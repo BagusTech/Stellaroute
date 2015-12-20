@@ -1,0 +1,9 @@
+// if isn't authenticated
+a(href="/login") Login with Facebook
+hr
+form(method='POST', action='/login')
+	input(name='localEmail', type='email', placeholder='email')
+	input(name='localPassword', type='password', placeholder='password')
+
+	button(type='submit') Log in
+//else

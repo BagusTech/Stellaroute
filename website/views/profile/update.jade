@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+	.container
+		form(method= 'POST', action= './update')
+			- for (var field in data)
+				if field != key
+					.form-group
+						label= field
+						input.form-control(name= field, value= data[field])
+				else
+					input(type='hidden', name= key, value= data[key])
+						
+			input.btn.btn-primary(type= 'submit', value= 'Submit')
+
+		form(method= 'POST', action= './delete')
+			input(type='hidden', name= key, value= data[key])
+			input.btn.btn-danger(type= 'submit', value= 'Delete')

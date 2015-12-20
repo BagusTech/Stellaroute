@@ -1,0 +1,83 @@
+html(lang='en')
+	head
+		title= title
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='description', content= description)
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+		meta(name='author', content='Joe Lissner')
+		meta(name='google-site-verification', content='tByCJ_M0-5-xPQYJzhqEIcJJkVSB7PcRNExX6fDnOd8')
+
+		//// Styles & Fonts ///////////////////////////////////////////////////////
+		// not hosted local
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type="text/css")
+
+		// hosted local
+		link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type="text/css")
+		link(rel='stylesheet', href='/styles/styles.css')
+
+
+		//// Scripts //////////////////////////////////////////////////////////////
+		// not hosted local
+		script(type='text/javascript', src="https://code.jquery.com/jquery-1.11.3.min.js")
+		script(type='text/javascript', src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+		script(type='text/javascript', src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
+		script(type='text/javascript', src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
+
+		// hosted local
+		script(type='text/javascript', src='/js/scripts.min.js')
+
+		// Google maps api
+			script(type='text/javascript', src='http://maps.google.com/maps/api/js??key=AIzaSyAqi8KpEFUzbQ-MiDK21GojT2cphVhk0Ms &libraries=places&sensor=false')
+			script(type='text/javascript', src='/scripts/google.js')
+
+		// api calls
+			script(type='text/javascript', src='/scripts/calls.js')
+
+		/////////////////////////////////////////////////////////////////////////
+
+	body
+		header
+			.row
+				.col-xs-6
+					a(href='/').comapny-name Qandira
+				.col-xs-6
+					include controls/login
+		nav
+			button#menu-toggle.toggle
+				i.fa.fa-bars
+
+			ul.nav
+				li
+					a(href="/explore")
+						| Explore
+					
+				li
+					a(href='/review')
+						| Review
+				li
+					a(href='/profile')
+						| Profile
+
+		header#Bagus.header
+			.text-vertical-center
+				h1 Bagus
+				h3 to innovate a better world
+		main
+			include flash
+			block content
+
+		footer.bg-primary
+			.container
+				.row.text-right
+						ul.list-inline
+							li
+								a(href='#Mission') Bagus
+							li
+								| St. Louis, MO
+							li
+								a(href='mailto:joe@bagus.com') Contact Us
+							li
+								| &copy; Copyright&nbsp;
+								- var date = new Date().getFullYear();
+								span= date

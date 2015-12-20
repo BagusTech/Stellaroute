@@ -1,0 +1,283 @@
+extends ../layout
+
+block content
+	.pb-Md.pt-Md
+		h1.container.mb-Md Write a Review!
+
+		.container.profile.ta-L
+			fieldset#Review.col-xs-12
+				legend Write a Review
+
+				.col-sm-6.col-xs-12
+					.row
+						.col-sm-6.col-xs-12
+							.form-group
+								label(for='Name') Name
+								input.form-control#Name(type='text', size='50', placeholder='The Arch')
+
+						.col-sm-6.col-xs-12
+							.form-group
+								label(for='Rating') Rating
+								input.form-control#Rating(type='number', min='0', max='5')
+
+					.form-group
+						label(for='Type') It's a
+						select.form-control#Type
+							option(value='country') Country
+							option(value='stateProvince') State/Province
+							option(value='city') City
+							option(value='attraction') Attraction
+					
+					.form-group
+						label(for='Address') Address
+						input.form-control#Address(type='text', size='50')
+
+					.form-group
+						label(for='Comments') Comments
+						textarea.form-control#Comments
+
+				.col-sm-6.col-xs-12
+					.form-group.clearfix
+						span.fw-B Interests
+
+						.row.checkbox
+							label.col-sm-3.col-xs-6
+								input#Adventure(type='checkbox', value='adventure') 
+								| Adventure
+							label.col-sm-3.col-xs-6
+								input#Culture(type='checkbox', value='culture') 
+								| Culture
+							label.col-sm-3.col-xs-6
+								input#Family(type='checkbox', value='family') 
+								| Family
+							label.col-sm-3.col-xs-6
+								input#Nightlife(type='checkbox', value='nightlife') 
+								| Nightlife
+							label.col-sm-3.col-xs-6
+								input#Architecture(type='checkbox', value='architecture') 
+								| Architecture
+							label.col-sm-3.col-xs-6
+								input#History(type='checkbox', value='history') 
+								| History
+							label.col-sm-3.col-xs-6
+								input#Food(type='checkbox', value='food') 
+								| Food
+							label.col-sm-3.col-xs-6
+								input#Scenery(type='checkbox', value='Scenery') 
+								| Scenery
+							label.col-sm-3.col-xs-6
+								input#Museums(type='checkbox', value='museums') 
+								| Museums
+							label.col-sm-3.col-xs-6
+								input#Outdoors(type='checkbox', value='outdoors') 
+								| Outdoors
+							label.col-sm-3.col-xs-6
+								input#Exotics(type='checkbox', value='exotics') 
+								| Exotics
+							label.col-sm-3.col-xs-6
+								input#Music(type='checkbox', value='music') 
+								| Music
+							label.col-sm-3.col-xs-6
+								input#Nature(type='checkbox', value='nature') 
+								| Nature
+							label.col-sm-3.col-xs-6
+								input#Sports(type='checkbox', value='sports') 
+								| Sports
+
+					.form-group
+						label.d-B(for='Time') I would suggest people Stay
+						input.form-control.w-A.d-Ib.mr-Sm#Time(type='number')
+						
+						label.radio-inline
+							input.radio(type='radio', name='time', value='minute')
+							| Minute(s)
+						
+						label.radio-inline
+							input.radio(type='radio', name='time', value='hour', checked='checked')
+							| Hour(s)
+
+						label.radio-inline
+							input.radio(type='radio', name='time', value='day')
+							| Day(s)
+
+					.form-group
+						label(for='Amount') Amount to Sepnd
+						.row
+							.col-sm-4
+								select.form-control#Currency
+									option(value='USD') (USD) US Dollar
+									option(value='EUR') (EUR) Euro
+									option(value='GBP') (GBP) Pound Sterling
+									option(value='AUD') (AUD) Australian Dollar
+									option(value='CAD') (CAD) Canadian Dollar
+									option(value='RMB') (RMB) Chinese Yuan
+									option(value='JPY') (JPY) Japanese Yen
+									option(value='AFN') (AFN) Afghanistan Afghani
+									option(value='ALL') (ALL) Albanian Lek
+									option(value='DZD') (DZD) Algerian Dinar
+									option(value='AOA') (AOA) Angolan Kwanza
+									option(value='AED') (AED) Arab Emirates Dirham
+									option(value='ARS') (ARS) Argentine Peso
+									option(value='AMD') (AMD) Armenian Dram
+									option(value='AWG') (AWG) Aruban Guilder
+									option(value='AZN') (AZN) Azerbaijan New Manat
+									option(value='BSD') (BSD) Bahamian Dollar
+									option(value='BHD') (BHD) Bahraini Dinar
+									option(value='BDT') (BDT) Bangladeshi Taka
+									option(value='BBD') (BBD) Barbados Dollar
+									option(value='BYR') (BYR) Belarussian Ruble
+									option(value='BZD') (BZD) Belize Dollar
+									option(value='BMD') (BMD) Bermudian Dollar
+									option(value='BTN') (BTN) Bhutan Ngultrum
+									option(value='BOB') (BOB) Boliviano
+									option(value='BWP') (BWP) Botswana Pula
+									option(value='BRL') (BRL) Brazilian Real
+									option(value='BND') (BND) Brunei Dollar
+									option(value='BGN') (BGN) Bulgarian Lev
+									option(value='BIF') (BIF) Burundi Franc
+									option(value='CVE') (CVE) Cape Verde Escudo
+									option(value='KYD') (KYD) Cayman Islands Dollar
+									option(value='XOF') (XOF) CFA Franc BCEAO
+									option(value='XAF') (XAF) CFA Franc BEAC
+									option(value='XPF') (XPF) CFP Franc
+									option(value='CLP') (CLP) Chilean Peso
+									option(value='COP') (COP) Colombian Peso
+									option(value='KMF') (KMF) Comoros Franc
+									option(value='CRC') (CRC) Costa Rican Colon
+									option(value='HRK') (HRK) Croatian Kuna
+									option(value='CUP') (CUP) Cuban Peso
+									option(value='CZK') (CZK) Czech Koruna
+									option(value='DKK') (DKK) Danish Krone
+									option(value='MKD') (MKD) Denar
+									option(value='RSD') (RSD) Dinar
+									option(value='DJF') (DJF) Djibouti Franc
+									option(value='STD') (STD) Dobra
+									option(value='DOP') (DOP) Dominican Peso
+									option(value='XCD') (XCD) East Caribbean Dollar
+									option(value='ECS') (ECS) Ecuador Sucre
+									option(value='EGP') (EGP) Egyptian Pound
+									option(value='SVC') (SVC) El Salvador Colon
+									option(value='ERN') (ERN) Eritrean Nakfa
+									option(value='ETB') (ETB) Ethiopian Birr
+									option(value='FKP') (FKP) Falkland Islands Pound
+									option(value='FJD') (FJD) Fiji Dollar
+									option(value='CDF') (CDF) Francs
+									option(value='GMD') (GMD) Gambian Dalasi
+									option(value='GEL') (GEL) Georgian Lari
+									option(value='GHS') (GHS) Ghanaian Cedi
+									option(value='GIP') (GIP) Gibraltar Pound
+									option(value='QTQ') (QTQ) Guatemalan Quetzal
+									option(value='GNF') (GNF) Guinea Franc
+									option(value='GWP') (GWP) Guinea-Bissau Peso
+									option(value='GYD') (GYD) Guyana Dollar
+									option(value='HTG') (HTG) Haitian Gourde
+									option(value='HNL') (HNL) Honduran Lempira
+									option(value='HKD') (HKD) Hong Kong Dollar
+									option(value='HUF') (HUF) Hungarian Forint
+									option(value='ISK') (ISK) Iceland Krona
+									option(value='INR') (INR) Indian Rupee
+									option(value='IDR') (IDR) Indonesian Rupiah
+									option(value='IRR') (IRR) Iranian Rial
+									option(value='IQD') (IQD) Iraqi Dinar
+									option(value='ILS') (ILS) Israeli New Shekel
+									option(value='JMD') (JMD) Jamaican Dollar
+									option(value='JOD') (JOD) Jordanian Dinar
+									option(value='KHR') (KHR) Kampuchean Riel
+									option(value='KZT') (KZT) Kazakhstan Tenge
+									option(value='KES') (KES) Kenyan Shilling
+									option(value='KRW') (KRW) Korean Won
+									option(value='KWD') (KWD) Kuwaiti Dinar
+									option(value='LAK') (LAK) Lao Kip
+									option(value='LVL') (LVL) Latvian Lats
+									option(value='LBP') (LBP) Lebanese Pound
+									option(value='LSL') (LSL) Lesotho Loti
+									option(value='LRD') (LRD) Liberian Dollar
+									option(value='LYD') (LYD) Libyan Dinar
+									option(value='LTL') (LTL) Lithuanian Litas
+									option(value='MOP') (MOP) Macau Pataca
+									option(value='MGF') (MGF) Malagasy Franc
+									option(value='MWK') (MWK) Malawi Kwacha
+									option(value='MYR') (MYR) Malaysian Ringgit
+									option(value='MVR') (MVR) Maldive Rufiyaa
+									option(value='TMT') (TMT) Manat
+									option(value='BAM') (BAM) Marka
+									option(value='MRO') (MRO) Mauritanian Ouguiya
+									option(value='MUR') (MUR) Mauritius Rupee
+									option(value='MXN') (MXN) Mexican Nuevo Peso
+									option(value='MDL') (MDL) Moldovan Leu
+									option(value='MNT') (MNT) Mongolian Tugrik
+									option(value='MAD') (MAD) Moroccan Dirham
+									option(value='MAD') (MAD) Moroccan Dirham
+									option(value='MZN') (MZN) Mozambique Metical
+									option(value='MMK') (MMK) Myanmar Kyat
+									option(value='NAD') (NAD) Namibian Dollar
+									option(value='NPR') (NPR) Nepalese Rupee
+									option(value='ANG') (ANG) Netherlands Antillean Guilder
+									option(value='NZD') (NZD) New Zealand Dollar
+									option(value='NIO') (NIO) Nicaraguan Cordoba Oro
+									option(value='NGN') (NGN) Nigerian Naira
+									option(value='KPW') (KPW) North Korean Won
+									option(value='NOK') (NOK) Norwegian Krone
+									option(value='OMR') (OMR) Omani Rial
+									option(value='PKR') (PKR) Pakistan Rupee
+									option(value='PAB') (PAB) Panamanian Balboa
+									option(value='PGK') (PGK) Papua New Guinea Kina
+									option(value='PYG') (PYG) Paraguay Guarani
+									option(value='PEN') (PEN) Peruvian Nuevo Sol
+									option(value='PHP') (PHP) Philippine Peso
+									option(value='PLN') (PLN) Polish Zloty
+									option(value='QAR') (QAR) Qatari Rial
+									option(value='RON') (RON) Romanian New Leu
+									option(value='RUB') (RUB) Russian Ruble
+									option(value='RWF') (RWF) Rwanda Franc
+									option(value='WST') (WST) Samoan Tala
+									option(value='SAR') (SAR) Saudi Riyal
+									option(value='SCR') (SCR) Seychelles Rupee
+									option(value='SLL') (SLL) Sierra Leone Leone
+									option(value='SGD') (SGD) Singapore Dollar
+									option(value='SBD') (SBD) Solomon Islands Dollar
+									option(value='KGS') (KGS) Som
+									option(value='SOS') (SOS) Somali Shilling
+									option(value='ZAR') (ZAR) South African Rand
+									option(value='SSP') (SSP) South Sudan Pound
+									option(value='LKR') (LKR) Sri Lanka Rupee
+									option(value='SHP') (SHP) St. Helena Pound
+									option(value='SDG') (SDG) Sudanese Pound
+									option(value='SRD') (SRD) Surinam Dollar
+									option(value='SZL') (SZL) Swaziland Lilangeni
+									option(value='SEK') (SEK) Swedish Krona
+									option(value='CHF') (CHF) Swiss Franc
+									option(value='SYP') (SYP) Syrian Pound
+									option(value='TWD') (TWD) Taiwan Dollar
+									option(value='TJS') (TJS) Tajik Somoni
+									option(value='TZS') (TZS) Tanzanian Shilling
+									option(value='THB') (THB) Thai Baht
+									option(value='TOP') (TOP) Tongan Pa'anga
+									option(value='TTD') (TTD) Trinidad and Tobago Dollar
+									option(value='TND') (TND) Tunisian Dollar
+									option(value='TRY') (TRY) Turkish Lira
+									option(value='UGX') (UGX) Uganda Shilling
+									option(value='UAH') (UAH) Ukraine Hryvnia
+									option(value='UYU') (UYU) Uruguayan Peso
+									option(value='UZS') (UZS) Uzbekistan Sum
+									option(value='VUV') (VUV) Vanuatu Vatu
+									option(value='VEF') (VEF) Venezuelan Bolivar
+									option(value='VND') (VND) Vietnamese Dong
+									option(value='YER') (YER) Yemeni Rial
+									option(value='CNY') (CNY) Yuan Renminbi
+									option(value='ZMW') (ZMW) Zambian Kwacha
+									option(value='ZWD') (ZWD) Zimbabwe Dollar
+							.col-sm-3
+								input.form-control#Amount(type='number', placeholder='40')
+							.col-sm-5
+								span.pr-Sm.fw-B per
+								select.form-control.w-A.d-Ib#MoneyUnit
+									option(value='day') day
+									option(value='person') person
+									option(value='dish') dish
+									option(value='drink') drink
+
+
+
+				.col-xs-12
+					input#SubmitReview.btn.btn-primary.f-R(type='submit', value='Submit')

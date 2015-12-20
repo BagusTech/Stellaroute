@@ -1,0 +1,43 @@
+{
+  "name": "qandira",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Company website for Bagus",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Bagus",
+    "Bagus Co.",
+    "Joe Lissner",
+    "Peter Lamming",
+    "Alan Furth",
+    ""
+  ],
+  "author": "Joe Lissner",
+  "license": "ISC",
+  "dependencies": {
+    "express": "~4.13.3",
+    "express-session": "~1.11.3",
+
+    "jade": "~1.11.0",
+    "serve-favicon": "~2.3.0",
+
+    "aws-sdk": "~2.2.17",
+
+    "method-override": "~1.0.0",
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+
+    "bcrypt-nodejs": "latest",
+    "passport": "~0.3.0",
+    "passport-local": "~1.0.0",
+    "passport-facebook": "~2.0.0",
+    "passport-twitter": "~1.0.3",
+    "passport-google-oauth": "~0.2.0",
+
+    "connect-flash": "~0.1.1"
+  }
+}

@@ -1,2 +1,4 @@
 /node_modules
 /website/node_modules
+/website/auth.js
+/website/aws.js

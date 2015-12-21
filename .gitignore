@@ -1,4 +1,10 @@
 /node_modules
-/website/node_modules
-/website/auth.js
-/website/aws.js
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+
+!.elasticbeanstalk/*.cfg.yml
+
+!.elasticbeanstalk/*.global.yml
+

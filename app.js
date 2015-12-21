@@ -86,6 +86,6 @@ app.use(function(err, req, res, next) {
 console.log('~~~~ Starting Stellroute ~~~~');
 console.log('Current Environment: ' + app.get('env'));
 
-app.listen(80); 
+app.listen(8080); 
 
 module.exports = app;

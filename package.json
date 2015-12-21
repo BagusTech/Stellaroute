@@ -1,8 +1,8 @@
 {
-  "name": "qandira",
+  "name": "stellaroute",
   "version": "1.0.0",
   "private": true,
-  "description": "Company website for Bagus",
+  "description": "A product of Bagus Tech",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

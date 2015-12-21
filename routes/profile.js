@@ -1,62 +1,72 @@
-const express    = require('express');
-const flash      = require('connect-flash');
-const assign     = require('../modules/assign');
-const readJSON   = require('../modules/readJSON');
-const User       = require('../schemas/user');
-const router     = express.Router();
+const express = require('express');
+const flash = require('connect-flash');
+const setFlash = require('../modules/setFlash');
+const User = require('../schemas/user');
+const router = express.Router();
 
 router.get('/', function(req, res, next){
-	res.render('profile/profile', {
-		title: 'StellaRoute: My Profile',
-		description: 'This is used to view, edit, and delete my profile',
-		user: req.user.Items[0]
+	User.find().then(function(data){
+		res.render('profile/profile', {
+			title: 'Welcome [get persons name]',
+			description: 'This is [perosn]\'s profile and they like bagus which is something we like too',
+			data: data.Items
+		})
+	}, function(err){
+		console.error(err);
+		res.render('profile/profile', {
+			title: 'Welcome [get persons name]',
+			description: 'This is [perosn]\'s profile and they like bagus which is something we like too',
+			data: []
+		})
+	})
+})
+
+router.get('/:id', function(req, res, next){
+	User.find('Id', req.params.id, 1).then(function(data){
+		res.render('profile/update', {
+			title: 'Update Users Profile',
+			description: 'This is used to update a users Profile',
+			data: data.Items[0],
+			key: User.hashKey
+		})
+	}, function(err){
+		res.render('profile/update', {
+			title: 'Update Users Profile',
+			description: 'This is used to update a users Profile',
+			data: [],
+			key: String()
+		})
+	})
+})
+
+// HTML form cannot pass an actual delete, so using post
+router.post('/delete', function(req, res){
+	User.delete(req.body[User.hashKey]).then(function(){
+		// resolved
+
+		req.flash('success', 'User successfully deleted')
+		res.redirect('./');
+	}, function(){
+		// rejected
+
+		req.flash('error', 'Oops, something went wrong. Please try again.')
+		res.redirect('./');
 	});
-});
+})
 
 router.post('/update', function(req, res){
-	if (req.body.delete){
-		User.delete(req.body[User.hash]).then(function(){
-			// resolved
+	console.log('body: ' + JSON.stringify(req.body, null, 2))
+	User.update(req.body).then(function(){
+		// resolved
 
-			req.flash('success', 'User successfully deleted')
-			res.redirect('/logout');
-		}, function(){
-			// rejected
+		req.flash('success', 'User successfully updated')
+		res.redirect('./')
+	}, function(){
+		// rejected
 
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/profile');
-		});
-	} else if (req.body.submit) {
-		delete req.body.submit;
-
-		var params = {};
-
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
-		});
-
-		if(params.local.password !== undefined && params.local.password.length > 4){
-			params.local.password = User.generateHash(params.local.password) 
-		} else { 
-			delete params.local.password;
-		}
-
-		User.update(params).then(function(){
-			// resolved
-
-			req.flash('success', 'User successfully updated')
-			res.redirect('/profile')
-		}, function(err){
-			// rejected
-
-			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/profile')
-		});
-	} else {
-		req.flash('error', 'There was an error, please try again');
-		res.redirect('/profile')
-	}
-});
+		req.flash('error', 'Oops, something went wrong. Please try again.')
+		res.redirect('./')
+	})
+})
 
 module.exports = router;

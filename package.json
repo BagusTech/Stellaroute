@@ -5,15 +5,13 @@
   "description": "Company website for Bagus",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
   },
   "keywords": [
     "Bagus",
     "Bagus Co.",
-    "Joe Lissner",
-    "Peter Lamming",
-    "Alan Furth",
-    ""
+    "Stellaroute"
   ],
   "author": "Joe Lissner",
   "license": "ISC",

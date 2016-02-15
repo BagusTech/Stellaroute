@@ -28,7 +28,7 @@ const router = express.Router();
 router.get('/', function(req, res, next){
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your worls your way',
-		description: 'Stellaroute, founded in 2015, is the world\'s formost innovator in travel technologies and services.'
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
 /* 

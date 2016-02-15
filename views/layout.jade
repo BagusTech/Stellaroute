@@ -13,19 +13,19 @@ html(lang='en')
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type="text/css")
 
 		// hosted local
-		link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type="text/css")
+			link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type="text/css")
 		link(rel='stylesheet', href='/styles/styles.css')
 
 
 		//// Scripts //////////////////////////////////////////////////////////////
 		// not hosted local
-		script(type='text/javascript', src="https://code.jquery.com/jquery-1.11.3.min.js")
-		script(type='text/javascript', src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
-		script(type='text/javascript', src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
-		script(type='text/javascript', src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
+			script(type='text/javascript', src="https://code.jquery.com/jquery-1.11.3.min.js")
+			script(type='text/javascript', src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+			script(type='text/javascript', src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
+			script(type='text/javascript', src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
 
 		// hosted local
-		script(type='text/javascript', src='/js/scripts.min.js')
+			script(type='text/javascript', src='/js/scripts.min.js')
 
 		// Google maps api
 			script(type='text/javascript', src='http://maps.google.com/maps/api/js??key=AIzaSyAqi8KpEFUzbQ-MiDK21GojT2cphVhk0Ms &libraries=places&sensor=false')
@@ -36,14 +36,14 @@ html(lang='en')
 
 		/////////////////////////////////////////////////////////////////////////
 
-	body
-		header
+	body(style="background: url(http://c2.staticflickr.com/4/3129/3143994000_72e101ba7e_b.jpg) no-repeat; background-size: cover;")
+		//header
 			.row
 				.col-xs-6
 					a(href='/').comapny-name Qandira
 				.col-xs-6
-					include controls/login
-		nav
+							include controls/login
+		//nav
 			button#menu-toggle.toggle
 				i.fa.fa-bars
 
@@ -58,16 +58,11 @@ html(lang='en')
 				li
 					a(href='/profile')
 						| Profile
-
-		header#Bagus.header
-			.text-vertical-center
-				h1 Bagus
-				h3 to innovate a better world
-		main
+		main(style="margin-top: 75px;")
 			include flash
 			block content
 
-		footer.bg-primary
+		//footer.bg-primary
 			.container
 				.row.text-right
 						ul.list-inline

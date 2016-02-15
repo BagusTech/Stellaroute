@@ -47,8 +47,8 @@ app.use(setFlash);
 
 //Set index.js to be the main router
 app.use('/', routes);
-app.use('/review', review);
-app.use('/profile', profile);
+//app.use('/review', review);
+//app.use('/profile', profile);
 
 // error handlers /////////////////////////////////////////////////////
 

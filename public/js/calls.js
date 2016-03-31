@@ -27,12 +27,15 @@ var updateMode = function(e){
 
 	$('.update').click(updateReview);
 
+	var currentCountry,
+		currentThoughts;
+
 	if (row.hasClass('update-mode')){
 		deleteButton.click(updateMode);
 		updateButton.click(updateReview);
 
-		var currentCountry = country.text(),
-			currentThoughts = thoughts.text();
+		currentCountry = country.text();
+		currentThoughts = thoughts.text();
 
 
 		country.html('<input class="form-control" id="UpdateCountry" value="'+ currentCountry +'"/>');
@@ -40,20 +43,18 @@ var updateMode = function(e){
 		thoughts.html('<textarea class="form-control" id="UpdateThoughts" />');
 		$('#UpdateThoughts').val(currentThoughts);
 
-		deleteButton.text('Cancel')
+		deleteButton.text('Cancel');
 	} else {
 		deleteButton.click(deleteReview);
 		updateButton.click(updateMode);
 
-		var currentCountry = $('#UpdateCountry').val(),
-			currentThoughts = $('#UpdateThoughts').val();
-
-		console.log(currentCountry);
+		currentCountry = $('#UpdateCountry').val();
+		currentThoughts = $('#UpdateThoughts').val();
 
 		country.text(currentCountry);
 		thoughts.text(currentThoughts);
 	}
-}
+};
 
 function showSubmittedReviews(){
 	var reviews = '';
@@ -113,13 +114,13 @@ function showSubmittedReviews(){
 		$('.update-button').click(updateMode);
 		$('.cancel-update-button').click(updateMode);
 	});
-};
+}
 
 function submitReview(e){
 	e.preventDefault();
 
 	// Create a guid
-	function guid() {
+	function makeGuid() {
 		function s4() {
 			return Math.floor((1 + Math.random()) * 0x10000)
 			.toString(16)
@@ -129,7 +130,7 @@ function submitReview(e){
 		s4() + '-' + s4() + s4() + s4();
 	}
 	
-	var guid = guid();
+	var guid = makeGuid();
 
 	// Super basic validation - increase errorCount if any fields are blank
 	var errorCount = 0;
@@ -179,7 +180,7 @@ function submitReview(e){
 				'nature': $('#Nature').prop('checked'),
 				'sports': $('#Sports').prop('checked')
 			}
-		}
+		};
 
 		$.ajax({
 			type: 'POST',
@@ -194,7 +195,7 @@ function submitReview(e){
 				// Reset the form
 				$('#Review input[type=text]').val('');
 				$('#Review input[type=number]').val('');
-				$('input[type=checkbox]').prop('checked', false)
+				$('input[type=checkbox]').prop('checked', false);
 				$('#Review textarea').val('');
 
 				// Update the table
@@ -206,7 +207,7 @@ function submitReview(e){
 			}
 		}).fail(function(err){
 			console.log(err);
-		})
+		});
 	} else {
 		// If errorCount is more than 0, error out
 		alert('Please fill in all fields');
@@ -217,7 +218,7 @@ function submitReview(e){
 function deleteReview(e){
 	e.preventDefault();
 
-	var confirmation = confirm('Are you sure you would like to delete this review?')
+	var confirmation = confirm('Are you sure you would like to delete this review?');
 
 	if (confirmation === true){
 		$.ajax({
@@ -229,10 +230,10 @@ function deleteReview(e){
 			} else {
 				console.log('Error: ' + response.msg);
 			}
-		})
+		});
 	} else {
 		// User did not confirm
-		return false
+		return false;
 	}
 }
 
@@ -244,7 +245,7 @@ function updateReview(e){
 		'Id': $(this).val(),
 		'Country': $('#UpdateCountry').val(),
 		'Thoughts': $('#UpdateThoughts').val()
-	}
+	};
 
 	$.ajax({
 		type: 'PUT',
@@ -259,5 +260,5 @@ function updateReview(e){
 			alert('Failed to update, see console for error');
 			showSubmittedReviews();
 		}
-	})
+	});
 }

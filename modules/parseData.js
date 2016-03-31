@@ -1,7 +1,7 @@
 function parseData(data, schema, table) {
 	var errorCount = 0;
 
-	!function parse(data, schema){
+	void function parse(data, schema){
 		for (var item in data){
 			// See if the attribute is part of the Schema
 			if ( schema[item] === undefined ){
@@ -18,7 +18,9 @@ function parseData(data, schema, table) {
 				parse(data[item], schema[item])
 			} else {
 				if ( itemType !== schemaType ){
+					console.log('~~~ parsing data failed ~~~')
 					console.error('"' + item + '" is currently a "' + itemType + '" and needs to be a "' + schemaType + '"');
+					console.log();
 					errorCount++;
 					return null;
 				}

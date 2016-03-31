@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+	.row
+		.col-sm-2.col-xs-3
+			strong Name
+		.col-sm-3.col-xs-3
+			strong Continent(s)
+		.col-xs-6
+			strong World Region(s)
+
+	for item in data
+		.row
+			.col-sm-2.col-xs-3
+				a(href='/countries/' + item.name)= item.name
+			.col-sm-3.col-xs-3
+				- for (var i = 0; i < item.continent.length; i++)
+					span= item.continent[i]
+
+					if ((i+1) !== item.continent.length)
+						|,&nbsp;
+
+			.col-xs-6
+				- for (var i = 0; i < item.worldRegions.length; i++)
+					span= item.worldRegions[i]
+
+					if ((i+1) !== item.worldRegions.length)
+						|,&nbsp;
+
+
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/countries/new') New

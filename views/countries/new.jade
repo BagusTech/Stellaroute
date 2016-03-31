@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+	h1 Add a new Country
+
+	form(method='POST', action='./new')
+		fieldset
+			legend Country
+
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='CountryName') Name
+						input.form-control#CountryName(name='name', type='text', placeholder='name', required)
+
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='CountryContinet') Continent(s) it resides in 
+						select.form-control#CountryContinent(name='continent',  multiple='true', required)
+							option North America
+							option South America
+							option TODO: Auto Generate list from database of continents
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='WorldRegions') World Region(s) it resides in 
+						select.form-control#WorldRegions(name='worldRegions',  multiple='true', required)
+							option Western Europe
+							option Eastern Europe
+							option TODO: Dynamically Generate list based off selected continents
+			// not sure if we need
+				.row
+					.col-sm-6.col-xs-12
+						.form-group
+							label(for='CountryRegions') Regions of the Country
+							textarea.form-control#CountryRegions(name='countryRegions', placeholder='Put each region on a new line', required)
+
+			.form-group.text-right
+				input.btn.btn-primary(type='submit', value='submit')

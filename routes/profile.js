@@ -27,7 +27,7 @@ router.get('/:id', function(req, res, next){
 			title: 'Update Users Profile',
 			description: 'This is used to update a users Profile',
 			data: data.Items[0],
-			key: User.hashKey
+			key: User.hash
 		})
 	}, function(err){
 		res.render('profile/update', {
@@ -41,16 +41,16 @@ router.get('/:id', function(req, res, next){
 
 // HTML form cannot pass an actual delete, so using post
 router.post('/delete', function(req, res){
-	User.delete(req.body[User.hashKey]).then(function(){
+	User.delete(req.body[Country.hash]).then(function(){
 		// resolved
 
-		req.flash('success', 'User successfully deleted')
-		res.redirect('./');
+		req.flash('success', 'Country successfully deleted')
+		res.redirect('/coutnries');
 	}, function(){
 		// rejected
 
 		req.flash('error', 'Oops, something went wrong. Please try again.')
-		res.redirect('./');
+		res.redirect('/coutnries');
 	});
 })
 

@@ -1,6 +1,6 @@
 $(window).on('load', function(){
 	init();
-})
+});
 
 function init(){
 	if($('#Address').length > 0){

@@ -9,6 +9,7 @@ const cookieParser     = require('cookie-parser');
 const bodyParser       = require('body-parser');
 const session          = require('express-session');
 const routes           = require('./routes/index');
+const countries        = require('./routes/countries');
 const review           = require('./routes/review');
 const profile          = require('./routes/profile');
 const db               = require('./config/aws'); 
@@ -47,6 +48,7 @@ app.use(setFlash);
 
 //Set index.js to be the main router
 app.use('/', routes);
+app.use('/countries', countries);
 //app.use('/review', review);
 //app.use('/profile', profile);
 

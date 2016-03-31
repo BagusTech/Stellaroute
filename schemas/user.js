@@ -1,7 +1,5 @@
-const bycrpt = require('bcrypt-nodejs');
 const db = require('../config/aws');
 const duck = require('../modules/duck');
-
 
 var User =  new duck(db, 'Users', {
 	Item: {
@@ -20,19 +18,8 @@ var User =  new duck(db, 'Users', {
 	},
 	
 	HASH: 'Id',
-	Indices : ['localEmail']
+	HASHType: 'S'
+	//, Indexes : ['localEmail']
 });
-
-
-// methods ===============
-// generateing a hash
-User.methods.generateHash = function(password){
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-User.methods.validPassword = function(password){
-	return bcrypt.compareSync(password, this.local.password);
-};
 
 module.exports = User;

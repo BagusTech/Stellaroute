@@ -5,13 +5,11 @@ var Country =  new duck(db, 'Countries', {
 	Item: {
 		Id: String,
 		name: String,
-		abbreviation: String,
-		alias: Array,
 		continent: Array,
 		worldRegions: Array
 		//countryRegions: Array
 	},
-	HASH: 'Id',
+	HASH: 'name',
 	HASHType: 'S'
 });
 

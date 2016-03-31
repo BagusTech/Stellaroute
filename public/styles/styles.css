@@ -1,2 +1,16 @@
+.form-group > .btn-group {
+  width: 100%;
+}
+.form-group > .btn-group > button {
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+.form-group > .btn-group > button .caret {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -3px;
+}
 
 /*# sourceMappingURL=styles.css.map */

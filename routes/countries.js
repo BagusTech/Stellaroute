@@ -1,55 +1,69 @@
 const express = require('express');
 const flash = require('connect-flash');
-const assign = require('../modules/assign');
-const cache = require('../modules/caching');
-const readJSON = require('../modules/readJSON');
-const sortBy = require('../modules/sortBy');
-const Continent = require('../schemas/continent');
+const setFlash = require('../modules/setFlash');
+const passport = require('passport');
+const isLoggedIn = require('../modules/isLoggedIn');
 const Country = require('../schemas/country');
-const WorldRegion = require('../schemas/world-region');
+const User = require('../schemas/user');
+const parseData = require('../modules/parseData');
 const router = express.Router();
 
-router.get('/', Country.checkCache, Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
-	var cachedCountries = Country.cached();
-
-	var mappedContinentIdsToName = Country.cached().map( country => 
-		country.continent.map( continentId => 
-			Continent.cached().map((continent) => 
-				continent.Id == continentId ? continent.name : null)
-				.filter(name => name)));
-	for (i in cachedCountries){
-		cachedCountries[i].continent = mappedContinentIdsToName[i]
-	}
-
-	var mappedWorldRegionIdsToName = Country.cached().map( country => 
-		country.worldRegions.map( worldRegionsId => 
-			WorldRegion.cached().map((worldRegions) => 
-				worldRegions.Id == worldRegionsId ? worldRegions.name : null)
-				.filter(name => name)));
-	for (i in cachedCountries){
-		cachedCountries[i].worldRegions = mappedWorldRegionIdsToName[i]
-	}
+require('../config/passport')(passport);
 
 
-	console.log('Make the Join')
-	//console.log(JSON.stringify(Country.join('continent', Continent.cached()), null, 2));
-	//console.log(JSON.stringify(cachedCountries, null, 2));
+// make caching into middleware (probably done by someone already)
+var loadedCountries;
+var cashedAt = new Date();
+var cacheDuration = 3600000; // 1 hour
 
+// TODO: Dynamically create this list
+var continents = ['Africa', 'Antartica', 'Asia', 'Austrailia', 'Europe', 'North America', 'South America' ];
 
-	res.render('countries/_countries', {
-		title: 'Stellaroute: countries',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		countries: cachedCountries.sort(sortBy('name'))
-	});
+// TODO: Dynamically create this list
+var worldRegions = ['South-east Asia', 'Western Europe', 'Central America'];
+
+router.get('/', function(req, res, next){
+	// check to see if the countries are chached
+	if (!loadedCountries || ((new Date() - cashedAt) > cacheDuration )) {
+		Country.find().then(function(data) {
+		// resolved
+
+			// set cache
+			cashedAt = new Date();
+			loadedCountries = data.Items;
+
+			res.render('countries/_countries', {
+				title: 'Stellaroute: Countries',
+				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+				data: loadedCountries
+			});
+		}, 
+		function(err) {
+		// rejected
+
+			req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
+
+			res.render('countries/_countries', {
+				title: 'Stellaroute: Countries',
+				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+				data: {}
+			});
+		});
+	} else {
+		res.render('countries/_countries', {
+			title: 'Stellaroute: Countries',
+			description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+			data: loadedCountries
+		});
+	}		
 });
 
-router.get('/new', Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
-
+router.get('/new', function(req, res, next){
 	res.render('countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		continents: Continent.cached().sort(sortBy('name')),
-		worldRegions: WorldRegion.cached().sort(sortBy('name'))
+		continents: continents,
+		worldRegions: worldRegions
 	});
 });
 
@@ -64,139 +78,98 @@ router.post('/new', function(req, res){
 	if (typeof params.worldRegions === 'string'){
 		params.worldRegions = Array(params.worldRegions);
 	}
-	
-	params.alias = params.alias.split(', ');
 
 	Country.add(params).then(function(data){
 	// resolved
 
-		Country.updateCache();
+		// if the countries are cached, 
+		if(loadedCountries) {
+			loadedCountries = null;
+		}
 
 		req.flash('success', 'Country Successfully added');
-		res.redirect('/countries');
+		res.redirect('./');
+	},
+	function(err){
+	// rejected
+
+		console.log('it failed');
+		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
+		res.redirect('./');
+	});
+});
+
+// HTML form cannot pass an actual delete, so using post
+router.post('/delete', function(req, res){
+	Country.delete(req.body[Country.hash]).then(function(){
+		// resolved
+
+		if(loadedCountries) {
+			loadedCountries = null;
+		}
+
+		req.flash('success', 'Country successfully deleted')
+		res.redirect('./');
+	}, function(){
+		// rejected
+
+		req.flash('error', 'Oops, something went wrong. Please try again.')
+		res.redirect('./');
+	});
+});
+
+router.post('/update', function(req, res){
+	const params = req.body;
+
+	// if the multiselect has one item, it returns a string and it needs to be an array
+	if (typeof params.continent === 'string'){
+		params.continent = Array(params.continent);
+	}
+
+	if (typeof params.worldRegions === 'string'){
+		params.worldRegions = Array(params.worldRegions);
+	}
+
+	Country.update(params).then(function(data){
+	// resolved
+		if(loadedCountries) {
+			loadedCountries = null;
+		}
+
+		req.flash('success', 'Country Successfully updated');
+		res.redirect('./');
 	},
 	function(err){
 	// rejected
 
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
-		res.redirect('/countries');
+		res.redirect('./');
 	});
 });
 
-router.post('/update', function(req, res){
-	if (req.body.delete){
-		Country.delete(req.body[Country.hash]).then(function(){
-			// resolved delete
+router.get('/:name', function(req, res, next){
+	Country.find('name', req.params.name, 1).then(
+	function(data){
+		// resolved
 
-			cache.del('/countries/' + req.body.name);
-			Country.updateCache().then(function(){
-				// resolved updateCache
+		res.render('countries/country', {
+			title: '',
+			description: '',
+			continents: continents,
+			data: data.Items[0],
+			key: Country.hash,
+			worldRegions: worldRegions
+		})
+	}, function(err){
+		// rejected
 
-				req.flash('success', 'Country successfully deleted')
-				res.redirect('/countries');
-			},function(err){
-				// rejected updateCache
-
-				console.error(err);
-				req.flash('error', 'Country was deleted, but something went wrong')
-				res.redirect('/countries');
-			});
-		}, function(err){
-			// rejected delete
-
-			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/countries');
-		});
-	} else if (req.body.update) {
-		delete req.body.update;
-
-		var params = {};
-
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
-		});
-
-		if(typeof params.continent === 'string'){
-			params.continent = Array(params.continent);
-		}
-
-		if(typeof params.worldRegions === 'string'){
-			params.worldRegions = Array(params.worldRegions);
-		}
-
-		params.alias = params.alias.split(', ');
-
-		Country.update(params).then(function(){
-			// resolved
-
-			cache.del('/countries/' + req.body.name);
-			Country.updateCache().then(function(){
-				req.flash('success', 'Country successfully updated')
-				res.redirect('/countries/' + req.body.name)
-			}, function(err){
-
-				console.error(err);
-				req.flash('error', 'There was a small issue, but the country was updated')
-				res.redirect('/countries/' + req.body.name)
-			});
-		}, function(err){
-			// rejected
-
-			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/countries')
-		});
-	} else {
-		req.flash('error', 'There was an error, please try again');
-		res.redirect('/countries')
-	}
-});
-
-router.get('/:name', Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
-	if(cache.get('/countries/' + req.params.name)){
-		next();
-	} else {
-		Country.find('name', req.params.name, 1).then(function(data){
-			// resolved
-
-			cache.set('/countries/' + req.params.name, data.Items[0], 3600);
-			next();
-		}, function(err){
-			// rejected
-
-			req.flash('error', 'Sorry, couln\'t find that country, please try again.')
-			res.redirect('/countries')
-		});
-	}
-
-}, function(req, res, next){
-	var country = cache.get('/countries/' + req.params.name);
-
-	var mappedContinentIdsToName = country.continent.map( continentId => 
-			Continent.cached().map((continent) => 
-				continent.Id == continentId ? continent.name : null)
-				.filter(name => name));
-
-	country.continent = mappedContinentIdsToName
-
-	var mappedWorldRegionIdsToName = country.worldRegions.map( worldRegionsId => 
-			WorldRegion.cached().map((worldRegions) => 
-				worldRegions.Id == worldRegionsId ? worldRegions.name : null)
-				.filter(name => name));
-	
-	country.worldRegions = mappedWorldRegionIdsToName
-
-	console.log('Make the Join')
-
-	res.render('countries/country', {
-		title: '',
-		description: '',
-		continents: Continent.cached().sort(sortBy('name')),
-		country: country,
-		key: Country.hash,
-		worldRegions: WorldRegion.cached().sort(sortBy('name'))
-	});
+		res.render('countries/country', {
+			title: '',
+			description: '',
+			data: [],
+			key: String()
+		})
+	})
 });
 
 module.exports = router;

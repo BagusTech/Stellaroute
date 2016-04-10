@@ -1,157 +1,297 @@
-const fs = require('fs');
-const parseData = require('../modules/parseData');
-const readJSON = require('../modules/readJSON');
+const fs            = require('fs');
+const bcrypt        = require('bcrypt-nodejs');
+const parseData     = require('../modules/parseData');
+const readJSON      = require('../modules/readJSON');
+const flattenObject = require('../modules/flattenObject');
+const uuid          = require('uuid');
 
 var duck = function(db, table, schema){
-	this.table    = table;
-	this.schema   = schema.Item;
-	this.hashKey  = schema.HASH;
-	this.rangeKey = schema.rangeKey;
-	this.methods  = schema.Methods || [];
-	this.indices  = schema.Indices || [];
+	this.table     = table;
+	this.schema    = schema.Item;
+	this.hash      = schema.HASH;
+	this.hashType  = schema.HASHType;
+	this.range     = schema.Range;
+	this.rangeType = schema.RangeType;
+	this.methods   = schema.Methods || [];
+	this.indexes   = schema.Indexes || [];
+	// generateing a hash
+	this.generateHash = function(password){ return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); };
+	// checking if password is valid
+	this.validPassword = function(password, encodedPassword){ return bcrypt.compareSync(password, encodedPassword); };
+	
+	/*	 
+		var testPut = {
+			  "TableName": "Continents",
+			  "Item": {
+			    "Id": "alsdkfjs",
+			    "local": {
+			      "email": "test@test.com",
+			      "password": "test"
+			    }
+			  },
+			  "ExpressionAttributeNames": {
+			    //"#h": "Id",
+			    "#local": "local",
+			    "#email": "email",
+			    //"#password": "password"
+			  },
+			  "ExpressionAttributeValues": {
+			    //":h": "alsdkfj",
+			    ":v0": "test@test.com",
+			    //":v1": "password"
+			  },
+			  "ReturnValues": "ALL_OLD"
+			}
 
-	if(!db || !this.hashKey || !this.table || !this.schema){
-		 console.error('you must define a databse, table, schema, AND hashKey');
+		db.lite.put(testPut, function(err, data){
+			if (err){
+				console.error(JSON.stringify(err, null, 2));
+			} else {
+				console.log(JSON.stringify(data, null, 2));
+			}
+
+			process.exit();
+		});
+
+		var testScan = {
+			TableName: 'Users',
+			FilterExpression: '#n1.#n2 = :v1 OR #n1.#n3 = :v3 OR #n1.#n2 = :v2',
+		    ExpressionAttributeNames:{
+		        '#n1': 'local',
+		        '#n2': 'email',
+		        '#n3': 'password'
+		    },
+		    ExpressionAttributeValues: {
+		        ':v1': 'test@test.com',
+		        ':v2': 'test2@test.com',
+		        ':v3': 'test'
+		    }
+		}
+
+		db.lite.scan(testScan, function(err, data){
+			if (err){
+				console.error(JSON.stringify(err, null, 2));
+			} else {
+				console.log(JSON.stringify(data, null, 2));
+			}
+
+			process.exit();
+		});
+
+		var params = {
+				  "TableName": "Users",
+				  "Key": {
+				    "Id": "b677b0d7-c734-48ca-87ed-0d542e472fa4"
+				  },
+				  "ExpressionAttributeNames": {
+				    "#name": "name",
+				    "#first": "first",
+				    "#last": "last",
+				    "#local": "local",
+				    "#email": "email"
+				  },
+				  "ExpressionAttributeValues": {
+				    ":0": "Joe",
+				    ":1": "Lissner",
+				    ":3": "test@test.com"
+				  },
+				  "UpdateExpression": "set #name.#first= :0, #name.#last= :1, #local.#email= :3"
+				}
+
+		db.lite.update(params, function(err, data){
+						if (err){
+							console.error(err);
+							process.exit();
+						} else {
+							process.exit();
+						}
+					}); 
+	*/
+
+
+	if(!db || !this.hash || !this.table || !this.schema){
+		 console.error('you must define a databse, table, schema, AND hash');
 		 process.exit();
 	}
 
 	db.listTables({}, function(err, data){
 		if(err){
-			console.log(JSON.stringify(err, null, 2));
+			console.error(JSON.stringify(err, null, 2));
 
 			process.exit();
 		} else {
 			if(data.TableNames.indexOf(table) === -1) {
-				console.log(table + 'doesn\'t exist! Attempting to create')
+				var params = {
+				    TableName : table,
+				    KeySchema: [       
+				        { AttributeName: schema.HASH,
+				          KeyType: 'HASH'} //Partition key
+				    ],
+				    AttributeDefinitions: [       
+				        { AttributeName: schema.HASH, 
+				          AttributeType: schema.HASHType }
+				    ],
+				    ProvisionedThroughput: {       
+				        ReadCapacityUnits: 1, 
+				        WriteCapacityUnits: 1
+				    }
+				};
+
+				if (schema.rangeKey){
+					params.KeySchema += {AttributeName: schema.rangeKey, KeyType: 'RANGE'} //Sort key
+					params.AttributeDefinitions += { AttributeName: schema.rangeKey, AttributeType: schema.rangeType }
+				}
+
+				db.createTable(params, function(err, data){
+					if (err){
+						console.error('Unable to create table. Error JSON:', JSON.stringify(err, null, 2));
+					} else {
+						crud();
+					}
+				});
 			} else {
 				crud();
 			}
 		}
-	})
-
-	/*if(!TableExists(this.table, db)){
-		console.log('the table didn\'t exist!')
-		var params = {
-			TableName : this.table,
-			KeySchema : [{AttributeName: this.hashKey, KeyType: 'HASH'}],
-			ProvisionedThroughput : {
-				ReadCapacityUnits : 1,
-				WriteCapacityUnits : 1
-			}
-		}
-
-		if (this.rangeKey){
-			params.KeySchema += {AttributeName: this.rangeKey, KeyType: 'RANGE'}
-		}
-	
-		db.createTable(params, function(err, data){
-			if (err){
-				console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-			} else {
-				console.log('successful createTable!')
-			}
-		});
-	}*/
+	});
 	
 	var crud = function(){
-		// add an item
 		// Write an item into the database
+		// Data is an object being added to the database
+		// Conditions is an array of objects with an 'attribute' property and a 'value' property
+		//// [{attribute: 'local.email', value: 'joe@bagusco.com'}, {attribute: 'username', value: 'howsc'}]
 		// TODO make accept array of items to do a batch write
-		duck.prototype.add = function(data){
+		duck.prototype.add = function(data, conditions){
 			var table = this.table;
 			var schema = this.schema;
+			var hash = this.hash;
 
 			return new Promise(function(resolve, reject){
 				if(parseData(data, schema, table) !== 'success'){ 
-					console.log('failed to add ' + JSON.stringify(data))
-					
-					reject();
+					console.error('failed to add ' + JSON.stringify(data));
+
+					reject('Mismatch of data types');
+					return;
 				}
 
+				data[hash] = data[hash] || uuid.v4();
+
 				var params = {
-					TableName : table,
-					Item: data
+					TableName: table,
+					Item: data,
+					ConditionExpression: '#h <> :h',
+					ExpressionAttributeNames: { '#h': hash },
+					ExpressionAttributeValues: { ':h': data[hash] }
 				}
 
 				for (var item in params.Item){
-					if(params.Item[item] === ""){
+					if(params.Item[item] === String()){
 						params.Item[item] = null;
 					}
 				}
-
-				console.log(JSON.stringify(data, null, 2));
 
 				db.lite.put(params, function(err, data) {
 					if (err){
 						console.error('error adding item: ' + JSON.stringify(err, null, 2));
 
-						reject();
+						reject(err);
 					} else {
-						resolve();
+						resolve(data);
 					}
 				});
 			});
 		}
 
 		// find an item
-		// Returns a promise, making it thennable
-		// field is the index, data object, limit (optional) is the number of items returned 
+		// returns a promise, making it thennable
+		// field is the index, data object
 		// if no params are filled, returns all items in that data base (scan)
 		// TODO make it work with HASH-RANGE keys
-		duck.prototype.find = function(field, data, limit){
-			var table = this.table;
-			var hashKey = this.hashKey;
-			var indices = this.indices;
+		duck.prototype.find = function(field, data){
+			const table = this.table;
+			const hash = this.hash;
+			const indexes = this.indexes;
+
 
 			return new Promise(function(resolve, reject){
 				if (data){
-					if (field == hashKey) {
+					if (field == hash) {
 						var params = {
 							TableName : table,
-							KeyConditionExpression: field + ' = :' + field,
-							ExpressionAttributeValues: {}
+							KeyConditionExpression: '#h = :h',
+							ExpressionAttributeNames: { '#h': field },
+							ExpressionAttributeValues: { ':h': data }
 						}
-						
-						params.ExpressionAttributeValues[':' + field] = data;
-						if(limit){params.Limit = limit;}
 
 						db.lite.query(params, function(err, data){
 							if (err){
+								console.error(JSON.stringify(err, null, 2));
 								reject(err);
 							} else {
-								console.log('successful query!')
 								resolve(data);
 							}
 						});
 					}
-					else if (indices.indexOf(field) > -1) {
+					else if (indexes.indexOf(field) > -1) {
 						var params = {
 							TableName : table,
-							IndexName : field + '-index',
-							KeyConditionExpression: field + ' = :' + field,
-							ExpressionAttributeValues: {}
+							KeyConditionExpression: '#h = :h',
+							ExpressionAttributeNames: { '#h': field },
+							ExpressionAttributeValues: { ':h': data }
 						}
-
-						params.ExpressionAttributeValues[':' + field] = data;
-						if(limit){params.Limit = limit;}
 
 						db.lite.query(params, function(err, data){
 							if (err){
+								console.error(JSON.stringify(err, null, 2));
 								reject(err);
 							} else {
-								console.log('successful query!')
 								resolve(data);
 							}
 						});
 					} else {
-						reject(field + ' is not an index of ' + table)
+						var params = {
+							TableName: table,
+							FilterExpression: '', // created in code
+						    ExpressionAttributeNames: {},
+						    ExpressionAttributeValues: {
+						        ':value': data
+						    }
+						};
+
+						var expressionAttributeNames = field.split('.'); // make the accepted arguments into an aray
+						var filterExpression = String();
+
+						// for each item in the array, add an expression attribute name 
+						// equal to the value and assign it's value to the value
+						for (value in expressionAttributeNames) {
+							var item = expressionAttributeNames[value];
+
+							// if the ExpressionAttributeName doesn't already exist add it
+							if (!params.ExpressionAttributeNames['#' + item]) {
+								params.ExpressionAttributeNames['#' + item] = item;
+							}
+
+							filterExpression += '.#' + expressionAttributeNames[value];
+						}
+
+						// set filter expression
+						params.FilterExpression = filterExpression.substring(1) + ' = :value';
+
+						db.lite.scan(params, function(err, data){
+							if (err){
+								console.error(JSON.stringify(err, null, 2));
+								reject(err);
+							} else {
+								resolve(data);
+							}
+						});
 					}
 				} else {
 					db.lite.scan({TableName: table}, function(err, data){
 						if (err){
+							console.error(JSON.stringify(err, null, 2));
 							reject(err);
 						} else {
-							console.log('successful scan!')
 							resolve(data);
 						}
 					})
@@ -164,7 +304,7 @@ var duck = function(db, table, schema){
 		// TODO make it work with HASH-RANGE keys
 		duck.prototype.delete = function(data){
 			var table = this.table;
-			var key = this.hashKey;
+			var key = this.hash;
 
 			return new Promise(function(resolve, reject){
 				var params = {
@@ -177,8 +317,7 @@ var duck = function(db, table, schema){
 				db.lite.delete(params, function(err, data){
 					if (err){
 						console.error('error deleting item: ' + JSON.stringify(err, null, 2));
-
-						reject()
+						reject(err)
 					} else {
 						resolve();
 					}
@@ -190,44 +329,65 @@ var duck = function(db, table, schema){
 		// TODO make it work with HASH-RANGE keys
 		duck.prototype.update = function(data){
 			var table = this.table;
-			var key = this.hashKey;
+			var schema = this.schema;
+			var key = this.hash;
 
 			return new Promise(function(resolve, reject){
+				if(parseData(data, schema, table) !== 'success'){ 
+					console.error('failed to add ' + JSON.stringify(data));
+					
+					reject('Mismatch of data types');
+					return;
+				}
+
 				var params = {
 					TableName: table,
 					Key: {},
-					//UpdateExpression: String(), // this is actually created below and added in
+					// UpdateExpression -- created below
+					ExpressionAttributeNames: {},
 					ExpressionAttributeValues: {}
 				}
+
 				var updateExpression = 'set';
 
-				params.Key[key] = data[key]
+				params.Key[key] = data[key];
 
-				readJSON(data, readJSON, function(){
-					if(item != key){
-						if(data[item] === ""){data[item] = null;}
+				var flattenedData = flattenObject(data);
 
-						updateExpression += ' ' + item + ' = :' + item + ',';
+				var expressionCounter = 0;
+				for (item in flattenedData){
+					if(item !== key) {
 
-						params.ExpressionAttributeValues[':' + item] = data[item];
+						// 'a.b.c' => 'a.#b.#c'
+						var concatinatedExpression = item.replace('.', '.#');
+
+						updateExpression += ' #' + concatinatedExpression + '= :' + expressionCounter + ',';
+
+						var arr = item.split('.');
+						for(i in arr){
+							if (!params.ExpressionAttributeNames['#' + arr[i]]) {
+								params.ExpressionAttributeNames['#' + arr[i]] = arr[i];
+							}
+						}
+
+						params.ExpressionAttributeValues[':' + expressionCounter] = flattenedData[item]
 					}
-				});
 
+					expressionCounter++;
+				}
+
+				// delete the last comma from the UpdateExpression
 				updateExpression = updateExpression.substring(0, updateExpression.length - 1);
-
 				params.UpdateExpression = updateExpression;
 				
 				db.lite.update(params, function(err, data){
 					if (err){
-						console.log(err);
-
+						console.error(err);
 						reject();
 					} else {
-						console.log('successful update!')
-
 						resolve();
 					}
-				})
+				});
 			});
 		}
 	}

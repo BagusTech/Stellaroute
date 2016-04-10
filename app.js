@@ -9,9 +9,10 @@ const cookieParser     = require('cookie-parser');
 const bodyParser       = require('body-parser');
 const session          = require('express-session');
 const routes           = require('./routes/index');
+const continents       = require('./routes/continents');
+const countries        = require('./routes/countries');
 const review           = require('./routes/review');
 const profile          = require('./routes/profile');
-const db               = require('./config/aws'); 
 const fs               = require('fs');
 const app              = express();
 
@@ -27,10 +28,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Sets the public folder to be available available to the front end
 
 // Make the db accessible to our router
-app.use(function(req, res, next){
+/* app.use(function(req, res, next){
   req.db = db;
   next();
-});
+}); */
 
 
 // required for passport
@@ -47,17 +48,19 @@ app.use(setFlash);
 
 //Set index.js to be the main router
 app.use('/', routes);
-app.use('/review', review);
+app.use('/continents', continents);
+app.use('/countries', countries)
 app.use('/profile', profile);
+//app.use('/review', review);
 
 // error handlers /////////////////////////////////////////////////////
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
-    console.log(req);
+    console.error(req);
     err.status = 404;
-    console.log('~~~~~~~~~~');
+    console.error('~~~~~~~~~~');
     next(err);
 });
 
@@ -85,7 +88,5 @@ app.use(function(err, req, res, next) {
 
 console.log('~~~~ Starting Stellroute ~~~~');
 console.log('Current Environment: ' + app.get('env'));
-
-app.listen(80); 
 
 module.exports = app;

@@ -1,6 +1,7 @@
-.flash-message-container
-	- if(flash && flash.success && flash.success.length > 0)
-		p.alert.alert-success= flash.success
+- if(flash && (flash.success || flash.error))
+	.flash-message-container
+		- if(flash && flash.success && flash.success.length > 0)
+			p.alert.alert-success= flash.success
 
-	- if(flash && flash.error && flash.error.length > 0)
-		p.alert.alert-danger= flash.error
+		- if(flash && flash.error && flash.error.length > 0)
+			p.alert.alert-danger= flash.error

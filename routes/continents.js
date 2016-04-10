@@ -3,35 +3,29 @@ const flash = require('connect-flash');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const assign = require('../modules/assign');
 const readJSON = require('../modules/readJSON');
-const Country = require('../schemas/country');
+const Continent = require('../schemas/continent');
 const router = express.Router();
 
 // make caching into middleware (probably done by someone already)
-var loadedCountries;
+var loadedContinents;
 var cashedAt = new Date();
-var cacheDuration = 3600000; // 1 hour
-
-// TODO: Dynamically create this list
-var continents = ['Africa', 'Antartica', 'Asia', 'Austrailia', 'Europe', 'North America', 'South America' ];
-
-// TODO: Dynamically create this list
-var worldRegions = ['South-east Asia', 'Western Europe', 'Eastern Europe', 'Central America'];
+var cacheDuration = 86400000; // 1 day
 
 router.get('/', isLoggedIn, function(req, res, next){
-	// check to see if the countries are chached
-	if (!loadedCountries || ((new Date() - cashedAt) > cacheDuration )) {
-		Country.find().then(function(data) {
+	// check to see if the continents are chached
+	if (!loadedContinents || ((new Date() - cashedAt) > cacheDuration )) {
+		Continent.find().then(function(data) {
 		// resolved
 
 			// set cache
 			cashedAt = new Date();
-			loadedCountries = data.Items || {};
+			loadedContinents = data.Items || {};
 
-			res.render('countries/_countries', {
-				title: 'Stellaroute: Countries',
+			res.render('continents/_continents', {
+				title: 'Stellaroute: Continents',
 				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 				user: req.user,
-				countries: loadedCountries
+				continents: loadedContinents
 			});
 		}, 
 		function(err) {
@@ -39,19 +33,19 @@ router.get('/', isLoggedIn, function(req, res, next){
 
 			req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
 
-			res.render('countries/_countries', {
-				title: 'Stellaroute: Countries',
+			res.render('continents/_countries', {
+				title: 'Stellaroute: Continents',
 				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 				user: req.user,
-				countries: {}
+				continents: {}
 			});
 		});
 	} else {
-		res.render('countries/_countries', {
-			title: 'Stellaroute: Countries',
+		res.render('continents/_continents', {
+			title: 'Stellaroute: Continents',
 			description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 			user: req.user,
-			countries: loadedCountries
+			continents: loadedContinents
 		});
 	}		
 });
@@ -78,37 +72,38 @@ router.post('/new', isLoggedIn, function(req, res){
 		params.worldRegions = Array(params.worldRegions);
 	}
 
-	Country.add(params).then(function(data){
+	Continent.add(params).then(function(data){
 	// resolved
 
 		// if the countries are cached, 
-		if(loadedCountries) {
-			loadedCountries = null;
+		if(loadedContinents) {
+			loadedContinents = null;
 		}
 
-		req.flash('success', 'Country Successfully added');
-		res.redirect('/countries');
+		req.flash('success', 'Continent Successfully added');
+		res.redirect('/continents');
 	},
 	function(err){
 	// rejected
 
+		console.log('it failed');
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
-		res.redirect('/countries');
+		res.redirect('/continents');
 	});
 });
 
 router.post('/update', isLoggedIn, function(req, res){
 	if (req.body.delete){
-		Country.delete(req.body[Country.hash]).then(function(){
+		Continent.delete(req.body[Continent.hash]).then(function(){
 			// resolved
 
-			req.flash('success', 'Country successfully deleted')
-			res.redirect('/countries');
+			req.flash('success', 'Continent successfully deleted')
+			res.redirect('/continents');
 		}, function(){
 			// rejected
 
 			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/countries');
+			res.redirect('/continents');
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
@@ -119,54 +114,44 @@ router.post('/update', isLoggedIn, function(req, res){
 			assign(params, item, data[item])
 		});
 
-		if(typeof params.continent === 'string'){
-			params.continent = Array(params.continent);
-		}
-
-		if(typeof params.worldRegions === 'string'){
-			params.worldRegions = Array(params.worldRegions);
-		}
-
-		Country.update(params).then(function(){
+		Continent.update(params).then(function(){
 			// resolved
 
-			req.flash('success', 'Country successfully updated')
-			res.redirect('/countries/' + req.body.name)
+			req.flash('success', 'Continent successfully updated')
+			res.redirect('/continents/' + req.body.name)
 		}, function(err){
 			// rejected
 
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/countries')
+			res.redirect('/continents')
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/countries')
+		res.redirect('/continents')
 	}
 });
 
 router.get('/:name', isLoggedIn, function(req, res, next){
-	Country.find('name', req.params.name, 1).then(
+	Continent.find('name', req.params.name).then(
 	function(data){
 		// resolved
 
-		res.render('countries/country', {
+		res.render('continents/continent', {
 			title: '',
 			description: '',
 			user: req.user,
-			continents: continents,
-			country: data.Items[0],
-			key: Country.hash,
-			worldRegions: worldRegions
+			continent: data.Items[0],
+			key: Continent.hash
 		})
 	}, function(err){
 		// rejected
 
-		res.render('countries/country', {
+		res.render('continents/continent', {
 			title: '',
 			description: '',
 			user: req.user,
-			country: [],
+			data: [],
 			key: String()
 		})
 	})

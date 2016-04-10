@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+	h1 Add a new Continent
+
+	form(method='POST', action='/continents/new')
+		fieldset
+			legend Continent
+
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='ContinentName') Name
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', required)
+			.form-group.text-right
+				input.btn.btn-primary(type='submit', value='submit')

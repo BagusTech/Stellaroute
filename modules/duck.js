@@ -1,7 +1,9 @@
-const fs = require('fs');
-const bcrypt = require('bcrypt-nodejs');
-const parseData = require('../modules/parseData');
-const readJSON = require('../modules/readJSON');
+const fs            = require('fs');
+const bcrypt        = require('bcrypt-nodejs');
+const parseData     = require('../modules/parseData');
+const readJSON      = require('../modules/readJSON');
+const flattenObject = require('../modules/flattenObject');
+const uuid          = require('uuid');
 
 var duck = function(db, table, schema){
 	this.table     = table;
@@ -16,65 +18,96 @@ var duck = function(db, table, schema){
 	this.generateHash = function(password){ return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); };
 	// checking if password is valid
 	this.validPassword = function(password, encodedPassword){ return bcrypt.compareSync(password, encodedPassword); };
-/*	 
-	var testPut = {
-		  "TableName": "Users",
-		  "Item": {
-		    "Id": "alsdkfjs",
-		    "local": {
-		      "email": "test@test.com",
-		      "password": "test"
+	
+	/*	 
+		var testPut = {
+			  "TableName": "Continents",
+			  "Item": {
+			    "Id": "alsdkfjs",
+			    "local": {
+			      "email": "test@test.com",
+			      "password": "test"
+			    }
+			  },
+			  "ExpressionAttributeNames": {
+			    //"#h": "Id",
+			    "#local": "local",
+			    "#email": "email",
+			    //"#password": "password"
+			  },
+			  "ExpressionAttributeValues": {
+			    //":h": "alsdkfj",
+			    ":v0": "test@test.com",
+			    //":v1": "password"
+			  },
+			  "ReturnValues": "ALL_OLD"
+			}
+
+		db.lite.put(testPut, function(err, data){
+			if (err){
+				console.error(JSON.stringify(err, null, 2));
+			} else {
+				console.log(JSON.stringify(data, null, 2));
+			}
+
+			process.exit();
+		});
+
+		var testScan = {
+			TableName: 'Users',
+			FilterExpression: '#n1.#n2 = :v1 OR #n1.#n3 = :v3 OR #n1.#n2 = :v2',
+		    ExpressionAttributeNames:{
+		        '#n1': 'local',
+		        '#n2': 'email',
+		        '#n3': 'password'
+		    },
+		    ExpressionAttributeValues: {
+		        ':v1': 'test@test.com',
+		        ':v2': 'test2@test.com',
+		        ':v3': 'test'
 		    }
-		  },
-		  "ConditionExpression": "#local.#email <> :v0",
-		  "ExpressionAttributeNames": {
-		    //"#h": "Id",
-		    "#local": "local",
-		    "#email": "email",
-		    //"#password": "password"
-		  },
-		  "ExpressionAttributeValues": {
-		    //":h": "alsdkfj",
-		    ":v0": "test@test.com",
-		    //":v1": "password"
-		  },
-		  "ReturnValues": "ALL_OLD"
 		}
 
-	db.lite.put(testPut, function(err, data){
-		if (err){
-			console.error(JSON.stringify(err, null, 2));
-		} else {
-			console.log(JSON.stringify(data, null, 2));
-		}
+		db.lite.scan(testScan, function(err, data){
+			if (err){
+				console.error(JSON.stringify(err, null, 2));
+			} else {
+				console.log(JSON.stringify(data, null, 2));
+			}
 
-		process.exit();
-	});
+			process.exit();
+		});
 
-	var testScan = {
-		TableName: 'Users',
-		FilterExpression: '#n1.#n2 = :v1 OR #n1.#n3 = :v3 OR #n1.#n2 = :v2',
-	    ExpressionAttributeNames:{
-	        '#n1': 'local',
-	        '#n2': 'email',
-	        '#n3': 'password'
-	    },
-	    ExpressionAttributeValues: {
-	        ':v1': 'test@test.com',
-	        ':v2': 'test2@test.com',
-	        ':v3': 'test'
-	    }
-	}
+		var params = {
+				  "TableName": "Users",
+				  "Key": {
+				    "Id": "b677b0d7-c734-48ca-87ed-0d542e472fa4"
+				  },
+				  "ExpressionAttributeNames": {
+				    "#name": "name",
+				    "#first": "first",
+				    "#last": "last",
+				    "#local": "local",
+				    "#email": "email"
+				  },
+				  "ExpressionAttributeValues": {
+				    ":0": "Joe",
+				    ":1": "Lissner",
+				    ":3": "test@test.com"
+				  },
+				  "UpdateExpression": "set #name.#first= :0, #name.#last= :1, #local.#email= :3"
+				}
 
-	db.lite.scan(testScan, function(err, data){
-		if (err){
-			console.error(JSON.stringify(err, null, 2));
-		} else {
-			console.log(JSON.stringify(data, null, 2));
-		}
+		db.lite.update(params, function(err, data){
+						if (err){
+							console.error(err);
+							process.exit();
+						} else {
+							process.exit();
+						}
+					}); 
+	*/
 
-		process.exit();
-	}); */
 
 	if(!db || !this.hash || !this.table || !this.schema){
 		 console.error('you must define a databse, table, schema, AND hash');
@@ -140,6 +173,8 @@ var duck = function(db, table, schema){
 					reject('Mismatch of data types');
 					return;
 				}
+
+				data[hash] = data[hash] || uuid.v4();
 
 				var params = {
 					TableName: table,
@@ -245,6 +280,7 @@ var duck = function(db, table, schema){
 						db.lite.scan(params, function(err, data){
 							if (err){
 								console.error(JSON.stringify(err, null, 2));
+								reject(err);
 							} else {
 								resolve(data);
 							}
@@ -314,69 +350,44 @@ var duck = function(db, table, schema){
 
 				var updateExpression = 'set';
 
-				params.Key[key] = data[key]
+				params.Key[key] = data[key];
 
-				readJSON(data, readJSON, function(){
-					if(item != key){
-						if(data[item] === String()){data[item] = null;}
+				var flattenedData = flattenObject(data);
 
-						updateExpression += ' #' + item + ' = :' + item + ',';
+				var expressionCounter = 0;
+				for (item in flattenedData){
+					if(item !== key) {
 
-						// if the ExpressionAttributeName doesn't already exist add it
-						if (!params.ExpressionAttributeNames['#' + item]) {
-							params.ExpressionAttributeNames['#' + item] = item;
-						}
-						
-						params.ExpressionAttributeValues[':' + item] = data[item];
-					}
-				});
+						// 'a.b.c' => 'a.#b.#c'
+						var concatinatedExpression = item.replace('.', '.#');
 
+						updateExpression += ' #' + concatinatedExpression + '= :' + expressionCounter + ',';
 
-				if(conditions){ // if conditions are provided
-					for (i in conditions){ // for each condition
-						var attrName = conditions[i]['attribute'].split('.'); // get the attribute name
-						var attrValue = conditions[i]['value']; // get the attribute value
-						var conditionExpression;
-
-						if (params.ConditionExpression){
-							conditionExpression = ' OR '; // add OR between each condition, so if condition fails, don't do it
-						}
-
-						// add an ExpressionAttributeName for each part of the attribute
-						for (val in attrName){
-							var value = attrName[val];
-
-							// if the ExpressionAttributeName doesn't already exist add it
-							if (!params.ExpressionAttributeNames['#' + value]) {
-								params.ExpressionAttributeNames['#' + value] = value;
+						var arr = item.split('.');
+						for(i in arr){
+							if (!params.ExpressionAttributeNames['#' + arr[i]]) {
+								params.ExpressionAttributeNames['#' + arr[i]] = arr[i];
 							}
-
-							conditionExpression += '#' + value + '.'; // build the Condition Expression
 						}
 
-						// finish building the condition expression
-						conditionExpression = conditionExpression.substring(0, conditionExpression.length - 1) + ' <> :v' + i;
-
-						// update the params ExpressionAttributeValue and ConditionExpression
-						params.ExpressionAttributeValues[':v' + i] = attrValue;
-						params.ConditionExpression += conditionExpression;
+						params.ExpressionAttributeValues[':' + expressionCounter] = flattenedData[item]
 					}
+
+					expressionCounter++;
 				}
 
 				// delete the last comma from the UpdateExpression
 				updateExpression = updateExpression.substring(0, updateExpression.length - 1);
-
 				params.UpdateExpression = updateExpression;
 				
 				db.lite.update(params, function(err, data){
 					if (err){
 						console.error(err);
-
 						reject();
 					} else {
 						resolve();
 					}
-				})
+				});
 			});
 		}
 	}

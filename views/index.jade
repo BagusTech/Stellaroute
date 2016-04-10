@@ -5,73 +5,13 @@ block content
 	if (!user)
 		h1.text-center(style='color: white;') Stellaroute
 			small(style='padding-left: 10px;') coming soon...
-		
-		div(style='position: absolute; top: 10px; right: 10px;')
-			button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SignupModal') Create Account
-			button.btn.btn-primary(type='button', data-toggle='modal', data-target='#LoginModal', style='margin-left: 5px;') Login
-
-		.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
-			.modal-dialog(role='document')
-				form.modal-content(method='POST', action='/login')
-					.modal-header
-						button.close(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-						h4.modal-title#LoginModalLabel Login
-					.modal-body
-						.form-horizontal
-							.form-group
-								label.control-label.col-sm-2(for='Email') Email
-								.col-sm-10
-									input.form-control#Email(name='email', type='email', placeholder='joe@gmail.com')
-
-							.form-group
-								label.control-label.col-sm-2(for='Passphrase') Passphrase
-								.col-sm-10
-									input.form-control#Passphrase(name='password', type='password', placeholder='StellarouteIsTheBest!')
-
-							.form-group
-								.col-sm-offset-2.col-sm-10
-									.checkbox
-										label
-											input(type='checkbox', name='remember')
-											| Remember me
-
-					.modal-footer
-						button.btn.btn-default(type='button', data-dismiss='modal') Close
-						input.btn.btn-primary(type='submit', value='Login')
-
-		.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
-			.modal-dialog(role='document')
-				form.modal-content(method='POST', action='/signup')
-					.modal-header
-						button.close(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-						h4.modal-title#SignupModal Create an Account
-					.modal-body
-						.form-horizontal
-							.form-group
-								label.control-label.col-sm-2(for='Email') Email
-								.col-sm-10
-									input.form-control#Email(name='email', type='email', placeholder='joe@gmail.com')
-
-							.form-group
-								label.control-label.col-sm-2(for='Passphrase') Passphrase
-								.col-sm-10
-									input.form-control#Passphrase(name='password', type='password', placeholder='StellarouteIsTheBest!')
-
-					.modal-footer
-						button.btn.btn-default(type='button', data-dismiss='modal') Close
-						input.btn.btn-primary(type='submit', value='Create')
-
 	else
 		h1 Capture Content
-
-		a.btn.btn-danger(href='/logout', style='position: absolute; top: 10px; right: 10px;') Log Out
 
 		.row
 			.col-sm-3.col-sm-push-3.col-xs-12
 				p
-					a(href='/contients').btn.btn-primary.btn-block.btn-lg Continent
+					a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
 			.col-sm-3.col-sm-push-3.col-xs-12
 				p
 					a(href='/regions').btn.btn-primary.btn-block.btn-lg World Region

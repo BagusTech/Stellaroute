@@ -10,6 +10,10 @@ var User =  new duck(db, 'Users', {
 		},
 		fb: {
 			email: String
+		},
+		name: {
+			first: String,
+			last: String
 		}
 	},
 	HASH: 'Id',

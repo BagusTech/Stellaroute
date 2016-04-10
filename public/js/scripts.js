@@ -32,7 +32,7 @@ function init(){
 }
 
 function update(){
-	//used for all update forms (ajax)
+	//used for all update forms
 
 	var $form = $('.update-form');
 
@@ -43,7 +43,8 @@ function update(){
 		var input = $( '<input/>', {
 				class: 'form-control hidden',
 				type: 'text',
-				value: $this.text()
+				value: $this.text(),
+				name: $this.attr('data-name')
 			});
 
 		$this.after(input);
@@ -55,7 +56,8 @@ function update(){
 		var input = $( '<input/>', {
 				class: 'form-control hidden',
 				type: 'email',
-				value: $this.text()
+				value: $this.text(),
+				name: $this.attr('data-name')
 			});
 
 		$this.after(input);
@@ -66,7 +68,8 @@ function update(){
 
 		var input = $( '<textarea/>', {
 				class: 'form-control hidden',
-				text: $this.text()
+				text: $this.text(),
+				name: $this.attr('data-name')
 			});
 
 		$this.after(input);
@@ -77,7 +80,8 @@ function update(){
 
 		var input = $( '<select/>', {
 				class: 'form-control hidden',
-				value: $this.text()
+				value: $this.text(),
+				name: $this.attr('data-name')
 			});
 
 		// get the options for the 'data-options' attribute and make it an array
@@ -104,13 +108,16 @@ function update(){
 		var input = $( '<select/>', {
 				class: 'form-control',
 				multiple: 'true',
-				value: $this.text()
+				value: $this.text(),
+				name: $this.attr('data-name')
 			});
 
 		container.append(input);
 
 		// get the options for the 'data-options' attribute and make it an array
 		var options = $this.attr('data-options').split(',');
+
+		console.log(options);
 
 		$.each(options, function(i, option){
 			input.append($('<option/>', {
@@ -139,7 +146,8 @@ function update(){
 			.append($('<label/>', {text: option})
 			.prepend($('<input/>', {
 							type: 'radio',
-							name: 'TODO-radio',
+							name: $this.attr('data-name'),
+							value: option,
 							checked: $this.text() === option
 						})
 					)
@@ -166,7 +174,8 @@ function update(){
 			.append($('<label/>', {text: option})
 			.prepend($('<input/>', {
 							type: 'checkbox',
-							name: 'TODO-checkbox',
+							name: $this.attr('data-name'),
+							value: option,
 							checked: $this.text() === option
 						})
 					)
@@ -190,15 +199,12 @@ function update(){
 
 		// change color and text of the update button
 		$this.toggleClass('btn-warning').toggleClass('btn-primary');
-		$this.text($this.text() === 'Update' ? 'Cancel' : 'Update');
+		$this.attr('value', $this.attr('value') === 'Update' ? 'Cancel' : 'Update');
 
 		// toggle save button
 		$form.find('.btn-save').toggleClass('hidden');
 	});
-	//click update
-	//all available inputs become the appropriate type of input
 	//save button saves the data
-	//cancel button flips away from inputs
 }
 
 

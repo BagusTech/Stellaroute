@@ -5,6 +5,9 @@ function parseData(data, schema, table) {
 		for (var item in data){
 			// See if the attribute is part of the Schema
 			if ( schema[item] === undefined ){
+				// uncomment if you want to be able to add new values without messing with the schema
+				// good for testing purposes, but do not forget to re-comment out
+				// return null;
 				console.error('"' + item + '" isn\'t an attribute of "' + table + '"'); 
 				errorCount++;
 				return null;

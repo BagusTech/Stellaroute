@@ -1,6 +1,32 @@
 extends ../layout
 
 block content
-	for item in data
-		a(href= '/profile/' + item.Id)= item.localEmail
-		br
+	h1 My Profile
+
+	form(method='POST', action='/profile/update')
+		.row
+			.col-sm-6.col-xs-12
+				.form-group
+					label(for='FirstName') First Name
+					input.form-control#FirstName(type='text', name='name.first', placeholders='First Name', value= user.name ? user.name.first : '')
+		.row
+			.col-sm-6.col-xs-12
+				.form-group
+					label(for='LastName') Last Name
+					input.form-control#LastName(type='text', name='name.last', placeholders='Last Name', value= user.name ? user.name.last : '')
+		.row
+			.col-sm-6.col-xs-12
+				.form-group
+					label(for='LastName') Email
+					input.form-control#Email(type='text', name='local.email', placeholders='Email', value= user.local ? user.local.email : '')
+		.row
+			.col-sm-6.col-xs-12
+				.form-group
+					label(for='LastName') Passphrase
+					input.form-control#Passphrase(type='password', name='local.password', placeholders='Passphrase')
+		.row
+			.col-xs-12.text-right
+				input(type='hidden', name='Id', value= user.Id)
+				input.btn.btn-primary(type='submit', value='Update', name='submit')
+				| &nbsp;
+				input.btn.btn-danger(type='submit', value='Delete', name='delete')

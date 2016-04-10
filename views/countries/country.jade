@@ -3,12 +3,12 @@ extends ../layout
 block content
 	h1 Country Info
 
-	.update-form
+	form.update-form(method='POST', action='/countries/update')
 		.row
 			.col-xs-12.col-sm-6
 				.form-group
 					label Name
-					p.form-control-static(data-type='text')= data.name
+					p.form-control-static(data-type='text', data-name='name')= country.name
 					
 				//.form-group
 					label Select
@@ -17,19 +17,19 @@ block content
 				.form-group
 					label Continent(s)
 
-					p.form-control-static(data-type='checkbox', data-options= continents.toString())
-						- for (var i = 0; i < data.continent.length; i++)
-							span= data.continent[i]
+					p.form-control-static(data-type='checkbox', data-options= continents.toString(), data-name='continent')
+						- for (var i = 0; i < country.continent.length; i++)
+							span= country.continent[i]
 
-							if ((i+1) !== data.continent.length)
+							if ((i+1) !== country.continent.length)
 								|,&nbsp;
 				.form-group
 					label World Region(s)
-					p.form-control-static(data-type='multi-select', data-options= worldRegions.toString())
-						- for (var i = 0; i < data.worldRegions.length; i++)
-							span= data.worldRegions[i]
+					p.form-control-static(data-type='multi-select', data-options= worldRegions.toString(), data-name='worldRegions')
+						- for (var i = 0; i < country.worldRegions.length; i++)
+							span= country.worldRegions[i]
 
-							if ((i+1) !== data.worldRegions.length)
+							if ((i+1) !== country.worldRegions.length)
 								|,&nbsp;
 
 				//.form-group
@@ -44,8 +44,11 @@ block content
 				.form-group
 					label Select as Many as You Want
 					p.form-control-static(data-type='checkbox') Checkbox 1, Checkbox 2
-		button.btn.btn-primary.btn-update Update
-		button.btn.btn-primary.btn-save.hidden Save
+		input(type='hidden', name= key, value= country[key])
+		input.btn.btn-primary.btn-update(type='button', value='Update')
+		| &nbsp;
+		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+		input.btn.btn-danger(type= 'submit', value= 'Delete', style='float: right')
 
 	//form(method='POST', action='./update')
 		h2 Continent(s)
@@ -81,7 +84,4 @@ block content
 		input(type='hidden', name= key, value= data[key])
 		button.btn.btn-warn.js-update-country(type= 'button') Edit
 		input.btn.btn-success.hidden#Update(type= 'submit', value= 'Update')
-
-	form(method='POST', action='./delete')
-		input(type='hidden', name= key, value= data[key])
-		input.btn.btn-danger(type= 'submit', value= 'Delete')
+	

@@ -9,7 +9,7 @@ var Country =  new duck(db, 'Countries', {
 		worldRegions: Array
 		//countryRegions: Array
 	},
-	HASH: 'name',
+	HASH: 'Id',
 	HASHType: 'S'
 });
 

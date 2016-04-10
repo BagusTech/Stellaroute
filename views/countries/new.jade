@@ -3,7 +3,7 @@ extends ../layout
 block content
 	h1 Add a new Country
 
-	form(method='POST', action='./new')
+	form(method='POST', action='/countries/new')
 		fieldset
 			legend Country
 
@@ -27,7 +27,7 @@ block content
 						select.form-control#WorldRegions(name='worldRegions',  multiple='true', required)
 							option Western Europe
 							option Eastern Europe
-							option TODO: Dynamically Generate list based off selected continents
+							option TODO: Dynamically Generate list based off selected worldRegions
 			// not sure if we need
 				.row
 					.col-sm-6.col-xs-12

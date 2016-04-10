@@ -38,12 +38,11 @@ html(lang='en')
 
 		/////////////////////////////////////////////////////////////////////////
 
-
-	// TODO: if user isn't logged in, show place holder
 	if (!user)
 		body(style='background: url(http://c2.staticflickr.com/4/3129/3143994000_72e101ba7e_b.jpg) no-repeat; background-size: cover; font-family: "Open Sans", sans-serif;')
 		main(style='margin-top: 75px;')
 			.container
+				include controls/login
 				block content
 				include flash
 	else 
@@ -69,7 +68,9 @@ html(lang='en')
 								li
 									a(href='/profile')
 										| Profile
-				//include controls/login
+
+				include controls/login
+			hr(style='margin:0;')
 			main
 				.container
 					include flash

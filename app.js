@@ -3,6 +3,7 @@ const path             = require('path');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const flash            = require('connect-flash');
+const cache            = require('./middleware/caching');
 const setFlash         = require('./modules/setFlash');
 const favicon          = require('serve-favicon');
 const cookieParser     = require('cookie-parser');

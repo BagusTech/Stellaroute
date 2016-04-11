@@ -1,9 +1,14 @@
 const fs            = require('fs');
 const bcrypt        = require('bcrypt-nodejs');
+const cache         = require('../middleware/caching');
 const parseData     = require('../modules/parseData');
 const readJSON      = require('../modules/readJSON');
 const flattenObject = require('../modules/flattenObject');
 const uuid          = require('uuid');
+
+// TODO: have cache duration set through schema
+const oneHour = 3600;
+const oneDay = 86400;
 
 var duck = function(db, table, schema){
 	this.table     = table;
@@ -294,7 +299,7 @@ var duck = function(db, table, schema){
 						} else {
 							resolve(data);
 						}
-					})
+					});
 				}
 			});
 		}
@@ -386,6 +391,55 @@ var duck = function(db, table, schema){
 						reject();
 					} else {
 						resolve();
+					}
+				});
+			});
+		}
+
+		// get/set cache
+		duck.prototype.cached = function(){
+			var table = this.table;
+
+			return new Promise(function(resolve, reject){
+				cache.get(table, function(err, items){
+					if(!err) {
+						if(items !== undefined) {
+							resolve(cache.get(table));
+							return;
+						}
+					}
+				});
+
+				db.lite.scan({TableName: table}, function(err, data){
+					if (err) {
+						console.error(JSON.stringify(err, null, 2));
+
+						reject(err);
+					} else {
+						cache.set(table, data.Items, oneDay, function(){
+						});
+
+						resolve(cache.get(table));
+					}
+				});
+			});
+		}
+
+		// update cache
+		duck.prototype.updateCache = function(){
+			var table = this.table;
+
+			return new Promise(function(resolve, reject){
+				db.lite.scan({TableName: table}, function(err, data){
+					if (err) {
+						console.error(JSON.stringify(err, null, 2));
+
+						reject(err);
+					} else {
+						cache.set(table, data.Items, oneDay, function(){
+						});
+
+						resolve(cache.get(table));
 					}
 				});
 			});

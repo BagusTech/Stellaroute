@@ -1,67 +1,42 @@
 const express = require('express');
 const flash = require('connect-flash');
+const cache = require('../middleware/caching');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const assign = require('../modules/assign');
 const readJSON = require('../modules/readJSON');
+const sortBy = require('../modules/sortBy');
 const Country = require('../schemas/country');
 const router = express.Router();
-
-// make caching into middleware (probably done by someone already)
-var loadedCountries;
-var cashedAt = new Date();
-var cacheDuration = 3600000; // 1 hour
-
-// TODO: Dynamically create this list
-var continents = ['Africa', 'Antartica', 'Asia', 'Austrailia', 'Europe', 'North America', 'South America' ];
 
 // TODO: Dynamically create this list
 var worldRegions = ['South-east Asia', 'Western Europe', 'Eastern Europe', 'Central America'];
 
 router.get('/', isLoggedIn, function(req, res, next){
-	// check to see if the countries are chached
-	if (!loadedCountries || ((new Date() - cashedAt) > cacheDuration )) {
-		Country.find().then(function(data) {
+	Country.cached().then(function(data){
 		// resolved
 
-			// set cache
-			cashedAt = new Date();
-			loadedCountries = data.Items || {};
-
-			res.render('countries/_countries', {
-				title: 'Stellaroute: Countries',
-				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-				user: req.user,
-				countries: loadedCountries
-			});
-		}, 
-		function(err) {
-		// rejected
-
-			req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
-
-			res.render('countries/_countries', {
-				title: 'Stellaroute: Countries',
-				description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-				user: req.user,
-				countries: {}
-			});
-		});
-	} else {
 		res.render('countries/_countries', {
-			title: 'Stellaroute: Countries',
+			title: 'Stellaroute: countries',
 			description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 			user: req.user,
-			countries: loadedCountries
+			countries: data.sort(sortBy('name'))
 		});
-	}		
+	}, function(err){
+		// rejected
+
+		console.error(err);
+		req.flash('error', 'Opps, something when wrong! Please try again.');
+		res.redirect('/')
+	});	
 });
 
 router.get('/new', isLoggedIn, function(req, res, next){
+
 	res.render('countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
-		continents: continents,
+		continents: cache.get('continents'),
 		worldRegions: worldRegions
 	});
 });

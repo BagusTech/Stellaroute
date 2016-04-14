@@ -31,9 +31,7 @@
     "passport-facebook": "~2.0.0",
     "passport-twitter": "~1.0.3",
     "passport-google-oauth": "~0.2.0",
-    "connect-flash": "~0.1.1"
-  },
-  "devDependencies": {
+    "connect-flash": "~0.1.1",
     "node-cache": "^3.2.1",
     "uuid": "^2.0.1"
   }

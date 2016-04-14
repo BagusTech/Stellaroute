@@ -1,9 +1,8 @@
 const express          = require('express');
 const flash            = require('connect-flash');
-const isLoggedIn       = require('../middleware/isLoggedIn');
-const setFlash         = require('../modules/setFlash');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const setFlash         = require('../modules/setFlash');
 const User             = require('../schemas/user');
 const router           = express.Router();
 

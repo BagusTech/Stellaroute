@@ -117,8 +117,6 @@ function update(){
 		// get the options for the 'data-options' attribute and make it an array
 		var options = $this.attr('data-options').split(',');
 
-		console.log(options);
-
 		$.each(options, function(i, option){
 			input.append($('<option/>', {
 				value: option,
@@ -176,7 +174,7 @@ function update(){
 							type: 'checkbox',
 							name: $this.attr('data-name'),
 							value: option,
-							checked: $this.text() === option
+							checked: $this.text().contains(option)
 						})
 					)
 				)

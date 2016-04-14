@@ -1,31 +1,25 @@
 const express = require('express');
 const flash = require('connect-flash');
-const cache = require('../middleware/caching');
-const isLoggedIn = require('../middleware/isLoggedIn');
 const assign = require('../modules/assign');
+const cache = require('../modules/caching');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const router = express.Router();
 
-router.get('/', isLoggedIn, function(req, res, next){
-	Continent.cached().then(function(data){
-		res.render('continents/_continents', {
-			title: 'Stellaroute: Continents',
-			description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-			user: req.user,
-			continents: data.sort(sortBy('name'))
-		});
-	}, function(err){
-		// rejected
+// TODO: make duck.checkcached and have it become middleware
 
-		console.error(err);
-		req.flash('error', 'Opps, something when wrong! Please try again.');
-		res.redirect('/')
+
+router.get('/', Continent.checkCache, function(req, res, next){
+	res.render('continents/_continents', {
+		title: 'Stellaroute: continents',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+		user: req.user,
+		continents: Continent.cached().sort(sortBy('name'))
 	});
 });
 
-router.get('/new', isLoggedIn, function(req, res, next){
+router.get('/new', function(req, res, next){
 	res.render('continents/new', {
 		title: 'Stellaroute: Add a Continent',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -33,7 +27,7 @@ router.get('/new', isLoggedIn, function(req, res, next){
 	});
 });
 
-router.post('/new', isLoggedIn, function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 
 	Continent.add(params).then(function(data){
@@ -52,7 +46,7 @@ router.post('/new', isLoggedIn, function(req, res){
 	});
 });
 
-router.post('/update', isLoggedIn, function(req, res){
+router.post('/update', function(req, res){
 	if (req.body.delete){
 
 		Continent.delete(req.body[Continent.hash]).then(function(){
@@ -99,7 +93,7 @@ router.post('/update', isLoggedIn, function(req, res){
 	}
 });
 
-router.get('/:name', isLoggedIn, function(req, res, next){
+router.get('/:name', function(req, res, next){
 	Continent.find('name', req.params.name).then(
 	function(data){
 		// resolved

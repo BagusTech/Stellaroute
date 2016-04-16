@@ -1,5 +1,5 @@
 - if(flash && (flash.success || flash.error))
-	.flash-message-container
+	.flash-message-container(style='position: absolute;top: 15px; right: 15px;')
 		- if(flash && flash.success && flash.success.length > 0)
 			p.alert.alert-success= flash.success
 

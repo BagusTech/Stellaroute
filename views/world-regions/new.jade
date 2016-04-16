@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+	h1 Add a new World Region
+
+	form(method='POST', action='/world-regions/new')
+		fieldset
+			legend World Region
+
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='WorldRegionName') Name
+						input.form-control#WorldRegionName(name='name', type='text', placeholder='name', required)
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='WorldRegionContinet') Continent(s) it resides in 
+						select.form-control#WorldRegionContinent(name='continent',  multiple='true', required)
+							-for (i in continents)
+								option(value= continents[i].Id)= continents[i].name
+								
+			.form-group.text-right
+				input.btn.btn-primary(type='submit', value='submit')

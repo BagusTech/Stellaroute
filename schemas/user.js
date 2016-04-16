@@ -16,6 +16,7 @@ var User =  new duck(db, 'Users', {
 			last: String
 		}
 	},
+	
 	HASH: 'Id',
 	HASHType: 'S'
 	//, Indexes : ['localEmail']

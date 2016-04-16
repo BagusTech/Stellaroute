@@ -1,7 +1,10 @@
 extends ../layout
 
 block content
-	h1 Continent Info
+	small
+		a(href='/continents') &lt; Back to All Continents
+
+	h1= String(continent.name)
 
 	form.update-form(method='POST', action='/continents/update')
 		.row
@@ -9,6 +12,8 @@ block content
 				.form-group
 					label Name
 					p.form-control-static(data-type='text', data-name='name')= String(continent.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=continent.name)
 
 		input(type='hidden', name= key, value= continent[key])
 		input.btn.btn-primary.btn-update(type='button', value='Update')

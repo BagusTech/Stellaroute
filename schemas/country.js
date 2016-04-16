@@ -5,6 +5,8 @@ var Country =  new duck(db, 'Countries', {
 	Item: {
 		Id: String,
 		name: String,
+		abbreviation: String,
+		alias: Array,
 		continent: Array,
 		worldRegions: Array
 		//countryRegions: Array

@@ -13,6 +13,7 @@ const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
 const review           = require('./routes/review');
 const profile          = require('./routes/profile');
+const worldRegions     = require('./routes/world-regions');
 const fs               = require('fs');
 const app              = express();
 
@@ -52,6 +53,7 @@ app.use('/', routes);
 app.use('/continents', continents);
 app.use('/countries', countries)
 app.use('/profile', profile);
+app.use('/world-regions', worldRegions);
 //app.use('/review', review);
 
 // error handlers /////////////////////////////////////////////////////

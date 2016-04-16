@@ -48,31 +48,29 @@ html(lang='en')
 	else 
 		body
 			header
-				.container
-					nav.navbar
-						.navbar-header
-							button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='GlobalNav', aria-expanded='false')
-								span.sr-only Toggle navigation
-								span.icon-bar
-								span.icon-bar
-								span.icon-bar
-							a(href='/').navbar-brand Stellaroute
-						.collapse.navbar-collapse#GlobalNav
-							ul.nav.navbar-nav
-								li
-									a(href='/explore')
-										| Explore
-								li
-									a(href='/review')
-										| Review
-								li
-									a(href='/profile')
-										| Profile
+				nav.navbar.navbar-default
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#GlobalNav', aria-expanded='false', style='float: left; margin-left: 15px; margin-right: 0;')
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(href='/').navbar-brand Stellaroute
+					.collapse.navbar-collapse#GlobalNav
+						ul.nav.navbar-nav
+							li
+								a(href='/continents')
+									| Continents
+							li
+								a(href='/world-regions')
+									| World Regions
+							li
+								a(href='/countries')
+									| Countries
 
 				include controls/login
-			hr(style='margin:0;')
 			main
-				.container
+				.container(style='position: relative;')
 					include flash
 					block content
 

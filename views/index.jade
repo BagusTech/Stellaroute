@@ -1,5 +1,24 @@
 extends layout
 
 block content
-	h1.text-center.container(style="color: white;") Stellaroute
-		small(style="padding-left: 10px;") coming soon...
+	// TODO: if user isn't logged in, show place holder
+	if (!user)
+		h1.text-center(style='color: white;') Stellaroute
+			small(style='padding-left: 10px;') coming soon...
+	else
+		h1 Capture Content
+
+		.row
+			.col-sm-3.col-sm-push-3.col-xs-12
+				p
+					a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
+			.col-sm-3.col-sm-push-3.col-xs-12
+				p
+					a(href='/world-regions').btn.btn-primary.btn-block.btn-lg World Region
+		.row
+			.col-sm-3.col-sm-push-3.col-xs-12
+				p
+					a(href='/countries').btn.btn-primary.btn-block.btn-lg Country
+			.col-sm-3.col-sm-push-3.col-xs-12
+				p
+					a(href='/attractions').btn.btn-primary.btn-block.btn-lg Attraction

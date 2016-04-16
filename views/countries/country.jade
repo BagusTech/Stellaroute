@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+	small
+		a(href='/countries') &lt; Back to All Countries
+
+	h1= country.name
+
+	form.update-form(method='POST', action='/countries/update')
+		.row
+			.col-xs-12.col-sm-6
+				.form-group
+					label(for='CountryName') Name
+					p.form-control-static= country.name
+					.hidden
+						input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
+
+				.form-group
+					label(for='CountryAbberviation') Abbreviation
+					p.form-control-static= country.abbreviation
+					.hidden
+						input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
+
+				.form-group
+					label(for='CountryAlias') Alias
+					p.form-control-static= country.alias && country.alias.join(', ')
+					.hidden
+						input.form-control#CountryAlias(name='alias', type='text', placeholder='Alias', value= country.alias)
+					
+				.form-group
+					label(for='CountryContinet') Continent(s)
+					p.form-control-static
+						- for (var i = 0; i < country.continent.length; i++)
+							span= country.continent[i]
+
+							if ((i+1) !== country.continent.length)
+								|,&nbsp;
+					.hidden
+						select.form-control#CountryContinent(name='continent',  multiple='true')
+							-for (i in continents)
+								option(value= continents[i].Id, selected= country.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
+
+				.form-group
+					label World Region(s)
+					p.form-control-static
+						- for (var i = 0; i < country.worldRegions.length; i++)
+							span= country.worldRegions[i]
+
+							if ((i+1) !== country.worldRegions.length)
+								|,&nbsp;
+					.hidden
+						select.form-control#WorldRegions(name='worldRegions',  multiple='true')
+							-for (i in worldRegions)
+								option(value= worldRegions[i].Id, selected= country.worldRegions.toString().indexOf(worldRegions[i].name) > -1)= worldRegions[i].name
+
+		input(type='hidden', name= key, value= country[key])
+		input.btn.btn-primary.btn-update(type='button', value='Update')
+		| &nbsp;
+		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+		input.btn.btn-danger(type= 'submit', value= 'Delete', style='float: right', name='delete')

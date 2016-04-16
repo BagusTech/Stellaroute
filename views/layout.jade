@@ -10,22 +10,24 @@ html(lang='en')
 
 		//// Styles & Fonts ///////////////////////////////////////////////////////
 		// not hosted local
-		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type="text/css")
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type='text/css')
+		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css', type='text/css')
 
 		// hosted local
-			link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type="text/css")
-		link(rel='stylesheet', href='/styles/styles.css')
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
+		link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type='text/css')
+		link(rel='stylesheet', href='/styles/styles.css', type='text/css')
 
 		//// Scripts //////////////////////////////////////////////////////////////
 		// not hosted local
-			script(type='text/javascript', src="https://code.jquery.com/jquery-1.11.3.min.js")
-			script(type='text/javascript', src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
-			script(type='text/javascript', src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
-			script(type='text/javascript', src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
+		script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+		script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+		script(type='text/javascript', src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+		script(type='text/javascript', src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+		script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js')
 
 		// hosted local
-			script(type='text/javascript', src='/js/scripts.min.js')
+		script(type='text/javascript', src='/js/scripts.min.js')
 
 		// Google maps api
 			script(type='text/javascript', src='http://maps.google.com/maps/api/js??key=AIzaSyAqi8KpEFUzbQ-MiDK21GojT2cphVhk0Ms &libraries=places&sensor=false')
@@ -36,43 +38,41 @@ html(lang='en')
 
 		/////////////////////////////////////////////////////////////////////////
 
-	body(style="background: url(http://c2.staticflickr.com/4/3129/3143994000_72e101ba7e_b.jpg) no-repeat; background-size: cover; font-family: 'Open Sans', sans-serif;")
-		//header
-			.row
-				.col-xs-6
-					a(href='/').comapny-name Qandira
-				.col-xs-6
-							include controls/login
-		//nav
-			button#menu-toggle.toggle
-				i.fa.fa-bars
-
-			ul.nav
-				li
-					a(href="/explore")
-						| Explore
-					
-				li
-					a(href='/review')
-						| Review
-				li
-					a(href='/profile')
-						| Profile
-		main(style="margin-top: 75px;")
-			include flash
-			block content
-
-		//footer.bg-primary
+	if (!user)
+		body(style='background: url(http://c2.staticflickr.com/4/3129/3143994000_72e101ba7e_b.jpg) no-repeat; background-size: cover; font-family: "Open Sans", sans-serif;')
+		main(style='margin-top: 75px;')
 			.container
-				.row.text-right
-						ul.list-inline
+				include controls/login
+				block content
+				include flash
+	else 
+		body
+			header
+				nav.navbar.navbar-default
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#GlobalNav', aria-expanded='false', style='float: left; margin-left: 15px; margin-right: 0;')
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(href='/').navbar-brand Stellaroute
+					.collapse.navbar-collapse#GlobalNav
+						ul.nav.navbar-nav
 							li
-								a(href='#Mission') Bagus
+								a(href='/continents')
+									| Continents
 							li
-								| St. Louis, MO
+								a(href='/world-regions')
+									| World Regions
 							li
-								a(href='mailto:joe@bagus.com') Contact Us
-							li
-								| &copy; Copyright&nbsp;
-								- var date = new Date().getFullYear();
-								span= date
+								a(href='/countries')
+									| Countries
+
+				include controls/login
+			main
+				.container(style='position: relative;')
+					include flash
+					block content
+
+			footer.bg-primary.text-center.well
+				small StellRoute

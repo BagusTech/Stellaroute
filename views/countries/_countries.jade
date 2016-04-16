@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+	h2 Countries
+	
+	.row
+		.col-sm-2.col-xs-3
+			strong Name
+		.col-sm-3.col-xs-3
+			strong Continent(s)
+		.col-xs-6
+			strong World Region(s)
+
+	for country in countries
+		.row
+			.col-sm-2.col-xs-3
+				a(href='/countries/' + country.name)= country.name
+			.col-sm-3.col-xs-3
+				- for (var i = 0; i < country.continent.length; i++)
+					span= country.continent[i]
+
+					if ((i+1) !== country.continent.length)
+						|,&nbsp;
+
+			.col-xs-6
+				- for (var i = 0; i < country.worldRegions.length; i++)
+					span= country.worldRegions[i]
+
+					if ((i+1) !== country.worldRegions.length)
+						|,&nbsp;
+
+
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/countries/new') New

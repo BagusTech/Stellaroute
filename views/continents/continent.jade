@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+	small
+		a(href='/continents') &lt; Back to All Continents
+
+	h1= String(continent.name)
+
+	form.update-form(method='POST', action='/continents/update')
+		.row
+			.col-xs-12.col-sm-6
+				.form-group
+					label Name
+					p.form-control-static(data-type='text', data-name='name')= String(continent.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=continent.name)
+
+		input(type='hidden', name= key, value= continent[key])
+		input.btn.btn-primary.btn-update(type='button', value='Update')
+		| &nbsp;
+		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+		input.btn.btn-danger(type= 'submit', value= 'Delete', style='float: right', name='delete')

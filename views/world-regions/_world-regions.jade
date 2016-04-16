@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+	h2 World Regions
+
+	p
+		strong Name
+
+
+	for region in worldRegion
+		p
+			a(href='/world-regions/' + region.name)= region.name
+
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/world-regions/new') New

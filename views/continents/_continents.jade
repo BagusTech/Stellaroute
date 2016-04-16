@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+	h2 Continents
+
+	p
+		strong Name
+
+
+	for continent in continents
+		p
+			a(href='/continents/' + continent.name)= continent.name
+
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/continents/new') New

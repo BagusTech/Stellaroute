@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+	small
+		a(href='/world-regions') &lt; Back to All World Regions
+
+	h1= String(worldRegion.name)
+
+	form.update-form(method='POST', action='/world-regions/update')
+		.row
+			.col-xs-12.col-sm-6
+				.form-group
+					label Name
+					p.form-control-static(data-type='text', data-name='name')= String(worldRegion.name)
+					.hidden
+						input.form-control#WorldRegionName(name='name', type='text', placeholder='name', value= worldRegion.name)
+
+				.form-group
+					label(for='WorldRegionContinet') Continent(s)
+					p.form-control-static
+						- for (var i = 0; i < (worldRegion.continent && worldRegion.continent.length); i++)
+							span= worldRegion.continent[i]
+
+							if ((i+1) !== worldRegion.continent.length)
+								|,&nbsp;
+					.hidden
+						select.form-control#WorldRegionContinent(name='continent',  multiple='true')
+							-for (i in continents)
+								option(value= continents[i].Id, selected= worldRegion.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
+
+		input(type='hidden', name= key, value= worldRegion[key])
+		input.btn.btn-primary.btn-update(type='button', value='Update')
+		| &nbsp;
+		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+		input.btn.btn-danger(type= 'submit', value= 'Delete', style='float: right', name='delete')

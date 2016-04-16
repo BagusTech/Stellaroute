@@ -221,6 +221,13 @@ var duck = function(db, table, schema){
 				ExpressionAttributeValues: { ':h': data[hash] }
 			}
 
+			// DynamoDB doesn't except empty strings as ReturnValues
+			for (var item in params.Item){
+				if(params.Item[item] === String()){
+					params.Item[item] = null;
+				}
+			}
+
 			db.lite.put(params, function(err, data) {
 				if (err){
 					console.error('error adding item: ' + JSON.stringify(err, null, 2));
@@ -412,7 +419,10 @@ var duck = function(db, table, schema){
 						}
 					}
 
-					params.ExpressionAttributeValues[':' + expressionCounter] = flattenedData[item]
+					// DynamoDB doesn't except empty strings as ReturnValues, so the value to null if that's the case
+					var attributeValue = flattenedData[item] == String() ? null : flattenedData[item];
+					params.ExpressionAttributeValues[':' + expressionCounter] = attributeValue;
+						
 				}
 
 				expressionCounter++;

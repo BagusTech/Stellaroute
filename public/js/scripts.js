@@ -2,7 +2,7 @@ void function($){
 	// Once window is loaded, do this
 	$(window).on('load', function(){
 		setTimeout(function(){
-			$('.flash-message-container').hide(1000);
+			$('.flash-message-container').slideUp(1000);
 		}, 1500);
 
 		
@@ -29,160 +29,20 @@ function init(){
 
 	// style multiselect via http://davidstutz.github.io/bootstrap-multiselect/
 	$('select[multiple]').multiselect();
+
+	$('button[data-target]').click(function onClick(e){
+		var id = $(this).attr('data-target');
+		setTimeout(function focusElement(){
+			$(id + ' input').first().focus();
+			console.log('done');
+		}, 200);
+	});
 }
 
 function update(){
 	//used for all update forms
 
 	var $form = $('.update-form');
-
-	//create the appropriate inputs
-	$form.find('[data-type=text]').each(function(){
-		var $this = $(this);
-
-		var input = $( '<input/>', {
-				class: 'form-control hidden',
-				type: 'text',
-				value: $this.text(),
-				name: $this.attr('data-name')
-			});
-
-		$this.after(input);
-	});
-
-	$form.find('[data-type=email]').each(function(){
-		var $this = $(this);
-
-		var input = $( '<input/>', {
-				class: 'form-control hidden',
-				type: 'email',
-				value: $this.text(),
-				name: $this.attr('data-name')
-			});
-
-		$this.after(input);
-	});
-
-	$form.find('[data-type=textarea]').each(function(){
-		var $this = $(this);
-
-		var input = $( '<textarea/>', {
-				class: 'form-control hidden',
-				text: $this.text(),
-				name: $this.attr('data-name')
-			});
-
-		$this.after(input);
-	});
-
-	$form.find('[data-type=select]').each(function(){
-		var $this = $(this);
-
-		var input = $( '<select/>', {
-				class: 'form-control hidden',
-				value: $this.text(),
-				name: $this.attr('data-name')
-			});
-
-		// get the options for the 'data-options' attribute and make it an array
-		var options = $this.attr('data-options').split(',');
-
-		$.each(options, function(i, option){
-			input.append($('<option/>', {
-				value: option,
-				selected: option === $this.text(),
-				text: option
-			}));
-		});
-
-		$this.after(input);
-	});
-
-	$form.find('[data-type=multi-select]').each(function(){
-		var $this = $(this);
-
-		var container = $('<div/>', {
-			class: 'multi-select form-group hidden'
-		}).append();
-
-		var input = $( '<select/>', {
-				class: 'form-control',
-				multiple: 'true',
-				value: $this.text(),
-				name: $this.attr('data-name')
-			});
-
-		container.append(input);
-
-		// get the options for the 'data-options' attribute and make it an array
-		var options = $this.attr('data-options').split(',');
-
-		$.each(options, function(i, option){
-			input.append($('<option/>', {
-				value: option,
-				selected: $this.text().contains(option),
-				text: option
-			}));
-		});
-
-		$this.after(container);
-	});
-
-	$form.find('[data-type=radio]').each(function(){
-		var $this = $(this);
-
-		var container = $('<div/>', {
-			class: 'radio-group hidden'
-		});
-
-		// get the options for the 'data-options' attribute and make it an array
-		var options = $this.attr('data-options').split(',');
-
-		$.each(options, function(i, option){
-			container
-			.append($('<div/>', { class: 'radio' })
-			.append($('<label/>', {text: option})
-			.prepend($('<input/>', {
-							type: 'radio',
-							name: $this.attr('data-name'),
-							value: option,
-							checked: $this.text() === option
-						})
-					)
-				)
-			);
-		});
-
-		$this.after(container);
-	});
-
-	$form.find('[data-type=checkbox]').each(function(){
-		var $this = $(this);
-
-		var container = $('<div/>', {
-			class: 'checkbox-group hidden'
-		});
-
-		// get the options for the 'data-options' attribute and make it an array
-		var options = $this.attr('data-options').split(',');
-
-		$.each(options, function(i, option){
-			container
-			.append($('<div/>', { class: 'checkbox' })
-			.append($('<label/>', {text: option})
-			.prepend($('<input/>', {
-							type: 'checkbox',
-							name: $this.attr('data-name'),
-							value: option,
-							checked: $this.text().contains(option)
-						})
-					)
-				)
-			);
-		});
-
-		$this.after(container);
-	});
 
 	var $inputs = $form.find('p + .hidden');
 	var $values = $form.find('.form-control-static');

@@ -7,14 +7,10 @@ const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const router = express.Router();
 
-// TODO: make duck.checkcached and have it become middleware
-
-
 router.get('/', Continent.checkCache, function(req, res, next){
 	res.render('continents/_continents', {
 		title: 'Stellaroute: continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		user: req.user,
 		continents: Continent.cached().sort(sortBy('name'))
 	});
 });
@@ -22,8 +18,7 @@ router.get('/', Continent.checkCache, function(req, res, next){
 router.get('/new', function(req, res, next){
 	res.render('continents/new', {
 		title: 'Stellaroute: Add a Continent',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		user: req.user
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
 
@@ -31,16 +26,22 @@ router.post('/new', function(req, res){
 	const params = req.body;
 
 	Continent.add(params).then(function(data){
-		// resolved
+		// resolved add
+
 		Continent.updateCache().then(function(){
+			// resolved update
+
 			req.flash('success', 'Continent Successfully added');
 			res.redirect('/continents');
 		}, function(err){
+			// rejected update 
+
 			console.error(err);
 			res.redirect('/continents');
 		})
 	}, function(err){
-		// rejected
+		// rejected add
+		
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
 		res.redirect('/continents');
 	});
@@ -78,8 +79,13 @@ router.post('/update', function(req, res){
 		Continent.update(params).then(function(){
 			// resolved
 
-			req.flash('success', 'Continent successfully updated')
+			Continent.updateCache().then(function(){
+				req.flash('success', 'Continent successfully updated')
 			res.redirect('/continents/' + req.body.name)
+			}, function(){
+				req.flash('error', 'There was a small issue, but your country was updated')
+				res.redirect('/continents');
+			});
 		}, function(err){
 			// rejected
 
@@ -94,8 +100,7 @@ router.post('/update', function(req, res){
 });
 
 router.get('/:name', function(req, res, next){
-	Continent.find('name', req.params.name).then(
-	function(data){
+	Continent.find('name', req.params.name).then(function(data){
 		// resolved
 
 		if (data.Items.length === 0){
@@ -106,20 +111,14 @@ router.get('/:name', function(req, res, next){
 		res.render('continents/continent', {
 			title: '',
 			description: '',
-			user: req.user,
 			continent: data.Items[0],
 			key: Continent.hash
 		})
 	}, function(err){
 		// rejected
 
-		res.render('continents/continent', {
-			title: '',
-			description: '',
-			user: req.user,
-			data: [],
-			key: String()
-		})
+		req.flash('error', 'Opps, something when wrong! Please try again.');
+		res.redirect('/continents');
 	})
 });
 

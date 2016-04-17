@@ -26,7 +26,7 @@ block content
 					.hidden
 						select.form-control#WorldRegionContinent(name='continent',  multiple='true')
 							-for (i in continents)
-								option(value= continents[i].Id, selected= worldRegion.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
+								option(value= continents[i].Id, selected= worldRegion.continent && worldRegion.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
 
 		input(type='hidden', name= key, value= worldRegion[key])
 		input.btn.btn-primary.btn-update(type='button', value='Update')

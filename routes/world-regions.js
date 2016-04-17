@@ -134,12 +134,14 @@ router.get('/:name', Continent.checkCache, function(req, res, next){
 }, function(req, res, next){
 	var worldRegion = cache.get('/world-regions/' + req.params.name);
 
-	var mappedContinentIdsToName = worldRegion.continent.map( continentId => 
-			Continent.cached().map((continent) => 
-				continent.Id == continentId ? continent.name : null)
-				.filter(name => name));
-
-	worldRegion.continent = mappedContinentIdsToName;
+	if(worldRegion.continent){
+		var mappedContinentIdsToName = worldRegion.continent.map( continentId => 
+				Continent.cached().map((continent) => 
+					continent.Id == continentId ? continent.name : null)
+					.filter(name => name));
+	
+		worldRegion.continent = mappedContinentIdsToName;
+	}
 
 	console.log('Make the Join')
 

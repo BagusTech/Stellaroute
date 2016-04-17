@@ -7,3 +7,5 @@
 !.elasticbeanstalk/*.global.yml
 
 public/styles/styles.css.map
+**/*.min.js
+**/*.min.js.map

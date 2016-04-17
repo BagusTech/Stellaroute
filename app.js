@@ -3,11 +3,12 @@ const path             = require('path');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const flash            = require('connect-flash');
-const setFlash         = require('./modules/setFlash');
 const favicon          = require('serve-favicon');
 const cookieParser     = require('cookie-parser');
 const bodyParser       = require('body-parser');
 const session          = require('express-session');
+const isLoggedIn       = require('./middleware/isLoggedIn');
+const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
 const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
@@ -34,8 +35,6 @@ app.use(express.static(path.join(__dirname, 'public'))); //Sets the public folde
   next();
 }); */
 
-
-
 // required for passport
 app.use(session({ 
         secret: 'thisisthesecretpasswordforstellaroute',
@@ -47,6 +46,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
+
+//check to see if user is logged in on all pages except home directory
+app.use(isLoggedIn);
 
 //Set index.js to be the main router
 app.use('/', routes);

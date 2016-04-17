@@ -1,12 +1,11 @@
 const express    = require('express');
 const flash      = require('connect-flash');
-const isLoggedIn = require('../middleware/isLoggedIn');
 const assign     = require('../modules/assign');
 const readJSON   = require('../modules/readJSON');
 const User       = require('../schemas/user');
 const router     = express.Router();
 
-router.get('/', isLoggedIn, function(req, res, next){
+router.get('/', function(req, res, next){
 	res.render('profile/profile', {
 		title: 'StellaRoute: My Profile',
 		description: 'This is used to view, edit, and delete my profile',
@@ -14,7 +13,7 @@ router.get('/', isLoggedIn, function(req, res, next){
 	});
 });
 
-router.post('/update', isLoggedIn, function(req, res){
+router.post('/update', function(req, res){
 	if (req.body.delete){
 		User.delete(req.body[User.hash]).then(function(){
 			// resolved

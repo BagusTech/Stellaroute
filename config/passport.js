@@ -44,10 +44,8 @@ module.exports = function(passport){
 
 				User.find('local.email', email).then(function(user){
 					if (user.Items.length) {
-						console.log('2')
 						return done(null, false, req.flash('error', 'That email is already taken'));
 					} else if(password.length < 4) {
-						console.log('3')
 						return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
 					}
 

@@ -1,0 +1,74 @@
+if (!user)
+	div(style='position: absolute; top: 10px; right: 10px;')
+		button.btn.btn-primary.hidden(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Create Account
+		button.btn.btn-primary(type='button', data-toggle='modal', data-target='#LoginModal', style='margin-left: 5px;', tab-index='1') Login
+
+	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
+		.modal-dialog(role='document')
+			form.modal-content(method='POST', action='/login')
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4.modal-title#LoginModalLabel Login
+				.modal-body
+					.form-horizontal
+						.form-group
+							label.control-label.col-sm-2(for='Email') Email
+							.col-sm-10
+								input.form-control#Email(name='email', type='email', placeholder='joe@gmail.com')
+
+						.form-group
+							label.control-label.col-sm-2(for='Passphrase') Passphrase
+							.col-sm-10
+								input.form-control#Passphrase(name='password', type='password', placeholder='StellarouteIsTheBest!')
+
+						//.form-group
+							.col-sm-offset-2.col-sm-10
+								.checkbox
+									label
+										input(type='checkbox', name='remember')
+										| Remember me
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					input.btn.btn-primary(type='submit', value='Login')
+
+	.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
+		.modal-dialog(role='document')
+			form.modal-content(method='POST', action='/signup')
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4.modal-title#SignupModalLabel Create an Account
+				.modal-body
+					.form-horizontal
+						.form-group
+							label.control-label.col-sm-2(for='First') First Name
+							.col-sm-10
+								input.form-control#First(name='name.first', type='text', placeholder='John', required='required')
+
+						.form-group
+							label.control-label.col-sm-2(for='Last') Last Name
+							.col-sm-10
+								input.form-control#Last(name='name.last', type='text', placeholder='Doe', required='required')
+
+						.form-group
+							label.control-label.col-sm-2(for='SignupEmail') Email
+							.col-sm-10
+								input.form-control#SignupEmail(name='local.email', type='email', placeholder='joe@gmail.com', required='required')
+
+						.form-group
+							label.control-label.col-sm-2(for='SignupPassphrase') Passphrase
+							.col-sm-10
+								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required='required')
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					input.btn.btn-primary(type='submit', value='Create')
+else
+	.user-controls(style='position: absolute; top: 10px; right: 10px;')
+		if (user && user.name && user.name.first)
+			span= 'Welcome ' + user.name.first + ' '
+		a.btn.btn-primary(href='/profile') My Profile
+		| &nbsp;
+		a.btn.btn-danger(href='/logout') Log Out

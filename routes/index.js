@@ -6,9 +6,12 @@ const setFlash         = require('../modules/setFlash');
 const User             = require('../schemas/user');
 const router           = express.Router();
 
-require('../config/passport')(passport);
+require('../config/passport')(passport);	
 
-router.get('/', function(req, res, next){
+router.get('/', User.getCached, function(req, res, next){
+	console.log(User.cached().get('local.email', 'joe@bagusco.com'));
+	process.exit()
+
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'

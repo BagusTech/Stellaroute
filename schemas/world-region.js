@@ -1,7 +1,9 @@
 const db = require('../config/aws');
-const duck = require('../modules/duck');
+const Duck = require('../modules/duck');
 
-var WorldRegion =  new duck(db, 'WorldRegions', {
+var WorldRegion = new Duck({
+	Database: db,
+	Table: 'WorldRegions',
 	Item: {
 		Id: String,
 		name: String,

@@ -3,13 +3,19 @@ extends ../layout
 block content
 	h2 World Regions
 
-	p
-		strong Name
+	.row
+		.col-sm-3.col-xs-6
+			strong Name
+		.col-sm-9.col-xs-6
+			strong Continent(s)
 
 
-	for region in worldRegion
-		p
-			a(href='/world-regions/' + region.name)= region.name
+	for region in worldRegions
+		.row
+			.col-sm-3.col-xs-6
+				a(href='/world-regions/' + region.name)= region.name
+			.col-sm-9.col-xs-6= region.continent.join(', ')
+
 
 	p.text-right
 		a.btn.btn-primary.btn-lg(href='/world-regions/new') New

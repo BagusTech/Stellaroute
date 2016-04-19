@@ -1,8 +1,10 @@
 const db = require('../config/aws');
-const duck = require('../modules/duck');
+const Duck = require('../modules/duck');
 
 // Not used anywhere yet
-var Attraction =  new duck(db, 'Attractions', {
+var Attraction = new Duck({
+	Database: db,
+	Table: 'Attractions',
 	Item: {
 		Id: String
 	},

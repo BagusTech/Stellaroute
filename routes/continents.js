@@ -7,7 +7,7 @@ const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const router = express.Router();
 
-router.get('/', Continent.checkCache, function(req, res, next){
+router.get('/', Continent.getCached, function(req, res, next){
 	res.render('continents/_continents', {
 		title: 'Stellaroute: continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',

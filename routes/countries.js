@@ -9,7 +9,7 @@ const Country = require('../schemas/country');
 const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
-router.get('/', Country.checkCache, Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
+router.get('/', Country.getCached, Continent.getCached, WorldRegion.getCached, function(req, res, next){
 	var cachedCountries = Country.cached();
 
 	var mappedContinentIdsToName = Country.cached().map( country => 
@@ -43,7 +43,7 @@ router.get('/', Country.checkCache, Continent.checkCache, WorldRegion.checkCache
 	});
 });
 
-router.get('/new', Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
+router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res, next){
 
 	res.render('countries/new', {
 		title: 'Stellaroute: Add a Country',
@@ -153,7 +153,7 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.checkCache, WorldRegion.checkCache, function(req, res, next){
+router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
 	if(cache.get('/countries/' + req.params.name)){
 		next();
 	} else {

@@ -8,19 +8,16 @@ const Continent = require('../schemas/continent');
 const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
-// TODO: make duck.checkcached and have it become middleware
-
-
-router.get('/', WorldRegion.checkCache, function(req, res, next){
+router.get('/', WorldRegion.getCached, Continent.getCached, function(req, res, next){
 	res.render('world-regions/_world-regions', {
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
-		worldRegion: WorldRegion.cached().sort(sortBy('name'))
+		worldRegions: WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
 	});
 });
 
-router.get('/new', Continent.checkCache, function(req, res, next){
+router.get('/new', Continent.getCached, function(req, res, next){
 	res.render('world-regions/new', {
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -114,36 +111,10 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.checkCache, function(req, res, next){
-	if(cache.get('/world-regions/' + req.params.name)){
-		next();
-	} else {
-		WorldRegion.find('name', req.params.name, 1).then(function(data){
-			// resolved
-
-			cache.set('/world-regions/' + req.params.name, data.Items[0], 3600);
-			next();
-		}, function(err){
-			// rejected
-
-			req.flash('error', 'Sorry, couln\'t find that country, please try again.')
-			res.redirect('/world-regions')
-		});
-	}
-
-}, function(req, res, next){
-	var worldRegion = cache.get('/world-regions/' + req.params.name);
-
-	if(worldRegion.continent){
-		var mappedContinentIdsToName = worldRegion.continent.map( continentId => 
-				Continent.cached().map((continent) => 
-					continent.Id == continentId ? continent.name : null)
-					.filter(name => name));
-	
-		worldRegion.continent = mappedContinentIdsToName;
-	}
-
-	console.log('Make the Join')
+router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
+	var worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
+								 .get('name', req.params.name)
+								 //.map(region => region.name == req.params.name ? region : null).filter(nullCheck => nullCheck)[0];
 
 	res.render('world-regions/world-region', {
 		title: '',

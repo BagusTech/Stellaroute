@@ -13,7 +13,7 @@ router.get('/', WorldRegion.getCached, Continent.getCached, function(req, res, n
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
-		worldRegions: WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
+		worldRegions: WorldRegion.join('continent', Continent.cached(), 'Id', 'name').items.sort(sortBy('name'))
 	});
 });
 
@@ -113,8 +113,7 @@ router.post('/update', function(req, res){
 
 router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
 	var worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
-								 .get('name', req.params.name)
-								 //.map(region => region.name == req.params.name ? region : null).filter(nullCheck => nullCheck)[0];
+								 .findOne('name', req.params.name);
 
 	res.render('world-regions/world-region', {
 		title: '',

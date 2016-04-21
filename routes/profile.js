@@ -8,8 +8,7 @@ const router     = express.Router();
 router.get('/', function(req, res, next){
 	res.render('profile/profile', {
 		title: 'StellaRoute: My Profile',
-		description: 'This is used to view, edit, and delete my profile',
-		user: req.user.Items[0]
+		description: 'This is used to view, edit, and delete my profile'
 	});
 });
 

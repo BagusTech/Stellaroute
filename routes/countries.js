@@ -10,41 +10,18 @@ const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
 router.get('/', Country.getCached, Continent.getCached, WorldRegion.getCached, function(req, res, next){
-	var cachedCountries = Country.cached();
-
-	var mappedContinentIdsToName = Country.cached().map( country => 
-		country.continent.map( continentId => 
-			Continent.cached().map((continent) => 
-				continent.Id == continentId ? continent.name : null)
-				.filter(name => name)));
-	for (i in cachedCountries){
-		cachedCountries[i].continent = mappedContinentIdsToName[i]
-	}
-
-	var mappedWorldRegionIdsToName = Country.cached().map( country => 
-		country.worldRegions.map( worldRegionsId => 
-			WorldRegion.cached().map((worldRegions) => 
-				worldRegions.Id == worldRegionsId ? worldRegions.name : null)
-				.filter(name => name)));
-	for (i in cachedCountries){
-		cachedCountries[i].worldRegions = mappedWorldRegionIdsToName[i]
-	}
-
-
-	console.log('Make the Join')
-	//console.log(JSON.stringify(Country.join('continent', Continent.cached()), null, 2));
-	//console.log(JSON.stringify(cachedCountries, null, 2));
-
+	var countries = Country.join('continent', Continent.cached(), 'Id', 'name' )
+	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
+	                       .items.sort(sortBy('name'));
 
 	res.render('countries/_countries', {
 		title: 'Stellaroute: countries',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		countries: cachedCountries.sort(sortBy('name'))
+		countries: countries
 	});
 });
 
 router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res, next){
-
 	res.render('countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -65,18 +42,31 @@ router.post('/new', function(req, res){
 		params.worldRegions = Array(params.worldRegions);
 	}
 	
-	params.alias = params.alias.split(', ');
+	// only attempt to split if alias' are entered else delete it
+	if(params.alias.length > 1){
+		params.alias = params.alias.split(', ');
+	} else{
+		delete params.alias;
+	}
 
 	Country.add(params).then(function(data){
-	// resolved
+	// resolved add
 
-		Country.updateCache();
+		Country.updateCache().then(function(){
+			// resolved updateCache
 
-		req.flash('success', 'Country Successfully added');
-		res.redirect('/countries');
+			req.flash('success', 'Country Successfully added');
+			res.redirect('/countries');
+		}, function(err){
+			// rejected updateCache
+
+			console.error(err);
+			req.flash('error', 'Country was added, but something went wrong')
+			res.redirect('/countries');
+		});
 	},
 	function(err){
-	// rejected
+	// rejected add
 
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
 		res.redirect('/countries');
@@ -154,41 +144,9 @@ router.post('/update', function(req, res){
 });
 
 router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
-	if(cache.get('/countries/' + req.params.name)){
-		next();
-	} else {
-		Country.find('name', req.params.name, 1).then(function(data){
-			// resolved
-
-			cache.set('/countries/' + req.params.name, data.Items[0], 3600);
-			next();
-		}, function(err){
-			// rejected
-
-			req.flash('error', 'Sorry, couln\'t find that country, please try again.')
-			res.redirect('/countries')
-		});
-	}
-
-}, function(req, res, next){
-	var country = cache.get('/countries/' + req.params.name);
-
-	var mappedContinentIdsToName = country.continent.map( continentId => 
-			Continent.cached().map((continent) => 
-				continent.Id == continentId ? continent.name : null)
-				.filter(name => name));
-
-	country.continent = mappedContinentIdsToName
-
-	var mappedWorldRegionIdsToName = country.worldRegions.map( worldRegionsId => 
-			WorldRegion.cached().map((worldRegions) => 
-				worldRegions.Id == worldRegionsId ? worldRegions.name : null)
-				.filter(name => name));
-	
-	country.worldRegions = mappedWorldRegionIdsToName
-
-	console.log('Make the Join')
-
+	var country = Country.join('continent', Continent.cached(), 'Id', 'name')
+						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
+						 .findOne('name', req.params.name)
 	res.render('countries/country', {
 		title: '',
 		description: '',

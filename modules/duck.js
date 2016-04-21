@@ -22,7 +22,7 @@ const Duck = function(schema, isReady, items){
 		this.range      = schema.Range;
 		this.rangeType  = schema.RangeType;
 		this.indexes    = schema.Indexes || [];
-		this.items      = items || [];		
+		this.items      = items;		
 
 
 
@@ -117,14 +117,20 @@ const Duck = function(schema, isReady, items){
 	/* ~~~~~~~ Methods ~~~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-		Duck.prototype.cached        = function(){ return new Duck(this.schema, true, cache.get(this.table)); } 
+		Duck.prototype.cached        = function(){ return cache.get(this.table); } 
 		Duck.prototype.generateHash  = function(password){ return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
 		Duck.prototype.validPassword = function(password, encodedPassword){ return bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
+		// documentation
+			// field: string = 'continent'
+			// data: array of objects = [{Id: 3, name: North America}, {Id: 4, name: South America}]
+			// joinOn: string = 'Id'
+			// display: string = 'name'
+			// returns: new Duck()
 		Duck.prototype.join          = function(field, data, joinOn, display){ 
-			var joinedItems = this.cached().items;
+			var joinedItems = this.items || this.cached();
 			var joinedField = joinedItems.map(item =>
 				item[field].map(field =>
-					data.items.map(data =>
+					data.map(data =>
 						data[joinOn] == field ? data[display] : null)
 					.filter(nullCheck => nullCheck)));
 
@@ -133,10 +139,36 @@ const Duck = function(schema, isReady, items){
 			}
 			return new Duck(this.schema, true, joinedItems);
 		}
-		Duck.prototype.get = function(field, value){
-			var fieldPath = field.split('.'); // make the accepted arguments into an aray			
+		// documentation
+			// field: string = 'name'
+			// value: string = 'Joe'
+			// contains: bool = true (if it isn't contains, it's equals)
+		Duck.prototype.find = function(field, value, contains){
+			const fieldPath = field.split('.'); // make the accepted arguments into an aray			
+			const items = this.items || this.cached();
+			const returnedItems = items.map(function(item){
+							  	var res = item;
 
-			var items = this.items.map(function(item){
+							  	// for each item in the array
+							  	for (i in fieldPath){
+									res = res[fieldPath[i]]
+								}
+
+								if(contains && (typeof contains == 'string' || contains instanceof Array)){
+									return res.indexOf(value) == -1 ? null : item
+								}
+
+							  	return res == value ? item : null;
+							  })
+							  .filter(nullCheck => nullCheck);
+
+			return returnedItems;
+		}
+		// same as find, but only returns one result, does not allow contains
+		Duck.prototype.findOne = function(field, value){
+			const fieldPath = field.split('.'); // make the accepted arguments into an aray			
+			const items = this.items || this.cached();
+			const returnedItems = items.map(function(item){
 							  	var res = item;
 
 							  	// for each item in the array
@@ -148,7 +180,7 @@ const Duck = function(schema, isReady, items){
 							  })
 							  .filter(nullCheck => nullCheck);
 
-			return items.length > 1 ? items : items[0];
+			return returnedItems.length > 1 ? returnedItems : returnedItems[0];
 		}
 
 
@@ -234,106 +266,6 @@ const Duck = function(schema, isReady, items){
 						resolve(data);
 					}
 				});
-			});
-		}
-
-		// find an item
-		// returns a promise, making it thennable
-		// field is the index, data object
-		// if no params are filled, returns all items in that data base (scan)
-		// TODO make it work with HASH-RANGE keys
-		Duck.prototype.find = function(field, data){
-			const table = this.table;
-			const hash = this.hash;
-			const indexes = this.indexes;
-
-			return new Promise(function(resolve, reject){
-				if(!isReady){
-					reject('still initializing ' + table);
-				}
-
-				if (data){
-					if (field == hash) {
-						var params = {
-							TableName : table,
-							KeyConditionExpression: '#h = :h',
-							ExpressionAttributeNames: { '#h': field },
-							ExpressionAttributeValues: { ':h': data }
-						}
-
-						db.lite.query(params, function(err, data){
-							if (err){
-								console.error(JSON.stringify(err, null, 2));
-								reject(err);
-							} else {
-								resolve(data);
-							}
-						});
-					}
-					else if (indexes.indexOf(field) > -1) {
-						var params = {
-							TableName : table,
-							KeyConditionExpression: '#h = :h',
-							ExpressionAttributeNames: { '#h': field },
-							ExpressionAttributeValues: { ':h': data }
-						}
-
-						db.lite.query(params, function(err, data){
-							if (err){
-								console.error(JSON.stringify(err, null, 2));
-								reject(err);
-							} else {
-								resolve(data);
-							}
-						});
-					} else {
-						var params = {
-							TableName: table,
-							FilterExpression: '', // created in code
-						    ExpressionAttributeNames: {},
-						    ExpressionAttributeValues: {
-						        ':value': data
-						    }
-						};
-
-						var expressionAttributeNames = field.split('.'); // make the accepted arguments into an aray
-						var filterExpression = String();
-
-						// for each item in the array, add an expression attribute name 
-						// equal to the value and assign it's value to the value
-						for (value in expressionAttributeNames) {
-							var item = expressionAttributeNames[value];
-
-							// if the ExpressionAttributeName doesn't already exist add it
-							if (!params.ExpressionAttributeNames['#' + item]) {
-								params.ExpressionAttributeNames['#' + item] = item;
-							}
-
-							filterExpression += '.#' + expressionAttributeNames[value];
-						}
-
-						// set filter expression
-						params.FilterExpression = filterExpression.substring(1) + ' = :value';
-
-						db.lite.scan(params, function(err, data){
-							if (err){
-								console.error(JSON.stringify(err, null, 2));
-								reject(err);
-							} else {
-								resolve(data);
-							}
-						});
-					}
-				} else {
-					db.lite.scan({TableName: table}, function(err, data){
-						if (err){
-							console.error(JSON.stringify(err, null, 2));
-							reject(err);
-						} else {
-							resolve(data);
-						}
-					});
-				}
 			});
 		}
 

@@ -6,7 +6,7 @@ void function($){
 		}, 1500);
 
 		
-		init();
+		init(); 
 
 		// for updating countries
 		$('.js-update-country').click(function(){
@@ -17,9 +17,6 @@ void function($){
 			$('.form-group').removeClass('hidden');
 		});
 	});
-
-
-
 }(jQuery);
 
 //////////////  Define Functions  //////////////////////

@@ -11,7 +11,7 @@ block content
 			.col-xs-12.col-sm-6
 				.form-group
 					label Name
-					p.form-control-static(data-type='text', data-name='name')= String(worldRegion.name)
+					p.form-control-static= String(worldRegion.name)
 					.hidden
 						input.form-control#WorldRegionName(name='name', type='text', placeholder='name', value= worldRegion.name)
 

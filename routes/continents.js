@@ -99,27 +99,13 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', function(req, res, next){
-	Continent.find('name', req.params.name).then(function(data){
-		// resolved
-
-		if (data.Items.length === 0){
-			req.flash('error', 'Opps, something when wrong! Please try again.');
-			res.redirect('/continents');
-		}
-
-		res.render('continents/continent', {
-			title: '',
-			description: '',
-			continent: data.Items[0],
-			key: Continent.hash
-		})
-	}, function(err){
-		// rejected
-
-		req.flash('error', 'Opps, something when wrong! Please try again.');
-		res.redirect('/continents');
-	})
+router.get('/:name', Continent.getCached, function(req, res, next){
+	res.render('continents/continent', {
+		title: '',
+		description: '',
+		continent: Continent.findOne('name', req.params.name),
+		key: Continent.hash
+	});
 });
 
 module.exports = router;

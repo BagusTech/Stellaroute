@@ -1,10 +1,10 @@
 // set an objects property to a nested value base off an array
-// obj = object i.e. = {}
-// keyPath = array i.e. = ['a', 'b', 'c']
+// obj: object = {}
+// keyPath: array = ['a', 'b', 'c']
 /// OR ///
-// keyPath = string i.e. = 'a.b.c'
-// value = value to be set to = 'foobar'
-// result -- obj = { a : { b : { c : 'foobar'}}}
+// keyPath: string = 'a.b.c'
+// value: string = 'foobar'
+// return: obj = { a : { b : { c : 'foobar'}}}
 var assign = function assign(obj, keyPath, value) {
 	if (typeof keyPath === 'string'){
 		keyPath = keyPath.split('.');

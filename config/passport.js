@@ -18,12 +18,13 @@ module.exports = function(passport){
 
 	// used to deserialize the user
 	passport.deserializeUser(function(id, done){
-		User.find('Id', id).then(function(user){
+		var user = User.findOne('Id', id);
+
+		if(user){
 			done(null, user);
-		}, function(err){
-			console.error(err);
-			done(err);
-		});
+		} else {
+			done(null, false, req.falsh('error', 'Sorry, something went wrong'));
+		}
 	});
 
 	// Local Signup ===================================================
@@ -36,41 +37,29 @@ module.exports = function(passport){
 			passwordField: 'local.password',
 			passReqToCallback: true // allows us to pass back the entire request to the callback
 		}, function(req, email, password, done){
+			if (User.findOne('local.email', email).length) {
+				return done(null, false, req.flash('error', 'That email is already taken'));
+			} else if(password.length < 4) {
+				return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
+			}
 
-			// User.find wont fire unless data is sent back
-			process.nextTick(function(){
-				// find a user whose email is the same as the forms email
-				// we are checking to see if the user already exists
+			const newUser = { Id: uuid.v4(), 
+							  local: {
+							        email: email, 
+								    password: User.generateHash(password)
+							    },
+						      name: {
+							      	first: req.body['name.first'],
+							      	last: req.body['name.last']
+						      	}
+						    }
 
-				User.find('local.email', email).then(function(user){
-					if (user.Items.length) {
-						return done(null, false, req.flash('error', 'That email is already taken'));
-					} else if(password.length < 4) {
-						return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
-					}
-
-					const newUser = { Id: uuid.v4(), 
-									  local: {
-									        email: email, 
-										    password: User.generateHash(password)
-									    },
-								      name: {
-									      	first: req.body['name.first'],
-									      	last: req.body['name.last']
-								      	}
-								    }
-
-					User.add(newUser).then(function(user){
-						done(null, newUser);
-					}, function(err){
-						console.error(err);
-						return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
-					});
-				}, function(err){
-					console.error(err);
-					return done(err);
-				})
-			})
+			User.add(newUser).then(function(user){
+				done(null, newUser);
+			}, function(err){
+				console.error(err);
+				return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
+			});
 		}
 	));
 
@@ -79,16 +68,13 @@ module.exports = function(passport){
 			passwordField: 'password',
 			passReqToCallback: true
 		}, function(req, email, password, done){
-			User.find('local.email', email).then(function(user){
-				if(user.Count === 0 || !User.validPassword(password, user.Items[0].local.password)){
-					return done(null, false, req.flash('error', 'Sorry, the password and email did not match!'));
-				}
+			var user = User.findOne('local.email', email);
 
-				return done(null, user.Items[0]);
-			}, function(err){
-				console.error(err);
-				done(err);
-			});
+			if(user && User.validPassword(password, user.local.password)){
+				return done(null, user);
+			}
+
+			return done(null, false, req.flash('error', 'Sorry, the password and email did not match!'));
 		}
 	));
 }

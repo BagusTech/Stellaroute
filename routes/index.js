@@ -9,8 +9,9 @@ const router           = express.Router();
 require('../config/passport')(passport);	
 
 router.get('/', User.getCached, function(req, res, next){
-	console.log(User.cached().get('local.email', 'joe@bagusco.com'));
-	process.exit()
+	// TODO: Make duck.find() = duck.get()
+	//console.log(User.findOne('local.email', 'joe@bagusco.com'));
+	//process.exit()
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',

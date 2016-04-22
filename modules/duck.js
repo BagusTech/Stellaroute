@@ -1,5 +1,6 @@
 const bcrypt        = require('bcrypt-nodejs');
 const uuid          = require('uuid');
+const assign        = require('../modules/assign');
 const cache         = require('../modules/caching');
 const parseData     = require('../modules/parseData');
 const readJSON      = require('../modules/readJSON');
@@ -168,19 +169,20 @@ const Duck = function(schema, isReady, items){
 		Duck.prototype.findOne = function(field, value){
 			const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 			const items = this.items || this.cached();
-			const returnedItems = items.map(function(item){
-							  	var res = item;
+			const returnedItem = function(){
+				for (i in items){
+					var res = items[i];
 
-							  	// for each item in the array
-							  	for (i in fieldPath){
-									res = res[fieldPath[i]]
-								}
+					for (j in fieldPath){
+						res = res[fieldPath[j]]
+					}
 
-							  	return res == value ? item : null
-							  })
-							  .filter(nullCheck => nullCheck);
-
-			return returnedItems.length > 1 ? returnedItems : returnedItems[0];
+					if(res == value){
+						return items[i];
+					}
+				}
+			}
+			return returnedItem();
 		}
 
 
@@ -232,19 +234,24 @@ const Duck = function(schema, isReady, items){
 					reject('still initializing ' + table);
 				}
 
-				if(parseData(data, schema, table) !== 'success'){ 
+				// if the HASH isn't set, set it to a uuid
+				data[hash] = data[hash] || uuid.v4();
+
+				var itemToAdd = {};
+				readJSON(data, readJSON, function(item, data){
+					assign(itemToAdd, item, data[item])
+				});
+
+				if(parseData(itemToAdd, schema, table) !== 'success'){ 
 					console.error('failed to add ' + JSON.stringify(data));
 
 					reject('Mismatch of data types');
 					return;
 				}
 
-				// if the HASH isn't set, set it to a uuid
-				data[hash] = data[hash] || uuid.v4();
-
 				var params = {
 					TableName: table,
-					Item: data,
+					Item: itemToAdd,
 					ConditionExpression: '#h <> :h',
 					ExpressionAttributeNames: { '#h': hash },
 					ExpressionAttributeValues: { ':h': data[hash] }

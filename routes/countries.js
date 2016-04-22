@@ -30,8 +30,14 @@ router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res
 	});
 });
 
-router.post('/new', function(req, res){
+router.post('/new', Country.getCached, function(req, res){
 	const params = req.body;
+
+	// only allowed to add a country that doesn't exist
+	if (Country.findOne('name', params.name)){
+		req.flash('error', 'A country with that name already exists');
+		res.redirect('/countries')
+	}
 
 	// if the multiselect has one item, it returns a string and it needs to be an array
 	if (typeof params.continent === 'string'){

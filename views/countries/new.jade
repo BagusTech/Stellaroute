@@ -13,6 +13,15 @@ block content
 						label(for='CountryName') Name
 						input.form-control#CountryName(name='name', type='text', placeholder='America', required)
 			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='CountryOfficialName') Official Name
+						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Federal Republic of Germany', required)
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='CountryNativeName') Native Name
+						input.form-control#CountryNativeName(name='names.native', type='text', placeholder='Deutschland', required)
+			.row
 				.col-sm-1.col-xs-4
 					.form-group
 						label(for='CountryAbbreviation') Abbreviation

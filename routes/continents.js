@@ -22,8 +22,14 @@ router.get('/new', function(req, res, next){
 	});
 });
 
-router.post('/new', function(req, res){
+router.post('/new', Continent.getCached, function(req, res){
 	const params = req.body;
+
+	// only allowed to add a continent that doesn't exist
+	if (Continent.findOne('name', params.name)){
+		req.flash('error', 'A country with that name already exists');
+		res.redirect('/continents')
+	}
 
 	Continent.add(params).then(function(data){
 		// resolved add

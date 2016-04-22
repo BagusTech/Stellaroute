@@ -29,4 +29,20 @@ block content
 				input(type='hidden', name='Id', value= user.Id)
 				input.btn.btn-primary(type='submit', value='Update', name='submit')
 				| &nbsp;
-				input.btn.btn-danger(type='submit', value='Delete', name='delete')
+				button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
+		
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content.text-left
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel Delete Your Account
+							.modal-body
+								.alert.alert-danger
+									p Are you sure you want to delete your account?
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close

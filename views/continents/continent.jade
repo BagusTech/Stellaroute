@@ -19,4 +19,24 @@ block content
 		input.btn.btn-primary.btn-update(type='button', value='Update')
 		| &nbsp;
 		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-		input.btn.btn-danger(type= 'submit', value= 'Delete', style='float: right', name='delete')
+		button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
+		
+		.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+			.modal-dialog(role='document')
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+						h4.modal-title#DeleteModalLabel
+							| Delete&nbsp;
+							= continent.name
+					.modal-body
+						.alert.alert-danger
+							p
+								| Are you sure you want to delete&nbsp;
+								= continent.name + '?'
+							p This action cannot be undone
+						input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+					.modal-footer
+						button.btn.btn-default(type='button', data-dismiss='modal') Close

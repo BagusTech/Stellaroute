@@ -7,11 +7,14 @@ var Country = new Duck({
 	Item: {
 		Id: String,
 		name: String,
+		names: {
+			official: String,
+			native: String
+		},
 		abbreviation: String,
 		alias: Array,
 		continent: Array,
 		worldRegions: Array
-		//countryRegions: Array
 	},
 	HASH: 'Id',
 	HASHType: 'S'

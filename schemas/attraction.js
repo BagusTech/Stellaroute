@@ -11,7 +11,6 @@ var Attraction = new Duck({
 
 	HASH: 'Id',
 	HASHType: 'S'
-	//, Indexes : ['localEmail']
 });
 
 module.exports = Attraction;

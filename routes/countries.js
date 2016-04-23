@@ -6,6 +6,7 @@ const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const Country = require('../schemas/country');
+const CountryRegion = require('../schemas/country-region');
 const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
@@ -149,16 +150,18 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
+router.get('/:name', Continent.getCached, WorldRegion.getCached, CountryRegion.getCached, function(req, res, next){
 	var country = Country.join('continent', Continent.cached(), 'Id', 'name')
 						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
-						 .findOne('name', req.params.name)
+						 .findOne('name', req.params.name);
+
 	res.render('countries/country', {
 		title: '',
 		description: '',
 		continents: Continent.cached().sort(sortBy('name')),
 		country: country,
 		key: Country.hash,
+		countryRegions: CountryRegion.find('country', country.Id),
 		worldRegions: WorldRegion.cached().sort(sortBy('name'))
 	});
 });

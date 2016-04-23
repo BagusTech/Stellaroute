@@ -6,27 +6,39 @@ block content
 
 	h1= country.name
 
-	form.update-form(method='POST', action='/countries/update')
-		.row
-			.col-xs-12.col-sm-6
+	.row
+		.col-xs-12.col-sm-6
+			form.update-form(method='POST', action='/countries/update')
 				.form-group
 					label(for='CountryName') Name
 					p.form-control-static= country.name
 					.hidden
 						input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
-
+			
+				.form-group
+					label(for='CountryOfficialName') Official Name
+					p.form-control-static= country.names && country.names.official || 'N/A'
+					.hidden
+						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
+			
+				.form-group
+					label(for='CountryNativeName') Native Name
+					p.form-control-static= country.names && country.names.native || 'N/A'
+					.hidden
+						input.form-control#CountryNativeName(name='names.native', type='text', placeholder='Name', value= country.names && country.names.native)
+			
 				.form-group
 					label(for='CountryAbberviation') Abbreviation
 					p.form-control-static= country.abbreviation
 					.hidden
 						input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
-
+			
 				.form-group
 					label(for='CountryAlias') Alias
-					p.form-control-static= country.alias && country.alias.join(', ')
+					p.form-control-static= country.alias && country.alias.join(', ') || 'N/A'
 					.hidden
 						input.form-control#CountryAlias(name='alias', type='text', placeholder='Alias', value= country.alias)
-					
+			
 				.form-group
 					label(for='CountryContinet') Continent(s)
 					p.form-control-static
@@ -39,7 +51,7 @@ block content
 						select.form-control#CountryContinent(name='continent',  multiple='true')
 							-for (i in continents)
 								option(value= continents[i].Id, selected= country.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
-
+			
 				.form-group
 					label World Region(s)
 					p.form-control-static
@@ -53,28 +65,70 @@ block content
 							-for (i in worldRegions)
 								option(value= worldRegions[i].Id, selected= country.worldRegions.toString().indexOf(worldRegions[i].name) > -1)= worldRegions[i].name
 
-		input(type='hidden', name= key, value= country[key])
-		input.btn.btn-primary.btn-update(type='button', value='Update')
-		| &nbsp;
-		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-		button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
 
-		.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header
-						button.close(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-						h4.modal-title#DeleteModalLabel
-							| Delete&nbsp;
-							= country.name
-					.modal-body
-						.alert.alert-danger
-							p
-								| Are you sure you want to delete&nbsp;
-								= country.name + '?'
-							p This action cannot be undone
-						input.btn.btn-danger(type='submit', value='Delete', name='delete')
+				input(type='hidden', name= key, value= country[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
 
-					.modal-footer
-						button.btn.btn-default(type='button', data-dismiss='modal') Close
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel
+									| Delete&nbsp;
+									= country.name
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= country.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		.col-xs-12.col-sm-6
+			h2 Country Regions
+			p.text-right
+				button.btn.btn-primary(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Country Region
+
+			for region in countryRegions
+				p
+					a(href= '/country-regions/' + region.name)= region.name
+
+			p.text-right
+				button.btn.btn-primary(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Country Region
+
+	.modal.fade#NewCountryRegionModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryRegionModalLabel")
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4.modal-title#NewCountryRegionModalLabel New Country Region
+				.modal-body
+					form(method='POST', action='/country-regions/new')
+						fieldset
+							legend Country Region
+
+							.form-group
+								label(for='CountryRegionName') Name
+								input.form-control#CountryRegionName(name='name', type='text', placeholder='name', required)
+
+							.form-group
+								label(for='CountryRegionContinet') Country it resides in
+								p.form-control-static= country.name
+
+							input(type='hidden', name='country', value= country.Id)
+							input(type='hidden', name='countryName', value= country.name)
+							input.btn.btn-primary(type='submit', value='submit')
+						
+					//input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close

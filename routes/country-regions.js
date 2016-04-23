@@ -24,28 +24,32 @@ router.get('/new', Country.getCached, function(req, res, next){
 	});
 });
 
-router.post('/new', CountryRegion.getCached, function(req, res){
+router.post('/new', CountryRegion.getCached, Country.getCached, function(req, res){
 	const params = req.body;
+	const countryName = params.countryName;
+
+	delete params.countryName;
 
 	// only allowed to add a world region that doesn't exist
-	if (CountryRegion.findOne('name', params.name)){
-		req.flash('error', 'A country with that name already exists');
-		res.redirect('/country-regions')
+	var existingCountry = CountryRegion.findOne('name', params.name);
+	if (existingCountry && existingCountry.country == params.country){
+		req.flash('error', 'That country region already exists');
+		res.redirect('/countries/' + countryName);
 	}
 
 	CountryRegion.add(params).then(function(data){
 		// resolved
 		CountryRegion.updateCache().then(function(){
 			req.flash('success', 'World Region Successfully added');
-			res.redirect('/country-regions');
+			res.redirect('/countries/' + countryName);
 		}, function(err){
 			console.error(err);
-			res.redirect('/country-regions');
+			res.redirect('/countries/' + countryName);
 		})
 	}, function(err){
 		// rejected
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
-		res.redirect('/country-regions');
+		res.redirect('/countries/' + countryName);
 	});
 });
 

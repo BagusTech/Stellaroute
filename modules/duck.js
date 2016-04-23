@@ -130,7 +130,7 @@ const Duck = function(schema, isReady, items){
 		Duck.prototype.join          = function(field, data, joinOn, display){ 
 			var joinedItems = this.items || this.cached();
 			var joinedField = joinedItems.map(item =>
-				item[field].map(field =>
+				Array(item[field]).map(field =>
 					data.map(data =>
 						data[joinOn] == field ? data[display] : null)
 					.filter(nullCheck => nullCheck)));

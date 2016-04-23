@@ -25,8 +25,6 @@ const Duck = function(schema, isReady, items){
 		this.indexes    = schema.Indexes || [];
 		this.items      = items;		
 
-
-
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~~~~ Init ~~~~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -45,7 +43,6 @@ const Duck = function(schema, isReady, items){
 			// if there is a match, set isReady = true
 			// if there isn't a match, create the table
 			// once table sucessfuly created, set isReady = true
-			
 			db.listTables({}, function(err, data){
 				if(err){
 					console.error(JSON.stringify(err, null, 2));
@@ -55,7 +52,7 @@ const Duck = function(schema, isReady, items){
 					if(data.TableNames.indexOf(table) === -1) {
 						var params = {
 						    TableName : table,
-						    KeySchema: [       
+						    KeySchema: [
 						        { AttributeName: schema.HASH,
 						          KeyType: 'HASH'} //Partition key
 						    ],
@@ -111,8 +108,6 @@ const Duck = function(schema, isReady, items){
 				}
 			});
 		}
-
-
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~~ Methods ~~~~~~~~ */
@@ -185,8 +180,6 @@ const Duck = function(schema, isReady, items){
 			return returnedItem();
 		}
 
-
-
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~ Middleware ~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -214,8 +207,6 @@ const Duck = function(schema, isReady, items){
 				});
 			}
 		}
-
-
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~~ Promises ~~~~~~~ */
@@ -258,11 +249,15 @@ const Duck = function(schema, isReady, items){
 				}
 
 				// DynamoDB doesn't except empty strings as ReturnValues
-				for (var item in params.Item){
-					if(params.Item[item] === String()){
-						params.Item[item] = null;
+				void function setEmptyStringToNull(Item){
+					for (var item in Item){
+						if(Item[item] === String()){
+							Item[item] = null;
+						} else if(typeof Item[item] === 'object' && !(Item[item] instanceof Array)) {
+							setEmptyStringToNull(Item[item]);
+						}
 					}
-				}
+				}(params.Item);
 
 				db.lite.put(params, function(err, data) {
 					if (err){
@@ -316,6 +311,7 @@ const Duck = function(schema, isReady, items){
 			return new Promise(function(resolve, reject){
 				if(!isReady){
 					reject('still initializing ' + table);
+					return;
 				}
 
 				if(parseData(data, schema, table) !== 'success'){ 
@@ -325,57 +321,136 @@ const Duck = function(schema, isReady, items){
 					return;
 				}
 
-				var params = {
-					TableName: table,
-					Key: {},
-					// UpdateExpression -- created below
-					ExpressionAttributeNames: {},
-					ExpressionAttributeValues: {}
+				var objectsToAdd = []
+
+				function parse(data, schema){
+					for (var item in data){
+						var itemType = data[item] instanceof Array === true ? 'array' : typeof data[item];
+
+						if ( schema[item] === undefined && itemType === 'object'){
+							objectsToAdd.push(item);
+						}
+						
+						if ( itemType === 'object' && schema[item]) {
+							parse(data[item], schema[item])
+						} else if ( itemType === 'object' ){
+							parse(data[item], {})
+						}
+					}
 				}
 
-				var updateExpression = 'set';
 
-				params.Key[key] = data[key];
+				void function getCountry(field, value){
+					const fieldPath = field.split('.'); // make the accepted arguments into an array
+					const items = cache.get(table);
+					const currentCountry = function(){
+						for (i in items){
+							var res = items[i];
 
-				var flattenedData = flattenObject(data);
+							for (j in fieldPath){
+								res = res[fieldPath[j]]
+							}
 
-				var expressionCounter = 0;
-				for (item in flattenedData){
-					if(item !== key) {
-
-						// 'a.b.c' => 'a.#b.#c'
-						var concatinatedExpression = item.replace('.', '.#');
-
-						updateExpression += ' #' + concatinatedExpression + '= :' + expressionCounter + ',';
-
-						var arr = item.split('.');
-						for(i in arr){
-							if (!params.ExpressionAttributeNames['#' + arr[i]]) {
-								params.ExpressionAttributeNames['#' + arr[i]] = arr[i];
+							if(res == value){
+								return items[i];
 							}
 						}
-
-						// DynamoDB doesn't except empty strings as ReturnValues, so the value to null if that's the case
-						var attributeValue = flattenedData[item] == String() ? null : flattenedData[item];
-						params.ExpressionAttributeValues[':' + expressionCounter] = attributeValue;
-							
 					}
+					parse(data, currentCountry())
+				}(key, data[key])
 
-					expressionCounter++;
+
+				function addMissingObjects(i){
+					var params = {
+						TableName: table,
+						Key: {},
+						// UpdateExpression -- created below
+						ExpressionAttributeNames: {
+							"#0": objectsToAdd[i]
+						},
+						ExpressionAttributeValues: {
+							":empty": {}
+						},
+						"UpdateExpression": "set #0= if_not_exists(#0, :empty)"
+					}
+					params.Key[key] = data[key];
+
+					i++;
+					db.lite.update(params, function(err, data){
+						if (err){
+							console.error(err);
+							process.exit();
+						} else {
+							console.log('success');
+							if (objectsToAdd.length == i){
+								finalUpdate(data);
+							} else {
+								addMissingObjects(i)
+							}
+						}
+					});
 				}
 
-				// delete the last comma from the UpdateExpression
-				updateExpression = updateExpression.substring(0, updateExpression.length - 1);
-				params.UpdateExpression = updateExpression;
+				if(objectsToAdd.length > 0){
+					addMissingObjects(0);
+				} else {
+					finalUpdate(data);
+				}
 				
-				db.lite.update(params, function(err, data){
-					if (err){
-						console.error(err);
-						reject();
-					} else {
-						resolve();
+
+				function finalUpdate(item){
+					var params = {
+						TableName: table,
+						Key: {},
+						// UpdateExpression -- created below
+						ExpressionAttributeNames: {},
+						ExpressionAttributeValues: {}
 					}
-				});
+
+					var updateExpression = 'set';
+
+					params.Key[key] = data[key];
+
+					var flattenedData = flattenObject(data);
+
+					var expressionCounter = 0;
+					for (item in flattenedData){
+						if(item !== key) {
+
+							// 'a.b.c' => 'a.#b.#c'
+							var concatinatedExpression = item.replace('.', '.#');
+
+							updateExpression += ' #' + concatinatedExpression + '= :' + expressionCounter + ',';
+
+							var arr = item.split('.');
+							for(i in arr){
+								if (!params.ExpressionAttributeNames['#' + arr[i]]) {
+									params.ExpressionAttributeNames['#' + arr[i]] = arr[i];
+								}
+							}
+
+							// DynamoDB doesn't except empty strings as ReturnValues, so the value to null if that's the case
+							var attributeValue = flattenedData[item] == String() ? null : flattenedData[item];
+							params.ExpressionAttributeValues[':' + expressionCounter] = attributeValue;
+								
+						}
+
+						expressionCounter++;
+					}
+
+					// delete the last comma from the UpdateExpression
+					updateExpression = updateExpression.substring(0, updateExpression.length - 1);
+					params.UpdateExpression = updateExpression;
+
+					db.lite.update(params, function(err, data){
+						if (err){
+							console.error(err);
+							reject();
+						} else {
+							resolve();
+						}
+					});
+				}
 			});
 		}
 
@@ -462,35 +537,34 @@ const Duck = function(schema, isReady, items){
 
 				process.exit();
 			});
-
+		
 			var params = {
-					  "TableName": "Users",
-					  "Key": {
-					    "Id": "b677b0d7-c734-48ca-87ed-0d542e472fa4"
-					  },
-					  "ExpressionAttributeNames": {
-					    "#name": "name",
-					    "#first": "first",
-					    "#last": "last",
-					    "#local": "local",
-					    "#email": "email"
-					  },
-					  "ExpressionAttributeValues": {
-					    ":0": "Joe",
-					    ":1": "Lissner",
-					    ":3": "test@test.com"
-					  },
-					  "UpdateExpression": "set #name.#first= :0, #name.#last= :1, #local.#email= :3"
-					}
+				"TableName": "Countries",
+				"Key": {
+					"Id": "6b50f784-a9df-47e2-891b-5b5126edf60a"
+				},
+				"ExpressionAttributeNames": {
+					"#names": "names",
+					"#official": "official",
+					"#native": "native"
+				},
+				"ExpressionAttributeValues": {
+					":empty": {},
+					":0": "Serious Country Name",
+					":1": "El Nameo"
+				},
+				"UpdateExpression": "set #names= if_not_exists(#names, :empty), #names.#official= :0, #names.#native= :1"
+			}
 
 			db.lite.update(params, function(err, data){
-							if (err){
-								console.error(err);
-								process.exit();
-							} else {
-								process.exit();
-							}
-						}); 
+									if (err){
+										console.error(err);
+										process.exit();
+									} else {
+										console.log('success');
+										process.exit();
+									}
+								});
 		*/
 }
 

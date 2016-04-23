@@ -4,14 +4,29 @@ const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const setFlash         = require('../modules/setFlash');
 const User             = require('../schemas/user');
+const Country          = require('../schemas/country');
 const router           = express.Router();
 
 require('../config/passport')(passport);	
 
-router.get('/', User.getCached, function(req, res, next){
-	// TODO: Make duck.find() = duck.get()
-	//console.log(User.findOne('local.email', 'joe@bagusco.com'));
-	//process.exit()
+router.get('/', Country.getCached, function(req, res, next){
+	var data = {
+		Id: 'cfa01d98-3dc8-41fb-aa7b-e83b63cb8cfb',
+		names: {
+			official: 'Test Official',
+			native: 'Test Native'
+		}
+	}
+	Country.update(data).then(function(i){
+		console.log(i);
+
+		//process.exit()
+	}, function(err){
+		console.log(err);
+
+		//process.exit()
+	});
+	
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',

@@ -1,3 +1,5 @@
+//ob: object = {a: {b: 'c'}}
+//returns: object = {a.b: 'c'}
 var flattenObject = function(ob) {
 	var toReturn = {};
 	

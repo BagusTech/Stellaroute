@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+	h2 Country Regions
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/country-regions/new') New
+		
+	.row
+		.col-sm-3.col-xs-6
+			strong Name
+		.col-sm-9.col-xs-6
+			strong Country
+
+
+	for region in countryRegions
+		.row
+			.col-sm-3.col-xs-6
+				a(href='/country-regions/' + region.name)= region.name
+			.col-sm-9.col-xs-6= region.country
+
+
+	p.text-right
+		a.btn.btn-primary.btn-lg(href='/country-regions/new') New

@@ -12,6 +12,7 @@ const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
 const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
+const countryRegions   = require('./routes/country-regions');
 const review           = require('./routes/review');
 const profile          = require('./routes/profile');
 const worldRegions     = require('./routes/world-regions');
@@ -53,7 +54,8 @@ app.use(isLoggedIn);
 //Set index.js to be the main router
 app.use('/', routes);
 app.use('/continents', continents);
-app.use('/countries', countries)
+app.use('/countries', countries);
+app.use('/country-regions', countryRegions);
 app.use('/profile', profile);
 app.use('/world-regions', worldRegions);
 //app.use('/review', review);

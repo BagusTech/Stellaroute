@@ -9,8 +9,9 @@ var Country = new Duck({
 		name: String,
 		names: {
 			official: String,
-			native: String
+			native: Array
 		},
+		languages: Array,
 		abbreviation: String,
 		alias: Array,
 		continent: Array,

@@ -48,6 +48,10 @@ router.post('/new', Country.getCached, function(req, res){
 	if (typeof params.worldRegions === 'string'){
 		params.worldRegions = Array(params.worldRegions);
 	}
+
+	if (params.names && params.names.native === 'string'){
+		params.names.native = Array(params.names.native);
+	}
 	
 	// only attempt to split if alias' are entered else delete it
 	if(params.alias.length > 1){

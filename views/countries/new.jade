@@ -4,7 +4,7 @@ block content
 	h1 Add a new Country
 
 	form(method='POST', action='/countries/new')
-		fieldset
+		fieldset.js-new-country
 			legend Country
 
 			.row
@@ -17,11 +17,117 @@ block content
 					.form-group
 						label(for='CountryOfficialName') Official Name
 						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Federal Republic of Germany', required)
-			.row
-				.col-sm-6.col-xs-12
+			.row.js-duplicate
+				.col-sm-4.col-xs-8
 					.form-group
 						label(for='CountryNativeName') Native Name
-						input.form-control#CountryNativeName(name='names.native', type='text', placeholder='Deutschland', required)
+						input.form-control#CountryNativeName(name='native.name', type='text', placeholder='Deutschland', required)
+				.col-xs-2
+					.form-group
+						label(for='CountryNativeNameLanguage') Language
+						select.form-control#CountryNativeNameLanguage(name='native.language', required)
+							option Akan
+							option Amharic
+							option Arabic
+							option Assamese
+							option Awadhi
+							option Azerbaijani
+							option Balochi
+							option Belarusian
+							option Bengali
+							option Bhojpuri
+							option Burmese
+							option Cantonese
+							option Cebuano
+							option Chewa
+							option Chhattisgarhi
+							option Chittagonian
+							option Czech
+							option Deccan
+							option Dhundhari
+							option Dutch
+							option English
+							option French
+							option Fula
+							option Gan Chinese
+							option German
+							option Greek
+							option Gujarati
+							option Haitian Creole
+							option Hakka
+							option Haryanvi
+							option Hausa
+							option Hiligaynon
+							option Hindi
+							option Hmong
+							option Hungarian
+							option Igbo
+							option Ilocano
+							option Indonesian
+							option Italian
+							option Japanese
+							option Javanese
+							option Jin
+							option Kannada
+							option Kazakh
+							option Khmer
+							option Kinyarwanda
+							option Kirundi
+							option Konkani
+							option Korean
+							option Kurdish
+							option Madurese
+							option Magahi
+							option Maithili
+							option Malagasy
+							option Malayalam
+							option Mandarin
+							option Marathi
+							option Marwari
+							option Mossi
+							option Nepali
+							option Odia
+							option Oromo
+							option Pashto
+							option Persian
+							option Polish
+							option Portuguese
+							option Punjabi
+							option Romanian
+							option Russian
+							option Saraiki
+							option Serbo-Croatian
+							option Shona
+							option Sindhi
+							option Sinhalese
+							option Somali
+							option Southern Min
+							option Spanish
+							option Sundanese
+							option Swedish
+							option Sylheti
+							option Tagalog
+							option Tamil
+							option Telugu
+							option Thai
+							option Turkish
+							option Turkmen
+							option Ukrainian
+							option Urdu
+							option Uyghur
+							option Uzbek
+							option Vietnamese
+							option Xhosa
+							option Yoruba
+							option Zhuang
+							option Zulu
+				.col-xs-2
+					.form-group
+						label &nbsp;
+						button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+			.row
+				.col-sm-6.col-xs-12.text-right
+					button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
 			.row
 				.col-sm-2.col-xs-4
 					.form-group
@@ -55,3 +161,19 @@ block content
 
 			.form-group.text-right
 				input.btn.btn-primary(type='submit', value='submit')
+
+	script(type='text/javascript').
+		$('.js-make-duplicate').click(function duplicateNativeNameRow(){
+			var duplicate = $('.js-duplicate').last().clone();
+			$('.js-duplicate').last().after(duplicate);
+
+			$('.js-duplicate').last().find('.hidden').removeClass('hidden');
+		})
+
+		$('.js-new-country').on('click', '.js-delete-row', function(){
+			$(this).closest('.js-duplicate').detach();
+		})
+		$('.js-delete-row').click(function(){
+			console.log($(this).closest('.js-duplicate').detach)
+			
+		})

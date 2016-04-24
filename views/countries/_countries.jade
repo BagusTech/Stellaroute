@@ -6,30 +6,135 @@ block content
 		a.btn.btn-primary.btn-lg(href='/countries/new') New
 	.row
 		.col-sm-2.col-xs-3
-			strong Name
+			strong.js-name-sort Name
 		.col-sm-3.col-xs-3
-			strong Continent(s)
+			strong.js-continent-sort Continent(s)
 		.col-xs-6
-			strong World Region(s)
+			strong.js-region-sort World Region(s)
 
-	for country in countries
-		.row
-			.col-sm-2.col-xs-3
-				a(href='/countries/' + country.name)= country.name
-			.col-sm-3.col-xs-3
-				- for (var i = 0; i < country.continent.length; i++)
-					span= country.continent[i]
+	.js-countries
+		for country in countries
+			.row.js-country
+				.col-sm-2.col-xs-3
+					a.js-name(href='/countries/' + country.name)= country.name
+				.col-sm-3.col-xs-3
+					- for (var i = 0; i < country.continent.length; i++)
+						span.js-continent= country.continent[i]
 
-					if ((i+1) !== country.continent.length)
-						|,&nbsp;
+						if ((i+1) !== country.continent.length)
+							|,&nbsp;
 
-			.col-xs-6
-				- for (var i = 0; i < country.worldRegions.length; i++)
-					span= country.worldRegions[i]
+				.col-xs-6
+					- for (var i = 0; i < country.worldRegions.length; i++)
+						span.js-region= country.worldRegions[i]
 
-					if ((i+1) !== country.worldRegions.length)
-						|,&nbsp;
+						if ((i+1) !== country.worldRegions.length)
+							|,&nbsp;
 
 
 	p.text-right
 		a.btn.btn-primary.btn-lg(href='/countries/new') New
+
+	script(type='text/javascript').
+		$(document).ready(function(){
+			var countries = $('.js-country');
+
+			//sort by name
+			$('.js-name-sort').click(function sortByContinent(){
+				$(this).toggleClass('js-asc');
+
+				if($(this).hasClass('js-asc')){
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-name').text() > $(b).find('.js-name').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-name').text() < $(b).find('.js-name').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				} else {
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-name').text() < $(b).find('.js-name').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-name').text() > $(b).find('.js-name').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				}
+
+				$('.js-countries').append(sorted);
+			});
+
+			//sort by continent
+			$('.js-continent-sort').click(function sortByContinent(){
+				$(this).toggleClass('js-asc');
+
+				if($(this).hasClass('js-asc')){
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-continent').text() > $(b).find('.js-continent').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-continent').text() < $(b).find('.js-continent').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				} else {
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-continent').text() < $(b).find('.js-continent').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-continent').text() > $(b).find('.js-continent').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				}
+
+				$('.js-countries').append(sorted);
+			});
+
+			//sort by world region
+			$('.js-region-sort').click(function sortByContinent(){
+				$(this).toggleClass('js-asc');
+
+				if($(this).hasClass('js-asc')){
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-region').text() > $(b).find('.js-region').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-region').text() < $(b).find('.js-region').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				} else {
+					var sorted = countries.sort(function (a, b) {
+						if ($(a).find('.js-region').text() < $(b).find('.js-region').text()) {
+							return 1;
+						}
+
+						if ($(a).find('.js-region').text() > $(b).find('.js-region').text()) {
+							return -1;
+						}
+
+						return 0;
+					});
+				}
+
+				$('.js-countries').append(sorted);
+			});
+		});

@@ -34,6 +34,20 @@ router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res
 router.post('/new', Country.getCached, function(req, res){
 	const params = req.body;
 
+	// start combining native name and native langauge into an array of objects from two seperate arrays
+	var nativeNames = params['native.name'];
+	delete params['native.name'];
+
+	var nativeLanguages = params['native.language'];
+	delete params['native.language'];
+
+	params['names.native'] = [];
+
+	for(i in nativeNames){
+		params['names.native'].push({name: nativeNames[i], language: nativeLanguages[i]});
+	}
+	// end combining
+
 	// only allowed to add a country that doesn't exist
 	if (Country.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
@@ -49,8 +63,8 @@ router.post('/new', Country.getCached, function(req, res){
 		params.worldRegions = Array(params.worldRegions);
 	}
 
-	if (params.names && params.names.native === 'string'){
-		params.names.native = Array(params.names.native);
+	if (typeof params.languages === 'string'){
+		params.languages = Array(params.languages);
 	}
 	
 	// only attempt to split if alias' are entered else delete it
@@ -111,6 +125,18 @@ router.post('/update', function(req, res){
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
+
+		var nativeNames = req.body['native.name'];
+		delete req.body['native.name'];
+
+		var nativeLanguages = req.body['native.language'];
+		delete req.body['native.language'];
+
+		req.body['names.native'] = [];
+
+		for(i in nativeNames){
+			req.body['names.native'].push({name: nativeNames[i], language: nativeLanguages[i]});
+		}
 
 		var params = {};
 

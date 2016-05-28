@@ -8,24 +8,241 @@ block content
 
 	.row
 		.col-xs-12.col-sm-6
-			form.update-form(method='POST', action='/countries/update')
+			form.update-form.js-update-form(method='POST', action='/countries/update')
 				.form-group
 					label(for='CountryName') Name
 					p.form-control-static= country.name
 					.hidden
 						input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
-			
+				
+				.form-group.js-languages
+					label(for='CountryLanguages') Language(s)
+					p.form-control-static= country.languages && country.languages.join(', ')
+					.hidden
+						select.form-control#CountryLanguages(name='languages', multiple='true', required)
+							option(selected= country.languages && country.languages.indexOf('Akan') > -1) Akan
+							option(selected= country.languages && country.languages.indexOf('Amharic') > -1) Amharic
+							option(selected= country.languages && country.languages.indexOf('Arabic') > -1) Arabic
+							option(selected= country.languages && country.languages.indexOf('Assamese') > -1) Assamese
+							option(selected= country.languages && country.languages.indexOf('Awadhi') > -1) Awadhi
+							option(selected= country.languages && country.languages.indexOf('Azerbaijani') > -1) Azerbaijani
+							option(selected= country.languages && country.languages.indexOf('Balochi') > -1) Balochi
+							option(selected= country.languages && country.languages.indexOf('Belarusian') > -1) Belarusian
+							option(selected= country.languages && country.languages.indexOf('Bengali') > -1) Bengali
+							option(selected= country.languages && country.languages.indexOf('Bhojpuri') > -1) Bhojpuri
+							option(selected= country.languages && country.languages.indexOf('Burmese') > -1) Burmese
+							option(selected= country.languages && country.languages.indexOf('Cantonese') > -1) Cantonese
+							option(selected= country.languages && country.languages.indexOf('Cebuano') > -1) Cebuano
+							option(selected= country.languages && country.languages.indexOf('Chewa') > -1) Chewa
+							option(selected= country.languages && country.languages.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
+							option(selected= country.languages && country.languages.indexOf('Chittagonian') > -1) Chittagonian
+							option(selected= country.languages && country.languages.indexOf('Czech') > -1) Czech
+							option(selected= country.languages && country.languages.indexOf('Deccan') > -1) Deccan
+							option(selected= country.languages && country.languages.indexOf('Dhundhari') > -1) Dhundhari
+							option(selected= country.languages && country.languages.indexOf('Dutch') > -1) Dutch
+							option(selected= country.languages && country.languages.indexOf('English') > -1) English
+							option(selected= country.languages && country.languages.indexOf('French') > -1) French
+							option(selected= country.languages && country.languages.indexOf('Fula') > -1) Fula
+							option(selected= country.languages && country.languages.indexOf('Gan Chinese') > -1) Gan Chinese
+							option(selected= country.languages && country.languages.indexOf('German') > -1) German
+							option(selected= country.languages && country.languages.indexOf('Greek') > -1) Greek
+							option(selected= country.languages && country.languages.indexOf('Gujarati') > -1) Gujarati
+							option(selected= country.languages && country.languages.indexOf('Haitian Creole') > -1) Haitian Creole
+							option(selected= country.languages && country.languages.indexOf('Hakka') > -1) Hakka
+							option(selected= country.languages && country.languages.indexOf('Haryanvi') > -1) Haryanvi
+							option(selected= country.languages && country.languages.indexOf('Hausa') > -1) Hausa
+							option(selected= country.languages && country.languages.indexOf('Hiligaynon') > -1) Hiligaynon
+							option(selected= country.languages && country.languages.indexOf('Hindi') > -1) Hindi
+							option(selected= country.languages && country.languages.indexOf('Hmong') > -1) Hmong
+							option(selected= country.languages && country.languages.indexOf('Hungarian') > -1) Hungarian
+							option(selected= country.languages && country.languages.indexOf('Igbo') > -1) Igbo
+							option(selected= country.languages && country.languages.indexOf('Ilocano') > -1) Ilocano
+							option(selected= country.languages && country.languages.indexOf('Indonesian') > -1) Indonesian
+							option(selected= country.languages && country.languages.indexOf('Italian') > -1) Italian
+							option(selected= country.languages && country.languages.indexOf('Japanese') > -1) Japanese
+							option(selected= country.languages && country.languages.indexOf('Javanese') > -1) Javanese
+							option(selected= country.languages && country.languages.indexOf('Jin') > -1) Jin
+							option(selected= country.languages && country.languages.indexOf('Kannada') > -1) Kannada
+							option(selected= country.languages && country.languages.indexOf('Kazakh') > -1) Kazakh
+							option(selected= country.languages && country.languages.indexOf('Khmer') > -1) Khmer
+							option(selected= country.languages && country.languages.indexOf('Kinyarwanda') > -1) Kinyarwanda
+							option(selected= country.languages && country.languages.indexOf('Kirundi') > -1) Kirundi
+							option(selected= country.languages && country.languages.indexOf('Konkani') > -1) Konkani
+							option(selected= country.languages && country.languages.indexOf('Korean') > -1) Korean
+							option(selected= country.languages && country.languages.indexOf('Kurdish') > -1) Kurdish
+							option(selected= country.languages && country.languages.indexOf('Madurese') > -1) Madurese
+							option(selected= country.languages && country.languages.indexOf('Magahi') > -1) Magahi
+							option(selected= country.languages && country.languages.indexOf('Maithili') > -1) Maithili
+							option(selected= country.languages && country.languages.indexOf('Malagasy') > -1) Malagasy
+							option(selected= country.languages && country.languages.indexOf('Malayalam') > -1) Malayalam
+							option(selected= country.languages && country.languages.indexOf('Mandarin') > -1) Mandarin
+							option(selected= country.languages && country.languages.indexOf('Marathi') > -1) Marathi
+							option(selected= country.languages && country.languages.indexOf('Marwari') > -1) Marwari
+							option(selected= country.languages && country.languages.indexOf('Mossi') > -1) Mossi
+							option(selected= country.languages && country.languages.indexOf('Nepali') > -1) Nepali
+							option(selected= country.languages && country.languages.indexOf('Odia') > -1) Odia
+							option(selected= country.languages && country.languages.indexOf('Oromo') > -1) Oromo
+							option(selected= country.languages && country.languages.indexOf('Pashto') > -1) Pashto
+							option(selected= country.languages && country.languages.indexOf('Persian') > -1) Persian
+							option(selected= country.languages && country.languages.indexOf('Polish') > -1) Polish
+							option(selected= country.languages && country.languages.indexOf('Portuguese') > -1) Portuguese
+							option(selected= country.languages && country.languages.indexOf('Punjabi') > -1) Punjabi
+							option(selected= country.languages && country.languages.indexOf('Romanian') > -1) Romanian
+							option(selected= country.languages && country.languages.indexOf('Russian') > -1) Russian
+							option(selected= country.languages && country.languages.indexOf('Saraiki') > -1) Saraiki
+							option(selected= country.languages && country.languages.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
+							option(selected= country.languages && country.languages.indexOf('Shona') > -1) Shona
+							option(selected= country.languages && country.languages.indexOf('Sindhi') > -1) Sindhi
+							option(selected= country.languages && country.languages.indexOf('Sinhalese') > -1) Sinhalese
+							option(selected= country.languages && country.languages.indexOf('Somali') > -1) Somali
+							option(selected= country.languages && country.languages.indexOf('Southern Min') > -1) Southern Min
+							option(selected= country.languages && country.languages.indexOf('Spanish') > -1) Spanish
+							option(selected= country.languages && country.languages.indexOf('Sundanese') > -1) Sundanese
+							option(selected= country.languages && country.languages.indexOf('Swedish') > -1) Swedish
+							option(selected= country.languages && country.languages.indexOf('Sylheti') > -1) Sylheti
+							option(selected= country.languages && country.languages.indexOf('Tagalog') > -1) Tagalog
+							option(selected= country.languages && country.languages.indexOf('Tamil') > -1) Tamil
+							option(selected= country.languages && country.languages.indexOf('Telugu') > -1) Telugu
+							option(selected= country.languages && country.languages.indexOf('Thai') > -1) Thai
+							option(selected= country.languages && country.languages.indexOf('Turkish') > -1) Turkish
+							option(selected= country.languages && country.languages.indexOf('Turkmen') > -1) Turkmen
+							option(selected= country.languages && country.languages.indexOf('Ukrainian') > -1) Ukrainian
+							option(selected= country.languages && country.languages.indexOf('Urdu') > -1) Urdu
+							option(selected= country.languages && country.languages.indexOf('Uyghur') > -1) Uyghur
+							option(selected= country.languages && country.languages.indexOf('Uzbek') > -1) Uzbek
+							option(selected= country.languages && country.languages.indexOf('Vietnamese') > -1) Vietnamese
+							option(selected= country.languages && country.languages.indexOf('Xhosa') > -1) Xhosa
+							option(selected= country.languages && country.languages.indexOf('Yoruba') > -1) Yoruba
+							option(selected= country.languages && country.languages.indexOf('Zhuang') > -1) Zhuang
+							option(selected= country.languages && country.languages.indexOf('Zulu') > -1) Zulu
+
 				.form-group
 					label(for='CountryOfficialName') Official Name
 					p.form-control-static= country.names && country.names.official || 'N/A'
 					.hidden
 						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
-			
-				.form-group
-					label(for='CountryNativeName') Native Name
-					p.form-control-static= country.names && country.names.native || 'N/A'
-					.hidden
-						input.form-control#CountryNativeName(name='names.native', type='text', placeholder='Name', value= country.names && country.names.native)
+				
+				if country.names && country.names.native
+					.well
+						- for( i in country.names.native)
+							.row.js-duplicate
+								.col-sm-.col-xs-5
+									.form-group
+										label Native Name
+										p.form-control-static= country.names.native[i].name
+										.hidden
+											input.form-control(name='native.name', value=country.names.native[i].name, type='text', placeholder='Deutschland', required)
+								.col-xs-4
+									.form-group
+										label Language
+										p.form-control-static= country.names.native[i].language
+										.hidden
+											select.form-control.js-name-language(name='native.language', required)
+												option(selected= country.names.native[i].language.indexOf('Akan') > -1) Akan
+												option(selected= country.names.native[i].language.indexOf('Amharic') > -1) Amharic
+												option(selected= country.names.native[i].language.indexOf('Arabic') > -1) Arabic
+												option(selected= country.names.native[i].language.indexOf('Assamese') > -1) Assamese
+												option(selected= country.names.native[i].language.indexOf('Awadhi') > -1) Awadhi
+												option(selected= country.names.native[i].language.indexOf('Azerbaijani') > -1) Azerbaijani
+												option(selected= country.names.native[i].language.indexOf('Balochi') > -1) Balochi
+												option(selected= country.names.native[i].language.indexOf('Belarusian') > -1) Belarusian
+												option(selected= country.names.native[i].language.indexOf('Bengali') > -1) Bengali
+												option(selected= country.names.native[i].language.indexOf('Bhojpuri') > -1) Bhojpuri
+												option(selected= country.names.native[i].language.indexOf('Burmese') > -1) Burmese
+												option(selected= country.names.native[i].language.indexOf('Cantonese') > -1) Cantonese
+												option(selected= country.names.native[i].language.indexOf('Cebuano') > -1) Cebuano
+												option(selected= country.names.native[i].language.indexOf('Chewa') > -1) Chewa
+												option(selected= country.names.native[i].language.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
+												option(selected= country.names.native[i].language.indexOf('Chittagonian') > -1) Chittagonian
+												option(selected= country.names.native[i].language.indexOf('Czech') > -1) Czech
+												option(selected= country.names.native[i].language.indexOf('Deccan') > -1) Deccan
+												option(selected= country.names.native[i].language.indexOf('Dhundhari') > -1) Dhundhari
+												option(selected= country.names.native[i].language.indexOf('Dutch') > -1) Dutch
+												option(selected= country.names.native[i].language.indexOf('English') > -1) English
+												option(selected= country.names.native[i].language.indexOf('French') > -1) French
+												option(selected= country.names.native[i].language.indexOf('Fula') > -1) Fula
+												option(selected= country.names.native[i].language.indexOf('Gan Chinese') > -1) Gan Chinese
+												option(selected= country.names.native[i].language.indexOf('German') > -1) German
+												option(selected= country.names.native[i].language.indexOf('Greek') > -1) Greek
+												option(selected= country.names.native[i].language.indexOf('Gujarati') > -1) Gujarati
+												option(selected= country.names.native[i].language.indexOf('Haitian Creole') > -1) Haitian Creole
+												option(selected= country.names.native[i].language.indexOf('Hakka') > -1) Hakka
+												option(selected= country.names.native[i].language.indexOf('Haryanvi') > -1) Haryanvi
+												option(selected= country.names.native[i].language.indexOf('Hausa') > -1) Hausa
+												option(selected= country.names.native[i].language.indexOf('Hiligaynon') > -1) Hiligaynon
+												option(selected= country.names.native[i].language.indexOf('Hindi') > -1) Hindi
+												option(selected= country.names.native[i].language.indexOf('Hmong') > -1) Hmong
+												option(selected= country.names.native[i].language.indexOf('Hungarian') > -1) Hungarian
+												option(selected= country.names.native[i].language.indexOf('Igbo') > -1) Igbo
+												option(selected= country.names.native[i].language.indexOf('Ilocano') > -1) Ilocano
+												option(selected= country.names.native[i].language.indexOf('Indonesian') > -1) Indonesian
+												option(selected= country.names.native[i].language.indexOf('Italian') > -1) Italian
+												option(selected= country.names.native[i].language.indexOf('Japanese') > -1) Japanese
+												option(selected= country.names.native[i].language.indexOf('Javanese') > -1) Javanese
+												option(selected= country.names.native[i].language.indexOf('Jin') > -1) Jin
+												option(selected= country.names.native[i].language.indexOf('Kannada') > -1) Kannada
+												option(selected= country.names.native[i].language.indexOf('Kazakh') > -1) Kazakh
+												option(selected= country.names.native[i].language.indexOf('Khmer') > -1) Khmer
+												option(selected= country.names.native[i].language.indexOf('Kinyarwanda') > -1) Kinyarwanda
+												option(selected= country.names.native[i].language.indexOf('Kirundi') > -1) Kirundi
+												option(selected= country.names.native[i].language.indexOf('Konkani') > -1) Konkani
+												option(selected= country.names.native[i].language.indexOf('Korean') > -1) Korean
+												option(selected= country.names.native[i].language.indexOf('Kurdish') > -1) Kurdish
+												option(selected= country.names.native[i].language.indexOf('Madurese') > -1) Madurese
+												option(selected= country.names.native[i].language.indexOf('Magahi') > -1) Magahi
+												option(selected= country.names.native[i].language.indexOf('Maithili') > -1) Maithili
+												option(selected= country.names.native[i].language.indexOf('Malagasy') > -1) Malagasy
+												option(selected= country.names.native[i].language.indexOf('Malayalam') > -1) Malayalam
+												option(selected= country.names.native[i].language.indexOf('Mandarin') > -1) Mandarin
+												option(selected= country.names.native[i].language.indexOf('Marathi') > -1) Marathi
+												option(selected= country.names.native[i].language.indexOf('Marwari') > -1) Marwari
+												option(selected= country.names.native[i].language.indexOf('Mossi') > -1) Mossi
+												option(selected= country.names.native[i].language.indexOf('Nepali') > -1) Nepali
+												option(selected= country.names.native[i].language.indexOf('Odia') > -1) Odia
+												option(selected= country.names.native[i].language.indexOf('Oromo') > -1) Oromo
+												option(selected= country.names.native[i].language.indexOf('Pashto') > -1) Pashto
+												option(selected= country.names.native[i].language.indexOf('Persian') > -1) Persian
+												option(selected= country.names.native[i].language.indexOf('Polish') > -1) Polish
+												option(selected= country.names.native[i].language.indexOf('Portuguese') > -1) Portuguese
+												option(selected= country.names.native[i].language.indexOf('Punjabi') > -1) Punjabi
+												option(selected= country.names.native[i].language.indexOf('Romanian') > -1) Romanian
+												option(selected= country.names.native[i].language.indexOf('Russian') > -1) Russian
+												option(selected= country.names.native[i].language.indexOf('Saraiki') > -1) Saraiki
+												option(selected= country.names.native[i].language.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
+												option(selected= country.names.native[i].language.indexOf('Shona') > -1) Shona
+												option(selected= country.names.native[i].language.indexOf('Sindhi') > -1) Sindhi
+												option(selected= country.names.native[i].language.indexOf('Sinhalese') > -1) Sinhalese
+												option(selected= country.names.native[i].language.indexOf('Somali') > -1) Somali
+												option(selected= country.names.native[i].language.indexOf('Southern Min') > -1) Southern Min
+												option(selected= country.names.native[i].language.indexOf('Spanish') > -1) Spanish
+												option(selected= country.names.native[i].language.indexOf('Sundanese') > -1) Sundanese
+												option(selected= country.names.native[i].language.indexOf('Swedish') > -1) Swedish
+												option(selected= country.names.native[i].language.indexOf('Sylheti') > -1) Sylheti
+												option(selected= country.names.native[i].language.indexOf('Tagalog') > -1) Tagalog
+												option(selected= country.names.native[i].language.indexOf('Tamil') > -1) Tamil
+												option(selected= country.names.native[i].language.indexOf('Telugu') > -1) Telugu
+												option(selected= country.names.native[i].language.indexOf('Thai') > -1) Thai
+												option(selected= country.names.native[i].language.indexOf('Turkish') > -1) Turkish
+												option(selected= country.names.native[i].language.indexOf('Turkmen') > -1) Turkmen
+												option(selected= country.names.native[i].language.indexOf('Ukrainian') > -1) Ukrainian
+												option(selected= country.names.native[i].language.indexOf('Urdu') > -1) Urdu
+												option(selected= country.names.native[i].language.indexOf('Uyghur') > -1) Uyghur
+												option(selected= country.names.native[i].language.indexOf('Uzbek') > -1) Uzbek
+												option(selected= country.names.native[i].language.indexOf('Vietnamese') > -1) Vietnamese
+												option(selected= country.names.native[i].language.indexOf('Xhosa') > -1) Xhosa
+												option(selected= country.names.native[i].language.indexOf('Yoruba') > -1) Yoruba
+												option(selected= country.names.native[i].language.indexOf('Zhuang') > -1) Zhuang
+												option(selected= country.names.native[i].language.indexOf('Zulu') > -1) Zulu
+								.col-xs-3
+									.form-group
+										p.form-static-content &nbsp;
+										button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+								hr
+
+						.text-right
+							p.hidden
+							.hidden
+								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
 			
 				.form-group
 					label(for='CountryAbberviation') Abbreviation

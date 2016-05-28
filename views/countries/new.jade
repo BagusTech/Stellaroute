@@ -14,18 +14,9 @@ block content
 						input.form-control#CountryName(name='name', type='text', placeholder='America', required)
 			.row
 				.col-sm-6.col-xs-12
-					.form-group
-						label(for='CountryOfficialName') Official Name
-						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Federal Republic of Germany', required)
-			.row.js-duplicate
-				.col-sm-4.col-xs-8
-					.form-group
-						label(for='CountryNativeName') Native Name
-						input.form-control#CountryNativeName(name='native.name', type='text', placeholder='Deutschland', required)
-				.col-xs-2
-					.form-group
-						label(for='CountryNativeNameLanguage') Language
-						select.form-control#CountryNativeNameLanguage(name='native.language', required)
+					.form-group.js-languages
+						label(for='CountryLanguages') Language(s)
+						select.form-control#CountryLanguages(name='languages', multiple='true', required)
 							option Akan
 							option Amharic
 							option Arabic
@@ -121,7 +112,23 @@ block content
 							option Yoruba
 							option Zhuang
 							option Zulu
-				.col-xs-2
+
+			.row
+				.col-sm-6.col-xs-12
+					.form-group
+						label(for='CountryOfficialName') Official Name
+						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Federal Republic of Germany', required)
+			.row.js-duplicate
+				.col-sm-4.col-xs-5
+					.form-group
+						label Native Name
+						input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
+				.col-sm-2.col-xs-4
+					.form-group
+						label Language
+						select.form-control.js-name-language(name='native.language', required)
+							
+				.col-sm-2.col-xs-3
 					.form-group
 						label &nbsp;
 						button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
@@ -161,19 +168,3 @@ block content
 
 			.form-group.text-right
 				input.btn.btn-primary(type='submit', value='submit')
-
-	script(type='text/javascript').
-		$('.js-make-duplicate').click(function duplicateNativeNameRow(){
-			var duplicate = $('.js-duplicate').last().clone();
-			$('.js-duplicate').last().after(duplicate);
-
-			$('.js-duplicate').last().find('.hidden').removeClass('hidden');
-		})
-
-		$('.js-new-country').on('click', '.js-delete-row', function(){
-			$(this).closest('.js-duplicate').detach();
-		})
-		$('.js-delete-row').click(function(){
-			console.log($(this).closest('.js-duplicate').detach)
-			
-		})

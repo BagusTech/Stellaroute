@@ -57,12 +57,50 @@ function init(){
 		var $this = $(this);
 
 		setTimeout(function(){
-			var selected = $this.closest('.multiselect-container').find('li.active');
-		
-			$('.js-name-language option').detach();
+			var $countryLanguages = $this.closest('.multiselect-container').find('li.active');
+			var $currentCountryLanguageList = $('.js-name-language'); // <select> with each language as an <option>
 
-			$(selected).each(function(){
-				$('.js-name-language').append($('<option/>', {text: $(this).text()}));
+			// if this language isn't in the country language list, add it as an option
+			$countryLanguages.each(function(){
+				if($currentCountryLanguageList.find('option').text().indexOf($(this).text().substring(1)) === -1){
+					for(var i in $('.js-name-language option')){
+						if($(this).text().substring(1) < $($('.js-name-language option')[i]).text()){
+							$($('.js-name-language option')[i]).before($('<option/>', {text: $(this).text().substring(1)}));
+							return;
+						}
+
+						if(i == $('.js-name-language option').length -1){
+							$('.js-name-language').append($('<option/>', {text: $(this).text().substring(1)}));
+						}
+					}
+				}
+			});
+
+			// if this language is no longer one of the country languages- remove it
+			$currentCountryLanguageList.find('option').each(function removeDeselectedLanguages(){
+				if($countryLanguages.text().indexOf($(this).text()) === -1){
+					$(this).detach();
+				}
+			});
+
+			$('.js-name-language option').sort(function sortAtoZ(a, b) {
+				a = $(a).text().replace(' ', '');
+				b = $(b).text().replace(' ', '');
+
+				console.log(a);
+				console.log(b);
+
+				// compare
+				if(a > b) {
+					console.log(1);
+					return 1;
+				} else if(a < b) {
+					console.log(2);
+					return -1;
+				} else {
+					console.log(3);
+					return 0;
+				}
 			});
 		}, 100);
 	});

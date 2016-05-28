@@ -35,10 +35,10 @@ router.post('/new', Country.getCached, function(req, res){
 	const params = req.body;
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
-	var nativeNames = params['native.name'];
+	var nativeNames = typeof params['native.name'] === 'string' ? Array(params['native.name']) : params['native.name'];
 	delete params['native.name'];
 
-	var nativeLanguages = params['native.language'];
+	var nativeLanguages = typeof params['native.language'] === 'string' ? Array(params['native.language']) : params['native.language'];
 	delete params['native.language'];
 
 	params['names.native'] = [];
@@ -126,10 +126,11 @@ router.post('/update', function(req, res){
 	} else if (req.body.update) {
 		delete req.body.update;
 
-		var nativeNames = req.body['native.name'];
+		// start combining native name and native langauge into an array of objects from two seperate arrays
+		var nativeNames = typeof req.body['native.name'] === 'string' ? Array(req.body['native.name']) : req.body['native.name'];
 		delete req.body['native.name'];
 
-		var nativeLanguages = req.body['native.language'];
+		var nativeLanguages = typeof req.body['native.language'] === 'string' ? Array(req.body['native.language']) : req.body['native.language'];
 		delete req.body['native.language'];
 
 		req.body['names.native'] = [];
@@ -150,6 +151,10 @@ router.post('/update', function(req, res){
 
 		if(typeof params.worldRegions === 'string'){
 			params.worldRegions = Array(params.worldRegions);
+		}
+
+		if (typeof params.languages === 'string'){
+			params.languages = Array(params.languages);
 		}
 
 		params.alias = params.alias.split(', ');

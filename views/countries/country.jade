@@ -126,7 +126,7 @@ block content
 					.well
 						- for( i in country.names.native)
 							.row.js-duplicate
-								.col-sm-.col-xs-5
+								.col-xs-5
 									.form-group
 										label Native Name
 										p.form-control-static= country.names.native[i].name
@@ -149,6 +149,26 @@ block content
 						.text-right
 							p.hidden
 							.hidden
+								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+				else
+					.well.js-no-native-name.hidden
+						.row.js-duplicate
+							.col-xs-5
+								.form-group
+									label Native Name
+									input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
+							.col-xs-4
+								.form-group
+									label Language
+									select.form-control.js-name-language(name='native.language', required)
+										- for(i in country.languages)
+											option= country.languages[i]
+							.col-xs-3
+								.form-group
+									p.form-static-content &nbsp;
+									button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+						.text-right
+								br
 								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
 			
 				.form-group

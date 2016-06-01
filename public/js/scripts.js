@@ -58,11 +58,18 @@ function init(){
 
 		setTimeout(function(){
 			var $countryLanguages = $this.closest('.multiselect-container').find('li.active');
-			var $currentCountryLanguageList = $('.js-name-language'); // <select> with each language as an <option>
+			var $currentCountryLanguageList = $('.js-name-language').find('option').length ? $('.js-name-language') : null; // <select> with each language as an <option>
 
+			console.log('$countryLanguages');
+			console.log($countryLanguages);
+			console.log('$currentCountryLanguageList');
+			console.log($currentCountryLanguageList);
+			
 			// if this language isn't in the country language list, add it as an option
 			$countryLanguages.each(function(){
-				if($currentCountryLanguageList.find('option').text().indexOf($(this).text().substring(1)) === -1){
+				if(!$currentCountryLanguageList){
+					$('.js-name-language').append($('<option/>', {text: $(this).text().substring(1)}));
+				} else if($currentCountryLanguageList.find('option').text().indexOf($(this).text().substring(1)) === -1){
 					for(var i in $('.js-name-language option')){
 						if($(this).text().substring(1) < $($('.js-name-language option')[i]).text()){
 							$($('.js-name-language option')[i]).before($('<option/>', {text: $(this).text().substring(1)}));
@@ -77,7 +84,7 @@ function init(){
 			});
 
 			// if this language is no longer one of the country languages- remove it
-			$currentCountryLanguageList.find('option').each(function removeDeselectedLanguages(){
+			$currentCountryLanguageList && $currentCountryLanguageList.find('option').each(function removeDeselectedLanguages(){
 				if($countryLanguages.text().indexOf($(this).text()) === -1){
 					$(this).detach();
 				}
@@ -136,6 +143,9 @@ function update(updateValues){
 		// toggle between static values and inputs
 		$inputs.toggleClass('hidden');
 		$values.toggleClass('hidden');
+
+		// toggle native names area when there aren't any native names
+		$('.js-no-native-name').toggleClass('hidden')
 
 		// change color and text of the update button
 		$this.toggleClass('btn-warning').toggleClass('btn-primary');

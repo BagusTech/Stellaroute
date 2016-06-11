@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+	small
+		a(href='/country-regions') &lt; Back to All Country Regions
+
+	h1= String(countryRegion.name)
+
+	form.update-form(method='POST', action='/country-regions/update')
+		.row
+			.col-xs-12.col-sm-6
+				.form-group
+					label Name
+					p.form-control-static= String(countryRegion.name)
+					.hidden
+						input.form-control#CountryRegionName(name='name', type='text', placeholder='name', value= countryRegion.name)
+
+				.form-group
+					label(for='CountryRegionCountry') Country
+					p.form-control-static
+						span= countryRegion.country
+					.hidden
+						select.form-control#CountryRegionCountry(name='country')
+							-for (i in countries)
+								option(value= countries[i].Id, selected= countryRegion.country.indexOf(countries[i].name) > -1)= countries[i].name
+
+		input(type='hidden', name= key, value= countryRegion[key])
+		input.btn.btn-primary.btn-update(type='button', value='Update')
+		| &nbsp;
+		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+		button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
+		
+		.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+			.modal-dialog(role='document')
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+						h4.modal-title#DeleteModalLabel
+							| Delete&nbsp;
+							= countryRegion.name
+					.modal-body
+						.alert.alert-danger
+							p
+								| Are you sure you want to delete&nbsp;
+								= countryRegion.name + '?'
+							p This action cannot be undone
+						input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+					.modal-footer
+						button.btn.btn-default(type='button', data-dismiss='modal') Close

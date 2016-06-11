@@ -113,9 +113,9 @@ const Duck = function(schema, isReady, items){
 	/* ~~~~~~~ Methods ~~~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-		Duck.prototype.cached        = function(){ return cache.get(this.table); } 
-		Duck.prototype.generateHash  = function(password){ return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
-		Duck.prototype.validPassword = function(password, encodedPassword){ return bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
+		Duck.prototype.cached        = () => { cache.get(this.table); } 
+		Duck.prototype.generateHash  = (password) => { bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
+		Duck.prototype.validPassword = (password, encodedPassword) => { bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
 		// documentation
 			// field: string = 'continent'
 			// data: array of objects = [{Id: 3, name: North America}, {Id: 4, name: South America}]
@@ -123,8 +123,8 @@ const Duck = function(schema, isReady, items){
 			// display: string = 'name'
 			// returns: new Duck()
 		Duck.prototype.join          = function(field, data, joinOn, display){ 
-			var joinedItems = this.items || this.cached();
-			var joinedField = joinedItems.map(item =>
+			let joinedItems = this.items || this.cached();
+			const joinedField = joinedItems.map(item =>
 				Array(item[field]).map(field =>
 					data.map(data =>
 						data[joinOn] == field ? data[display] : null)

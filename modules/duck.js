@@ -112,17 +112,16 @@ const Duck = function(schema, isReady, items){
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~~ Methods ~~~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-		Duck.prototype.cached        = () => { cache.get(this.table); } 
-		Duck.prototype.generateHash  = (password) => { bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
-		Duck.prototype.validPassword = (password, encodedPassword) => { bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
+		this.cached        = () => { return cache.get(this.table); } 
+		this.generateHash  = (password) => { return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
+		this.validPassword = (password, encodedPassword) => { return bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
 		// documentation
 			// field: string = 'continent'
 			// data: array of objects = [{Id: 3, name: North America}, {Id: 4, name: South America}]
 			// joinOn: string = 'Id'
 			// display: string = 'name'
 			// returns: new Duck()
-		Duck.prototype.join          = function(field, data, joinOn, display){ 
+		this.join          = function(field, data, joinOn, display){ 
 			let joinedItems = this.items || this.cached();
 			const joinedField = joinedItems.map(item =>
 				Array(item[field]).map(field =>
@@ -139,7 +138,7 @@ const Duck = function(schema, isReady, items){
 			// field: string = 'name'
 			// value: string = 'Joe'
 			// contains: bool = true (if it isn't contains, it's equals)
-		Duck.prototype.find = function(field, value, contains){
+		this.find = function(field, value, contains){
 			const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 			const items = this.items || this.cached();
 			const returnedItems = items.map(function(item){
@@ -161,7 +160,7 @@ const Duck = function(schema, isReady, items){
 			return returnedItems;
 		}
 		// same as find, but only returns one result, does not allow contains
-		Duck.prototype.findOne = function(field, value){
+		this.findOne = function(field, value){
 			const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 			const items = this.items || this.cached();
 			const returnedItem = function(){

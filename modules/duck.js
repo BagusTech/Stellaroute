@@ -122,7 +122,7 @@ const Duck = function(schema, isReady, items){
 			// display: string = 'name'
 			// returns: new Duck()
 		this.join          = function(field, data, joinOn, display){ 
-			let joinedItems = this.items || this.cached();
+			var joinedItems = this.items || this.cached();
 			const joinedField = joinedItems.map(item =>
 				Array(item[field]).map(field =>
 					data.map(data =>

@@ -10,7 +10,7 @@ const CountryRegion = require('../schemas/country-region');
 const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
-router.get('/', Country.getCached, Continent.getCached, WorldRegion.getCached, function(req, res, next){
+router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
 	var countries = Country.join('continent', Continent.cached(), 'Id', 'name' )
 	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
 	                       .items.sort(sortBy('name'));
@@ -22,7 +22,7 @@ router.get('/', Country.getCached, Continent.getCached, WorldRegion.getCached, f
 	});
 });
 
-router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res, next){
+router.get('/new', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
 	res.render('countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -31,7 +31,7 @@ router.get('/new', Continent.getCached, WorldRegion.getCached, function(req, res
 	});
 });
 
-router.post('/new', Country.getCached, function(req, res){
+router.post('/new', Country.getCached(), function(req, res){
 	const params = req.body;
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
@@ -185,7 +185,7 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached, WorldRegion.getCached, CountryRegion.getCached, function(req, res, next){
+router.get('/:name', Continent.getCached(), WorldRegion.getCached(), CountryRegion.getCached(), function(req, res, next){
 	var country = Country.join('continent', Continent.cached(), 'Id', 'name')
 						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
 						 .findOne('name', req.params.name);

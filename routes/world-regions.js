@@ -8,7 +8,7 @@ const Continent = require('../schemas/continent');
 const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
-router.get('/', WorldRegion.getCached, Continent.getCached, function(req, res, next){
+router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, res, next){
 	res.render('world-regions/_world-regions', {
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -17,7 +17,7 @@ router.get('/', WorldRegion.getCached, Continent.getCached, function(req, res, n
 	});
 });
 
-router.get('/new', Continent.getCached, function(req, res, next){
+router.get('/new', Continent.getCached(), function(req, res, next){
 	res.render('world-regions/new', {
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -26,7 +26,7 @@ router.get('/new', Continent.getCached, function(req, res, next){
 	});
 });
 
-router.post('/new', WorldRegion.getCached, function(req, res){
+router.post('/new', WorldRegion.getCached(), function(req, res){
 	const params = req.body;
 
 	// only allowed to add a world region that doesn't exist
@@ -117,7 +117,7 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached, WorldRegion.getCached, function(req, res, next){
+router.get('/:name', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
 	var worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
 								 .findOne('name', req.params.name);
 

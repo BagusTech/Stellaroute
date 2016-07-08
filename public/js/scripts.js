@@ -59,11 +59,6 @@ function init(){
 		setTimeout(function(){
 			var $countryLanguages = $this.closest('.multiselect-container').find('li.active');
 			var $currentCountryLanguageList = $('.js-name-language').find('option').length ? $('.js-name-language') : null; // <select> with each language as an <option>
-
-			console.log('$countryLanguages');
-			console.log($countryLanguages);
-			console.log('$currentCountryLanguageList');
-			console.log($currentCountryLanguageList);
 			
 			// if this language isn't in the country language list, add it as an option
 			$countryLanguages.each(function(){

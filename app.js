@@ -1,3 +1,5 @@
+console.log('~~~~ Starting Stellroute ~~~~');
+
 const express          = require('express');
 const path             = require('path');
 const passport         = require('passport');
@@ -93,7 +95,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-console.log('~~~~ Starting Stellroute ~~~~');
+console.log('~~~~ Stellroute Has Started ~~~~');
 console.log('Current Environment: ' + app.get('env'));
 
 module.exports = app;

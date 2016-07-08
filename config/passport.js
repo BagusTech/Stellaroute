@@ -2,8 +2,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const User          = require('../schemas/user')
 const uuid          = require('uuid');
 
-
-
 module.exports = function(passport){
 	// =========================================================================
     // passport session setup ==================================================

@@ -1,13 +1,12 @@
 const express = require('express');
 const flash = require('connect-flash');
 const assign = require('../modules/assign');
-const cache = require('../modules/caching');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const router = express.Router();
 
-router.get('/', Continent.getCached, function(req, res, next){
+router.get('/', Continent.getCached(), function(req, res, next){
 	res.render('continents/_continents', {
 		title: 'Stellaroute: continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -22,7 +21,7 @@ router.get('/new', function(req, res, next){
 	});
 });
 
-router.post('/new', Continent.getCached, function(req, res){
+router.post('/new', Continent.getCached(), function(req, res){
 	const params = req.body;
 
 	// only allowed to add a continent that doesn't exist
@@ -105,7 +104,7 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached, function(req, res, next){
+router.get('/:name', Continent.getCached(), function(req, res, next){
 	res.render('continents/continent', {
 		title: '',
 		description: '',

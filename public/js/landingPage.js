@@ -37,46 +37,7 @@ void function initLandingPageJavascript($){
 	    		return re.test(email);
 			};
 
-			$emailSubmit.click(function(e) {
-				e.preventDefault();
-
-				var email = $emailInput.val();
-
-				var failed = function() {
-					$('.email-capture-error').addClass('active');
-
-					setTimeout(function(){
-						$('.email-capture-error').removeClass('active');					
-					}, 2000);
-				};
-
-				if(isValid(email)){
-					$('.email-capture-error').text('Sorry, we experienced an error. Please refresh the page and try again.');
-					var user = {
-						"local.email": email,
-						recieveNewsletter: true
-					};
-
-					$.ajax({
-						type: 'POST',
-						data: JSON.stringify(user),
-						url: '/newsletter-signup',
-						contentType: 'application/json'
-					}).done(function(response) {
-						if(response.msg === "success"){
-							$('.email-capture').removeClass('active');
-							$('.email-capture-success').addClass('active').slideDown(180);
-						} else {
-							failed();
-						}
-
-					}).fail(function(response) {
-						failed();
-					});
-				} else {
-					failed();
-				}
-			});
+			
 
 			$guideSubmit.click(function(e) {
 				e.preventDefault();

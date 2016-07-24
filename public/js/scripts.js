@@ -79,11 +79,13 @@ function init(){
 			});
 
 			// if this language is no longer one of the country languages- remove it
-			$currentCountryLanguageList && $currentCountryLanguageList.find('option').each(function removeDeselectedLanguages(){
-				if($countryLanguages.text().indexOf($(this).text()) === -1){
-					$(this).detach();
-				}
-			});
+			if($currentCountryLanguageList){
+				$currentCountryLanguageList.find('option').each(function removeDeselectedLanguages(){
+					if($countryLanguages.text().indexOf($(this).text()) === -1){
+						$(this).detach();
+					}
+				});
+			}
 
 			$('.js-name-language option').sort(function sortAtoZ(a, b) {
 				a = $(a).text().replace(' ', '');
@@ -140,7 +142,7 @@ function update(updateValues){
 		$values.toggleClass('hidden');
 
 		// toggle native names area when there aren't any native names
-		$('.js-no-native-name').toggleClass('hidden')
+		$('.js-no-native-name').toggleClass('hidden');
 
 		// change color and text of the update button
 		$this.toggleClass('btn-warning').toggleClass('btn-primary');

@@ -6,7 +6,6 @@ module.exports = function(_duck){
 	_duck.prototype.validPassword = (password, encodedPassword) => { return bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
 
 	_duck.prototype.cached = function() {
-		console.log(this.table); // here for testing why it doesn't work on server reboot
 		return cache.get(this.table);
 	}
 	
@@ -14,8 +13,8 @@ module.exports = function(_duck){
 	// data: array of objects = [{Id: 3, name: North America}, {Id: 4, name: South America}]
 	// joinOn: string = 'Id'
 	// display: string = 'name'
-	// returns: new Duck()
-	_duck.prototype.join = function(field, data, joinOn, display){ 
+	// returns: this
+	_duck.prototype.join = function(field, data, joinOn, display){
 		var joinedItems = this.items || this.cached();
 		const joinedField = joinedItems.map(item =>
 			Array(item[field]).map(field =>
@@ -27,7 +26,9 @@ module.exports = function(_duck){
 			joinedItems[i][field] = [].concat.apply([], joinedField[i]);
 		}
 
-		return Duck(this.schema, true, joinedItems);
+		this.items = joinedItems;
+
+		return this;
 	}
 
 	// field: string = 'name'
@@ -35,6 +36,10 @@ module.exports = function(_duck){
 	// contains: bool = true (if it isn't contains, it's equals)
 	// return array of items
 	_duck.prototype.find = function(field, value, contains){
+		if(!field){
+			return this.cached();
+		}
+
 		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 		const items = this.items || this.cached();
 		const returnedItems = items.map(function(item){

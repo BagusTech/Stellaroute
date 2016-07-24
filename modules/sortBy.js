@@ -3,9 +3,9 @@
 // primer - augmenting the result
 // primer - example if primer was  function(a){return a.toUpperCase()})
 // primar - then asia => Asia
-var sortBy = function(field, reverse, primer){
+const sortBy = function(field, reverse, primer){
 
-   var key = primer ? 
+   const key = primer ? 
        function(x) {return primer(x[field])} : 
        function(x) {return x[field]};
 

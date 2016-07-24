@@ -1,3 +1,1 @@
-void function initLandingPageJavascript($){
-	
-}(jQuery);
+

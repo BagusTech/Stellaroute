@@ -172,6 +172,7 @@ h2 {
 }
 @media (min-width: 767px) {
   .landing-header {
+    background-image: url("/images/hero-large.jpg");
     min-height: 0;
   }
   .landing-header h1 small {

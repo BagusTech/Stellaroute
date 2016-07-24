@@ -8,12 +8,37 @@ const router           = express.Router();
 
 require('../config/passport')(passport);
 
-router.get('/', User.getCached(), function(req, res, next){
+router.get('/', function(req, res, next){
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
+
+// sign up for newsletter
+router.post('/newsletter-signup', User.getCached(), function(req, res, next){
+	var user = User.findOne('local.email', req.body['local.email']);
+
+	if(user){
+		if(user.recieveNewsletter === true){
+			res.send({msg: 'success'});
+			return;
+		}
+
+		User.update({Id: user.Id, recieveNewsletter: true}).then(function added(){
+			res.send({msg: 'success'});
+		}, function(error){
+			res.send({msg: 'error: ' + error});
+		});
+		return;
+	}
+
+	User.add(req.body).then(function added(){
+		res.send({msg: 'success'});
+	}, function(error){
+		res.send({msg: 'error: ' + error});
+	});
+})
 
 // authentication
 router.post('/signup', passport.authenticate('local-signup', {

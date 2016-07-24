@@ -12,6 +12,7 @@ html(lang='en')
 		// not hosted local
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type='text/css')
 		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css', type='text/css')
+		link(href='https://fonts.googleapis.com/css?family=Work+Sans:400,600,700,300', rel='stylesheet', type='text/css')
 
 		// hosted local
 		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
@@ -38,15 +39,47 @@ html(lang='en')
 
 		/////////////////////////////////////////////////////////////////////////
 
-	if (!user)
-		body(style='background: url(http://c2.staticflickr.com/4/3129/3143994000_72e101ba7e_b.jpg) no-repeat; background-size: cover; font-family: "Open Sans", sans-serif;')
-		main(style='margin-top: 75px;')
-			.container
-				include controls/login
-				block content
-				include flash
-	else 
-		body
+	body
+		if (!user)
+			header.landing-header
+				.landing-utility
+					img(src='/images/logo.png', alt='Stellaroute')
+					include controls/login
+				h1 
+					| Plan Spontaneity
+					small 
+						| Join the Beta in 
+						span January, 2017
+				.email-capture-wrapper.form-group
+					form.input-group.email-capture.active
+						input.form-control(type='email', placeholder='name@email.com', id='EmailCaptureInput', name='email')
+						.input-group-addon
+							input(type='submit', id='EmailCaptureButton', for='email', value='Sign Me Up')
+
+					form.email-capture-success
+						.email-capture-success-content
+							h2.submit-guide-header Thanks for signing up!
+							p.submit-guide-text In the mean time request a custom guide from us.
+							.input-group
+								input.form-control(type='text', placeholder='Where do you want to go?', id='RequestGuideInput', name='travel')
+								.input-group-addon
+									input(type='submit', id='RequestGuideButton', value='Request a Guide')
+
+					span.email-capture-error Please enter a valid email.
+
+
+
+			main
+				.container.landing-container
+					block content
+					include flash
+
+			footer
+				small 
+					| Copyright &copy; 2016 Bagus Tech LLC. 
+					span All rights reserved
+			script(type='text/javascript', src='/js/landing-page.min.js')
+		else
 			header
 				nav.navbar.navbar-default
 					.navbar-header
@@ -59,14 +92,11 @@ html(lang='en')
 					.collapse.navbar-collapse#GlobalNav
 						ul.nav.navbar-nav
 							li
-								a(href='/continents')
-									| Continents
+								a(href='/continents') Continents
 							li
-								a(href='/world-regions')
-									| World Regions
+								a(href='/world-regions') World Regions
 							li
-								a(href='/countries')
-									| Countries
+								a(href='/countries') Countries
 
 				include controls/login
 			main

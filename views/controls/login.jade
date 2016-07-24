@@ -1,7 +1,7 @@
 if (!user)
-	div(style='position: absolute; top: 10px; right: 10px;')
-		button.btn.btn-primary.hidden(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Create Account
-		button.btn.btn-primary(type='button', data-toggle='modal', data-target='#LoginModal', style='margin-left: 5px;', tab-index='1') Login
+	.login-control
+		button.btn.hidden(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Create Account
+		button.btn(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
 		.modal-dialog(role='document')

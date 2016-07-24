@@ -14,7 +14,8 @@ var User = Duck({
 		name: {
 			first: String,
 			last: String
-		}
+		},
+		recieveNewsletter: Boolean
 	},
 	
 	HASH: 'Id',

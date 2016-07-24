@@ -3,8 +3,55 @@ extends layout
 block content
 	// TODO: if user isn't logged in, show place holder
 	if (!user)
-		h1.text-center(style='color: white;') Stellaroute
-			small(style='padding-left: 10px;') coming soon...
+		.visible-xs
+			section.page-card.introduction
+				h2 What is Stellaroute?
+				p.lead Stellaroute is a new way to go plan trips so you can get the most out of your travels.
+
+			section.page-card.location-overviews
+				h2 Location Overviews
+				p Know the critical information about where you're going without hours of reseach
+
+			section.page-card.attraction-listings
+				h2 Attraction Listings
+				p Find the must see attractions and the hidden gems all in one place
+
+			section.page-card.neighborhood-descriptions
+				h2 Neighborhood Descriptions
+				p Understand a destination before your get there and find your crowd
+
+			section.page-card.custom-guides
+				h2 Custom Guides
+				p Plan painlessly by using one of our expert guides or quickly make your own
+
+			section.page-card.advice-ratings
+				h2 Advice &amp; Ratings
+				p Get quality advice and descriptive ratings from peers and experts
+
+		.hidden-xs
+			.row
+				.col-sm-4.text-center
+					h2 Custom Guides
+					p.lead.custom-guides-text Plan painlessly by using one of our expert guides or quickly make your own.
+
+					.screen-shot-black-phone
+						img(src="/images/screenshot-guide.jpg")
+
+				.col-sm-4
+					.screen-shot-white-phone
+						.screenshot-rotator
+							img.active(src="/images/screenshot-overview.jpg", alt="placeholder")
+							img.after(src="/images/screenshot-attractions.jpg", alt="placeholder")
+							img.before(src="/images/screenshot-neighborhoods.jpg", alt="placeholder")
+				
+				.col-sm-4.text-center
+					h2 Meaningful Ratings
+					p.lead Make the most of your vacation by making informed decisions based on your interests.
+
+					.screen-shot-black-phone
+						img(src="/images/screenshot-ratings.jpg")
+
+
 	else
 		h1 Capture Content
 

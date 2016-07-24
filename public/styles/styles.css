@@ -1,3 +1,345 @@
+html,
+body {
+  color: #4a4d50;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+}
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+h2 {
+  font-size: 24px;
+}
+@media (min-width: 767px) {
+  h1 {
+    font-size: 40px;
+  }
+}
+.email-capture-wrapper {
+  position: relative;
+}
+.email-capture-wrapper .input-group {
+  display: block;
+  width: 100%;
+}
+.email-capture-wrapper .form-control {
+  float: none;
+  border-radius: 2px;
+  text-align: center;
+  font-size: 16px;
+}
+.email-capture-wrapper .input-group-addon {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: #59D087;
+  box-shadow: 1px 1px #2C794A;
+  border-radius: 2px;
+  border: none;
+  white-space: normal;
+  margin-top: 12px;
+}
+.email-capture-wrapper .input-group-addon:hover {
+  background: #2C794A;
+}
+.email-capture-wrapper .input-group-addon [type='submit'] {
+  padding: 7px 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+.email-capture-wrapper .email-capture {
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s ease-out;
+  position: absolute;
+}
+.email-capture-wrapper .email-capture.active {
+  opacity: 1;
+  z-index: 27;
+}
+.email-capture-wrapper .email-capture-success {
+  background: rgba(0, 0, 0, 0.63);
+  color: white;
+  padding: 48px;
+  text-align: center;
+  border-radius: 1px;
+  top: 0;
+  display: none;
+}
+.email-capture-wrapper .email-capture-success h2 {
+  position: relative;
+  padding: 0 0 24px;
+  margin: 0 0 24px;
+}
+.email-capture-wrapper .email-capture-success h2:after {
+  content: ' ';
+  display: block;
+  height: 1px;
+  background: white;
+  position: absolute;
+  top: 100%;
+  left: 15%;
+  right: 15%;
+}
+.email-capture-wrapper .email-capture-success p {
+  margin-bottom: 12px;
+}
+.email-capture-wrapper .email-capture-success .email-capture-success-content {
+  transition: all 0.5s ease-out;
+  opacity: 0;
+}
+.email-capture-wrapper .email-capture-success.active .email-capture-success-content {
+  opacity: 1;
+}
+.email-capture-wrapper .email-capture-error {
+  position: absolute;
+  background: rgba(180, 50, 50, 0.45);
+  border: 1px solid #b43232;
+  padding: 12px;
+  color: white;
+  top: 40px;
+  transition: all 0.18s ease-out;
+  opacity: 0;
+  z-index: -1;
+}
+.email-capture-wrapper .email-capture-error.active {
+  opacity: 1;
+  z-index: 18;
+}
+@media (min-width: 767px) {
+  .email-capture-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .email-capture-wrapper .input-group {
+    display: table;
+    width: 100%;
+  }
+  .email-capture-wrapper .form-control {
+    float: left;
+    text-align: left;
+    border-radius: 2px 0 0 2px;
+  }
+  .email-capture-wrapper .input-group-addon {
+    border-radius: 0 2px 2px 0;
+    display: table-cell;
+    width: 1%;
+    white-space: nowrap;
+  }
+  .email-capture-wrapper .input-group-addon button {
+    background: none;
+    border: none;
+    color: white;
+  }
+}
+.login-control {
+  float: right;
+}
+.login-control .btn {
+  color: white;
+  background: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 2px;
+}
+@media (min-width: 767px) {
+  .login-control .btn {
+    padding: 0;
+  }
+}
+.landing-header {
+  background: url("/images/hero-small.jpg") no-repeat center bottom / cover;
+  padding: 0 24px 16%;
+  min-height: 100vh;
+}
+.landing-header h1 {
+  margin: 48px 0 36px;
+  color: white;
+  text-align: center;
+}
+.landing-header h1 small {
+  display: block;
+  margin-top: 12px;
+  color: white;
+  font-size: 18px;
+}
+.landing-header h1 small span {
+  display: block;
+}
+@media (min-width: 767px) {
+  .landing-header {
+    min-height: 0;
+  }
+  .landing-header h1 small {
+    margin-top: 12px;
+    font-size: 24px;
+  }
+  .landing-header h1 small span {
+    display: inline;
+  }
+}
+.landing-utility {
+  padding: 24px 0;
+}
+.landing-utility img {
+  max-width: 160px;
+}
+@media (min-width: 767px) {
+  .landing-utility img {
+    max-width: 188px;
+  }
+}
+.container {
+  max-width: 1440px;
+}
+.container.landing-container {
+  padding: 36px 24px 0;
+}
+.container.landing-container .custom-guides-text {
+  padding: 0 24px;
+}
+.page-card {
+  overflow: hidden;
+  padding: 36px;
+  text-align: center;
+  color: white;
+  margin: 0 -24px;
+}
+.page-card.introduction {
+  color: #4a4d50;
+}
+.page-card.introduction h2 {
+  position: relative;
+  padding: 0 0 .3em;
+  margin-bottom: 24px;
+}
+.page-card.introduction h2:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  height: 1px;
+  top: 100%;
+  left: 20%;
+  right: 20%;
+  background: #ccc;
+}
+.page-card.introduction p {
+  font-size: 16px;
+}
+.page-card.location-overviews,
+.page-card.attraction-listings,
+.page-card.neighborhood-descriptions,
+.page-card.custom-guides,
+.page-card.advice-ratings {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.page-card.location-overviews h2,
+.page-card.attraction-listings h2,
+.page-card.neighborhood-descriptions h2,
+.page-card.custom-guides h2,
+.page-card.advice-ratings h2 {
+  margin-bottom: 48px;
+}
+.page-card.location-overviews h2,
+.page-card.attraction-listings h2,
+.page-card.neighborhood-descriptions h2,
+.page-card.custom-guides h2,
+.page-card.advice-ratings h2,
+.page-card.location-overviews p,
+.page-card.attraction-listings p,
+.page-card.neighborhood-descriptions p,
+.page-card.custom-guides p,
+.page-card.advice-ratings p {
+  text-shadow: 1px 1px #4a4d50;
+}
+.page-card.location-overviews p,
+.page-card.attraction-listings p,
+.page-card.neighborhood-descriptions p,
+.page-card.custom-guides p,
+.page-card.advice-ratings p {
+  font-size: 18px;
+}
+.page-card.location-overviews {
+  background-image: url('/images/location-overviews.jpg');
+}
+.page-card.attraction-listings {
+  background-image: url('/images/attraction-listings.jpg');
+}
+.page-card.neighborhood-descriptions {
+  background-image: url('/images/neighborhood-descriptions.jpg');
+}
+.page-card.custom-guides {
+  background-image: url('/images/custom-guides.jpg');
+}
+.page-card.advice-ratings {
+  background-image: url('/images/advice-ratings.jpg');
+}
+.screen-shot-black-phone {
+  background: url('/images/phone-black.png') no-repeat top left / cover;
+  margin: 0 auto;
+  width: 167px;
+  height: 340px;
+  position: relative;
+}
+.screen-shot-black-phone img {
+  position: absolute;
+  border-radius: 2px;
+  top: 35px;
+  left: 10px;
+  max-width: 147px;
+}
+.screen-shot-white-phone {
+  background: url('/images/phone-white.png') no-repeat top left / cover;
+  margin: 24px auto 48px;
+  width: 238px;
+  height: 485px;
+  position: relative;
+}
+.screen-shot-white-phone .screenshot-rotator {
+  position: absolute;
+  top: 59px;
+  width: 207px;
+  height: 367px;
+  left: 16px;
+  overflow: hidden;
+}
+.screen-shot-white-phone .screenshot-rotator img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transition: left 0.5s ease-out;
+}
+.screen-shot-white-phone .screenshot-rotator img.active {
+  left: 0;
+}
+.screen-shot-white-phone .screenshot-rotator img.before {
+  left: -100%;
+  transition: none;
+}
+.screen-shot-white-phone .screenshot-rotator img.after {
+  left: 100%;
+}
+footer {
+  width: 100%;
+  padding: 6px;
+  background: #7770A1;
+  color: white;
+  text-align: center;
+}
+footer span {
+  display: block;
+}
+@media (min-width: 767px) {
+  footer span {
+    display: inline;
+  }
+}
 .form-group > .btn-group {
   width: 100%;
 }

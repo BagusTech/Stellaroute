@@ -1,4 +1,4 @@
-void function initLandingPageJavascript($){
+void function($){
 	$(document).ready(function(){
 		void function initRotator(rotateTime){
 			rotateTime = rotateTime*1000;

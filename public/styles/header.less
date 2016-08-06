@@ -1,0 +1,218 @@
+.site-header{
+	.clear;
+
+	width: 100%;
+	background: white;
+
+}
+
+
+.logo-header{
+	position: absolute;
+	top: @gw-Sm;
+	left: 0;
+	right: 0;
+	width: 200px;
+	margin: 0 auto;
+}
+		
+
+.search{
+	&.active{
+		.search--area{
+			left: 5px;
+			right: 5px;
+			z-index: 1;
+		}
+			.search--btn{
+				z-index: 1;
+			}
+
+			.search--input{
+				opacity: 1;
+				right: 5px;
+				left: 5px;
+			}
+	}
+}
+
+	.search--toggle,
+	.search--btn{
+		border: none;
+		background: none;
+		color: @grey-light;
+		font-size: 16px;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+	}
+		.search-icon{
+			width: 100%;
+		}
+
+	.search--area{
+		position: absolute;
+		z-index: -1;
+		top: 5px;
+		left: 0;
+		right: 100%;
+		transition: .3s all ease-out;
+	}
+		.search--btn{
+			top: 15px;
+			left: 15px;
+		}
+		
+		.search--input{
+			width: 100%;
+			border: 1px solid #ddd;
+			padding: @gw-Sm @gw-Sm @gw-Sm 60px;
+			opacity: 0;
+			transition: .3s all ease-out;
+			border-radius: 5px;
+		}
+
+.hamburger-menu--toggle{
+	float: right;
+	border: none;
+	background: none;
+	color: @grey-light;
+	font-size: 20px;
+	z-index: 2;
+	padding: @gw-Sm @gw-Md @gw-Sm;
+	margin: 10px 0 5px;
+}
+
+.hamburger-menu{
+	position: absolute;
+	z-index: 1;
+	transition: all .5s ease-out;
+	left: 100%;
+	right: -100%;
+	top: 0;
+	bottom: 0;
+	
+
+	&.active{
+		left: 0;
+		right: 0;
+	}
+
+	.exit-icon{
+		position: relative;
+		float: right;
+		margin: @gw-Sm @gw-Xs @gw-Md;
+		border: none;
+		color: #f7f7f7;
+		background: none;
+		font-size: 18px;
+		z-index: 10000;
+	}
+
+	.hamburger-menu--options{
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		max-width: 320px;
+		padding-top: 40px;
+		padding-right: 30px;
+		background: #333;
+		list-style: none;
+
+		li{
+			padding-bottom: @gw-Sm;
+		}
+
+			a{
+				color: #f7f7f7;
+			}
+
+		.btn.log-out{
+			padding-left: 2px;
+			border: none;
+			background: none;
+			color: #f7f7f7;
+		}
+	}
+}
+
+	.account-access{
+		display: none;	
+	}
+
+
+@media(min-width: @screen-Sm){
+
+	.logo-header {
+		position: static;
+		float: left;
+		max-width: 25%;
+		margin-left: @gw-Md;
+		padding-top: @gw-Xs;
+		padding-bottom: @gw-Xs;
+		padding-right: @gw-Md;
+	}
+			
+
+	.search{ 
+		
+	}
+		.search--toggle{
+			display: none;
+		}
+
+		.search--area{
+			position: static;
+			width: 56%;
+			float: left;
+			border-color: #eee;
+			border-style: solid;
+			border-width: 0 1px;
+			padding: 0 @gw-Md;
+		}
+			.search--btn{
+				position: static;
+
+			}
+			.search--input{
+				border: none;
+				width: auto;
+				padding: @gw-Sm;
+				opacity: 1;
+			}
+
+	.hamburger-menu--toggle{
+		display: none;
+	}	
+
+	.account-access{
+		display: inline-block;
+		position: absolute;
+		float: right;
+		width: 24%;
+		padding-top: @gw-Xs;
+		padding-bottom: @gw-Xs;
+	}
+
+		.btn{
+			background: none;
+			color: @grey-light;
+		}
+
+			.btn.log-in{
+				position: relative;
+				float: left;
+				width: 76px;
+				margin-left: @gw-Md;
+				background: #59D087;
+				color: white;
+			}
+
+			.btn.sign-up{
+				position: relative;
+				float: left;
+				margin-left: @gw-Sm;
+			}
+
+}

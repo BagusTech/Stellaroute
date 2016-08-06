@@ -1,0 +1,12 @@
+.clear,
+.clearfix,
+.c-B, .clear-both{
+	clear: both;
+
+	&:before,
+	&:after{
+		clear: both;
+		content: ' ';
+		display: table;
+	}
+}

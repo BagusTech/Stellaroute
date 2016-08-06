@@ -7,6 +7,8 @@ html(lang='en')
 		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
 		meta(name='author', content='Joe Lissner')
 		meta(name='google-site-verification', content='tByCJ_M0-5-xPQYJzhqEIcJJkVSB7PcRNExX6fDnOd8')
+		meta(name="p:domain_verify", content="ae641ef00710b9b8aa9a2d033222d33a")
+
 
 		//// Styles & Fonts ///////////////////////////////////////////////////////
 		// not hosted local
@@ -28,9 +30,7 @@ html(lang='en')
 		script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js')
 
 		// hosted local
-		script(type='text/javascript', src='js/scripts.min.js')
-		script(type='text/javascript', src='js/landingPage.min.js')
-			
+		script(type='text/javascript', src='js/scripts.min.js')			
 
 		// Google maps api
 			script(type='text/javascript', src='http://maps.google.com/maps/api/js??key=AIzaSyAqi8KpEFUzbQ-MiDK21GojT2cphVhk0Ms &libraries=places&sensor=false')
@@ -76,34 +76,91 @@ html(lang='en')
 					block content
 					include flash
 
-			footer
+			footer.landing-footer
 				small 
 					| Copyright &copy; 2016 Bagus Tech LLC. 
 					span All rights reserved
 		else
-			header
-				nav.navbar.navbar-default
-					.navbar-header
-						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#GlobalNav', aria-expanded='false', style='float: left; margin-left: 15px; margin-right: 0;')
-							span.sr-only Toggle navigation
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
-						a(href='/').navbar-brand Stellaroute
-					.collapse.navbar-collapse#GlobalNav
-						ul.nav.navbar-nav
-							li
-								a(href='/continents') Continents
-							li
-								a(href='/world-regions') World Regions
-							li
-								a(href='/countries') Countries
-
-				include controls/login
-			main
+			header.site-header
+				a(href='#')
+					img.logo-header(src='/images/logo_purple.svg', alt='Stellaroute')
+				#SiteSearch.search
+					button.search--toggle(type='button')
+						i.fa.fa-search(aria-hidden="true")
+					
+					.search--area
+						button.search--btn(type='button')
+							i.fa.fa-search(aria-hidden="true")
+						input.search--input(type='text', placeholder='Where do you want to go?', id='SearchQuery', name='searchInput')
+				button.hamburger-menu--toggle
+					i.fa.fa-ellipsis-v(aria-hidden='true')
+				nav.hamburger-menu
+					button.exit-icon
+						i.fa.fa-times(aria-hidden='true')
+					ul.hamburger-menu--options
+						li
+							a(href='#') My Accounts
+						li
+							a(href='#') Make A Request
+						li
+							a(href='#') Give Us Feedback
+						li
+							button.btn.log-out(type='button') Log Out
+								
+				.account-access
+					include controls/login
+				
+			main.site-body
 				.container(style='position: relative;')
 					include flash
 					block content
 
-			footer.bg-primary.text-center.well
-				small StellRoute
+			footer.site-footer
+				.footer-content.container
+					.row
+						.col-xs-12.col-sm-6.footer-col-1
+							a(href='#')
+								img.logo-footer(src='/images/logo_purple.svg', alt='Stellaroute')
+							ul.about-us.visible-xs
+								li
+									a(href='#') About Us
+								li
+									| &bull;
+								li
+									a(href='mailto:info@stellaroute.com') Email Us
+							ul.social-media
+								li.facebook-icon
+									a(href='https://www.facebook.com/stellaroute/' target='blank')
+										i.fa.fa-facebook(aria-hidden="true")
+										span.sr-only Facebook
+								li.instagram-icon
+									a(href='https://www.instagram.com/stellaroute_travel/' target='blank')
+										i.fa.fa-instagram(aria-hidden="true")
+										span.sr-only Instagram
+								li.twitter-icon
+									a(href='https://twitter.com/stellaroute' target='blank')
+										i.fa.fa-twitter(aria-hidden="true")
+										span.sr-only Twitter
+								li.pinterest-icon
+									a(href='https://www.pinterest.com/stellaroute/' target='blank')
+										i.fa.fa-pinterest(aria-hidden="true")
+										span.sr-only Pinterest
+								li.youtube-icon
+									a(href='https://www.youtube.com/channel/UCU5tyYgAJoqOudRkss21BSw' target='blank')
+										i.fa.fa-youtube(aria-hidden="true")
+										span.sr-only YouTube
+						.col-xs-12.col-sm-6.footer-col-2
+							.email-capture-wrapper.form-group
+								h3 Sign Up for Our Beta	
+									small.hidden-xs We'll keep you updated leading up to our launch
+								include controls/beta-signup
+
+				ul.bottom-footer
+					li.hidden-xs
+						a(href="#") About Us
+					li
+						a(href="#") &copy; Bagus Tech LLC. 
+					li
+						a(href="#") All rights reserved
+					li.hidden-xs
+						a(href="mailto:info@stellaroute.com") Email Us

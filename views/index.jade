@@ -2,6 +2,7 @@ extends layout
 
 block content
 	// TODO: if user isn't logged in, show place holder
+	// PeterL took out the !
 	if (!user)
 		.visible-xs
 			section.page-card.introduction
@@ -18,7 +19,7 @@ block content
 
 			section.page-card.neighborhood-descriptions
 				h2 Neighborhood Descriptions
-				p Understand a destination before your get there and find your crowd
+				p Understand a destination before you get there and find your crowd
 
 			section.page-card.custom-guides
 				h2 Custom Guides

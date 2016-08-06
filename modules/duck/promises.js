@@ -1,5 +1,5 @@
 const uuid          = require('uuid');
-const db            = require('../../config/aws');
+const db            = require('../../config/db');
 const assign        = require('../assign');
 const cache         = require('../caching');
 const flattenObject = require('../flattenObject');

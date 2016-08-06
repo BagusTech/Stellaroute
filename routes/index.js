@@ -3,6 +3,7 @@ const flash            = require('connect-flash');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const setFlash         = require('../modules/setFlash');
+const sendEmail         = require('../modules/sendEmail');
 const User             = require('../schemas/user');
 const router           = express.Router();
 
@@ -17,7 +18,10 @@ router.get('/', function(req, res, next){
 
 // sign up for newsletter
 router.post('/newsletter-signup', User.getCached(), function(req, res, next){
-	var user = User.findOne('local.email', req.body['local.email']);
+	const email = req.body['local.email'];
+	const user = User.findOne('local.email', email);
+	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
+	const template = 'betaSignup';
 
 	if(user){
 		if(user.recieveNewsletter === true){
@@ -26,6 +30,7 @@ router.post('/newsletter-signup', User.getCached(), function(req, res, next){
 		}
 
 		User.update({Id: user.Id, recieveNewsletter: true}).then(function added(){
+			sendEmail(email, subject, template);
 			res.send({msg: 'success'});
 		}, function(error){
 			res.send({msg: 'error: ' + error});
@@ -34,6 +39,7 @@ router.post('/newsletter-signup', User.getCached(), function(req, res, next){
 	}
 
 	User.add(req.body).then(function added(){
+		sendEmail(email, subject, template);
 		res.send({msg: 'success'});
 	}, function(error){
 		res.send({msg: 'error: ' + error});
@@ -57,5 +63,13 @@ router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
 });
+
+// terms and privacy
+router.get('/privacy-and-terms', function(req, res){
+	res.render('privacy-terms', {
+		title: 'Stellaroute\'s Privacy Agreement and Terms of Service',
+		description: 'Stellaroute\'s Privacy Agreement and Terms of Service'
+	});
+})
 
 module.exports = router;

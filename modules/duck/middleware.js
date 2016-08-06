@@ -1,4 +1,4 @@
-const db    = require('../../config/aws');
+const db   = require('../../config/db');
 const cache = require('../caching');
 
 module.exports = function(_duck){

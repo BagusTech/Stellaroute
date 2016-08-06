@@ -8,7 +8,7 @@ AWS.config.update({
   endpoint: "https://dynamodb.us-west-2.amazonaws.com"
 });
 
-var db = new AWS.DynamoDB();
+const db = new AWS.DynamoDB();
 db.lite = new AWS.DynamoDB.DocumentClient()
 
 module.exports = db;

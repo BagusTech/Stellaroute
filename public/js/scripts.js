@@ -116,6 +116,34 @@ function init(){
 			$(id + ' input').first().focus();
 		}, 200);
 	});
+
+	// toggle nav
+	function toggleMenu() {
+		$('.hamburger-menu').toggleClass('active');
+	}
+
+	$('.hamburger-menu--toggle').click(toggleMenu);
+	$('.hamburger-menu').click(toggleMenu);
+	$('.hamburger-menu--options').click(function preventCloseMenu(e){
+		e.stopPropagation();
+	});
+
+	// toggle search
+	function deActivateSearch() {
+		$('#SiteSearch').removeClass('active');
+
+		$('.site-body').off('click', deActivateSearch);
+	}
+
+	$('.search--toggle').click(function activeSiteSearch(){
+		$('#SiteSearch').addClass('active')
+
+		$('.site-body').click(deActivateSearch);
+	});
+
+	$('#SiteSearch').click(function dontCloseSearchWhileSearching(e){
+		e.stopPropagation();
+	})
 }
 
 function update(updateValues){

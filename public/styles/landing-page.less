@@ -1,0 +1,248 @@
+// Beta Sign Up
+	.email-capture-wrapper{
+		max-width: 560px;
+	}
+
+// Login
+	.landing-header .login-control{
+		float: right;
+
+		.btn{
+			color: white;
+			background: none;
+			text-transform: uppercase;
+			font-weight: 600;
+			font-size: 18px;
+			padding: 2px;
+		}
+	}
+
+	@media(min-width:@screen-Sm){
+		.landing-header .login-control .btn {
+			padding: 0;
+		}
+	}
+
+// Header Styles
+	.landing-header {
+		background: url("/images/hero-small.jpg") no-repeat center bottom / cover;
+		padding: 0 @gw-Md 16%;
+		min-height: 100vh;
+		h1{
+			margin: @gw-Xl 0 @gw-Lg;
+			color: white;
+			text-align: center;
+
+			small {
+				display: block;
+				margin-top: @gw-Sm;
+				color: white;
+				font-size: 18px;
+
+				span{
+					display: block;
+				}
+			}
+		}
+	}
+
+
+	@media(min-width: @screen-Sm){
+		.landing-header{
+			background-image: url("/images/hero-large.jpg");
+			min-height: 0;
+
+			h1{
+				small{
+					margin-top: @gw-Sm;
+					font-size: 24px;
+
+					span{
+						display: inline;
+					}
+				}
+			}
+		}
+	}
+
+	.landing-utility {
+		padding: @gw-Md 0;
+
+		img{
+			max-width: 160px;
+		}
+	}
+
+	@media(min-width: @screen-Sm){
+		.landing-utility {
+			img{
+				max-width: 188px;
+			}
+		}
+	}
+
+// Body Styles
+	.container{
+		max-width: @site-width; 
+
+		&.landing-container{
+			padding: @gw-Lg @gw-Md 0;
+
+			.custom-guides-text{
+				padding: 0 @gw-Md;
+			}
+		}
+	}
+
+	.page-card{
+		overflow: hidden;
+		padding: @gw-Lg;
+		text-align: center;
+		color: white;
+		margin: 0 -@gw-Md;
+
+		&.introduction{
+			color: @font-color; 
+
+			h2{
+				position: relative;
+				padding: 0 0 .3em;
+				margin-bottom: @gw-Md;
+
+				&:after{
+					content: ' ';
+					display: block;
+					position: absolute;
+					height: 1px;
+					top: 100%;
+					left: 20%;
+					right: 20%;
+					background: #ccc;
+				}
+			}
+
+			p{
+				font-size: 16px;
+			}
+		}
+
+		&.location-overviews,
+		&.attraction-listings,
+		&.neighborhood-descriptions,
+		&.custom-guides,
+		&.advice-ratings{
+			h2{
+				margin-bottom: @gw-Xl;
+			}
+
+			h2, p{
+				text-shadow: 1px 1px @font-color;
+			}
+
+			p{
+				font-size: 18px;
+			}
+
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		&.location-overviews{background-image: url('/images/location-overviews.jpg');}
+		&.attraction-listings{background-image: url('/images/attraction-listings.jpg');}
+		&.neighborhood-descriptions{background-image: url('/images/neighborhood-descriptions.jpg');}
+		&.custom-guides{background-image: url('/images/custom-guides.jpg');}
+		&.advice-ratings{background-image: url('/images/advice-ratings.jpg');}
+	}
+
+	.screen-shot-black-phone{
+		background: url('/images/phone-black.png') no-repeat top left / cover;
+		margin: 0 auto;
+		width: 167px;
+		height: 340px;
+		position: relative;
+
+		img{
+			position: absolute;
+			border-radius: 2px;
+			top: 35px;
+			left: 10px;
+			max-width: 147px;
+		}
+	}
+
+	.screen-shot-white-phone{
+		background: url('/images/phone-white.png') no-repeat top left / cover;
+		margin: @gw-Md auto @gw-Xl;
+		width: 238px;
+		height: 485px;
+		position: relative;
+
+		.screenshot-rotator{
+			position: absolute;
+			top: 59px;
+			width: 207px;
+			height: 367px;
+			left: 16px;
+			overflow: hidden;
+
+			img{
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				transition: left .5s ease-out;
+
+				&.active{
+					left: 0;
+				}
+
+				&.before{
+					left: -100%;
+					transition: none;
+				}
+
+				&.after{
+					left: 100%;
+				}
+			}
+		}
+	}
+
+// Footer
+	.landing-footer{
+		width: 100%;
+		padding: @gw-Xs;
+		background: @purple;
+		color: white;
+		text-align: center;
+
+		span{
+			display: block;
+		}
+	}
+
+	@media(min-width: @screen-Sm){
+		.landing-footer{
+			span{
+				display: inline;
+			}
+		}
+	}
+
+// Form Styles
+	.form-group > .btn-group{
+		width: 100%;
+
+		> button {
+			width: 100%;
+			text-align: left;
+			position: relative;
+
+			.caret{
+				position: absolute;
+				right: 10px;
+				top: 50%;
+				margin-top: -3px;
+			}
+		}
+	}

@@ -1,7 +1,7 @@
 if (!user)
 	.login-control
-		button.btn.hidden(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Create Account
-		button.btn(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
+		//button.btn.sign-up(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
+		button.btn.log-in(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
 		.modal-dialog(role='document')
@@ -9,39 +9,50 @@ if (!user)
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-					h4.modal-title#LoginModalLabel Login
+						//PeterL code added
 				.modal-body
-					.form-horizontal
-						.form-group
-							label.control-label.col-sm-2(for='Email') Email
-							.col-sm-10
-								input.form-control#Email(name='email', type='email', placeholder='joe@gmail.com')
+					.col-xs-12
+						button.facebook-btn(type='button') Log in with Facebook
+						button.google-btn(type='button') Log in with Google
+					p.text-center.clear or
 
-						.form-group
-							label.control-label.col-sm-2(for='Passphrase') Passphrase
-							.col-sm-10
-								input.form-control#Passphrase(name='password', type='password', placeholder='StellarouteIsTheBest!')
+					.col-xs-12
+						label.input-label
+							i.fa.fa-envelope(aria-hidden="true")
+							input.form-control#Email(name='email', type='email', placeholder='Email Address')
 
-						//.form-group
-							.col-sm-offset-2.col-sm-10
-								.checkbox
-									label
-										input(type='checkbox', name='remember')
-										| Remember me
+					.col-xs-12
+						label.input-label
+							i.fa.fa-lock(aria-hidden="true")
+							input.form-control#Passphrase(name='password', type='password', placeholder='Password')
 
-				.modal-footer
-					button.btn.btn-default(type='button', data-dismiss='modal') Close
-					input.btn.btn-primary(type='submit', value='Login')
+					.col-xs-8
+						.checkbox
+							label
+								input(type='checkbox', name='remember')
+								| Remember me
+					.col-xs-4.text-right
+						a.forgot-password(href="#") Forgot Password?
 
-	.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
+					.col-xs-12
+						input.login-btn(type='submit', value='Log In')
+				//.modal-footer
+					.col-xs-12
+						p Don't have an account?
+						button.signup-login-btn(type='button', data-dismiss='modal', data-toggle='modal', data-target='#SignupModal') Sign Up
+	
+	//.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
 		.modal-dialog(role='document')
-			form.modal-content(method='POST', action='/signup')
+			.modal-content
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-					h4.modal-title#SignupModalLabel Create an Account
+					//h4.modal-title#SignupModalLabel Create an Account
 				.modal-body
-					.form-horizontal
+					.col-xs-12
+						h3 Coming Soon...
+						p.lead We are currently in a closed Beta. If you would like to be put in the list to get in on it sign up for below!
+					//.form-horizontal
 						.form-group
 							label.control-label.col-sm-2(for='First') First Name
 							.col-sm-10
@@ -63,8 +74,11 @@ if (!user)
 								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required='required')
 
 				.modal-footer
-					button.btn.btn-default(type='button', data-dismiss='modal') Close
-					input.btn.btn-primary(type='submit', value='Create')
+					.col-xs-12
+						p Already have an account?
+						button.signup-login-btn(type='button', data-dismiss='modal', data-toggle='modal', data-target='#LoginModal') Log In
+					//button.btn.btn-default(type='button', data-dismiss='modal') Close
+						input.btn.btn-primary(type='submit', value='Create')
 else
 	.user-controls(style='position: absolute; top: 10px; right: 10px;')
 		if (user && user.name && user.name.first)

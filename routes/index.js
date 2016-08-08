@@ -70,6 +70,14 @@ router.get('/privacy-and-terms', function(req, res){
 		title: 'Stellaroute\'s Privacy Agreement and Terms of Service',
 		description: 'Stellaroute\'s Privacy Agreement and Terms of Service'
 	});
-})
+});
+
+// about
+router.get('/about', function(req, res){
+	res.render('about', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
 
 module.exports = router;

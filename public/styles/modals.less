@@ -1,0 +1,112 @@
+.modal-header{
+	border: none;
+}
+
+.modal-body{
+	.clear;
+
+	.facebook-btn{
+		width: 100%;
+		height: 60px;
+		margin: 20px 0 15px;
+		border:none;
+		background: #3b5998;
+		color: white;
+		border-radius: 1px;
+	}
+
+
+	.google-btn{
+		width: 100%;
+		height: 60px;
+		margin: 0 0 10px;
+		border-width: 2px;
+		border-color: #ddd;
+		border-style: solid;
+		border-radius: 1px;
+		background: white;
+		color: #4a4d50;
+	}
+
+	p{	
+		margin: 10px 0;
+		color: #959ca2;
+		font-weight: 600;
+	}
+
+	.input-label{
+		position: relative;
+		width: 100%;
+		font-weight: normal;
+		margin-bottom: 15px;
+		font-size: 1.3em; 
+
+		i{
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			color: #ccc;
+		}
+
+		input{
+			height: 60px;
+			font-size: .8em;
+			border-width: 2px;
+			border-color: #ddd;
+			border-style: solid;
+			background: white;
+			border-radius: 1px;
+		}
+	}
+
+	.checkbox{
+		margin-top: 0;
+	}
+
+	.forgot-password{
+		color: @green;
+	}
+
+	.login-btn{
+		background: @green;
+		color: #f2f2f2;
+		width: 100%;
+		text-align: center;
+		font-style: 1.2em;
+		border: none;
+		height: 60px;
+		margin-bottom: 15px;
+	}
+}
+
+.modal-footer{
+	border: none;
+	margin-top: 5px;
+	padding: 20px 15px;
+	position: relative;
+
+	&:before{
+		background: #ddd;
+		content: ' ';
+		display: block;
+		position: absolute;
+		height: 1px;
+		left: 30px;
+		right: 30px;
+		top: 0;
+	}
+
+	p{
+		padding-top: @gw-Sm;
+		float: left;
+		font-weight: 600;
+	}
+
+	.signup-login-btn{
+		padding: @gw-Sm;
+		color: @green;
+		border: 2px solid @green;
+		float: right;
+		background: none;
+	}
+}

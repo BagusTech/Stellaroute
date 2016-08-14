@@ -87,4 +87,13 @@ router.get('/request', function(req, res){
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
+
+// feedback
+router.get('/feedback', function(req, res){
+	res.render('feedback', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
+
 module.exports = router;

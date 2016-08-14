@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	section.feedback-page
+		header.feedback-header
+			.container
+				h1 We Want to Know What What You Think!		
+		form.feedback-form
+			.container
+				p.lead.text-center We are always trying to improve our site and we take your feedback very seriously. Let us know how we can improve.
+				.row
+					.col-xs-12.col-sm-8.col-sm-push-2.form-group
+						input.form-control(name='name', type='text', placeholder='Name')
+				.row
+					.col-xs-12.col-sm-8.col-sm-push-2.form-group
+						input.form-control(name='email', type='email', placeholder='Email')
+				.row
+					.col-xs-12.col-sm-8.col-sm-push-2.form-group
+						input.form-control(name='Subject', type='text', placeholder='Subject')
+				.row
+					.col-xs-12.col-sm-8.col-sm-push-2.form-group
+						textarea.form-control(name='feedback', placeholder='Tell us how we can improve')
+				.row
+					.col-xs-12.col-sm-8.col-sm-push-2
+						button.btn-primary.btn-block(type='button') Send Your Feedback

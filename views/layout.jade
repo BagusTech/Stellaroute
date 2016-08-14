@@ -12,7 +12,6 @@ html(lang='en')
 
 		//// Styles & Fonts ///////////////////////////////////////////////////////
 		// not hosted local
-		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type='text/css')
 		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css', type='text/css')
 		link(href='https://fonts.googleapis.com/css?family=Work+Sans:400,600,700,300', rel='stylesheet', type='text/css')
 
@@ -44,7 +43,7 @@ html(lang='en')
 		
 
 	body
-		if (!user)
+		if (user)
 			header.landing-header
 				.landing-utility
 					img(src='/images/logo.png', alt='Stellaroute')
@@ -113,9 +112,8 @@ html(lang='en')
 					include controls/login
 				
 			main.site-body
-				.container(style='position: relative;')
-					include flash
-					block content
+				include flash
+				block content
 
 			footer.site-footer
 				.footer-content.container

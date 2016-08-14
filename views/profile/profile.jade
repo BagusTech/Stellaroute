@@ -1,48 +1,116 @@
 extends ../layout
 
 block content
-	h1 My Profile
+	section.profile-page
+		header.profile-header
+			.container
+				.profile-info
+					img.profile-picture(src='http://placebear.com/200/200', alt='profile picture')
+					h1 Butters
+					h2 South Park, USA
+				ul.account-pages(role="navigation")
+					li 
+						a(href="#") Guides
+					li 
+						a(href="#") Wishlist
+					li 
+						a(href="#") Reviews
+					li.active
+						a(href="#") Settings
+		.container
+			form.profile-settings-update
+				//button.edit-toggle(type='button')
+					i.fa.fa-pencil(aria-hidden="true")
+					span.sr-only Toggle Edit Mode
+				.row
+					.col-xs-12.col-sm-6
+						.content-card
+							h3.profile-label INFO
+							.row
+								.col-xs-12
+									label.profile-label First Name
+									input.form-control.form-settings(name='username', type='text', placeholder='First Name', value= user.name ? user.name.first : '')
+								.col-xs-12
+									label.profile-label Last Name
+									input.form-control.form-settings(name='username', type='text', placeholder='Last Name', value= user.name ? user.name.last : '')
+							.row
+								.col-xs-12
+									label.profile-label Hometown
+									input.form-control.form-settings(name='hometown', type='text', placeholder='Hometown')
+							.row
+								.col-xs-12
+									label.profile-label Email
+									input.form-control.form-settings(name='email', type='email', placeholder='Email', value= user.local ? user.local.email : '')
 
-	form(method='POST', action='/profile/update')
-		.row
-			.col-sm-6.col-xs-12
-				.form-group
-					label(for='FirstName') First Name
-					input.form-control#FirstName(type='text', name='name.first', placeholders='First Name', value= user.name ? user.name.first : '')
-		.row
-			.col-sm-6.col-xs-12
-				.form-group
-					label(for='LastName') Last Name
-					input.form-control#LastName(type='text', name='name.last', placeholders='Last Name', value= user.name ? user.name.last : '')
-		.row
-			.col-sm-6.col-xs-12
-				.form-group
-					label(for='LastName') Email
-					input.form-control#Email(type='text', name='local.email', placeholders='Email', value= user.local ? user.local.email : '')
-		.row
-			.col-sm-6.col-xs-12
-				.form-group
-					label(for='LastName') Passphrase
-					input.form-control#Passphrase(type='password', name='local.password', placeholders='Passphrase')
-		.row
-			.col-xs-12.text-right
-				input(type='hidden', name='Id', value= user.Id)
-				input.btn.btn-primary(type='submit', value='Update', name='submit')
-				| &nbsp;
-				button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
-		
-				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-					.modal-dialog(role='document')
-						.modal-content.text-left
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-label='Close')
-									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel Delete Your Account
-							.modal-body
-								.alert.alert-danger
-									p Are you sure you want to delete your account?
-									p This action cannot be undone
-								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+								.col-xs-12
+									label.profile-label Password
+									input.form-control.form-settings(name='password', type='password', placeholder='Password') 
+				
+					.col-xs-12.col-sm-6
+						.content-card
+							.row
+								.col-xs-12.profile-label.notification
+									h3 Notification
+									.checkbox
+										label.switch
+											input(type='checkbox')
+											| Send Me Newsletters
+											.slider-round
+									.checkbox
+										label.switch
+											input(type='checkbox')
+											| Send Me Product Updates
+											.slider-round
 
-							.modal-footer
-								button.btn.btn-default(type='button', data-dismiss='modal') Close
+						.content-card
+							.row
+								.col-xs-6
+									button.btn-default.btn-block(type='button') Cancel
+								.col-xs-6
+									button.btn-primary.btn-block(type='button') Save
+
+			//h1 My Profile
+
+			//form(method='POST', action='/profile/update')
+				.row
+					.col-sm-6.col-xs-12
+						.form-group
+							label(for='FirstName') First Name
+							input.form-control#FirstName(type='text', name='name.first', placeholders='First Name', value= user.name ? user.name.first : '')
+				.row
+					.col-sm-6.col-xs-12
+						.form-group
+							label(for='LastName') Last Name
+							input.form-control#LastName(type='text', name='name.last', placeholders='Last Name', value= user.name ? user.name.last : '')
+				.row
+					.col-sm-6.col-xs-12
+						.form-group
+							label(for='LastName') Email
+							input.form-control#Email(type='text', name='local.email', placeholders='Email', value= user.local ? user.local.email : '')
+				.row
+					.col-sm-6.col-xs-12
+						.form-group
+							label(for='LastName') Passphrase
+							input.form-control#Passphrase(type='password', name='local.password', placeholders='Passphrase')
+				.row
+					.col-xs-12.text-right
+						input(type='hidden', name='Id', value= user.Id)
+						input.btn.btn-primary(type='submit', value='Update', name='submit')
+						| &nbsp;
+						button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
+				
+						.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+							.modal-dialog(role='document')
+								.modal-content.text-left
+									.modal-header
+										button.close(type='button', data-dismiss='modal', aria-label='Close')
+											span(aria-hidden='true') &times;
+										h4.modal-title#DeleteModalLabel Delete Your Account
+									.modal-body
+										.alert.alert-danger
+											p Are you sure you want to delete your account?
+											p This action cannot be undone
+										input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+									.modal-footer
+										button.btn.btn-default(type='button', data-dismiss='modal') Clos

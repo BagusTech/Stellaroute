@@ -80,4 +80,11 @@ router.get('/about', function(req, res){
 	});
 });
 
+// request
+router.get('/request', function(req, res){
+	res.render('request', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
 module.exports = router;

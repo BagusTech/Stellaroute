@@ -136,14 +136,14 @@ function init(){
 	}
 
 	$('.search--toggle').click(function activeSiteSearch(){
-		$('#SiteSearch').addClass('active')
+		$('#SiteSearch').addClass('active');
 
 		$('.site-body').click(deActivateSearch);
 	});
 
 	$('#SiteSearch').click(function dontCloseSearchWhileSearching(e){
 		e.stopPropagation();
-	})
+	});
 }
 
 function update(updateValues){

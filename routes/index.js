@@ -17,7 +17,7 @@ router.get('/', function(req, res, next){
 });
 
 // sign up for newsletter
-router.post('/newsletter-signup', User.getCached(), function(req, res, next){
+router.post('/newsletter-signup', User.getCached(), function(req, res){
 	const email = req.body['local.email'];
 	const user = User.findOne('local.email', email);
 	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
@@ -44,7 +44,17 @@ router.post('/newsletter-signup', User.getCached(), function(req, res, next){
 	}, function(error){
 		res.send({msg: 'error: ' + error});
 	});
-})
+});
+
+// request a location
+router.post('/request-location', function(req, res){
+	const toEmail = 'info@stellaroute.com';
+	const subject = 'Location Request';
+	const html = '<h1>'+ req.body.fromEmail +' Made a Request!</h1><p>'+ req.body.request +'</p>'
+
+	sendEmail(toEmail, subject, null, html);
+	res.send({msg: 'success'});
+});
 
 // authentication
 router.post('/signup', passport.authenticate('local-signup', {

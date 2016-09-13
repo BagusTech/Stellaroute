@@ -7,8 +7,10 @@
 		}
 	}
 
-	.w-@{width}--@{breakpoint} {
-		width: @w;
+	& when not (@breakpoint = xs) {
+		.w-@{width}--@{breakpoint} {
+			width: @w;
+		}
 	}
 
 	.make-width-classes(@breakpoint, @unit, @maxWidth, @width+1)

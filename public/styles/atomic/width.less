@@ -1,0 +1,25 @@
+.make-width-classes(@breakpoint: xs, @unit: '%', @maxWidth: 100, @width: 0) when (@width <= @maxWidth){
+	@w: ~"@{width}@{unit}";
+
+	& when (@breakpoint = xs) {
+		.w-@{width} {
+			width: @w;
+		}
+	}
+
+	.w-@{width}--@{breakpoint} {
+		width: @w;
+	}
+
+	.make-width-classes(@breakpoint, @unit, @maxWidth, @width+1)
+}
+
+.make-width-classes();
+
+@media (min-width: @screen-Sm){
+	.make-width-classes(sm);
+}
+
+@media (min-width: @screen-Md){
+	.make-width-classes(md);
+}

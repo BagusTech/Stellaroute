@@ -1,0 +1,30 @@
+.text-wings{
+  position: relative;
+  display: table;
+  width: 100%;
+  text-align: center;
+  
+  span{
+    display: table-cell;
+    width: 0;
+    padding:0 24px;
+    white-space: nowrap;
+  }
+  
+  hr{
+      display: table-cell;
+      postion: relative;
+      width: 50%;
+      border: none;
+      color: inherit;
+        
+      &:before{
+        display: inline-block;
+        position: relative;
+        top: -.18em;
+        width: 100%;
+        content: ' ';
+        border-bottom: 1px solid;
+      }
+    }
+}

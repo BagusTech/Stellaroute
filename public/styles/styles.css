@@ -3,6 +3,113 @@
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+.clear,
+.clearfix,
+.c-B,
+.clear-both,
+.dl-horizontal dd,
+.container,
+.container-fluid,
+.row,
+.form-horizontal .form-group,
+.btn-toolbar,
+.btn-group-vertical > .btn-group,
+.nav,
+.navbar,
+.navbar-header,
+.navbar-collapse,
+.pager,
+.panel-body,
+.modal-header,
+.modal-footer {
+  clear: both;
+  overflow: hidden;
+  zoom: 1;
+}
+.clear:before,
+.clearfix:before,
+.c-B:before,
+.clear-both:before,
+.clear:after,
+.clearfix:after,
+.c-B:after,
+.clear-both:after,
+.dl-horizontal dd:before,
+.dl-horizontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.modal-header:before,
+.modal-header:after,
+.modal-footer:before,
+.modal-footer:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.clear:before,
+.clearfix:before,
+.c-B:before,
+.clear-both:before,
+.clear:after,
+.clearfix:after,
+.c-B:after,
+.clear-both:after,
+.dl-horizontal dd:before,
+.dl-horizontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.modal-header:before,
+.modal-header:after,
+.modal-footer:before,
+.modal-footer:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
@@ -6783,6 +6890,8 @@ button.close {
 .modal-header,
 .modal-footer {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
 }
 .clearfix:before,
 .clearfix:after,
@@ -6816,27 +6925,10 @@ button.close {
 .modal-header:after,
 .modal-footer:before,
 .modal-footer:after {
+  clear: both;
   content: " ";
   display: table;
 }
-.clearfix:after,
-.dl-horizontal dd:after,
-.container:after,
-.container-fluid:after,
-.row:after,
-.form-horizontal .form-group:after,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:after,
-.nav:after,
-.navbar:after,
-.navbar-header:after,
-.navbar-collapse:after,
-.pager:after,
-.panel-body:after,
-.modal-header:after,
-.modal-footer:after {
-  clear: both;
-}
 .clearfix:before,
 .clearfix:after,
 .dl-horizontal dd:before,
@@ -6870,7 +6962,7 @@ button.close {
 .modal-footer:before,
 .modal-footer:after {
   clear: both;
-  content: ' ';
+  content: " ";
   display: table;
 }
 .center-block {
@@ -7118,13 +7210,21 @@ button.close {
 }
 .email-capture-wrapper {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
   position: relative;
   height: 44px;
 }
 .email-capture-wrapper:before,
 .email-capture-wrapper:after {
   clear: both;
-  content: ' ';
+  content: " ";
+  display: table;
+}
+.email-capture-wrapper:before,
+.email-capture-wrapper:after {
+  clear: both;
+  content: " ";
   display: table;
 }
 .email-capture-wrapper .input-group {
@@ -7619,12 +7719,20 @@ form.profile-settings-update .profile-label.notification h3 {
   }
   .account-pages {
     clear: both;
+    overflow: hidden;
+    zoom: 1;
     text-align: left;
   }
   .account-pages:before,
   .account-pages:after {
     clear: both;
-    content: ' ';
+    content: " ";
+    display: table;
+  }
+  .account-pages:before,
+  .account-pages:after {
+    clear: both;
+    content: " ";
     display: table;
   }
   .account-pages li {
@@ -7663,68 +7771,32 @@ form.profile-settings-update .profile-label.notification h3 {
   text-align: center;
   font-weight: 400;
 }
-.clear,
-.clearfix,
-.c-B,
-.clear-both,
-.dl-horizontal dd,
-.container,
-.container-fluid,
-.row,
-.form-horizontal .form-group,
-.btn-toolbar,
-.btn-group-vertical > .btn-group,
-.nav,
-.navbar,
-.navbar-header,
-.navbar-collapse,
-.pager,
-.panel-body,
-.modal-header,
-.modal-footer {
-  clear: both;
-}
-.clear:before,
-.clearfix:before,
-.c-B:before,
-.clear-both:before,
-.clear:after,
-.clearfix:after,
-.c-B:after,
-.clear-both:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
-.container:before,
-.container:after,
-.container-fluid:before,
-.container-fluid:after,
-.row:before,
-.row:after,
-.form-horizontal .form-group:before,
-.form-horizontal .form-group:after,
-.btn-toolbar:before,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:before,
-.btn-group-vertical > .btn-group:after,
-.nav:before,
-.nav:after,
-.navbar:before,
-.navbar:after,
-.navbar-header:before,
-.navbar-header:after,
-.navbar-collapse:before,
-.navbar-collapse:after,
-.pager:before,
-.pager:after,
-.panel-body:before,
-.panel-body:after,
-.modal-header:before,
-.modal-header:after,
-.modal-footer:before,
-.modal-footer:after {
-  clear: both;
-  content: ' ';
+.text-wings {
+  position: relative;
   display: table;
+  width: 100%;
+  text-align: center;
+}
+.text-wings span {
+  display: table-cell;
+  width: 0;
+  padding: 0 24px;
+  white-space: nowrap;
+}
+.text-wings hr {
+  display: table-cell;
+  postion: relative;
+  width: 50%;
+  border: none;
+  color: inherit;
+}
+.text-wings hr:before {
+  display: inline-block;
+  position: relative;
+  top: -0.18em;
+  width: 100%;
+  content: ' ';
+  border-bottom: 1px solid;
 }
 html,
 body {
@@ -7748,13 +7820,21 @@ h2 {
 }
 .site-header {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
   width: 100%;
   position: absolute;
 }
 .site-header:before,
 .site-header:after {
   clear: both;
-  content: ' ';
+  content: " ";
+  display: table;
+}
+.site-header:before,
+.site-header:after {
+  clear: both;
+  content: " ";
   display: table;
 }
 .logo-header {
@@ -7931,11 +8011,19 @@ h2 {
 }
 .modal-body {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
 }
 .modal-body:before,
 .modal-body:after {
   clear: both;
-  content: ' ';
+  content: " ";
+  display: table;
+}
+.modal-body:before,
+.modal-body:after {
+  clear: both;
+  content: " ";
   display: table;
 }
 .modal-body .facebook-btn {
@@ -8049,6 +8137,8 @@ h2 {
 }
 .site-footer {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
   position: relative;
   width: 100%;
   background: #363b44;
@@ -8056,7 +8146,13 @@ h2 {
 .site-footer:before,
 .site-footer:after {
   clear: both;
-  content: ' ';
+  content: " ";
+  display: table;
+}
+.site-footer:before,
+.site-footer:after {
+  clear: both;
+  content: " ";
   display: table;
 }
 .site-footer a {
@@ -8067,12 +8163,20 @@ h2 {
 }
 .site-footer .email-capture-wrapper {
   clear: both;
+  overflow: hidden;
+  zoom: 1;
   height: auto;
 }
 .site-footer .email-capture-wrapper:before,
 .site-footer .email-capture-wrapper:after {
   clear: both;
-  content: ' ';
+  content: " ";
+  display: table;
+}
+.site-footer .email-capture-wrapper:before,
+.site-footer .email-capture-wrapper:after {
+  clear: both;
+  content: " ";
   display: table;
 }
 .site-footer .email-capture-wrapper .input-group .form-control {
@@ -10034,13 +10138,13 @@ h2 {
 #Stellaroute .fs-Xs {
   font-size: .65em;
 }
-#Stellaroute .fs-S {
+#Stellaroute .fs-Sm {
   font-size: .8em;
 }
-#Stellaroute .fs-M {
+#Stellaroute .fs-Md {
   font-size: 1em;
 }
-#Stellaroute .fs-L {
+#Stellaroute .fs-Lg {
   font-size: 1.2em;
 }
 #Stellaroute .fs-Xl {
@@ -10113,13 +10217,13 @@ h2 {
   #Stellaroute .fs-Xs--sm {
     font-size: .65em;
   }
-  #Stellaroute .fs-S--sm {
+  #Stellaroute .fs-Sm--sm {
     font-size: .8em;
   }
-  #Stellaroute .fs-M--sm {
+  #Stellaroute .fs-Md--sm {
     font-size: 1em;
   }
-  #Stellaroute .fs-L--sm {
+  #Stellaroute .fs-Lg--sm {
     font-size: 1.2em;
   }
   #Stellaroute .fs-Xl--sm {
@@ -10193,13 +10297,13 @@ h2 {
   #Stellaroute .fs-Xs--md {
     font-size: .65em;
   }
-  #Stellaroute .fs-S--md {
+  #Stellaroute .fs-Sm--md {
     font-size: .8em;
   }
-  #Stellaroute .fs-M--md {
+  #Stellaroute .fs-Md--md {
     font-size: 1em;
   }
-  #Stellaroute .fs-L--md {
+  #Stellaroute .fs-Lg--md {
     font-size: 1.2em;
   }
   #Stellaroute .fs-Xl--md {

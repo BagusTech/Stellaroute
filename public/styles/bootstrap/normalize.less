@@ -10,6 +10,10 @@ html {
   font-family: sans-serif; // 1
   -ms-text-size-adjust: 100%; // 2
   -webkit-text-size-adjust: 100%; // 2
+  color: @font-color;
+  font-family: @font-family;
+  font-size: @font-size;
+  overflow-x: hidden;
 }
 
 //
@@ -17,7 +21,11 @@ html {
 //
 
 body {
+  color: @font-color;
+  font-family: @font-family;
+  font-size: @font-size;
   margin: 0;
+  overflow-x: hidden;
 }
 
 // HTML5 display definitions

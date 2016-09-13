@@ -32,12 +32,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Sets the public folder to be available available to the front end
 
-// Make the db accessible to our router
-/* app.use(function(req, res, next){
-  req.db = db;
-  next();
-}); */
-
 // required for passport
 app.use(session({ 
         secret: 'thisisthesecretpasswordforstellaroute',

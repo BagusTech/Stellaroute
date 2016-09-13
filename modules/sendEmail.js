@@ -1,8 +1,8 @@
 const fs   = require('fs');
 const smtp = require('../config/smtp');
 
-const sendEmail = function(toEmail, subject, template, fromEmail) {
-	const htmlstream = fs.createReadStream('./emailTemplates/' + template + '.html');
+const sendEmail = function(toEmail, subject, template, rawHTML, fromEmail) {
+	const htmlstream = template ? fs.createReadStream('./emailTemplates/' + template + '.html') : rawHTML;
 	const mailOptions = {
 		from: fromEmail || 'marketing@stellaroute.com', // sender address
 		to: toEmail, // list of receivers

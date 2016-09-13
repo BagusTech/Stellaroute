@@ -11,38 +11,50 @@ const readJSON      = require('../readJSON');
 module.exports = function(_duck){
 	// Write an item into the database
 	// Data is the object being added to the database
+	// Conditions - TODO
+	// ReAssign - bool - change object form { a.b: 'foo'} to { a: { b: 'foo' }} 
+	// CheckSchema - bool - SHOULD ONLY BE USED FOR TESTING - verify that data matches Schema
 	// TODO make accept array of items to do a batch write
-	_duck.prototype.add = function(data, conditions){
+	_duck.prototype.add = function(data, conditions, reAssign, checkSchema){
 		const table = this.table;
 		const schema = this.itemSchema;
 		const hash = this.hash;
+
+		reAssign = reAssign || true;
+		checkSchema = checkSchema || true;
 
 		return new Promise(function(resolve, reject){
 
 			// if the HASH isn't set, set it to a uuid
 			data[hash] = data[hash] || uuid.v4();
 
-			var itemToAdd = {};
-			readJSON(data, readJSON, function(item, data){
-				assign(itemToAdd, item, data[item])
-			});
+			// item to add is an object object if it needs to be re-assigned
+			var itemToAdd = reAssign ? {} : data;
 
-			if(parseData(itemToAdd, schema, table) !== 'success'){ 
-				console.error('failed to add ' + JSON.stringify(data));
+			if (reAssign) {
+				readJSON(data, readJSON, function(item, data){
+					assign(itemToAdd, item, data[item])
+				});
+			}
 
-				reject('Mismatch of data types');
-				return;
+			if (checkSchema) {
+				if(parseData(itemToAdd, schema, table) !== 'success'){ 
+					console.error('failed to add ' + JSON.stringify(data));
+
+					reject('Mismatch of data types');
+					return;
+				}
 			}
 
 			var params = {
 				TableName: table,
 				Item: itemToAdd,
-				ConditionExpression: '#h <> :h',
+				ConditionExpression: '#h <> :h', //make sure an item with the same is doesn't already exist
 				ExpressionAttributeNames: { '#h': hash },
 				ExpressionAttributeValues: { ':h': data[hash] }
 			}
 
-			// DynamoDB doesn't except empty strings as ReturnValues
+			// DynamoDB doesn't except empty strings as ReturnValues, so change them to null
 			void function setEmptyStringToNull(Item){
 				for (var item in Item){
 					if(Item[item] === String()){

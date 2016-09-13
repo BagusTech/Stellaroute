@@ -30,8 +30,8 @@ block content
 				p Get quality advice and descriptive ratings from peers and experts
 
 		.hidden-xs
-			.row
-				.col-sm-4.text-center
+			.row.mb-Sm
+				.col-sm-4.ta-C
 					h2 Custom Guides
 					p.lead.custom-guides-text Plan painlessly by using one of our expert guides or quickly make your own.
 
@@ -56,16 +56,27 @@ block content
 
 
 	else
-		h1 Capture Content
+		h1.ta-C Plan Spontaneity
 
-		.row
+		.container
+			.row
+				.col-xs-12.col-md-6.col-md-push-3
+					.form-group.p-R
+						input.form-control.fa.fa-search(type='search', placeholder="Where do you want to go?", name="locationSearch")
+						button.p-A.r-Xs.t-XXs.bg-N.bw-0.pt-XXs.fc-G__lt(type="button")
+							i.fa.fa-search(aria-hidden="true")
+
+
+
+
+		//.row
 			.col-sm-3.col-sm-push-3.col-xs-12
 				p
 					a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
 			.col-sm-3.col-sm-push-3.col-xs-12
 				p
 					a(href='/world-regions').btn.btn-primary.btn-block.btn-lg World Region
-		.row
+		//.row
 			.col-sm-3.col-sm-push-3.col-xs-12
 				p
 					a(href='/countries').btn.btn-primary.btn-block.btn-lg Country

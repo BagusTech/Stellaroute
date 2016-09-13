@@ -1,8 +1,22 @@
 extends layout
 
+block header
+	if (!user)
+		header.landing-header
+			.landing-utility
+				img(src='/images/logo.png', alt='Stellaroute')
+				include controls/login
+			h1.mt-Xl.mb-Lg.ta-C
+				| Plan Spontaneity
+				small.d-B.mt-Sm.fc-W
+					| Join the Beta in 
+					span.d-B.d-I--sm January, 2017
+
+			include controls/beta-signup
+	else
+		include controls/header
+
 block content
-	// TODO: if user isn't logged in, show place holder
-	// PeterL took out the !
 	if (!user)
 		.visible-xs
 			section.page-card.introduction
@@ -53,8 +67,6 @@ block content
 						img(src="/images/screenshot-ratings.jpg")
 
 		script(type='text/javascript', src='js/pages/landingPage.min.js')
-
-
 	else
 		h1.ta-C Plan Spontaneity
 
@@ -67,19 +79,27 @@ block content
 							i.fa.fa-search(aria-hidden="true")
 
 
+block footer
+	if (!user)
+		footer.bg-Purp.p-Xs.fc-W.ta-C
+			small 
+				| Copyright &copy; 2016 Bagus Tech LLC. 
+				span All rights reserved
+	else
+		include controls/footer
 
 
-		//.row
-			.col-sm-3.col-sm-push-3.col-xs-12
-				p
-					a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
-			.col-sm-3.col-sm-push-3.col-xs-12
-				p
-					a(href='/world-regions').btn.btn-primary.btn-block.btn-lg World Region
-		//.row
-			.col-sm-3.col-sm-push-3.col-xs-12
-				p
-					a(href='/countries').btn.btn-primary.btn-block.btn-lg Country
-			.col-sm-3.col-sm-push-3.col-xs-12
-				p
-					a(href='/attractions').btn.btn-primary.btn-block.btn-lg Attraction
+	//.row
+		.col-sm-3.col-sm-push-3.col-xs-12
+			p
+				a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
+		.col-sm-3.col-sm-push-3.col-xs-12
+			p
+				a(href='/world-regions').btn.btn-primary.btn-block.btn-lg World Region
+	//.row
+		.col-sm-3.col-sm-push-3.col-xs-12
+			p
+				a(href='/countries').btn.btn-primary.btn-block.btn-lg Country
+		.col-sm-3.col-sm-push-3.col-xs-12
+			p
+				a(href='/attractions').btn.btn-primary.btn-block.btn-lg Attraction

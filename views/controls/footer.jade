@@ -1,0 +1,49 @@
+footer.site-footer
+	.footer-content.container
+		.row
+			.col-xs-12.col-sm-6.footer-col-1
+				a(href='#')
+					img.logo-footer(src='/images/logo_purple.svg', alt='Stellaroute')
+				ul.about-us.visible-xs
+					li
+						a(href='/about') About Us
+					li
+						| &bull;
+					li
+						a(href='mailto:info@stellaroute.com') Email Us
+				ul.social-media
+					li.facebook-icon
+						a(href='https://www.facebook.com/stellaroute/' target='blank')
+							i.fa.fa-facebook(aria-hidden="true")
+							span.sr-only Facebook
+					li.instagram-icon
+						a(href='https://www.instagram.com/stellaroute_travel/' target='blank')
+							i.fa.fa-instagram(aria-hidden="true")
+							span.sr-only Instagram
+					li.twitter-icon
+						a(href='https://twitter.com/stellaroute' target='blank')
+							i.fa.fa-twitter(aria-hidden="true")
+							span.sr-only Twitter
+					li.pinterest-icon
+						a(href='https://www.pinterest.com/stellaroute/' target='blank')
+							i.fa.fa-pinterest(aria-hidden="true")
+							span.sr-only Pinterest
+					li.youtube-icon
+						a(href='https://www.youtube.com/channel/UCU5tyYgAJoqOudRkss21BSw' target='blank')
+							i.fa.fa-youtube(aria-hidden="true")
+							span.sr-only YouTube
+			.col-xs-12.col-sm-6.footer-col-2
+				.email-capture-wrapper.form-group
+					h3 Sign Up for Our Beta	
+						small.hidden-xs We'll keep you updated leading up to our launch
+					include beta-signup
+
+	ul.bottom-footer
+		li.hidden-xs
+			a(href="/about") About Us
+		li
+			a(href="http://bagusco.com/") &copy; Bagus Tech LLC. 
+		li
+			a(href="/privacy-and-terms") All rights reserved
+		li.hidden-xs
+			a(href="mailto:info@stellaroute.com") Email Us

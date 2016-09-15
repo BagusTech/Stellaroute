@@ -34,7 +34,7 @@
 .fc-Steel{     color: @steel; }
 .fc-Steel__dk{ color: @steel-dark; }
 
-.stc-G__ltr{ color: @grey-lightest; }
+.fc-G__ltst{ color: @grey-lightest; }
 .fc-G__ltr{  color: @grey-lighter; }
 .fc-G__lt{   color: @grey-light; }
 .fc-G__dk{   color: @grey-dark; }
@@ -51,13 +51,23 @@
 // font weight
 .fw-B, 
 .fw-700, { font-weight: 700; }
-.fw-Semi,
+.fw-Sb,
 .fw-500{   font-weight: 500; }
 .fw-N,
 .fw-400{   font-weight: 400; }
 
+// text transform
+.tt-U { text-transform: uppercase; }
+.tt-C { text-transform: capitalize; }
+.tt-L { text-transform: lowercase; }
+.tt-N { text-transform: none; }
+
+// white space
+.ws-NoWrap { white-space: nowrap; }
+.ws-Normal { white-space: normal; }
+.ws-Pre { white-space: pre; }
+
 @media (min-width: @screen-Sm){
-	// font size
 	.fs-XXs--sm{ font-size: .5em; }
 	.fs-Xs--sm{  font-size: .65em; }
 	.fs-Sm--sm{  font-size: .8em; }
@@ -74,7 +84,6 @@
 	.fs-22--sm{ font-size: 22px; }
 	.fs-24--sm{ font-size: 24px; }
 
-	// color
 	.fc-I--sm{ color: inherit; }
 
 	.fc-Gr--sm{     color: @green; }
@@ -95,19 +104,21 @@
 	.fc-W--sm{       color: white; }
 	.fc-B--sm{       color: #000; }
 
-	// text align
 	.ta-L--sm{ text-align: left; }
 	.ta-r--sm{ text-align: right; }
 	.ta-C--sm{ text-align: center; }
 	.ta-J--sm{ text-align: justify; }
 
-	// font weight
 	.fw-B--sm, 
 	.fw-700--sm, { font-weight: 700; }
 	.fw-Semi--sm,
 	.fw-500--sm{   font-weight: 500; }
 	.fw-N--sm,
 	.fw-400--sm{   font-weight: 400; }
+
+	.ws-NoWrap--sm { white-space: nowrap; }
+	.ws-Normal--sm { white-space: normal; }
+	.ws-Pre--sm { white-space: pre; }
 }
 
 @media (min-width: @screen-Md){
@@ -158,4 +169,8 @@
 	.fw-500--md{   font-weight: 500; }
 	.fw-N--md,
 	.fw-400--md{   font-weight: 400; }
+
+	.ws-NoWrap--md { white-space: nowrap; }
+	.ws-Normal--md { white-space: normal; }
+	.ws-Pre--md { white-space: pre; }
 }

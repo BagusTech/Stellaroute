@@ -1,0 +1,147 @@
+.make-flex-order-classes(@breakpoint: xs, @maxWidth: 10, @order: -10) when (@order <= @maxWidth){
+	& when (@breakpoint = xs) {
+		& when (@order < 0) {
+			.fo-Neg@{order} {
+				order: @order;
+			}
+		}
+
+		& when not (@order < 0) {
+			.fo-@{order} {
+				order: @order;
+			}
+		}
+	}
+
+	& when not (@breakpoint = xs) {
+		& when (@order < 0) {
+			.fo-Neg@{order}--@{breakpoint} {
+				order: @order;
+			}
+		}
+
+		& when not (@order < 0) {
+			.fo-@{order}--@{breakpoint} {
+				order: @order;
+			}
+		}
+	}
+
+	.make-flex-order-classes(@breakpoint, @maxWidth, @order+1)
+}
+
+// display flex
+.d-F { display: flex; }
+
+// flex direction
+.fd-R { flex-direction: row; }
+.fd-Rr { flex-direction: row-reverse; }
+.fd-C { flex-direction: column; }
+.fd-Cr { flex-direction: column-reverse; }
+
+// flex justify
+.fj-S { justify-content: flex-start; }
+.fj-E { justify-content: flex-end; }
+.fj-C { justify-content: center; }
+.fj-B { justify-content: space-between; }
+.fj-A { justify-content: space-around; }
+
+// flex align items
+.fai-S{ align-items: flex-start; }
+.fai-W{ align-items: flex-end; }
+.fai-C{ align-items: center; }
+.fai-B{ align-items: baseline; }
+.fai-Str{ align-items: stretch; }
+
+// flex align content
+.fac-S { align-content: flex-start; }
+.fac-E { align-content: flex-end; }
+.fac-C { align-content: center; }
+.fac-Str { align-content: stretch; }
+.fac-B { align-content: space-between; }
+.fac-A { align-content: space-around; }
+
+// flex order
+.fo-I { order: initial; }
+.make-flex-order-classes();
+
+// flex align self
+.fas-S{ align-self: flex-start; }
+.fas-W{ align-self: flex-end; }
+.fas-C{ align-self: center; }
+.fas-B{ align-self: baseline; }
+.fas-Str{ align-self: stretch; }
+
+@media (min-width: @screen-Sm){
+	.d-F--sm { display: flex; }
+
+	.fd-R--sm { flex-direction: row; }
+	.fd-Rr--sm { flex-direction: row-reverse; }
+	.fd-C--sm { flex-direction: column; }
+	.fd-Cr--sm { flex-direction: column-reverse; }
+
+	.fj-S--sm { justify-content: flex-start; }
+	.fj-E--sm { justify-content: flex-end; }
+	.fj-C--sm { justify-content: center; }
+	.fj-B--sm { justify-content: space-between; }
+	.fj-A--sm { justify-content: space-around; }
+
+	.fai-S--sm { align-items: flex-start; }
+	.fai-W--sm { align-items: flex-end; }
+	.fai-C--sm { align-items: center; }
+	.fai-B--sm { align-items: baseline; }
+	.fai-Str--sm { align-items: stretch; }
+
+	.fac-S--sm { align-content: flex-start; }
+	.fac-E--sm { align-content: flex-end; }
+	.fac-C--sm { align-content: center; }
+	.fac-Str--sm { align-content: stretch; }
+	.fac-B--sm { align-content: space-between; }
+	.fac-A--sm { align-content: space-around; }
+
+	.fo-I--sm { order: initial; }
+	.make-flex-order-classes(sm);
+
+	.fas-S--sm { align-self: flex-start; }
+	.fas-W--sm { align-self: flex-end; }
+	.fas-C--sm { align-self: center; }
+	.fas-B--sm { align-self: baseline; }
+	.fas-Str--sm { align-self: stretch; }
+}
+
+@media (min-width: @screen-Md){
+	.d-F--md { display: flex; }
+
+	.fd-R--md { flex-direction: row; }
+	.fd-Rr--md { flex-direction: row-reverse; }
+	.fd-C--md { flex-direction: column; }
+	.fd-Cr--md { flex-direction: column-reverse; }
+
+	.fj-S--md { justify-content: flex-start; }
+	.fj-E--md { justify-content: flex-end; }
+	.fj-C--md { justify-content: center; }
+	.fj-B--md { justify-content: space-between; }
+	.fj-A--md { justify-content: space-around; }
+
+	.fai-S--md { align-items: flex-start; }
+	.fai-W--md { align-items: flex-end; }
+	.fai-C--md { align-items: center; }
+	.fai-B--md { align-items: baseline; }
+	.fai-Str--md { align-items: stretch; }
+
+	.fac-S--md { align-content: flex-start; }
+	.fac-E--md { align-content: flex-end; }
+	.fac-C--md { align-content: center; }
+	.fac-Str--md { align-content: stretch; }
+	.fac-B--md { align-content: space-between; }
+	.fac-A--md { align-content: space-around; }
+
+	.fo-I--md { order: initial; }
+	.make-flex-order-classes(md);
+
+	.fas-S--md { align-self: flex-start; }
+	.fas-W--md { align-self: flex-end; }
+	.fas-C--md { align-self: center; }
+	.fas-B--md { align-self: baseline; }
+	.fas-Str--md { align-self: stretch; }
+}

@@ -16,12 +16,15 @@
 	.make-width-classes(@breakpoint, @unit, @maxWidth, @width+1)
 }
 
+.w-A{ width: auto; }
 .make-width-classes();
 
 @media (min-width: @screen-Sm){
+	.w-A--sm{ width: auto; }
 	.make-width-classes(sm);
 }
 
 @media (min-width: @screen-Md){
+	.w-A--md{ width: auto; }
 	.make-width-classes(md);
 }

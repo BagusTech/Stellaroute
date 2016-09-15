@@ -1202,7 +1202,7 @@ a {
 a:hover,
 a:focus {
   color: #544e77;
-  text-decoration: underline;
+  text-decoration: none;
 }
 a:focus {
   outline: 5px auto -webkit-focus-ring-color;
@@ -3969,7 +3969,7 @@ fieldset[disabled] .btn-link {
 .btn-link:hover,
 .btn-link:focus {
   color: #544e77;
-  text-decoration: underline;
+  text-decoration: none;
   background-color: transparent;
 }
 .btn-link[disabled]:hover,
@@ -4465,6 +4465,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   width: 1%;
   white-space: nowrap;
   vertical-align: middle;
+}
+.input-group-addon i,
+.input-group-btn i {
+  line-height: 1.42857143;
 }
 .input-group-addon {
   padding: 10px 12px;
@@ -5772,6 +5776,10 @@ a.thumbnail.active {
   padding-left: 0;
   list-style: none;
 }
+.media-bg-img {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .list-group {
   margin-bottom: 20px;
   padding-left: 0;
@@ -6803,7 +6811,6 @@ button.close {
 @media all and (transform-3d), (-webkit-transform-3d) {
   .carousel-inner > .item {
     transition: transform 0.6s ease-in-out;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     perspective: 1000px;
   }
@@ -7432,8 +7439,6 @@ button.close {
   color: #cccccc;
   font-size: 20px;
   z-index: 2;
-  padding: 12px 24px 12px;
-  margin: 10px 0 5px;
 }
 .hamburger-menu {
   position: absolute;
@@ -7543,13 +7548,8 @@ button.close {
 .site-body {
   background: #d7d7d7;
 }
-.site-body > section > header {
+.site-body > .media-bg-img {
   padding-top: 52px;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.feedback-page .container {
-  padding: 0;
 }
 .feedback-header {
   padding-bottom: 36px;
@@ -7589,6 +7589,10 @@ button.close {
   .feedback-form textarea {
     min-height: 220px;
   }
+}
+.home-bg-img {
+  background-image: url("/images/index-bg.jpg");
+  min-height: 100vh;
 }
 .landing-header .email-capture-wrapper {
   max-width: 560px;
@@ -7958,12 +7962,6 @@ form.profile-settings-update .profile-label.notification h3 {
     padding-top: 0;
     margin-top: 0;
   }
-}
-.request-page {
-  background: white;
-}
-.request-page .container {
-  padding: 24px;
 }
 .request-page-header {
   padding: 24px 24px 36px;

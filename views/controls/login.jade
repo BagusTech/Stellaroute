@@ -84,9 +84,23 @@ if (!user)
 					//button.btn.btn-default(type='button', data-dismiss='modal') Close
 						input.btn.btn-primary(type='submit', value='Create')
 else
-	.user-controls(style='position: absolute; top: 10px; right: 10px;')
-		if (user && user.name && user.name.first)
-			span= 'Welcome ' + user.name.first + ' '
-		a.btn.btn-primary(href='/profile') My Profile
-		| &nbsp;
-		a.btn.btn-danger(href='/logout') Log Out
+	.dropdown.navbar-right
+		button#dLabel.bg-N.bw-N.pt-0.fc-W(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+			if (user.name && user.name.first)
+				span= user.name.first + ' '
+			else
+				span User
+			i.fa.fa-user(aria-hidden="true")
+
+		ul.dropdown-menu.ta-R(aria-labelledby="dLabel")
+			li
+				a(href='/profile') My Accounts
+			li
+				a(href='/request') Make A Request
+			li
+				a(href='/feedback') Give Us Feedback
+			li.divider(role="separator")
+			li
+				button.btn.log-out.bg-N.mr-Sm.pt-0(type='button') Log Out
+
+	

@@ -1,149 +1,30 @@
-// Email Capture
-.email-capture-wrapper{
-	.clear;
-
+[data-beta-signup="success"] {
+	display: none;
 	position: relative;
-	height: 44px;
+	top: -120px;
+	padding: @gw-Md;
+	background: rgba(0, 0, 0, .63);
+	color: white;
+	text-align: center;
+}
 
-	.input-group{
-		display: block;
-		width: 100%;
-	}
+[data-beta-signup="error"] {
+	opacity: 0;
+	z-index: -1;
+	position: absolute;
+	top: -@gw-XXl;
+	margin-bottom: @gw-Sm;
+	transition: all .18s ease-out;
 
-	.form-control{
-		float: none;
-		border-radius: 2px;
-		text-align: center;
-		font-size: 16px;
-	}
-
-	.input-group-addon{
-		display: block;
-		width: 100%;
-		padding: 0;
-		background: @green;
-		box-shadow: 1px 1px @green-dark;
-		border-radius: 2px;
-		border: none;
-		white-space: normal;
-		margin-top: @gw-Sm;
-
-		&:hover{
-			background: @green-dark;
-		}
-
-		[type='submit']{
-			padding: 7px 20px;
-			background: none;
-			border: none;
-			color: white;
-			font-size: 16px;
-		}
-	}
-
-	.email-capture{
-		opacity: 0;
-		z-index: -1;
-		transition: all .5s ease-out;
-		position: absolute;
-
-		&.active{
-			opacity: 1;
-			z-index: 27;
-		}
-	}
-
-	.email-capture-success{
-		background: rgba(0,0,0,.63);
-		color: white;
-		padding: @gw-Xl;
-		text-align: center;
-		border-radius: 1px;
-		top: 0;
-		display: none;
-
-		h2{
-			position: relative;
-			padding: 0 0 @gw-Md;
-			margin: 0 0 @gw-Md;
-
-			&:after{
-				content: ' ';
-				display: block;
-				height: 1px;
-				background: white;
-				position: absolute;
-				top: 100%;
-				left: 15%;
-				right: 15%;
-			}
-		}
-
-		p{
-			//font-weight: 300;
-			margin-bottom: @gw-Sm;
-		}
-
-		.email-capture-success-content{
-			transition: all .5s ease-out;
-			opacity: 0;
-		}
-
-		&.active {
-			.email-capture-success-content{
-				opacity: 1;
-			}
-		}
-	}
-
-	.email-capture-error{
-		position: absolute;
-		background: rgba(180, 50, 50, .45);
-		border:1px solid rgb(180, 50, 50);
-		padding: @gw-Sm;
-		color: white;
-		top: 40px;
-		
-		transition: all .18s ease-out;
-		opacity: 0;
-		z-index: -1;
-
-		&.active{
-			opacity: 1;
-			z-index: 18;
-		}
+	&.active{
+		opacity: 1;
+		z-index: 18;
 	}
 }
 
 @media(min-width: @screen-Sm){
-	.email-capture-wrapper{
-		//max-width: 520px;
-		margin: 0 auto;
-
-		.input-group{
-			display: table;
-			width: 100%;
-			height: 44px;
-		}
-
-		.form-control{
-			float: left;
-			text-align: left;
-			border-radius: 2px 0 0 2px;
-			height: 44px;
-		}
-
-		.input-group-addon{
-			border-radius: 0 2px 2px 0;
-			display: table-cell;
-			width: 1%;
-			white-space: nowrap;
-
-			button{
-				background: none;
-				border: none;
-				color: white;
-			}
-		}
+	[data-beta-signup="success"] {
+		padding: @gw-Xl;
+		top: -60px;
 	}
 }

@@ -34,6 +34,47 @@
       z-index: 3;
     }
   }
+
+  &.input-submit-group {
+    width: 100%;
+
+    .form-control,
+    .input-group-btn,
+    .input-group-addon{
+      display: block;
+    }
+
+    .input-group-btn,
+    .input-group-addon{
+      width: 100%;
+      white-space: normal;
+    }
+
+    .input-group-btn .btn{
+      width: 100%;
+      margin-top: @gw-Md;
+    }
+  }
+}
+
+@media (min-width: @screen-sm) {
+  .input-group.input-submit-group{
+    .form-control,
+    .input-group-btn,
+    .input-group-addon{
+      display: table-cell;
+    }
+
+    .input-group-btn,
+    .input-group-addon{
+      width: auto;
+      white-space: nowrap;
+    }
+
+    .input-group-btn .btn{
+      margin-top: 0;
+    }
+  }
 }
 
 // Sizing options

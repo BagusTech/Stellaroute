@@ -190,6 +190,44 @@ ol {
   }
 }
 
+// Flex evenly distibutes items
+.list-flex {
+  .list-unstyled();
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-social-media{
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: @gw-Md 0 @gw-Lg; 
+
+  li{
+    margin: @gw-Sm;
+    background: white;
+    border-radius: 50%;
+    height: @gw-Lg;
+    width: @gw-Lg;
+    padding-top: @gw-Xs;
+    text-align: center;
+  }
+
+  a{
+    color: white;
+    font-size: 26px;
+    color: @steel-dark;
+  }
+
+  &.list-flex{
+    li {
+      margin: 0;
+    }
+  }
+}
+
 // Description Lists
 dl {
   margin-top: 0; // Remove browser default

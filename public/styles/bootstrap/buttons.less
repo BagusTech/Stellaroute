@@ -144,7 +144,9 @@
 
 .btn-lg {
   // line-height: ensure even-numbered height of button next to large input
-  .button-size(@padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @btn-border-radius-large);
+  .button-size(@padding-large-vertical; @padding-large-horizontal; @font-size; @line-height-large; @btn-border-radius-base);
+  border-width: 2px;
+  width: 100%;
 }
 .btn-sm {
   // line-height: ensure proper height of button next to small input

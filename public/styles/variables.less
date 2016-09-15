@@ -18,7 +18,7 @@
 // font
 @font-family: 'Work Sans', sans-serif;
 @font-size: 16px;
-@font-color: #4a4d50;
+@font-color: @grey-dark;
 
 // colors
 @green: #59D087;
@@ -28,11 +28,13 @@
 @purple: #7770A1;
 @purple-dark: #695A75;
 
-@steel: #4d5460; //
-@steel-dark: #363b44; //
+@blue-fb: #3b5998;
+
+@steel: #4d5460;
+@steel-dark: #363b44;
 
 @off-white: #f7f7f7;
-@grey-lightest: @off-white; //
+@grey-lightest: @off-white;
 @grey-lighter: #d7d7d7;
 @grey-light: #cccccc;
 @grey-medium: #959ca2;
@@ -131,10 +133,10 @@
 //
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
-@padding-base-vertical:     6px;
+@padding-base-vertical:     10px;
 @padding-base-horizontal:   12px;
 
-@padding-large-vertical:    10px;
+@padding-large-vertical:    14px;
 @padding-large-horizontal:  16px;
 
 @padding-small-vertical:    5px;
@@ -148,7 +150,7 @@
 
 @border-radius-base:        2px;
 @border-radius-large:       6px;
-@border-radius-small:       @border-radius-base;
+@border-radius-small:       1px;
 
 //** Global color for active items (e.g., navs or dropdowns).
 @component-active-color:    #fff;
@@ -188,9 +190,9 @@
 
 @btn-font-weight:                normal;
 
-@btn-default-color:              #ccc;
+@btn-default-color:              @font-color;
 @btn-default-bg:                 #fff;
-@btn-default-border:             #ccc;
+@btn-default-border:             @grey-lighter;
 
 @btn-primary-color:              #fff;
 @btn-primary-bg:                 @brand-secondary;
@@ -236,7 +238,7 @@
 //** Text color for `<input>`s
 @input-color:                    @gray;
 //** `<input>` border color
-@input-border:                   #ccc;
+@input-border:                   @grey-lighter;
 
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -254,7 +256,7 @@
 @input-color-placeholder:        @grey-light;
 
 //** Default `.form-control` height
-@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2));
+@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);
 //** Large `.form-control` height
 @input-height-large:             (ceil(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
 //** Small `.form-control` height
@@ -467,7 +469,7 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px 15px;
+@nav-link-padding:                          10px @gw-Sm;
 @nav-link-hover-bg:                         @gray-lighter;
 
 @nav-disabled-link-color:                   @gray-light;
@@ -518,7 +520,7 @@
 
 @pager-bg:                             @pagination-bg;
 @pager-border:                         @pagination-border;
-@pager-border-radius:                  15px;
+@pager-border-radius:                  @gw-Sm;
 
 @pager-hover-bg:                       @pagination-hover-bg;
 
@@ -532,7 +534,7 @@
 //
 //##
 
-@jumbotron-padding:              30px;
+@jumbotron-padding:              @gw-Md;
 @jumbotron-color:                inherit;
 @jumbotron-bg:                   @gray-lighter;
 @jumbotron-heading-color:        inherit;
@@ -636,10 +638,10 @@
 //##
 
 //** Padding applied to the modal body
-@modal-inner-padding:         15px;
+@modal-inner-padding:         @gw-Sm;
 
 //** Padding applied to the modal title
-@modal-title-padding:         15px;
+@modal-title-padding:         @gw-Sm;
 //** Modal title line-height
 @modal-title-line-height:     @line-height-base;
 
@@ -668,7 +670,7 @@
 //
 //## Define alert colors, border radius, and padding.
 
-@alert-padding:               15px;
+@alert-padding:               @gw-Sm;
 @alert-border-radius:         @border-radius-base;
 @alert-link-font-weight:      bold;
 
@@ -751,8 +753,8 @@
 //##
 
 @panel-bg:                    #fff;
-@panel-body-padding:          15px;
-@panel-heading-padding:       10px 15px;
+@panel-body-padding:          @gw-Sm;
+@panel-heading-padding:       10px @gw-Sm;
 @panel-footer-padding:        @panel-heading-padding;
 @panel-border-radius:         @border-radius-base;
 
@@ -836,7 +838,7 @@
 //##
 
 @breadcrumb-padding-vertical:   8px;
-@breadcrumb-padding-horizontal: 15px;
+@breadcrumb-padding-horizontal: @gw-Sm;
 //** Breadcrumb background color
 @breadcrumb-bg:                 #f5f5f5;
 //** Breadcrumb text color

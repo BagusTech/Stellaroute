@@ -35,7 +35,7 @@ label {
   margin-bottom: 12px;
   font-weight: 400;
   color: @grey-light;
-  line-height: 1;
+  //line-height: 1;
   font-size: 14px;
 }
 
@@ -226,8 +226,8 @@ input[type="search"] {
 .checkbox {
   position: relative;
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: @gw-Sm;
+  margin-bottom: @gw-Sm;
 
   label {
     min-height: @line-height-computed; // Ensure the input doesn't jump when there is no text
@@ -265,7 +265,7 @@ input[type="search"] {
 .radio-inline + .radio-inline,
 .checkbox-inline + .checkbox-inline {
   margin-top: 0;
-  margin-left: 10px; // space out consecutive inline controls
+  margin-left: @gw-Sm; // space out consecutive inline controls
 }
 
 // Apply same disabled cursor tweak as for inputs
@@ -358,7 +358,8 @@ input[type="checkbox"] {
 }
 
 .input-lg {
-  .input-size(@input-height-large; @padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @input-border-radius-large);
+  .input-size(@input-height-large; @padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @input-border-radius);
+  border-width: 2px;
 }
 .form-group-lg {
   .form-control {
@@ -458,7 +459,7 @@ input[type="checkbox"] {
 .help-block {
   display: block; // account for any element using help-block
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: @gw-Sm;
   color: lighten(@text-color, 25%); // lighten the text some for contrast
 }
 

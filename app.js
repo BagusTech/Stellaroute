@@ -8,7 +8,7 @@ const flash            = require('connect-flash');
 const favicon          = require('serve-favicon');
 const cookieParser     = require('cookie-parser');
 const bodyParser       = require('body-parser');
-const session          = require('express-session');
+const session          = require('cookie-session');
 const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
@@ -33,12 +33,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Sets the public folder to be available available to the front end
 
 // required for passport
-app.use(session({ 
-        secret: 'thisisthesecretpasswordforstellaroute',
-        resave: false,
-        saveUninitialized: false
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+        name: 'session',
+        keys: ['key1', 'key2']
     }
 )); // session secret
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

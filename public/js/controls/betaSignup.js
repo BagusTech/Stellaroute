@@ -10,11 +10,12 @@ jQuery(function initLandingPageJavascript($){
 		return re.test(email);
 	};
 
+	var $error = $('[data-beta-signup="error"]');
 	var failed = function() {
-		$('.email-capture-error').addClass('active');
+		$error.toggleClass('active');
 
 		setTimeout(function(){
-			$('.email-capture-error').removeClass('active');					
+			$error.toggleClass('active');
 		}, 2000);
 	};
 
@@ -24,7 +25,7 @@ jQuery(function initLandingPageJavascript($){
 		var email = $emailInput.val();
 
 		if(isValid(email)){
-			$('.email-capture-error').text('Sorry, we experienced an error. Please refresh the page and try again.');
+			$('[data-beta-signup="error"]').text('Sorry, we experienced an error. Please refresh the page and try again.');
 			var user = {
 				"local.email": email,
 				recieveNewsletter: true
@@ -37,8 +38,8 @@ jQuery(function initLandingPageJavascript($){
 				contentType: 'application/json'
 			}).done(function(response) {
 				if(response.msg === "success"){
-					$('.email-capture').removeClass('active');
-					$('.email-capture-success').addClass('active').slideDown(180);
+					$('[data-beta-signup="email-capture"]').css('opacity', 0);
+					$('[data-beta-signup="success"]').slideDown(180);
 				} else {
 					failed();
 				}
@@ -54,8 +55,8 @@ jQuery(function initLandingPageJavascript($){
 	$guideSubmit.click(function(e) {
 		e.preventDefault();
 
-		var $header = $('.submit-guide-header');
-		var $text = $('.submit-guide-text');
+		var $header = $('[data-submit-guide="header"]');
+		var $text = $('[data-submit-guide="text"]');
 		var request = {
 			fromEmail: $emailInput.val(),
 			request: $guideInput.val()

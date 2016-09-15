@@ -7,35 +7,39 @@ if (!user)
 		.modal-dialog(role='document')
 			form.modal-content(method='POST', action='/login')
 				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
+					h4.mt-0.mb-0.pl-Sm.fc-G Log In (Sign Up is Coming soon!)
+					button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-						//PeterL code added
 				.modal-body
 					.col-xs-12
-						button.facebook-btn(type='button') Log in with Facebook
-						button.google-btn(type='button') Log in with Google
-					p.text-center.clear or
+						button.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(type='button') Log In with Facebook
+						button.btn.btn-default.btn-lg(type='button') Log In with Google
+					.col-xs-12.ptb-Md.mb-Xs
+						.text-wings.fc-G.fw-B
+							hr
+							span or
+							hr
 
 					.col-xs-12
-						label.input-label
-							i.fa.fa-envelope(aria-hidden="true")
-							input.form-control#Email(name='email', type='email', placeholder='Email Address')
+						label.input-label.w-100.p-R
+							i.fa.fa-envelope.p-A.t-0.b-0.r-Md.d-F.fj-C.fd-C.fs-Lg(aria-hidden="true")
+							input#Email.form-control.input-lg(name='email', type='email', placeholder='Email Address')
 
 					.col-xs-12
-						label.input-label
-							i.fa.fa-lock(aria-hidden="true")
-							input.form-control#Passphrase(name='password', type='password', placeholder='Password')
+						label.input-label.w-100.p-R
+							i.fa.fa-lock.p-A.t-0.b-0.r-Md.d-F.fj-C.fd-C.fs-Lg(aria-hidden="true")
+							input#Passphrase.form-control.input-lg(name='password', type='password', placeholder='Password')
 
 					.col-xs-8
 						.checkbox
-							label
+							label.fc-G__dk
 								input(type='checkbox', name='remember')
 								| Remember me
-					.col-xs-4.text-right
-						a.forgot-password(href="#") Forgot Password?
+					.col-xs-4.text-right.ptb-Sm
+						a.fc-Gr(href="#") Forgot Password?
 
 					.col-xs-12
-						input.login-btn(type='submit', value='Log In')
+						input.btn.btn-lg.bg-Gr.fc-G__ltst(type='submit', value='Log In')
 				//.modal-footer
 					.col-xs-12
 						p Don't have an account?

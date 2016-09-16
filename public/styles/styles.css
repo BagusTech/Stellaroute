@@ -4396,7 +4396,7 @@ tbody.collapse.in {
   }
   .input-group.input-submit-group .input-group-btn,
   .input-group.input-submit-group .input-group-addon {
-    width: auto;
+    width: 1%;
     white-space: nowrap;
   }
   .input-group.input-submit-group .input-group-btn .btn {

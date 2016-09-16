@@ -15,7 +15,7 @@ router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCache
 	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
 	                       .items.sort(sortBy('name'));
 
-	res.render('countries/_countries', {
+	res.render('locations/countries/_countries', {
 		title: 'Stellaroute: countries',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		countries: countries
@@ -23,7 +23,7 @@ router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCache
 });
 
 router.get('/new', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
-	res.render('countries/new', {
+	res.render('locations/countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		continents: Continent.cached().sort(sortBy('name')),
@@ -190,7 +190,7 @@ router.get('/:name', Continent.getCached(), WorldRegion.getCached(), CountryRegi
 						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
 						 .findOne('name', req.params.name);
 
-	res.render('countries/country', {
+	res.render('locations/countries/country', {
 		title: '',
 		description: '',
 		continents: Continent.cached().sort(sortBy('name')),

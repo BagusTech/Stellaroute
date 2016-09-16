@@ -3,7 +3,7 @@ const flash            = require('connect-flash');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const setFlash         = require('../modules/setFlash');
-const sendEmail         = require('../modules/sendEmail');
+const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
 const router           = express.Router();
 

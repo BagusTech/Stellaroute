@@ -18,7 +18,11 @@ module.exports = function(passport){
 	passport.deserializeUser(function(id, done){
 		var user = User.findOne('Id', id);
 
-		done(null, user);
+		if (user){
+			done(null, user);
+		} else {
+			done(null, false);
+		}
 	});
 
 	// Local Signup ===================================================

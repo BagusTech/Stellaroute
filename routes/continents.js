@@ -7,7 +7,7 @@ const Continent = require('../schemas/continent');
 const router = express.Router();
 
 router.get('/', Continent.getCached(), function(req, res, next){
-	res.render('continents/_continents', {
+	res.render('locations/continents/_continents', {
 		title: 'Stellaroute: continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		continents: Continent.cached().sort(sortBy('name'))
@@ -15,7 +15,7 @@ router.get('/', Continent.getCached(), function(req, res, next){
 });
 
 router.get('/new', function(req, res, next){
-	res.render('continents/new', {
+	res.render('locations/continents/new', {
 		title: 'Stellaroute: Add a Continent',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
@@ -105,7 +105,7 @@ router.post('/update', function(req, res){
 });
 
 router.get('/:name', Continent.getCached(), function(req, res, next){
-	res.render('continents/continent', {
+	res.render('locations/continents/continent', {
 		title: '',
 		description: '',
 		continent: Continent.findOne('name', req.params.name),

@@ -9,7 +9,7 @@ const CountryRegion = require('../schemas/country-region');
 const router = express.Router();
 
 router.get('/', CountryRegion.getCached(), Country.getCached(), function(req, res, next){
-	res.render('country-regions/_country-regions', {
+	res.render('locations/country-regions/_country-regions', {
 		title: 'Stellaroute: Country Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		countryRegions: CountryRegion.join('country', Country.cached(), 'Id', 'name').items.sort(sortBy('name'))
@@ -17,7 +17,7 @@ router.get('/', CountryRegion.getCached(), Country.getCached(), function(req, re
 });
 
 router.get('/new', Country.getCached(), function(req, res, next){
-	res.render('country-regions/new', {
+	res.render('locations/country-regions/new', {
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		countries: Country.cached().sort(sortBy('name'))
@@ -115,7 +115,7 @@ router.get('/:name', Country.getCached(), CountryRegion.getCached(), function(re
 	var countryRegion = CountryRegion.join('country', Country.cached(), 'Id', 'name')
 								 .findOne('name', req.params.name);
 
-	res.render('country-regions/country-region', {
+	res.render('locations/country-regions/country-region', {
 		title: '',
 		description: '',
 		countries: Country.cached().sort(sortBy('name')),

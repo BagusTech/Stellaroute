@@ -18,14 +18,7 @@ module.exports = function(passport){
 	passport.deserializeUser(function(id, done){
 		var user = User.findOne('Id', id);
 
-		if(user){
-			done(null, user);
-		} else {
-			console.log('req is here');
-			console.log(req);
-			console.log('~~')
-			done(null, false, req.falsh('error', 'Sorry, something went wrong'));
-		}
+		done(null, user);
 	});
 
 	// Local Signup ===================================================

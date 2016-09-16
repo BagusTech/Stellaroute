@@ -7,10 +7,11 @@ const Continent = require('../schemas/continent');
 const router = express.Router();
 
 router.get('/', Continent.getCached(), function(req, res, next){
-	res.render('locations/continents/_continents', {
+	res.render('locations/_locations', {
 		title: 'Stellaroute: continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		continents: Continent.cached().sort(sortBy('name'))
+		locations: Continent.cached().sort(sortBy('name')),
+		locationType: 'Continents'
 	});
 });
 

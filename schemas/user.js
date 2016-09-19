@@ -19,7 +19,8 @@ var User = Duck({
 	},
 	
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	CacheDuration: 1000*60*60*24
 	//, Indexes : ['localEmail']
 });
 

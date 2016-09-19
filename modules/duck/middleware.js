@@ -8,7 +8,7 @@ module.exports = function(_duck){
 
 		return function(req, res, next){
 			if(cache.get(table)){
-				console.log(table + ' is still cached');
+				console.log(table + ' is still cached (' + cache.get(table).length + ' items)');
 				next();
 			} else{
 				console.log(table + ' is not cached');

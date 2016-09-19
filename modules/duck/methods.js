@@ -16,19 +16,28 @@ module.exports = function(_duck){
 	// returns: this
 	_duck.prototype.join = function(field, data, joinOn, display){
 		var joinedItems = this.items || this.cached();
-		const joinedField = joinedItems.map(item =>
-			Array(item[field]).map(field =>
-				data.map(data =>
-					data[joinOn] == field ? data[display] : null)
-				.filter(nullCheck => nullCheck)));
 
-		for (i in joinedItems){
-			joinedItems[i][field] = [].concat.apply([], joinedField[i]);
+		for(var i in joinedItems){
+			if(joinedItems[i][field] instanceof Array){
+				for(var j in joinedItems[i][field]){
+					for(var k in data){
+						if (data[k][joinOn] == joinedItems[i][field][j]){
+							joinedItems[i][field][j] = data[k][display]
+						}
+					}
+				}
+			} else {
+				for(var k in data){
+					if (data[k][joinOn] == joinedItems[i][field]){
+						joinedItems[i][field] = data[k][display]
+					}
+				}
+			}
 		}
 
 		this.items = joinedItems;
 
-		return this;
+		return this
 	}
 
 	// field: string = 'name'

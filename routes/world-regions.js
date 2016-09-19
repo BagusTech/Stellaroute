@@ -9,7 +9,7 @@ const WorldRegion = require('../schemas/world-region');
 const router = express.Router();
 
 router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, res, next){
-	res.render('world-regions/_world-regions', {
+	res.render('locations/world-regions/_world-regions', {
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
@@ -18,7 +18,7 @@ router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, re
 });
 
 router.get('/new', Continent.getCached(), function(req, res, next){
-	res.render('world-regions/new', {
+	res.render('locations/world-regions/new', {
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
@@ -121,7 +121,7 @@ router.get('/:name', Continent.getCached(), WorldRegion.getCached(), function(re
 	var worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
 								 .findOne('name', req.params.name);
 
-	res.render('world-regions/world-region', {
+	res.render('locations/world-regions/world-region', {
 		title: '',
 		description: '',
 		continents: Continent.cached().sort(sortBy('name')),

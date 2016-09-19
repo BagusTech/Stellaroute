@@ -1,55 +1,59 @@
 extends ../../layout
 
 block content
-	small
-		a(href='/world-regions') &lt; Back to All World Regions
+	.media-bg-img.request-page-header
+		h1= worldRegion.name
 
-	h1= String(worldRegion.name)
+	.container.pt-Sm
+		small
+			a(href='/world-regions') &lt; Back to All World Regions
 
-	form.update-form(method='POST', action='/world-regions/update')
-		.row
-			.col-xs-12.col-sm-6
-				.form-group
-					label Name
-					p.form-control-static= String(worldRegion.name)
-					.hidden
-						input.form-control#WorldRegionName(name='name', type='text', placeholder='name', value= worldRegion.name)
+		.content-card
 
-				.form-group
-					label(for='WorldRegionContinet') Continent(s)
-					p.form-control-static
-						- for (var i = 0; i < (worldRegion.continent && worldRegion.continent.length); i++)
-							span= worldRegion.continent[i]
+			form.update-form(method='POST', action='/world-regions/update')
+				.row
+					.col-xs-12.col-sm-6
+						.form-group
+							label Name
+							p.form-control-static= String(worldRegion.name)
+							.hidden
+								input.form-control#WorldRegionName(name='name', type='text', placeholder='name', value= worldRegion.name)
 
-							if ((i+1) !== worldRegion.continent.length)
-								|,&nbsp;
-					.hidden
-						select.form-control#WorldRegionContinent(name='continent',  multiple='true')
-							-for (i in continents)
-								option(value= continents[i].Id, selected= worldRegion.continent && worldRegion.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
+						.form-group
+							label(for='WorldRegionContinet') Continent(s)
+							p.form-control-static
+								- for (var i = 0; i < (worldRegion.continent && worldRegion.continent.length); i++)
+									span= worldRegion.continent[i]
 
-		input(type='hidden', name= key, value= worldRegion[key])
-		input.btn.btn-primary.btn-update(type='button', value='Update')
-		| &nbsp;
-		input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-		button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
-		
-		.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header
-						button.close(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-						h4.modal-title#DeleteModalLabel
-							| Delete&nbsp;
-							= worldRegion.name
-					.modal-body
-						.alert.alert-danger
-							p
-								| Are you sure you want to delete&nbsp;
-								= worldRegion.name + '?'
-							p This action cannot be undone
-						input.btn.btn-danger(type='submit', value='Delete', name='delete')
+									if ((i+1) !== worldRegion.continent.length)
+										|,&nbsp;
+							.hidden
+								select.form-control#WorldRegionContinent(name='continent',  multiple='true')
+									-for (i in continents)
+										option(value= continents[i].Id, selected= worldRegion.continent && worldRegion.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
 
-					.modal-footer
-						button.btn.btn-default(type='button', data-dismiss='modal') Close
+				input(type='hidden', name= key, value= worldRegion[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal', style='float: right') Delete
+				
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel
+									| Delete&nbsp;
+									= worldRegion.name
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= worldRegion.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close

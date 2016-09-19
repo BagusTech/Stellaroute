@@ -1,21 +1,24 @@
 extends ../../layout
 
 block content
-	h2 World Regions
+	.media-bg-img.request-page-header
+		h1 World Regions
 
-	.row
-		.col-sm-3.col-xs-6
-			strong Name
-		.col-sm-9.col-xs-6
-			strong Continent(s)
+	.container
+		.col-xs-12.col-sm-6-col-sm-pus-3
+			.content-card
+				.row
+					.col-sm-3.col-xs-6
+						strong Name
+					.col-sm-9.col-xs-6
+						strong Continent(s)
+
+				for region in worldRegions
+					.row
+						.col-sm-3.col-xs-6
+							a(href='/world-regions/' + region.name)= region.name
+						.col-sm-9.col-xs-6= region.continent && region.continent.join(', ')
 
 
-	for region in worldRegions
-		.row
-			.col-sm-3.col-xs-6
-				a(href='/world-regions/' + region.name)= region.name
-			.col-sm-9.col-xs-6= region.continent && region.continent.join(', ')
-
-
-	p.text-right
-		a.btn.btn-primary.btn-lg(href='/world-regions/new') New
+				p.text-right
+					a.btn.btn-primary(href='/world-regions/new') New

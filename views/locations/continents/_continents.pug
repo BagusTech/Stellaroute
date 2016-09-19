@@ -1,15 +1,13 @@
 extends ../../layout
 
 block content
-	h2 Continents
+	.media-bg-img.request-page-header
+		h1 Continents
 
-	p
-		strong Name
-
-
-	for continent in continents
-		p
-			a(href='/continents/' + continent.name)= continent.name
-
-	p.text-right
-		a.btn.btn-primary.btn-lg(href='/continents/new') New
+	.container
+		.col-xs-12.col-sm-6.col-sm-push-3
+			.content-card
+				ul.m-0
+					for continent in continents
+						li
+							a(href='/continents/'+continent.name)= continent.name

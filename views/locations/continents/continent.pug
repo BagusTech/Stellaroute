@@ -8,7 +8,7 @@ block content
 		small
 			a.fc-G(href='/continents') &lt; Back to All Continents
 
-		.content-card
+		.content-card.mt-Md
 			form.update-form(method='POST', action='/continents/update')
 				.row
 					.col-xs-12.col-sm-6
@@ -43,3 +43,39 @@ block content
 
 							.modal-footer
 								button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		.row
+			.col-xs-12.col-sm-6
+				.content-card
+					h2 Regions
+					ul
+						for region in worldRegions
+							li
+								a(href='/world-regions/' + region.name)= region.name
+
+					button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddRegion') Add Region
+
+			.col-xs-12.col-sm-6
+				.content-card
+					h2 Countries
+					ul
+						for country in countries
+							li
+								a(href='/countries/' + country.name)= country.name
+
+	.modal.fade#AddRegion(tab-index='-1', role='dialog')
+			.modal-dialog(role='document')
+				form.modal-content(method='POST', action='/world-regions/new')
+					.modal-header.mb-Md
+						h4.mt-0.mb-0.pl-Sm.fc-G
+							| Add a Region to&nbsp;
+							span= continent.name
+						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+					.modal-body.p-Md
+						.form-group
+							label(for='WorldRegionName') Name of Region
+							input.form-control#WorldRegionName(name='name', type='text', placeholder='Southeast Asia', required)
+							input.hidden(type='hidden', name='continent', value= continent.Id)
+						.col-xs-12.col-sm-8.col-sm-push-2
+							input.btn.btn-primary.btn-Sm.w-100.bg-Gr.fc-G__ltst(type='submit', value='Create')

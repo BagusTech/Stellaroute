@@ -4,6 +4,8 @@ const assign = require('../modules/assign');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
+const WorldRegion = require('../schemas/world-region');
+const Country = require('../schemas/country');
 const router = express.Router();
 
 router.get('/', Continent.getCached(), function(req, res, next){
@@ -104,11 +106,17 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached(), function(req, res, next){
+router.get('/:name', Continent.getCached(), WorldRegion.getCached(), Country.getCached(), function(req, res, next){
+	const continent = Continent.findOne('name', req.params.name);
+	const worldRegions = WorldRegion.find('continent', continent.Id).sort(sortBy('name'));
+	const countries = Country.find('continent', continent.Id).sort(sortBy('name'));
+
 	res.render('locations/continents/continent', {
 		title: '',
 		description: '',
-		continent: Continent.findOne('name', req.params.name),
+		continent: continent,
+		worldRegions: worldRegions,
+		countries: countries,
 		key: Continent.hash
 	});
 });

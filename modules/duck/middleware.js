@@ -8,9 +8,10 @@ module.exports = function(_duck){
 
 		return function(req, res, next){
 			if(cache.get(table)){
-				console.log('still cached!');
+				console.log(table + ' is still cached');
 				next();
 			} else{
+				console.log(table + ' is not cached');
 				db.lite.scan({TableName: table}, function(err, data){
 					if (err) {
 						console.error(JSON.stringify(err, null, 2));

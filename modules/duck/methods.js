@@ -74,20 +74,19 @@ module.exports = function(_duck){
 	_duck.prototype.findOne = function(field, value){
 		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 		const items = this.items || this.cached();
-		const returnedItem = function(){
-			for (i in items){
-				var res = items[i];
 
-				for (j in fieldPath){
-					res = res[fieldPath[j]]
-				}
+		for (var i in items){
+			var res = items[i];
 
-				if(res == value){
-					return items[i];
-				}
+			for (var j in fieldPath){
+				res = res[fieldPath[j]]
+			}
+
+			if(res == value){
+				return items[i];
 			}
 		}
-
-		return returnedItem();
+		
+		return false;
 	}
 }

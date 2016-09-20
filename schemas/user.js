@@ -20,7 +20,7 @@ var User = Duck({
 	
 	HASH: 'Id',
 	HASHType: 'S',
-	CacheDuration: 1000*60*60*24
+	CacheDuration: 60*60*24 // 24h -- node-cache timing is in seconds, not miliseconds
 	//, Indexes : ['localEmail']
 });
 

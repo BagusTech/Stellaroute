@@ -16,20 +16,23 @@ module.exports = function(_duck){
 	// returns: this
 	_duck.prototype.join = function(field, data, joinOn, display){
 		var joinedItems = this.items || this.cached();
+		var joinedFieldName = `${field}${display.charAt(0).toUpperCase() + display.slice(1)}`;
 
 		for(var i in joinedItems){
 			if(joinedItems[i][field] instanceof Array){
+				joinedItems[i][joinedFieldName] = joinedItems[i][joinedFieldName] || [];
+
 				for(var j in joinedItems[i][field]){
 					for(var k in data){
 						if (data[k][joinOn] == joinedItems[i][field][j]){
-							joinedItems[i][field][j] = data[k][display]
+							joinedItems[i][joinedFieldName][j] = data[k][display]
 						}
 					}
 				}
 			} else {
 				for(var k in data){
 					if (data[k][joinOn] == joinedItems[i][field]){
-						joinedItems[i][field] = data[k][display]
+						joinedItems[i][joinedFieldName] = data[k][display]
 					}
 				}
 			}
@@ -51,6 +54,7 @@ module.exports = function(_duck){
 
 		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 		const items = this.items || this.cached();
+
 		const returnedItems = items.map(function(item){
 						  	var res = item;
 

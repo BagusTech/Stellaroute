@@ -1722,8 +1722,8 @@ pre code {
 .container {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 12px 24px;
+  transition: width 0.23s ease-out;
 }
 @media (min-width: 767px) {
   .container {
@@ -1743,8 +1743,8 @@ pre code {
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 12px 24px;
+  transition: width 0.23s ease-out;
 }
 .row {
   margin-left: -12px;
@@ -7546,6 +7546,9 @@ button.close {
     margin-left: 12px;
   }
 }
+#Stellaroute {
+  padding: 0 !important;
+}
 .site-body {
   background: #d7d7d7;
 }
@@ -7973,14 +7976,12 @@ form.profile-settings-update .profile-label.notification h3 {
   text-align: center;
   font-weight: 400;
 }
-@media (min-width: 767px) {
-  .content-card {
-    padding: 24px;
-    margin: 0 0 24px;
-    box-shadow: 0 1px 3px #777;
-    background: white;
-    overflow: hidden;
-  }
+.content-card {
+  background: white;
+  box-shadow: 0 1px 3px #777;
+  margin: 12px 0;
+  padding: 24px;
+  overflow: hidden;
 }
 .text-wings {
   position: relative;
@@ -9520,6 +9521,34 @@ form.profile-settings-update .profile-label.notification h3 {
   margin-top: 60px;
   margin-bottom: 60px;
 }
+#Stellaroute .mtb-NegXXs {
+  margin-top: -4px;
+  margin-bottom: -4px;
+}
+#Stellaroute .mtb-NegXs {
+  margin-top: -6px;
+  margin-bottom: -6px;
+}
+#Stellaroute .mtb-NegSm {
+  margin-top: -12px;
+  margin-bottom: -12px;
+}
+#Stellaroute .mtb-NegMd {
+  margin-top: -24px;
+  margin-bottom: -24px;
+}
+#Stellaroute .mtb-NegLg {
+  margin-top: -36px;
+  margin-bottom: -36px;
+}
+#Stellaroute .mtb-NegXl {
+  margin-top: -48px;
+  margin-bottom: -48px;
+}
+#Stellaroute .mtb-NegXXl {
+  margin-top: -60px;
+  margin-bottom: -60px;
+}
 #Stellaroute .ml-0,
 #Stellaroute .ml-N {
   margin-left: 0;
@@ -9654,6 +9683,34 @@ form.profile-settings-update .profile-label.notification h3 {
 #Stellaroute .mlr-XXl {
   margin-left: 60px;
   margin-right: 60px;
+}
+#Stellaroute .mlr-NegXXs {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+#Stellaroute .mlr-NegXs {
+  margin-left: -6px;
+  margin-right: -6px;
+}
+#Stellaroute .mlr-NegSm {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+#Stellaroute .mlr-NegMd {
+  margin-left: -24px;
+  margin-right: -24px;
+}
+#Stellaroute .mlr-NegLg {
+  margin-left: -36px;
+  margin-right: -36px;
+}
+#Stellaroute .mlr-NegXl {
+  margin-left: -48px;
+  margin-right: -48px;
+}
+#Stellaroute .mlr-NegXXl {
+  margin-left: -60px;
+  margin-right: -60px;
 }
 @media (min-width: 767px) {
   #Stellaroute .m-0--sm,

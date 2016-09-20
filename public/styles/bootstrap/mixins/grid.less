@@ -6,8 +6,9 @@
 .container-fixed(@gutter: @grid-gutter-width) {
   margin-right: auto;
   margin-left: auto;
-  padding-left:  floor((@gutter / 2));
-  padding-right: ceil((@gutter / 2));
+  padding: @gw-Sm @gw-Md;
+  transition: width .23s ease-out;
+
   &:extend(.clearfix all);
 }
 

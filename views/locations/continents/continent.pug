@@ -4,19 +4,17 @@ block content
 	.media-bg-img.request-page-header
 		h1= continent.name
 
-	.container.pt-Sm
+	.container.ptb-Sm
 		small
 			a.fc-G(href='/continents') &lt; Back to All Continents
 
 		.content-card.mt-Md
 			form.update-form(method='POST', action='/continents/update')
-				.row
-					.col-xs-12.col-sm-6
-						.form-group
-							label Name
-							p.form-control-static(data-type='text', data-name='name')= String(continent.name)
-							.hidden
-								input.form-control#ContinentName(name='name', type='text', placeholder='name', value=continent.name)
+				.form-group
+					label Name
+					p.form-control-static(data-type='text', data-name='name')= String(continent.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=continent.name)
 
 				input(type='hidden', name= key, value= continent[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
@@ -77,5 +75,7 @@ block content
 							label(for='WorldRegionName') Name of Region
 							input.form-control#WorldRegionName(name='name', type='text', placeholder='Southeast Asia', required)
 							input.hidden(type='hidden', name='continent', value= continent.Id)
-						.col-xs-12.col-sm-8.col-sm-push-2
-							input.btn.btn-primary.btn-Sm.w-100.bg-Gr.fc-G__ltst(type='submit', value='Create')
+
+						.form-group.mb-0
+							button.btn.btn-default.btn-Sm(type='submit', value= `/continents/${continent.name}`, name='redirect') Save and Return
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='world-regions', name='redirect') Save and Continue

@@ -27,11 +27,13 @@ router.get('/new', Continent.getCached(), function(req, res, next){
 });
 
 router.post('/new', WorldRegion.getCached(), function(req, res){
+	const redirect = (req.body.redirect == 'world-regions' ? `/world-regions/${req.body.name}` : req.body.redirect) || '/world-regions';
+	delete req.body.redirect;
 	const params = req.body;
 
 	// only allowed to add a world region that doesn't exist
 	if (WorldRegion.findOne('name', params.name)){
-		req.flash('error', 'A country with that name already exists');
+		req.flash('error', 'A World Region with that name already exists');
 		res.redirect('/world-regions')
 	}
 
@@ -43,14 +45,16 @@ router.post('/new', WorldRegion.getCached(), function(req, res){
 		// resolved
 		WorldRegion.updateCache().then(function(){
 			req.flash('success', 'World Region Successfully added');
-			res.redirect('/world-regions');
+			res.redirect(redirect);
 		}, function(err){
+			// rejected update 
+
 			console.error(err);
 			res.redirect('/world-regions');
-		})
+		});		
 	}, function(err){
 		// rejected
-		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
+		req.flash('error', 'Opps, something when wrong! Please try again.');
 		res.redirect('/world-regions');
 	});
 });
@@ -61,7 +65,6 @@ router.post('/update', function(req, res){
 		WorldRegion.delete(req.body[WorldRegion.hash]).then(function(){
 			// resolved
 
-			cache.del('/world-regions/' + req.body.name);
 			WorldRegion.updateCache().then(function(){
 				req.flash('success', 'World Region successfully deleted')
 				res.redirect('/world-regions');
@@ -92,7 +95,6 @@ router.post('/update', function(req, res){
 		WorldRegion.update(params).then(function(){
 			// resolved update
 
-			cache.del('/world-regions/' + req.body.name);
 			WorldRegion.updateCache().then(function(){
 				// resolved updateCache
 

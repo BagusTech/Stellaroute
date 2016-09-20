@@ -45,7 +45,7 @@ router.post('/new', Continent.getCached(), function(req, res){
 
 			console.error(err);
 			res.redirect('/continents');
-		})
+		});
 	}, function(err){
 		// rejected add
 		

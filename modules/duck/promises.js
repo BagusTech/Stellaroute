@@ -257,6 +257,11 @@ module.exports = function(_duck){
 		const table = this.table;
 		const cacheDuration = this.cacheDuration;
 
+		//console.log(`${table} - updating cache`);
+
+		cache.del(table);
+		this.items = null;
+
 		return new Promise(function(resolve, reject){
 			db.lite.scan({TableName: table}, function(err, data){
 				if (err) {
@@ -266,7 +271,7 @@ module.exports = function(_duck){
 				} else {
 					cache.set(table, data.Items, cacheDuration);
 
-					resolve(cache.get(table));
+					resolve(data.Items);
 				}
 			});
 		});

@@ -13,7 +13,7 @@ const _duck = function(schema, isReady, items){
 		this.range         = schema.Range;
 		this.rangeType     = schema.RangeType;
 		this.indexes       = schema.Indexes || [];
-		this.cacheDuration = schema.CacheDuration || 1000; // default to one second TODO: change to one day when live
+		this.cacheDuration = schema.CacheDuration || 60*60; // default to one hour TODO: change to one day when live
 		this.items         = items;		
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */

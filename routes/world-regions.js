@@ -13,7 +13,7 @@ router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, re
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
-		worldRegions: WorldRegion.join('continent', Continent.cached(), 'Id', 'name').items.sort(sortBy('name'))
+		worldRegions: WorldRegion.join('continent', Continent.cached(), 'Id', 'name').items.sort(sortBy('name')),
 	});
 });
 
@@ -22,7 +22,7 @@ router.get('/new', Continent.getCached(), function(req, res, next){
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		user: req.user,
-		continents: Continent.cached().sort(sortBy('name'))
+		continents: Continent.cached().sort(sortBy('name')),
 	});
 });
 
@@ -34,7 +34,7 @@ router.post('/new', WorldRegion.getCached(), function(req, res){
 	// only allowed to add a world region that doesn't exist
 	if (WorldRegion.findOne('name', params.name)){
 		req.flash('error', 'A World Region with that name already exists');
-		res.redirect('/world-regions')
+		res.redirect('/world-regions');
 	}
 
 	if(typeof params.continent === 'string'){
@@ -66,17 +66,17 @@ router.post('/update', function(req, res){
 			// resolved
 
 			WorldRegion.updateCache().then(function(){
-				req.flash('success', 'World Region successfully deleted')
+				req.flash('success', 'World Region successfully deleted');
 				res.redirect('/world-regions');
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was deleted')
+				req.flash('error', 'There was a small issue, but your country was deleted');
 				res.redirect('/world-regions');
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/world-regions');
 		});
 	} else if (req.body.update) {
@@ -85,7 +85,7 @@ router.post('/update', function(req, res){
 		var params = {};
 
 		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
+			assign(params, item, data[item]);
 		});
 
 		if(typeof params.continent === 'string'){
@@ -98,24 +98,24 @@ router.post('/update', function(req, res){
 			WorldRegion.updateCache().then(function(){
 				// resolved updateCache
 
-				req.flash('success', 'World Region successfully updated')
-				res.redirect('/world-regions/' + req.body.name)
+				req.flash('success', 'World Region successfully updated');
+				res.redirect('/world-regions/' + req.body.name);
 			}, function(){
 				// rejected updateCache
 
-				req.flash('error', 'There was a small issue, but the world region was updated')
+				req.flash('error', 'There was a small issue, but the world region was updated');
 				res.redirect('/world-regions');
 			});
 		}, function(err){
 			// rejected update
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/world-regions')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect('/world-regions');
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/world-regions')
+		res.redirect('/world-regions');
 	}
 });
 

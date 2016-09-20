@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/', Continent.getCached(), function(req, res, next){
 	res.render('locations/continents/_continents', {
-		title: 'Stellaroute: continents',
+		title: 'Stellaroute: Continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		continents: Continent.cached().sort(sortBy('name')),
 	});
@@ -29,7 +29,7 @@ router.post('/new', Continent.getCached(), function(req, res){
 	// only allowed to add a continent that doesn't exist
 	if (Continent.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
-		res.redirect('/continents')
+		res.redirect('/continents');
 	}
 
 	Continent.add(params).then(function(data){
@@ -61,17 +61,17 @@ router.post('/update', function(req, res){
 			// resolved
 
 			Continent.updateCache().then(function(){
-				req.flash('success', 'Continent successfully deleted')
+				req.flash('success', 'Continent successfully deleted');
 				res.redirect('/continents');
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was deleted')
+				req.flash('error', 'There was a small issue, but your country was deleted');
 				res.redirect('/continents');
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/continents');
 		});
 	} else if (req.body.update) {
@@ -80,29 +80,29 @@ router.post('/update', function(req, res){
 		var params = {};
 
 		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
+			assign(params, item, data[item]);
 		});
 
 		Continent.update(params).then(function(){
 			// resolved
 
 			Continent.updateCache().then(function(){
-				req.flash('success', 'Continent successfully updated')
-			res.redirect('/continents/' + req.body.name)
+				req.flash('success', 'Continent successfully updated');
+			res.redirect('/continents/' + req.body.name);
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was updated')
+				req.flash('error', 'There was a small issue, but your country was updated');
 				res.redirect('/continents');
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/continents')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect('/continents');
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/continents')
+		res.redirect('/continents');
 	}
 });
 

@@ -91,18 +91,13 @@ function init(){
 				a = $(a).text().replace(' ', '');
 				b = $(b).text().replace(' ', '');
 
-				console.log(a);
-				console.log(b);
 
 				// compare
 				if(a > b) {
-					console.log(1);
 					return 1;
 				} else if(a < b) {
-					console.log(2);
 					return -1;
 				} else {
-					console.log(3);
 					return 0;
 				}
 			});

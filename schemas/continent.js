@@ -1,6 +1,6 @@
 const Duck = require('../modules/duck');
 
-var Continent = Duck({
+const Continent = Duck({
 	Table: 'Continents',
 	Item: {
 		Id: String,

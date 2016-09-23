@@ -1,6 +1,6 @@
 const Duck = require('../modules/duck');
 
-var Country = Duck({
+const Country = Duck({
 	Table: 'Countries',
 	Item: {
 		Id: String,
@@ -13,10 +13,22 @@ var Country = Duck({
 		abbreviation: String,
 		alias: Array,
 		continent: Array,
-		worldRegions: Array
+		worldRegions: Array,
+		advice: {
+			tipping: String,
+			barganinig: {
+				amount: String,
+				explanation: String
+			},
+			clothing: {
+				cultural: String,
+				whatToWear: String
+			}
+		}
 	},
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	UniqueBy: ['name']
 });
 
 module.exports = Country;

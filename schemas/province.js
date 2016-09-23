@@ -1,14 +1,19 @@
 const Duck = require('../modules/duck');
 
-var Province = Duck({
+const Province = Duck({
 	Table: 'Provinces',
 	Item: {
 		Id: String,
+		url: String,
 		name: String,
-		countryRegions: Array
+		continent: Array,
+		worldRegions: Array,
+		country: String,
+		countryRegions: Array,
 	},
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	UniqueBy: ['name', 'country']
 });
 
 module.exports = Province;

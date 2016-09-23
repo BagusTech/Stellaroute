@@ -5,6 +5,7 @@ var Attraction = Duck({
 	Table: 'Attractions',
 	Item: {
 		Id: String
+		url: String,
 	},
 
 	HASH: 'Id',

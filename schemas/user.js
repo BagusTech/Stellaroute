@@ -1,6 +1,6 @@
 const Duck = require('../modules/duck');
 
-var User = Duck({
+const User = Duck({
 	Table: 'Users',
 	Item: {
 		Id: String,
@@ -15,12 +15,13 @@ var User = Duck({
 			first: String,
 			last: String
 		},
-		recieveNewsletter: Boolean
+		recieveNewsletter: Boolean,
+		isAdmin: Boolean
 	},
 	
 	HASH: 'Id',
 	HASHType: 'S',
-	CacheDuration: 60*60*24 // 24h -- node-cache timing is in seconds, not miliseconds
+	CacheDuration: 60*60*24, // 24h -- node-cache timing is in seconds, not miliseconds
 	//, Indexes : ['localEmail']
 });
 

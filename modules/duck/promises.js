@@ -6,8 +6,6 @@ const flattenObject = require('../flattenObject');
 const parseData     = require('../parseData');
 const readJSON      = require('../readJSON');
 
-// TODO: have cache duration set through schema
-
 module.exports = function(_duck){
 	// Write an item into the database
 	// Data is the object being added to the database
@@ -19,17 +17,20 @@ module.exports = function(_duck){
 		const table = this.table;
 		const schema = this.itemSchema;
 		const hash = this.hash;
+		const uniqueBy = this.uniqueBy;
+		const items = this.cached();
 
 		reAssign = reAssign || true;
 		checkSchema = checkSchema || true;
 
 		return new Promise(function(resolve, reject){
 
+
 			// if the HASH isn't set, set it to a uuid
 			data[hash] = data[hash] || uuid.v4();
 
 			// item to add is an object object if it needs to be re-assigned
-			var itemToAdd = reAssign ? {} : data;
+			const itemToAdd = reAssign ? {} : data;
 
 			if (reAssign) {
 				readJSON(data, readJSON, function(item, data){
@@ -42,6 +43,40 @@ module.exports = function(_duck){
 					console.error('failed to add ' + JSON.stringify(data));
 
 					reject('Mismatch of data types');
+					return;
+				}
+			}
+
+			// check to see if it has any special rules for going into the db
+			if(uniqueBy){
+				const key = uniqueBy[0];
+				const range = (typeof uniqueBy[1] === 'string' ? Array(uniqueBy[1]) : uniqueBy[1]) || [];
+				const isUnique = items.filter(function(item){
+					if(!itemToAdd[key]) {
+						return true  
+					}
+
+					function isEqual(a, b){
+						if (a instanceof Array){
+							for (var i in b){
+								if(a.indexOf(b[i]) > -1){
+									return true;
+								}
+							}
+						} else {
+							return a === b;
+						}
+					}
+
+					const keyCheck = isEqual(item[key], itemToAdd[key]);
+					const range1 = isEqual(item[range[0]], itemToAdd[range[0]]);
+					const range2 = isEqual(item[range[1]], itemToAdd[range[1]]);
+
+					return (keyCheck && range1 && range2)
+				}).length === 0;
+
+				if(!isUnique){
+					reject({ forUser: `Cant add to ${table} because "${key}" must be unique between "${range}"`});
 					return;
 				}
 			}
@@ -71,7 +106,7 @@ module.exports = function(_duck){
 
 					reject(err);
 				} else {
-					resolve(data);
+					resolve(data.Items);
 				}
 			});
 		});
@@ -106,13 +141,20 @@ module.exports = function(_duck){
 
 	// updates an item
 	// TODO make it work with HASH-RANGE keys
-	_duck.prototype.update = function(data){
+	_duck.prototype.update = function(data, reAssign){
 		const table = this.table;
 		const schema = this.itemSchema;
 		const key = this.hash;
+		const params = reAssign ? {} : data;
+
+		if (reAssign){
+			readJSON(data, readJSON, function(item, data){
+				assign(params, item, data[item]);
+			});
+		}
 
 		return new Promise(function(resolve, reject){
-			if(parseData(data, schema, table) !== 'success'){ 
+			if(parseData(params, schema, table) !== 'success'){ 
 				console.error('failed to add ' + JSON.stringify(data));
 				
 				reject('Mismatch of data types');

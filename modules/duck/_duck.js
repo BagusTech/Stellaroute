@@ -14,6 +14,7 @@ const _duck = function(schema, isReady, items){
 		this.rangeType     = schema.RangeType;
 		this.indexes       = schema.Indexes || [];
 		this.cacheDuration = schema.CacheDuration || 60*60; // default to one hour TODO: change to one day when live
+		this.uniqueBy      = schema.UniqueBy;
 		this.items         = items;		
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -23,7 +24,7 @@ const _duck = function(schema, isReady, items){
 
 		// if the required parameters aren't there, fail
 		if(!this.hash || !this.table || !this.schema){
-			 console.error('you must define a databse, table, schema, AND hash');
+			 console.error('you must define a table, schema, AND hash');
 			 process.exit();
 		}
 

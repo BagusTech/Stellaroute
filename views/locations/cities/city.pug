@@ -115,7 +115,7 @@ block content
 				form.modal-content(method='POST', action='/city-regions/new')
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
-							| Add a Province Region to&nbsp;
+							| Add a City Region to&nbsp;
 							span= city.name
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
@@ -131,7 +131,7 @@ block content
 							button.btn.btn-default.btn-Sm(type='submit', value= `/cities/${city.name}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city', name='redirect')
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city-regions', name='redirect')
 								span.hidden-xs Save and&nbsp;
 								| Continue
 

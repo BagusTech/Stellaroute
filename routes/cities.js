@@ -103,12 +103,20 @@ router.post('/update', Country.getCached(), City.getCached(), function(req, res)
 			params.countryRegions = Array(params.countryRegions);
 		}
 
+		if (params.countryRegions === undefined){
+			params.countryRegions = Array();	
+		}
+
 		if (typeof params.province === 'string'){
 			params.province = Array(params.province);
 		}
 
 		if (typeof params.provinceRegions === 'string'){
 			params.provinceRegions = Array(params.provinceRegions);
+		}
+
+		if (params.provinceRegions === undefined){
+			params.provinceRegions = Array();	
 		}
 
 		City.update(params, true).then(function(){
@@ -145,23 +153,21 @@ router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.ge
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'name' )
 					 .findOne('name', req.params.name);
 	const countryRegions = CountryRegion.find('country', city.country)
-	const province = Province.find('country', city.country)
-	const provinceRegions = [];
+	const provinces = Province.find('country', city.country)
+	var provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id);
 	const neighborhoods = Neighborhood.find('city', city.Id);
 
-	province.forEach(function(p){
-		provinceRegions.push(ProvinceRegion.find('province', p.Id))
+	provinces.forEach(function(p){
+		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id))
 	});
-
-	console.log(JSON.stringify(provinceRegions, null, 2));
 
 	res.render('locations/cities/city', {
 		title: `Stellaroute: ${city.name}`,
 		description: 'Stellaroute: ${city.name} Overview',
 		key: City.hash,
 		countryRegions: countryRegions,
-		province: province,
+		provinces: provinces,
 		provinceRegions: provinceRegions,
 		city: city,
 		cityRegions: cityRegions,

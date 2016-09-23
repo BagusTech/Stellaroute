@@ -21,41 +21,42 @@ block content
 					p.form-control-static
 						if city.countryRegionsName
 							for region in city.countryRegionsName
-								a(href=`/country-regions/${region}`)= city.countryRegionsName.indexOf(region) == city.countryRegionsName.length-1 ? region : `${region}, ` 
+								a(href=`/country-regions/${region}`)= city.countryRegionsName && city.countryRegionsName.indexOf(region) == city.countryRegionsName.length-1 ? region : `${region}, ` 
 						else
 							| N/A
 					.hidden
-						select(name='countryRegions')
+						select.form-control(name='countryRegions', multiple)
 							for region in countryRegions
-								option(value=region.Id, selected= city.countryRegions.indexOf(region.Id) > -1)= region.name
+								option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.name
 
 				.row
 					.col-xs-12.col-sm-6
 						.form-group
-							label State
+							label State/Province
 							p.form-control-static
 								if city.provinceName
 									for province in city.provinceName
-										a(href=`/province/${province}`)= city.provinceName.indexOf(province) == city.provinceName.length-1 ? province : `${province}, ` 
+										a(href=`/provinces/${province}`)= city.provinceName && city.provinceName.indexOf(province) == city.provinceName.length-1 ? province : `${province}, ` 
 								else
 									| N/A
 							.hidden
-								select(name='province')
-									for eachProvince in province
-										option(value=province.Id, selected= city.province.indexOf(eachProvince.Id) > -1)= province.name
+								select.form-control(name='province', multiple)
+									for province in provinces
+										option(value=province.Id, selected= city.province && city.province.indexOf(province.Id) > -1)= province.name
 
+					.col-xs-12.col-sm-6
 						.form-group
-							label State Region(s)
+							label State/Province Region(s)
 							p.form-control-static
 								if city.provinceRegionsName
 									for region in city.provinceRegionsName
-										a(href=`/country-regions/${region}`)= city.provinceRegionsName.indexOf(region) == city.provinceRegionsName.length-1 ? region : `${region}, ` 
+										a(href=`/province-regions/${region}`)= city.provinceRegionsName && city.provinceRegionsName.indexOf(region) == city.provinceRegionsName.length-1 ? region : `${region}, ` 
 								else
 									| N/A
 							.hidden
-								select(name='provinceRegions')
+								select.form-control(name='provinceRegions', multiple)
 									for region in provinceRegions
-										option(value=region.Id, selected= city.provinceRegionsName.indexOf(region.name) > -1)= region.name
+										option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.name
 
 				input(type='hidden', name='redirect', value=`/countries/${city.countryName}`)
 				input(type='hidden', name= key, value= city[key])

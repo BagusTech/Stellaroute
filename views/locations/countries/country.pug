@@ -199,7 +199,7 @@ block content
 							label(for='CountryContinet') Continent(s)
 							p.form-control-static
 								- for (var i = 0; i < country.continentName.length; i++)
-									span= country.continentName[i]
+									a(href=`/continents/${country.continentName[i]}`)= country.continentName[i]
 
 									if ((i+1) !== country.continentName.length)
 										|,&nbsp;
@@ -213,7 +213,7 @@ block content
 							label World Region(s)
 							p.form-control-static
 								- for (var i = 0; i < country.worldRegionsName.length; i++)
-									span= country.worldRegionsName[i]
+									a(href=`/world-regions/${country.worldRegionsName[i]}`)= country.worldRegionsName[i]
 
 									if ((i+1) !== country.worldRegionsName.length)
 										|,&nbsp;

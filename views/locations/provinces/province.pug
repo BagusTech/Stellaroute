@@ -11,10 +11,51 @@ block content
 		.content-card
 			form.update-form(method='POST', action='/provinces/update')
 				.form-group
-					label Name
-					p.form-control-static(data-type='text', data-name='name')= String(province.name)
+					label(for='ProvinceName') Name
+					p.form-control-static= province.name
 					.hidden
-						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=province.name)
+						input.form-control#ProvinceName(name='name', type='text', placeholder='name', value=province.name)
+
+				.row
+					.col-xs-12.col-sm-6
+						.form-group
+							label Continent
+							p.form-control-static
+								if province.continentName
+									| #{province.continentName}
+								else
+									| Same as <a href='/countries/#{province.countryName}'>#{province.countryName}</a>
+							.hidden
+								select.form-control(name='continent', multiple)
+									for continent in continents
+										option(value=continent.Id, selected= province.continent && province.continent.indexOf(continent.Id) > -1)= continent.name
+
+					.col-xs-12.col-sm-6
+						.form-group
+							label World Region(s)
+							p.form-control-static
+								if province.worldRegions && province.worldRegions.length > 0
+									for region in province.worldRegionsName
+										a(href=`/province-regions/${region}`)= province.worldRegionsName && province.worldRegionsName.indexOf(region) == province.worldRegionsName.length-1 ? region : `${region}, ` 
+								else
+									| Same as <a href='/countries/#{province.countryName}'>#{province.countryName}</a>
+							.hidden
+								select.form-control(name='worldRegions', multiple)
+									for region in worldRegions
+										option(value=region.Id, selected= province.worldRegions && province.worldRegions.indexOf(region.Id) > -1)= region.name
+
+				.form-group
+					label Country Region(s)
+					p.form-control-static
+						if province.countryRegions && province.countryRegions.length > 0
+							for region in province.countryRegionsName
+								a(href=`/province-regions/${region}`)= province.countryRegionsName && province.countryRegionsName.indexOf(region) == province.countryRegionsName.length-1 ? region : `${region}, ` 
+						else
+							| N/A
+					.hidden
+						select.form-control(name='countryRegions', multiple)
+							for region in countryRegions
+								option(value=region.Id, selected= province.countryRegions && province.countryRegions.indexOf(region.Id) > -1)= region.name
 
 				input(type='hidden', name='redirect', value=`/countries/${province.countryName}`)
 				input(type='hidden', name= key, value= province[key])
@@ -86,7 +127,6 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
-							input.hidden(name='countryRegions', value=province.countryRegions)
 							button.btn.btn-default.btn-Sm(type='submit', value= `/provinces/${province.name}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return

@@ -23,7 +23,7 @@ block content
 							p.form-control-static
 								if (neighborhood.cityRegions)
 									- for (var i = 0; i < neighborhood.cityRegions.length; i++)
-										span= neighborhood.cityRegionsName[i]
+										a(href=`/city-regions/${neighborhood.cityRegionsName[i]}`)= neighborhood.cityRegionsName[i]
 
 										if ((i+1) !== neighborhood.cityRegions.length)
 											|,&nbsp;

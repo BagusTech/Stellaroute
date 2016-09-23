@@ -69,6 +69,14 @@ router.post('/update', Country.getCached(), ProvinceRegion.getCached(), function
 
 		const params = req.body;
 
+		if (typeof params.countryRegions === 'string'){
+			params.countryRegions = Array(params.countryRegions);
+		}
+
+		if (params.countryRegions === undefined){
+			params.countryRegions = Array();	
+		}
+
 		ProvinceRegion.update(params, true).then(function(){
 			// resolved update
 
@@ -76,12 +84,12 @@ router.post('/update', Country.getCached(), ProvinceRegion.getCached(), function
 				// resolved updateCache
 
 				req.flash('success', 'World Region successfully updated');
-				res.redirect(`/provinces/${req.body.name}`);
+				res.redirect(`/province-regions/${req.body.name}`);
 			}, function(){
 				// rejected updateCache
 
 				req.flash('error', 'There was a small issue, but the world region was updated');
-				res.redirect(`/provinces/${req.body.name}`);
+				res.redirect(`/province-regions/${req.body.name}`);
 			});
 		}, function(err){
 			// rejected update
@@ -96,18 +104,20 @@ router.post('/update', Country.getCached(), ProvinceRegion.getCached(), function
 	}
 });
 
-router.get('/:name', CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
+router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
 	const provinceRegion = ProvinceRegion.join('province', Province.cached(), 'Id', 'name')
 									.join('countryRegions', CountryRegion.cached(), 'Id', 'name')
 									.findOne('name', req.params.name);
-
+	const country = Country.find('Id', Province.find('Id', provinceRegion.province)[0].country)[0];
+	const countryRegions = CountryRegion.find('country', country.Id);
 	const cities = City.find('provinceRegions', provinceRegion.Id);
-	const countryId = Province.findOne('Id', provinceRegion.province).country
+	const countryId = Province.findOne('Id', provinceRegion.province).country;
 
 	res.render('locations/provinces/province-region', {
 		title: `Stellaroute: ${provinceRegion.name}`,
 		description: 'Stellaroute: ${provinceRegion.name} Overview',
 		key: ProvinceRegion.hash,
+		countryRegions: countryRegions,
 		provinceRegion: provinceRegion,
 		cities: cities,
 		countryId: countryId,

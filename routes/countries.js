@@ -162,26 +162,24 @@ router.post('/update', function(req, res){
 		Country.update(params, true).then(function(){
 			// resolved
 
-			cache.del('/countries/' + req.body.name);
 			Country.updateCache().then(function(){
-				req.flash('success', 'Country successfully updated')
-				res.redirect('/countries/' + req.body.name)
+				req.flash('success', 'Country successfully updated');
+				res.redirect('/countries/' + req.body.name);
 			}, function(err){
 
 				console.error(err);
-				req.flash('error', 'There was a small issue, but the country was updated')
-				res.redirect('/countries/' + req.body.name)
+				res.redirect('/countries/' + req.body.name);
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/countries')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect('/countries/' + req.body.name);
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/countries')
+		res.redirect('/countries');
 	}
 });
 

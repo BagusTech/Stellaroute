@@ -4,6 +4,8 @@ const assign = require('../modules/assign');
 const cache = require('../modules/caching');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
+const Continent = require('../schemas/continent');
+const WorldRegion = require('../schemas/world-region');
 const Country = require('../schemas/country');
 const CountryRegion = require('../schemas/country-region');
 const Province = require('../schemas/province');
@@ -21,6 +23,14 @@ router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req
 
 	const redirect = (params.redirect == 'provinces' ? `/provinces/${params.name}` : params.redirect) || '/countries';
 	delete params.redirect;
+
+	if (typeof params.continent === 'string'){
+		params.continent = Array(params.continent);
+	}
+
+	if (typeof params.worldRegions === 'string'){
+		params.worldRegions = Array(params.worldRegions);
+	}
 
 	if (typeof params.countryRegions === 'string'){
 		params.countryRegions = Array(params.countryRegions);
@@ -69,6 +79,30 @@ router.post('/update', Country.getCached(), Province.getCached(), function(req, 
 
 		const params = req.body;
 
+		if (typeof params.continent === 'string'){
+			params.continent = Array(params.continent);
+		}
+
+		if (params.continent === undefined){
+			params.continent = [];
+		}
+
+		if (typeof params.worldRegions === 'string'){
+			params.worldRegions = Array(params.worldRegions);
+		}
+
+		if (params.worldRegions === undefined){
+			params.worldRegions = [];
+		}
+
+		if (typeof params.countryRegions === 'string'){
+			params.countryRegions = Array(params.countryRegions);
+		}
+
+		if (params.countryRegions === undefined){
+			params.countryRegions = [];
+		}
+
 		Province.update(params, true).then(function(){
 			// resolved update
 
@@ -95,11 +129,13 @@ router.post('/update', Country.getCached(), Province.getCached(), function(req, 
 	}
 });
 
-router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
-	const province = Province.join('country', Country.cached(), 'Id', 'name')
-						   .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
-						   .findOne('name', req.params.name);
-
+router.get('/:name', Continent.getCached(), WorldRegion.getCached(), Country.getCached(), CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
+	const province = Province.join('continent', Continent.cached(), 'Id', 'name')
+							 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
+							 .join('country', Country.cached(), 'Id', 'name')
+						     .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
+						     .findOne('name', req.params.name);
+    const countryRegions = CountryRegion.find('country', province.country);
 	const provinceRegions = ProvinceRegion.find('province', province.Id);
 	const cities = City.find('province', province.Id);
 
@@ -107,6 +143,9 @@ router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.ge
 		title: `Stellaroute: ${province.name}`,
 		description: 'Stellaroute: ${province.name} Overview',
 		key: Province.hash,
+		continents: Continent.find(),
+		worldRegions: WorldRegion.find(),
+		countryRegions: countryRegions,
 		province: province,
 		provinceRegions: provinceRegions,
 		cities: cities,

@@ -6,6 +6,7 @@ const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
 const WorldRegion = require('../schemas/world-region');
+const Country = require('../schemas/country');
 const router = express.Router();
 
 router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, res, next){
@@ -27,9 +28,13 @@ router.get('/new', Continent.getCached(), function(req, res, next){
 });
 
 router.post('/new', WorldRegion.getCached(), function(req, res){
-	const redirect = (req.body.redirect == 'world-regions' ? `/world-regions/${req.body.name}` : req.body.redirect) || '/world-regions';
-	delete req.body.redirect;
 	const params = req.body;
+	
+	const redirect = (params.redirect == 'world-regions' ? `/world-regions/${params.name}` : params.redirect) || '/world-regions';
+	delete params.redirect;
+
+	console.log(redirect);
+	
 
 	// only allowed to add a world region that doesn't exist
 	if (WorldRegion.findOne('name', params.name)){
@@ -69,7 +74,6 @@ router.post('/update', function(req, res){
 				req.flash('success', 'World Region successfully deleted');
 				res.redirect('/world-regions');
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was deleted');
 				res.redirect('/world-regions');
 			});
 		}, function(err){
@@ -82,17 +86,13 @@ router.post('/update', function(req, res){
 	} else if (req.body.update) {
 		delete req.body.update;
 
-		var params = {};
-
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item]);
-		});
+		const params = req.body;
 
 		if(typeof params.continent === 'string'){
 			params.continent = Array(params.continent);
 		}
 
-		WorldRegion.update(params).then(function(){
+		WorldRegion.update(params, true).then(function(){
 			// resolved update
 
 			WorldRegion.updateCache().then(function(){
@@ -120,13 +120,15 @@ router.post('/update', function(req, res){
 });
 
 router.get('/:name', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
-	var worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
+	const worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
 								 .findOne('name', req.params.name);
+	const countries = Country.find('worldRegions', worldRegion.Id).sort(sortBy('name'));
 
 	res.render('locations/world-regions/world-region', {
-		title: '',
-		description: '',
+		title: `Stellaroute: ${worldRegion.name}`,
+		description: 'Stellaroute: ${worldRegion.name} Overview',
 		continents: Continent.cached().sort(sortBy('name')),
+		countries: countries,
 		key: WorldRegion.hash,
 		worldRegion: worldRegion
 	});

@@ -16,20 +16,20 @@ router.get('/', function(req, res){
 	res.redirect('/countries');
 });
 
-router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 
-	const redirect = (params.redirect == 'provinces' ? `/provinces/${params.name}` : params.redirect) || '/countries';
+	const redirect = (params.redirect == 'province-regions' ? `/province-regions/${params.name}` : params.redirect) || '/countries';
 	delete params.redirect;
 
 	if (typeof params.countryRegions === 'string'){
 		params.countryRegions = Array(params.countryRegions);
 	}
 
-	Province.add(params).then(function(data){
+	ProvinceRegion.add(params).then(function(data){
 		// resolved
-		Province.updateCache().then(function(){
-			req.flash('success', 'World Region Successfully added');
+		ProvinceRegion.updateCache().then(function(){
+			req.flash('success', 'Provice Region Successfully added');
 			res.redirect(redirect);
 		}, function(err){
 			console.error(err);
@@ -37,22 +37,22 @@ router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req
 		})
 	}, function(err){
 		// rejected
-		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
+		req.flash('error', 'Opps, something when wrong! Please try again.');
 		res.redirect('/countries');
 	});
 });
 
-router.post('/update', Country.getCached(), Province.getCached(), function(req, res){
+router.post('/update', Country.getCached(), ProvinceRegion.getCached(), function(req, res){
 	const redirect = req.body.redirect || '/countries';
 	delete req.body.redirect;
 
 	if (req.body.delete){
 
-		Province.delete(req.body[Province.hash]).then(function(){
+		ProvinceRegion.delete(req.body[ProvinceRegion.hash]).then(function(){
 			// resolved
 
-			Province.updateCache().then(function(){
-				req.flash('success', 'State/Province successfully deleted');
+			ProvinceRegion.updateCache().then(function(){
+				req.flash('success', 'State/Province Region successfully deleted');
 				res.redirect(redirect);
 			}, function(){
 				res.redirect(redirect);
@@ -69,17 +69,18 @@ router.post('/update', Country.getCached(), Province.getCached(), function(req, 
 
 		const params = req.body;
 
-		Province.update(params, true).then(function(){
+		ProvinceRegion.update(params, true).then(function(){
 			// resolved update
 
-			Province.updateCache().then(function(){
+			ProvinceRegion.updateCache().then(function(){
 				// resolved updateCache
 
-				req.flash('success', 'State/Province successfully updated');
+				req.flash('success', 'World Region successfully updated');
 				res.redirect(`/provinces/${req.body.name}`);
 			}, function(){
 				// rejected updateCache
 
+				req.flash('error', 'There was a small issue, but the world region was updated');
 				res.redirect(`/provinces/${req.body.name}`);
 			});
 		}, function(err){
@@ -95,21 +96,21 @@ router.post('/update', Country.getCached(), Province.getCached(), function(req, 
 	}
 });
 
-router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
-	const province = Province.join('country', Country.cached(), 'Id', 'name')
-						   .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
-						   .findOne('name', req.params.name);
+router.get('/:name', CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
+	const provinceRegion = ProvinceRegion.join('province', Province.cached(), 'Id', 'name')
+									.join('countryRegions', CountryRegion.cached(), 'Id', 'name')
+									.findOne('name', req.params.name);
 
-	const provinceRegions = ProvinceRegion.find('province', province.Id);
-	const cities = City.find('province', province.Id);
+	const cities = City.find('provinceRegions', provinceRegion.Id);
+	const countryId = Province.findOne('Id', provinceRegion.province).country
 
-	res.render('locations/provinces/province', {
-		title: `Stellaroute: ${province.name}`,
-		description: 'Stellaroute: ${province.name} Overview',
-		key: Province.hash,
-		province: province,
-		provinceRegions: provinceRegions,
+	res.render('locations/provinces/province-region', {
+		title: `Stellaroute: ${provinceRegion.name}`,
+		description: 'Stellaroute: ${provinceRegion.name} Overview',
+		key: ProvinceRegion.hash,
+		provinceRegion: provinceRegion,
 		cities: cities,
+		countryId: countryId,
 	});
 });
 

@@ -5,9 +5,11 @@ const cache = require('../modules/caching');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
+const WorldRegion = require('../schemas/world-region');
 const Country = require('../schemas/country');
 const CountryRegion = require('../schemas/country-region');
-const WorldRegion = require('../schemas/world-region');
+const Province = require('../schemas/province');
+
 const router = express.Router();
 
 router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
@@ -35,11 +37,14 @@ router.post('/new', Country.getCached(), function(req, res){
 	const params = req.body;
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
-	var nativeNames = typeof params['native.name'] === 'string' ? Array(params['native.name']) : params['native.name'];
+	const nativeNames = typeof params['native.name'] === 'string' ? Array(params['native.name']) : params['native.name'];
 	delete params['native.name'];
 
-	var nativeLanguages = typeof params['native.language'] === 'string' ? Array(params['native.language']) : params['native.language'];
+	const nativeLanguages = typeof params['native.language'] === 'string' ? Array(params['native.language']) : params['native.language'];
 	delete params['native.language'];
+
+	const redirect = (params.redirect == 'countries' ? `/countries/${params.name}` : params.redirect) || '/countries';
+	delete params.redirect;
 
 	params['names.native'] = [];
 
@@ -51,7 +56,7 @@ router.post('/new', Country.getCached(), function(req, res){
 	// only allowed to add a country that doesn't exist
 	if (Country.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
-		res.redirect('/countries')
+		res.redirect(redirect)
 	}
 
 	// if the multiselect has one item, it returns a string and it needs to be an array
@@ -68,7 +73,7 @@ router.post('/new', Country.getCached(), function(req, res){
 	}
 	
 	// only attempt to split if alias' are entered else delete it
-	if(params.alias.length > 1){
+	if(params.alias.length > 0){
 		params.alias = params.alias.split(', ');
 	} else{
 		delete params.alias;
@@ -81,19 +86,18 @@ router.post('/new', Country.getCached(), function(req, res){
 			// resolved updateCache
 
 			req.flash('success', 'Country Successfully added');
-			res.redirect('/countries');
+			res.redirect(redirect);
 		}, function(err){
 			// rejected updateCache
 
 			console.error(err);
-			req.flash('error', 'Country was added, but something went wrong')
-			res.redirect('/countries');
+			res.redirect(redirect);
 		});
 	},
 	function(err){
 	// rejected add
 
-		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
+		req.flash('error', 'Opps, something when wrong! Please try again.');
 		res.redirect('/countries');
 	});
 });
@@ -139,11 +143,7 @@ router.post('/update', function(req, res){
 			req.body['names.native'].push({name: nativeNames[i], language: nativeLanguages[i]});
 		}
 
-		var params = {};
-
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
-		});
+		const params = req.body;
 
 		if(typeof params.continent === 'string'){
 			params.continent = Array(params.continent);
@@ -159,7 +159,7 @@ router.post('/update', function(req, res){
 
 		params.alias = params.alias.split(', ');
 
-		Country.update(params).then(function(){
+		Country.update(params, true).then(function(){
 			// resolved
 
 			cache.del('/countries/' + req.body.name);
@@ -185,19 +185,21 @@ router.post('/update', function(req, res){
 	}
 });
 
-router.get('/:name', Continent.getCached(), WorldRegion.getCached(), CountryRegion.getCached(), function(req, res, next){
+router.get('/:name', Continent.getCached(), WorldRegion.getCached(), CountryRegion.getCached(), Province.getCached(), function(req, res, next){
 	var country = Country.join('continent', Continent.cached(), 'Id', 'name')
 						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
 						 .findOne('name', req.params.name);
+	const provinces = Province.find('country', country.Id).sort(sortBy('name'));
 
 	res.render('locations/countries/country', {
-		title: '',
-		description: '',
+		title: `Stellaroute: ${country.name}`,
+		description: 'Stellaroute: ${country.name} Overview',
 		continents: Continent.cached().sort(sortBy('name')),
 		country: country,
 		key: Country.hash,
 		countryRegions: CountryRegion.find('country', country.Id),
-		worldRegions: WorldRegion.cached().sort(sortBy('name'))
+		worldRegions: WorldRegion.cached().sort(sortBy('name')),
+		provinces: provinces,
 	});
 });
 

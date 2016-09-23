@@ -40,7 +40,12 @@ router.post('/newsletter-signup', User.getCached(), function(req, res){
 
 	User.add(req.body).then(function added(){
 		sendEmail(email, subject, template);
-		res.send({msg: 'success'});
+
+		User.updateCache().then(function(){
+			res.send({msg: 'success'});
+		}, function(){
+			res.send({msg: 'success'});
+		});
 	}, function(error){
 		res.send({msg: 'error: ' + error});
 	});

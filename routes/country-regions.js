@@ -6,121 +6,100 @@ const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Country = require('../schemas/country');
 const CountryRegion = require('../schemas/country-region');
+const Province = require('../schemas/province');
 const router = express.Router();
 
-router.get('/', CountryRegion.getCached(), Country.getCached(), function(req, res, next){
-	res.render('locations/country-regions/_country-regions', {
-		title: 'Stellaroute: Country Regions',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		countryRegions: CountryRegion.join('country', Country.cached(), 'Id', 'name').items.sort(sortBy('name'))
-	});
+router.get('/', function(req, res){
+	req.flash('info', 'That page doesn\'t exist, but this is a close second!');
+	res.redirect('/countries');
 });
 
-router.get('/new', Country.getCached(), function(req, res, next){
-	res.render('locations/country-regions/new', {
-		title: 'Stellaroute: Add a World Region',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		countries: Country.cached().sort(sortBy('name'))
-	});
-});
-
-router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req, res){
+router.post('/new', CountryRegion.getCached(), function(req, res){
 	const params = req.body;
-	const countryName = params.countryName;
-
-	delete params.countryName;
-
-	// only allowed to add a world region that doesn't exist
-	var existingCountry = CountryRegion.findOne('name', params.name);
-	if (existingCountry && existingCountry.country == params.country){
-		req.flash('error', 'That country region already exists');
-		res.redirect('/countries/' + countryName);
-	}
+	const redirect = (params.redirect == 'country-regions' ? `/country-regions/${params.name}` : params.redirect) || '/countries';
+	delete params.redirect;
 
 	CountryRegion.add(params).then(function(data){
 		// resolved
 		CountryRegion.updateCache().then(function(){
 			req.flash('success', 'World Region Successfully added');
-			res.redirect('/countries/' + countryName);
+			res.redirect(redirect);
 		}, function(err){
 			console.error(err);
-			res.redirect('/countries/' + countryName);
+			res.redirect(redirect);
 		})
 	}, function(err){
 		// rejected
-		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
-		res.redirect('/countries/' + countryName);
+		req.flash('error', 'Opps, something when wrong! Please try again.');
+		res.redirect(redirect);
 	});
 });
 
 router.post('/update', function(req, res){
+	const redirect = req.body.redirect || '/countries';
+	delete req.body.redirect;
+
 	if (req.body.delete){
 
 		CountryRegion.delete(req.body[CountryRegion.hash]).then(function(){
 			// resolved
 
-			cache.del('/country-regions/' + req.body.name);
 			CountryRegion.updateCache().then(function(){
-				req.flash('success', 'World Region successfully deleted')
-				res.redirect('/country-regions');
+				req.flash('success', 'World Region successfully deleted');
+				res.redirect(redirect);
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was deleted')
-				res.redirect('/country-regions');
+				res.redirect(redirect);
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/country-regions');
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect(redirect);
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
 
-		var params = {};
+		const params = req.body;
 
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
-		});
-
-		CountryRegion.update(params).then(function(){
+		CountryRegion.update(params, true).then(function(){
 			// resolved update
 
-			cache.del('/country-regions/' + req.body.name);
 			CountryRegion.updateCache().then(function(){
 				// resolved updateCache
 
-				req.flash('success', 'World Region successfully updated')
-				res.redirect('/country-regions/' + req.body.name)
+				req.flash('success', 'Country Region successfully updated');
+				res.redirect(`/country-regions/${req.body.name}`);
 			}, function(){
 				// rejected updateCache
 
-				req.flash('error', 'There was a small issue, but the world region was updated')
-				res.redirect('/country-regions');
+				res.redirect(redirect);
 			});
 		}, function(err){
 			// rejected update
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/country-regions')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect(redirect);
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/country-regions')
+		res.redirect(redirect);
 	}
 });
 
-router.get('/:name', Country.getCached(), CountryRegion.getCached(), function(req, res, next){
-	var countryRegion = CountryRegion.join('country', Country.cached(), 'Id', 'name')
-								 .findOne('name', req.params.name);
+router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.getCached(), function(req, res, next){
+	const countryRegion = CountryRegion.join('country', Country.cached(), 'Id', 'name')
+									   .findOne('name', req.params.name);
+	const provinces = Province.find('countryRegions', countryRegion.Id);
 
-	res.render('locations/country-regions/country-region', {
-		title: '',
-		description: '',
+	res.render('locations/countries/country-region', {
+		title: `Stellaroute: ${countryRegion.name}`,
+		description: 'Stellaroute: ${countryRegion.name} Overview',
 		countries: Country.cached().sort(sortBy('name')),
 		key: CountryRegion.hash,
-		countryRegion: countryRegion
+		countryRegion: countryRegion,
+		provinces: provinces,
 	});
 });
 

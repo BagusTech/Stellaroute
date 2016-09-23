@@ -15,9 +15,13 @@ const routes           = require('./routes/index');
 const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
 const countryRegions   = require('./routes/country-regions');
-const review           = require('./routes/review');
 const profile          = require('./routes/profile');
 const worldRegions     = require('./routes/world-regions');
+const provinces        = require('./routes/provinces');
+const provinceRegions  = require('./routes/province-regions');
+const cities           = require('./routes/cities');
+const cityRegions      = require('./routes/city-regions');
+const neighborhoods    = require('./routes/neighborhoods');
 const fs               = require('fs');
 const app              = express();
 
@@ -55,7 +59,11 @@ app.use('/countries', countries);
 app.use('/country-regions', countryRegions);
 app.use('/profile', profile);
 app.use('/world-regions', worldRegions);
-//app.use('/review', review);
+app.use('/provinces', provinces);
+app.use('/province-regions', provinceRegions);
+app.use('/cities', cities);
+app.use('/city-regions', cityRegions);
+app.use('/neighborhoods', neighborhoods);
 
 // error handlers /////////////////////////////////////////////////////
 

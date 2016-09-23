@@ -64,7 +64,6 @@ router.post('/update', function(req, res){
 				req.flash('success', 'Continent successfully deleted');
 				res.redirect('/continents');
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was deleted');
 				res.redirect('/continents');
 			});
 		}, function(err){
@@ -77,13 +76,9 @@ router.post('/update', function(req, res){
 	} else if (req.body.update) {
 		delete req.body.update;
 
-		var params = {};
+		const params = req.body;
 
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item]);
-		});
-
-		Continent.update(params).then(function(){
+		Continent.update(params, true).then(function(){
 			// resolved
 
 			Continent.updateCache().then(function(){
@@ -112,8 +107,8 @@ router.get('/:name', Continent.getCached(), WorldRegion.getCached(), Country.get
 	const countries = Country.find('continent', continent.Id).sort(sortBy('name'));
 
 	res.render('locations/continents/continent', {
-		title: '',
-		description: '',
+		title: `Stellaroute: ${continent.name}`,
+		description: `Stellaroute: ${continent.name} Overview`,
 		continent: continent,
 		worldRegions: worldRegions,
 		countries: countries,

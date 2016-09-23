@@ -28,11 +28,7 @@ router.post('/update', function(req, res){
 	} else if (req.body.submit) {
 		delete req.body.submit;
 
-		var params = {};
-
-		readJSON(req.body, readJSON, function(item, data){
-			assign(params, item, data[item])
-		});
+		const params = req.body;
 
 		if(params.local.password !== undefined && params.local.password.length > 4){
 			params.local.password = User.generateHash(params.local.password) 
@@ -40,7 +36,7 @@ router.post('/update', function(req, res){
 			delete params.local.password;
 		}
 
-		User.update(params).then(function(){
+		User.update(params, true).then(function(){
 			// resolved
 
 			req.flash('success', 'User successfully updated')

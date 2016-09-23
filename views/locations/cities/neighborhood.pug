@@ -1,0 +1,60 @@
+extends ../../layout
+
+block content
+	.media-bg-img.request-page-header
+		h1= neighborhood.name
+
+	.container.ptb-Sm
+		small
+			a.fc-G(href= `/cities/${neighborhood.cityName}`)= `< Back to ${neighborhood.cityName}`
+
+		.content-card
+			form.update-form(method='POST', action='/neighborhoods/update')
+				.row
+					.col-xs-12.col-sm-6.col-md-4
+						.form-group
+							label Name
+							p.form-control-static(data-type='text', data-name='name')= neighborhood.name
+							.hidden
+								input.form-control#ContinentName(name='name', type='text', placeholder='name', value=neighborhood.name)
+
+						.form-group
+							label(for='CityRegions') City Region(s)
+							p.form-control-static
+								if (neighborhood.cityRegions)
+									- for (var i = 0; i < neighborhood.cityRegions.length; i++)
+										span= neighborhood.cityRegionsName[i]
+
+										if ((i+1) !== neighborhood.cityRegions.length)
+											|,&nbsp;
+								else
+									| Please Select a City Region
+							.hidden
+								select.form-control#CityRegions(name='cityRegions',  multiple='true')
+									-for (i in cityRegions)
+										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsName && neighborhood.cityRegionsName.toString().indexOf(cityRegions[i].name) > -1)= cityRegions[i].name
+
+				input(type='hidden', name='redirect', value=`/cities/${neighborhood.cityName}`)
+				input(type='hidden', name= key, value= neighborhood[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel= `Delete ${neighborhood.name}`
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= neighborhood.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close

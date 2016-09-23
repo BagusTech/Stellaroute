@@ -1,12 +1,15 @@
 extends layout
 
 block content
+	.media-bg-img.feedback-header
+		.container
+			h1= error.status
 	.container.text-center
-		h1= message
-		h2= error.status
-		
-		hr.small
-		br
+		.content-card
+			h2= message
 
-		pre.sr-only #{error.stack}
-		- console.log(error.stack)
+			if user && user.isAdmin
+				hr.small
+				br
+				p= error.stack
+			- console.error(error.stack)

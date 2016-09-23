@@ -1,221 +1,233 @@
 extends ../../layout
 
 block content
-	small
-		a(href='/countries') &lt; Back to All Countries
+	.media-bg-img.request-page-header
+		h1= country.name
 
-	h1= country.name
+	.container.ptb-Sm
+		small
+			a(href='/countries') &lt; Back to All Countries
 
-	.row
-		.col-xs-12.col-sm-6
+		.content-card
 			form.update-form.js-update-form(method='POST', action='/countries/update')
-				.form-group
-					label(for='CountryName') Name
-					p.form-control-static= country.name
-					.hidden
-						input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
-				
-				.form-group.js-languages
-					label(for='CountryLanguages') Language(s)
-					p.form-control-static= country.languages && country.languages.join(', ')
-					.hidden
-						select.form-control#CountryLanguages(name='languages', multiple='true', required)
-							option(selected= country.languages && country.languages.indexOf('Akan') > -1) Akan
-							option(selected= country.languages && country.languages.indexOf('Amharic') > -1) Amharic
-							option(selected= country.languages && country.languages.indexOf('Arabic') > -1) Arabic
-							option(selected= country.languages && country.languages.indexOf('Assamese') > -1) Assamese
-							option(selected= country.languages && country.languages.indexOf('Awadhi') > -1) Awadhi
-							option(selected= country.languages && country.languages.indexOf('Azerbaijani') > -1) Azerbaijani
-							option(selected= country.languages && country.languages.indexOf('Balochi') > -1) Balochi
-							option(selected= country.languages && country.languages.indexOf('Belarusian') > -1) Belarusian
-							option(selected= country.languages && country.languages.indexOf('Bengali') > -1) Bengali
-							option(selected= country.languages && country.languages.indexOf('Bhojpuri') > -1) Bhojpuri
-							option(selected= country.languages && country.languages.indexOf('Burmese') > -1) Burmese
-							option(selected= country.languages && country.languages.indexOf('Cantonese') > -1) Cantonese
-							option(selected= country.languages && country.languages.indexOf('Cebuano') > -1) Cebuano
-							option(selected= country.languages && country.languages.indexOf('Chewa') > -1) Chewa
-							option(selected= country.languages && country.languages.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
-							option(selected= country.languages && country.languages.indexOf('Chittagonian') > -1) Chittagonian
-							option(selected= country.languages && country.languages.indexOf('Czech') > -1) Czech
-							option(selected= country.languages && country.languages.indexOf('Deccan') > -1) Deccan
-							option(selected= country.languages && country.languages.indexOf('Dhundhari') > -1) Dhundhari
-							option(selected= country.languages && country.languages.indexOf('Dutch') > -1) Dutch
-							option(selected= country.languages && country.languages.indexOf('English') > -1) English
-							option(selected= country.languages && country.languages.indexOf('French') > -1) French
-							option(selected= country.languages && country.languages.indexOf('Fula') > -1) Fula
-							option(selected= country.languages && country.languages.indexOf('Gan Chinese') > -1) Gan Chinese
-							option(selected= country.languages && country.languages.indexOf('Georgian') > -1) Georgian
-							option(selected= country.languages && country.languages.indexOf('German') > -1) German
-							option(selected= country.languages && country.languages.indexOf('Greek') > -1) Greek
-							option(selected= country.languages && country.languages.indexOf('Gujarati') > -1) Gujarati
-							option(selected= country.languages && country.languages.indexOf('Haitian Creole') > -1) Haitian Creole
-							option(selected= country.languages && country.languages.indexOf('Hakka') > -1) Hakka
-							option(selected= country.languages && country.languages.indexOf('Haryanvi') > -1) Haryanvi
-							option(selected= country.languages && country.languages.indexOf('Hausa') > -1) Hausa
-							option(selected= country.languages && country.languages.indexOf('Hiligaynon') > -1) Hiligaynon
-							option(selected= country.languages && country.languages.indexOf('Hindi') > -1) Hindi
-							option(selected= country.languages && country.languages.indexOf('Hmong') > -1) Hmong
-							option(selected= country.languages && country.languages.indexOf('Hungarian') > -1) Hungarian
-							option(selected= country.languages && country.languages.indexOf('Igbo') > -1) Igbo
-							option(selected= country.languages && country.languages.indexOf('Ilocano') > -1) Ilocano
-							option(selected= country.languages && country.languages.indexOf('Indonesian') > -1) Indonesian
-							option(selected= country.languages && country.languages.indexOf('Italian') > -1) Italian
-							option(selected= country.languages && country.languages.indexOf('Japanese') > -1) Japanese
-							option(selected= country.languages && country.languages.indexOf('Javanese') > -1) Javanese
-							option(selected= country.languages && country.languages.indexOf('Jin') > -1) Jin
-							option(selected= country.languages && country.languages.indexOf('Kannada') > -1) Kannada
-							option(selected= country.languages && country.languages.indexOf('Kazakh') > -1) Kazakh
-							option(selected= country.languages && country.languages.indexOf('Khmer') > -1) Khmer
-							option(selected= country.languages && country.languages.indexOf('Kinyarwanda') > -1) Kinyarwanda
-							option(selected= country.languages && country.languages.indexOf('Kirundi') > -1) Kirundi
-							option(selected= country.languages && country.languages.indexOf('Konkani') > -1) Konkani
-							option(selected= country.languages && country.languages.indexOf('Korean') > -1) Korean
-							option(selected= country.languages && country.languages.indexOf('Kurdish') > -1) Kurdish
-							option(selected= country.languages && country.languages.indexOf('Madurese') > -1) Madurese
-							option(selected= country.languages && country.languages.indexOf('Magahi') > -1) Magahi
-							option(selected= country.languages && country.languages.indexOf('Maithili') > -1) Maithili
-							option(selected= country.languages && country.languages.indexOf('Malagasy') > -1) Malagasy
-							option(selected= country.languages && country.languages.indexOf('Malayalam') > -1) Malayalam
-							option(selected= country.languages && country.languages.indexOf('Mandarin') > -1) Mandarin
-							option(selected= country.languages && country.languages.indexOf('Marathi') > -1) Marathi
-							option(selected= country.languages && country.languages.indexOf('Marwari') > -1) Marwari
-							option(selected= country.languages && country.languages.indexOf('Mossi') > -1) Mossi
-							option(selected= country.languages && country.languages.indexOf('Nepali') > -1) Nepali
-							option(selected= country.languages && country.languages.indexOf('Odia') > -1) Odia
-							option(selected= country.languages && country.languages.indexOf('Oromo') > -1) Oromo
-							option(selected= country.languages && country.languages.indexOf('Pashto') > -1) Pashto
-							option(selected= country.languages && country.languages.indexOf('Persian') > -1) Persian
-							option(selected= country.languages && country.languages.indexOf('Polish') > -1) Polish
-							option(selected= country.languages && country.languages.indexOf('Portuguese') > -1) Portuguese
-							option(selected= country.languages && country.languages.indexOf('Punjabi') > -1) Punjabi
-							option(selected= country.languages && country.languages.indexOf('Romanian') > -1) Romanian
-							option(selected= country.languages && country.languages.indexOf('Russian') > -1) Russian
-							option(selected= country.languages && country.languages.indexOf('Saraiki') > -1) Saraiki
-							option(selected= country.languages && country.languages.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
-							option(selected= country.languages && country.languages.indexOf('Shona') > -1) Shona
-							option(selected= country.languages && country.languages.indexOf('Sindhi') > -1) Sindhi
-							option(selected= country.languages && country.languages.indexOf('Sinhalese') > -1) Sinhalese
-							option(selected= country.languages && country.languages.indexOf('Somali') > -1) Somali
-							option(selected= country.languages && country.languages.indexOf('Southern Min') > -1) Southern Min
-							option(selected= country.languages && country.languages.indexOf('Spanish') > -1) Spanish
-							option(selected= country.languages && country.languages.indexOf('Sundanese') > -1) Sundanese
-							option(selected= country.languages && country.languages.indexOf('Swedish') > -1) Swedish
-							option(selected= country.languages && country.languages.indexOf('Sylheti') > -1) Sylheti
-							option(selected= country.languages && country.languages.indexOf('Tagalog') > -1) Tagalog
-							option(selected= country.languages && country.languages.indexOf('Tamil') > -1) Tamil
-							option(selected= country.languages && country.languages.indexOf('Telugu') > -1) Telugu
-							option(selected= country.languages && country.languages.indexOf('Thai') > -1) Thai
-							option(selected= country.languages && country.languages.indexOf('Turkish') > -1) Turkish
-							option(selected= country.languages && country.languages.indexOf('Turkmen') > -1) Turkmen
-							option(selected= country.languages && country.languages.indexOf('Ukrainian') > -1) Ukrainian
-							option(selected= country.languages && country.languages.indexOf('Urdu') > -1) Urdu
-							option(selected= country.languages && country.languages.indexOf('Uyghur') > -1) Uyghur
-							option(selected= country.languages && country.languages.indexOf('Uzbek') > -1) Uzbek
-							option(selected= country.languages && country.languages.indexOf('Vietnamese') > -1) Vietnamese
-							option(selected= country.languages && country.languages.indexOf('Xhosa') > -1) Xhosa
-							option(selected= country.languages && country.languages.indexOf('Yoruba') > -1) Yoruba
-							option(selected= country.languages && country.languages.indexOf('Zhuang') > -1) Zhuang
-							option(selected= country.languages && country.languages.indexOf('Zulu') > -1) Zulu
-
-				.form-group
-					label(for='CountryOfficialName') Official Name
-					p.form-control-static= country.names && country.names.official || 'N/A'
-					.hidden
-						input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
-				
-				if country.names && country.names.native
-					.well
-						- for( i in country.names.native)
-							.row.js-duplicate
-								.col-xs-5
-									.form-group
-										label Native Name
-										p.form-control-static= country.names.native[i].name
-										.hidden
-											input.form-control(name='native.name', value=country.names.native[i].name, type='text', placeholder='Deutschland', required)
-								.col-xs-4
-									.form-group
-										label Language
-										p.form-control-static= country.names.native[i].language
-										.hidden
-											select.form-control.js-name-language(name='native.language', required)
-												- for(j in country.languages)
-													option(selected= country.names.native[i].language.indexOf(country.languages[j]) > -1)= country.languages[j]
-								.col-xs-3
-									.form-group
-										p.form-static-content &nbsp;
-										button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
-								hr
-
-						.text-right
-							p.hidden
+				.row
+					.col-xs-12.col-sm-6.col-md-3
+						.form-group
+							label(for='CountryName') Name
+							p.form-control-static= country.name
 							.hidden
-								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
-				else
-					.well.js-no-native-name.hidden
-						.row.js-duplicate
-							.col-xs-5
-								.form-group
-									label Native Name
-									input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
-							.col-xs-4
-								.form-group
-									label Language
-									select.form-control.js-name-language(name='native.language', required)
-										- for(i in country.languages)
-											option= country.languages[i]
-							.col-xs-3
-								.form-group
-									p.form-static-content &nbsp;
-									button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
-						.text-right
-								br
-								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
-			
-				.form-group
-					label(for='CountryAbberviation') Abbreviation
-					p.form-control-static= country.abbreviation
-					.hidden
-						input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
-			
-				.form-group
-					label(for='CountryAlias') Alias
-					p.form-control-static= country.alias && country.alias.join(', ') || 'N/A'
-					.hidden
-						input.form-control#CountryAlias(name='alias', type='text', placeholder='Alias', value= country.alias)
-			
-				.form-group
-					label(for='CountryContinet') Continent(s)
-					p.form-control-static
-						- for (var i = 0; i < country.continent.length; i++)
-							span= country.continent[i]
+								input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
 
-							if ((i+1) !== country.continent.length)
-								|,&nbsp;
-					.hidden
-						select.form-control#CountryContinent(name='continent',  multiple='true')
-							-for (i in continents)
-								option(value= continents[i].Id, selected= country.continent.toString().indexOf(continents[i].name) > -1)= continents[i].name
-			
-				.form-group
-					label World Region(s)
-					p.form-control-static
-						- for (var i = 0; i < country.worldRegions.length; i++)
-							span= country.worldRegions[i]
+					.col-xs-12.col-sm-6.col-md-4
+						.form-group
+							label(for='CountryOfficialName') Official Name
+							p.form-control-static= country.names && country.names.official || 'N/A'
+							.hidden
+								input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
 
-							if ((i+1) !== country.worldRegions.length)
-								|,&nbsp;
-					.hidden
-						select.form-control#WorldRegions(name='worldRegions',  multiple='true')
-							-for (i in worldRegions)
-								option(value= worldRegions[i].Id, selected= country.worldRegions.toString().indexOf(worldRegions[i].name) > -1)= worldRegions[i].name
+					.col-xs-12.col-sm-6.col-md-2
+						.form-group
+							label(for='CountryAbberviation') Abbreviation
+							p.form-control-static= country.abbreviation
+							.hidden
+								input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
+					
+					.col-xs-12.col-sm-6.col-md-3
+						.form-group
+							label(for='CountryAlias') Alias
+							p.form-control-static= country.alias && country.alias.join(', ') || 'N/A'
+							.hidden
+								input.form-control#CountryAlias(name='alias', type='text', placeholder='Alias', value= country.alias)
+				
+				.row
+					.col-xs-12.col-sm-3.col-md-2
+						.form-group.js-languages
+							label(for='CountryLanguages') Language(s)
+							p.form-control-static= country.languages && country.languages.join(', ')
+							.hidden
+								select.form-control#CountryLanguages(name='languages', multiple='true', required)
+									option(selected= country.languages && country.languages.indexOf('Akan') > -1) Akan
+									option(selected= country.languages && country.languages.indexOf('Amharic') > -1) Amharic
+									option(selected= country.languages && country.languages.indexOf('Arabic') > -1) Arabic
+									option(selected= country.languages && country.languages.indexOf('Assamese') > -1) Assamese
+									option(selected= country.languages && country.languages.indexOf('Awadhi') > -1) Awadhi
+									option(selected= country.languages && country.languages.indexOf('Azerbaijani') > -1) Azerbaijani
+									option(selected= country.languages && country.languages.indexOf('Balochi') > -1) Balochi
+									option(selected= country.languages && country.languages.indexOf('Belarusian') > -1) Belarusian
+									option(selected= country.languages && country.languages.indexOf('Bengali') > -1) Bengali
+									option(selected= country.languages && country.languages.indexOf('Bhojpuri') > -1) Bhojpuri
+									option(selected= country.languages && country.languages.indexOf('Burmese') > -1) Burmese
+									option(selected= country.languages && country.languages.indexOf('Cantonese') > -1) Cantonese
+									option(selected= country.languages && country.languages.indexOf('Cebuano') > -1) Cebuano
+									option(selected= country.languages && country.languages.indexOf('Chewa') > -1) Chewa
+									option(selected= country.languages && country.languages.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
+									option(selected= country.languages && country.languages.indexOf('Chittagonian') > -1) Chittagonian
+									option(selected= country.languages && country.languages.indexOf('Czech') > -1) Czech
+									option(selected= country.languages && country.languages.indexOf('Deccan') > -1) Deccan
+									option(selected= country.languages && country.languages.indexOf('Dhundhari') > -1) Dhundhari
+									option(selected= country.languages && country.languages.indexOf('Dutch') > -1) Dutch
+									option(selected= country.languages && country.languages.indexOf('English') > -1) English
+									option(selected= country.languages && country.languages.indexOf('French') > -1) French
+									option(selected= country.languages && country.languages.indexOf('Fula') > -1) Fula
+									option(selected= country.languages && country.languages.indexOf('Gan Chinese') > -1) Gan Chinese
+									option(selected= country.languages && country.languages.indexOf('Georgian') > -1) Georgian
+									option(selected= country.languages && country.languages.indexOf('German') > -1) German
+									option(selected= country.languages && country.languages.indexOf('Greek') > -1) Greek
+									option(selected= country.languages && country.languages.indexOf('Gujarati') > -1) Gujarati
+									option(selected= country.languages && country.languages.indexOf('Haitian Creole') > -1) Haitian Creole
+									option(selected= country.languages && country.languages.indexOf('Hakka') > -1) Hakka
+									option(selected= country.languages && country.languages.indexOf('Haryanvi') > -1) Haryanvi
+									option(selected= country.languages && country.languages.indexOf('Hausa') > -1) Hausa
+									option(selected= country.languages && country.languages.indexOf('Hiligaynon') > -1) Hiligaynon
+									option(selected= country.languages && country.languages.indexOf('Hindi') > -1) Hindi
+									option(selected= country.languages && country.languages.indexOf('Hmong') > -1) Hmong
+									option(selected= country.languages && country.languages.indexOf('Hungarian') > -1) Hungarian
+									option(selected= country.languages && country.languages.indexOf('Igbo') > -1) Igbo
+									option(selected= country.languages && country.languages.indexOf('Ilocano') > -1) Ilocano
+									option(selected= country.languages && country.languages.indexOf('Indonesian') > -1) Indonesian
+									option(selected= country.languages && country.languages.indexOf('Italian') > -1) Italian
+									option(selected= country.languages && country.languages.indexOf('Japanese') > -1) Japanese
+									option(selected= country.languages && country.languages.indexOf('Javanese') > -1) Javanese
+									option(selected= country.languages && country.languages.indexOf('Jin') > -1) Jin
+									option(selected= country.languages && country.languages.indexOf('Kannada') > -1) Kannada
+									option(selected= country.languages && country.languages.indexOf('Kazakh') > -1) Kazakh
+									option(selected= country.languages && country.languages.indexOf('Khmer') > -1) Khmer
+									option(selected= country.languages && country.languages.indexOf('Kinyarwanda') > -1) Kinyarwanda
+									option(selected= country.languages && country.languages.indexOf('Kirundi') > -1) Kirundi
+									option(selected= country.languages && country.languages.indexOf('Konkani') > -1) Konkani
+									option(selected= country.languages && country.languages.indexOf('Korean') > -1) Korean
+									option(selected= country.languages && country.languages.indexOf('Kurdish') > -1) Kurdish
+									option(selected= country.languages && country.languages.indexOf('Madurese') > -1) Madurese
+									option(selected= country.languages && country.languages.indexOf('Magahi') > -1) Magahi
+									option(selected= country.languages && country.languages.indexOf('Maithili') > -1) Maithili
+									option(selected= country.languages && country.languages.indexOf('Malagasy') > -1) Malagasy
+									option(selected= country.languages && country.languages.indexOf('Malayalam') > -1) Malayalam
+									option(selected= country.languages && country.languages.indexOf('Mandarin') > -1) Mandarin
+									option(selected= country.languages && country.languages.indexOf('Marathi') > -1) Marathi
+									option(selected= country.languages && country.languages.indexOf('Marwari') > -1) Marwari
+									option(selected= country.languages && country.languages.indexOf('Mossi') > -1) Mossi
+									option(selected= country.languages && country.languages.indexOf('Nepali') > -1) Nepali
+									option(selected= country.languages && country.languages.indexOf('Odia') > -1) Odia
+									option(selected= country.languages && country.languages.indexOf('Oromo') > -1) Oromo
+									option(selected= country.languages && country.languages.indexOf('Pashto') > -1) Pashto
+									option(selected= country.languages && country.languages.indexOf('Persian') > -1) Persian
+									option(selected= country.languages && country.languages.indexOf('Polish') > -1) Polish
+									option(selected= country.languages && country.languages.indexOf('Portuguese') > -1) Portuguese
+									option(selected= country.languages && country.languages.indexOf('Punjabi') > -1) Punjabi
+									option(selected= country.languages && country.languages.indexOf('Romanian') > -1) Romanian
+									option(selected= country.languages && country.languages.indexOf('Russian') > -1) Russian
+									option(selected= country.languages && country.languages.indexOf('Saraiki') > -1) Saraiki
+									option(selected= country.languages && country.languages.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
+									option(selected= country.languages && country.languages.indexOf('Shona') > -1) Shona
+									option(selected= country.languages && country.languages.indexOf('Sindhi') > -1) Sindhi
+									option(selected= country.languages && country.languages.indexOf('Sinhalese') > -1) Sinhalese
+									option(selected= country.languages && country.languages.indexOf('Somali') > -1) Somali
+									option(selected= country.languages && country.languages.indexOf('Southern Min') > -1) Southern Min
+									option(selected= country.languages && country.languages.indexOf('Spanish') > -1) Spanish
+									option(selected= country.languages && country.languages.indexOf('Sundanese') > -1) Sundanese
+									option(selected= country.languages && country.languages.indexOf('Swedish') > -1) Swedish
+									option(selected= country.languages && country.languages.indexOf('Sylheti') > -1) Sylheti
+									option(selected= country.languages && country.languages.indexOf('Tagalog') > -1) Tagalog
+									option(selected= country.languages && country.languages.indexOf('Tamil') > -1) Tamil
+									option(selected= country.languages && country.languages.indexOf('Telugu') > -1) Telugu
+									option(selected= country.languages && country.languages.indexOf('Thai') > -1) Thai
+									option(selected= country.languages && country.languages.indexOf('Turkish') > -1) Turkish
+									option(selected= country.languages && country.languages.indexOf('Turkmen') > -1) Turkmen
+									option(selected= country.languages && country.languages.indexOf('Ukrainian') > -1) Ukrainian
+									option(selected= country.languages && country.languages.indexOf('Urdu') > -1) Urdu
+									option(selected= country.languages && country.languages.indexOf('Uyghur') > -1) Uyghur
+									option(selected= country.languages && country.languages.indexOf('Uzbek') > -1) Uzbek
+									option(selected= country.languages && country.languages.indexOf('Vietnamese') > -1) Vietnamese
+									option(selected= country.languages && country.languages.indexOf('Xhosa') > -1) Xhosa
+									option(selected= country.languages && country.languages.indexOf('Yoruba') > -1) Yoruba
+									option(selected= country.languages && country.languages.indexOf('Zhuang') > -1) Zhuang
+									option(selected= country.languages && country.languages.indexOf('Zulu') > -1) Zulu
+					
+					.col-xs-12.col-sm-9.col-md-10
+						if country.names && country.names.native
+							.well
+								- for( i in country.names.native)
+									.row.js-duplicate
+										.col-xs-5
+											.form-group
+												label Native Name
+												p.form-control-static= country.names.native[i].name
+												.hidden
+													input.form-control(name='native.name', value=country.names.native[i].name, type='text', placeholder='Deutschland', required)
+										.col-xs-4
+											.form-group
+												label Language
+												p.form-control-static= country.names.native[i].language
+												.hidden
+													select.form-control.js-name-language(name='native.language', required)
+														- for(j in country.languages)
+															option(selected= country.names.native[i].language.indexOf(country.languages[j]) > -1)= country.languages[j]
+										.col-xs-3
+											.form-group
+												p.form-static-content &nbsp;
+												button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+										hr
+
+								.text-right
+									p.hidden
+									.hidden
+										button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+						else
+							.well.js-no-native-name.hidden
+								.row.js-duplicate
+									.col-xs-5
+										.form-group
+											label Native Name
+											input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
+									.col-xs-4
+										.form-group
+											label Language
+											select.form-control.js-name-language(name='native.language', required)
+												- for(i in country.languages)
+													option= country.languages[i]
+									.col-xs-3
+										.form-group
+											p.form-static-content &nbsp;
+											button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+								.text-right
+										br
+										button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+			
+				.row
+					.col-xs-12.col-sm-6
+						.form-group
+							label(for='CountryContinet') Continent(s)
+							p.form-control-static
+								- for (var i = 0; i < country.continentName.length; i++)
+									span= country.continentName[i]
+
+									if ((i+1) !== country.continentName.length)
+										|,&nbsp;
+							.hidden
+								select.form-control#CountryContinent(name='continent',  multiple='true')
+									-for (i in continents)
+										option(value= continents[i].Id, selected= country.continentName.toString().indexOf(continents[i].name) > -1)= continents[i].name
+					
+					.col-xs-12.col-sm-6
+						.form-group
+							label World Region(s)
+							p.form-control-static
+								- for (var i = 0; i < country.worldRegionsName.length; i++)
+									span= country.worldRegionsName[i]
+
+									if ((i+1) !== country.worldRegionsName.length)
+										|,&nbsp;
+							.hidden
+								select.form-control#WorldRegions(name='worldRegions',  multiple='true')
+									-for (i in worldRegions)
+										option(value= worldRegions[i].Id, selected= country.worldRegionsName.toString().indexOf(worldRegions[i].name) > -1)= worldRegions[i].name
 
 
 				input(type='hidden', name= key, value= country[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
 				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-				button.btn.btn-danger(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				button.btn.btn-danger.f-R(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
 
 				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
 					.modal-dialog(role='document')
@@ -237,17 +249,32 @@ block content
 							.modal-footer
 								button.btn.btn-default(type='button', data-dismiss='modal') Close
 
-		.col-xs-12.col-sm-6
-			h2 Country Regions
-			p.text-right
-				button.btn.btn-primary(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Country Region
+		.row
+			.col-xs-12.col-sm-6
+				.content-card.p-R
+					h2 Regions
 
-			for region in countryRegions
-				p
-					a(href= '/country-regions/' + region.name)= region.name
+					ul
+						for region in countryRegions
+							li
+								a(href= `/country-regions/${region.name}`)= region.name
 
-			p.text-right
-				button.btn.btn-primary(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Country Region
+					.clear
+						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
+					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
+
+			.col-xs-12.col-sm-6
+				.content-card.p-R
+					h2 States/Provinces
+
+					ul
+						for province in provinces
+							li
+								a(href= `/provinces/${province.name}`)= province.name
+
+					.clear
+						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
+					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
 
 	.modal.fade#NewCountryRegionModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryRegionModalLabel")
 		.modal-dialog(role='document')
@@ -255,25 +282,49 @@ block content
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-					h4.modal-title#NewCountryRegionModalLabel New Country Region
-				.modal-body
+					h4#NewCountryRegionModalLabel.mt-0.mb-0.pl-Sm.fc-G
+							| Add a Region to&nbsp;
+							span= country.name
+				.modal-body.plr-Md.pb-Md
 					form(method='POST', action='/country-regions/new')
-						fieldset
-							legend Country Region
+						.form-group
+							label(for='CountryRegionName') Name
+							input.form-control#CountryRegionName(name='name', type='text', placeholder='New England', required)
 
-							.form-group
-								label(for='CountryRegionName') Name
-								input.form-control#CountryRegionName(name='name', type='text', placeholder='name', required)
+						input(type='hidden', name='country', value= country.Id)
+						button.btn.btn-default.btn-Sm(type='submit', value= `/countries/${country.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='country-regions', name='redirect')
+							span.hidden-xs Save and&nbsp;
+							| Continue
 
-							.form-group
-								label(for='CountryRegionContinet') Country it resides in
-								p.form-control-static= country.name
+	.modal.fade#NewCountryProvinceModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryProvinceModalLabel")
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4#NewCountryProvinceModalLabel.mt-0.mb-0.pl-Sm.fc-G
+							| Add a State/Province to&nbsp;
+							span= country.name
+				.modal-body.plr-Md.pb-Md
+					form(method='POST', action='/provinces/new')
+						.form-group
+							label(for='ProvinceName') Name
+							input.form-control#ProvinceName(name='name', type='text', placeholder='Missouri', required)
 
-							input(type='hidden', name='country', value= country.Id)
-							input(type='hidden', name='countryName', value= country.name)
-							input.btn.btn-primary(type='submit', value='submit')
-						
-					//input.btn.btn-danger(type='submit', value='Delete', name='delete')
+						.form-group
+							label(for='ProvinceCountryRegion') Country Region
+							select#ProvinceCountryRegion(name='countryRegions', multiple)
+								for region in countryRegions
+									option(value= region.Id)= region.name
 
-				.modal-footer
-					button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+						input(type='hidden', name='country', value= country.Id)
+						button.btn.btn-default.btn-Sm(type='submit', value= `/countries/${country.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')
+							span.hidden-xs Save and&nbsp;
+							| Continue

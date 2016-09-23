@@ -1,0 +1,95 @@
+extends ../../layout
+
+block content
+	.media-bg-img.request-page-header
+		h1= countryRegion.name
+
+	.container.ptb-Sm
+		small
+			a.fc-G(href= `/countries/${countryRegion.countryName}`)= `< Back to ${countryRegion.countryName}`
+
+		.content-card
+			form.update-form(method='POST', action='/country-regions/update')
+				.form-group
+					label Name
+					p.form-control-static(data-type='text', data-name='name')= String(countryRegion.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=countryRegion.name)
+
+				input(type='hidden', name='redirect', value=`/countries/${countryRegion.countryName}`)
+				input(type='hidden', name= key, value= countryRegion[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel
+									| Delete&nbsp;
+									= countryRegion.name
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= countryRegion.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		.row
+			.col-xs-12
+				.content-card.p-R
+					h2 State/Provinces
+					ul
+						for province in provinces
+							li
+								a(href='/provinces/' + province.name)= province.name
+
+					.clear
+						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddProvince') Add Region
+					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddProvince') Add Region
+
+			//.col-xs-12.col-sm-6
+				.content-card.p-R
+					h2 Cities
+					ul
+						for city in cities
+							li
+								a(href='/cities/' + city.name)= city.name
+
+					.clear
+						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
+					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddCity') Add City
+
+	.modal.fade#AddProvince(tab-index='-1', role='dialog')
+			.modal-dialog(role='document')
+				form.modal-content(method='POST', action='/provinces/new')
+					.modal-header.mb-Md
+						h4.mt-0.mb-0.pl-Sm.fc-G
+							| Add a State/Province to&nbsp;
+							span= countryRegion.name
+						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+					.modal-body.plr-Md.pb-Md
+						.row
+							.col-xs-12
+								.form-group
+									label(for='ProvinceName') Name
+									input.form-control#ProvinceName(name='name', type='text', placeholder='Ontario', required)
+
+						.form-group.mb-0
+							input.hidden(name='countryRegions', value=countryRegion.Id)
+							input.hidden(name='country', value=countryRegion.country)
+							button.btn.btn-default.btn-Sm(type='submit', value= `/country-regions/${countryRegion.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')
+								span.hidden-xs Save and&nbsp;
+								| Continue

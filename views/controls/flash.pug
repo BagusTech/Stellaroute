@@ -5,3 +5,6 @@
 
 		- if(flash && flash.error && flash.error.length > 0)
 			p.alert.alert-danger= flash.error
+
+		- if(flash && flash.info && flash.info.length > 0)
+			p.alert.alert-info= flash.info

@@ -1,39 +1,43 @@
 extends ../../layout
 
 block content
-	h2 Countries
-	p.text-right
-		a.btn.btn-primary.btn-lg(href='/countries/new') New
-	.row
-		.col-sm-2.col-xs-3
-			strong.js-name-sort Name
-		.col-sm-3.col-xs-3
-			strong.js-continent-sort Continent(s)
-		.col-xs-6
-			strong.js-region-sort World Region(s)
+	.media-bg-img.request-page-header
+		h1 Countries
 
-	.js-countries
-		for country in countries
-			.row.js-country
+	.container.ptb-Sm
+		.content-card
+			p.text-right
+				a.btn.btn-primary(href='/countries/new') New
+			.row
 				.col-sm-2.col-xs-3
-					a.js-name(href='/countries/' + country.name)= country.name
+					strong.js-name-sort Name
 				.col-sm-3.col-xs-3
-					- for (var i = 0; i < country.continent.length; i++)
-						span.js-continent= country.continent[i]
-
-						if ((i+1) !== country.continent.length)
-							|,&nbsp;
-
+					strong.js-continent-sort Continent(s)
 				.col-xs-6
-					- for (var i = 0; i < country.worldRegions.length; i++)
-						span.js-region= country.worldRegions[i]
+					strong.js-region-sort World Region(s)
 
-						if ((i+1) !== country.worldRegions.length)
-							|,&nbsp;
+			.js-countries
+				for country in countries
+					.row.js-country
+						.col-sm-2.col-xs-3
+							a.js-name(href='/countries/' + country.name)= country.name
+						.col-sm-3.col-xs-3
+							- for (var i = 0; i < country.continentName.length; i++)
+								span.js-continent= country.continentName[i]
+
+								if ((i+1) !== country.continentName.length)
+									|,&nbsp;
+
+						.col-xs-6
+							- for (var i = 0; i < country.worldRegionsName.length; i++)
+								span.js-region= country.worldRegionsName[i]
+
+								if ((i+1) !== country.worldRegionsName.length)
+									|,&nbsp;
 
 
-	p.text-right
-		a.btn.btn-primary.btn-lg(href='/countries/new') New
+			p.text-right
+				a.btn.btn-primary(href='/countries/new') New
 
 	script(type='text/javascript').
 		$(document).ready(function(){

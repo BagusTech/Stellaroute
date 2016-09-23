@@ -1,0 +1,160 @@
+extends ../../layout
+
+block content
+	.media-bg-img.request-page-header
+		h1= city.name
+
+	.container.ptb-Sm
+		small
+			a.fc-G(href= `/countries/${city.countryName}`)= `< Back to ${city.countryName}`
+
+		.content-card
+			form.update-form(method='POST', action='/cities/update')
+				.form-group
+					label Name
+					p.form-control-static= String(city.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=city.name)
+
+				.form-group
+					label Country Region(s)
+					p.form-control-static
+						if city.countryRegionsName
+							for region in city.countryRegionsName
+								a(href=`/country-regions/${region}`)= city.countryRegionsName.indexOf(region) == city.countryRegionsName.length-1 ? region : `${region}, ` 
+						else
+							| N/A
+					.hidden
+						select(name='countryRegions')
+							for region in countryRegions
+								option(value=region.Id, selected= city.countryRegions.indexOf(region.Id) > -1)= region.name
+
+				.row
+					.col-xs-12.col-sm-6
+						.form-group
+							label State
+							p.form-control-static
+								if city.provinceName
+									for province in city.provinceName
+										a(href=`/province/${province}`)= city.provinceName.indexOf(province) == city.provinceName.length-1 ? province : `${province}, ` 
+								else
+									| N/A
+							.hidden
+								select(name='province')
+									for eachProvince in province
+										option(value=province.Id, selected= city.province.indexOf(eachProvince.Id) > -1)= province.name
+
+						.form-group
+							label State Region(s)
+							p.form-control-static
+								if city.provinceRegionsName
+									for region in city.provinceRegionsName
+										a(href=`/country-regions/${region}`)= city.provinceRegionsName.indexOf(region) == city.provinceRegionsName.length-1 ? region : `${region}, ` 
+								else
+									| N/A
+							.hidden
+								select(name='provinceRegions')
+									for region in provinceRegions
+										option(value=region.Id, selected= city.provinceRegionsName.indexOf(region.name) > -1)= region.name
+
+				input(type='hidden', name='redirect', value=`/countries/${city.countryName}`)
+				input(type='hidden', name= key, value= city[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel
+									| Delete&nbsp;
+									= city.name
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= city.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		.row
+			.col-xs-12.col-sm-6
+				.content-card.p-R
+					h2 City Regions
+					ul
+						for region in cityRegions
+							li
+								a(href='/city-regions/' + region.name)= region.name
+
+					.clear
+						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCityRegion') Add Region
+					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddCityRegion') Add Region
+
+			.col-xs-12.col-sm-6
+				.content-card.p-R
+					h2 Neighborhoods
+					ul
+						for neighborhood in neighborhoods
+							li
+								a(href='/neighborhoods/' + neighborhood.name)= neighborhood.name
+
+					.clear
+						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
+					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
+
+	.modal.fade#AddCityRegion(tab-index='-1', role='dialog')
+			.modal-dialog(role='document')
+				form.modal-content(method='POST', action='/city-regions/new')
+					.modal-header.mb-Md
+						h4.mt-0.mb-0.pl-Sm.fc-G
+							| Add a Province Region to&nbsp;
+							span= city.name
+						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+					.modal-body.plr-Md.pb-Md
+						.row
+							.col-xs-12
+								.form-group
+									label(for='CountryName') Name
+									input.form-control#CountryName(name='name', type='text', placeholder='America', required)
+
+						.form-group.mb-0
+							input.hidden(name='city', value=city.Id)
+							button.btn.btn-default.btn-Sm(type='submit', value= `/cities/${city.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city', name='redirect')
+								span.hidden-xs Save and&nbsp;
+								| Continue
+
+	.modal.fade#AddNeighborhood(tab-index='-1', role='dialog')
+			.modal-dialog(role='document')
+				form.modal-content(method='POST', action='/neighborhoods/new')
+					.modal-header.mb-Md
+						h4.mt-0.mb-0.pl-Sm.fc-G
+							| Add a Neighborhood to&nbsp;
+							span= city.name
+						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+					.modal-body.plr-Md.pb-Md
+						.row
+							.col-xs-12
+								.form-group
+									label(for='NeighborhoodName') Name
+									input.form-control#CityName(name='name', type='text', placeholder='Paris', required)
+
+						.form-group.mb-0
+							input.hidden(name='city', value=city.Id)
+							button.btn.btn-default.btn-Sm(type='submit', value= `/cities/${city.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='neighborhoods', name='redirect')
+								span.hidden-xs Save and&nbsp;
+								| Continue

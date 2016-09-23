@@ -1,0 +1,82 @@
+extends ../../layout
+
+block content
+	.media-bg-img.request-page-header
+		h1= provinceRegion.name
+
+	.container.ptb-Sm
+		small
+			a.fc-G(href= `/provinces/${provinceRegion.provinceName}`)= `< Back to ${provinceRegion.provinceName}`
+
+		.content-card
+			form.update-form(method='POST', action='/province-regions/update')
+				.form-group
+					label Name
+					p.form-control-static(data-type='text', data-name='name')= String(provinceRegion.name)
+					.hidden
+						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=provinceRegion.name)
+
+				input(type='hidden', name='redirect', value=`/provinces/${provinceRegion.provinceName}`)
+				input(type='hidden', name= key, value= provinceRegion[key])
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				
+				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+					.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+								h4.modal-title#DeleteModalLabel
+									| Delete&nbsp;
+									= provinceRegion.name
+							.modal-body
+								.alert.alert-danger
+									p
+										| Are you sure you want to delete&nbsp;
+										= provinceRegion.name + '?'
+									p This action cannot be undone
+								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+							.modal-footer
+								button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		.content-card.p-R.mt-Md
+			h2 Cities
+			ul
+				for city in cities
+					li
+						a(href='/cities/' + city.name)= city.name
+
+			.clear
+				button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
+			button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddCity') Add City
+
+	.modal.fade#AddCity(tab-index='-1', role='dialog')
+			.modal-dialog(role='document')
+				form.modal-content(method='POST', action='/cities/new')
+					.modal-header.mb-Md
+						h4.mt-0.mb-0.pl-Sm.fc-G
+							| Add a City to&nbsp;
+							span= provinceRegion.name
+						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+					.modal-body.plr-Md.pb-Md
+						.row
+							.col-xs-12
+								.form-group
+									label(for='CityName') Name
+									input.form-control#CityName(name='name', type='text', placeholder='Paris', required)
+
+						.form-group.mb-0
+							input.hidden(name='provinceRegions', value=provinceRegion.Id)
+							input.hidden(name='province', value=provinceRegion.province)
+							input.hidden(name='country', value=countryId)
+							button.btn.btn-default.btn-Sm(type='submit', value= `/province-regions/${provinceRegion.name}`, name='redirect') 
+								span.hidden-xs Save and&nbsp;
+								| Return
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city', name='redirect')
+								span.hidden-xs Save and&nbsp;
+								| Continue

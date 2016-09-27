@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/cities/${neighborhood.cityName}`)= `< Back to ${neighborhood.cityName}`
+			a.fc-G(href= `/${country.name}/${neighborhood.cityName}`)= `< Back to ${neighborhood.cityName}`
 
 		.content-card
 			form.update-form(method='POST', action='/neighborhoods/update')
@@ -23,7 +23,7 @@ block content
 							p.form-control-static
 								if (neighborhood.cityRegions)
 									- for (var i = 0; i < neighborhood.cityRegions.length; i++)
-										a(href=`/city-regions/${neighborhood.cityRegionsName[i]}`)= neighborhood.cityRegionsName[i]
+										a(href=`/${country.name}/${neighborhood.cityName}/${neighborhood.cityRegionsName[i]}`)= neighborhood.cityRegionsName[i]
 
 										if ((i+1) !== neighborhood.cityRegions.length)
 											|,&nbsp;
@@ -34,7 +34,7 @@ block content
 									-for (i in cityRegions)
 										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsName && neighborhood.cityRegionsName.toString().indexOf(cityRegions[i].name) > -1)= cityRegions[i].name
 
-				input(type='hidden', name='redirect', value=`/cities/${neighborhood.cityName}`)
+				input(type='hidden', name='redirect', value=`/${country.name}/${neighborhood.cityName}/${neighborhood.name}`)
 				input(type='hidden', name= key, value= neighborhood[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;

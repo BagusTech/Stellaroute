@@ -49,7 +49,7 @@ block content
 					ul
 						for region in worldRegions
 							li
-								a(href='/world-regions/' + region.name)= region.name
+								a(href=`/${region.name.replace(/ /g, '-').toLowerCase()}`)= region.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddRegion') Add Region
@@ -61,7 +61,7 @@ block content
 					ul
 						for country in countries
 							li
-								a(href='/countries/' + country.name)= country.name
+								a(href=`/${country.name.replace(/ /g, '-').toLowerCase()}`)= country.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCountry') Add Country
@@ -83,7 +83,7 @@ block content
 							input.hidden(type='hidden', name='continent', value= continent.Id)
 
 						.form-group.mb-0
-							button.btn.btn-default.btn-Sm(type='submit', value= `/continents/${continent.name}`, name='redirect')
+							button.btn.btn-default.btn-Sm(type='submit', value= `${continent.name.replace(/ /g, '-').toLowerCase()}`, name='redirect')
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='world-regions', name='redirect')
@@ -255,7 +255,7 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='continent', value=continent.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/continents/${continent.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${continent.name.replace(/ /g, '-').toLowerCase()}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='countries', name='redirect')

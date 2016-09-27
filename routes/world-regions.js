@@ -9,7 +9,7 @@ const WorldRegion = require('../schemas/world-region');
 const Country = require('../schemas/country');
 const router = express.Router();
 
-router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, res, next){
+router.get('/', function(req, res, next){
 	res.render('locations/world-regions/_world-regions', {
 		title: 'Stellaroute: World Regions',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -18,7 +18,7 @@ router.get('/', WorldRegion.getCached(), Continent.getCached(), function(req, re
 	});
 });
 
-router.get('/new', Continent.getCached(), function(req, res, next){
+router.get('/new', function(req, res, next){
 	res.render('locations/world-regions/new', {
 		title: 'Stellaroute: Add a World Region',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -27,7 +27,7 @@ router.get('/new', Continent.getCached(), function(req, res, next){
 	});
 });
 
-router.post('/new', WorldRegion.getCached(), function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 	
 	const redirect = (params.redirect == 'world-regions' ? `/world-regions/${params.name}` : params.redirect) || '/world-regions';
@@ -117,21 +117,6 @@ router.post('/update', function(req, res){
 		req.flash('error', 'There was an error, please try again');
 		res.redirect('/world-regions');
 	}
-});
-
-router.get('/:name', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
-	const worldRegion = WorldRegion.join('continent', Continent.cached(), 'Id', 'name')
-								 .findOne('name', req.params.name);
-	const countries = Country.find('worldRegions', worldRegion.Id).sort(sortBy('name'));
-
-	res.render('locations/world-regions/world-region', {
-		title: `Stellaroute: ${worldRegion.name}`,
-		description: 'Stellaroute: ${worldRegion.name} Overview',
-		continents: Continent.cached().sort(sortBy('name')),
-		countries: countries,
-		key: WorldRegion.hash,
-		worldRegion: worldRegion
-	});
 });
 
 module.exports = router;

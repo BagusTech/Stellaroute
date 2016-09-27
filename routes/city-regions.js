@@ -40,7 +40,7 @@ router.post('/new', function(req, res){
 	});
 });
 
-router.post('/update', CityRegion.getCached(), function(req, res){
+router.post('/update', function(req, res){
 	const redirect = req.body.redirect || '/countries';
 	delete req.body.redirect;
 
@@ -92,21 +92,6 @@ router.post('/update', CityRegion.getCached(), function(req, res){
 		req.flash('error', 'There was an error, please try again');
 		res.redirect(redirect);
 	}
-});
-
-router.get('/:name', City.getCached(), CityRegion.getCached(), Neighborhood.getCached(), function(req, res, next){
-	const cityRegion = CityRegion.join('city', City.cached(), 'Id', 'name')
-								 .findOne('name', req.params.name);
-
-	const neighborhoods = Neighborhood.find('cityRegions', cityRegion.Id);
-
-	res.render('locations/cities/city-region', {
-		title: `Stellaroute: ${cityRegion.name}`,
-		description: 'Stellaroute: ${cityRegion.name} Overview',
-		key: CityRegion.hash,
-		cityRegion: cityRegion,
-		neighborhoods: neighborhoods,
-	});
 });
 
 module.exports = router;

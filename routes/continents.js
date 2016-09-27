@@ -8,7 +8,7 @@ const WorldRegion = require('../schemas/world-region');
 const Country = require('../schemas/country');
 const router = express.Router();
 
-router.get('/', Continent.getCached(), function(req, res, next){
+router.get('/', function(req, res, next){
 	res.render('locations/continents/_continents', {
 		title: 'Stellaroute: Continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -99,21 +99,6 @@ router.post('/update', function(req, res){
 		req.flash('error', 'There was an error, please try again');
 		res.redirect('/continents');
 	}
-});
-
-router.get('/:name', Continent.getCached(), WorldRegion.getCached(), Country.getCached(), function(req, res, next){
-	const continent = Continent.findOne('name', req.params.name);
-	const worldRegions = WorldRegion.find('continent', continent.Id).sort(sortBy('name'));
-	const countries = Country.find('continent', continent.Id).sort(sortBy('name'));
-
-	res.render('locations/continents/continent', {
-		title: `Stellaroute: ${continent.name}`,
-		description: `Stellaroute: ${continent.name} Overview`,
-		continent: continent,
-		worldRegions: worldRegions,
-		countries: countries,
-		key: Continent.hash
-	});
 });
 
 module.exports = router;

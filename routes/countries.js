@@ -12,7 +12,7 @@ const Province = require('../schemas/province');
 
 const router = express.Router();
 
-router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
+router.get('/', function(req, res, next){
 	var countries = Country.join('continent', Continent.cached(), 'Id', 'name' )
 	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
 	                       .items.sort(sortBy('name'));
@@ -24,7 +24,7 @@ router.get('/', Country.getCached(), Continent.getCached(), WorldRegion.getCache
 	});
 });
 
-router.get('/new', Continent.getCached(), WorldRegion.getCached(), function(req, res, next){
+router.get('/new', function(req, res, next){
 	res.render('locations/countries/new', {
 		title: 'Stellaroute: Add a Country',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -33,7 +33,7 @@ router.get('/new', Continent.getCached(), WorldRegion.getCached(), function(req,
 	});
 });
 
-router.post('/new', Country.getCached(), function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
@@ -181,24 +181,6 @@ router.post('/update', function(req, res){
 		req.flash('error', 'There was an error, please try again');
 		res.redirect('/countries');
 	}
-});
-
-router.get('/:name', Continent.getCached(), WorldRegion.getCached(), CountryRegion.getCached(), Province.getCached(), function(req, res, next){
-	var country = Country.join('continent', Continent.cached(), 'Id', 'name')
-						 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
-						 .findOne('name', req.params.name);
-	const provinces = Province.find('country', country.Id).sort(sortBy('name'));
-
-	res.render('locations/countries/country', {
-		title: `Stellaroute: ${country.name}`,
-		description: 'Stellaroute: ${country.name} Overview',
-		continents: Continent.cached().sort(sortBy('name')),
-		country: country,
-		key: Country.hash,
-		countryRegions: CountryRegion.find('country', country.Id),
-		worldRegions: WorldRegion.cached().sort(sortBy('name')),
-		provinces: provinces,
-	});
 });
 
 module.exports = router;

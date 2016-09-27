@@ -14,7 +14,7 @@ router.get('/', function(req, res){
 	res.redirect('/countries');
 });
 
-router.post('/new', CountryRegion.getCached(), function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 	const redirect = (params.redirect == 'country-regions' ? `/country-regions/${params.name}` : params.redirect) || '/countries';
 	delete params.redirect;
@@ -86,21 +86,6 @@ router.post('/update', function(req, res){
 		req.flash('error', 'There was an error, please try again');
 		res.redirect(redirect);
 	}
-});
-
-router.get('/:name', Country.getCached(), CountryRegion.getCached(), Province.getCached(), function(req, res, next){
-	const countryRegion = CountryRegion.join('country', Country.cached(), 'Id', 'name')
-									   .findOne('name', req.params.name);
-	const provinces = Province.find('countryRegions', countryRegion.Id);
-
-	res.render('locations/countries/country-region', {
-		title: `Stellaroute: ${countryRegion.name}`,
-		description: 'Stellaroute: ${countryRegion.name} Overview',
-		countries: Country.cached().sort(sortBy('name')),
-		key: CountryRegion.hash,
-		countryRegion: countryRegion,
-		provinces: provinces,
-	});
 });
 
 module.exports = router;

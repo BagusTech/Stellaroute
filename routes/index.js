@@ -16,6 +16,43 @@ router.get('/', function(req, res, next){
 	});
 });
 
+// terms and privacy
+router.get('/privacy-and-terms', function(req, res){
+	res.render('privacy-terms', {
+		title: 'Stellaroute\'s Privacy Agreement and Terms of Service',
+		description: 'Stellaroute\'s Privacy Agreement and Terms of Service'
+	});
+});
+
+// about
+router.get('/about', function(req, res){
+	res.render('about', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
+
+// request
+router.get('/request', function(req, res){
+	res.render('request', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
+
+// feedback
+router.get('/feedback', function(req, res){
+	res.render('feedback', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
+
+router.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+});
+
 // sign up for newsletter
 router.post('/newsletter-signup', User.getCached(), function(req, res){
 	const email = req.body['local.email'];
@@ -73,42 +110,5 @@ router.post('/login', User.getCached(), passport.authenticate('local-login', {
 	failureRedirect: '/',
 	failureFlash: true
 }));
-
-router.get('/logout', function(req, res){
-	req.logout();
-	res.redirect('/');
-});
-
-// terms and privacy
-router.get('/privacy-and-terms', function(req, res){
-	res.render('privacy-terms', {
-		title: 'Stellaroute\'s Privacy Agreement and Terms of Service',
-		description: 'Stellaroute\'s Privacy Agreement and Terms of Service'
-	});
-});
-
-// about
-router.get('/about', function(req, res){
-	res.render('about', {
-		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
-	});
-});
-
-// request
-router.get('/request', function(req, res){
-	res.render('request', {
-		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
-	});
-});
-
-// feedback
-router.get('/feedback', function(req, res){
-	res.render('feedback', {
-		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
-	});
-});
 
 module.exports = router;

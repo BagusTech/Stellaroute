@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/cities/${cityRegion.cityName}`)= `< Back to ${cityRegion.cityName}`
+			a.fc-G(href= `/${country.name}/${cityRegion.cityName}`)= `< Back to ${cityRegion.cityName}`
 
 		.content-card
 			form.update-form(method='POST', action='/city-regions/update')
@@ -16,7 +16,7 @@ block content
 					.hidden
 						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=cityRegion.name)
 
-				input(type='hidden', name='redirect', value=`/cities/${cityRegion.cityName}`)
+				input(type='hidden', name='redirect', value=`/${country.name}/${cityRegion.cityName}`)
 				input(type='hidden', name= key, value= cityRegion[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -48,7 +48,7 @@ block content
 			ul
 				for neighborhood in neighborhoods
 					li
-						a(href='/neighborhoods/' + neighborhood.name)= neighborhood.name
+						a(href=`/${country.name}/${cityRegion.cityName}/${neighborhood.name}`)= neighborhood.name
 
 			.clear
 				button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
@@ -73,7 +73,7 @@ block content
 						.form-group.mb-0
 							input.hidden(name='cityRegions', value=cityRegion.Id)
 							input.hidden(name='city', value=cityRegion.city)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/city-regions/${cityRegion.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.name}/${cityRegion.cityName}/${cityRegion.name}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='neighborhoods', name='redirect')

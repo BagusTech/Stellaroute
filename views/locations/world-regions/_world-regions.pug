@@ -16,7 +16,7 @@ block content
 				for region in worldRegions
 					.row
 						.col-sm-3.col-xs-6
-							a(href='/world-regions/' + region.name)= region.name
+							a(href=`/${region.name}`)= region.name
 						.col-sm-9.col-xs-6= region.continentName && region.continentName.join(', ')
 
 

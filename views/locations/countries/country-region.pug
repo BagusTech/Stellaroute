@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/countries/${countryRegion.countryName}`)= `< Back to ${countryRegion.countryName}`
+			a.fc-G(href= `/${countryRegion.countryName}`)= `< Back to ${countryRegion.countryName}`
 
 		.content-card
 			form.update-form(method='POST', action='/country-regions/update')
@@ -16,7 +16,7 @@ block content
 					.hidden
 						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=countryRegion.name)
 
-				input(type='hidden', name='redirect', value=`/countries/${countryRegion.countryName}`)
+				input(type='hidden', name='redirect', value=`/${countryRegion.countryName}/${countryRegion.name}`)
 				input(type='hidden', name= key, value= countryRegion[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -62,7 +62,7 @@ block content
 					ul
 						for city in cities
 							li
-								a(href='/cities/' + city.name)= city.name
+								a(href=`/${countryRegion.countryName}/${city.name}`)= city.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
@@ -87,7 +87,7 @@ block content
 						.form-group.mb-0
 							input.hidden(name='countryRegions', value=countryRegion.Id)
 							input.hidden(name='country', value=countryRegion.country)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/country-regions/${countryRegion.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${countryRegion.countryName}/${countryRegion.name}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')

@@ -18,7 +18,7 @@ router.get('/', function(req, res){
 	res.redirect('/countries');
 });
 
-router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req, res){
+router.post('/new', function(req, res){
 	const params = req.body;
 
 	const redirect = (params.redirect == 'provinces' ? `/provinces/${params.name}` : params.redirect) || '/countries';
@@ -52,7 +52,7 @@ router.post('/new', CountryRegion.getCached(), Country.getCached(), function(req
 	});
 });
 
-router.post('/update', Country.getCached(), Province.getCached(), function(req, res){
+router.post('/update', function(req, res){
 	const redirect = req.body.redirect || '/countries';
 	delete req.body.redirect;
 
@@ -127,29 +127,6 @@ router.post('/update', Country.getCached(), Province.getCached(), function(req, 
 		req.flash('error', 'There was an error, please try again');
 		res.redirect(redirect);
 	}
-});
-
-router.get('/:name', Continent.getCached(), WorldRegion.getCached(), Country.getCached(), CountryRegion.getCached(), Province.getCached(), ProvinceRegion.getCached(), City.getCached(), function(req, res, next){
-	const province = Province.join('continent', Continent.cached(), 'Id', 'name')
-							 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
-							 .join('country', Country.cached(), 'Id', 'name')
-						     .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
-						     .findOne('name', req.params.name);
-    const countryRegions = CountryRegion.find('country', province.country);
-	const provinceRegions = ProvinceRegion.find('province', province.Id);
-	const cities = City.find('province', province.Id);
-
-	res.render('locations/provinces/province', {
-		title: `Stellaroute: ${province.name}`,
-		description: 'Stellaroute: ${province.name} Overview',
-		key: Province.hash,
-		continents: Continent.find(),
-		worldRegions: WorldRegion.find(),
-		countryRegions: countryRegions,
-		province: province,
-		provinceRegions: provinceRegions,
-		cities: cities,
-	});
 });
 
 module.exports = router;

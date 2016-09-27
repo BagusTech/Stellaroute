@@ -24,7 +24,7 @@ block content
 							label(for='WorldRegionContinet') Continent(s)
 							p.form-control-static
 								- for (var i = 0; i < (worldRegion.continentName && worldRegion.continentName.length); i++)
-									a(href=`/continents/${worldRegion.continentName[i]}`)= worldRegion.continentName[i]
+									a(href=`/${worldRegion.continentName[i]}`)= worldRegion.continentName[i]
 
 									if ((i+1) !== worldRegion.continentName.length)
 										|,&nbsp;
@@ -64,7 +64,7 @@ block content
 			ul
 				for country in countries
 					li
-						a(href='/countries/' + country.name)= country.name
+						a(href=`/${country.name}`)= country.name
 			.clear
 				button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCountry') Add Country
 			button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddCountry') Add Country
@@ -227,7 +227,7 @@ block content
 						.form-group.mb-0
 							input.hidden(name='worldRegions', value=worldRegion.Id)
 							input.hidden(name='continent', value=worldRegion.continent)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/world-regions/${worldRegion.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${worldRegion.name}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='countries', name='redirect')

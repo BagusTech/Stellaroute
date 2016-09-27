@@ -4,6 +4,7 @@ const Country = Duck({
 	Table: 'Countries',
 	Item: {
 		Id: String,
+		url: String,
 	//Modal Fields Card
 		names: {
 			display: String,  

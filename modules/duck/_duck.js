@@ -1,36 +1,34 @@
 const db   = require('../../config/db');
 const cache = require('../caching');
 
-const _duck = function(schema, isReady, items){
+const _duck = function(schema, items, isReady){
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~ Properties ~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 		this.schema        = schema;
-		this.table         = schema.Table;
-		this.itemSchema    = schema.Item;
-		this.hash          = schema.HASH;
-		this.hashType      = schema.HASHType;
-		this.range         = schema.Range;
-		this.rangeType     = schema.RangeType;
-		this.indexes       = schema.Indexes || [];
-		this.cacheDuration = schema.CacheDuration || 60*60; // default to one hour TODO: change to one day when live
-		this.uniqueBy      = schema.UniqueBy;
-		this.items         = items;		
+		this.table         = schema && schema.Table;
+		this.itemSchema    = schema && schema.Item;
+		this.hash          = schema && schema.HASH;
+		this.hashType      = schema && schema.HASHType;
+		this.range         = schema && schema.Range;
+		this.rangeType     = schema && schema.RangeType;
+		this.indexes       = schema && schema.Indexes || [];
+		this.cacheDuration = schema && schema.CacheDuration || 60*60; // default to one hour TODO: change to one day when live
+		this.uniqueBy      = schema && schema.UniqueBy;
+		this.items         = items;
+		this.isReady       = isReady || true;
+
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* ~~~~~~~~~ Init ~~~~~~~~~ */
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */
+		if(!this.isReady){
+			// if the required parameters aren't there, fail
+			if(!this.hash || !this.table || !this.schema){
+				 console.error('you must define a table, schema, AND hash');
+				 process.exit();
+			}
 		
-
-		// if the required parameters aren't there, fail
-		if(!this.hash || !this.table || !this.schema){
-			 console.error('you must define a table, schema, AND hash');
-			 process.exit();
-		}
-
-		//commented out because not sure if it is actually needed
-		//var isReady = isReady || false;
-		if(!isReady){
 			const table = this.table
 			const cacheDuration = this.cacheDuration;
 

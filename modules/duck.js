@@ -5,8 +5,8 @@ require('./duck/methods')(_duck);
 require('./duck/middleware')(_duck);
 require('./duck/promises')(_duck);
 
-const Duck = function(schema, isReady, items) {
-	return new _duck(schema, isReady, items);
+const Duck = function(schema, items, isReady) {
+	return new _duck(schema, items, isReady);
 }
 
 module.exports = Duck;

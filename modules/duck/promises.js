@@ -179,7 +179,6 @@ module.exports = function(_duck){
 				}
 			}
 
-
 			void function getCountry(field, value){
 				const fieldPath = field.split('.'); // make the accepted arguments into an array
 				const items = cache.get(table);
@@ -221,7 +220,6 @@ module.exports = function(_duck){
 						console.error(err);
 						process.exit();
 					} else {
-						console.log('success');
 						if (objectsToAdd.length == i){
 							finalUpdate(data);
 						} else {
@@ -230,13 +228,6 @@ module.exports = function(_duck){
 					}
 				});
 			}
-
-			if(objectsToAdd.length > 0){
-				addMissingObjects(0);
-			} else {
-				finalUpdate(data);
-			}
-			
 
 			function finalUpdate(item){
 				var params = {
@@ -291,6 +282,48 @@ module.exports = function(_duck){
 					}
 				});
 			}
+
+			if(objectsToAdd.length > 0){
+				addMissingObjects(0);
+			} else {
+				finalUpdate(data);
+			}
+			/*
+				// delete attribute from item
+				var params = {
+				    TableName: 'table_name',
+				    Key: { // The primary key of the item (a map of attribute name to AttributeValue)
+
+				        attribute_name: { S: 'STRING_VALUE' }
+				        // more attributes...
+				    },
+				    AttributeUpdates: { // The attributes to update (map of attribute name to AttributeValueUpdate)
+
+				        attribute_name: {
+				            Action: 'PUT', // PUT (replace)
+				                           // ADD (adds to number or set)
+				                           // DELETE (delete attribute or remove from set)
+				            Value: { S: 'STRING_VALUE' }
+				        },
+				        // more attribute updates: ...
+				    },
+				    Expected: { // optional (map of attribute name to ExpectedAttributeValue)
+				    
+				        attribute_name: {
+				            Exists: true, // optional (if false, Value must be null)
+				            Value: { S: 'STRING_VALUE' },
+				        },
+				        // more attributes...
+				    },
+				    ReturnValues: 'NONE', // optional (NONE | ALL_OLD | UPDATED_OLD | ALL_NEW | UPDATED_NEW)
+				    ReturnConsumedCapacity: 'NONE', // optional (NONE | TOTAL | INDEXES)
+				    ReturnItemCollectionMetrics: 'NONE', // optional (NONE | SIZE)
+				};
+				dynamodb.updateItem(params, function(err, data) {
+				    if (err) console.log(err); // an error occurred
+				    else console.log(data); // successful response
+				});
+			*/
 		});
 	}
 

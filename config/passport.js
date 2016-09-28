@@ -16,7 +16,7 @@ module.exports = function(passport){
 
 	// used to deserialize the user
 	passport.deserializeUser(function(id, done){
-		var user = User.findOne('Id', id);
+		var user = User.findOne('Id', id).items;
 
 		if (user){
 			done(null, user);
@@ -35,7 +35,7 @@ module.exports = function(passport){
 			passwordField: 'local.password',
 			passReqToCallback: true // allows us to pass back the entire request to the callback
 		}, function(req, email, password, done){
-			if (User.findOne('local.email', email).length) {
+			if (User.findOne('local.email', email)) {
 				return done(null, false, req.flash('error', 'That email is already taken'));
 			} else if(password.length < 4) {
 				return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
@@ -66,7 +66,7 @@ module.exports = function(passport){
 			passwordField: 'password',
 			passReqToCallback: true
 		}, function(req, email, password, done){
-			var user = User.findOne('local.email', email);
+			const user = User.findOne('local.email', email).items;
 
 			if(user && User.validPassword(password, user.local.password)){
 				return done(null, user);

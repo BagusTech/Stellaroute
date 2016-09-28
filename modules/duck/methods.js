@@ -16,7 +16,7 @@ module.exports = function(_duck){
 	// display: string = 'name'
 	// returns: this
 	_duck.prototype.join = function(field, data, joinOn, display){
-		const items = this.items || this.cached();
+		const items = this.items && !(this.items instanceof Array) ? Array(this.items) : (this.items || this.cached());
 		const fields = field.split('.');
 	    const displays = display.split('.');
 	    const joinedFieldName = fields[fields.length-1]+displays[displays.length-1].charAt(0).toUpperCase() + displays[displays.length-1].slice(1);
@@ -24,16 +24,14 @@ module.exports = function(_duck){
 
 		for(var i in items){
 			for(var j in data){
-				const item = joinObject(items[i], field.split('.'), data[j], joinOn.split('.'), data[j], display.split('.'), joinedFieldName);
-				
+				var item = joinObject(items[i], field.split('.'), data[j], joinOn.split('.'), data[j], display.split('.'), joinedFieldName);
+
 				joinedItems.indexOf(item) > -1 ? null : joinedItems.push(item);
 			}
 
 		}
 
-		this.items = joinedItems.filter(function(i) { return i});
-
-		return this
+		return new _duck(this.schema, joinedItems.filter(function(i) { return i}));
 	}
 
 	// field: string = 'name'
@@ -42,49 +40,65 @@ module.exports = function(_duck){
 	// return array of items
 	_duck.prototype.find = function(field, value, contains){
 		if(!field){
-			return this.cached();
+			return new _duck(this.schema, this.items || this.cached());
 		}
 
-		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
+		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
+		const values = typeof value === 'string' ? Array(value) : value;
 		const items = this.items || this.cached();
 
-		this.items = items.map(function(item){
-						  	var res = item;
+		const foundItems = items.map(function(item){
+							for (var i in fieldPaths){
+								var res = item;
 
-						  	// for each item in the array
-						  	for (i in fieldPath){
-								res = res[fieldPath[i]]
+								// for each item in the array
+								for (var j in fieldPaths[i]){
+									res = res[fieldPaths[i][j]]
+								}
+
+								if(contains && (typeof contains == 'string' || contains instanceof Array)){
+									return res.indexOf(values[i]) == -1 ? null : item
+								}
+
+								if (res != values[i]){
+									return null;
+								}
 							}
 
-							if(contains && (typeof contains == 'string' || contains instanceof Array)){
-								return res.indexOf(value) == -1 ? null : item
-							}
-
-						  	return res == value ? item : null;
+							return item;
 						  })
 						  .filter(nullCheck => nullCheck);
 
-		return this;
+		return new _duck(this.schema, foundItems);
 	}
 
 	// same as find, but only returns one result, does not allow contains
 	_duck.prototype.findOne = function(field, value){
-		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
+		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
+		const values = typeof value === 'string' ? Array(value) : value;
 		const items = this.items || this.cached();
+		debugger;
+		for (var item in items){
+			var addItem = true;
 
-		for (var i in items){
-			var res = items[i];
+			for (var i in fieldPaths){
+				var res = items[item];
 
-			for (var j in fieldPath){
-				res = res[fieldPath[j]]
+				// for each item in the array
+				for (var j in fieldPaths[i]){
+					res = res[fieldPaths[i][j]]
+				}
+
+				if (res != values[i]){
+					addItem = false;
+				}
 			}
 
-			if(res == value){
-				this.currentItem = items[i];
-				return this;
+			if(addItem){
+				return new _duck(this.schema, items[item]);
 			}
 		}
 		
-		return false;
+		return new _duck();
 	}
 }

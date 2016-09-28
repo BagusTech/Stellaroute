@@ -27,16 +27,16 @@ const Country = Duck({
 	// Need to Know
 		needToKnow: [{
 			order: Number,
-			category: String,
-				/*
-					communication
-				*/
+			endorse: Boolean,
+			remove: Boolean, 
 			title: String,
-			advice: String,
+			explanation: String,
 		}],
 	//Quick Facts (or Fun Facts)
 		quickFact: [{
 			order: Number,
+			endorse: Boolean,
+			remove: Boolean, 
 			title: String,
 			explanation: String,
 		}],
@@ -72,11 +72,17 @@ const Country = Duck({
 			explanation: String,
 		},
 		visa: [{
+			order: Number,
+			endorse: Boolean,
+			remove: Boolean, 
 			countries: Array,
 			requirements: String,
 			explanation: String,
 		}],
 		vaccines: [{
+			order: Number,
+			endorse: Boolean,
+			remove: Boolean, 
 			countries: Array,
 			requirements: String,
 			explanation: String,
@@ -91,10 +97,13 @@ const Country = Duck({
 				overview: String,
 				availability: String,
 				accepted: Array,
-			}
+			},
 		},
 		clothing: [{
-			whatToWear: String,
+			order: Number,
+			endorse: Boolean,
+			remove: Boolean, 
+			title: String,
 			explanation: String,
 		}],
 	// People and Customs
@@ -108,11 +117,17 @@ const Country = Duck({
 				bargainingStyle: String,
 				explanation: String,
 			}, 
-			dress: {
+			dress: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				style: String,
 				explanation: String,
-			},
+			}],
 			traditions: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
 			}],
@@ -142,101 +157,151 @@ const Country = Duck({
 			overview: String,
 			languages: Array, 
 			basicSayings: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				language: String,
 				saying: String,
 				translation: String,
 				explanation: String,
 			}],
 			expressions: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				language: String,
 				language: String,
 				phrase: String,
 				translation: String,
 				explanation: String,
 			}],
-			/*nonVerbal: [{
-				title: String,
-				explanation: String,
-			}], */
 		},
 	// Getting Around
 		transit: {
 			overview: String,
-			roadQuality: String,
-			suggested: [{
+			card: [{
+				image: String, 
+				title: String, 
+				arrive: String,
+				move: String,
+				explanation: String,
+			}],
+			rank: [{ // ranking of transit options
 				order: Number,
-				mode: String,
-				description: String,
+				mode: String, // dropdown
 			}],
 			advice: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
-				description: String,
+				explanation: String,
 			}],
-			public: {
-				quality: String,
+			car: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-			},
-			car: {
-				roadQuality: String,
-				tolls: String,
-				drivingStyle: String,
+			}],
+			taxis: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-			},
-			taxis: {
-				alias: String,
-				bargaining: String,
-				explanation: String,
-			},
-			train: {
-				operators: Array,
-				trainQuality: String,
-				reliability: String,
+			}],
+			motorcycle: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-			},
-			bus: {
-				operators: Array,
+			}],
+			bus: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-			},
-			
-			boats: {
+			}],
+			train: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-				
-			},
-			bike: {
-				friendliness: String,
+			}],
+			public: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
 				explanation: String,
-				
-			},
-			hitchHiking: {
+			}],
+			plane: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
 				title: String,
-				explanation: String, 
-			},
+				explanation: String,
+			}],
+			borderCrossing: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				title: String,
+				explanation: String,
+			}],
+			bicycle: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				title: String,
+				explanation: String,
+			}],
+			hitchHiking: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				title: String,
+				explanation: String,
+			}],
+			train: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				title: String,
+				explanation: String,
+			}],
 		},
-	//Fascilities and Infrastructure 
 	// Eating and Meals
 		food: {
 			overview: String,
 			habits: [{
 				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				image: String,
 				title: String,
 				explanation: String,
 			}],
 			dishs: [{
 				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				image: String,
 				title: String,
-				mealType: String,
+				meal: String,
 				cuisinse: String,
 				explanation: String,
 			}],
 			drinks: [{
 				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				image: String, 
 				title: String,
-				drinkType: String,
 				explanation: String,
 				isAlcoholic: Boolean,
 			}],
@@ -259,6 +324,7 @@ const Country = Duck({
 				classification: String,
 			}],
 		}
+	// Fascilities and Infrastructure 
 	},
 	HASH: 'Id',
 	HASHType: 'S',

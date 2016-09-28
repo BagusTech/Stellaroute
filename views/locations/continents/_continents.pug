@@ -10,4 +10,4 @@ block content
 				ul.m-0
 					for continent in continents
 						li
-							a(href=`/${continent.name.replace(/ /g, '-').toLowerCase()}`)= continent.name
+							a(href=`/${continent.url}`)= continent.name

@@ -20,7 +20,7 @@ block content
 				for country in countries
 					.row.js-country
 						.col-sm-2.col-xs-3
-							a.js-name(href=`/${country.name}`)= country.name
+							a.js-name(href=`/${country.url}`)= country.names.display
 						.col-sm-3.col-xs-3
 							- for (var i = 0; i < country.continentName.length; i++)
 								span.js-continent= country.continentName[i]

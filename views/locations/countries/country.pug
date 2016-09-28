@@ -2,7 +2,7 @@ extends ../../layout
 
 block content
 	.media-bg-img.request-page-header
-		h1= country.name
+		h1= country.names.display
 
 	.container.ptb-Sm
 		small
@@ -14,9 +14,9 @@ block content
 					.col-xs-12.col-sm-6.col-md-3
 						.form-group
 							label(for='CountryName') Name
-							p.form-control-static= country.name
+							p.form-control-static= country.names.display
 							.hidden
-								input.form-control#CountryName(name='name', type='text', placeholder='Name', value= country.name)
+								input.form-control#CountryName(name='names.display', type='text', placeholder='Name', value= country.names.display)
 
 					.col-xs-12.col-sm-6.col-md-4
 						.form-group
@@ -37,7 +37,7 @@ block content
 							label(for='CountryAlias') Alias
 							p.form-control-static= country.alias && country.alias.join(', ') || 'N/A'
 							.hidden
-								input.form-control#CountryAlias(name='alias', type='text', placeholder='Alias', value= country.alias)
+								input.form-control#CountryAlias(name='names.alias', type='text', placeholder='Alias', value= country.alias)
 				
 				.row
 					.col-xs-12.col-sm-3.col-md-2
@@ -45,7 +45,7 @@ block content
 							label(for='CountryLanguages') Language(s)
 							p.form-control-static= country.languages && country.languages.join(', ')
 							.hidden
-								select.form-control#CountryLanguages(name='languages', multiple='true', required)
+								select.form-control#CountryLanguages(name='communication.languages', multiple='true', required)
 									option(selected= country.languages && country.languages.indexOf('Akan') > -1) Akan
 									option(selected= country.languages && country.languages.indexOf('Amharic') > -1) Amharic
 									option(selected= country.languages && country.languages.indexOf('Arabic') > -1) Arabic
@@ -199,7 +199,7 @@ block content
 							label(for='CountryContinet') Continent(s)
 							p.form-control-static
 								- for (var i = 0; i < country.continentName.length; i++)
-									a(href=`/${country.continentName[i]}`)= country.continentName[i]
+									a(href=`/${country.continentName[i].replace(/ /g, '-').toLowerCase()}`)= country.continentName[i]
 
 									if ((i+1) !== country.continentName.length)
 										|,&nbsp;
@@ -213,7 +213,7 @@ block content
 							label World Region(s)
 							p.form-control-static
 								- for (var i = 0; i < country.worldRegionsName.length; i++)
-									a(href=`/${country.worldRegionsName[i]}`)= country.worldRegionsName[i]
+									a(href=`/${country.worldRegionsName[i].replace(/ /g, '-').toLowerCase()}`)= country.worldRegionsName[i]
 
 									if ((i+1) !== country.worldRegionsName.length)
 										|,&nbsp;
@@ -257,7 +257,7 @@ block content
 					ul
 						for region in countryRegions
 							li
-								a(href= `/${country.name}/${region.name}`)= region.name
+								a(href= `/${country.url}/${region.url}`)= region.name
 
 					.clear
 						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
@@ -270,7 +270,7 @@ block content
 					ul
 						for province in provinces
 							li
-								a(href= `/${country.name}/${province.name}`)= province.name
+								a(href= `/${country.url}/${province.url}`)= province.name
 
 					.clear
 						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
@@ -292,7 +292,7 @@ block content
 							input.form-control#CountryRegionName(name='name', type='text', placeholder='New England', required)
 
 						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.name}`, name='redirect') 
+						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='country-regions', name='redirect')
@@ -322,7 +322,7 @@ block content
 
 
 						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.name}`, name='redirect') 
+						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')

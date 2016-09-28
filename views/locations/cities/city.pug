@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${city.countryName}`)= `< Back to ${city.countryName}`
+			a.fc-G(href= `/${city.countryUrl}`)= `< Back to ${city.countryDisplay}`
 
 		.content-card
 			form.update-form(method='POST', action='/cities/update')
@@ -20,8 +20,8 @@ block content
 					label Country Region(s)
 					p.form-control-static
 						if city.countryRegionsName
-							for region in city.countryRegionsName
-								a(href=`/${city.countryName}/${region}`)= city.countryRegionsName && city.countryRegionsName.indexOf(region) == city.countryRegionsName.length-1 ? region : `${region}, ` 
+							-for (i in city.countryRegionsName)
+								a(href=`/${city.countryUrl}/${city.countryRegionsUrl[i]}`)= city.countryRegionsName && city.countryRegionsName.indexOf(city.countryRegionsName[i]) == city.countryRegionsName.length-1 ? city.countryRegionsName[i] : `${city.countryRegionsName[i]}, ` 
 						else
 							| N/A
 					.hidden
@@ -35,8 +35,8 @@ block content
 							label State/Province
 							p.form-control-static
 								if city.provinceName
-									for province in city.provinceName
-										a(href=`/${city.countryName}/${province}`)= city.provinceName && city.provinceName.indexOf(province) == city.provinceName.length-1 ? province : `${province}, ` 
+									-for (i in city.provinceName)
+										a(href=`/${city.countryUrl}/${city.provinceUrl[i]}`)= city.provinceName && city.provinceName.indexOf(city.provinceName[i]) == city.provinceName.length-1 ? city.provinceName[i] : `${city.provinceName[i]}, ` 
 								else
 									| N/A
 							.hidden
@@ -49,8 +49,8 @@ block content
 							label State/Province Region(s)
 							p.form-control-static
 								if city.provinceRegionsName
-									for region in city.provinceRegionsName
-										a(href=`/${city.countryName}`)= city.provinceRegionsName && city.provinceRegionsName.indexOf(region) == city.provinceRegionsName.length-1 ? region : `${region}, ` 
+									-for (i in city.provinceRegionsName)
+										a(href=`/${city.countryUrl}/${city.provinceRegionsUrl[i]}`)= city.provinceRegionsName && city.provinceRegionsName.indexOf(city.provinceRegionsName[i]) == city.provinceRegionsName.length-1 ? city.provinceRegionsName[i] : `${city.provinceRegionsName[i]}, ` 
 								else
 									| N/A
 							.hidden
@@ -92,7 +92,7 @@ block content
 					ul
 						for region in cityRegions
 							li
-								a(href=`/${city.countryName}/${city.name}/${region.name}`)= region.name
+								a(href=`/${city.countryUrl}/${city.url}/${region.url}`)= region.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCityRegion') Add Region
@@ -104,7 +104,7 @@ block content
 					ul
 						for neighborhood in neighborhoods
 							li
-								a(href=`/${city.countryName}/${city.name}/${neighborhood.name}`)= neighborhood.name
+								a(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)= neighborhood.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
@@ -128,7 +128,7 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='city', value=city.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryName}/${city.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city-regions', name='redirect')
@@ -153,7 +153,7 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='city', value=city.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryName}/${city.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='neighborhoods', name='redirect')

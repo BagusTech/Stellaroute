@@ -6,17 +6,17 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${countryRegion.countryName}`)= `< Back to ${countryRegion.countryName}`
+			a.fc-G(href= `/${country.url}`)= `< Back to ${country.names.display}`
 
 		.content-card
 			form.update-form(method='POST', action='/country-regions/update')
 				.form-group
 					label Name
-					p.form-control-static(data-type='text', data-name='name')= String(countryRegion.name)
+					p.form-control-static(data-type='text', data-name='name')= countryRegion.name
 					.hidden
 						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=countryRegion.name)
 
-				input(type='hidden', name='redirect', value=`/${countryRegion.countryName}/${countryRegion.name}`)
+				input(type='hidden', name='redirect', value=`/${country.names.display}/${countryRegion.name}`)
 				input(type='hidden', name= key, value= countryRegion[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -50,7 +50,7 @@ block content
 					ul
 						for province in provinces
 							li
-								a(href='/provinces/' + province.name)= province.name
+								a(href=`/${country.url}/${province.url}`)= province.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddProvince') Add Region
@@ -62,7 +62,7 @@ block content
 					ul
 						for city in cities
 							li
-								a(href=`/${countryRegion.countryName}/${city.name}`)= city.name
+								a(href=`/${country.url}/${city.url}`)= city.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
@@ -87,7 +87,7 @@ block content
 						.form-group.mb-0
 							input.hidden(name='countryRegions', value=countryRegion.Id)
 							input.hidden(name='country', value=countryRegion.country)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${countryRegion.countryName}/${countryRegion.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${countryRegion.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')

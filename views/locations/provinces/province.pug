@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${province.countryName}`)= `< Back to ${province.countryName}`
+			a.fc-G(href= `/${country.url}`)= `< Back to ${country.names.display}`
 
 		.content-card
 			form.update-form(method='POST', action='/provinces/update')
@@ -24,7 +24,7 @@ block content
 								if province.continentName
 									a(href="province.continentName")= province.continentName
 								else
-									| Same as <a href='/countries/#{province.countryName}'>#{province.countryName}</a>
+									| Same as <a href='/#{country.url}'>#{country.names.display}</a>
 							.hidden
 								select.form-control(name='continent', multiple)
 									for continent in continents
@@ -35,10 +35,10 @@ block content
 							label World Region(s)
 							p.form-control-static
 								if province.worldRegions && province.worldRegions.length > 0
-									for region in province.worldRegionsName
-										a(href=`/${region}`)= province.worldRegionsName && province.worldRegionsName.indexOf(region) == province.worldRegionsName.length-1 ? region : `${region}, ` 
+									-for(region in province.worldRegionsName)
+										a(href=`/${province.worldRegionsUrl[region]}`)= province.worldRegionsName && province.worldRegionsName.indexOf(region) == province.worldRegionsName.length-1 ? region : `${province.worldRegionsName[region]}, ` 
 								else
-									| Same as <a href='/countries/#{province.countryName}'>#{province.countryName}</a>
+									| Same as <a href='/countries/#{country.url}'>#{country.names.display}</a>
 							.hidden
 								select.form-control(name='worldRegions', multiple)
 									for region in worldRegions
@@ -48,8 +48,8 @@ block content
 					label Country Region(s)
 					p.form-control-static
 						if province.countryRegions && province.countryRegions.length > 0
-							for region in province.countryRegionsName
-								a(href=`/${province.countryName}/${region}`)= province.countryRegionsName && province.countryRegionsName.indexOf(region) == province.countryRegionsName.length-1 ? region : `${region}, ` 
+							-for (i in province.countryRegionsName)
+								a(href=`/${country.url}/${province.countryRegionsUrl[i]}`)= province.countryRegionsName && province.countryRegionsName.indexOf(province.countryRegionsName[i]) == province.countryRegionsName.length-1 ? province.countryRegionsName[i] : `${province.countryRegionsName[i]}, ` 
 						else
 							| N/A
 					.hidden
@@ -57,7 +57,7 @@ block content
 							for region in countryRegions
 								option(value=region.Id, selected= province.countryRegions && province.countryRegions.indexOf(region.Id) > -1)= region.name
 
-				input(type='hidden', name='redirect', value=`/${province.countryName}/${province.countryName}`)
+				input(type='hidden', name='redirect', value=`/${country.url}`)
 				input(type='hidden', name= key, value= province[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -91,7 +91,7 @@ block content
 					ul
 						for region in provinceRegions
 							li
-								a(href=`/${province.countryName}/${province.name}/${region.name}`)= region.name
+								a(href=`/${country.url}/${province.url}/${region.url}`)= region.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddProvinceRegion') Add Region
@@ -103,7 +103,7 @@ block content
 					ul
 						for city in cities
 							li
-								a(href=`/${province.countryName}/${city.name}`)= city.name
+								a(href=`/${country.url}/${city.url}`)= city.name
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
@@ -127,7 +127,7 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${province.countryName}/${province.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${province.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='province-regions', name='redirect')
@@ -153,7 +153,7 @@ block content
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
 							input.hidden(name='country', value=province.country)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${province.countryName}/${province.name}`, name='redirect') 
+							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${province.url}`, name='redirect') 
 								span.hidden-xs Save and&nbsp;
 								| Return
 							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city', name='redirect')

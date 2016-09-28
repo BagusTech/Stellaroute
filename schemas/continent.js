@@ -9,6 +9,6 @@ const Continent = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S'
-});
+}, null, false);
 
 module.exports = Continent;

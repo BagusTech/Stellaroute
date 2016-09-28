@@ -14,6 +14,6 @@ var URL = Duck({
 
 	HASH: 'Id',
 	HASHType: 'S'
-});
+}, null, false);
 
 module.exports = URL;

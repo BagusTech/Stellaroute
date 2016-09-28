@@ -10,6 +10,6 @@ const WorldRegion = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S'
-});
+}, null, false);
 
 module.exports = WorldRegion;

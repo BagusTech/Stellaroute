@@ -10,6 +10,6 @@ var Attraction = Duck({
 
 	HASH: 'Id',
 	HASHType: 'S'
-});
+}, null, false);
 
 module.exports = Attraction;

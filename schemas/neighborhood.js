@@ -12,6 +12,6 @@ const Neighborhood = Duck({
 	HASH: 'Id',
 	HASHType: 'S',
 	UniqueBy: ['name', 'city']
-});
+}, null, false);
 
 module.exports = Neighborhood;

@@ -14,6 +14,6 @@ const Province = Duck({
 	HASH: 'Id',
 	HASHType: 'S',
 	UniqueBy: ['name', 'country']
-});
+}, null, false);
 
 module.exports = Province;

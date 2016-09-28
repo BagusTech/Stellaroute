@@ -16,6 +16,6 @@ const City = Duck({
 	HASH: 'Id',
 	HASHType: 'S',
 	UniqueBy: ['name', ['country', 'province']]
-});
+}, null, false);
 
 module.exports = City;

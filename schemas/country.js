@@ -58,11 +58,11 @@ const Country = Duck({
 		electricity: {
 			type: String,
 			image: String,
-		};
+		},
 		mobile: {
-			simCard: bolean,
+			simCard: Boolean,
 			explanation: String,
-		};
+		},
 		water: {
 			quality: String,
 			explanation: String,
@@ -240,7 +240,7 @@ const Country = Duck({
 				explanation: String,
 				isAlcoholic: Boolean,
 			}],
-		}
+		},
 	//Top Places
 		top: {
 			destinations: [{
@@ -263,6 +263,6 @@ const Country = Duck({
 	HASH: 'Id',
 	HASHType: 'S',
 	UniqueBy: ['name']
-});
+}, null, false);
 
 module.exports = Country;

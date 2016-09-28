@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs');
 const cache  = require('../caching');
+const joinObject  = require('../joinObject');
 
 module.exports = function(_duck){
 	_duck.prototype.generateHash  = (password) => { return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
@@ -15,30 +16,22 @@ module.exports = function(_duck){
 	// display: string = 'name'
 	// returns: this
 	_duck.prototype.join = function(field, data, joinOn, display){
-		var joinedItems = this.items || this.cached();
-		var joinedFieldName = `${field}${display.charAt(0).toUpperCase() + display.slice(1)}`;
+		const items = this.items || this.cached();
+		const fields = field.split('.');
+	    const displays = display.split('.');
+	    const joinedFieldName = fields[fields.length-1]+displays[displays.length-1].charAt(0).toUpperCase() + displays[displays.length-1].slice(1);
+		const joinedItems = [];
 
-		for(var i in joinedItems){
-			if(joinedItems[i][field] instanceof Array){
-				joinedItems[i][joinedFieldName] = joinedItems[i][joinedFieldName] || [];
-
-				for(var j in joinedItems[i][field]){
-					for(var k in data){
-						if (data[k][joinOn] == joinedItems[i][field][j]){
-							joinedItems[i][joinedFieldName][j] = data[k][display]
-						}
-					}
-				}
-			} else {
-				for(var k in data){
-					if (data[k][joinOn] == joinedItems[i][field]){
-						joinedItems[i][joinedFieldName] = data[k][display]
-					}
-				}
+		for(var i in items){
+			for(var j in data){
+				const item = joinObject(items[i], field.split('.'), data[j], joinOn.split('.'), data[j], display.split('.'), joinedFieldName);
+				
+				joinedItems.indexOf(item) > -1 ? null : joinedItems.push(item);
 			}
+
 		}
 
-		this.items = joinedItems;
+		this.items = joinedItems.filter(function(i) { return i});
 
 		return this
 	}
@@ -55,7 +48,7 @@ module.exports = function(_duck){
 		const fieldPath = field.split('.'); // make the accepted arguments into an aray			
 		const items = this.items || this.cached();
 
-		const returnedItems = items.map(function(item){
+		this.items = items.map(function(item){
 						  	var res = item;
 
 						  	// for each item in the array
@@ -71,7 +64,7 @@ module.exports = function(_duck){
 						  })
 						  .filter(nullCheck => nullCheck);
 
-		return returnedItems;
+		return this;
 	}
 
 	// same as find, but only returns one result, does not allow contains
@@ -87,7 +80,8 @@ module.exports = function(_duck){
 			}
 
 			if(res == value){
-				return items[i];
+				this.currentItem = items[i];
+				return this;
 			}
 		}
 		

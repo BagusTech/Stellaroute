@@ -59,11 +59,11 @@ const City = Duck({
 		electricity: {
 			type: String,
 			image: String,
-		};
+		},
 		mobile: {
 			title: String,
 			explanation: String,
-		};
+		},
 		water: {
 			quality: String,
 			explanation: String,
@@ -343,7 +343,7 @@ const City = Duck({
 				title: String,
 				explanation: String,
 			}],
-		}
+		},
 	//Top Places
 		top: {
 			destinations: [{
@@ -361,7 +361,7 @@ const City = Duck({
 				name: String,
 				classification: String,
 			}],
-		}
+		},
 		nearby: [{
 				order: String,
 				name: String,

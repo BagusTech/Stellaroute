@@ -29,18 +29,10 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', function(req, res){
 	const params = req.body;
+	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
 	
-	const redirect = (params.redirect == 'world-regions' ? `/world-regions/${params.name}` : params.redirect) || '/world-regions';
+	const redirect = params.redirect;
 	delete params.redirect;
-
-	console.log(redirect);
-	
-
-	// only allowed to add a world region that doesn't exist
-	if (WorldRegion.findOne('name', params.name)){
-		req.flash('error', 'A World Region with that name already exists');
-		res.redirect('/world-regions');
-	}
 
 	if(typeof params.continent === 'string'){
 		params.continent = Array(params.continent);
@@ -65,6 +57,9 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
+	const redirect = req.body.redirect;
+	delete req.body.redirect;
+
 	if (req.body.delete){
 
 		WorldRegion.delete(req.body[WorldRegion.hash]).then(function(){
@@ -99,12 +94,11 @@ router.post('/update', function(req, res){
 				// resolved updateCache
 
 				req.flash('success', 'World Region successfully updated');
-				res.redirect('/world-regions/' + req.body.name);
+				res.redirect(redirect);
 			}, function(){
 				// rejected updateCache
 
-				req.flash('error', 'There was a small issue, but the world region was updated');
-				res.redirect('/world-regions');
+				res.redirect(redirect);
 			});
 		}, function(err){
 			// rejected update
@@ -113,9 +107,6 @@ router.post('/update', function(req, res){
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/world-regions');
 		});
-	} else {
-		req.flash('error', 'There was an error, please try again');
-		res.redirect('/world-regions');
 	}
 });
 

@@ -34,7 +34,8 @@ block content
 									-for (i in cityRegions)
 										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsName && neighborhood.cityRegionsName.toString().indexOf(cityRegions[i].name) > -1)= cityRegions[i].name
 
-				input(type='hidden', name='redirect', value=`/${country.name}/${neighborhood.cityName}/${neighborhood.name}`)
+				input(type='hidden', name='redirect', value=`/${country.url}/${neighborhood.cityUrl}/${neighborhood.url}`)
+				input(type='hidden', name='deleteRedirect', value=`/${country.url}/${neighborhood.cityUrl}`)
 				input(type='hidden', name= key, value= neighborhood[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;

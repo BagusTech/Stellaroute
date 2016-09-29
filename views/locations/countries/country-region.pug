@@ -16,7 +16,8 @@ block content
 					.hidden
 						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=countryRegion.name)
 
-				input(type='hidden', name='redirect', value=`/${country.names.display}/${countryRegion.name}`)
+				input(type='hidden', name='redirect', value=`/${country.url}/${countryRegion.url}`)
+				input(type='hidden', name='deleteRedirect', value=`/${country.url}`)
 				input(type='hidden', name= key, value= countryRegion[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -87,9 +88,4 @@ block content
 						.form-group.mb-0
 							input.hidden(name='countryRegions', value=countryRegion.Id)
 							input.hidden(name='country', value=countryRegion.country)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${countryRegion.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}/${countryRegion.url}`, name='redirect') Save

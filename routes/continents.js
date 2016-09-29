@@ -25,7 +25,8 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', Continent.getCached(), function(req, res){
 	const params = req.body;
-
+	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	
 	// only allowed to add a continent that doesn't exist
 	if (Continent.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
@@ -55,6 +56,9 @@ router.post('/new', Continent.getCached(), function(req, res){
 });
 
 router.post('/update', function(req, res){
+	const redirect = req.body.redirect;
+	delete req.body.redirect;
+
 	if (req.body.delete){
 
 		Continent.delete(req.body[Continent.hash]).then(function(){
@@ -83,9 +87,8 @@ router.post('/update', function(req, res){
 
 			Continent.updateCache().then(function(){
 				req.flash('success', 'Continent successfully updated');
-			res.redirect('/continents/' + req.body.name);
+				res.redirect(redirect);
 			}, function(){
-				req.flash('error', 'There was a small issue, but your country was updated');
 				res.redirect('/continents');
 			});
 		}, function(err){

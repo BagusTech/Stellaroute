@@ -34,6 +34,7 @@ block content
 										option(value= continents[i].Id, selected= worldRegion.continentName && worldRegion.continentName.toString().indexOf(continents[i].name) > -1)= continents[i].name
 
 				input(type='hidden', name= key, value= worldRegion[key])
+				input(type='hidden', name='redirect', value=`/${worldRegion.url}`)
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
 				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')

@@ -22,7 +22,7 @@ block content
 							label Continent
 							p.form-control-static
 								if province.continentName
-									a(href="province.continentName")= province.continentName
+									a(href=`${province.continentUrl}`)= province.continentName
 								else
 									| Same as <a href='/#{country.url}'>#{country.names.display}</a>
 							.hidden
@@ -36,7 +36,7 @@ block content
 							p.form-control-static
 								if province.worldRegions && province.worldRegions.length > 0
 									-for(region in province.worldRegionsName)
-										a(href=`/${province.worldRegionsUrl[region]}`)= province.worldRegionsName && province.worldRegionsName.indexOf(region) == province.worldRegionsName.length-1 ? region : `${province.worldRegionsName[region]}, ` 
+										a(href=`/${province.worldRegionsUrl[region]}`)= province.worldRegionsName && province.worldRegionsName.indexOf(province.worldRegionsName[region]) == province.worldRegionsName.length-1 ? province.worldRegionsName[region] : `${province.worldRegionsName[region]}, ` 
 								else
 									| Same as <a href='/countries/#{country.url}'>#{country.names.display}</a>
 							.hidden
@@ -57,7 +57,8 @@ block content
 							for region in countryRegions
 								option(value=region.Id, selected= province.countryRegions && province.countryRegions.indexOf(region.Id) > -1)= region.name
 
-				input(type='hidden', name='redirect', value=`/${country.url}`)
+				input(type='hidden', name='redirect', value=`/${country.url}/${province.url}`)
+				input(type='hidden', name='deleteRedirect', value=`/${country.url}`)
 				input(type='hidden', name= key, value= province[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -127,12 +128,7 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${province.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='province-regions', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value=`/${country.url}/${province.url}`, name='redirect') Save
 
 	.modal.fade#AddCity(tab-index='-1', role='dialog')
 			.modal-dialog(role='document')
@@ -153,9 +149,4 @@ block content
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
 							input.hidden(name='country', value=province.country)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}/${province.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							button.btn.btn-primary.btn-Sm.f-R(type='submit', value=`/${country.url}/${province.url}`, name='redirect') Save

@@ -227,27 +227,32 @@ router.get('/:country/:city', function(req, res, next){
 });
 
 router.get('/:country/:city/:cityRegion', function(req, res, next){
-	const country = Country.findOne('url', req.params.country).items;
+
+	const country = Country.findOne('url', req.params.country)
+						   .items;
 
 	if(!country){
+		console.log('1')
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
 		return;
 	}
 
-	const city = City.findOne('url', req.params.city).items;
+	const city = City.findOne('url', req.params.city)
+					 .items;
 	
 	if(!city){
+		console.log('2')
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
 		return;
 	}
 
 	const cityRegion = CityRegion.findOne('url', req.params.cityRegion)
-								 .join('city', City.cached(), 'Id', 'name')
-								 .items[0];
+								 .items;
 
 	if(!cityRegion){
+		console.log('3')
 		next();
 		return;
 	}
@@ -259,6 +264,7 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 		description: 'Stellaroute: ${cityRegion.name} Overview',
 		key: CityRegion.hash,
 		country: country,
+		city: city,
 		cityRegion: cityRegion,
 		neighborhoods: neighborhoods,
 	});
@@ -267,6 +273,7 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 router.get('/:country/:city/:neighborhood', function(req, res, next){
 	const neighborhood = Neighborhood.findOne('url', req.params.neighborhood)
 									 .join('city', City.cached(), 'Id', 'name')
+									 .join('city', City.cached(), 'Id', 'url')
 									 .join('cityRegions', CityRegion.cached(), 'Id', 'name')
 									 .items[0];
 	if(!neighborhood){
@@ -275,7 +282,7 @@ router.get('/:country/:city/:neighborhood', function(req, res, next){
 		return;
 	}
 
-	const country = Country.findOne('name', req.params.country).items;
+	const country = Country.findOne('url', req.params.country).items;
 	const cityRegions = CityRegion.find('city', neighborhood.city).items.sort(sortBy('name'))
 
 	res.render('locations/cities/neighborhood', {

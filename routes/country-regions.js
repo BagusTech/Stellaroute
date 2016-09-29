@@ -16,7 +16,9 @@ router.get('/', function(req, res){
 
 router.post('/new', function(req, res){
 	const params = req.body;
-	const redirect = (params.redirect == 'country-regions' ? `/country-regions/${params.name}` : params.redirect) || '/countries';
+	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	
+	const redirect = params.redirect;
 	delete params.redirect;
 
 	CountryRegion.add(params).then(function(data){
@@ -36,8 +38,9 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
-	const redirect = req.body.redirect || '/countries';
+	const redirect = req.body.delete ? req.body.deleteRedirect : req.body.redirect;
 	delete req.body.redirect;
+	delete req.body.deleteRedirect;
 
 	if (req.body.delete){
 
@@ -69,7 +72,7 @@ router.post('/update', function(req, res){
 				// resolved updateCache
 
 				req.flash('success', 'Country Region successfully updated');
-				res.redirect(`/country-regions/${req.body.name}`);
+				res.redirect(redirect);
 			}, function(){
 				// rejected updateCache
 

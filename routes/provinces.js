@@ -20,8 +20,9 @@ router.get('/', function(req, res){
 
 router.post('/new', function(req, res){
 	const params = req.body;
+	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
 
-	const redirect = (params.redirect == 'provinces' ? `/provinces/${params.name}` : params.redirect) || '/countries';
+	const redirect = params.redirect;
 	delete params.redirect;
 
 	if (typeof params.continent === 'string'){
@@ -53,8 +54,9 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
-	const redirect = req.body.redirect || '/countries';
+	const redirect = req.body.delete ? req.body.deleteRedirect : req.body.redirect;
 	delete req.body.redirect;
+	delete req.body.deleteRedirect;
 
 	if (req.body.delete){
 
@@ -110,11 +112,11 @@ router.post('/update', function(req, res){
 				// resolved updateCache
 
 				req.flash('success', 'State/Province successfully updated');
-				res.redirect(`/provinces/${req.body.name}`);
+				res.redirect(redirect);
 			}, function(){
 				// rejected updateCache
 
-				res.redirect(`/provinces/${req.body.name}`);
+				res.redirect(redirect);
 			});
 		}, function(err){
 			// rejected update

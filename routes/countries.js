@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/', function(req, res, next){
 	var countries = Country.join('continent', Continent.cached(), 'Id', 'name' )
 	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
-	                       .items.sort(sortBy('name'));
+	                       .items.sort(sortBy('url'));
 
 	res.render('locations/countries/_countries', {
 		title: 'Stellaroute: countries',
@@ -35,6 +35,7 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', function(req, res){
 	const params = req.body;
+	params.url = params.url || params.names.display.replace(/ /g, '-').toLowerCase();
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
 	const nativeNames = typeof params['native.name'] === 'string' ? Array(params['native.name']) : params['native.name'];
@@ -42,9 +43,6 @@ router.post('/new', function(req, res){
 
 	const nativeLanguages = typeof params['native.language'] === 'string' ? Array(params['native.language']) : params['native.language'];
 	delete params['native.language'];
-
-	const redirect = (params.redirect == 'countries' ? `/countries/${params.name}` : params.redirect) || '/countries';
-	delete params.redirect;
 
 	params['names.native'] = [];
 
@@ -56,7 +54,7 @@ router.post('/new', function(req, res){
 	// only allowed to add a country that doesn't exist
 	if (Country.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
-		res.redirect(redirect)
+		res.redirect(params.url)
 	}
 
 	// if the multiselect has one item, it returns a string and it needs to be an array
@@ -86,12 +84,12 @@ router.post('/new', function(req, res){
 			// resolved updateCache
 
 			req.flash('success', 'Country Successfully added');
-			res.redirect(redirect);
+			res.redirect(params.url);
 		}, function(err){
 			// rejected updateCache
 
 			console.error(err);
-			res.redirect(redirect);
+			res.redirect('/countries');
 		});
 	},
 	function(err){
@@ -103,11 +101,13 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
+	const redirect = req.body.redirect;
+	delete req.body.redirect;
+
 	if (req.body.delete){
 		Country.delete(req.body[Country.hash]).then(function(){
 			// resolved delete
 
-			cache.del('/countries/' + req.body.name);
 			Country.updateCache().then(function(){
 				// resolved updateCache
 
@@ -164,18 +164,18 @@ router.post('/update', function(req, res){
 
 			Country.updateCache().then(function(){
 				req.flash('success', 'Country successfully updated');
-				res.redirect('/countries/' + req.body.name);
+				res.redirect(redirect);
 			}, function(err){
 
 				console.error(err);
-				res.redirect('/countries/' + req.body.name);
+				res.redirect('/countries');
 			});
 		}, function(err){
 			// rejected
 
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
-			res.redirect('/countries/' + req.body.name);
+			res.redirect(redirect);
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');

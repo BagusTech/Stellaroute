@@ -15,10 +15,13 @@ router.get('/', function(req, res){
 });
 
 router.post('/new', function(req, res){
-	const params = req.body;
+	const redirect = req.body.delete ? req.body.deleteRedirect : req.body.redirect;
+	delete req.body.redirect;
+	delete req.body.deleteRedirect;
 
-	const redirect = (params.redirect == 'neighborhoods' ? `/neighborhoods/${params.name}` : params.redirect) || '/countries';
-	delete params.redirect;
+	const params = req.body;
+	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+
 
 	if (typeof params.cityRegions === 'string'){
 		params.cityRegions = Array(params.cityRegions);
@@ -41,7 +44,7 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
-	const redirect = req.body.redirect || '/countries';
+	const redirect = req.body.redirect;
 	delete req.body.redirect;
 
 	if (req.body.delete){
@@ -82,12 +85,12 @@ router.post('/update', function(req, res){
 				// resolved updateCache
 
 				req.flash('success', 'Neighborhood successfully updated');
-				res.redirect(`/neighborhoods/${req.body.name}`);
+				res.redirect(redirect);
 			}, function(){
 				// rejected updateCache
 
 				req.flash('error', 'There was a small issue, but the world region was updated');
-				res.redirect(`/neighborhoods/${req.body.name}`);
+				res.redirect(redirect);
 			});
 		}, function(err){
 			// rejected update

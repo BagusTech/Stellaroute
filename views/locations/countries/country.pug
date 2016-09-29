@@ -224,6 +224,7 @@ block content
 
 
 				input(type='hidden', name= key, value= country[key])
+				input(type='hidden', name='redirect', value=`/${country.url}`)
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
 				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
@@ -292,12 +293,7 @@ block content
 							input.form-control#CountryRegionName(name='name', type='text', placeholder='New England', required)
 
 						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='country-regions', name='redirect')
-							span.hidden-xs Save and&nbsp;
-							| Continue
+						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
 
 	.modal.fade#NewCountryProvinceModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryProvinceModalLabel")
 		.modal-dialog(role='document')
@@ -322,9 +318,4 @@ block content
 
 
 						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-default.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-						button.btn.btn-primary.btn-Sm.f-R(type='submit', value='provinces', name='redirect')
-							span.hidden-xs Save and&nbsp;
-							| Continue
+						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save

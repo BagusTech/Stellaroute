@@ -12,7 +12,7 @@ block content
 			form.update-form(method='POST', action='/cities/update')
 				.form-group
 					label Name
-					p.form-control-static= String(city.name)
+					p.form-control-static= city.name
 					.hidden
 						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=city.name)
 
@@ -58,7 +58,8 @@ block content
 									for region in provinceRegions
 										option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.name
 
-				input(type='hidden', name='redirect', value=`/countries/${city.countryName}`)
+				input(type='hidden', name='redirect', value=`/${city.countryUrl}/${city.url}`)
+				input(type='hidden', name='deleteRedirect', value=`/${city.countryUrl}`)
 				input(type='hidden', name= key, value= city[key])
 				input.btn.btn-primary.btn-update(type='button', value='Update')
 				| &nbsp;
@@ -123,17 +124,12 @@ block content
 						.row
 							.col-xs-12
 								.form-group
-									label(for='CountryName') Name
-									input.form-control#CountryName(name='name', type='text', placeholder='America', required)
+									label(for='CityRegionName') Name
+									input.form-control#CityRegionName(name='name', type='text', placeholder='America', required)
 
 						.form-group.mb-0
 							input.hidden(name='city', value=city.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='city-regions', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save
 
 	.modal.fade#AddNeighborhood(tab-index='-1', role='dialog')
 			.modal-dialog(role='document')
@@ -153,9 +149,4 @@ block content
 
 						.form-group.mb-0
 							input.hidden(name='city', value=city.Id)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='neighborhoods', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save

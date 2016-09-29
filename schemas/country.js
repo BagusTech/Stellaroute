@@ -16,6 +16,7 @@ const Country = Duck({
 			alias: Array, 
 		},
 		abbreviation: String,
+		image: String,
 		continent: Array,
 		worldRegions: Array,
 	//At a Glance Card
@@ -60,7 +61,7 @@ const Country = Duck({
 			image: String,
 		},
 		mobile: {
-			simCard: Boolean,
+			title: Boolean,
 			explanation: String,
 		},
 		water: {
@@ -237,6 +238,12 @@ const Country = Duck({
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
+				explanation: String,
+			}],
+			airports: [{
+				city: String,
+				airport: String,
+				abbreviation: String,
 				explanation: String,
 			}],
 			plane: [{

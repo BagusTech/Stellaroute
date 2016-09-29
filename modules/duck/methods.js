@@ -77,7 +77,7 @@ module.exports = function(_duck){
 		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
 		const values = typeof value === 'string' ? Array(value) : value;
 		const items = this.items || this.cached();
-		debugger;
+
 		for (var item in items){
 			var addItem = true;
 

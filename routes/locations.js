@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../config/db');
 const flash = require('connect-flash');
 const assign = require('../modules/assign');
+const cache = require('../modules/cache');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');

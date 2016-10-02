@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs');
-const cache  = require('../caching');
+const cache  = require('../cache');
 const joinObject  = require('../joinObject');
 
 module.exports = function(_duck){

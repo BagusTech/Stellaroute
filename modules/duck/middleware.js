@@ -1,5 +1,5 @@
 const db   = require('../../config/db');
-const cache = require('../caching');
+const cache = require('../cache');
 
 module.exports = function(_duck){
 	_duck.prototype.getCached = function(){

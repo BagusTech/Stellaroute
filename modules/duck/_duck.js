@@ -1,5 +1,5 @@
 const db   = require('../../config/db');
-const cache = require('../caching');
+const cache = require('../cache');
 
 const _duck = function(schema, items, isReady){
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */

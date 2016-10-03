@@ -28,7 +28,7 @@ router.post('/new', Continent.getCached(), function(req, res){
 	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
 	
 	// only allowed to add a continent that doesn't exist
-	if (Continent.findOne('name', params.name)){
+	if (Continent.findOne('name', params.name).items){
 		req.flash('error', 'A country with that name already exists');
 		res.redirect('/continents');
 	}

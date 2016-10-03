@@ -42,11 +42,6 @@ const Country = Duck({
 			explanation: String,
 		}],
 	//Travel Basics 
-		airports: [{
-			city: String,
-			airport: String,
-			abbreviation: String,
-		}],
 		entryTax: {
 			amount: String,
 			explanation: String,

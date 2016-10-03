@@ -8,3 +8,6 @@
 
 		- if(flash && flash.info && flash.info.length > 0)
 			p.alert.alert-info= flash.info
+
+		- if(flash && flash.warning && flash.warning.length > 0)
+			p.alert.alert-warning= flash.warning

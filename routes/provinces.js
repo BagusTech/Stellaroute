@@ -16,6 +16,7 @@ const router = express.Router();
 router.get('/', function(req, res){
 	req.flash('info', 'That page doesn\'t exist, but this is a close second!');
 	res.redirect('/countries');
+	return;
 });
 
 router.post('/new', function(req, res){
@@ -42,14 +43,17 @@ router.post('/new', function(req, res){
 		Province.updateCache().then(function(){
 			req.flash('success', 'World Region Successfully added');
 			res.redirect(redirect);
+			return;
 		}, function(err){
 			console.error(err);
 			res.redirect('/countries');
+			return;
 		})
 	}, function(err){
 		// rejected
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
 		res.redirect('/countries');
+		return;
 	});
 });
 
@@ -66,8 +70,10 @@ router.post('/update', function(req, res){
 			Province.updateCache().then(function(){
 				req.flash('success', 'State/Province successfully deleted');
 				res.redirect(redirect);
+				return;
 			}, function(){
 				res.redirect(redirect);
+				return;
 			});
 		}, function(err){
 			// rejected
@@ -75,6 +81,7 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect(redirect);
+			return;
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
@@ -113,10 +120,12 @@ router.post('/update', function(req, res){
 
 				req.flash('success', 'State/Province successfully updated');
 				res.redirect(redirect);
+				return;
 			}, function(){
 				// rejected updateCache
 
 				res.redirect(redirect);
+				return;
 			});
 		}, function(err){
 			// rejected update
@@ -124,10 +133,12 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect(redirect);
+			return;
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
 		res.redirect(redirect);
+		return;
 	}
 });
 

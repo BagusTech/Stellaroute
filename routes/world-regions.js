@@ -43,16 +43,19 @@ router.post('/new', function(req, res){
 		WorldRegion.updateCache().then(function(){
 			req.flash('success', 'World Region Successfully added');
 			res.redirect(redirect);
+			return;
 		}, function(err){
 			// rejected update 
 
 			console.error(err);
 			res.redirect('/world-regions');
+			return;
 		});		
 	}, function(err){
 		// rejected
 		req.flash('error', 'Opps, something when wrong! Please try again.');
 		res.redirect('/world-regions');
+		return;
 	});
 });
 
@@ -68,8 +71,10 @@ router.post('/update', function(req, res){
 			WorldRegion.updateCache().then(function(){
 				req.flash('success', 'World Region successfully deleted');
 				res.redirect('/world-regions');
+				return;
 			}, function(){
 				res.redirect('/world-regions');
+				return;
 			});
 		}, function(err){
 			// rejected
@@ -77,6 +82,7 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/world-regions');
+			return;
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
@@ -95,10 +101,12 @@ router.post('/update', function(req, res){
 
 				req.flash('success', 'World Region successfully updated');
 				res.redirect(redirect);
+				return;
 			}, function(){
 				// rejected updateCache
 
 				res.redirect(redirect);
+				return;
 			});
 		}, function(err){
 			// rejected update
@@ -106,6 +114,7 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/world-regions');
+			return;
 		});
 	}
 });

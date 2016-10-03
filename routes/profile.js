@@ -19,11 +19,13 @@ router.post('/update', function(req, res){
 
 			req.flash('success', 'User successfully deleted')
 			res.redirect('/logout');
+			return;
 		}, function(){
 			// rejected
 
-			req.flash('error', 'Oops, something went wrong. Please try again.')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/profile');
+			return;
 		});
 	} else if (req.body.submit) {
 		delete req.body.submit;
@@ -31,7 +33,7 @@ router.post('/update', function(req, res){
 		const params = req.body;
 
 		if(params.local.password !== undefined && params.local.password.length > 4){
-			params.local.password = User.generateHash(params.local.password) 
+			params.local.password = User.generateHash(params.local.password);
 		} else { 
 			delete params.local.password;
 		}
@@ -39,18 +41,21 @@ router.post('/update', function(req, res){
 		User.update(params, true).then(function(){
 			// resolved
 
-			req.flash('success', 'User successfully updated')
-			res.redirect('/profile')
+			req.flash('success', 'User successfully updated');
+			res.redirect('/profile');
+			return;
 		}, function(err){
 			// rejected
 
 			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.')
-			res.redirect('/profile')
+			req.flash('error', 'Oops, something went wrong. Please try again.');
+			res.redirect('/profile');
+			return;
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
-		res.redirect('/profile')
+		res.redirect('/profile');
+		return;
 	}
 });
 

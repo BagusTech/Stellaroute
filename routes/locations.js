@@ -306,10 +306,12 @@ router.post('/delete', function(req, res){
 
 		req.flash('success', 'Successfully deleted!');
 		res.redirect(params.redirect);
+		return;
 	}, function failed(err){
 		console.error(err);
 		req.flash('error', 'Something went wrong, please try again.');
 		res.redirect(params.retry);
+		return;
 	});
 });
 

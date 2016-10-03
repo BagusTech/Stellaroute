@@ -55,6 +55,7 @@ router.post('/new', function(req, res){
 	if (Country.findOne('name', params.name)){
 		req.flash('error', 'A country with that name already exists');
 		res.redirect(params.url)
+		return;
 	}
 
 	// if the multiselect has one item, it returns a string and it needs to be an array
@@ -85,11 +86,13 @@ router.post('/new', function(req, res){
 
 			req.flash('success', 'Country Successfully added');
 			res.redirect(params.url);
+			return;
 		}, function(err){
 			// rejected updateCache
 
 			console.error(err);
 			res.redirect('/countries');
+			return;
 		});
 	},
 	function(err){
@@ -97,6 +100,7 @@ router.post('/new', function(req, res){
 
 		req.flash('error', 'Opps, something when wrong! Please try again.');
 		res.redirect('/countries');
+		return;
 	});
 });
 
@@ -113,12 +117,14 @@ router.post('/update', function(req, res){
 
 				req.flash('success', 'Country successfully deleted')
 				res.redirect('/countries');
+				return;
 			},function(err){
 				// rejected updateCache
 
 				console.error(err);
 				req.flash('error', 'Country was deleted, but something went wrong')
 				res.redirect('/countries');
+				return;
 			});
 		}, function(err){
 			// rejected delete
@@ -126,6 +132,7 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.')
 			res.redirect('/countries');
+			return;
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
@@ -165,10 +172,12 @@ router.post('/update', function(req, res){
 			Country.updateCache().then(function(){
 				req.flash('success', 'Country successfully updated');
 				res.redirect(redirect);
+				return;
 			}, function(err){
 
 				console.error(err);
 				res.redirect('/countries');
+				return;
 			});
 		}, function(err){
 			// rejected
@@ -176,10 +185,12 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect(redirect);
+			return;
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
 		res.redirect('/countries');
+		return;
 	}
 });
 

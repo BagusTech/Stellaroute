@@ -31,6 +31,7 @@ router.post('/new', Continent.getCached(), function(req, res){
 	if (Continent.findOne('name', params.name).items){
 		req.flash('error', 'A country with that name already exists');
 		res.redirect('/continents');
+		return;
 	}
 
 	Continent.add(params).then(function(data){
@@ -41,17 +42,20 @@ router.post('/new', Continent.getCached(), function(req, res){
 
 			req.flash('success', 'Continent Successfully added');
 			res.redirect('/continents');
+			return;
 		}, function(err){
 			// rejected update 
 
 			console.error(err);
 			res.redirect('/continents');
+			return;
 		});
 	}, function(err){
 		// rejected add
 		
 		req.flash('error', 'Opps, something when wrong! Please try again or contact Joe.');
 		res.redirect('/continents');
+		return;
 	});
 });
 
@@ -67,8 +71,10 @@ router.post('/update', function(req, res){
 			Continent.updateCache().then(function(){
 				req.flash('success', 'Continent successfully deleted');
 				res.redirect('/continents');
+				return;
 			}, function(){
 				res.redirect('/continents');
+				return;
 			});
 		}, function(err){
 			// rejected
@@ -76,6 +82,7 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/continents');
+			return;
 		});
 	} else if (req.body.update) {
 		delete req.body.update;
@@ -88,8 +95,10 @@ router.post('/update', function(req, res){
 			Continent.updateCache().then(function(){
 				req.flash('success', 'Continent successfully updated');
 				res.redirect(redirect);
+				return;
 			}, function(){
 				res.redirect('/continents');
+				return;
 			});
 		}, function(err){
 			// rejected
@@ -97,10 +106,12 @@ router.post('/update', function(req, res){
 			console.error(err);
 			req.flash('error', 'Oops, something went wrong. Please try again.');
 			res.redirect('/continents');
+			return;
 		});
 	} else {
 		req.flash('error', 'There was an error, please try again');
 		res.redirect('/continents');
+		return;
 	}
 });
 

@@ -51,6 +51,7 @@ router.get('/feedback', function(req, res){
 router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
+	return;
 });
 
 // sign up for newsletter

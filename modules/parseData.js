@@ -21,9 +21,8 @@ function parseData(data, schema, table) {
 				parse(data[item], schema[item])
 			} else {
 				if ( itemType !== schemaType ){
-					console.log('~~~ parsing data failed ~~~')
+					console.error('~~~ parsing data failed ~~~')
 					console.error('"' + item + '" is currently a "' + itemType + '" and needs to be a "' + schemaType + '"');
-					console.log();
 					errorCount++;
 					return null;
 				}

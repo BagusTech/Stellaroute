@@ -92,7 +92,7 @@ block content
 					ul
 						for region in provinceRegions
 							li
-								a(href=`/${country.url}/${province.url}/${region.url}`)= region.name
+								a(href=`/${country.url}/${province.url}/${region.url}`)= region.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddProvinceRegion') Add Region
@@ -104,7 +104,7 @@ block content
 					ul
 						for city in cities
 							li
-								a(href=`/${country.url}/${city.url}`)= city.name
+								a(href=`/${country.url}/${city.url}`)= city.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCity') Add City
@@ -123,8 +123,8 @@ block content
 						.row
 							.col-xs-12
 								.form-group
-									label(for='CountryName') Name
-									input.form-control#CountryName(name='name', type='text', placeholder='America', required)
+									label(for='ProvinceRegionName') Name
+									input.form-control#ProvinceRegionName(name='names.display', type='text', placeholder='America', required)
 
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)
@@ -144,7 +144,7 @@ block content
 							.col-xs-12
 								.form-group
 									label(for='CityName') Name
-									input.form-control#CityName(name='name', type='text', placeholder='Paris', required)
+									input.form-control#CityName(name='names.display', type='text', placeholder='Paris', required)
 
 						.form-group.mb-0
 							input.hidden(name='province', value=province.Id)

@@ -200,7 +200,7 @@ const Neighborhood = Duck({
 				title: String,
 				explanation: String,
 			}],
-		}
+		},
 	//Main Attractions
 		attractions: [{
 				order: String,

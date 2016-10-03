@@ -12,9 +12,9 @@ block content
 			form.update-form(method='POST', action='/cities/update')
 				.form-group
 					label Name
-					p.form-control-static= city.name
+					p.form-control-static= city.names.display
 					.hidden
-						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=city.name)
+						input.form-control(name='names.display', type='text', placeholder='name', value=city.names.display)
 
 				.form-group
 					label Country Region(s)
@@ -93,7 +93,7 @@ block content
 					ul
 						for region in cityRegions
 							li
-								a(href=`/${city.countryUrl}/${city.url}/${region.url}`)= region.name
+								a(href=`/${city.countryUrl}/${city.url}/${region.url}`)= region.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddCityRegion') Add Region
@@ -125,7 +125,7 @@ block content
 							.col-xs-12
 								.form-group
 									label(for='CityRegionName') Name
-									input.form-control#CityRegionName(name='name', type='text', placeholder='America', required)
+									input.form-control#CityRegionName(name='names.display', type='text', placeholder='America', required)
 
 						.form-group.mb-0
 							input.hidden(name='city', value=city.Id)

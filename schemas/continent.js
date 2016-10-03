@@ -8,7 +8,8 @@ const Continent = Duck({
 		name: String
 	},
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	UniqueBy: ['url']
 }, null, false);
 
 module.exports = Continent;

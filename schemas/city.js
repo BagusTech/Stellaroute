@@ -6,7 +6,7 @@ const City = Duck({
 		Id: String,
 		url: String,
 	//Modal Fields Card
-		name: {
+		names: {
 			display: String,
 			official: String,
 			native: [{  
@@ -370,7 +370,7 @@ const City = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S',
-	UniqueBy: ['name', ['country', 'province']]
+	UniqueBy: ['url', ['country', 'province']]
 }, null, false);
 
 module.exports = City;

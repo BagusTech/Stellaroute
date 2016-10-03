@@ -5,13 +5,22 @@ const Neighborhood = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		name: String,
+		overveiw: String,
 		city: String,
 		cityRegions: Array,
+		names: {
+			display: String,
+			official: String,
+			native: [{  
+				name: String, 
+				language: String,
+			}],
+			alias: Array, 
+		},
 	},
 	HASH: 'Id',
 	HASHType: 'S',
-	UniqueBy: ['name', 'city']
+	UniqueBy: ['url', 'city']
 }, null, false);
 
 module.exports = Neighborhood;

@@ -335,7 +335,7 @@ const Country = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S',
-	UniqueBy: ['name']
+	UniqueBy: ['url']
 }, null, false);
 
 module.exports = Country;

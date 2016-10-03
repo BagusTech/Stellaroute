@@ -10,7 +10,7 @@ const CountryRegion = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S',
-	UniqueBy: ['name', 'country']
+	UniqueBy: ['url', 'country']
 }, null, false);
 
 module.exports = CountryRegion;

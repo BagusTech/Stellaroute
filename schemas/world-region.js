@@ -9,7 +9,8 @@ const WorldRegion = Duck({
 		continent: Array
 	},
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	UniqueBy: ['url']
 }, null, false);
 
 module.exports = WorldRegion;

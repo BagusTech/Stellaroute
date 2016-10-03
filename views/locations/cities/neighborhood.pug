@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${country.name}/${neighborhood.cityName}`)= `< Back to ${neighborhood.cityName}`
+			a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityName}`
 
 		.content-card
 			form.update-form(method='POST', action='/neighborhoods/update')
@@ -14,9 +14,9 @@ block content
 					.col-xs-12.col-sm-6.col-md-4
 						.form-group
 							label Name
-							p.form-control-static(data-type='text', data-name='name')= neighborhood.name
+							p.form-control-static= neighborhood.names.display
 							.hidden
-								input.form-control#ContinentName(name='name', type='text', placeholder='name', value=neighborhood.name)
+								input.form-control#ContinentName(name='names.display', type='text', placeholder='name', value=neighborhood.names.display)
 
 						.form-group
 							label(for='CityRegions') City Region(s)

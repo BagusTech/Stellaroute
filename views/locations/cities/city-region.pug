@@ -49,7 +49,7 @@ block content
 			ul
 				for neighborhood in neighborhoods
 					li
-						a(href=`/${country.url}/${city.url}/${neighborhood.url}`)= neighborhood.name
+						a(href=`/${country.url}/${city.url}/${neighborhood.url}`)= neighborhood.names.display
 
 			.clear
 				button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
@@ -69,7 +69,7 @@ block content
 							.col-xs-12
 								.form-group
 									label(for='NeighborhoodName') Name
-									input.form-control#NeighborhoodName(name='name', type='text', placeholder='Upper Sackville', required)
+									input.form-control#NeighborhoodName(name='names.display', type='text', placeholder='Upper Sackville', required)
 
 						.form-group.mb-0
 							input.hidden(name='cityRegions', value=cityRegion.Id)

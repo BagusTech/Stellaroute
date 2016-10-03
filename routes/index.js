@@ -5,14 +5,50 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
+const Neighborhood     = require('../schemas/neighborhood');
+const db               = require('../config/db');
 const router           = express.Router();
 
 require('../config/passport')(passport);
 
-router.get('/', function(req, res, next){
+router.get('/', Neighborhood.getCached(), function(req, res, next){
+	/*
+	Neighborhood.find().items.forEach(function(item){
+		item.names = {};
+		item.names.display = item.name;
+		delete item.name;
+
+		Neighborhood.update(item).then(function(){
+			console.log('succesfully updated item')
+		});
+
+		var params = {
+		    TableName: 'Neighborhoods',
+		    Key: { // The primary key of the item (a map of attribute name to AttributeValue)
+
+		        Id: { S: item.Id}
+		        // more attributes...
+		    },
+		    AttributeUpdates: { // The attributes to update (map of attribute name to AttributeValueUpdate)
+
+		        name: {
+		            Action: 'DELETE', // PUT (replace)
+		                           // ADD (adds to number or set)
+		                           // DELETE (delete attribute or remove from set)
+		        },
+		        // more attribute updates: ...
+		    },
+		};
+
+		db.updateItem(params, function(err, data) {
+		    if (err) console.log(err); // an error occurred
+		    else console.log('succesfully deleted param'); // successful response
+		});
+	});*/	
+
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 	});
 });
 

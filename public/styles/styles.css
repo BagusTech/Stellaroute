@@ -8567,6 +8567,18 @@ form.profile-settings-update .profile-label.notification h3 {
   display: -ms-flexbox;
   display: flex;
 }
+#Stellaroute .fw-W {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+#Stellaroute .fw-Wr {
+  -ms-flex-wrap: wrap-reverse;
+      flex-wrap: wrap-reverse;
+}
+#Stellaroute .fw-Nw {
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
 #Stellaroute .fd-R {
   -ms-flex-direction: row;
       flex-direction: row;

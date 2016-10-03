@@ -48,8 +48,30 @@ const City = Duck({
 			explanation: String,
 		}],
 	//Travel Basics
+		entryTax: {
+			amount: String,
+			explanation: String,
+		}, 
+		exitTax: {
+			amount: String,
+			explanation: String,
+		}, 
 		timeZones: Array,
+		electricity: {
+			type: String,
+			image: String,
 		},
+		mobile: {
+			title: String,
+			explanation: String,
+		},
+		water: {
+			quality: String,
+			explanation: String,
+		},
+		toilets: {
+			types: Array,
+			explanation: String,
 		},
 		visa: [{
 			order: Number,

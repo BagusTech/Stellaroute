@@ -23,25 +23,31 @@ block content
 				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
 				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
 				
-				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-					.modal-dialog(role='document')
-						.modal-content
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-label='Close')
-									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel
-									| Delete&nbsp;
-									= continent.name
-							.modal-body
-								.alert.alert-danger
-									p
-										| Are you sure you want to delete&nbsp;
-										= continent.name + '?'
-									p This action cannot be undone
-								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+			.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+				form.modal-dialog(role='document', method='POST', action='/delete')
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-label='Close')
+								span(aria-hidden='true') &times;
+							h4.modal-title#DeleteModalLabel
+								| Delete&nbsp;
+								= continent.name
+						.modal-body
+							.alert.alert-danger
+								p
+									| Are you sure you want to delete&nbsp;
+									= continent.name + '?'
+								p This action cannot be undone
+							
+							input(type='hidden', name='key', value= continent[key])
+							input(type='hidden', name='keyName', value= key)
+							input(type='hidden', name='table', value='Continents')
+							input(type='hidden', name='redirect', value='/continents')
+							input(type='hidden', name='retry', value=`/${continent.url}`)
+							input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
-							.modal-footer
-								button.btn.btn-default(type='button', data-dismiss='modal') Close
+						.modal-footer
+							button.btn.btn-default(type='button', data-dismiss='modal') Cancel
 
 		.row
 			.col-xs-12.col-sm-6

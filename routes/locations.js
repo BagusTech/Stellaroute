@@ -1,8 +1,8 @@
 const express = require('express');
-const db = require('../config/db');
 const flash = require('connect-flash');
 const assign = require('../modules/assign');
 const cache = require('../modules/cache');
+const duck = require('../modules/duck');
 const readJSON = require('../modules/readJSON');
 const sortBy = require('../modules/sortBy');
 const Continent = require('../schemas/continent');
@@ -293,6 +293,23 @@ router.get('/:country/:city/:neighborhood', function(req, res, next){
 		country: country,
 		cityRegions: cityRegions,
 		neighborhood: neighborhood,
+	});
+});
+
+router.post('/delete', function(req, res){
+	const params = req.body;
+
+	duck({Table: params.table, HASH: params.keyName,})
+	.delete(params.key)
+	.then(function success(){
+		cache.del(params.table);
+
+		req.flash('success', 'Successfully deleted!');
+		res.redirect(params.redirect);
+	}, function failed(err){
+		console.error(err);
+		req.flash('error', 'Something went wrong, please try again.');
+		res.redirect(params.retry);
 	});
 });
 

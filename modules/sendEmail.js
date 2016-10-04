@@ -13,7 +13,7 @@ const sendEmail = function(toEmail, subject, template, rawHTML, fromEmail) {
 
 	smtp.sendMail(mailOptions, function(error, info) {
 		if (error) {
-			console.log(error);
+			console.error(error);
 		} else {
 			console.log('Message sent: ' + info.response);
 		}

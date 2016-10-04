@@ -93,7 +93,7 @@ router.get('/logout', function(req, res){
 // sign up for newsletter
 router.post('/newsletter-signup', User.getCached(), function(req, res){
 	const email = req.body['local.email'];
-	const user = User.findOne('local.email', email);
+	const user = User.findOne('local.email', email).items;
 	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
 	const template = 'betaSignup';
 

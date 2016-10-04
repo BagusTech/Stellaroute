@@ -24,15 +24,6 @@ router.get('/', function(req, res, next){
 	});
 });
 
-router.get('/new', function(req, res, next){
-	res.render('locations/countries/new', {
-		title: 'Stellaroute: Add a Country',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		continents: Continent.cached().sort(sortBy('name')),
-		worldRegions: WorldRegion.cached().sort(sortBy('name'))
-	});
-});
-
 router.post('/new', function(req, res){
 	const params = req.body;
 	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
@@ -164,7 +155,7 @@ router.post('/update', function(req, res){
 			params.languages = Array(params.languages);
 		}
 
-		params.alias = params.alias.split(', ');
+		params.alias = params.alias && params.alias.split(', ');
 
 		Country.update(params, true).then(function(){
 			// resolved

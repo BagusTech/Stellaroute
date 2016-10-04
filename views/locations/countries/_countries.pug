@@ -20,17 +20,17 @@ block content
 						.col-sm-2.col-xs-3
 							a.js-name(href=`/${country.url}`)= country.names.display
 						.col-sm-3.col-xs-3
-							- for (var i = 0; i < country.continentName.length; i++)
-								span.js-continent= country.continentName[i]
+							- for (var i = 0; i < country.continentDisplay.length; i++)
+								span.js-continent= country.continentDisplay[i]
 
-								if ((i+1) !== country.continentName.length)
+								if ((i+1) !== country.continentDisplay.length)
 									|,&nbsp;
 
 						.col-xs-6
-							- for (var i = 0; i < country.worldRegionsName.length; i++)
-								span.js-region= country.worldRegionsName[i]
+							- for (var i = 0; i < country.worldRegionsDisplay.length; i++)
+								span.js-region= country.worldRegionsDisplay[i]
 
-								if ((i+1) !== country.worldRegionsName.length)
+								if ((i+1) !== country.worldRegionsDisplay.length)
 									|,&nbsp;
 
 	script(type='text/javascript').

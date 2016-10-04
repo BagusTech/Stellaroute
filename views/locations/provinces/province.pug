@@ -2,7 +2,7 @@ extends ../../layout
 
 block content
 	.media-bg-img.request-page-header
-		h1= province.name
+		h1= province.names.display
 
 	.container.ptb-Sm
 		small
@@ -21,41 +21,41 @@ block content
 						.form-group
 							label Continent
 							p.form-control-static
-								if province.continentName
-									a(href=`${province.continentUrl}`)= province.continentName
+								if province.continentDisplay
+									a(href=`${province.continentUrl}`)= province.continentDisplay
 								else
 									| Same as <a href='/#{country.url}'>#{country.names.display}</a>
 							.hidden
 								select.form-control(name='continent', multiple)
 									for continent in continents
-										option(value=continent.Id, selected= province.continent && province.continent.indexOf(continent.Id) > -1)= continent.name
+										option(value=continent.Id, selected= province.continent && province.continent.indexOf(continent.Id) > -1)= continent.names.display
 
 					.col-xs-12.col-sm-6
 						.form-group
 							label World Region(s)
 							p.form-control-static
 								if province.worldRegions && province.worldRegions.length > 0
-									-for(region in province.worldRegionsName)
-										a(href=`/${province.worldRegionsUrl[region]}`)= province.worldRegionsName && province.worldRegionsName.indexOf(province.worldRegionsName[region]) == province.worldRegionsName.length-1 ? province.worldRegionsName[region] : `${province.worldRegionsName[region]}, ` 
+									-for(region in province.worldRegionsDisplay)
+										a(href=`/${province.worldRegionsUrl[region]}`)= province.worldRegionsDisplay && province.worldRegionsDisplay.indexOf(province.worldRegionsDisplay[region]) == province.worldRegionsDisplay.length-1 ? province.worldRegionsDisplay[region] : `${province.worldRegionsDisplay[region]}, ` 
 								else
 									| Same as <a href='/countries/#{country.url}'>#{country.names.display}</a>
 							.hidden
 								select.form-control(name='worldRegions', multiple)
 									for region in worldRegions
-										option(value=region.Id, selected= province.worldRegions && province.worldRegions.indexOf(region.Id) > -1)= region.name
+										option(value=region.Id, selected= province.worldRegions && province.worldRegions.indexOf(region.Id) > -1)= region.names.display
 
 				.form-group
 					label Country Region(s)
 					p.form-control-static
 						if province.countryRegions && province.countryRegions.length > 0
-							-for (i in province.countryRegionsName)
-								a(href=`/${country.url}/${province.countryRegionsUrl[i]}`)= province.countryRegionsName && province.countryRegionsName.indexOf(province.countryRegionsName[i]) == province.countryRegionsName.length-1 ? province.countryRegionsName[i] : `${province.countryRegionsName[i]}, ` 
+							-for (i in province.countryRegionsDisplay)
+								a(href=`/${country.url}/${province.countryRegionsUrl[i]}`)= province.countryRegionsDisplay && province.countryRegionsDisplay.indexOf(province.countryRegionsDisplay[i]) == province.countryRegionsDisplay.length-1 ? province.countryRegionsDisplay[i] : `${province.countryRegionsDisplay[i]}, ` 
 						else
 							| N/A
 					.hidden
 						select.form-control(name='countryRegions', multiple)
 							for region in countryRegions
-								option(value=region.Id, selected= province.countryRegions && province.countryRegions.indexOf(region.Id) > -1)= region.name
+								option(value=region.Id, selected= province.countryRegions && province.countryRegions.indexOf(region.Id) > -1)= region.names.display
 
 				input(type='hidden', name='redirect', value=`/${country.url}/${province.url}`)
 				input(type='hidden', name='deleteRedirect', value=`/${country.url}`)
@@ -116,7 +116,7 @@ block content
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
 							| Add a Province Region to&nbsp;
-							span= province.name
+							span= province.names.display
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
 					.modal-body.plr-Md.pb-Md
@@ -136,7 +136,7 @@ block content
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
 							| Add a City to&nbsp;
-							span= province.name
+							span= province.names.display
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
 					.modal-body.plr-Md.pb-Md

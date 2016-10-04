@@ -2,7 +2,7 @@ extends ../../layout
 
 block content
 	.media-bg-img.request-page-header
-		h1= cityRegion.name
+		h1= cityRegion.names.display
 
 	.container.ptb-Sm
 		small
@@ -32,12 +32,12 @@ block content
 									span(aria-hidden='true') &times;
 								h4.modal-title#DeleteModalLabel
 									| Delete&nbsp;
-									= cityRegion.name
+									= cityRegion.names.display
 							.modal-body
 								.alert.alert-danger
 									p
 										| Are you sure you want to delete&nbsp;
-										= cityRegion.name + '?'
+										= cityRegion.names.display + '?'
 									p This action cannot be undone
 								input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
@@ -61,7 +61,7 @@ block content
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
 							| Add a Neighborhood to&nbsp;
-							span= cityRegion.name
+							span= cityRegion.names.display
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
 					.modal-body.plr-Md.pb-Md

@@ -28,12 +28,12 @@ router.get('/:continent', function(req, res, next){
 	}
 
 
-	const worldRegions = WorldRegion.find('continent', continent.Id).items.sort(sortBy('name'));
-	const countries = Country.find('continent', continent.Id).items.sort(sortBy('name'));
+	const worldRegions = WorldRegion.find('continent', continent.Id).items.sort(sortBy('url'));
+	const countries = Country.find('continent', continent.Id).items.sort(sortBy('url'));
 
 	res.render('locations/continents/continent', {
-		title: `Stellaroute: ${continent.name}`,
-		description: `Stellaroute: ${continent.name} Overview`,
+		title: `Stellaroute: ${continent.names.display}`,
+		description: `Stellaroute: ${continent.names.display} Overview`,
 		continent: continent,
 		worldRegions: worldRegions,
 		countries: countries,
@@ -43,7 +43,7 @@ router.get('/:continent', function(req, res, next){
 
 router.get('/:worldRegion', function(req, res, next){
 	const worldRegion = WorldRegion.findOne('url', req.params.worldRegion)
-								   .join('continent', Continent.cached(), 'Id', 'name')
+								   .join('continent', Continent.cached(), 'Id', 'names.display')
 								   .items[0];
 
 	if(!worldRegion){
@@ -55,9 +55,9 @@ router.get('/:worldRegion', function(req, res, next){
 	const countries = Country.find('worldRegions', worldRegion.Id).items.sort(sortBy('url'));
 
 	res.render('locations/world-regions/world-region', {
-		title: `Stellaroute: ${worldRegion.name}`,
-		description: 'Stellaroute: ${worldRegion.name} Overview',
-		continents: Continent.cached().sort(sortBy('name')),
+		title: `Stellaroute: ${worldRegion.names.display}`,
+		description: 'Stellaroute: ${worldRegion.names.display} Overview',
+		continents: Continent.cached().sort(sortBy('url')),
 		countries: countries,
 		key: WorldRegion.hash,
 		worldRegion: worldRegion
@@ -66,8 +66,8 @@ router.get('/:worldRegion', function(req, res, next){
 
 router.get('/:country', function(req, res, next){
 	const country = Country.findOne('url', req.params.country)
-						   .join('continent', Continent.cached(), 'Id', 'name')
-						   .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
+						   .join('continent', Continent.cached(), 'Id', 'names.display')
+						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
 						   .items[0];
 
 	if(!country){
@@ -81,11 +81,11 @@ router.get('/:country', function(req, res, next){
 	res.render('locations/countries/country', {
 		title: `Stellaroute: ${country.names.display}`,
 		description: 'Stellaroute: ${country.names.display} Overview',
-		continents: Continent.cached().sort(sortBy('name')),
+		continents: Continent.cached().sort(sortBy('url')),
 		country: country,
 		key: Country.hash,
 		countryRegions: CountryRegion.find('country', country.Id).items,
-		worldRegions: WorldRegion.cached().sort(sortBy('name')),
+		worldRegions: WorldRegion.cached().sort(sortBy('url')),
 		provinces: provinces,
 	});
 });
@@ -110,7 +110,7 @@ router.get('/:country/:countryRegion', function(req, res, next){
 	res.render('locations/countries/country-region', {
 		title: `Stellaroute: ${countryRegion.name}`,
 		description: 'Stellaroute: ${countryRegion.name} Overview',
-		countries: Country.cached().sort(sortBy('name')),
+		countries: Country.cached().sort(sortBy('url')),
 		key: CountryRegion.hash,
 		country: country,
 		countryRegion: countryRegion,
@@ -121,11 +121,11 @@ router.get('/:country/:countryRegion', function(req, res, next){
 router.get('/:country/:province', function(req, res, next){
 	const country = Country.findOne('url', req.params.country).items;
 	const province = Province.findOne(['url', 'country'], [req.params.province, country.Id])
-							 .join('continent', Continent.cached(), 'Id', 'name')
+							 .join('continent', Continent.cached(), 'Id', 'names.display')
 							 .join('continent', Continent.cached(), 'Id', 'url')
-							 .join('worldRegions', WorldRegion.cached(), 'Id', 'name')
+							 .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
 							 .join('worldRegions', WorldRegion.cached(), 'Id', 'url')
-						     .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
+						     .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display')
 						     .join('countryRegions', CountryRegion.cached(), 'Id', 'url')
 						     .items[0];
 
@@ -142,8 +142,8 @@ router.get('/:country/:province', function(req, res, next){
 		title: `Stellaroute: ${province.name}`,
 		description: 'Stellaroute: ${province.name} Overview',
 		key: Province.hash,
-		continents: Continent.cached().sort(sortBy('name')),
-		worldRegions: WorldRegion.cached().sort(sortBy('name')),
+		continents: Continent.cached().sort(sortBy('url')),
+		worldRegions: WorldRegion.cached().sort(sortBy('url')),
 		country: country,
 		countryRegions: countryRegions,
 		province: province,
@@ -161,9 +161,9 @@ router.get('/:country/:province/:provinceRegion', function(req, res, next){
 	}
 
 	const provinceRegion = ProvinceRegion.findOne('url', req.params.provinceRegion)
-										 .join('province', Province.cached(), 'Id', 'name')
+										 .join('province', Province.cached(), 'Id', 'names.display')
 										 .join('province', Province.cached(), 'Id', 'url')
-									     .join('countryRegions', CountryRegion.cached(), 'Id', 'name')
+									     .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display')
 									     .join('countryRegions', CountryRegion.cached(), 'Id', 'url')
 									     .items[0];
 	if(!provinceRegion){
@@ -190,11 +190,11 @@ router.get('/:country/:city', function(req, res, next){
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'name' )
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
 					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
-					 .join('province', Province.cached(), 'Id', 'name' )
+					 .join('province', Province.cached(), 'Id', 'names.display' )
 					 .join('province', Province.cached(), 'Id', 'url' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'name' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
 	
@@ -284,7 +284,7 @@ router.get('/:country/:city/:neighborhood', function(req, res, next){
 	}
 
 	const country = Country.findOne('url', req.params.country).items;
-	const cityRegions = CityRegion.find('city', neighborhood.city).items.sort(sortBy('name'))
+	const cityRegions = CityRegion.find('city', neighborhood.city).items.sort(sortBy('url'))
 
 	res.render('locations/cities/neighborhood', {
 		title: `Stellaroute: ${neighborhood.names.display}`,

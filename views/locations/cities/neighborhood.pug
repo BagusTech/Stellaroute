@@ -48,12 +48,12 @@ block content
 							.modal-header
 								button.close(type='button', data-dismiss='modal', aria-label='Close')
 									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel= `Delete ${neighborhood.name}`
+								h4.modal-title#DeleteModalLabel= `Delete ${neighborhood.names.display}`
 							.modal-body
 								.alert.alert-danger
 									p
 										| Are you sure you want to delete&nbsp;
-										= neighborhood.name + '?'
+										= neighborhood.names.display + '?'
 									p This action cannot be undone
 								input.btn.btn-danger(type='submit', value='Delete', name='delete')
 

@@ -199,14 +199,14 @@ block content
 							label(for='CountryContinet') Continent(s)
 							p.form-control-static
 								- for (var i = 0; i < country.continentDisplay.length; i++)
-									a(href=`/${country.continentName[i].replace(/ /g, '-').toLowerCase()}`)= country.continentDisplay[i]
+									a(href=`/${country.continentDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.continentDisplay[i]
 
 									if ((i+1) !== country.continentDisplay.length)
 										|,&nbsp;
 							.hidden
 								select.form-control#CountryContinent(name='continent',  multiple='true')
 									-for (i in continents)
-										option(value= continents[i].Id, selected= country.continentName.toString().indexOf(continents[i].name) > -1)= continents[i].name
+										option(value= continents[i].Id, selected= country.continentDisplay.toString().indexOf(continents[i].names.display) > -1)= continents[i].names.display
 					
 					.col-xs-12.col-sm-6
 						.form-group
@@ -220,7 +220,7 @@ block content
 							.hidden
 								select.form-control#WorldRegions(name='worldRegions',  multiple='true')
 									-for (i in worldRegions)
-										option(value= worldRegions[i].Id, selected= country.worldRegionsName.toString().indexOf(worldRegions[i].name) > -1)= worldRegions[i].name
+										option(value= worldRegions[i].Id, selected= country.worldRegionsDisplay.toString().indexOf(worldRegions[i].names.display) > -1)= worldRegions[i].names.display
 
 
 				input(type='hidden', name= key, value= country[key])
@@ -238,12 +238,12 @@ block content
 									span(aria-hidden='true') &times;
 								h4.modal-title#DeleteModalLabel
 									| Delete&nbsp;
-									= country.name
+									= country.names.display
 							.modal-body
 								.alert.alert-danger
 									p
 										| Are you sure you want to delete&nbsp;
-										= country.name + '?'
+										= country.names.display + '?'
 									p This action cannot be undone
 								input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
@@ -285,7 +285,7 @@ block content
 						span(aria-hidden='true') &times;
 					h4#NewCountryRegionModalLabel.mt-0.mb-0.pl-Sm.fc-G
 							| Add a Region to&nbsp;
-							span= country.name
+							span= country.names.display
 				.modal-body.plr-Md.pb-Md
 					form(method='POST', action='/country-regions/new')
 						.form-group
@@ -303,7 +303,7 @@ block content
 						span(aria-hidden='true') &times;
 					h4#NewCountryProvinceModalLabel.mt-0.mb-0.pl-Sm.fc-G
 							| Add a State/Province to&nbsp;
-							span= country.name
+							span= country.names.display
 				.modal-body.plr-Md.pb-Md
 					form(method='POST', action='/provinces/new')
 						.form-group
@@ -314,7 +314,7 @@ block content
 							label(for='ProvinceCountryRegion') Country Region
 							select#ProvinceCountryRegion(name='countryRegions', multiple)
 								for region in countryRegions
-									option(value= region.Id)= region.name
+									option(value= region.Id, name='countryRegions')= region.names.display
 
 
 						input(type='hidden', name='country', value= country.Id)

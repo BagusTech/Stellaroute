@@ -19,38 +19,38 @@ block content
 				.form-group
 					label Country Region(s)
 					p.form-control-static
-						if city.countryRegionsName
-							-for (i in city.countryRegionsName)
-								a(href=`/${city.countryUrl}/${city.countryRegionsUrl[i]}`)= city.countryRegionsName && city.countryRegionsName.indexOf(city.countryRegionsName[i]) == city.countryRegionsName.length-1 ? city.countryRegionsName[i] : `${city.countryRegionsName[i]}, ` 
+						if city.countryRegionsDisplay
+							-for (i in city.countryRegionsDisplay)
+								a(href=`/${city.countryUrl}/${city.countryRegionsUrl[i]}`)= city.countryRegionsDisplay && city.countryRegionsDisplay.indexOf(city.countryRegionsDisplay[i]) == city.countryRegionsDisplay.length-1 ? city.countryRegionsDisplay[i] : `${city.countryRegionsDisplay[i]}, ` 
 						else
 							| N/A
 					.hidden
 						select.form-control(name='countryRegions', multiple)
 							for region in countryRegions
-								option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.name
+								option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.names.display
 
 				.row
 					.col-xs-12.col-sm-6
 						.form-group
 							label State/Province
 							p.form-control-static
-								if city.provinceName
-									-for (i in city.provinceName)
-										a(href=`/${city.countryUrl}/${city.provinceUrl[i]}`)= city.provinceName && city.provinceName.indexOf(city.provinceName[i]) == city.provinceName.length-1 ? city.provinceName[i] : `${city.provinceName[i]}, ` 
+								if city.provinceDisplay
+									-for (i in city.provinceDisplay)
+										a(href=`/${city.countryUrl}/${city.provinceUrl[i]}`)= city.provinceDisplay && city.provinceDisplay.indexOf(city.provinceDisplay[i]) == city.provinceDisplay.length-1 ? city.provinceDisplay[i] : `${city.provinceDisplay[i]}, ` 
 								else
 									| N/A
 							.hidden
 								select.form-control(name='province', multiple)
 									for province in provinces
-										option(value=province.Id, selected= city.province && city.province.indexOf(province.Id) > -1)= province.name
+										option(value=province.Id, selected= city.province && city.province.indexOf(province.Id) > -1)= province.names.display
 
 					.col-xs-12.col-sm-6
 						.form-group
 							label State/Province Region(s)
 							p.form-control-static
-								if city.provinceRegionsName
-									-for (i in city.provinceRegionsName)
-										a(href=`/${city.countryUrl}/${city.provinceRegionsUrl[i]}`)= city.provinceRegionsName && city.provinceRegionsName.indexOf(city.provinceRegionsName[i]) == city.provinceRegionsName.length-1 ? city.provinceRegionsName[i] : `${city.provinceRegionsName[i]}, ` 
+								if city.provinceRegionsDisplay
+									-for (i in city.provinceRegionsDisplay)
+										a(href=`/${city.countryUrl}/${city.provinceRegionsUrl[i]}`)= city.provinceRegionsDisplay && city.provinceRegionsDisplay.indexOf(city.provinceRegionsDisplay[i]) == city.provinceRegionsDisplay.length-1 ? city.provinceRegionsDisplay[i] : `${city.provinceRegionsDisplay[i]}, ` 
 								else
 									| N/A
 							.hidden
@@ -74,12 +74,12 @@ block content
 									span(aria-hidden='true') &times;
 								h4.modal-title#DeleteModalLabel
 									| Delete&nbsp;
-									= city.name
+									= city.names.display
 							.modal-body
 								.alert.alert-danger
 									p
 										| Are you sure you want to delete&nbsp;
-										= city.name + '?'
+										= city.names.display + '?'
 									p This action cannot be undone
 								input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
@@ -117,7 +117,7 @@ block content
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
 							| Add a City Region to&nbsp;
-							span= city.name
+							span= city.names.display
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
 					.modal-body.plr-Md.pb-Md
@@ -137,7 +137,7 @@ block content
 					.modal-header.mb-Md
 						h4.mt-0.mb-0.pl-Sm.fc-G
 							| Add a Neighborhood to&nbsp;
-							span= city.name
+							span= city.names.display
 						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') &times;
 					.modal-body.plr-Md.pb-Md

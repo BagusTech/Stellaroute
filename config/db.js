@@ -2,8 +2,8 @@ const AWS = require('aws-sdk');
 
 //Connect to database
 AWS.config.update({
-  accessKeyId: 'AKIAIJEG2OGEQALNK2WA', 
-  secretAccessKey: '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',
+  accessKeyId: process.env.AWS_DYNAMO_ID,
+  secretAccessKey: process.env.AWS_DYNAMO_KEY,
   region: 'us-west-2',
   endpoint: "https://dynamodb.us-west-2.amazonaws.com"
 });

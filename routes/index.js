@@ -5,7 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
-const City     		   = require('../schemas/province-region');
+const City     		   = require('../schemas/continent');
 const db               = require('../config/db');
 const router           = express.Router();
 

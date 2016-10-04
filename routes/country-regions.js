@@ -17,7 +17,7 @@ router.get('/', function(req, res){
 
 router.post('/new', function(req, res){
 	const params = req.body;
-	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 	
 	const redirect = params.redirect;
 	delete params.redirect;

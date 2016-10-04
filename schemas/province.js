@@ -5,11 +5,19 @@ const Province = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		name: String,
 		continent: Array,
 		worldRegions: Array,
 		country: String,
 		countryRegions: Array,
+		names: {
+			display: String,
+			official: String,
+			native: [{  
+				name: String, 
+				language: String,
+			}],
+			alias: Array, 
+		},
 	},
 	HASH: 'Id',
 	HASHType: 'S',

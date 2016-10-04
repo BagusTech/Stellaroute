@@ -13,8 +13,8 @@ const Province = require('../schemas/province');
 const router = express.Router();
 
 router.get('/', function(req, res, next){
-	var countries = Country.join('continent', Continent.cached(), 'Id', 'name' )
-	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'name' )
+	var countries = Country.join('continent', Continent.cached(), 'Id', 'names.display' )
+	                       .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display' )
 	                       .items.sort(sortBy('url'));
 
 	res.render('locations/countries/_countries', {
@@ -35,7 +35,7 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', function(req, res){
 	const params = req.body;
-	params.url = params.url || params.names.display.replace(/ /g, '-').toLowerCase();
+	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 
 	// start combining native name and native langauge into an array of objects from two seperate arrays
 	const nativeNames = typeof params['native.name'] === 'string' ? Array(params['native.name']) : params['native.name'];

@@ -12,9 +12,9 @@ block content
 			form.update-form(method='POST', action='/continents/update')
 				.form-group
 					label Name
-					p.form-control-static(data-type='text', data-name='name')= String(continent.name)
+					p.form-control-static(data-type='text', data-name='name')= String(continent.names.display)
 					.hidden
-						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=continent.name)
+						input.form-control#ContinentName(name='names.display', type='text', placeholder='name', value=continent.names.display)
 
 				input(type='hidden', name= key, value= continent[key])
 				input(type='hidden', name='redirect', value=`/${continent.url}`)
@@ -56,7 +56,7 @@ block content
 					ul
 						for region in worldRegions
 							li
-								a(href=`/${region.url}`)= region.name
+								a(href=`/${region.url}`)= region.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddRegion') Add Region
@@ -86,7 +86,7 @@ block content
 					.modal-body.plr-Md.pb-Md
 						.form-group
 							label(for='WorldRegionName') Name of Region
-							input.form-control#WorldRegionName(name='name', type='text', placeholder='Southeast Asia', required)
+							input.form-control#WorldRegionName(name='names.display', type='text', placeholder='Southeast Asia', required)
 							input.hidden(type='hidden', name='continent', value= continent.Id)
 
 						.form-group.mb-0

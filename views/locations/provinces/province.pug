@@ -12,9 +12,9 @@ block content
 			form.update-form(method='POST', action='/provinces/update')
 				.form-group
 					label(for='ProvinceName') Name
-					p.form-control-static= province.name
+					p.form-control-static= province.names.display
 					.hidden
-						input.form-control#ProvinceName(name='name', type='text', placeholder='name', value=province.name)
+						input.form-control#ProvinceName(name='names.display', type='text', placeholder='name', value=province.names.display)
 
 				.row
 					.col-xs-12.col-sm-6

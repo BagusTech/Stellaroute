@@ -56,7 +56,7 @@ block content
 							.hidden
 								select.form-control(name='provinceRegions', multiple)
 									for region in provinceRegions
-										option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.name
+										option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.names.display
 
 				input(type='hidden', name='redirect', value=`/${city.countryUrl}/${city.url}`)
 				input(type='hidden', name='deleteRedirect', value=`/${city.countryUrl}`)

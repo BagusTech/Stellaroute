@@ -11,14 +11,15 @@ block content
 				.col-sm-6.col-xs-12
 					.form-group
 						label(for='WorldRegionName') Name
-						input.form-control#WorldRegionName(name='name', type='text', placeholder='name', required)
+						input.form-control#WorldRegionName(name='names.display', type='text', placeholder='name', required)
 			.row
 				.col-sm-6.col-xs-12
 					.form-group
 						label(for='WorldRegionContinet') Continent(s) it resides in 
 						select.form-control#WorldRegionContinent(name='continent',  multiple='true', required)
 							-for (i in continents)
-								option(value= continents[i].Id)= continents[i].name
+								option(value= continents[i].Id)= continents[i].names.display
 								
 			.form-group.text-right
+				input(type='hidden', name='redirect', value='/world-regions')
 				input.btn.btn-primary(type='submit', value='submit')

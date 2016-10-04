@@ -198,10 +198,10 @@ block content
 						.form-group
 							label(for='CountryContinet') Continent(s)
 							p.form-control-static
-								- for (var i = 0; i < country.continentName.length; i++)
-									a(href=`/${country.continentName[i].replace(/ /g, '-').toLowerCase()}`)= country.continentName[i]
+								- for (var i = 0; i < country.continentDisplay.length; i++)
+									a(href=`/${country.continentName[i].replace(/ /g, '-').toLowerCase()}`)= country.continentDisplay[i]
 
-									if ((i+1) !== country.continentName.length)
+									if ((i+1) !== country.continentDisplay.length)
 										|,&nbsp;
 							.hidden
 								select.form-control#CountryContinent(name='continent',  multiple='true')
@@ -212,10 +212,10 @@ block content
 						.form-group
 							label World Region(s)
 							p.form-control-static
-								- for (var i = 0; i < country.worldRegionsName.length; i++)
-									a(href=`/${country.worldRegionsName[i].replace(/ /g, '-').toLowerCase()}`)= country.worldRegionsName[i]
+								- for (var i = 0; i < country.worldRegionsDisplay.length; i++)
+									a(href=`/${country.worldRegionsDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.worldRegionsDisplay[i]
 
-									if ((i+1) !== country.worldRegionsName.length)
+									if ((i+1) !== country.worldRegionsDisplay.length)
 										|,&nbsp;
 							.hidden
 								select.form-control#WorldRegions(name='worldRegions',  multiple='true')
@@ -258,7 +258,7 @@ block content
 					ul
 						for region in countryRegions
 							li
-								a(href= `/${country.url}/${region.url}`)= region.name
+								a(href= `/${country.url}/${region.url}`)= region.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
@@ -271,7 +271,7 @@ block content
 					ul
 						for province in provinces
 							li
-								a(href= `/${country.url}/${province.url}`)= province.name
+								a(href= `/${country.url}/${province.url}`)= province.names.display
 
 					.clear
 						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
@@ -290,7 +290,7 @@ block content
 					form(method='POST', action='/country-regions/new')
 						.form-group
 							label(for='CountryRegionName') Name
-							input.form-control#CountryRegionName(name='name', type='text', placeholder='New England', required)
+							input.form-control#CountryRegionName(name='names.display', type='text', placeholder='New England', required)
 
 						input(type='hidden', name='country', value= country.Id)
 						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
@@ -308,7 +308,7 @@ block content
 					form(method='POST', action='/provinces/new')
 						.form-group
 							label(for='ProvinceName') Name
-							input.form-control#ProvinceName(name='name', type='text', placeholder='Missouri', required)
+							input.form-control#ProvinceName(name='names.display', type='text', placeholder='Missouri', required)
 
 						.form-group
 							label(for='ProvinceCountryRegion') Country Region

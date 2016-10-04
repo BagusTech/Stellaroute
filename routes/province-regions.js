@@ -23,7 +23,7 @@ router.post('/new', function(req, res){
 	delete req.body.deleteRedirect;
 
 	const params = req.body;
-	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 
 	if (typeof params.countryRegions === 'string'){
 		params.countryRegions = Array(params.countryRegions);
@@ -49,8 +49,9 @@ router.post('/new', function(req, res){
 });
 
 router.post('/update', function(req, res){
-	const redirect = req.body.redirect;
+	const redirect = req.body.delete ? req.body.deleteRedirect : req.body.redirect;
 	delete req.body.redirect;
+	delete req.body.deleteRedirect;
 
 	if (req.body.delete){
 

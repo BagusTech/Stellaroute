@@ -42,11 +42,6 @@ const Country = Duck({
 			explanation: String,
 		}],
 	//Travel Basics 
-		airports: [{
-			city: String,
-			airport: String,
-			abbreviation: String,
-		}],
 		entryTax: {
 			amount: String,
 			explanation: String,
@@ -61,7 +56,7 @@ const Country = Duck({
 			image: String,
 		},
 		mobile: {
-			title: Boolean,
+			title: String,
 			explanation: String,
 		},
 		water: {
@@ -274,13 +269,6 @@ const Country = Duck({
 				title: String,
 				explanation: String,
 			}],
-			train: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				explanation: String,
-			}],
 		},
 	// Eating and Meals
 		food: {
@@ -319,11 +307,13 @@ const Country = Duck({
 				order: String,
 				name: String,
 				type: String,
+				id: String,
 			}],
 			attractions: [{
 				order: String,
 				name: String,
 				city: String,
+				id: String,
 			}],
 			geographicalLandmarks: [{
 				order: String,

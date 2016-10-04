@@ -5,7 +5,15 @@ const Continent = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		name: String
+			names: {
+			display: String,
+			official: String,
+			native: [{  
+				name: String, 
+				language: String,
+			}],
+			alias: Array, 
+		},
 	},
 	HASH: 'Id',
 	HASHType: 'S',

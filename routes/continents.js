@@ -12,7 +12,7 @@ router.get('/', function(req, res, next){
 	res.render('locations/continents/_continents', {
 		title: 'Stellaroute: Continents',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		continents: Continent.cached().sort(sortBy('name')),
+		continents: Continent.cached().sort(sortBy('names.display')),
 	});
 });
 
@@ -25,10 +25,10 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', Continent.getCached(), function(req, res){
 	const params = req.body;
-	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 	
 	// only allowed to add a continent that doesn't exist
-	if (Continent.findOne('name', params.name).items){
+	if (Continent.findOne('names.display', params['names.display']).items){
 		req.flash('error', 'A country with that name already exists');
 		res.redirect('/continents');
 		return;

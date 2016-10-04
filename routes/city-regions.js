@@ -17,7 +17,7 @@ router.get('/', function(req, res){
 
 router.post('/new', function(req, res){
 	const params = req.body;
-	params.url = params.url || params.name.replace(/ /g, '-').toLowerCase();
+	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 
 	const redirect = params.redirect;
 	delete params.redirect;
@@ -83,13 +83,13 @@ router.post('/update', function(req, res){
 				// resolved updateCache
 
 				req.flash('success', 'City Region successfully updated');
-				res.redirect(`/city-regions/${req.body.name}`);
+				res.redirect(redirect);
 				return;
 			}, function(){
 				// rejected updateCache
 
 				req.flash('error', 'There was a small issue, but the world region was updated');
-				res.redirect(`/city-regions/${req.body.name}`);
+				res.redirect(redirect);
 				return;
 			});
 		}, function(err){

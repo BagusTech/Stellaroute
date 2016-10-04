@@ -5,8 +5,16 @@ const WorldRegion = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		name: String,
-		continent: Array
+		continent: Array,
+		names: {
+			display: String,
+			official: String,
+			native: [{  
+				name: String, 
+				language: String,
+			}],
+			alias: Array, 
+		},
 	},
 	HASH: 'Id',
 	HASHType: 'S',

@@ -18,6 +18,7 @@ const City = Duck({
 		abbreviation: String,
 		isAutonomous: Boolean,
 		image: String,
+		mapImage: String,
 		continent: Array,
 		worldRegions: Array,
 		country: String,
@@ -46,7 +47,7 @@ const City = Duck({
 			title: String,
 			explanation: String,
 		}],
-	//Travel Basics 
+	//Travel Basics
 		entryTax: {
 			amount: String,
 			explanation: String,
@@ -152,14 +153,9 @@ const City = Duck({
 			months: Array,
 			description: String,
 		}],
-		holidays: [{
-			name: String,
-			alias: Array,
-			date: String,
-			description: String,
-		}], 
 		festival: [{
 			name: String,
+			alias: Array,
 			type: String, ///ability to destingious between event/festival type. ie Cherry Blossoms as oppose to a Musica Festival???
 			date: String,
 			description: String,
@@ -285,13 +281,6 @@ const City = Duck({
 				title: String,
 				explanation: String,
 			}],
-			train: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				explanation: String,
-			}],
 		},
 	// Eating and Meals
 		food: {
@@ -350,11 +339,13 @@ const City = Duck({
 				order: String,
 				name: String,
 				type: String,
+				id: String,
 			}],
 			attractions: [{
 				order: String,
 				name: String,
 				city: String,
+				id: String,
 			}],
 			geographicalLandmarks: [{
 				order: String,
@@ -366,6 +357,7 @@ const City = Duck({
 				order: String,
 				name: String,
 				type: String,
+				id: String,
 		}],
 	},
 	HASH: 'Id',

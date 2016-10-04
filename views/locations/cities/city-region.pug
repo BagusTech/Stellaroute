@@ -6,15 +6,15 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${country.url}/${city.url}`)= `< Back to ${city.name}`
+			a.fc-G(href= `/${country.url}/${city.url}`)= `< Back to ${city.names.display}`
 
 		.content-card
 			form.update-form(method='POST', action='/city-regions/update')
 				.form-group
 					label Name
-					p.form-control-static(data-type='text', data-name='name')= cityRegion.name
+					p.form-control-static(data-type='text', data-name='name')= cityRegion.names.display
 					.hidden
-						input.form-control#ContinentName(name='name', type='text', placeholder='name', value=cityRegion.name)
+						input.form-control#ContinentName(name='names.display', type='text', placeholder='name', value=cityRegion.names.display)
 
 				input(type='hidden', name='redirect', value=`/${country.url}/${city.url}/${cityRegion.url}`)
 				input(type='hidden', name='deleteRedirect', value=`/${country.url}/${city.url}`)

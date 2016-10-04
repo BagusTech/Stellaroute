@@ -6,7 +6,7 @@ block content
 
 	.container.ptb-Sm
 		small
-			a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityName}`
+			a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
 
 		.content-card
 			form.update-form(method='POST', action='/neighborhoods/update')
@@ -23,7 +23,7 @@ block content
 							p.form-control-static
 								if (neighborhood.cityRegions)
 									- for (var i = 0; i < neighborhood.cityRegions.length; i++)
-										a(href=`/${country.name}/${neighborhood.cityName}/${neighborhood.cityRegionsName[i]}`)= neighborhood.cityRegionsName[i]
+										a(href=`/${country.name}/${neighborhood.cityName}/${neighborhood.cityRegionsDisplay[i]}`)= neighborhood.cityRegionsDisplay[i]
 
 										if ((i+1) !== neighborhood.cityRegions.length)
 											|,&nbsp;
@@ -32,7 +32,7 @@ block content
 							.hidden
 								select.form-control#CityRegions(name='cityRegions',  multiple='true')
 									-for (i in cityRegions)
-										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsName && neighborhood.cityRegionsName.toString().indexOf(cityRegions[i].name) > -1)= cityRegions[i].name
+										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsDisplay && neighborhood.cityRegionsDisplay.toString().indexOf(cityRegions[i].names.display) > -1)= cityRegions[i].names.display
 
 				input(type='hidden', name='redirect', value=`/${country.url}/${neighborhood.cityUrl}/${neighborhood.url}`)
 				input(type='hidden', name='deleteRedirect', value=`/${country.url}/${neighborhood.cityUrl}`)

@@ -14,10 +14,10 @@ function parseData(data, schema, table) {
 			}
 
 			var itemType = data[item] instanceof Array === true ? 'array' : typeof data[item];
-			var schemaType = typeof schema[item] === 'object' ? 'object' : 
+			var schemaType = typeof schema[item] === 'object' ? (schema[item] instanceof Array === true ? 'array' : 'object') : 
 				(schema[item]() instanceof Array === true ? 'array' : typeof schema[item]());
 
-			if ( itemType === 'object' ) {
+			if (itemType === 'object' || (schemaType === 'array' && typeof schemaType[0] === 'object')) {
 				parse(data[item], schema[item])
 			} else {
 				if ( itemType !== schemaType ){

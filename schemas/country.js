@@ -5,6 +5,18 @@ const Country = Duck({
 	Item: {
 		Id: String,
 		url: String,
+		abbreviation: String,
+		image: String,
+		continent: Array,
+		worldRegions: Array,
+	//At a Glance Card
+		overview: String,
+		tagline: String,
+		averageStay: String,
+		bestTimeToVisit: Array,
+		topPlaces: Array,
+		climate: String,
+		timeZones: Array,
 	//Modal Fields Card
 		names: {
 			display: String,  
@@ -15,16 +27,6 @@ const Country = Duck({
 			}],
 			alias: Array, 
 		},
-		abbreviation: String,
-		image: String,
-		continent: Array,
-		worldRegions: Array,
-	//At a Glance Card
-		averageStay: String,
-		bestTimeToVisit: Array,
-		topPlaces: Array,	
-		tagline: String,
-		overview: String,
 	// Need to Know
 		needToKnow: [{
 			order: Number,
@@ -50,7 +52,6 @@ const Country = Duck({
 			amount: String,
 			explanation: String,
 		}, 
-		timeZones: Array,
 		electricity: {
 			type: String,
 			image: String,
@@ -135,7 +136,6 @@ const Country = Duck({
 			end: String,
 			description: String,
 		}],
-		climate: String,
 		seasons: [{
 			order: Number,
 			season: String,
@@ -151,7 +151,7 @@ const Country = Duck({
 	// Communication
 		communication: {
 			overview: String,
-			languages: Array, 
+			languages: Array,
 			basicSayings: [{
 				order: Number,
 				endorse: Boolean,
@@ -165,7 +165,6 @@ const Country = Duck({
 				order: Number,
 				endorse: Boolean,
 				remove: Boolean, 
-				language: String,
 				language: String,
 				phrase: String,
 				translation: String,

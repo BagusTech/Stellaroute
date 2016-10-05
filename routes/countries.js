@@ -25,6 +25,9 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/new', function(req, res){
+	const redirect = req.body.redirect || '/countries';
+	delete req.body.redirect;
+
 	const params = req.body;
 	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 
@@ -43,7 +46,7 @@ router.post('/new', function(req, res){
 	// end combining
 
 	// only allowed to add a country that doesn't exist
-	if (Country.findOne('name', params.name)){
+	if (Country.findOne('url', params.url).items){
 		req.flash('error', 'A country with that name already exists');
 		res.redirect(params.url)
 		return;
@@ -58,15 +61,15 @@ router.post('/new', function(req, res){
 		params.worldRegions = Array(params.worldRegions);
 	}
 
-	if (typeof params.languages === 'string'){
-		params.languages = Array(params.languages);
+	if (typeof params['communication.languages'] === 'string'){
+		params['communication.languages'] = Array(params['communication.languages']);
 	}
 	
 	// only attempt to split if alias' are entered else delete it
-	if(params.alias.length > 0){
-		params.alias = params.alias.split(', ');
+	if(params['names.alias'] && params['names.alias'].length > 0){
+		params['names.alias'] = params['names.alias'].split(', ');
 	} else{
-		delete params.alias;
+		delete params['names.alias'];
 	}
 
 	Country.add(params).then(function(data){
@@ -76,13 +79,13 @@ router.post('/new', function(req, res){
 			// resolved updateCache
 
 			req.flash('success', 'Country Successfully added');
-			res.redirect(params.url);
+			res.redirect(redirect);
 			return;
 		}, function(err){
 			// rejected updateCache
 
 			console.error(err);
-			res.redirect('/countries');
+			res.redirect(redirect);
 			return;
 		});
 	},
@@ -90,7 +93,7 @@ router.post('/new', function(req, res){
 	// rejected add
 
 		req.flash('error', 'Opps, something when wrong! Please try again.');
-		res.redirect('/countries');
+		res.redirect(redirect);
 		return;
 	});
 });
@@ -151,11 +154,16 @@ router.post('/update', function(req, res){
 			params.worldRegions = Array(params.worldRegions);
 		}
 
-		if (typeof params.languages === 'string'){
-			params.languages = Array(params.languages);
+		if (typeof params['communication.languages'] === 'string'){
+			params['communication.languages'] = Array(params['communication.languages']);
 		}
 
-		params.alias = params.alias && params.alias.split(', ');
+		// only attempt to split if alias' are entered else delete it
+		if(params['names.alias'] && params['names.alias'].length > 0){
+			params['names.alias'] = params['names.alias'].split(', ');
+		} else{
+			delete params['names.alias'];
+		}
 
 		Country.update(params, true).then(function(){
 			// resolved

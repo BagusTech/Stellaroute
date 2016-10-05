@@ -90,7 +90,7 @@ block content
 							.col-xs-12
 								.form-group.js-languages
 									label(for='CountryLanguages') Language(s)
-									select.form-control#CountryLanguages(name='languages', multiple='true', required)
+									select.form-control#CountryLanguages(name='communication.languages', multiple='true', required)
 										option Akan
 										option Amharic
 										option Arabic
@@ -192,6 +192,28 @@ block content
 								.form-group
 									label(for='CountryOfficialName') Official Name
 									input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Federal Republic of Germany', required)
+
+						.row.js-duplicate
+							.col-sm-6.col-xs-6
+								.form-group
+									label Native Name
+									input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
+							.col-sm-3.col-xs-3.plr-0.plr-Sm--sm
+								.form-group
+									label Language
+									select.form-control.js-name-language(name='native.language', required)
+										
+							.col-sm-3.col-xs-3
+								.form-group
+									label &nbsp;
+									button.btn.btn-danger.form-control.js-delete-row.hidden(type='button')
+										span.visible-xs(aria-hidden='true') &times;
+										span.hidden-xs(aria-hidden='true') Remove
+										span.sr-only Remove Native Name
+						
+						.row
+							.col-xs-12.text-right
+								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
 						
 						.row
 							.col-xs-12.col-sm-4
@@ -201,14 +223,9 @@ block content
 							.col-xs-12.col-sm-8
 								.form-group
 									label(for='CountryAlias') Alias
-									input.form-control#CountryAlias(name='alias', type='text', placeholder='US, U.S.A., America')
+									input.form-control#CountryAlias(name='names.alias', type='text', placeholder='US, U.S.A., America')
 
 						.form-group.mb-0
 							input.hidden(name='worldRegions', value=worldRegion.Id)
-							input.hidden(name='continent', value=worldRegion.continent)
-							button.btn.btn-default.btn-Sm(type='submit', value= `/${worldRegion.url}`, name='redirect') 
-								span.hidden-xs Save and&nbsp;
-								| Return
-							button.btn.btn-primary.btn-Sm.f-R(type='submit', value='countries', name='redirect')
-								span.hidden-xs Save and&nbsp;
-								| Continue
+							input.hidden(name='continent', value=worldRegion.continent[0])
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${worldRegion.url}`, name='redirect') Save

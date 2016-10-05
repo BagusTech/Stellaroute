@@ -108,8 +108,8 @@ router.get('/:country/:countryRegion', function(req, res, next){
 	const provinces = Province.find('countryRegions', countryRegion.Id).items;
 
 	res.render('locations/countries/country-region', {
-		title: `Stellaroute: ${countryRegion.name}`,
-		description: 'Stellaroute: ${countryRegion.name} Overview',
+		title: `Stellaroute: ${countryRegion.names.display}`,
+		description: 'Stellaroute: ${countryRegion.names.display} Overview',
 		countries: Country.cached().sort(sortBy('url')),
 		key: CountryRegion.hash,
 		country: country,
@@ -139,8 +139,8 @@ router.get('/:country/:province', function(req, res, next){
 	const cities = City.find('province', province.Id).items;
 
 	res.render('locations/provinces/province', {
-		title: `Stellaroute: ${province.name}`,
-		description: 'Stellaroute: ${province.name} Overview',
+		title: `Stellaroute: ${province.names.display}`,
+		description: 'Stellaroute: ${province.names.display} Overview',
 		key: Province.hash,
 		continents: Continent.cached().sort(sortBy('url')),
 		worldRegions: WorldRegion.cached().sort(sortBy('url')),
@@ -176,8 +176,8 @@ router.get('/:country/:province/:provinceRegion', function(req, res, next){
 	const cities = City.find('provinceRegions', provinceRegion.Id).items;
 
 	res.render('locations/provinces/province-region', {
-		title: `Stellaroute: ${provinceRegion.name}`,
-		description: 'Stellaroute: ${provinceRegion.name} Overview',
+		title: `Stellaroute: ${provinceRegion.names.display}`,
+		description: 'Stellaroute: ${provinceRegion.names.display} Overview',
 		key: ProvinceRegion.hash,
 		countryRegions: countryRegions,
 		provinceRegion: provinceRegion,
@@ -233,7 +233,6 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 						   .items;
 
 	if(!country){
-		console.log('1')
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
 		return;
@@ -243,7 +242,6 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 					 .items;
 	
 	if(!city){
-		console.log('2')
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
 		return;
@@ -253,7 +251,6 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 								 .items;
 
 	if(!cityRegion){
-		console.log('3')
 		next();
 		return;
 	}

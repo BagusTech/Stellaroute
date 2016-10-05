@@ -114,13 +114,13 @@ block content
 									label(for='WorldRegions') World Region(s) it resides in 
 									select.form-control#WorldRegions(name='worldRegions',  multiple='true', required)
 										-for (i in worldRegions)
-											option(value= worldRegions[i].Id)= worldRegions[i].name
+											option(value= worldRegions[i].Id)= worldRegions[i].names.display
 
 						.row
 							.col-xs-12
 								.form-group.js-languages
 									label(for='CountryLanguages') Language(s)
-									select.form-control#CountryLanguages(name='languages', multiple='true', required)
+									select.form-control#CountryLanguages(name='communication.languages', multiple='true', required)
 										option Akan
 										option Amharic
 										option Arabic
@@ -217,6 +217,28 @@ block content
 										option Zhuang
 										option Zulu
 
+						.row.js-duplicate
+							.col-sm-6.col-xs-6
+								.form-group
+									label Native Name
+									input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
+							.col-sm-3.col-xs-3.plr-0.plr-Sm--sm
+								.form-group
+									label Language
+									select.form-control.js-name-language(name='native.language', required)
+										
+							.col-sm-3.col-xs-3
+								.form-group
+									label &nbsp;
+									button.btn.btn-danger.form-control.js-delete-row.hidden(type='button')
+										span.visible-xs(aria-hidden='true') &times;
+										span.hidden-xs(aria-hidden='true') Remove
+										span.sr-only Remove Native Name
+						
+						.row
+							.col-xs-12.text-right
+								button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+						
 						.row
 							.col-xs-12
 								.form-group
@@ -231,7 +253,7 @@ block content
 							.col-xs-12.col-sm-8
 								.form-group
 									label(for='CountryAlias') Alias
-									input.form-control#CountryAlias(name='alias', type='text', placeholder='US, U.S.A., America')
+									input.form-control#CountryAlias(name='names.alias', type='text', placeholder='US, U.S.A., America')
 
 						.form-group.mb-0
 							input.hidden(name='continent', value=continent.Id)

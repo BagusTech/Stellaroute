@@ -1,13 +1,13 @@
 html(lang='en')
-	include controls/common-resources
+	include controls/common-resources.pug
 
 	body#Stellaroute
 		block header
-			include controls/header
+			include controls/header.pug
 			
 		main.site-body
-			include controls/flash
+			include controls/flash.pug
 			block content
 
 		block footer
-			include controls/footer
+			include controls/footer.pug

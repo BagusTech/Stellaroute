@@ -1,11 +1,11 @@
-extends layout
+extends layout.pug
 
 block header
 	if (!user)
 		header.landing-header
 			.landing-utility
 				img(src='/images/logo.png', alt='Stellaroute')
-				include controls/login
+				include controls/login.pug
 			h1.mt-Xl.mb-Lg.ta-C
 				| Plan Spontaneity
 				small.d-B.mt-Sm.fc-W
@@ -14,7 +14,7 @@ block header
 
 			.row.p-A.l-0.r-0.plr-Md
 				.col-xs-12.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
-					include controls/beta-signup
+					include controls/beta-signup.pug
 	else
 		header.site-header.z-1.plr-Md
 			.row.pt-Md
@@ -32,7 +32,7 @@ block header
 						li.plr-Sm
 							a.fc-W(href='/countries') Countries
 				.col-xs-6.col-sm-3.ta-R.hidden-xs
-					include controls/login
+					include controls/login.pug
 
 				button.hamburger-menu--toggle.pt-0.mt-0
 					i.fa.fa-ellipsis-v(aria-hidden='true')

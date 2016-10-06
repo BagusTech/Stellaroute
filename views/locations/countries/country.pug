@@ -159,12 +159,11 @@ block content
 												label Language
 												p.form-control-static= country.names.native && country.names.native[i].language
 												.hidden
-													- try
-														select.form-control.js-name-language(name='native.language', required)
+													select.form-control.js-name-language(name='native.language', required)
+														if country.communication
 															- for(j in country.communication.languages)
 																option(selected= country.names.native[i].language.indexOf(country.communication.languages[j]) > -1)= country.communication.languages[j]
-													catch
-														| none to choose from
+												
 										.col-xs-3
 											.form-group
 												p.form-static-content &nbsp;

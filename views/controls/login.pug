@@ -5,7 +5,7 @@ if (!user)
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
 		.modal-dialog(role='document')
-			form.modal-content(method='POST', action='/login')
+			form.modal-content(method='POST', action='/auth/local')
 				.modal-header
 					h4.mt-0.mb-0.pl-Sm.fc-G Log In (Sign Up is Coming soon!)
 					button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
@@ -90,7 +90,11 @@ else
 				span= user.name.first + ' '
 			else
 				span User
-			i.fa.fa-user(aria-hidden="true")
+			
+			if user.instagram
+				img.br-C(src=user.instagram.profile_picture, alt=user.name.first, style= {'max-width': '36px'})
+			else
+				i.fa.fa-user(aria-hidden="true")
 
 		ul.dropdown-menu.ta-R(aria-labelledby="dLabel")
 			li

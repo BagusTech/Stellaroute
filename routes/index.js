@@ -2,6 +2,8 @@ const express          = require('express');
 const flash            = require('connect-flash');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const strategies       = require('../config/passport');
+const instagram        = require('../config/instagram');
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
@@ -9,7 +11,8 @@ const City     		   = require('../schemas/continent');
 const db               = require('../config/db');
 const router           = express.Router();
 
-require('../config/passport')(passport);
+strategies.local(passport);
+strategies.instagram(passport);
 
 router.get('/', City.getCached(), function(req, res, next){
 	
@@ -46,7 +49,7 @@ router.get('/', City.getCached(), function(req, res, next){
 		    else console.log('succesfully deleted param'); // successful response
 		});
 	});
-	//*/
+	//*/	
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
@@ -144,10 +147,27 @@ router.post('/signup', passport.authenticate('local-signup', {
 	failureFlash: true
 }));
 
-router.post('/login', User.getCached(), passport.authenticate('local-login', {
+router.post('/auth/local', User.getCached(), passport.authenticate('local-login', {
 	successRedirect: '/',
 	failureRedirect: '/',
 	failureFlash: true
+}));
+
+// GET /auth/instagram
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  The first step in Instagram authentication will involve
+//   redirecting the user to instagram.com.  After authorization, Instagram
+//   will redirect the user back to this application at /auth/instagram/callback
+router.get('/auth/instagram', passport.authenticate('instagram'));
+
+// GET /auth/instagram/callback
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  If authentication fails, the user will be redirected back to the
+//   login page.  Otherwise, the primary route function function will be called,
+//   which, in this example, will redirect the user to the home page.
+router.get('/auth/instagram/callback', passport.authenticate('instagram', {
+	successRedirect: '/',
+	failureRedirect: '/',
 }));
 
 module.exports = router;

@@ -4,19 +4,18 @@ const User = Duck({
 	Table: 'Users',
 	Item: {
 		Id: String,
-		local: {
-			email: String,
-			password: String
-		},
-		fb: {
-			email: String
-		},
+		facebook: String,
+		instagram: String,
+		recieveNewsletter: Boolean,
+		isAdmin: Boolean,
 		name: {
 			first: String,
 			last: String
 		},
-		recieveNewsletter: Boolean,
-		isAdmin: Boolean
+		local: {
+			email: String,
+			password: String
+		},
 	},
 	
 	HASH: 'Id',

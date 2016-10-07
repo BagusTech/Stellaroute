@@ -2,7 +2,7 @@
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on 
     // or if user is going to the home or login page
-    if (req.isAuthenticated() || req.originalUrl === '/' || req.originalUrl === '/login' || req.originalUrl === '/signup' || req.originalUrl === '/newsletter-signup' || req.originalUrl === '/request-location'){
+    if (req.isAuthenticated() || req.originalUrl === '/' || req.originalUrl === '/login' || req.originalUrl === '/signup' || req.originalUrl === '/newsletter-signup' || req.originalUrl === '/request-location' || req.originalUrl === '/privacy-and-terms'){
 		res.locals.user = req.user;
         return next();
     }

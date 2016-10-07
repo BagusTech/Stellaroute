@@ -1545,14 +1545,18 @@ ol ol {
 .list-flex {
   padding-left: 0;
   list-style: none;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
-  -ms-flex-align: center;
-      align-items: center;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .list-social-media {
   width: 100%;
@@ -5667,6 +5671,14 @@ a.thumbnail.active {
 .alert-danger .alert-link {
   color: #843534;
 }
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0;
@@ -5702,6 +5714,7 @@ a.thumbnail.active {
 }
 .progress.active .progress-bar,
 .progress-bar.active {
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
   animation: progress-bar-stripes 2s linear infinite;
 }
 .progress-bar-success {
@@ -6416,11 +6429,15 @@ button.close {
   outline: 0;
 }
 .modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
   -ms-transform: translate(0, -25%);
   transform: translate(0, -25%);
+  transition: -webkit-transform 0.3s ease-out;
   transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
 }
 .modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
 }
@@ -6810,24 +6827,30 @@ button.close {
 }
 @media all and (transform-3d), (-webkit-transform-3d) {
   .carousel-inner > .item {
+    transition: -webkit-transform 0.6s ease-in-out;
     transition: transform 0.6s ease-in-out;
+    transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-perspective: 1000px;
     perspective: 1000px;
   }
   .carousel-inner > .item.next,
   .carousel-inner > .item.active.right {
+    -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
     left: 0;
   }
   .carousel-inner > .item.prev,
   .carousel-inner > .item.active.left {
+    -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
     left: 0;
   }
   .carousel-inner > .item.next.left,
   .carousel-inner > .item.prev.right,
   .carousel-inner > .item.active {
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     left: 0;
   }
@@ -8318,7 +8341,8 @@ form.profile-settings-update .profile-label.notification h3 {
 #Stellaroute .bc-G {
   border-color: #959ca2;
 }
-#Stellaroute .br-C {
+#Stellaroute .br-C,
+#Stellaroute .br-50 {
   border-radius: 50%;
 }
 #Stellaroute .br-Sm {
@@ -8564,610 +8588,757 @@ form.profile-settings-update .profile-label.notification h3 {
   }
 }
 #Stellaroute .d-F {
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 #Stellaroute .fw-W {
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
 }
 #Stellaroute .fw-Wr {
-  -ms-flex-wrap: wrap-reverse;
-      flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
+      -ms-flex-wrap: wrap-reverse;
+          flex-wrap: wrap-reverse;
 }
 #Stellaroute .fw-Nw {
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
 }
 #Stellaroute .fd-R {
-  -ms-flex-direction: row;
-      flex-direction: row;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 #Stellaroute .fd-Rr {
-  -ms-flex-direction: row-reverse;
-      flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
 }
 #Stellaroute .fd-C {
-  -ms-flex-direction: column;
-      flex-direction: column;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 #Stellaroute .fd-Cr {
-  -ms-flex-direction: column-reverse;
-      flex-direction: column-reverse;
+  -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
 }
 #Stellaroute .fj-S {
-  -ms-flex-pack: start;
-      justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 #Stellaroute .fj-E {
-  -ms-flex-pack: end;
-      justify-content: flex-end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 #Stellaroute .fj-C {
-  -ms-flex-pack: center;
-      justify-content: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #Stellaroute .fj-B {
-  -ms-flex-pack: justify;
-      justify-content: space-between;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 #Stellaroute .fj-A {
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
 }
 #Stellaroute .fai-S {
-  -ms-flex-align: start;
-      -ms-grid-row-align: flex-start;
-      align-items: flex-start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+              -ms-grid-row-align: flex-start;
+          align-items: flex-start;
 }
 #Stellaroute .fai-W {
-  -ms-flex-align: end;
-      -ms-grid-row-align: flex-end;
-      align-items: flex-end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+              -ms-grid-row-align: flex-end;
+          align-items: flex-end;
 }
 #Stellaroute .fai-C {
-  -ms-flex-align: center;
-      -ms-grid-row-align: center;
-      align-items: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
 }
 #Stellaroute .fai-B {
-  -ms-flex-align: baseline;
-      -ms-grid-row-align: baseline;
-      align-items: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+              -ms-grid-row-align: baseline;
+          align-items: baseline;
 }
 #Stellaroute .fai-Str {
-  -ms-flex-align: stretch;
-      -ms-grid-row-align: stretch;
-      align-items: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+              -ms-grid-row-align: stretch;
+          align-items: stretch;
 }
 #Stellaroute .fac-S {
-  -ms-flex-line-pack: start;
-      align-content: flex-start;
+  -webkit-align-content: flex-start;
+      -ms-flex-line-pack: start;
+          align-content: flex-start;
 }
 #Stellaroute .fac-E {
-  -ms-flex-line-pack: end;
-      align-content: flex-end;
+  -webkit-align-content: flex-end;
+      -ms-flex-line-pack: end;
+          align-content: flex-end;
 }
 #Stellaroute .fac-C {
-  -ms-flex-line-pack: center;
-      align-content: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
 }
 #Stellaroute .fac-Str {
-  -ms-flex-line-pack: stretch;
-      align-content: stretch;
+  -webkit-align-content: stretch;
+      -ms-flex-line-pack: stretch;
+          align-content: stretch;
 }
 #Stellaroute .fac-B {
-  -ms-flex-line-pack: justify;
-      align-content: space-between;
+  -webkit-align-content: space-between;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
 }
 #Stellaroute .fac-A {
-  -ms-flex-line-pack: distribute;
-      align-content: space-around;
+  -webkit-align-content: space-around;
+      -ms-flex-line-pack: distribute;
+          align-content: space-around;
 }
 #Stellaroute .fo-I {
-  -ms-flex-order: initial;
-      order: initial;
+  -webkit-order: initial;
+      -ms-flex-order: initial;
+          order: initial;
 }
 #Stellaroute .fo-Neg-10 {
-  -ms-flex-order: -10;
-      order: -10;
+  -webkit-order: -10;
+      -ms-flex-order: -10;
+          order: -10;
 }
 #Stellaroute .fo-Neg-9 {
-  -ms-flex-order: -9;
-      order: -9;
+  -webkit-order: -9;
+      -ms-flex-order: -9;
+          order: -9;
 }
 #Stellaroute .fo-Neg-8 {
-  -ms-flex-order: -8;
-      order: -8;
+  -webkit-order: -8;
+      -ms-flex-order: -8;
+          order: -8;
 }
 #Stellaroute .fo-Neg-7 {
-  -ms-flex-order: -7;
-      order: -7;
+  -webkit-order: -7;
+      -ms-flex-order: -7;
+          order: -7;
 }
 #Stellaroute .fo-Neg-6 {
-  -ms-flex-order: -6;
-      order: -6;
+  -webkit-order: -6;
+      -ms-flex-order: -6;
+          order: -6;
 }
 #Stellaroute .fo-Neg-5 {
-  -ms-flex-order: -5;
-      order: -5;
+  -webkit-order: -5;
+      -ms-flex-order: -5;
+          order: -5;
 }
 #Stellaroute .fo-Neg-4 {
-  -ms-flex-order: -4;
-      order: -4;
+  -webkit-order: -4;
+      -ms-flex-order: -4;
+          order: -4;
 }
 #Stellaroute .fo-Neg-3 {
-  -ms-flex-order: -3;
-      order: -3;
+  -webkit-order: -3;
+      -ms-flex-order: -3;
+          order: -3;
 }
 #Stellaroute .fo-Neg-2 {
-  -ms-flex-order: -2;
-      order: -2;
+  -webkit-order: -2;
+      -ms-flex-order: -2;
+          order: -2;
 }
 #Stellaroute .fo-Neg-1 {
-  -ms-flex-order: -1;
-      order: -1;
+  -webkit-order: -1;
+      -ms-flex-order: -1;
+          order: -1;
 }
 #Stellaroute .fo-0 {
-  -ms-flex-order: 0;
-      order: 0;
+  -webkit-order: 0;
+      -ms-flex-order: 0;
+          order: 0;
 }
 #Stellaroute .fo-1 {
-  -ms-flex-order: 1;
-      order: 1;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
 }
 #Stellaroute .fo-2 {
-  -ms-flex-order: 2;
-      order: 2;
+  -webkit-order: 2;
+      -ms-flex-order: 2;
+          order: 2;
 }
 #Stellaroute .fo-3 {
-  -ms-flex-order: 3;
-      order: 3;
+  -webkit-order: 3;
+      -ms-flex-order: 3;
+          order: 3;
 }
 #Stellaroute .fo-4 {
-  -ms-flex-order: 4;
-      order: 4;
+  -webkit-order: 4;
+      -ms-flex-order: 4;
+          order: 4;
 }
 #Stellaroute .fo-5 {
-  -ms-flex-order: 5;
-      order: 5;
+  -webkit-order: 5;
+      -ms-flex-order: 5;
+          order: 5;
 }
 #Stellaroute .fo-6 {
-  -ms-flex-order: 6;
-      order: 6;
+  -webkit-order: 6;
+      -ms-flex-order: 6;
+          order: 6;
 }
 #Stellaroute .fo-7 {
-  -ms-flex-order: 7;
-      order: 7;
+  -webkit-order: 7;
+      -ms-flex-order: 7;
+          order: 7;
 }
 #Stellaroute .fo-8 {
-  -ms-flex-order: 8;
-      order: 8;
+  -webkit-order: 8;
+      -ms-flex-order: 8;
+          order: 8;
 }
 #Stellaroute .fo-9 {
-  -ms-flex-order: 9;
-      order: 9;
+  -webkit-order: 9;
+      -ms-flex-order: 9;
+          order: 9;
 }
 #Stellaroute .fo-10 {
-  -ms-flex-order: 10;
-      order: 10;
+  -webkit-order: 10;
+      -ms-flex-order: 10;
+          order: 10;
 }
 #Stellaroute .fas-S {
-  -ms-flex-item-align: start;
-      align-self: flex-start;
+  -webkit-align-self: flex-start;
+      -ms-flex-item-align: start;
+          align-self: flex-start;
 }
 #Stellaroute .fas-W {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
+  -webkit-align-self: flex-end;
+      -ms-flex-item-align: end;
+          align-self: flex-end;
 }
 #Stellaroute .fas-C {
-  -ms-flex-item-align: center;
-      align-self: center;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
 }
 #Stellaroute .fas-B {
-  -ms-flex-item-align: baseline;
-      align-self: baseline;
+  -webkit-align-self: baseline;
+      -ms-flex-item-align: baseline;
+          align-self: baseline;
 }
 #Stellaroute .fas-Str {
-  -ms-flex-item-align: stretch;
-      align-self: stretch;
+  -webkit-align-self: stretch;
+      -ms-flex-item-align: stretch;
+          align-self: stretch;
 }
 @media (min-width: 767px) {
   #Stellaroute .d-F--sm {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }
   #Stellaroute .fd-R--sm {
-    -ms-flex-direction: row;
-        flex-direction: row;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
   #Stellaroute .fd-Rr--sm {
-    -ms-flex-direction: row-reverse;
-        flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
   }
   #Stellaroute .fd-C--sm {
-    -ms-flex-direction: column;
-        flex-direction: column;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   #Stellaroute .fd-Cr--sm {
-    -ms-flex-direction: column-reverse;
-        flex-direction: column-reverse;
+    -webkit-flex-direction: column-reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
   }
   #Stellaroute .fj-S--sm {
-    -ms-flex-pack: start;
-        justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
   }
   #Stellaroute .fj-E--sm {
-    -ms-flex-pack: end;
-        justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
   }
   #Stellaroute .fj-C--sm {
-    -ms-flex-pack: center;
-        justify-content: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
   #Stellaroute .fj-B--sm {
-    -ms-flex-pack: justify;
-        justify-content: space-between;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   #Stellaroute .fj-A--sm {
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
   }
   #Stellaroute .fai-S--sm {
-    -ms-flex-align: start;
-        -ms-grid-row-align: flex-start;
-        align-items: flex-start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+                -ms-grid-row-align: flex-start;
+            align-items: flex-start;
   }
   #Stellaroute .fai-W--sm {
-    -ms-flex-align: end;
-        -ms-grid-row-align: flex-end;
-        align-items: flex-end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+                -ms-grid-row-align: flex-end;
+            align-items: flex-end;
   }
   #Stellaroute .fai-C--sm {
-    -ms-flex-align: center;
-        -ms-grid-row-align: center;
-        align-items: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+                -ms-grid-row-align: center;
+            align-items: center;
   }
   #Stellaroute .fai-B--sm {
-    -ms-flex-align: baseline;
-        -ms-grid-row-align: baseline;
-        align-items: baseline;
+    -webkit-align-items: baseline;
+        -ms-flex-align: baseline;
+                -ms-grid-row-align: baseline;
+            align-items: baseline;
   }
   #Stellaroute .fai-Str--sm {
-    -ms-flex-align: stretch;
-        -ms-grid-row-align: stretch;
-        align-items: stretch;
+    -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+                -ms-grid-row-align: stretch;
+            align-items: stretch;
   }
   #Stellaroute .fac-S--sm {
-    -ms-flex-line-pack: start;
-        align-content: flex-start;
+    -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+            align-content: flex-start;
   }
   #Stellaroute .fac-E--sm {
-    -ms-flex-line-pack: end;
-        align-content: flex-end;
+    -webkit-align-content: flex-end;
+        -ms-flex-line-pack: end;
+            align-content: flex-end;
   }
   #Stellaroute .fac-C--sm {
-    -ms-flex-line-pack: center;
-        align-content: center;
+    -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+            align-content: center;
   }
   #Stellaroute .fac-Str--sm {
-    -ms-flex-line-pack: stretch;
-        align-content: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
   }
   #Stellaroute .fac-B--sm {
-    -ms-flex-line-pack: justify;
-        align-content: space-between;
+    -webkit-align-content: space-between;
+        -ms-flex-line-pack: justify;
+            align-content: space-between;
   }
   #Stellaroute .fac-A--sm {
-    -ms-flex-line-pack: distribute;
-        align-content: space-around;
+    -webkit-align-content: space-around;
+        -ms-flex-line-pack: distribute;
+            align-content: space-around;
   }
   #Stellaroute .fo-I--sm {
-    -ms-flex-order: initial;
-        order: initial;
+    -webkit-order: initial;
+        -ms-flex-order: initial;
+            order: initial;
   }
   #Stellaroute .fo-Neg-10--sm {
-    -ms-flex-order: -10;
-        order: -10;
+    -webkit-order: -10;
+        -ms-flex-order: -10;
+            order: -10;
   }
   #Stellaroute .fo-Neg-9--sm {
-    -ms-flex-order: -9;
-        order: -9;
+    -webkit-order: -9;
+        -ms-flex-order: -9;
+            order: -9;
   }
   #Stellaroute .fo-Neg-8--sm {
-    -ms-flex-order: -8;
-        order: -8;
+    -webkit-order: -8;
+        -ms-flex-order: -8;
+            order: -8;
   }
   #Stellaroute .fo-Neg-7--sm {
-    -ms-flex-order: -7;
-        order: -7;
+    -webkit-order: -7;
+        -ms-flex-order: -7;
+            order: -7;
   }
   #Stellaroute .fo-Neg-6--sm {
-    -ms-flex-order: -6;
-        order: -6;
+    -webkit-order: -6;
+        -ms-flex-order: -6;
+            order: -6;
   }
   #Stellaroute .fo-Neg-5--sm {
-    -ms-flex-order: -5;
-        order: -5;
+    -webkit-order: -5;
+        -ms-flex-order: -5;
+            order: -5;
   }
   #Stellaroute .fo-Neg-4--sm {
-    -ms-flex-order: -4;
-        order: -4;
+    -webkit-order: -4;
+        -ms-flex-order: -4;
+            order: -4;
   }
   #Stellaroute .fo-Neg-3--sm {
-    -ms-flex-order: -3;
-        order: -3;
+    -webkit-order: -3;
+        -ms-flex-order: -3;
+            order: -3;
   }
   #Stellaroute .fo-Neg-2--sm {
-    -ms-flex-order: -2;
-        order: -2;
+    -webkit-order: -2;
+        -ms-flex-order: -2;
+            order: -2;
   }
   #Stellaroute .fo-Neg-1--sm {
-    -ms-flex-order: -1;
-        order: -1;
+    -webkit-order: -1;
+        -ms-flex-order: -1;
+            order: -1;
   }
   #Stellaroute .fo-0--sm {
-    -ms-flex-order: 0;
-        order: 0;
+    -webkit-order: 0;
+        -ms-flex-order: 0;
+            order: 0;
   }
   #Stellaroute .fo-1--sm {
-    -ms-flex-order: 1;
-        order: 1;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
   }
   #Stellaroute .fo-2--sm {
-    -ms-flex-order: 2;
-        order: 2;
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
   }
   #Stellaroute .fo-3--sm {
-    -ms-flex-order: 3;
-        order: 3;
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
   }
   #Stellaroute .fo-4--sm {
-    -ms-flex-order: 4;
-        order: 4;
+    -webkit-order: 4;
+        -ms-flex-order: 4;
+            order: 4;
   }
   #Stellaroute .fo-5--sm {
-    -ms-flex-order: 5;
-        order: 5;
+    -webkit-order: 5;
+        -ms-flex-order: 5;
+            order: 5;
   }
   #Stellaroute .fo-6--sm {
-    -ms-flex-order: 6;
-        order: 6;
+    -webkit-order: 6;
+        -ms-flex-order: 6;
+            order: 6;
   }
   #Stellaroute .fo-7--sm {
-    -ms-flex-order: 7;
-        order: 7;
+    -webkit-order: 7;
+        -ms-flex-order: 7;
+            order: 7;
   }
   #Stellaroute .fo-8--sm {
-    -ms-flex-order: 8;
-        order: 8;
+    -webkit-order: 8;
+        -ms-flex-order: 8;
+            order: 8;
   }
   #Stellaroute .fo-9--sm {
-    -ms-flex-order: 9;
-        order: 9;
+    -webkit-order: 9;
+        -ms-flex-order: 9;
+            order: 9;
   }
   #Stellaroute .fo-10--sm {
-    -ms-flex-order: 10;
-        order: 10;
+    -webkit-order: 10;
+        -ms-flex-order: 10;
+            order: 10;
   }
   #Stellaroute .fas-S--sm {
-    -ms-flex-item-align: start;
-        align-self: flex-start;
+    -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+            align-self: flex-start;
   }
   #Stellaroute .fas-W--sm {
-    -ms-flex-item-align: end;
-        align-self: flex-end;
+    -webkit-align-self: flex-end;
+        -ms-flex-item-align: end;
+            align-self: flex-end;
   }
   #Stellaroute .fas-C--sm {
-    -ms-flex-item-align: center;
-        align-self: center;
+    -webkit-align-self: center;
+        -ms-flex-item-align: center;
+            align-self: center;
   }
   #Stellaroute .fas-B--sm {
-    -ms-flex-item-align: baseline;
-        align-self: baseline;
+    -webkit-align-self: baseline;
+        -ms-flex-item-align: baseline;
+            align-self: baseline;
   }
   #Stellaroute .fas-Str--sm {
-    -ms-flex-item-align: stretch;
-        align-self: stretch;
+    -webkit-align-self: stretch;
+        -ms-flex-item-align: stretch;
+            align-self: stretch;
   }
 }
 @media (min-width: 1023px) {
   #Stellaroute .d-F--md {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }
   #Stellaroute .fd-R--md {
-    -ms-flex-direction: row;
-        flex-direction: row;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
   #Stellaroute .fd-Rr--md {
-    -ms-flex-direction: row-reverse;
-        flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
   }
   #Stellaroute .fd-C--md {
-    -ms-flex-direction: column;
-        flex-direction: column;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   #Stellaroute .fd-Cr--md {
-    -ms-flex-direction: column-reverse;
-        flex-direction: column-reverse;
+    -webkit-flex-direction: column-reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
   }
   #Stellaroute .fj-S--md {
-    -ms-flex-pack: start;
-        justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
   }
   #Stellaroute .fj-E--md {
-    -ms-flex-pack: end;
-        justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
   }
   #Stellaroute .fj-C--md {
-    -ms-flex-pack: center;
-        justify-content: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
   #Stellaroute .fj-B--md {
-    -ms-flex-pack: justify;
-        justify-content: space-between;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   #Stellaroute .fj-A--md {
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
   }
   #Stellaroute .fai-S--md {
-    -ms-flex-align: start;
-        -ms-grid-row-align: flex-start;
-        align-items: flex-start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+                -ms-grid-row-align: flex-start;
+            align-items: flex-start;
   }
   #Stellaroute .fai-W--md {
-    -ms-flex-align: end;
-        -ms-grid-row-align: flex-end;
-        align-items: flex-end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+                -ms-grid-row-align: flex-end;
+            align-items: flex-end;
   }
   #Stellaroute .fai-C--md {
-    -ms-flex-align: center;
-        -ms-grid-row-align: center;
-        align-items: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+                -ms-grid-row-align: center;
+            align-items: center;
   }
   #Stellaroute .fai-B--md {
-    -ms-flex-align: baseline;
-        -ms-grid-row-align: baseline;
-        align-items: baseline;
+    -webkit-align-items: baseline;
+        -ms-flex-align: baseline;
+                -ms-grid-row-align: baseline;
+            align-items: baseline;
   }
   #Stellaroute .fai-Str--md {
-    -ms-flex-align: stretch;
-        -ms-grid-row-align: stretch;
-        align-items: stretch;
+    -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+                -ms-grid-row-align: stretch;
+            align-items: stretch;
   }
   #Stellaroute .fac-S--md {
-    -ms-flex-line-pack: start;
-        align-content: flex-start;
+    -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+            align-content: flex-start;
   }
   #Stellaroute .fac-E--md {
-    -ms-flex-line-pack: end;
-        align-content: flex-end;
+    -webkit-align-content: flex-end;
+        -ms-flex-line-pack: end;
+            align-content: flex-end;
   }
   #Stellaroute .fac-C--md {
-    -ms-flex-line-pack: center;
-        align-content: center;
+    -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+            align-content: center;
   }
   #Stellaroute .fac-Str--md {
-    -ms-flex-line-pack: stretch;
-        align-content: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
   }
   #Stellaroute .fac-B--md {
-    -ms-flex-line-pack: justify;
-        align-content: space-between;
+    -webkit-align-content: space-between;
+        -ms-flex-line-pack: justify;
+            align-content: space-between;
   }
   #Stellaroute .fac-A--md {
-    -ms-flex-line-pack: distribute;
-        align-content: space-around;
+    -webkit-align-content: space-around;
+        -ms-flex-line-pack: distribute;
+            align-content: space-around;
   }
   #Stellaroute .fo-I--md {
-    -ms-flex-order: initial;
-        order: initial;
+    -webkit-order: initial;
+        -ms-flex-order: initial;
+            order: initial;
   }
   #Stellaroute .fo-Neg-10--md {
-    -ms-flex-order: -10;
-        order: -10;
+    -webkit-order: -10;
+        -ms-flex-order: -10;
+            order: -10;
   }
   #Stellaroute .fo-Neg-9--md {
-    -ms-flex-order: -9;
-        order: -9;
+    -webkit-order: -9;
+        -ms-flex-order: -9;
+            order: -9;
   }
   #Stellaroute .fo-Neg-8--md {
-    -ms-flex-order: -8;
-        order: -8;
+    -webkit-order: -8;
+        -ms-flex-order: -8;
+            order: -8;
   }
   #Stellaroute .fo-Neg-7--md {
-    -ms-flex-order: -7;
-        order: -7;
+    -webkit-order: -7;
+        -ms-flex-order: -7;
+            order: -7;
   }
   #Stellaroute .fo-Neg-6--md {
-    -ms-flex-order: -6;
-        order: -6;
+    -webkit-order: -6;
+        -ms-flex-order: -6;
+            order: -6;
   }
   #Stellaroute .fo-Neg-5--md {
-    -ms-flex-order: -5;
-        order: -5;
+    -webkit-order: -5;
+        -ms-flex-order: -5;
+            order: -5;
   }
   #Stellaroute .fo-Neg-4--md {
-    -ms-flex-order: -4;
-        order: -4;
+    -webkit-order: -4;
+        -ms-flex-order: -4;
+            order: -4;
   }
   #Stellaroute .fo-Neg-3--md {
-    -ms-flex-order: -3;
-        order: -3;
+    -webkit-order: -3;
+        -ms-flex-order: -3;
+            order: -3;
   }
   #Stellaroute .fo-Neg-2--md {
-    -ms-flex-order: -2;
-        order: -2;
+    -webkit-order: -2;
+        -ms-flex-order: -2;
+            order: -2;
   }
   #Stellaroute .fo-Neg-1--md {
-    -ms-flex-order: -1;
-        order: -1;
+    -webkit-order: -1;
+        -ms-flex-order: -1;
+            order: -1;
   }
   #Stellaroute .fo-0--md {
-    -ms-flex-order: 0;
-        order: 0;
+    -webkit-order: 0;
+        -ms-flex-order: 0;
+            order: 0;
   }
   #Stellaroute .fo-1--md {
-    -ms-flex-order: 1;
-        order: 1;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
   }
   #Stellaroute .fo-2--md {
-    -ms-flex-order: 2;
-        order: 2;
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
   }
   #Stellaroute .fo-3--md {
-    -ms-flex-order: 3;
-        order: 3;
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
   }
   #Stellaroute .fo-4--md {
-    -ms-flex-order: 4;
-        order: 4;
+    -webkit-order: 4;
+        -ms-flex-order: 4;
+            order: 4;
   }
   #Stellaroute .fo-5--md {
-    -ms-flex-order: 5;
-        order: 5;
+    -webkit-order: 5;
+        -ms-flex-order: 5;
+            order: 5;
   }
   #Stellaroute .fo-6--md {
-    -ms-flex-order: 6;
-        order: 6;
+    -webkit-order: 6;
+        -ms-flex-order: 6;
+            order: 6;
   }
   #Stellaroute .fo-7--md {
-    -ms-flex-order: 7;
-        order: 7;
+    -webkit-order: 7;
+        -ms-flex-order: 7;
+            order: 7;
   }
   #Stellaroute .fo-8--md {
-    -ms-flex-order: 8;
-        order: 8;
+    -webkit-order: 8;
+        -ms-flex-order: 8;
+            order: 8;
   }
   #Stellaroute .fo-9--md {
-    -ms-flex-order: 9;
-        order: 9;
+    -webkit-order: 9;
+        -ms-flex-order: 9;
+            order: 9;
   }
   #Stellaroute .fo-10--md {
-    -ms-flex-order: 10;
-        order: 10;
+    -webkit-order: 10;
+        -ms-flex-order: 10;
+            order: 10;
   }
   #Stellaroute .fas-S--md {
-    -ms-flex-item-align: start;
-        align-self: flex-start;
+    -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+            align-self: flex-start;
   }
   #Stellaroute .fas-W--md {
-    -ms-flex-item-align: end;
-        align-self: flex-end;
+    -webkit-align-self: flex-end;
+        -ms-flex-item-align: end;
+            align-self: flex-end;
   }
   #Stellaroute .fas-C--md {
-    -ms-flex-item-align: center;
-        align-self: center;
+    -webkit-align-self: center;
+        -ms-flex-item-align: center;
+            align-self: center;
   }
   #Stellaroute .fas-B--md {
-    -ms-flex-item-align: baseline;
-        align-self: baseline;
+    -webkit-align-self: baseline;
+        -ms-flex-item-align: baseline;
+            align-self: baseline;
   }
   #Stellaroute .fas-Str--md {
-    -ms-flex-item-align: stretch;
-        align-self: stretch;
+    -webkit-align-self: stretch;
+        -ms-flex-item-align: stretch;
+            align-self: stretch;
   }
 }
 #Stellaroute .d-I {
@@ -9227,6 +9398,7 @@ form.profile-settings-update .profile-label.notification h3 {
     display: table-cell;
   }
   #Stellaroute .d-F--sm {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }
@@ -9267,6 +9439,7 @@ form.profile-settings-update .profile-label.notification h3 {
     display: table-cell;
   }
   #Stellaroute .d-F--md {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }

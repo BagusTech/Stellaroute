@@ -9,6 +9,10 @@ module.exports = function(_duck){
 	_duck.prototype.cached = function() {
 		return cache.get(this.table);
 	}
+
+	_duck.prototype.deleteCached = function() {
+		return cache.del(this.table);
+	}
 	
 	// field: string = 'continent'
 	// data: array of objects = [{Id: 3, name: North America}, {Id: 4, name: South America}]

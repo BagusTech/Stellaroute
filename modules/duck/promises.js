@@ -13,15 +13,12 @@ module.exports = function(_duck){
 	// ReAssign - bool - change object form { a.b: 'foo'} to { a: { b: 'foo' }} 
 	// CheckSchema - bool - SHOULD ONLY BE USED FOR TESTING - verify that data matches Schema
 	// TODO make accept array of items to do a batch write
-	_duck.prototype.add = function(data, conditions, reAssign, checkSchema){
+	_duck.prototype.add = function(data, reAssign = true, conditions, checkSchema = true){
 		const table = this.table;
 		const schema = this.itemSchema;
 		const hash = this.hash;
 		const uniqueBy = this.uniqueBy;
 		const items = this.cached();
-
-		reAssign = reAssign || true;
-		checkSchema = checkSchema || true;
 
 		return new Promise(function(resolve, reject){
 

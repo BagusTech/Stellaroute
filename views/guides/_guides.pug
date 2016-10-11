@@ -1,0 +1,30 @@
+extends ../layout.pug
+
+block content
+	.media-bg-img.request-page-header
+		h1 Guides
+	.container
+		.content-card
+			.ta-R
+				button.btn.btn-primary(data-toggle='modal', data-target='#AddNewGuide') New Guide
+			ul
+				for guide in guides
+					li
+						a(href=`/guides/${guide.url}`)= guide.names.display
+
+	.modal.fade#AddNewGuide(tab-index='-1', role='dialog')
+		.modal-dialog(role='document')
+			form.modal-content(method='POST', action='/guides/new')
+				.modal-header.mb-Md
+					h4.mt-0.mb-0.pl-Sm.fc-G Make a New Guide
+					button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+				.modal-body.plr-Md.pb-Md
+					.row
+						.col-xs-12
+							.form-group
+								label(for='GuideName') Name
+								input.form-control#GuideName(name='names.display', type='text', placeholder='3 Days in Rome', required)
+
+					.form-group.mb-0
+						button.btn.btn-primary.btn-Sm(type='submit', value='/guides', name='redirect') Save

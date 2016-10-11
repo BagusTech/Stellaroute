@@ -1,0 +1,45 @@
+extends ../layout.pug
+
+block content
+	.media-bg-img.request-page-header
+		h1 guide.names.dispaly
+	.container.ptb-Sm
+		small
+			a.fc-G(href='/guides') &lt; Back to All Guides
+
+		.content-card
+			form.update-form(method='POST', action='/guides/update')
+				.form-group
+					label(for='GuideName') Name
+					p.form-control-static= guide.names.display
+					.hidden
+						input.form-control#GuideName(name='names.display', type='text', placeholder='12 Days in Japan', value=guide.names.display)
+
+				input(type='hidden', name= key, value= guide[key])
+				input(type='hidden', name='redirect', value=`/guides/${guide.url}`)
+				input.btn.btn-primary.btn-update(type='button', value='Update')
+				| &nbsp;
+				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+				
+	.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+		form.modal-dialog(role='document', method='POST', action='/delete')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4.modal-title#DeleteModalLabel= `Delete ${guide.names.display}`
+				.modal-body
+					.alert.alert-danger
+						p= `Are you sure you want to delete ${guide.names.display}?`
+						p This action cannot be undone
+					
+					input(type='hidden', name='key', value= guide[key])
+					input(type='hidden', name='keyName', value= key)
+					input(type='hidden', name='table', value='Guides')
+					input(type='hidden', name='redirect', value='/guides')
+					input(type='hidden', name='retry', value=`/${guide.url}`)
+					input.btn.btn-danger(type='submit', value='Delete', name='delete')
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Cancel

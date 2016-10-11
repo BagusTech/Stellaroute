@@ -12,6 +12,7 @@ const session          = require('cookie-session');
 const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
+const guides           = require('./routes/guides');
 const locations        = require('./routes/locations');
 const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
@@ -23,6 +24,7 @@ const provinceRegions  = require('./routes/province-regions');
 const cities           = require('./routes/cities');
 const cityRegions      = require('./routes/city-regions');
 const neighborhoods    = require('./routes/neighborhoods');
+const Guide            = require('./schemas/guide');
 const Continent        = require('./schemas/continent');
 const WorldRegion      = require('./schemas/world-region');
 const Country          = require('./schemas/country');
@@ -66,6 +68,7 @@ app.use(isLoggedIn);
 app.use('/', routes);
 
 // location cache
+app.use(Guide.getCached());
 app.use(Continent.getCached());
 app.use(WorldRegion.getCached());
 app.use(Country.getCached());
@@ -76,7 +79,8 @@ app.use(City.getCached());
 app.use(CityRegion.getCached());
 app.use(Neighborhood.getCached());
 
-// locations CRUD
+// CRUD
+app.use('/guides', guides);
 app.use('/continents', continents);
 app.use('/countries', countries);
 app.use('/country-regions', countryRegions);

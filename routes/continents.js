@@ -63,28 +63,7 @@ router.post('/update', function(req, res){
 	const redirect = req.body.redirect;
 	delete req.body.redirect;
 
-	if (req.body.delete){
-
-		Continent.delete(req.body[Continent.hash]).then(function(){
-			// resolved
-
-			Continent.updateCache().then(function(){
-				req.flash('success', 'Continent successfully deleted');
-				res.redirect('/continents');
-				return;
-			}, function(){
-				res.redirect('/continents');
-				return;
-			});
-		}, function(err){
-			// rejected
-
-			console.error(err);
-			req.flash('error', 'Oops, something went wrong. Please try again.');
-			res.redirect('/continents');
-			return;
-		});
-	} else if (req.body.update) {
+	if (req.body.update) {
 		delete req.body.update;
 
 		const params = req.body;

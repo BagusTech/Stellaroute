@@ -57,7 +57,9 @@ module.exports = function(_duck){
 
 								// for each item in the array
 								for (var j in fieldPaths[i]){
-									res = res[fieldPaths[i][j]]
+									if(res[fieldPaths[i][j]]){
+										res = res[fieldPaths[i][j]]
+									}
 								}
 
 								if(contains && (typeof contains == 'string' || contains instanceof Array)){
@@ -90,7 +92,9 @@ module.exports = function(_duck){
 
 				// for each item in the array
 				for (var j in fieldPaths[i]){
-					res = res[fieldPaths[i][j]]
+					if(res[fieldPaths[i][j]]){
+						res = res[fieldPaths[i][j]]
+					}
 				}
 
 				if (res != values[i]){

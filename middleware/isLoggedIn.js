@@ -8,11 +8,15 @@ function isLoggedIn(req, res, next) {
 		if(req.user){
 			res.locals.user = req.user;
 
-			instagram.user(req.user.instagram, function(err, result, remaining, limit){
-				res.locals.user.instagram = result;
+			if(req.user.instagram){
+				instagram.user(req.user.instagram, function(err, result, remaining, limit){
+					res.locals.user.instagram = result;
 
+					return next();
+				});
+			} else {
 				return next();
-			});
+			}
 		} else {
 			return next();
 		}

@@ -16,7 +16,7 @@ const _duck = function(schema, items, isReady = true){
 		this.cacheDuration = schema && schema.CacheDuration || 60*60; // default to one hour TODO: change to one day when live
 		this.uniqueBy      = schema && schema.UniqueBy;
 		this.items         = items;
-		this.isReady       = isReady;
+		this.isReady       = isReady === undefined ? true : isReady;
 
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~ */

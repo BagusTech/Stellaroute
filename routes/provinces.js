@@ -41,7 +41,7 @@ router.post('/new', function(req, res){
 	Province.add(params).then(function(data){
 		// resolved
 		Province.updateCache().then(function(){
-			req.flash('success', 'World Region Successfully added');
+			req.flash('success', 'State/Province Successfully added');
 			res.redirect(redirect);
 			return;
 		}, function(err){

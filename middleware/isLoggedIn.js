@@ -16,10 +16,10 @@ function isLoggedIn(req, res, next) {
 		} else {
 			return next();
 		}
-    } else {
-    	// if they aren't redirect them to the home page
-    	res.redirect('/');
-    }
+	} else {
+		// if they aren't redirect them to the home page
+		res.redirect('/');
+	}
 }
 
 module.exports = isLoggedIn;

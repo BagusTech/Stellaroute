@@ -27,7 +27,7 @@ router.post('/new', function(req, res){
 	if (typeof params.cityRegions === 'string'){
 		params.cityRegions = Array(params.cityRegions);
 	}
-	//console.log()
+
 	Neighborhood.add(params).then(function(data){
 		// resolved
 		Neighborhood.updateCache().then(function(){

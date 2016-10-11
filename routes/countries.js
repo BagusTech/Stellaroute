@@ -18,7 +18,7 @@ router.get('/', function(req, res, next){
 	                       .items.sort(sortBy('url'));
 
 	res.render('locations/countries/_countries', {
-		title: 'Stellaroute: countries',
+		title: 'Stellaroute: Countries',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 		countries: countries
 	});

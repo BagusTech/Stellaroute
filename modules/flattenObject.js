@@ -1,15 +1,15 @@
 //ob: object = {a: {b: 'c'}}
 //returns: object = {a.b: 'c'}
-var flattenObject = function(ob) {
-	var toReturn = {};
+const flattenObject = function(ob) {
+	const toReturn = {};
 	
 	for (var i in ob) {
-		if (!ob.hasOwnProperty(i)) continue;
+		if (!Object.hasOwnProperty.call(ob, i)) continue;
 		
-		if ((typeof ob[i]) == 'object' && !(ob[i] instanceof Array)  ) {
-			var flatObject = flattenObject(ob[i]);
+		if ((typeof ob[i]) == 'object' && !(ob[i] instanceof Array)) {
+			const flatObject = flattenObject(ob[i]);
 			for (var x in flatObject) {
-				if (!flatObject.hasOwnProperty(x)) continue;
+				if (!Object.hasOwnProperty.call(flatObject, x)) continue;
 				
 				toReturn[i + '.' + x] = flatObject[x];
 			}

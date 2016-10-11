@@ -4,12 +4,23 @@ const Duck = require('../modules/duck');
 var Attraction = Duck({
 	Table: 'Attractions',
 	Item: {
-		Id: String
+		Id: String,
 		url: String,
+		country: Array,
+		countryRegions: Array,
+		province: Array,
+		provinceRegions: Array,
+		city: Array,
+		cityRegions: Array,
+		neighborhoods: Array,
+		names: {
+			display: String,
+			Alias: Array
+		}
 	},
-
 	HASH: 'Id',
-	HASHType: 'S'
+	HASHType: 'S',
+	UniqueBy: ['url', ['country', 'city']]
 }, null, false);
 
 module.exports = Attraction;

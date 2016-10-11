@@ -280,6 +280,18 @@ block content
 						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
 					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
 
+			.col-xs-12
+				.content-card.p-R
+					h2 Attractions
+
+					ul
+						for attraction in attractions
+							li
+								a(href=`/${country.url}/${attraction.url}`)= attraction.names.display
+					.clear
+						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
+					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
+
 	.modal.fade#NewCountryRegionModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryRegionModalLabel")
 		.modal-dialog(role='document')
 			.modal-content
@@ -319,6 +331,24 @@ block content
 								for region in countryRegions
 									option(value= region.Id, name='countryRegions')= region.names.display
 
+
+						input(type='hidden', name='country', value= country.Id)
+						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
+
+	.modal.fade#NewAttraction(tab-index='-1', role='dialog', aria-labelledby="NewAttractionLabel")
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4#NewAttractionLabel.mt-0.mb-0.pl-Sm.fc-G
+							| Add an Attraction to&nbsp;
+							span= country.names.display
+				.modal-body.plr-Md.pb-Md
+					form(method='POST', action='/attractions/new')
+						.form-group
+							label(for='ProvinceName') Name
+							input.form-control#ProvinceName(name='names.display', type='text', placeholder='The Gateway Arch', required)
 
 						input(type='hidden', name='country', value= country.Id)
 						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save

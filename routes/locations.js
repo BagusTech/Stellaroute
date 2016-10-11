@@ -5,6 +5,7 @@ const cache          = require('../modules/cache');
 const duck           = require('../modules/duck');
 const readJSON       = require('../modules/readJSON');
 const sortBy         = require('../modules/sortBy');
+const Attraction     = require('../schemas/attraction');
 const Continent      = require('../schemas/continent');
 const WorldRegion    = require('../schemas/world-region');
 const Country        = require('../schemas/country');
@@ -77,6 +78,7 @@ router.get('/:country', function(req, res, next){
 	}
 
 	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
+	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
 
 	res.render('locations/countries/country', {
 		title: `Stellaroute: ${country.names.display}`,
@@ -87,6 +89,31 @@ router.get('/:country', function(req, res, next){
 		countryRegions: CountryRegion.find('country', country.Id).items,
 		worldRegions: WorldRegion.cached().sort(sortBy('url')),
 		provinces: provinces,
+		attractions: attractions,
+	});
+});
+
+router.get('/:country/:attraction', function(req, res, next){
+	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		req.flash('error', missingLocationMessage);
+		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const attraction = Attraction.findOne('url', req.params.attraction).items;
+	if(!attraction){
+		next();
+		return;
+	}
+
+	res.render('locations/countries/attraction', {
+		title: `Stellaroute: ${attraction.names.display}`,
+		description: 'Stellaroute: ${attraction.names.display} Overview',
+		key: Attraction.hash,
+		country: country,
+		attraction: attraction,
 	});
 });
 

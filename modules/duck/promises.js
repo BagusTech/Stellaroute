@@ -18,7 +18,7 @@ module.exports = function(_duck){
 		const schema = this.itemSchema;
 		const hash = this.hash;
 		const uniqueBy = this.uniqueBy;
-		const items = this.cached();
+		const items = this.cached() || [];
 
 		return new Promise(function(resolve, reject){
 

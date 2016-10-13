@@ -1,14 +1,15 @@
 const express    = require('express');
 const flash      = require('connect-flash');
-const assign     = require('../modules/assign');
-const readJSON   = require('../modules/readJSON');
+const sortBy     = require('../modules/sortBy');
 const User       = require('../schemas/user');
 const router     = express.Router();
 
 router.get('/', function(req, res, next){
 	res.render('profile/profile', {
 		title: 'StellaRoute: My Profile',
-		description: 'This is used to view, edit, and delete my profile'
+		description: 'This is used to view, edit, and delete my profile',
+		key: User.hash,
+		users: User.cached().sort()
 	});
 });
 
@@ -27,23 +28,35 @@ router.post('/update', function(req, res){
 			res.redirect('/profile');
 			return;
 		});
-	} else if (req.body.submit) {
-		delete req.body.submit;
+	} else if (req.body.update) {
+		debugger;
+		delete req.body.update;
 
 		const params = req.body;
 
-		if(params.local.password !== undefined && params.local.password.length > 4){
-			params.local.password = User.generateHash(params.local.password);
+		if(params['local.password'] && params['local.password'].length > 4){
+			params['local.password'] = User.generateHash(params['local.password']);
 		} else { 
-			delete params.local.password;
+			delete params['local.password'];
+		}
+
+		if(params.isAdmin){
+			params.isAdmin = params.isAdmin.indexOf('true') > -1 ? true : false;
 		}
 
 		User.update(params, true).then(function(){
 			// resolved
 
-			req.flash('success', 'User successfully updated');
-			res.redirect('/profile');
-			return;
+			User.updateCache().then(() => {
+				req.flash('success', 'User successfully updated');
+				res.redirect('/profile');
+				return;
+			}, (err) => {
+				console.error(err);
+				req.flash('error', 'Oops, something went wrong. Please try again.');
+				res.redirect('/profile');
+				return;
+			});
 		}, function(err){
 			// rejected
 

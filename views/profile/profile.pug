@@ -6,8 +6,8 @@ block content
 			.container
 				.profile-info
 					img.profile-picture(src='http://placebear.com/200/200', alt='profile picture')
-					h1 Butters
-					h2 South Park, USA
+					h1= user.name.first
+					//h2 South Park, USA
 				ul.account-pages(role="navigation")
 					li 
 						a(href="#") Guides
@@ -18,7 +18,7 @@ block content
 					li.active
 						a(href="#") Settings
 		.container
-			form.profile-settings-update
+			form.profile-settings-update(method='POST', action='/profile/update')
 				//button.edit-toggle(type='button')
 					i.fa.fa-pencil(aria-hidden="true")
 					span.sr-only Toggle Edit Mode
@@ -29,22 +29,22 @@ block content
 							.row
 								.col-xs-12
 									label.profile-label First Name
-									input.form-control.form-settings(name='username', type='text', placeholder='First Name', value= user.name ? user.name.first : '')
+									input.form-control.form-settings(name='name.first', type='text', placeholder='First Name', value= user.name ? user.name.first : '')
 								.col-xs-12
 									label.profile-label Last Name
-									input.form-control.form-settings(name='username', type='text', placeholder='Last Name', value= user.name ? user.name.last : '')
-							.row
+									input.form-control.form-settings(name='name.last', type='text', placeholder='Last Name', value= user.name ? user.name.last : '')
+							//.row
 								.col-xs-12
 									label.profile-label Hometown
 									input.form-control.form-settings(name='hometown', type='text', placeholder='Hometown')
 							.row
 								.col-xs-12
 									label.profile-label Email
-									input.form-control.form-settings(name='email', type='email', placeholder='Email', value= user.local ? user.local.email : '')
+									input.form-control.form-settings(name='local.email', type='email', placeholder='Email', value= user.local ? user.local.email : '')
 
 								.col-xs-12
 									label.profile-label Password
-									input.form-control.form-settings(name='password', type='password', placeholder='Password') 
+									input.form-control.form-settings(name='local.password', type='password', placeholder='Password') 
 				
 					.col-xs-12.col-sm-6
 						.content-card
@@ -64,10 +64,34 @@ block content
 
 						.content-card
 							.row
-								.col-xs-6
+								//.col-xs-6
 									button.btn-default.btn-block(type='button') Cancel
 								.col-xs-6
-									button.btn-primary.btn-block(type='button') Save
+									input(type='hidden', name= key, value= user[key])
+									input.btn-primary.btn-block(type='submit', name='update', value='Save')
+
+			if (user.isAdmin)
+				.content-card
+					h3 Update Users' Permissions
+
+					ul.p-0
+						-var liClasses = 'm-0 ls-N p-Sm checkbox'
+						for user, i in users
+							-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
+
+							li(class=`${liClasses} ${isAlt}`)
+								form.profile-settings-update.p-R(method='POST', action='/profile/update')
+									strong= user.name ? user.name.first : 'N/A' 
+									| :&nbsp;
+									span= user.local ? user.local.email : 'N/A'
+									br
+									.pl-Md
+										input(type='hidden', name='isAdmin', value='false')
+										input(type='checkbox', name='isAdmin', checked= user.isAdmin, value='true')
+										| Administrator
+									input(type='hidden', name= key, value= user[key])
+									input.btn-primary.p-A.r-XXs.t-0(type='submit', name='update', value='Save')
+
 
 			//h1 My Profile
 

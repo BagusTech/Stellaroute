@@ -10,8 +10,8 @@ module.exports = function(_duck){
 	// Write an item into the database
 	// Data is the object being added to the database
 	// Conditions - TODO
-	// ReAssign - bool - change object form { a.b: 'foo'} to { a: { b: 'foo' }} 
-	// CheckSchema - bool - SHOULD ONLY BE USED FOR TESTING - verify that data matches Schema
+	// ReAssign - bool - change object from { a.b: 'foo'} to { a: { b: 'foo' }} 
+	// CheckSchema - bool - verify that data matches Schema (defaults to true, SHOULD ONLY BE USED FOR TESTING)
 	// TODO make accept array of items to do a batch write
 	_duck.prototype.add = function(data, reAssign, conditions, checkSchema){
 		const table = this.table;
@@ -140,6 +140,7 @@ module.exports = function(_duck){
 	}
 
 	// updates an item
+	// ReAssign - bool - change object from { a.b: 'foo'} to { a: { b: 'foo' }} 
 	// TODO make it work with HASH-RANGE keys
 	_duck.prototype.update = function(data, reAssign){
 		const table = this.table;
@@ -167,11 +168,11 @@ module.exports = function(_duck){
 				for (var item in data){
 					var itemType = data[item] instanceof Array === true ? 'array' : typeof data[item];
 
-					if ( schema[item] === undefined && itemType === 'object'){
+					if (schema[item] === undefined && itemType === 'object'){
 						objectsToAdd.push(item);
 					}
 					
-					if ( itemType === 'object' && schema[item]) {
+					if (itemType === 'object' && schema[item]) {
 						parse(data[item], schema[item])
 					} else if ( itemType === 'object' ){
 						parse(data[item], {})
@@ -183,14 +184,14 @@ module.exports = function(_duck){
 				const fieldPath = field.split('.'); // make the accepted arguments into an array
 				const items = cache.get(table);
 				const currentCountry = function(){
-					for (i in items){
+					for (var i in items){
 						var res = items[i];
 
-						for (j in fieldPath){
+						for (var j in fieldPath){
 							res = res[fieldPath[j]]
 						}
 
-						if(res == value){
+						if(res === value){
 							return items[i];
 						}
 					}

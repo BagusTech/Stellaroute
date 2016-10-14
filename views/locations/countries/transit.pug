@@ -1,0 +1,95 @@
+extends ../../layout.pug
+
+block content
+	.media-bg-img.request-page-header
+		h1='Tranposrtation in ' + country.names.display   
+
+	.container.ptb-Sm
+		h2 Overview
+		.content-card
+			ol.ls-N.p-N
+				li.d-F
+					span.pr-Sm.fs-48.lh-1.fc-Gr 1
+					div
+						h3.m-0.lh-1 The City is Walkable
+						p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
+				li.d-F
+					span.pr-Sm.fs-48.lh-1.fc-Gr 2
+					div
+						h3.m-0.lh-1 Bars Close Early 
+						p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
+				li.d-F
+					span.pr-Sm.fs-48.lh-1.fc-Gr 3
+					div
+						h3.m-0.lh-1 Good Public Transit 
+						p Japan is an archipelago primarily made up of four main islands: Kyushu, Shikoku, Honshu, and Hokkaido. Honshu is the main island with the majority of cities and attractions.
+				p.pb-Sm.ta-R
+					a.fw-B(href="nhl.com") More Info
+
+	.container.ptb-Sm
+		div.panel-group#accordion(role="tablist" aria-multiselectable="true")
+			div.panel.panel-default
+				div.panel-heading.bg-Gr.p-N(role="tab" id="headingOne")
+					.text-wings
+						span.ta-L
+							h2.panel-title
+								i.fa.fa-chevron-down.p-Sm
+								a(role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne") Get in the Chopper
+						hr.w-A
+					.content-card#collapseOne.panel-collapse.collapse.in(role="tabpanel" aria-labelledby="headingOne")
+						div
+							.row
+								ul.nav.nav-tabs.bw-N(role="tablist")
+									li.active.col-xs-6.ta-C(role="presentation")
+										a(href="#verified", aria-controls="verified", role="tab", data-toggle="tab") Verified
+									li.col-xs-6.ta-C(role="presentation")
+										a(href="#community", aria-controls="community", role="tab", data-toggle="tab") Community
+							div.tab-content
+								ol.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
+									li.d-F
+										span.pr-Sm.fs-48.lh-1.fc-Gr 1
+										div
+											h3.m-0.lh-1 The City is Walkable
+											p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
+									li.d-F
+										span.pr-Sm.fs-48.lh-1.fc-Gr 2
+										div
+											h3.m-0.lh-1 Bars Close Early 
+											p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
+									li.d-F
+								div.tab-pane#community(role="tabpanel")
+									p Well this is finally working 
+
+	//
+		.container.ptb-Sm
+			div.panel-group#accordion(role="tablist" aria-multiselectable="true")
+				div.panel.panel-default
+					div.panel-heading.bg-Gr.p-N(role="tab" id="headingOne")
+						.text-wings
+							span.ta-L
+								h2.panel-title
+									i.fa.fa-chevron-down.p-Sm
+									a(role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne") This is Sparta!!!!
+							hr.w-A
+						.content-card#collapseOne.panel-collapse.collapse.in(role="tabpanel" aria-labelledby="headingOne")
+							div
+								ul.nav.nav-tabs(role="tablist")
+									li.active(role="presentation")
+										a(href="#verified", aria-controls="verified", role="tab", data-toggle="tab") Verified
+									li(role="presentation")
+										a(href="#community", aria-controls="community", role="tab", data-toggle="tab") Community
+								div.tab-content
+									ol.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
+										li.d-F
+											span.pr-Sm.fs-48.lh-1.fc-Gr 1
+											div
+												h3.m-0.lh-1 The City is Walkable
+												p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
+										li.d-F
+											span.pr-Sm.fs-48.lh-1.fc-Gr 2
+											div
+												h3.m-0.lh-1 Bars Close Early 
+												p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
+										li.d-F
+									div.tab-pane#community(role="tabpanel")
+										p Well this is finally working 

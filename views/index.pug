@@ -90,10 +90,10 @@ block content
 
 						.col-sm-4
 							.screen-shot-white-phone
-								.screenshot-rotator
-									img.active(src="/images/screenshot-overview.jpg", alt="placeholder")
-									img.after(src="/images/screenshot-attractions.jpg", alt="placeholder")
-									img.before(src="/images/screenshot-neighborhoods.jpg", alt="placeholder")
+								.screenshot-rotator(data-function='banner')
+									img(src="/images/screenshot-overview.jpg", alt="placeholder", data-banner-item)
+									img(src="/images/screenshot-attractions.jpg", alt="placeholder", data-banner-item)
+									img(src="/images/screenshot-neighborhoods.jpg", alt="placeholder", data-banner-item)
 						
 						.col-sm-4.text-center
 							h2 Meaningful Ratings

@@ -7,13 +7,13 @@
 // gutters
 @gutter-width: 24px;
 @gw: @gutter-width;
-@gw-XXs: @gutter-width/6;
-@gw-Xs: @gutter-width/4;
-@gw-Sm: @gutter-width/2;
-@gw-Md: @gutter-width;
-@gw-Lg: @gutter-width*1.5;
-@gw-Xl: @gutter-width*2;
-@gw-XXl: @gutter-width*2.5;
+@gw-XXs: @gutter-width/6; // 4px
+@gw-Xs: @gutter-width/4; // 6px
+@gw-Sm: @gutter-width/2; // 12px
+@gw-Md: @gutter-width; // 24px
+@gw-Lg: @gutter-width*1.5; // 36px
+@gw-Xl: @gutter-width*2; // 48px
+@gw-XXl: @gutter-width*2.5; // 60px
 
 // font
 @font-family: 'Work Sans', sans-serif;
@@ -36,11 +36,16 @@
 @off-white: #f7f7f7;
 @grey-lightest: @off-white;
 @grey-lighter: #d7d7d7;
+	@gray-lighter: @grey-lighter;
 @grey-light: #cccccc;
-@grey-medium: #959ca2;
+	@gray-light:@grey-light;
+@grey: #959ca2;
+	@gray:@grey;
 @grey-dark: #4a4d50;
-@grey: @grey-medium;
-
+	@gray-dark:@grey-dark;
+@grey-darker: #222;
+	@gray-darker: @grey-darker;
+	@gray-base:#000;
 @background-color: @grey-lighter;
 
 //
@@ -50,14 +55,7 @@
 
 //== Colors
 //
-//## Gray and brand colors for use across Bootstrap.
-
-@gray-base:              #000;
-@gray-darker:            lighten(@gray-base, 13.5%); // #222
-@gray-dark:              lighten(@gray-base, 20%);   // #333
-@gray:                   lighten(@gray-base, 33.5%); // #555
-@gray-light:             lighten(@gray-base, 46.7%); // #777
-@gray-lighter:           lighten(@gray-base, 93.5%); // #eee
+//## brand colors for use across Bootstrap.
 
 @brand-primary:         @purple;
 @brand-secondary:       @green;

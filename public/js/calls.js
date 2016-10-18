@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$('.delete-button').click(deleteReview);
 	$('.update-button').click(updateMode);
 	$('.cancel-update-button').click(updateMode);
@@ -261,4 +261,4 @@ function updateReview(e){
 			showSubmittedReviews();
 		}
 	});
-}
+} */

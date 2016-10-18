@@ -1,47 +1,32 @@
-void function($){
-	// Once window is loaded, do this
-	$(window).on('load', function(){
-		setTimeout(function(){
-			$('.flash-message-container').slideUp(1000);
-		}, 1500);
+/*global jQuery */
 
-		
-		init(); 
+// Once window is loaded, do this
+jQuery(($) => {
+	'use strict'
 
-		// for updating countries
-		$('.js-update-country').click(function(){
-			$(this).hide();
-			$('#Update').removeClass('hidden');
+	setTimeout(() => {
+		$('.flash-message-container').slideUp(1000);
+	}, 1500);
 
-			$('.js-update').hide();
-			$('.form-group').removeClass('hidden');
-		});
-	});
-}(jQuery);
-
-//////////////  Define Functions  //////////////////////
-function init(){
-	// initilize all update pages
-	update();
-
+	
 	// style multiselect via http://davidstutz.github.io/bootstrap-multiselect/
 	$('select[multiple]').multiselect();
 
 	// should probably be moved into it's own file
-	$('.js-new-country .js-make-duplicate').click(function duplicateNativeNameRow(){
-		var duplicate = $('.js-duplicate').last().clone();
+	$('.js-new-country .js-make-duplicate').click(() => {
+		const duplicate = $('.js-duplicate').last().clone();
 		$('.js-duplicate').last().after(duplicate);
 		$('.js-duplicate').last().find('.hidden').removeClass('hidden');
 	});
 
-	$('.js-new-country').on('click', '.js-delete-row', function(){
+	$('.js-new-country').on('click', '.js-delete-row', function deleteRow(){
 		$(this).closest('.js-duplicate').detach();
 	});
 
 
 	// should probably be moved into it's own file
-	$('.js-update-form .js-make-duplicate').click(function duplicateNativeNameRow(){
-		var duplicate = $('.js-duplicate').last().clone();
+	$('.js-update-form .js-make-duplicate').click(() => {
+		const duplicate = $('.js-duplicate').last().clone();
 
 		$('.js-duplicate').last().after(duplicate);
 		$('.js-duplicate').last().find('.js-name-language option').attr('selected', false);
@@ -49,29 +34,29 @@ function init(){
 		$('.js-duplicate').last().find('.form-control-static').addClass('hidden');
 	});
 
-	$('.js-update-form').on('click', '.js-delete-row', function(){
+	$('.js-update-form').on('click', '.js-delete-row', function deleteRow(){
 		$(this).closest('.js-duplicate').detach();
 	});
 	
-	$('.js-languages .multiselect-container input').on('click', function(){
-		var $this = $(this);
+	$('.js-languages .multiselect-container input').on('click', function updateOptions(){
+		const $this = $(this);
 
-		setTimeout(function(){
-			var $countryLanguages = $this.closest('.multiselect-container').find('li.active');
-			var $currentCountryLanguageList = $('.js-name-language').find('option').length ? $('.js-name-language') : null; // <select> with each language as an <option>
+		setTimeout(() => {
+			const $countryLanguages = $this.closest('.multiselect-container').find('li.active');
+			const $currentCountryLanguageList = $('.js-name-language').find('option').length ? $('.js-name-language') : null; // <select> with each language as an <option>
 			
 			// if this language isn't in the country language list, add it as an option
-			$countryLanguages.each(function(){
+			$countryLanguages.each(function updateOption(){
 				if(!$currentCountryLanguageList){
 					$('.js-name-language').append($('<option/>', {text: $(this).text().substring(1)}));
 				} else if($currentCountryLanguageList.find('option').text().indexOf($(this).text().substring(1)) === -1){
-					for(var i in $('.js-name-language option')){
+					for(const i in $('.js-name-language option')){
 						if($(this).text().substring(1) < $($('.js-name-language option')[i]).text()){
 							$($('.js-name-language option')[i]).before($('<option/>', {text: $(this).text().substring(1)}));
 							return;
 						}
 
-						if(i == $('.js-name-language option').length -1){
+						if(i === $('.js-name-language option').length -1){
 							$('.js-name-language').append($('<option/>', {text: $(this).text().substring(1)}));
 						}
 					}
@@ -87,7 +72,7 @@ function init(){
 				});
 			}
 
-			$('.js-name-language option').sort(function sortAtoZ(a, b) {
+			$('.js-name-language option').sort((a, b) => {
 				a = $(a).text().replace(' ', '');
 				b = $(b).text().replace(' ', '');
 
@@ -97,18 +82,18 @@ function init(){
 					return 1;
 				} else if(a < b) {
 					return -1;
-				} else {
-					return 0;
 				}
+				
+				return 0;
 			});
 		}, 100);
 	});
 	// end new file
 
-	$('button[data-target]').click(function onClick(e){
-		var id = $(this).attr('data-target');
-		setTimeout(function focusElement(){
-			$(id + ' input').first().focus();
+	$('button[data-target]').click(function onClick(){
+		const id = $(this).attr('data-target');
+		setTimeout(() => {
+			$(`${id} input`).first().focus();
 		}, 200);
 	});
 
@@ -119,9 +104,7 @@ function init(){
 
 	$('.hamburger-menu--toggle').click(toggleMenu);
 	$('.hamburger-menu').click(toggleMenu);
-	$('.hamburger-menu--options').click(function preventCloseMenu(e){
-		e.stopPropagation();
-	});
+	$('.hamburger-menu--options').click((e) => e.stopPropagation());
 
 	// toggle search
 	function deActivateSearch() {
@@ -130,66 +113,75 @@ function init(){
 		$('.site-body').off('click', deActivateSearch);
 	}
 
-	$('.search--toggle').click(function activeSiteSearch(){
+	$('.search--toggle').click(() => {
 		$('#SiteSearch').addClass('active');
 
 		$('.site-body').click(deActivateSearch);
 	});
 
-	$('#SiteSearch').click(function dontCloseSearchWhileSearching(e){
-		e.stopPropagation();
+	$('#SiteSearch').click((e) => e.stopPropagation());
+
+	// for updating countries
+	$('.js-update-country').click(function(){
+		$(this).hide();
+		$('#Update').removeClass('hidden');
+
+		$('.js-update').hide();
+		$('.form-group').removeClass('hidden');
 	});
-}
 
-function update(updateValues){
 	//used for all update forms
+	function update(updateValues){
+		const $form = $('.update-form');
 
-	var $form = $('.update-form');
+		let $inputs = $form.find('p + .hidden');
+		let $values = $form.find('.form-control-static');
 
-	var $inputs = $form.find('p + .hidden');
-	var $values = $form.find('.form-control-static');
+		if(updateValues){
+			$form.find('.btn-update').unbind('click');
 
-	if(updateValues){
-		$form.find('.btn-update').unbind('click');
+			$inputs = $form.find('p + .hidden');
+			$values = $form.find('.form-control-static');
+		}
 
-		$inputs = $form.find('p + .hidden');
-		$values = $form.find('.form-control-static');
+		// toggle between seeing input fields and
+		$form.find('.btn-update').click(function(){
+			const $this = $(this);
+
+			// toggle between static values and inputs
+			$inputs.toggleClass('hidden');
+			$values.toggleClass('hidden');
+
+			// toggle native names area when there aren't any native names
+			$('.js-no-native-name').toggleClass('hidden');
+
+			// change color and text of the update button
+			$this.toggleClass('btn-warning').toggleClass('btn-primary');
+			$this.attr('value', $this.attr('value') === 'Update' ? 'Cancel' : 'Update');
+
+			// toggle save button
+			$form.find('.btn-save').toggleClass('hidden');
+		});
+		//save button saves the data
 	}
 
-	// toggle between seeing input fields and
-	$form.find('.btn-update').click(function(){
-		var $this = $(this);
+	// initilize all update pages
+	update();
+});	
 
-		// toggle between static values and inputs
-		$inputs.toggleClass('hidden');
-		$values.toggleClass('hidden');
-
-		// toggle native names area when there aren't any native names
-		$('.js-no-native-name').toggleClass('hidden');
-
-		// change color and text of the update button
-		$this.toggleClass('btn-warning').toggleClass('btn-primary');
-		$this.attr('value', $this.attr('value') === 'Update' ? 'Cancel' : 'Update');
-
-		// toggle save button
-		$form.find('.btn-save').toggleClass('hidden');
-	});
-	//save button saves the data
-}
-
-
+/* eslint-disable */
 // polyfills
 if (!String.prototype.contains) {
-  String.prototype.contains = function(search, start) {
-    'use strict';
-    if (typeof start !== 'number') {
-      start = 0;
-    }
-    
-    if (start + search.length > this.length) {
-      return false;
-    } else {
-      return this.indexOf(search, start) !== -1;
-    }
-  };
+	String.prototype.contains = function(search, start) {
+	if (typeof start !== 'number') {
+		start = 0;
+	}
+
+	if (start + search.length > this.length) {
+			return false;
+		} else {
+			return this.indexOf(search, start) !== -1;
+		}
+	};
 }
+/* eslint-enable */

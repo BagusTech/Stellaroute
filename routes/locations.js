@@ -90,6 +90,62 @@ router.get('/:country', function(req, res, next){
 	});
 });
 
+router.get('/:country/food', function(req, res, next){
+	const country = Country.findOne('url', req.params.country)
+						   .join('continent', Continent.cached(), 'Id', 'names.display')
+						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
+						   .items[0];
+
+	if(!country){
+		req.flash('error', missingLocationMessage);
+		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
+	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
+
+	res.render('locations/countries/food', {
+		title: `Stellaroute: ${country.names.display}`,
+		description: 'Stellaroute: ${country.names.display} Overview',
+		continents: Continent.cached().sort(sortBy('url')),
+		country: country,
+		key: Country.hash,
+		countryRegions: CountryRegion.find('country', country.Id).items,
+		worldRegions: WorldRegion.cached().sort(sortBy('url')),
+		provinces: provinces,
+		attractions: attractions,
+	});
+});
+
+router.get('/:country/transit', function(req, res, next){
+	const country = Country.findOne('url', req.params.country)
+						   .join('continent', Continent.cached(), 'Id', 'names.display')
+						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
+						   .items[0];
+
+	if(!country){
+		req.flash('error', missingLocationMessage);
+		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
+	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
+
+	res.render('locations/countries/transit', {
+		title: `Stellaroute: ${country.names.display}`,
+		description: 'Stellaroute: ${country.names.display} Overview',
+		continents: Continent.cached().sort(sortBy('url')),
+		country: country,
+		key: Country.hash,
+		countryRegions: CountryRegion.find('country', country.Id).items,
+		worldRegions: WorldRegion.cached().sort(sortBy('url')),
+		provinces: provinces,
+		attractions: attractions,
+	});
+});
+
 router.get('/:country/:attraction', function(req, res, next){
 	const country = Country.findOne('url', req.params.country).items;
 

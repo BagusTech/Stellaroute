@@ -1,29 +1,20 @@
-.make-flex-order-classes(@breakpoint: xs, @maxWidth: 10, @order: -10) when (@order <= @maxWidth){
+.make-flex-order-classes(@breakpoint: xs, @maxWidth: 10, @order: 0) when (@order <= @maxWidth){
 	& when (@breakpoint = xs) {
-		& when (@order < 0) {
-			.fo-Neg@{order} {
-				order: @order;
-			}
+		.fo-Neg@{order} {
+			order: -@order;
 		}
-
-		& when not (@order < 0) {
-			.fo-@{order} {
-				order: @order;
-			}
+		.fo-@{order} {
+			order: @order;
 		}
 	}
 
 	& when not (@breakpoint = xs) {
-		& when (@order < 0) {
-			.fo-Neg@{order}--@{breakpoint} {
-				order: @order;
-			}
+		.fo-Neg@{order}--@{breakpoint} {
+			order: -@order;
 		}
 
-		& when not (@order < 0) {
-			.fo-@{order}--@{breakpoint} {
-				order: @order;
-			}
+		.fo-@{order}--@{breakpoint} {
+			order: @order;
 		}
 	}
 

@@ -1,3 +1,7 @@
+// pointer events
+.pe-N { pointer-events: none; }
+.pe-A { pointer-events: auto; }
+
 // opacity
 .o-0 { opacity: 0; }
 .o-25 { opacity: .25; }
@@ -7,12 +11,22 @@
 .o-75 { opacity: .75; }
 .o-1, .o-100 { opacity: 1; }
 
+// overflow
+.o-H { overflow: hidden; }
+.o-V { overflow: visible; }
+.o-S { overflow: scroll; }
+.o-Sx { overflow-x: scroll; }
+.o-Sy { overflow-y: scroll; }
+
 // z-index
 .z-A { z-index: auto; }
 .z-1 { z-index: 1; }
 .z-Neg1 { z-index: -1; }
 
 @media (min-width: @screen-Sm){
+	.pe-N--sm { pointer-events: none; }
+	.pe-A--sm { pointer-events: auto; }
+
 	.o-0--sm { opacity: 0; }
 	.o-25--sm { opacity: .25; }
 	.o-33--sm { opacity: .33; }
@@ -21,12 +35,21 @@
 	.o-75--sm { opacity: .75; }
 	.o-1--sm, .o-100--sm { opacity: 1; }
 
+	.o-H--sm { overflow: hidden; }
+	.o-V--sm { overflow: visible; }
+	.o-S--sm { overflow: scroll; }
+	.o-Sx--sm { overflow-x: scroll; }
+	.o-Sy--sm { overflow-y: scroll; }
+
 	.z-A--sm { z-index: auto; }
 	.z-1--sm { z-index: 1; }
 	.z-Neg1--sm { z-index: -1; }
 }
 
 @media (min-width: @screen-Md){
+	.pe-N--md { pointer-events: none; }
+	.pe-A--md { pointer-events: auto; }
+
 	.o-0--md { opacity: 0; }
 	.o-25--md { opacity: .25; }
 	.o-33--md { opacity: .33; }
@@ -34,6 +57,12 @@
 	.o-66--md { opacity: .66; }
 	.o-75--md { opacity: .75; }
 	.o-1--md, .o-100--md { opacity: 1; }
+
+	.o-H--md { overflow: hidden; }
+	.o-V--md { overflow: visible; }
+	.o-S--md { overflow: scroll; }
+	.o-Sx--md { overflow-x: scroll; }
+	.o-Sy--md { overflow-y: scroll; }
 
 	.z-A--md { z-index: auto; }
 	.z-1--md { z-index: 1; }

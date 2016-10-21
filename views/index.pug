@@ -1,5 +1,8 @@
 extends layout.pug
 
+block options
+	- headerBackground = 'none';
+
 block header
 	if (!user)
 		header.landing-header
@@ -16,38 +19,35 @@ block header
 				.col-xs-12.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
 					include controls/beta-signup.pug
 	else
-		header.site-header.z-1.plr-Md
-			.row.pt-Md
-				.col-xs-6.col-sm-3
-					a.d-B.w-50--sm(href='/')
-						img.img-responsive(src='/images/logo_white.svg', alt='Stellaroute')
-				.col-sm-6.hidden-xs
-					ul.list-inline.ta-C
-						li.plr-Sm
-							a.fc-W(href='/guides') Guides
-						li.plr-Sm
-							a.fc-W(href='/continents') Continents
-						li.plr-Sm
-							a.fc-W(href='/world-regions') World Regions
-						li.plr-Sm
-							a.fc-W(href='/countries') Countries
-				.col-xs-6.col-sm-3.ta-R.hidden-xs
-					include controls/login.pug
+		header.p-A.d-F.fj-B.fai-C.p-Md.z-1
+			a.w-75.w-20--sm.plr-Sm(href='/')
+				img.img-responsive(src=`/images/logo_white.svg`, alt='Stellaroute')
 
-				button.hamburger-menu--toggle.pt-0.mt-0
-					i.fa.fa-ellipsis-v(aria-hidden='true')
-				nav.hamburger-menu.z-1
-					button.exit-icon
-						i.fa.fa-times(aria-hidden='true')
-					ul.hamburger-menu--options
-						li
-							a(href='/profile') My Accounts
-						li
-							a(href='/request') Make A Request
-						li
-							a(href='/feedback') Give Us Feedback
-						li
-							button.btn.log-out(type='button') Log Out
+			ul.hidden-xs.list-inline.ta-C.m-0
+				li.plr-Sm
+					a.fc-W(href='/guides') Guides
+				li.plr-Sm
+					a.fc-W(href='/continents') Continents
+				li.plr-Sm
+					a.fc-W(href='/world-regions') World Regions
+				li.plr-Sm
+					a.fc-W(href='/countries') Countries
+
+			button.hamburger-menu--toggle.fc-W.z-1(data-icon='fa fa-ellipsis-v', data-function='toggle', data-target='.hamburger-menu')
+			nav.hamburger-menu.z-1(data-function='toggle', style='height: 100vh;')
+				button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
+				ul.hamburger-menu--options(data-function='stopProp')
+					li
+						a(href='http://stellaroute.com/profile') My Accounts
+					li
+						a(href='http://stellaroute.com/request') Make A Request
+					li
+						a(href='http://stellaroute.com/feedback') Give Us Feedback
+					li
+						button.btn.log-out(type='button') Log Out
+
+			.d-N.d-B--sm.pr-Sm
+				include controls/login.pug
 
 block content
 	if (!user)
@@ -102,16 +102,14 @@ block content
 								img(src="/images/screenshot-ratings.jpg")
 	else
 		.media-bg-img.home-bg-img
-			
-
 			.container.d-F.fd-C.fj-C.p-A.t-0.b-0.l-0.r-0
 				.row.plr-Sm
 					h1.mt-0.mb-Md.ta-C Plan Spontaneity
 					.col-xs-12.col-md-6.col-md-push-3
 						.input-group
-							input.form-control(type='text', placeholder='Where do you want to go?')
+							input.form-control.p-S(type='text', placeholder='Where do you want to go?')
 							.input-group-btn
-								button.btn.btn-primary(type='submit')
+								button.btn.btn-primary.p-S(type='submit')
 									span.hidden-Xs Search
 									span.visible-Xs
 										i.fa.fa-search(aria-hidden="true")

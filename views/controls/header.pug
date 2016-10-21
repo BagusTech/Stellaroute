@@ -1,4 +1,4 @@
-header.site-header.p-A--sm(style={'background-color': headerBackground})
+header.site-header(style={'background-color': headerBackground})
 	button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
 	input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
 
@@ -6,7 +6,7 @@ header.site-header.p-A--sm(style={'background-color': headerBackground})
 		img.img-responsive(src=`/images/logo_${logoColor}.svg`, alt='Stellaroute')
 
 	button.hamburger-menu--toggle(data-icon='fa fa-ellipsis-v', data-function='toggle', data-target='.hamburger-menu')
-	nav.hamburger-menu(data-function='toggle')
+	nav.hamburger-menu.z-1(data-function='toggle')
 		button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
 		ul.hamburger-menu--options(data-function='stopProp')
 			li

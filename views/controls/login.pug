@@ -1,7 +1,7 @@
 if (!user)
 	.login-control
 		//button.btn.sign-up(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
-		button.btn.log-in(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
+		button.btn.btn-default.bw-N(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
 		.modal-dialog(role='document')
@@ -84,19 +84,21 @@ if (!user)
 					//button.btn.btn-default(type='button', data-dismiss='modal') Close
 						input.btn.btn-primary(type='submit', value='Create')
 else
-	.dropdown.navbar-right
-		button#dLabel.bg-N.bw-N.pt-0.fc-W(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+	- var loginClasses = `bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;
+
+	nav.dropdown.navbar-right
+		button#UserMenu(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", class= loginClasses)
 			if (user.name && user.name.first)
 				span= user.name.first + ' '
 			else
 				span User
 			
 			if user.instagram
-				img.br-C(src=user.instagram.profile_picture, alt=user.name.first, style= {'max-width': '36px'})
+				img.br-C.ml-XXs(src=user.instagram.profile_picture, alt=user.name.first, style= {'max-width': '32px'})
 			else
 				i.fa.fa-user(aria-hidden="true")
 
-		ul.dropdown-menu.ta-R(aria-labelledby="dLabel")
+		ul.dropdown-menu.ta-R(aria-labelledby="UserMenu")
 			li
 				a(href='/profile') My Accounts
 			li

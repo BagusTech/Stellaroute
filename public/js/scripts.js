@@ -90,36 +90,12 @@ jQuery(($) => {
 	});
 	// end new file
 
-	$('button[data-target]').click(function onClick(){
+	$('button[data-target="#LoginModal"]').click(function onClick(){
 		const id = $(this).attr('data-target');
 		setTimeout(() => {
 			$(`${id} input`).first().focus();
 		}, 200);
 	});
-
-	// toggle nav
-	function toggleMenu() {
-		$('.hamburger-menu').toggleClass('active');
-	}
-
-	$('.hamburger-menu--toggle').click(toggleMenu);
-	$('.hamburger-menu').click(toggleMenu);
-	$('.hamburger-menu--options').click((e) => e.stopPropagation());
-
-	// toggle search
-	function deActivateSearch() {
-		$('#SiteSearch').removeClass('active');
-
-		$('.site-body').off('click', deActivateSearch);
-	}
-
-	$('.search--toggle').click(() => {
-		$('#SiteSearch').addClass('active');
-
-		$('.site-body').click(deActivateSearch);
-	});
-
-	$('#SiteSearch').click((e) => e.stopPropagation());
 
 	// for updating countries
 	$('.js-update-country').click(function(){

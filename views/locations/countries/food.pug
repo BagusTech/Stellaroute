@@ -2,7 +2,139 @@ extends ../../layout.pug
 
 block content
 	.media-bg-img.request-page-header
-		h1= country.names.display
+		h1= "Food and Drinks in " + country.names.display
 
 	.container.ptb-Sm
-		.content-card Country's Food 
+		//Standard
+		div.panel-group#accordion(role="tablist" aria-multiselectable="true")
+			div.panel.panel-default
+				div.panel-heading.bg-Gr.p-N(role="tab" id="headingOne")
+					.text-wings
+						span.ta-L
+							h2.panel-title
+								i.fa.fa-chevron-down.p-Sm
+								a(role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne") Dishes
+						hr.w-A
+					.content-card#collapseOne.panel-collapse.collapse.in.m-0(role="tabpanel" aria-labelledby="headingOne")
+						div
+							.row
+								ul.nav.nav-tabs.bw-N(role="tablist")
+									li.active.col-xs-6.ta-C.p-0(role="presentation")
+										i.fa.fa-skype.d-IB.p-A.b-Sm.l-25.z-1.fc-W
+										a(href="#verified", aria-controls="verified", role="tab", data-toggle="tab") Verified
+									li.col-xs-6.ta-C.p-0(role="presentation")
+										a(href="#community", aria-controls="community", role="tab", data-toggle="tab") Community
+							div.tab-content
+								div.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
+									.row.d-F.mt-Sm.mb-Lg
+										.col-xs-6.plr-Sm
+											div.d-F.ta-l
+												span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/140/140">
+												div 
+													h3.m-0.mb-Xs.lh-1.ta-C Ramen
+													p.lh-1.pl-Sm A soup and noodle dish whose name alone prompts images of Japan. Something close to a national dish, Ramen is a lot like burgers: you can find it everywhere. Most are edible, some are great, few are transformative. 
+											ul.mtb-Sm
+												li Made of four elements: <b>broth</b>, <b>noodles</b>, <b>meat</b> &amp; <b>vegetables</b>: and <b>tare</b> (sauces and flavoring, usually soy or miso-based).
+												li Many regional differences.
+												li 
+													a(href="#") To find out more read our blog
+										.col-xs-6
+											div.d-F.ta-l
+												span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/140/140">
+												div 
+													h3.m-0.mb-Xs.lh-1.ta-C Sushi
+													p.lh-1.pl-Sm A soup and noodle dish whose name alone prompts images of Japan. Something close to a national dish, Ramen is a lot like burgers: you can find it everywhere. Most are edible, some are great, few are transformative. 
+											ul.mtb-Sm
+												li Made of four elements: <b>broth</b>, <b>noodles</b>, <b>meat</b> &amp; <b>vegetables</b>: and <b>tare</b> (sauces and flavoring, usually soy or miso-based).
+												li Many regional differences.
+												li 
+													a(href="#") To find out more read our blog
+									.row.d-F.mt-Sm
+										.col-xs-6.plr-Sm
+											div.d-F.ta-l
+												span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/140/140">
+												div 
+													h3.m-0.mb-Xs.lh-1.ta-C Yakitori
+													p.lh-1.pl-Sm A soup and noodle dish whose name alone prompts images of Japan. 
+											ul.mtb-Sm
+												li Made of four elements: <b>broth</b>, <b>noodles</b>, <b>meat</b> &amp; <b>vegetables</b>: and <b>tare</b> (sauces and flavoring, usually soy or miso-based).
+												li Many regional differences.
+												li 
+													a(href="#") To find out more read our blog
+										.col-xs-6
+											div.d-F.ta-l
+												span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/140/140">
+												div 
+													h3.m-0.mb-Xs.lh-1.ta-C Chanko Nabe
+													p.lh-1.pl-Sm A soup and noodle dish whose name alone prompts images of Japan. Something close to a national dish, Ramen is a lot like burgers: you can find it everywhere. Most are edible, some are great, few are transformative. A soup and noodle dish whose name alone prompts images of Japan. Something close to a national dish, Ramen is a lot like burgers: you can find it everywhere. Most are.A soup and noodle dish whose name alone prompts images of Japan. Something close to a national dish, Ramen is a lot like burgers: you can find it everywhere. Most are.
+											ul.mtb-Sm
+												li Made of four elements: <b>broth</b>, <b>noodles</b>, <b>meat</b> &amp; <b>vegetables</b>: and <b>tare</b> (sauces and flavoring, usually soy or miso-based).
+												li Many regional differences.
+												li 
+													a(href="#") To find out more read our blog
+									.row-d-Fl
+										p.pb-Sm.ta-R
+											a.fw-B(href="nhl.com") More Info
+								div.tab-pane#community(role="tabpanel")
+									p Looks like no one has any fresh suggestions.
+		//Test
+		div.panel-group#accordion2(role="tablist" aria-multiselectable="true")
+			div.panel.panel-default
+				div.panel-heading.bg-Purp.p-N(role="tab" id="headingTwo")
+					.text-wings
+						span.ta-L
+							h2.panel-title
+								i.fa.fa-chevron-down.p-Sm
+								a(role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo") Introducing American Cuisine
+						hr.w-A
+			.div#collapseTwo.panel-collapse.collapse.in.m-0(role="tabpanel" aria-labelledby="headingTwo")
+				div
+					.row
+						.col-xs-12.col-sm-6.col-md-4
+							.content-card
+								h2 Dishes You Have to Try
+								ol
+									li.fw-B Hamburgers 
+									|	The quitessential American cuisine.  
+								p
+									strong Niagra Falls 
+									|	Relatively lax. Searches are in frequent but passport is required. 
+								p
+									strong Sault Ste Marie
+									|	Popular crossing that requires passport. Vehicle searches are not uncommon. 
+								p
+									strong Tijuana
+									|	This crossing into Mexico is busy and highly scrutinzed. Passports are required. 
+								p.pb-Sm.ta-R
+									a.fw-B(href="nhl.com") More Info
+						.col-xs-8
+							.content-card#collapseOne.panel-collapse.collapse.in.m-0.mt-Sm(role="tabpanel" aria-labelledby="headingOne")
+								div
+									.row
+										ul.nav.nav-tabs.bw-N(role="tablist")
+											li.active.col-xs-6.ta-C.p-0(role="presentation")
+												a(href="#verified", aria-controls="verified", role="tab", data-toggle="tab") Verified
+											li.col-xs-6.ta-C.p-0(role="presentation")
+												a(href="#community", aria-controls="community", role="tab", data-toggle="tab") Community
+									div.tab-content
+										ol.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
+											li.d-F.mt-Sm
+												span.pr-Sm.fs-48.lh-1.fc-Gr 1
+												div
+													h3.m-0.lh-1 Passport Required
+														small 	p_forsberg21
+													p A passport is required to enter or exit the United States. Customs will ask standard questions including what is the purpose of your visit; how long do you intend to stay; and where will you be going. If the agent senses anything suspicious in your response or appearance they will search you and your items (so for those traveling by car that means your vehicle). While the Southern border shared with Mexico tends to show more scrutiny than the Norther Canadian border, at either border agents can and will perform searchers.  
+											li.d-F
+												span.pr-Sm.fs-48.lh-1.fc-Gr 2
+												div
+													h3.m-0.lh-1 Canadian Border 
+														small 	j_sakic19
+													p This northern border is not heavily scrutinized. With that said, busy controls can take over an hour to cross and some vehicles are randomly selected for search.
+											li.d-F
+												span.pr-Sm.fs-48.lh-1.fc-Gr 3
+												div
+													h3.m-0.lh-1 Mexican Border 
+														small 	j_sakic19
+													p The southern border is a source of political tension. With many people illegally crossing this border it is tightly monitored. A passport is all that is required to cross, however, there is an increased chance of being searched and qeustioned. 
+										div.tab-pane#community(role="tabpanel")
+											p Well this is finally working

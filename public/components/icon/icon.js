@@ -16,5 +16,5 @@ void function initializeIcon($) {
         });
     };
 
-    $('[data-icon]').addIcon();
+    jQuery(() => $('[data-icon]').addIcon());
 }(jQuery);

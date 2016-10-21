@@ -199,5 +199,5 @@ void function initializeCustomScroll($) {
         });
     };
 
-    $('[data-function="scroll"]').customScroll();
+    jQuery(() => $('[data-function="scroll"]').customScroll());
 }(jQuery);

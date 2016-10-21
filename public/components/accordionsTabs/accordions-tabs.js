@@ -181,8 +181,8 @@ void function initializeAccordionsTabs($) {
         });
     };
 
-    void function init() {
+    jQuery(() => {
         $('[data-function="accordion"]').makeAccordion();
         $('[data-function="tabs"]').makeTabs();
-    }();
+    });
 }(jQuery);

@@ -42,5 +42,5 @@ void function initializeCustomScroll($){
         return this.each((index, wrapper) => initCopyText($(wrapper)));
     };
 
-    $('[data-function="copy"]').copyText();
+    jQuery(() => $('[data-function="copy"]').copyText());
 }(jQuery);

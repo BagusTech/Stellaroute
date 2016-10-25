@@ -4,9 +4,10 @@ const instagram = require('../config/instagram');
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on 
     // or if user is going to the home or login page
-    if (req.isAuthenticated() || req.originalUrl === '/' || req.originalUrl.indexOf('/auth') > -1 || req.originalUrl === '/signup' || req.originalUrl === '/newsletter-signup' || req.originalUrl === '/request-location' || req.originalUrl === '/privacy-and-terms'){
+    if (req.isAuthenticated()){
 		if(req.user){
 			res.locals.user = req.user;
+			console.log('true');
 
 			if(req.user.instagram){
 				instagram.user(req.user.instagram, function(err, result, remaining, limit){

@@ -1,20 +1,15 @@
-header.site-header
-	a(href='/')
-		img.logo-header(src='/images/logo_purple.svg', alt='Stellaroute')
-	#SiteSearch.search
-		button.search--toggle(type='button')
-			i.fa.fa-search(aria-hidden="true")
-		
-		.search--area
-			button.search--btn(type='button')
-				i.fa.fa-search(aria-hidden="true")
-			input.search--input(type='text', placeholder='Where do you want to go?', id='SearchQuery', name='searchInput')
-	button.hamburger-menu--toggle
-		i.fa.fa-ellipsis-v(aria-hidden='true')
-	nav.hamburger-menu
-		button.exit-icon
-			i.fa.fa-times(aria-hidden='true')
-		ul.hamburger-menu--options
+header.site-header(style={'background-color': headerBackground}, class= headerClasses)
+	if showHeaderSearch
+		button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
+		input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
+
+	a#SiteLogo.w-50.plr-Sm(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
+		img.img-responsive(src=`/images/logo_${logoColor}.svg`, alt='Stellaroute')
+
+	button.hamburger-menu--toggle(data-icon='fa fa-ellipsis-v', data-function='toggle', data-target='.hamburger-menu')
+	nav.hamburger-menu.z-1(data-function='toggle')
+		button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
+		ul.hamburger-menu--options(data-function='stopProp')
 			li
 				a(href='http://stellaroute.com/profile') My Accounts
 			li
@@ -24,5 +19,5 @@ header.site-header
 			li
 				button.btn.log-out(type='button') Log Out
 
-	.account-access
+	.d-N.d-B--sm.ml-A
 		include login

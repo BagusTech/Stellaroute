@@ -1,4 +1,4 @@
-$(window).on('load', function(){
+/*$(window).on('load', function(){
 	init();
 });
 
@@ -10,4 +10,4 @@ function init(){
 			input = document.getElementById('Address'),
 			autocomplete = new google.maps.places.Autocomplete(input, options);
 	}
-}
+}*/

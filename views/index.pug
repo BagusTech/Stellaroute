@@ -1,5 +1,11 @@
 extends layout.pug
 
+append options
+	- headerBackground = 'none';
+	- logoColor = 'white';
+	- headerClasses = 'p-A pt-Sm';
+	- showHeaderSearch = false;
+
 block header
 	if (!user)
 		header.landing-header
@@ -16,39 +22,7 @@ block header
 				.col-xs-12.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
 					include controls/beta-signup.pug
 	else
-		header.site-header.z-1.plr-Md
-			.row.pt-Md
-				.col-xs-6.col-sm-3
-					a.d-B.w-50--sm(href='/')
-						img.img-responsive(src='/images/logo_white.svg', alt='Stellaroute')
-				.col-sm-6.hidden-xs
-					ul.list-inline.ta-C
-						li.plr-Sm
-							a.fc-W(href='/guides') Guides
-						li.plr-Sm
-							a.fc-W(href='/continents') Continents
-						li.plr-Sm
-							a.fc-W(href='/world-regions') World Regions
-						li.plr-Sm
-							a.fc-W(href='/countries') Countries
-				.col-xs-6.col-sm-3.ta-R.hidden-xs
-					include controls/login.pug
-
-				button.hamburger-menu--toggle.pt-0.mt-0
-					i.fa.fa-ellipsis-v(aria-hidden='true')
-				nav.hamburger-menu.z-1
-					button.exit-icon
-						i.fa.fa-times(aria-hidden='true')
-					ul.hamburger-menu--options
-						li
-							a(href='/profile') My Accounts
-						li
-							a(href='/request') Make A Request
-						li
-							a(href='/feedback') Give Us Feedback
-						li
-							button.btn.log-out(type='button') Log Out
-										
+		include controls/header.pug
 
 block content
 	if (!user)
@@ -90,10 +64,10 @@ block content
 
 						.col-sm-4
 							.screen-shot-white-phone
-								.screenshot-rotator
-									img.active(src="/images/screenshot-overview.jpg", alt="placeholder")
-									img.after(src="/images/screenshot-attractions.jpg", alt="placeholder")
-									img.before(src="/images/screenshot-neighborhoods.jpg", alt="placeholder")
+								.screenshot-rotator(data-function='banner')
+									img(src="/images/screenshot-overview.jpg", alt="placeholder", data-banner-item)
+									img(src="/images/screenshot-attractions.jpg", alt="placeholder", data-banner-item)
+									img(src="/images/screenshot-neighborhoods.jpg", alt="placeholder", data-banner-item)
 						
 						.col-sm-4.text-center
 							h2 Meaningful Ratings
@@ -101,20 +75,16 @@ block content
 
 							.screen-shot-black-phone
 								img(src="/images/screenshot-ratings.jpg")
-
-		script(type='text/javascript', src='js/pages/landingPage.min.js')
 	else
 		.media-bg-img.home-bg-img
-			
-
 			.container.d-F.fd-C.fj-C.p-A.t-0.b-0.l-0.r-0
 				.row.plr-Sm
 					h1.mt-0.mb-Md.ta-C Plan Spontaneity
 					.col-xs-12.col-md-6.col-md-push-3
 						.input-group
-							input.form-control(type='text', placeholder='Where do you want to go?')
+							input.form-control.p-S(type='text', placeholder='Where do you want to go?')
 							.input-group-btn
-								button.btn.btn-primary(type='submit')
+								button.btn.btn-primary.p-S(type='submit')
 									span.hidden-Xs Search
 									span.visible-Xs
 										i.fa.fa-search(aria-hidden="true")
@@ -123,48 +93,7 @@ block content
 							span or
 							hr
 
-						.row
-							.col-xs-6.ta-C.fs-Lg
-								a.fc-W(href="/continents")
-									i.fa.fa-location-arrow(aria-hidden="true")
-									| &nbsp; Explore
-							.col-xs-6.ta-C.fs-Lg
-								button.fc-W.bg-N.bw-N(type='button', data-toggle='modal', data-target='#CreateContent', tab-index='1')
-									i.fa.fa-plus(aria-hidden="true")
-									| &nbsp; Request
-
-		.modal.fade#CreateContent(tab-index='-1', role='dialog')
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header.mb-Md
-						h4.mt-0.mb-0.pl-Sm.fc-G CREATE CONTENT
-						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-					.modal-body
-						.col-xs-12.col-sm-8.mb-Md
-							label.d-B What type of location do you want to create? 
-							select.form-control
-								option Location
-								//option Attraction
-								//option Guide
-						.col-xs-12.col-sm-8.mb-Md.mb-Md
-							label.d-B What level is this location? 
-							select.form-control
-								option Country
-								option Country Region
-								option State/Prov
-								option State/Prov Region
-								Option City
-								option City Region
-								option Neighborhood
-						.col-xs-12.col-sm-8.mb-Md.mb-Lg
-							label.d-B What's the name of the location? 
-							input.form-control.short-statement(type="text", name="location", placeholder="Southeast Asia")
-						.col-xs-12.col-sm-8.col-sm-push-2
-							input.btn.btn-primary.btn-Sm.w-100.bg-Gr.fc-G__ltst(type='submit', value='Create')
-
-								
-
+						a.btn.btn-primary.btn-lg.fs-Lg(href="/explore", data-icon='fa fa-location-arrow') &nbsp;Explore
 
 block footer
 	if (!user)

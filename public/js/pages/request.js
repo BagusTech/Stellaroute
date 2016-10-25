@@ -1,10 +1,13 @@
-jQuery(function initRequestToggle(){
-	var $selectRequestForm = $('#SelectRequestForm');
-	var $requestForms = $('.js-request-form');
+/*global jQuery */
+jQuery(($) => {
+	'use strict'
 
-	$selectRequestForm.on('change', function showSelectedForm(){
+	const $selectRequestForm = $('#SelectRequestForm');
+	const $requestForms = $('.js-request-form');
+
+	$selectRequestForm.on('change', () => {
 		$requestForms.addClass('hidden');
 
-		$('.request-'+$selectRequestForm.val()).removeClass('hidden');
+		$(`.request-${$selectRequestForm.val()}`).removeClass('hidden');
 	});
 });

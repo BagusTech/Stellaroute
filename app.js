@@ -63,38 +63,35 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
 
-// check to see if user is logged in on all pages except home directory
-app.use(isLoggedIn);
+// location cache
+app.use(Guide.getCached(),
+        Attraction.getCached(),
+        Continent.getCached(),
+        WorldRegion.getCached(),
+        Country.getCached(),
+        CountryRegion.getCached(),
+        Province.getCached(),
+        ProvinceRegion.getCached(),
+        City.getCached(),
+        CityRegion.getCached(),
+        Neighborhood.getCached());
 
 // Set index.js to be the main router
 app.use('/', routes);
 
-// location cache
-app.use(Guide.getCached());
-app.use(Attraction.getCached());
-app.use(Continent.getCached());
-app.use(WorldRegion.getCached());
-app.use(Country.getCached());
-app.use(CountryRegion.getCached());
-app.use(Province.getCached());
-app.use(ProvinceRegion.getCached());
-app.use(City.getCached());
-app.use(CityRegion.getCached());
-app.use(Neighborhood.getCached());
-
 // CRUD
-app.use('/guides', guides);
-app.use('/attractions', attractions);
-app.use('/continents', continents);
-app.use('/countries', countries);
-app.use('/country-regions', countryRegions);
-app.use('/profile', profile);
-app.use('/world-regions', worldRegions);
-app.use('/provinces', provinces);
-app.use('/province-regions', provinceRegions);
-app.use('/cities', cities);
-app.use('/city-regions', cityRegions);
-app.use('/neighborhoods', neighborhoods);
+app.use('/guides', isLoggedIn,  guides);
+app.use('/attractions', isLoggedIn, attractions);
+app.use('/continents', isLoggedIn, continents);
+app.use('/countries', isLoggedIn, countries);
+app.use('/country-regions', isLoggedIn, countryRegions);
+app.use('/profile', isLoggedIn, profile);
+app.use('/world-regions', isLoggedIn, worldRegions);
+app.use('/provinces', isLoggedIn, provinces);
+app.use('/province-regions', isLoggedIn, provinceRegions);
+app.use('/cities', isLoggedIn, cities);
+app.use('/city-regions', isLoggedIn, cityRegions);
+app.use('/neighborhoods', isLoggedIn, neighborhoods);
 
 // view locations
 app.use('/', locations);

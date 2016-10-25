@@ -1,83 +1,37 @@
 .site-header{
-	.clear;
-
-	width: 100%;
-	position: absolute;
+	padding: @gw-XXs;
+	display: flex;
+	flex-justify: space-between;
+	align-items: center;
 }
-
-
-.logo-header{
-	position: absolute;
-	top: @gw-Sm;
-	left: 0;
-	right: 0;
-	width: 200px;
-	margin: 0 auto;
-}
-		
-
-.search{
-	&.active{
-		.search--area{
-			left: 5px;
-			right: 5px;
-			z-index: 1;
-		}
-			.search--btn{
-				z-index: 1;
-			}
-
-			.search--input{
-				opacity: 1;
-				right: 5px;
-				left: 5px;
-			}
-	}
-}
-
-	.search--toggle,
-	.search--btn{
-		border: none;
+	.btn-search{
+		padding: @gw-Sm;
 		background: none;
+		border: none;
 		color: @grey-light;
-		font-size: 16px;
-		position: absolute;
-		top: 20px;
-		left: 20px;
 	}
-		.search-icon{
-			width: 100%;
-		}
 
-	.search--area{
-		position: absolute;
-		z-index: -1;
-		top: 5px;
-		left: 0;
-		right: 100%;
-		transition: .3s all ease-out;
+	#SearchQuery{
+		display: inline-block;
+		transition: width 0.27s ease-out;
 	}
-		.search--btn{
-			top: 15px;
-			left: 15px;
-		}
-		
-		.search--input{
-			width: 100%;
-			border: 1px solid #ddd;
-			padding: @gw-Sm @gw-Sm @gw-Sm 60px;
-			opacity: 0;
-			transition: .3s all ease-out;
-			border-radius: 5px;
-		}
+
+	#SiteLogo{
+		display: block;
+		line-height: 1;
+		margin: 0 auto;
+		padding-top: @gw-Xs;
+		padding-bottom: @gw-Xs;
+		transition: width 0.27s ease-out;
+	}
 
 .hamburger-menu--toggle{
 	float: right;
 	border: none;
 	background: none;
-	color: @grey-light;
-	font-size: 20px;
-	z-index: 2;
+	color: @purple;
+	font-size: 24px;
+	margin-left: auto;
 }
 
 .hamburger-menu{
@@ -134,77 +88,37 @@
 	}
 }
 
-	.account-access{
-		display: none;	
-	}
-
 
 @media(min-width: @screen-Sm){
-
-	.logo-header {
-		position: static;
-		float: left;
-		max-width: 25%;
-		margin-left: @gw-Md;
-		padding-top: @gw-Xs;
-		padding-bottom: @gw-Xs;
-		padding-right: @gw-Md;
+	.site-header{
+		padding: @gw-Xs @gw-Lg;
+		width: 100%
 	}
-			
+		.btn-search{
+			font-size: 24px;
+		}
 
-	.search{ 
-		
-	}
-		.search--toggle{
+		#Stellaroute{
+			#SearchQuery{
+				border: none;
+				box-shadow: none;
+				width: auto;
+				opacity: 1;
+				color: @text-color;
+				font-size: 16px;
+				min-width: 250px;
+			}
+
+			#SiteLogo{
+				width: 25%;
+				max-width: 180px;
+				order: -1;
+				margin: 0 5% 0 0;
+				padding: 0;
+			}
+		}
+
+		.hamburger-menu--toggle{
 			display: none;
 		}
-
-		.search--area{
-			position: static;
-			width: 56%;
-			float: left;
-			border-color: #eee;
-			border-style: solid;
-			border-width: 0 1px;
-			padding: 0 @gw-Md;
-		}
-			.search--btn{
-				position: static;
-
-			}
-			.search--input{
-				border: none;
-				width: auto;
-				padding: @gw-Sm;
-				opacity: 1;
-			}
-
-	.hamburger-menu--toggle{
-		display: none;
-	}	
-
-	.account-access{
-		display: inline-block;
-		position: absolute;
-		float: right;
-		width: 24%;
-		padding-top: @gw-Xs;
-		padding-bottom: @gw-Xs;
-	}
-
-			.btn.log-in{
-				position: relative;
-				float: left;
-				width: 76px;
-				margin-left: @gw-Md;
-				background: #59D087;
-				color: white;
-			}
-
-			.btn.sign-up{
-				position: relative;
-				float: left;
-				margin-left: @gw-Sm;
-			}
-
 }

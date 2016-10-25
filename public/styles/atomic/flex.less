@@ -26,7 +26,7 @@
 
 .fw-W {flex-wrap: wrap; }
 .fw-Wr {flex-wrap: wrap-reverse; }
-.fw-Nw {flex-wrap: nowrap; }
+.fw-N {flex-wrap: nowrap; }
 
 // flex direction
 .fd-R { flex-direction: row; }
@@ -70,6 +70,10 @@
 @media (min-width: @screen-Sm){
 	.d-F--sm { display: flex; }
 
+	.fw-W--sm {flex-wrap: wrap; }
+	.fw-Wr--sm {flex-wrap: wrap-reverse; }
+	.fw-N--sm {flex-wrap: nowrap; }
+
 	.fd-R--sm { flex-direction: row; }
 	.fd-Rr--sm { flex-direction: row-reverse; }
 	.fd-C--sm { flex-direction: column; }
@@ -106,6 +110,10 @@
 
 @media (min-width: @screen-Md){
 	.d-F--md { display: flex; }
+
+	.fw-W--md {flex-wrap: wrap; }
+	.fw-Wr--md {flex-wrap: wrap-reverse; }
+	.fw-N--md {flex-wrap: nowrap; }
 
 	.fd-R--md { flex-direction: row; }
 	.fd-Rr--md { flex-direction: row-reverse; }

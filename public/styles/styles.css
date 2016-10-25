@@ -1532,7 +1532,7 @@ h3,
 .h3 {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 0;
+  margin-bottom: 6px;
 }
 h4,
 .h4 {
@@ -8849,7 +8849,7 @@ form.profile-settings-update .profile-label.notification h3 {
   -ms-flex-wrap: wrap-reverse;
       flex-wrap: wrap-reverse;
 }
-#Stellaroute .fw-Nw {
+#Stellaroute .fw-N {
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
 }
@@ -9093,6 +9093,18 @@ form.profile-settings-update .profile-label.notification h3 {
     display: -ms-flexbox;
     display: flex;
   }
+  #Stellaroute .fw-W--sm {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  #Stellaroute .fw-Wr--sm {
+    -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+  }
+  #Stellaroute .fw-N--sm {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+  }
   #Stellaroute .fd-R--sm {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -9333,6 +9345,18 @@ form.profile-settings-update .profile-label.notification h3 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+  #Stellaroute .fw-W--md {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  #Stellaroute .fw-Wr--md {
+    -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+  }
+  #Stellaroute .fw-N--md {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
   }
   #Stellaroute .fd-R--md {
     -webkit-box-orient: horizontal;

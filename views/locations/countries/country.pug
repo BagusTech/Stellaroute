@@ -2,560 +2,607 @@ extends ../../layout.pug
 
 block content
 	.media-bg-img.request-page-header
-		h1= country.names.display
+		.container
+			h1= country.names.display
 
 	.container.ptb-Sm
-		.row
-			.col-xs-12.col-sm-6.col-md-4
-				.content-card
-					h2 At a Glance
-					ul.ls-N.p-0
-						li.mb-Sm 
-							.row
-								.hidden-xs.col-xs-1.ta-C
-									i.fa.fa-sun-o.fc-G__lt 
-								.col-xs-6.col-sm-5 
-									span.lh-1.fc-G__dk Suggested Stay
-								.col-xs-6.ta-C 
-									strong.lh-1 8 days
-						li.mb-Sm 
-							.row
-								.hidden-xs.col-xs-1.ta-C
-									i.fa.fa-clock-o.fc-G__lt 
-								.col-xs-6.col-sm-5 
-									span.lh-1.fc-G__dk Best Time to Go
-								.col-xs-6.ta-C
-									strong.d-B.lh-1 Mar - May;
-									strong.d-B.lh-1 Sep - Nov
-						li
-							.row
-								.hidden-xs.col-xs-1.ta-C
-									i.fa.fa-map-marker.fc-G__lt 
-								.col-xs-6.col-sm-5 
-									span.lh-1.fc-G__dk Top Places	
-								.col-xs-6.ta-C
-									strong.d-B.lh-1 Tokyo;
-									strong.d-B.lh-1 Hiroshima
-				// Before You Go
-				.content-card
-					h2 Before You Go
-
-					h3.pb-Xs.m-0.lh-1 Visa
-					p Canadian, Bermudan, and some European citizens do not need a travel visa. For a full list click 
-						a.fw-B(href="www.nhl.com") here
-
-					h3.pb-Xs.m-0.lh-1 Vaccines
-					p US Customs closely monitors travelers coming into the country. Check your country for specific requirements before travelling to the US 
-				// Quick Facts Card
-				.content-card
-					h2 Quick Facts
-
-					h3.pb-Xs.m-0.lh-1 Small Penises
-					p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
-
-					h3.pb-Xs.m-0.lh-1 The Millions of Millennial Virgins
-					p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts. 
-				// Local Food and Drink
-				.content-card.pb-0
-					h2 Local Food &amp; Drink
-					
-					div.d-F.ta-C
-						span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-						div 
-							h3.m-0.mb-Xs.lh-1 Crab Cakes
-							p.lh-1 Mid-Atlantic seafood specialty with many regional and stulistic distinctions.
-					ul.mtb-Sm
-						li Cakes, Sandwiches, or Benedicts
-						li Lump, Flake, and Claw meat are regularly used
-						li The Blue Crab, native to Chesapeake Bay, is the local favorite
-					.row.ta-C.bg-G
-						h4.fc-W.fs-14 SPONSORED RESTAURANT  
-				// People and Customs
-				.content-card
-					h2 People and Customs
-
-					h3.pb-Xs.m-0.lh-1 Polite and Rspectful
-					p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
-
-					h3.pb-Xs.m-0.lh-1 Wonderful Hosts
-					p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts.
-				// Getting Around Card
-				.content-card.pb-0
-					h2 Getting Around
-
-					h3.d-F
-						i.fa.fa-plane.w-20.pl-Xs.lh-1.fs-48.fc-G
-						span.plr-Sm.ta-C The Best Public Transit in the World
-					p
-						strong Arrive:
-						|	Tokyo Narita (NRT), Tokyo Haneda (HND)
-					p
-						strong Move Around:
-						|	Trains and buses are the easiest way to get around
-					p
-						strong Lay of the Land:
-						|	Extensive and organized public transit system connection every major city and attraction
-					p.pb-Sm.ta-R
-						a.fw-B(href="nhl.com") More Info
-			// Main Content Section
-			.col-xs-12.col-sm-6.col-md-8
-				.content-card
-					h2 What to Know
-					ol.ls-N.p-N
-						li.d-F
-							span.pr-Sm.fs-48.lh-1.fc-Gr 1
-							div
-								h3.m-0.lh-1 Cultural Differences
-								p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
-						li.d-F
-							span.pr-Sm.fs-48.lh-1.fc-Gr 2
-							div
-								h3.m-0.lh-1 Tranposrtation is a Breeze
-								p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
-						li.d-F
-							span.pr-Sm.fs-48.lh-1.fc-Gr 3
-							div
-								h3.m-0.lh-1 Four Islands
-								p Japan is an archipelago primarily made up of four main islands: Kyushu, Shikoku, Honshu, and Hokkaido. Honshu is the main island with the majority of cities and attractions.
-			.col-xs-12.col-sm-6.col-md-8
-				.content-card
-					h2 
-						a.fc-G__lt(href="www.nhl.com") Top Destinations
-						select.ml-Sm.bw-N.fc-B.fs-16
-							option Overall
-							option You Know Nothing
-							option Winter is Coming
-							option Lannisters are never debt free
-					ol.ls-N.p-N.mlr-NegSm
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 1
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li.bg-G__ltr
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 2
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 3
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li.bg-G__ltr
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 4
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 5
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-			.col-xs-12.col-sm-6.col-md-8
-				.content-card
-					h2 
-						a.fc-G__lt(href="www.nhl.com") Top Attractions
-						select.ml-Sm.bw-N.fc-B.fs-16
-							option Overall
-							option You Know Nothing
-							option Winter is Coming
-							option Lannisters are never debt free
-					ol.ls-N.p-N.mlr-NegSm
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 1
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li.bg-G__ltr
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 2
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 3
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li.bg-G__ltr
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 4
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-						li
-							.row.d-F.plr-Sm
-								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
-									span.fs-48.lh-1.fc-Gr 5
-								.col-xs-3
-									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-								.col-xs-7.col-sm-8
-									h3.pt-Sm.m-0.lh-1 Air and Space Museum
-									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
-
 		.content-card
-			form.update-form.js-update-form(method='POST', action='/countries/update')
-				.row
-					.col-xs-12.col-sm-6.col-md-3
-						.form-group
-							label(for='CountryName') Name
-							p.form-control-static= country.names.display
-							.hidden
-								input.form-control#CountryName(name='names.display', type='text', placeholder='Name', value= country.names.display)
+			h2 What to Know
+			h3 America the Beautiful
+			p What the US lacks in historical sites it makes up for in National Parks. No other country in the world has the natural diversity that the US does. From glacier mountains, massive tree forests to other worldly deserts, the US boasts an impressive array of natural landscapes. The National Parks in the US are truly remarkable and set it apart from anywhere else.
+			h3 Massive Size
+			p The US is the 3rd largest country in the world, but inlike Canada and Russia, people live throughout the country. Seeing everything would take months and the best way to see the US is either to focus on a few cities or to concentrate on a region. Don'r rely on public transit though, as there's very little infrastructure from city to city.
 
-					.col-xs-12.col-sm-6.col-md-4
-						.form-group
-							label(for='CountryOfficialName') Official Name
-							p.form-control-static= country.names && country.names.official || 'N/A'
-							.hidden
-								input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
-
-					.col-xs-12.col-sm-6.col-md-2
-						.form-group
-							label(for='CountryAbberviation') Abbreviation
-							p.form-control-static= country.abbreviation
-							.hidden
-								input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
-					
-					.col-xs-12.col-sm-6.col-md-3
-						.form-group
-							label(for='CountryAlias') Alias
-							p.form-control-static= country.names.alias && country.names.alias.join(', ') || 'N/A'
-							.hidden
-								input.form-control#CountryAlias(name='names.alias', type='text', placeholder='Alias', value= country.names.alias && country.names.alias.join(', '))
-				
+		.d-F.fw-W.fw-N--sm
+			.content-card.w-100.mr-Sm--sm
+				h2 Regions of #{country.names.display}
+				for province in provinces
+					h3= province.names.display
+					ul.ls-N.p-0
+						for city in cities
+							if city.province.indexOf(province.Id) > -1
+								li
+									a(href=`/${country.url}/${city.url}`)= city.names.display
+			.content-card.w-100.mt-Sm.ml-Sm--sm
+				h2.mb-0 Guides
 				.row
-					.col-xs-12.col-sm-3.col-md-2
-						.form-group.js-languages
-							label(for='CountryLanguages') Language(s)
-							p.form-control-static= country.communication && country.communication.languages && country.communication.languages.join(', ')
-							.hidden
-								select.form-control#CountryLanguages(name='communication.languages', multiple='true', required)
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Akan') > -1) Akan
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Amharic') > -1) Amharic
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Arabic') > -1) Arabic
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Assamese') > -1) Assamese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Awadhi') > -1) Awadhi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Azerbaijani') > -1) Azerbaijani
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Balochi') > -1) Balochi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Belarusian') > -1) Belarusian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Bengali') > -1) Bengali
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Bhojpuri') > -1) Bhojpuri
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Burmese') > -1) Burmese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Cantonese') > -1) Cantonese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Cebuano') > -1) Cebuano
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chewa') > -1) Chewa
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chittagonian') > -1) Chittagonian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Czech') > -1) Czech
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Deccan') > -1) Deccan
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Dhundhari') > -1) Dhundhari
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Dutch') > -1) Dutch
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('English') > -1) English
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('French') > -1) French
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Fula') > -1) Fula
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Gan Chinese') > -1) Gan Chinese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Georgian') > -1) Georgian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('German') > -1) German
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Greek') > -1) Greek
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Gujarati') > -1) Gujarati
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Haitian Creole') > -1) Haitian Creole
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hakka') > -1) Hakka
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Haryanvi') > -1) Haryanvi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hausa') > -1) Hausa
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hiligaynon') > -1) Hiligaynon
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hindi') > -1) Hindi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hmong') > -1) Hmong
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hungarian') > -1) Hungarian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Igbo') > -1) Igbo
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Ilocano') > -1) Ilocano
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Indonesian') > -1) Indonesian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Italian') > -1) Italian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Japanese') > -1) Japanese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Javanese') > -1) Javanese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Jin') > -1) Jin
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kannada') > -1) Kannada
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kazakh') > -1) Kazakh
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Khmer') > -1) Khmer
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kinyarwanda') > -1) Kinyarwanda
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kirundi') > -1) Kirundi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Konkani') > -1) Konkani
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Korean') > -1) Korean
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kurdish') > -1) Kurdish
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Madurese') > -1) Madurese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Magahi') > -1) Magahi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Maithili') > -1) Maithili
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Malagasy') > -1) Malagasy
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Malayalam') > -1) Malayalam
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Mandarin') > -1) Mandarin
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Marathi') > -1) Marathi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Marwari') > -1) Marwari
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Mossi') > -1) Mossi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Nepali') > -1) Nepali
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Odia') > -1) Odia
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Oromo') > -1) Oromo
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Pashto') > -1) Pashto
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Persian') > -1) Persian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Polish') > -1) Polish
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Portuguese') > -1) Portuguese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Punjabi') > -1) Punjabi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Romanian') > -1) Romanian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Russian') > -1) Russian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Saraiki') > -1) Saraiki
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Shona') > -1) Shona
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sindhi') > -1) Sindhi
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sinhalese') > -1) Sinhalese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Somali') > -1) Somali
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Southern Min') > -1) Southern Min
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Spanish') > -1) Spanish
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sundanese') > -1) Sundanese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Swedish') > -1) Swedish
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sylheti') > -1) Sylheti
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Tagalog') > -1) Tagalog
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Tamil') > -1) Tamil
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Telugu') > -1) Telugu
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Thai') > -1) Thai
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Turkish') > -1) Turkish
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Turkmen') > -1) Turkmen
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Ukrainian') > -1) Ukrainian
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Urdu') > -1) Urdu
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Uyghur') > -1) Uyghur
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Uzbek') > -1) Uzbek
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Vietnamese') > -1) Vietnamese
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Xhosa') > -1) Xhosa
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Yoruba') > -1) Yoruba
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Zhuang') > -1) Zhuang
-									option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Zulu') > -1) Zulu
+					.col-xs-8.col-sm-9.col-md-10
+						h3 Name
+						ul.ls-N.p-0
+							li
+								a(href='#') 3 Days in Chicago
+								| &nbsp;- Lots of fun in ChiTown
+							li
+								a(href='#') Califonia Road Trip
+							li
+								a(href='#') America's Capital
+							li
+								a(href='#') Bigger in Texas
+							li
+								a(href='#') Three Days in the Big Apple
+							li
+								a(href='#') Ultimate Boston
+					.col-xs-4.col-sm-3.col-md-2.ta-R
+						h3 Days
+						ul.ls-N.p-0
+							li 3 Days
+							li 11 Days
+							li 4 Days
+							li 5 Days
+							li 3 Days
+							li 2 Days
+		//
+			.row
+				.col-xs-12.col-sm-6.col-md-4
+					.content-card
+						h2 At a Glance
+						ul.ls-N.p-0
+							li.mb-Sm 
+								.row
+									.hidden-xs.col-xs-1.ta-C
+										i.fa.fa-sun-o.fc-G__lt 
+									.col-xs-6.col-sm-5 
+										span.lh-1.fc-G__dk Suggested Stay
+									.col-xs-6.ta-C 
+										strong.lh-1 8 days
+							li.mb-Sm 
+								.row
+									.hidden-xs.col-xs-1.ta-C
+										i.fa.fa-clock-o.fc-G__lt 
+									.col-xs-6.col-sm-5 
+										span.lh-1.fc-G__dk Best Time to Go
+									.col-xs-6.ta-C
+										strong.d-B.lh-1 Mar - May;
+										strong.d-B.lh-1 Sep - Nov
+							li
+								.row
+									.hidden-xs.col-xs-1.ta-C
+										i.fa.fa-map-marker.fc-G__lt 
+									.col-xs-6.col-sm-5 
+										span.lh-1.fc-G__dk Top Places	
+									.col-xs-6.ta-C
+										strong.d-B.lh-1 Tokyo;
+										strong.d-B.lh-1 Hiroshima
+					// Before You Go
+					.content-card
+						h2 Before You Go
+
+						h3.pb-Xs.m-0.lh-1 Visa
+						p Canadian, Bermudan, and some European citizens do not need a travel visa. For a full list click 
+							a.fw-B(href="www.nhl.com") here
+
+						h3.pb-Xs.m-0.lh-1 Vaccines
+						p US Customs closely monitors travelers coming into the country. Check your country for specific requirements before travelling to the US 
+					// Quick Facts Card
+					.content-card
+						h2 Quick Facts
+
+						h3.pb-Xs.m-0.lh-1 Small Penises
+						p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
+
+						h3.pb-Xs.m-0.lh-1 The Millions of Millennial Virgins
+						p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts. 
+					// Local Food and Drink
+					.content-card.pb-0
+						h2 Local Food &amp; Drink
+						
+						div.d-F.ta-C
+							span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+							div 
+								h3.m-0.mb-Xs.lh-1 Crab Cakes
+								p.lh-1 Mid-Atlantic seafood specialty with many regional and stulistic distinctions.
+						ul.mtb-Sm
+							li Cakes, Sandwiches, or Benedicts
+							li Lump, Flake, and Claw meat are regularly used
+							li The Blue Crab, native to Chesapeake Bay, is the local favorite
+						.row.ta-C.bg-G
+							h4.fc-W.fs-14 SPONSORED RESTAURANT  
+					// People and Customs
+					.content-card
+						h2 People and Customs
+
+						h3.pb-Xs.m-0.lh-1 Polite and Rspectful
+						p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
+
+						h3.pb-Xs.m-0.lh-1 Wonderful Hosts
+						p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts.
+					// Getting Around Card
+					.content-card.pb-0
+						h2 Getting Around
+
+						h3.d-F
+							i.fa.fa-plane.w-20.pl-Xs.lh-1.fs-48.fc-G
+							span.plr-Sm.ta-C The Best Public Transit in the World
+						p
+							strong Arrive:
+							|	Tokyo Narita (NRT), Tokyo Haneda (HND)
+						p
+							strong Move Around:
+							|	Trains and buses are the easiest way to get around
+						p
+							strong Lay of the Land:
+							|	Extensive and organized public transit system connection every major city and attraction
+						p.pb-Sm.ta-R
+							a.fw-B(href="nhl.com") More Info
+				// Main Content Section
+				.col-xs-12.col-sm-6.col-md-8
+					.content-card
+						h2 What to Know
+						ol.ls-N.p-N
+							li.d-F
+								span.pr-Sm.fs-48.lh-1.fc-Gr 1
+								div
+									h3.m-0.lh-1 Cultural Differences
+									p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
+							li.d-F
+								span.pr-Sm.fs-48.lh-1.fc-Gr 2
+								div
+									h3.m-0.lh-1 Tranposrtation is a Breeze
+									p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
+							li.d-F
+								span.pr-Sm.fs-48.lh-1.fc-Gr 3
+								div
+									h3.m-0.lh-1 Four Islands
+									p Japan is an archipelago primarily made up of four main islands: Kyushu, Shikoku, Honshu, and Hokkaido. Honshu is the main island with the majority of cities and attractions.
+				.col-xs-12.col-sm-6.col-md-8
+					.content-card
+						h2 
+							a.fc-G__lt(href="www.nhl.com") Top Destinations
+							select.ml-Sm.bw-N.fc-B.fs-16
+								option Overall
+								option You Know Nothing
+								option Winter is Coming
+								option Lannisters are never debt free
+						ol.ls-N.p-N.mlr-NegSm
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 1
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li.bg-G__ltr
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 2
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 3
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li.bg-G__ltr
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 4
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 5
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+				.col-xs-12.col-sm-6.col-md-8
+					.content-card
+						h2 
+							a.fc-G__lt(href="www.nhl.com") Top Attractions
+							select.ml-Sm.bw-N.fc-B.fs-16
+								option Overall
+								option You Know Nothing
+								option Winter is Coming
+								option Lannisters are never debt free
+						ol.ls-N.p-N.mlr-NegSm
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 1
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li.bg-G__ltr
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 2
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 3
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li.bg-G__ltr
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 4
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+							li
+								.row.d-F.plr-Sm
+									.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+										span.fs-48.lh-1.fc-Gr 5
+									.col-xs-3
+										span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+									.col-xs-7.col-sm-8
+										h3.pt-Sm.m-0.lh-1 Air and Space Museum
+										p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+		if (user && user.isAdmin)
+			.content-card
+				form.update-form.js-update-form(method='POST', action='/countries/update')
+					.row
+						.col-xs-12.col-sm-6.col-md-3
+							.form-group
+								label(for='CountryName') Name
+								p.form-control-static= country.names.display
+								.hidden
+									input.form-control#CountryName(name='names.display', type='text', placeholder='Name', value= country.names.display)
+
+						.col-xs-12.col-sm-6.col-md-4
+							.form-group
+								label(for='CountryOfficialName') Official Name
+								p.form-control-static= country.names && country.names.official || 'N/A'
+								.hidden
+									input.form-control#CountryOfficialName(name='names.official', type='text', placeholder='Name', value= country.names && country.names.official)
+
+						.col-xs-12.col-sm-6.col-md-2
+							.form-group
+								label(for='CountryAbberviation') Abbreviation
+								p.form-control-static= country.abbreviation
+								.hidden
+									input.form-control#CountryAbberviation(name='abbreviation', type='text', placeholder='Abbr', value= country.abbreviation)
+						
+						.col-xs-12.col-sm-6.col-md-3
+							.form-group
+								label(for='CountryAlias') Alias
+								p.form-control-static= country.names.alias && country.names.alias.join(', ') || 'N/A'
+								.hidden
+									input.form-control#CountryAlias(name='names.alias', type='text', placeholder='Alias', value= country.names.alias && country.names.alias.join(', '))
 					
-					.col-xs-12.col-sm-9.col-md-10
-						if country.names && country.names.native
-							.well
-								- for( i in country.names.native)
+					.row
+						.col-xs-12.col-sm-3.col-md-2
+							.form-group.js-languages
+								label(for='CountryLanguages') Language(s)
+								p.form-control-static= country.communication && country.communication.languages && country.communication.languages.join(', ')
+								.hidden
+									select.form-control#CountryLanguages(name='communication.languages', multiple='true', required)
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Akan') > -1) Akan
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Amharic') > -1) Amharic
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Arabic') > -1) Arabic
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Assamese') > -1) Assamese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Awadhi') > -1) Awadhi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Azerbaijani') > -1) Azerbaijani
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Balochi') > -1) Balochi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Belarusian') > -1) Belarusian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Bengali') > -1) Bengali
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Bhojpuri') > -1) Bhojpuri
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Burmese') > -1) Burmese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Cantonese') > -1) Cantonese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Cebuano') > -1) Cebuano
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chewa') > -1) Chewa
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chhattisgarhi') > -1) Chhattisgarhi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Chittagonian') > -1) Chittagonian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Czech') > -1) Czech
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Deccan') > -1) Deccan
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Dhundhari') > -1) Dhundhari
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Dutch') > -1) Dutch
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('English') > -1) English
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('French') > -1) French
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Fula') > -1) Fula
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Gan Chinese') > -1) Gan Chinese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Georgian') > -1) Georgian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('German') > -1) German
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Greek') > -1) Greek
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Gujarati') > -1) Gujarati
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Haitian Creole') > -1) Haitian Creole
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hakka') > -1) Hakka
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Haryanvi') > -1) Haryanvi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hausa') > -1) Hausa
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hiligaynon') > -1) Hiligaynon
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hindi') > -1) Hindi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hmong') > -1) Hmong
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Hungarian') > -1) Hungarian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Igbo') > -1) Igbo
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Ilocano') > -1) Ilocano
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Indonesian') > -1) Indonesian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Italian') > -1) Italian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Japanese') > -1) Japanese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Javanese') > -1) Javanese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Jin') > -1) Jin
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kannada') > -1) Kannada
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kazakh') > -1) Kazakh
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Khmer') > -1) Khmer
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kinyarwanda') > -1) Kinyarwanda
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kirundi') > -1) Kirundi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Konkani') > -1) Konkani
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Korean') > -1) Korean
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Kurdish') > -1) Kurdish
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Madurese') > -1) Madurese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Magahi') > -1) Magahi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Maithili') > -1) Maithili
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Malagasy') > -1) Malagasy
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Malayalam') > -1) Malayalam
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Mandarin') > -1) Mandarin
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Marathi') > -1) Marathi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Marwari') > -1) Marwari
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Mossi') > -1) Mossi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Nepali') > -1) Nepali
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Odia') > -1) Odia
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Oromo') > -1) Oromo
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Pashto') > -1) Pashto
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Persian') > -1) Persian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Polish') > -1) Polish
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Portuguese') > -1) Portuguese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Punjabi') > -1) Punjabi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Romanian') > -1) Romanian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Russian') > -1) Russian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Saraiki') > -1) Saraiki
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Serbo-Croatian') > -1) Serbo-Croatian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Shona') > -1) Shona
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sindhi') > -1) Sindhi
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sinhalese') > -1) Sinhalese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Somali') > -1) Somali
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Southern Min') > -1) Southern Min
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Spanish') > -1) Spanish
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sundanese') > -1) Sundanese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Swedish') > -1) Swedish
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Sylheti') > -1) Sylheti
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Tagalog') > -1) Tagalog
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Tamil') > -1) Tamil
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Telugu') > -1) Telugu
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Thai') > -1) Thai
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Turkish') > -1) Turkish
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Turkmen') > -1) Turkmen
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Ukrainian') > -1) Ukrainian
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Urdu') > -1) Urdu
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Uyghur') > -1) Uyghur
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Uzbek') > -1) Uzbek
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Vietnamese') > -1) Vietnamese
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Xhosa') > -1) Xhosa
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Yoruba') > -1) Yoruba
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Zhuang') > -1) Zhuang
+										option(selected= country.communication && country.communication.languages && country.communication.languages.indexOf('Zulu') > -1) Zulu
+						
+						.col-xs-12.col-sm-9.col-md-10
+							if country.names && country.names.native
+								.well
+									- for( i in country.names.native)
+										.row.js-duplicate
+											.col-xs-5
+												.form-group
+													label Native Name
+													p.form-control-static= country.names.native[i].name
+													.hidden
+														input.form-control(name='native.name', value=country.names.native[i].name, type='text', placeholder='Deutschland', required)
+											.col-xs-4
+												.form-group
+													label Language
+													p.form-control-static= country.names.native && country.names.native[i].language
+													.hidden
+														select.form-control.js-name-language(name='native.language', required)
+															if country.communication
+																- for(j in country.communication.languages)
+																	option(selected= country.names.native[i].language.indexOf(country.communication.languages[j]) > -1)= country.communication.languages[j]
+													
+											.col-xs-3
+												.form-group
+													p.form-static-content &nbsp;
+													button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
+											hr
+
+									.text-right
+										p.hidden
+										.hidden
+											button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+							else
+								.well.js-no-native-name.hidden
 									.row.js-duplicate
 										.col-xs-5
 											.form-group
 												label Native Name
-												p.form-control-static= country.names.native[i].name
-												.hidden
-													input.form-control(name='native.name', value=country.names.native[i].name, type='text', placeholder='Deutschland', required)
+												input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
 										.col-xs-4
 											.form-group
 												label Language
-												p.form-control-static= country.names.native && country.names.native[i].language
-												.hidden
-													select.form-control.js-name-language(name='native.language', required)
-														if country.communication
-															- for(j in country.communication.languages)
-																option(selected= country.names.native[i].language.indexOf(country.communication.languages[j]) > -1)= country.communication.languages[j]
-												
+												select.form-control.js-name-language(name='native.language', required)
+													if (country.communication && country.communication.languages)
+														for language in country.communication.languages
+															option= language
 										.col-xs-3
 											.form-group
 												p.form-static-content &nbsp;
 												button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
-										hr
+									.text-right
+											br
+											button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
+				
+					.row
+						.col-xs-12.col-sm-6
+							.form-group
+								label(for='CountryContinet') Continent(s)
+								p.form-control-static
+									- for (var i = 0; i < country.continentDisplay.length; i++)
+										a(href=`/${country.continentDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.continentDisplay[i]
 
-								.text-right
-									p.hidden
-									.hidden
-										button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
-						else
-							.well.js-no-native-name.hidden
-								.row.js-duplicate
-									.col-xs-5
-										.form-group
-											label Native Name
-											input.form-control(name='native.name', type='text', placeholder='Deutschland', required)
-									.col-xs-4
-										.form-group
-											label Language
-											select.form-control.js-name-language(name='native.language', required)
-												if (country.communication)
-													for language in country.communication.languages
-														option= language
-									.col-xs-3
-										.form-group
-											p.form-static-content &nbsp;
-											button.btn.btn-danger.form-control.js-delete-row.hidden(type='button') Remove
-								.text-right
-										br
-										button.btn.btn-primary.js-make-duplicate(type='button') Add Native Name
-			
-				.row
-					.col-xs-12.col-sm-6
-						.form-group
-							label(for='CountryContinet') Continent(s)
-							p.form-control-static
-								- for (var i = 0; i < country.continentDisplay.length; i++)
-									a(href=`/${country.continentDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.continentDisplay[i]
+										if ((i+1) !== country.continentDisplay.length)
+											|,&nbsp;
+								.hidden
+									select.form-control#CountryContinent(name='continent',  multiple='true')
+										-for (i in continents)
+											option(value= continents[i].Id, selected= country.continentDisplay.toString().indexOf(continents[i].names.display) > -1)= continents[i].names.display
+						
+						.col-xs-12.col-sm-6
+							.form-group
+								label World Region(s)
+								p.form-control-static
+									- for (var i = 0; i < country.worldRegionsDisplay.length; i++)
+										a(href=`/${country.worldRegionsDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.worldRegionsDisplay[i]
 
-									if ((i+1) !== country.continentDisplay.length)
-										|,&nbsp;
-							.hidden
-								select.form-control#CountryContinent(name='continent',  multiple='true')
-									-for (i in continents)
-										option(value= continents[i].Id, selected= country.continentDisplay.toString().indexOf(continents[i].names.display) > -1)= continents[i].names.display
-					
-					.col-xs-12.col-sm-6
-						.form-group
-							label World Region(s)
-							p.form-control-static
-								- for (var i = 0; i < country.worldRegionsDisplay.length; i++)
-									a(href=`/${country.worldRegionsDisplay[i].replace(/ /g, '-').toLowerCase()}`)= country.worldRegionsDisplay[i]
-
-									if ((i+1) !== country.worldRegionsDisplay.length)
-										|,&nbsp;
-							.hidden
-								select.form-control#WorldRegions(name='worldRegions',  multiple='true')
-									-for (i in worldRegions)
-										option(value= worldRegions[i].Id, selected= country.worldRegionsDisplay.toString().indexOf(worldRegions[i].names.display) > -1)= worldRegions[i].names.display
+										if ((i+1) !== country.worldRegionsDisplay.length)
+											|,&nbsp;
+								.hidden
+									select.form-control#WorldRegions(name='worldRegions',  multiple='true')
+										-for (i in worldRegions)
+											option(value= worldRegions[i].Id, selected= country.worldRegionsDisplay.toString().indexOf(worldRegions[i].names.display) > -1)= worldRegions[i].names.display
 
 
-				input(type='hidden', name= key, value= country[key])
-				input(type='hidden', name='redirect', value=`/${country.url}`)
-				input.btn.btn-primary.btn-update(type='button', value='Update')
-				| &nbsp;
-				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-				button.btn.btn-danger.f-R(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+					input(type='hidden', name= key, value= country[key])
+					input(type='hidden', name='redirect', value=`/${country.url}`)
+					input.btn.btn-primary.btn-update(type='button', value='Update')
+					| &nbsp;
+					input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+					button.btn.btn-danger.f-R(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
 
-				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-					.modal-dialog(role='document')
-						.modal-content
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-label='Close')
-									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel
-									| Delete&nbsp;
-									= country.names.display
-							.modal-body
-								.alert.alert-danger
-									p
-										| Are you sure you want to delete&nbsp;
-										= country.names.display + '?'
-									p This action cannot be undone
-								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+					.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+						.modal-dialog(role='document')
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-label='Close')
+										span(aria-hidden='true') &times;
+									h4.modal-title#DeleteModalLabel
+										| Delete&nbsp;
+										= country.names.display
+								.modal-body
+									.alert.alert-danger
+										p
+											| Are you sure you want to delete&nbsp;
+											= country.names.display + '?'
+										p This action cannot be undone
+									input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
-							.modal-footer
-								button.btn.btn-default(type='button', data-dismiss='modal') Close
+								.modal-footer
+									button.btn.btn-default(type='button', data-dismiss='modal') Close
 
-		.row
-			.col-xs-12.col-sm-6
-				.content-card.p-R
-					h2 Regions
+			.row
+				.col-xs-12.col-sm-6
+					.content-card.p-R
+						h2 Regions
 
-					ul
-						for region in countryRegions
-							li
-								a(href= `/${country.url}/${region.url}`)= region.names.display
+						ul
+							for region in countryRegions
+								li
+									a(href= `/${country.url}/${region.url}`)= region.names.display
 
-					.clear
-						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
-					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
+						.clear
+							button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
+						button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryRegionModal') New Region
 
-			.col-xs-12.col-sm-6
-				.content-card.p-R
-					h2 States/Provinces
+				.col-xs-12.col-sm-6
+					.content-card.p-R
+						h2 States/Provinces
 
-					ul
-						for province in provinces
-							li
-								a(href= `/${country.url}/${province.url}`)= province.names.display
+						ul
+							for province in provinces
+								li
+									a(href= `/${country.url}/${province.url}`)= province.names.display
 
-					.clear
-						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
-					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
+						.clear
+							button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
+						button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewCountryProvinceModal') New Province
 
-			.col-xs-12
-				.content-card.p-R
-					h2 Attractions
+				.col-xs-12
+					.content-card.p-R
+						h2 Attractions
 
-					ul
-						for attraction in attractions
-							li
-								a(href=`/${country.url}/${attraction.url}`)= attraction.names.display
-					.clear
-						button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
-					button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
+						ul
+							for attraction in attractions
+								li
+									a(href=`/${country.url}/${attraction.url}`)= attraction.names.display
+						.clear
+							button.btn.btn-primary.f-R(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
+						button.btn.btn-primary.p-A.t-Md.r-Md(type='button', data-toggle='modal', data-target='#NewAttraction') New Attraction
+	if (user && user.isAdmin)
+		.modal.fade#NewCountryRegionModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryRegionModalLabel")
+			.modal-dialog(role='document')
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+						h4#NewCountryRegionModalLabel.mt-0.mb-0.pl-Sm.fc-G
+								| Add a Region to&nbsp;
+								span= country.names.display
+					.modal-body.plr-Md.pb-Md
+						form(method='POST', action='/country-regions/new')
+							.form-group
+								label(for='CountryRegionName') Name
+								input.form-control#CountryRegionName(name='names.display', type='text', placeholder='New England', required)
 
-	.modal.fade#NewCountryRegionModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryRegionModalLabel")
-		.modal-dialog(role='document')
-			.modal-content
-				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
-						span(aria-hidden='true') &times;
-					h4#NewCountryRegionModalLabel.mt-0.mb-0.pl-Sm.fc-G
-							| Add a Region to&nbsp;
-							span= country.names.display
-				.modal-body.plr-Md.pb-Md
-					form(method='POST', action='/country-regions/new')
-						.form-group
-							label(for='CountryRegionName') Name
-							input.form-control#CountryRegionName(name='names.display', type='text', placeholder='New England', required)
+							input(type='hidden', name='country', value= country.Id)
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
 
-						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
+		.modal.fade#NewCountryProvinceModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryProvinceModalLabel")
+			.modal-dialog(role='document')
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') &times;
+						h4#NewCountryProvinceModalLabel.mt-0.mb-0.pl-Sm.fc-G
+								| Add a State/Province to&nbsp;
+								span= country.names.display
+					.modal-body.plr-Md.pb-Md
+						form(method='POST', action='/provinces/new')
+							.form-group
+								label(for='ProvinceName') Name
+								input.form-control#ProvinceName(name='names.display', type='text', placeholder='Missouri', required)
 
-	.modal.fade#NewCountryProvinceModal(tab-index='-1', role='dialog', aria-labelledby="NewCountryProvinceModalLabel")
-		.modal-dialog(role='document')
-			.modal-content
-				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
-						span(aria-hidden='true') &times;
-					h4#NewCountryProvinceModalLabel.mt-0.mb-0.pl-Sm.fc-G
-							| Add a State/Province to&nbsp;
-							span= country.names.display
-				.modal-body.plr-Md.pb-Md
-					form(method='POST', action='/provinces/new')
-						.form-group
-							label(for='ProvinceName') Name
-							input.form-control#ProvinceName(name='names.display', type='text', placeholder='Missouri', required)
-
-						.form-group
-							label(for='ProvinceCountryRegion') Country Region
-							select#ProvinceCountryRegion(name='countryRegions', multiple)
-								for region in countryRegions
-									option(value= region.Id, name='countryRegions')= region.names.display
+							.form-group
+								label(for='ProvinceCountryRegion') Country Region
+								select#ProvinceCountryRegion(name='countryRegions', multiple)
+									for region in countryRegions
+										option(value= region.Id, name='countryRegions')= region.names.display
 
 
-						input(type='hidden', name='country', value= country.Id)
-						button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
+							input(type='hidden', name='country', value= country.Id)
+							button.btn.btn-primary.btn-Sm(type='submit', value= `/${country.url}`, name='redirect') Save
 
-	.modal.fade#NewAttraction(tab-index='-1', role='dialog', aria-labelledby="NewAttractionLabel")
+		.modal.fade#NewAttraction(tab-index='-1', role='dialog', aria-labelledby="NewAttractionLabel")
 		.modal-dialog(role='document')
 			.modal-content
 				.modal-header

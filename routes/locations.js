@@ -76,6 +76,7 @@ router.get('/:country', function(req, res, next){
 
 	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
 	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
+	const cities = City.find('country', country.Id).items.sort(sortBy('url'))
 
 	res.render('locations/countries/country', {
 		title: `Stellaroute: ${country.names.display}`,
@@ -86,6 +87,7 @@ router.get('/:country', function(req, res, next){
 		countryRegions: CountryRegion.find('country', country.Id).items,
 		worldRegions: WorldRegion.cached().sort(sortBy('url')),
 		provinces: provinces,
+		cities: cities,
 		attractions: attractions,
 	});
 });

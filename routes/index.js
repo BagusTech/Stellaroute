@@ -7,14 +7,14 @@ const instagram        = require('../config/instagram');
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
-const City     		   = require('../schemas/continent');
+const Continent 	   = require('../schemas/continent');
 const db               = require('../config/db');
 const router           = express.Router();
 
 strategies.local(passport);
 strategies.instagram(passport);
 
-router.get('/', City.getCached(), function(req, res, next){
+router.get('/', (req, res, next) => {res.locals.user = req.user; next();}, function(req, res, next){
 	
 	/*
 	City.find().items.forEach(function(item){
@@ -86,6 +86,15 @@ router.get('/feedback', function(req, res){
 	res.render('feedback', {
 		title: 'Stellaroute: Learn Everything About Us',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
+	});
+});
+
+// explore
+router.get('/explore', function(req, res){
+	res.render('explore', {
+		title: 'Stellaroute: Learn Everything About Us',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+		continents: Continent.cached(),
 	});
 });
 

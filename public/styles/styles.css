@@ -8117,6 +8117,9 @@ form.profile-settings-update .profile-label.notification h3 {
   border-bottom: 1px solid #d7d7d7;
   color: #cccccc;
 }
+.content-card + .content-card {
+  margin-top: 24px;
+}
 .text-wings {
   position: relative;
   display: table;

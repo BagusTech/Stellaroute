@@ -5,9 +5,229 @@ block content
 		h1= city.names.display
 
 	.container.ptb-Sm
-		small
-			a.fc-G(href= `/${city.countryUrl}`)= `< Back to ${city.countryDisplay}`
+		.row
+			.col-xs-12.col-sm-6.col-md-4
+				.content-card
+					h2 At a Glance
+					ul.ls-N.p-0
+						li.mb-Sm 
+							.row
+								.hidden-xs.col-xs-1.ta-C
+									i.fa.fa-sun-o.fc-G__lt 
+								.col-xs-6.col-sm-5 
+									span.lh-1.fc-G__dk Suggested Stay
+								.col-xs-6.ta-C 
+									strong.lh-1 8 days
+						li.mb-Sm 
+							.row
+								.hidden-xs.col-xs-1.ta-C
+									i.fa.fa-clock-o.fc-G__lt 
+								.col-xs-6.col-sm-5 
+									span.lh-1.fc-G__dk Best Time to Go
+								.col-xs-6.ta-C
+									strong.d-B.lh-1 Mar - May;
+									strong.d-B.lh-1 Sep - Nov
+						li
+							.row
+								.hidden-xs.col-xs-1.ta-C
+									i.fa.fa-map-marker.fc-G__lt 
+								.col-xs-6.col-sm-5 
+									span.lh-1.fc-G__dk Top Places	
+								.col-xs-6.ta-C
+									strong.d-B.lh-1 Tokyo;
+									strong.d-B.lh-1 Hiroshima
+				// Before You Go
+				.content-card
+					h2 Before You Go
 
+					h3.pb-Xs.m-0.lh-1 Visa
+					p Canadian, Bermudan, and some European citizens do not need a travel visa. For a full list click 
+						a.fw-B(href="www.nhl.com") here
+
+					h3.pb-Xs.m-0.lh-1 Vaccines
+					p US Customs closely monitors travelers coming into the country. Check your country for specific requirements before travelling to the US 
+				// Quick Facts Card
+				.content-card
+					h2 Quick Facts
+
+					h3.pb-Xs.m-0.lh-1 Small Penises
+					p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
+
+					h3.pb-Xs.m-0.lh-1 The Millions of Millennial Virgins
+					p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts. 
+				// Local Food and Drink
+				.content-card.pb-0
+					h2 Local Food &amp; Drink
+					
+					div.d-F.ta-C
+						span.pl-Xs.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+						div 
+							h3.m-0.mb-Xs.lh-1 Crab Cakes
+							p.lh-1 Mid-Atlantic seafood specialty with many regional and stulistic distinctions.
+					ul.mtb-Sm
+						li Cakes, Sandwiches, or Benedicts
+						li Lump, Flake, and Claw meat are regularly used
+						li The Blue Crab, native to Chesapeake Bay, is the local favorite
+					.row.ta-C.bg-G
+						h4.fc-W.fs-14 SPONSORED RESTAURANT  
+				// People and Customs
+				.content-card
+					h2 People and Customs
+
+					h3.pb-Xs.m-0.lh-1 Polite and Rspectful
+					p The Japanese are renowned around the world for their espicially small penises. Not to be confused for micro penises, these small organs are a distinguishing feature of Japanses males.
+
+					h3.pb-Xs.m-0.lh-1 Wonderful Hosts
+					p Remember all those jokes about computer geeks and gamers not getting laid? Well it's no joke in Japan. Roughly 30% of all people aged 18 - 30 are virgins and have no interest in having sex. It's a pandemic of sorts.
+				// Getting Around Card
+				.content-card.pb-0
+					h2 Getting Around
+
+					h3.d-F
+						i.fa.fa-plane.w-20.pl-Xs.lh-1.fs-48.fc-G
+						span.plr-Sm.ta-C The Best Public Transit in the World
+					p
+						strong Arrive:
+						|	Tokyo Narita (NRT), Tokyo Haneda (HND)
+					p
+						strong Move Around:
+						|	Trains and buses are the easiest way to get around
+					p
+						strong Lay of the Land:
+						|	Extensive and organized public transit system connection every major city and attraction
+					p.pb-Sm.ta-R
+						a.fw-B(href="nhl.com") More Info
+			// Main Content Section
+			.col-xs-12.col-sm-6.col-md-8
+				.content-card
+					h2 What to Know
+					ol.ls-N.p-N
+						li.d-F
+							span.pr-Sm.fs-48.lh-1.fc-Gr 1
+							div
+								h3.m-0.lh-1 Cultural Differences
+								p Japanese culture is not completely uniquie, but there  are some differences travelers should be aware of. From taking your shoes off indoors, never tipping, and a bevvy of table manners, be aware if you want to make a good impression.
+						li.d-F
+							span.pr-Sm.fs-48.lh-1.fc-Gr 2
+							div
+								h3.m-0.lh-1 Tranposrtation is a Breeze
+								p The country is incredibly well connected by public transport. Unless you're going to a remote area, you'll never need to step foot in a car. 
+						li.d-F
+							span.pr-Sm.fs-48.lh-1.fc-Gr 3
+							div
+								h3.m-0.lh-1 Four Islands
+								p Japan is an archipelago primarily made up of four main islands: Kyushu, Shikoku, Honshu, and Hokkaido. Honshu is the main island with the majority of cities and attractions.
+			.col-xs-12.col-sm-6.col-md-8
+				.content-card
+					h2 
+						a.fc-G__lt(href="www.nhl.com") Top Destinations
+						select.ml-Sm.bw-N.fc-B.fs-16
+							option Overall
+							option You Know Nothing
+							option Winter is Coming
+							option Lannisters are never debt free
+					ol.ls-N.p-N.mlr-NegSm
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 1
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li.bg-G__ltr
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 2
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 3
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li.bg-G__ltr
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 4
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 5
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+			.col-xs-12.col-sm-6.col-md-8
+				.content-card
+					h2 
+						a.fc-G__lt(href="www.nhl.com") Top Attractions
+						select.ml-Sm.bw-N.fc-B.fs-16
+							option Overall
+							option You Know Nothing
+							option Winter is Coming
+							option Lannisters are never debt free
+					ol.ls-N.p-N.mlr-NegSm
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 1
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li.bg-G__ltr
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 2
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 3
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li.bg-G__ltr
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 4
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Big Gay Al's Adventure Funland in SouthPark Colorado 
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+						li
+							.row.d-F.plr-Sm
+								.col-xs-2.col-sm-1.ta-C.fas-C.ta-R
+									span.fs-48.lh-1.fc-Gr 5
+								.col-xs-3
+									span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
+								.col-xs-7.col-sm-8
+									h3.pt-Sm.m-0.lh-1 Air and Space Museum
+									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
+		//Original Form
 		.content-card
 			form.update-form(method='POST', action='/cities/update')
 				.form-group

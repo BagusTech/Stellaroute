@@ -2,9 +2,98 @@ extends ../../layout.pug
 
 block content
 	.media-bg-img.request-page-header
-		h1= city.names.display
+		.container.ptb-0
+			ol.breadcrumb.bg-N.p-N
+				li.active United Sates
+				li.active Midwest
+				li.active #{city.names.display}
+			hr
+			h1 #{city.names.display}
+				small.ml-Md Broad Shoulders, Down to Earch, Great Food
 
 	.container.ptb-Sm
+		.row
+			.col-xs-12.col-sm-4.col-md-3
+				.content-card
+					h2 At a Glance
+					dl
+						dt Length of Stay
+						dd 3 day
+						dt Best Time to Visit
+						dd Apr - Jun; Aug - Sep
+						dt Top places to stay
+						dd Lincoln Park, River North
+			.col-xs-12.col-sm-8.col-md-9
+				.content-card.p-0
+					.d-F.fj-B.fai-C.bg-Purp.fc-W
+						button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.ml-A(data-icon='fa fa-chevron-left')
+						h2.bw-N.fc-W.m-0.p-0 Sightseeing
+						button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.mr-A(data-icon='fa fa-chevron-right')
+					.js-map-overview.p-R
+						nav.p-A.l-0.t-0.b-0.w-25.bg-Dk
+							ul.ls-N.p-0
+								li(data-map='legend', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover')
+									img.img-responsive(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
+								li
+									img.img-responsive(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
+								li(data-map='legend', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover')
+									img.img-responsive(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
+								li(data-map='legend', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card', data-event='hover')
+									img.img-responsive(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
+								li
+									img.img-responsive(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
+						.p-A.br-C(data-map='icon', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:380px; left:550px; background: url("http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg") no-repeat center center/cover;border: 2px solid #333')
+							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
+								h2 John Hancock Center
+								| Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
+						.p-A.br-C(data-map='icon', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:530px; left:485px; background: url("http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg") no-repeat center center/cover;border: 2px solid #333')
+							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
+								h2 Willis Tower
+								| Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
+						.p-A.br-C.bc-G__dkr.bw-Md.bs-S(data-map='icon', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card, this', data-event='hover', data-toggle='bc-Gr', style='height: 50px; width: 50px; top:500px; left:570px; background: url("http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg") no-repeat center center/cover;')
+							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
+								h2 Millennium Park
+								| Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
+
+						img.w-100(src='/images/chicago-map.jpg')
+					//ol.ls-N.p-0
+						li
+							.d-F
+								.w-10.fc-Gr.fs-48.fas-C.ta-C 1
+								img.w-30(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
+								.p-Md
+									h3.mt-0.lh-1 John Hancock Center
+									p.m-0 Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
+						li.bg-G__ltr
+							.d-F
+								.w-10.fc-Gr.fs-48.fas-C.ta-C 2
+								img.w-30(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
+								.p-Md
+									h3.mt-0.lh-1 Buckingham Fountain
+									p.m-0 Located in Grant Park, the Beaux Arts-style Buckingham Fountain was designed by architect Edward Bennett after the Latona Fountain at Versailles. The font is famous for its grand size and for the height of its spray, which can reach as high as 15 stories. The fountain’s four water-spouting sea horse statues are said to represent the four states that surround Lake Michigan, while the fountain’s pool symbolizes the lake itself.
+						li
+							.d-F
+								.w-10.fc-Gr.fs-48.fas-C.ta-C 3
+								img.w-30(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
+								.p-Md
+									h3.mt-0.lh-1 Willis Tower
+									p.m-0 Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
+						li.bg-G__ltr
+							.d-F
+								.w-10.fc-Gr.fs-48.fas-C.ta-C 4
+								img.w-30(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
+								.p-Md
+									h3.mt-0.lh-1 Millennium Park
+									p.m-0 Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
+						li
+							.d-F
+								.w-10.fc-Gr.fs-48.fas-C.ta-C 5
+								img.w-30(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
+								.p-Md
+									h3.mt-0.lh-1 Chicago Water Tower
+									p.m-0 One of the few surviving structures of the infamous Great Chicago Fire, the Chicago Water Tower is a symbol of the city’s resilience. Today, the beautiful limestone structure is home to the City Gallery, which exhibits works by local artists and photographers.
+
+	//.container.ptb-Sm
 		.row
 			.col-xs-12.col-sm-6.col-md-4
 				.content-card
@@ -228,85 +317,86 @@ block content
 									h3.pt-Sm.m-0.lh-1 Air and Space Museum
 									p With many of the city's sites closely packed together this is an easy city to get around by foot and public transit (not so great for cars)
 		//Original Form
-		.content-card
-			form.update-form(method='POST', action='/cities/update')
-				.form-group
-					label Name
-					p.form-control-static= city.names.display
-					.hidden
-						input.form-control(name='names.display', type='text', placeholder='name', value=city.names.display)
+		if user && user.isAdmin
+			.content-card
+				form.update-form(method='POST', action='/cities/update')
+					.form-group
+						label Name
+						p.form-control-static= city.names.display
+						.hidden
+							input.form-control(name='names.display', type='text', placeholder='name', value=city.names.display)
 
-				.form-group
-					label Country Region(s)
-					p.form-control-static
-						if city.countryRegionsDisplay
-							-for (i in city.countryRegionsDisplay)
-								a(href=`/${city.countryUrl}/${city.countryRegionsUrl[i]}`)= city.countryRegionsDisplay && city.countryRegionsDisplay.indexOf(city.countryRegionsDisplay[i]) == city.countryRegionsDisplay.length-1 ? city.countryRegionsDisplay[i] : `${city.countryRegionsDisplay[i]}, ` 
-						else
-							| N/A
-					.hidden
-						select.form-control(name='countryRegions', multiple)
-							for region in countryRegions
-								option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.names.display
+					.form-group
+						label Country Region(s)
+						p.form-control-static
+							if city.countryRegionsDisplay
+								-for (i in city.countryRegionsDisplay)
+									a(href=`/${city.countryUrl}/${city.countryRegionsUrl[i]}`)= city.countryRegionsDisplay && city.countryRegionsDisplay.indexOf(city.countryRegionsDisplay[i]) == city.countryRegionsDisplay.length-1 ? city.countryRegionsDisplay[i] : `${city.countryRegionsDisplay[i]}, ` 
+							else
+								| N/A
+						.hidden
+							select.form-control(name='countryRegions', multiple)
+								for region in countryRegions
+									option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.names.display
 
-				.row
-					.col-xs-12.col-sm-6
-						.form-group
-							label State/Province
-							p.form-control-static
-								if city.provinceDisplay
-									-for (i in city.provinceDisplay)
-										a(href=`/${city.countryUrl}/${city.provinceUrl[i]}`)= city.provinceDisplay && city.provinceDisplay.indexOf(city.provinceDisplay[i]) == city.provinceDisplay.length-1 ? city.provinceDisplay[i] : `${city.provinceDisplay[i]}, ` 
-								else
-									| N/A
-							.hidden
-								select.form-control(name='province', multiple)
-									for province in provinces
-										option(value=province.Id, selected= city.province && city.province.indexOf(province.Id) > -1)= province.names.display
+					.row
+						.col-xs-12.col-sm-6
+							.form-group
+								label State/Province
+								p.form-control-static
+									if city.provinceDisplay
+										-for (i in city.provinceDisplay)
+											a(href=`/${city.countryUrl}/${city.provinceUrl[i]}`)= city.provinceDisplay && city.provinceDisplay.indexOf(city.provinceDisplay[i]) == city.provinceDisplay.length-1 ? city.provinceDisplay[i] : `${city.provinceDisplay[i]}, ` 
+									else
+										| N/A
+								.hidden
+									select.form-control(name='province', multiple)
+										for province in provinces
+											option(value=province.Id, selected= city.province && city.province.indexOf(province.Id) > -1)= province.names.display
 
-					.col-xs-12.col-sm-6
-						.form-group
-							label State/Province Region(s)
-							p.form-control-static
-								if city.provinceRegionsDisplay
-									-for (i in city.provinceRegionsDisplay)
-										a(href=`/${city.countryUrl}/${city.provinceRegionsUrl[i]}`)= city.provinceRegionsDisplay && city.provinceRegionsDisplay.indexOf(city.provinceRegionsDisplay[i]) == city.provinceRegionsDisplay.length-1 ? city.provinceRegionsDisplay[i] : `${city.provinceRegionsDisplay[i]}, ` 
-								else
-									| N/A
-							.hidden
-								select.form-control(name='provinceRegions', multiple)
-									for region in provinceRegions
-										option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.names.display
+						.col-xs-12.col-sm-6
+							.form-group
+								label State/Province Region(s)
+								p.form-control-static
+									if city.provinceRegionsDisplay
+										-for (i in city.provinceRegionsDisplay)
+											a(href=`/${city.countryUrl}/${city.provinceRegionsUrl[i]}`)= city.provinceRegionsDisplay && city.provinceRegionsDisplay.indexOf(city.provinceRegionsDisplay[i]) == city.provinceRegionsDisplay.length-1 ? city.provinceRegionsDisplay[i] : `${city.provinceRegionsDisplay[i]}, ` 
+									else
+										| N/A
+								.hidden
+									select.form-control(name='provinceRegions', multiple)
+										for region in provinceRegions
+											option(value=region.Id, selected= city.provinceRegions && city.provinceRegions.indexOf(region.Id) > -1)= region.names.display
 
-				input(type='hidden', name='redirect', value=`/${city.countryUrl}/${city.url}`)
-				input(type='hidden', name='deleteRedirect', value=`/${city.countryUrl}`)
-				input(type='hidden', name= key, value= city[key])
-				input.btn.btn-primary.btn-update(type='button', value='Update')
-				| &nbsp;
-				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
-				
-				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-					.modal-dialog(role='document')
-						.modal-content
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-label='Close')
-									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel
-									| Delete&nbsp;
-									= city.names.display
-							.modal-body
-								.alert.alert-danger
-									p
-										| Are you sure you want to delete&nbsp;
-										= city.names.display + '?'
-									p This action cannot be undone
-								input.btn.btn-danger(type='submit', value='Delete', name='delete')
+					input(type='hidden', name='redirect', value=`/${city.countryUrl}/${city.url}`)
+					input(type='hidden', name='deleteRedirect', value=`/${city.countryUrl}`)
+					input(type='hidden', name= key, value= city[key])
+					input.btn.btn-primary.btn-update(type='button', value='Update')
+					| &nbsp;
+					input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
+					button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
+					
+					.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
+						.modal-dialog(role='document')
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-label='Close')
+										span(aria-hidden='true') &times;
+									h4.modal-title#DeleteModalLabel
+										| Delete&nbsp;
+										= city.names.display
+								.modal-body
+									.alert.alert-danger
+										p
+											| Are you sure you want to delete&nbsp;
+											= city.names.display + '?'
+										p This action cannot be undone
+									input.btn.btn-danger(type='submit', value='Delete', name='delete')
 
-							.modal-footer
-								button.btn.btn-default(type='button', data-dismiss='modal') Close
+								.modal-footer
+									button.btn.btn-default(type='button', data-dismiss='modal') Close
 
-		.row
+			.row
 			.col-xs-12.col-sm-6
 				.content-card.p-R
 					h2 City Regions
@@ -330,43 +420,43 @@ block content
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
 					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
+	if user && user.isAdmin
+		.modal.fade#AddCityRegion(tab-index='-1', role='dialog')
+				.modal-dialog(role='document')
+					form.modal-content(method='POST', action='/city-regions/new')
+						.modal-header.mb-Md
+							h4.mt-0.mb-0.pl-Sm.fc-G
+								| Add a City Region to&nbsp;
+								span= city.names.display
+							button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+								span(aria-hidden='true') &times;
+						.modal-body.plr-Md.pb-Md
+							.row
+								.col-xs-12
+									.form-group
+										label(for='CityRegionName') Name
+										input.form-control#CityRegionName(name='names.display', type='text', placeholder='America', required)
 
-	.modal.fade#AddCityRegion(tab-index='-1', role='dialog')
-			.modal-dialog(role='document')
-				form.modal-content(method='POST', action='/city-regions/new')
-					.modal-header.mb-Md
-						h4.mt-0.mb-0.pl-Sm.fc-G
-							| Add a City Region to&nbsp;
-							span= city.names.display
-						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-					.modal-body.plr-Md.pb-Md
-						.row
-							.col-xs-12
-								.form-group
-									label(for='CityRegionName') Name
-									input.form-control#CityRegionName(name='names.display', type='text', placeholder='America', required)
+							.form-group.mb-0
+								input.hidden(name='city', value=city.Id)
+								button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save
 
-						.form-group.mb-0
-							input.hidden(name='city', value=city.Id)
-							button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save
+		.modal.fade#AddNeighborhood(tab-index='-1', role='dialog')
+				.modal-dialog(role='document')
+					form.modal-content(method='POST', action='/neighborhoods/new')
+						.modal-header.mb-Md
+							h4.mt-0.mb-0.pl-Sm.fc-G
+								| Add a Neighborhood to&nbsp;
+								span= city.names.display
+							button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
+								span(aria-hidden='true') &times;
+						.modal-body.plr-Md.pb-Md
+							.row
+								.col-xs-12
+									.form-group
+										label(for='NeighborhoodName') Name
+										input.form-control#NeighborhoodName(name='names.display', type='text', placeholder='SoHo', required)
 
-	.modal.fade#AddNeighborhood(tab-index='-1', role='dialog')
-			.modal-dialog(role='document')
-				form.modal-content(method='POST', action='/neighborhoods/new')
-					.modal-header.mb-Md
-						h4.mt-0.mb-0.pl-Sm.fc-G
-							| Add a Neighborhood to&nbsp;
-							span= city.names.display
-						button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') &times;
-					.modal-body.plr-Md.pb-Md
-						.row
-							.col-xs-12
-								.form-group
-									label(for='NeighborhoodName') Name
-									input.form-control#NeighborhoodName(name='names.display', type='text', placeholder='SoHo', required)
-
-						.form-group.mb-0
-							input.hidden(name='city', value=city.Id)
-							button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save
+							.form-group.mb-0
+								input.hidden(name='city', value=city.Id)
+								button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save

@@ -23,19 +23,24 @@ void function initializeToggle($) {
 
     function getElementString($elem){
         const elem = $elem[0]
-        const classes = elem.classList.value.replace(/\s/g, '.');
 
-        return `${elem.nodeName}#${elem.id}.${classes}`
+        if(elem){
+            const classes = elem.classList.value.replace(/\s/g, '.');
+
+            return `${elem.nodeName}#${elem.id}.${classes}`
+        }
+
+        return 'NoTargetFound'
     }
 
     function makeToggle(wrapper) {
         const $this = $(wrapper);
-        const $targets = ($this.attr('data-target') && $this.attr('data-target').split(',')) || [$this];
+        const targets = ($this.attr('data-target') && $this.attr('data-target').split(',')) || [$this];
         const event = $this.attr('data-event') || 'click';
 
         
-        for(const i in $targets){
-            const $target = $($targets[i]);
+        for(const i in targets){
+            const $target = targets[i] === ' this' ? $this : $(targets[i]);
             const classes = ($target.attr('data-toggle') && $target.attr('data-toggle').split(' ')) || ['active'];
             const toggleEventName = `${getElementString($this)}.toggles.${getElementString($target)}.to.${classes.join('.')}`;
             

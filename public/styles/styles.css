@@ -1403,7 +1403,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid #e7e7e7;
 }
 .sr-only {
   position: absolute;
@@ -1676,7 +1676,7 @@ a.bg-danger:focus {
 .page-header {
   padding-bottom: 9px;
   margin: 40px 0 20px;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid #e7e7e7;
 }
 ul,
 ol {
@@ -1782,7 +1782,7 @@ blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;
   font-size: 17.5px;
-  border-left: 5px solid #d7d7d7;
+  border-left: 5px solid #e7e7e7;
 }
 blockquote p:last-child,
 blockquote ul:last-child,
@@ -1806,7 +1806,7 @@ blockquote .small:before {
 blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid #d7d7d7;
+  border-right: 5px solid #e7e7e7;
   border-left: 0;
   text-align: right;
 }
@@ -2860,7 +2860,7 @@ output {
   color: #959ca2;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #d7d7d7;
+  border: 1px solid #e7e7e7;
   border-radius: 2px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -2888,7 +2888,7 @@ output {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
   opacity: 1;
 }
 .form-control[disabled],
@@ -3372,7 +3372,7 @@ fieldset[disabled] a.btn {
   user-select: none;
   color: #4a4d50;
   background-color: #fff;
-  border-color: #d7d7d7;
+  border-color: #e7e7e7;
 }
 .btn-default:focus,
 .btn-default:active:focus,
@@ -3411,19 +3411,19 @@ fieldset[disabled] a.btn-default {
 .btn-default.focus {
   color: #4a4d50;
   background-color: #e6e6e6;
-  border-color: #979797;
+  border-color: #a7a7a7;
 }
 .btn-default:hover {
   color: #4a4d50;
   background-color: #e6e6e6;
-  border-color: #b8b8b8;
+  border-color: #c8c8c8;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #4a4d50;
   background-color: #e6e6e6;
-  border-color: #b8b8b8;
+  border-color: #c8c8c8;
 }
 .btn-default:active:hover,
 .btn-default.active:hover,
@@ -3436,7 +3436,7 @@ fieldset[disabled] a.btn-default {
 .open > .dropdown-toggle.btn-default.focus {
   color: #4a4d50;
   background-color: #d4d4d4;
-  border-color: #979797;
+  border-color: #a7a7a7;
 }
 .btn-default:active,
 .btn-default.active,
@@ -3453,7 +3453,7 @@ fieldset[disabled] .btn-default:focus,
 .btn-default[disabled].focus,
 fieldset[disabled] .btn-default.focus {
   background-color: #fff;
-  border-color: #d7d7d7;
+  border-color: #e7e7e7;
 }
 .btn-default .badge {
   color: #fff;
@@ -4648,8 +4648,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   line-height: 1;
   color: #959ca2;
   text-align: center;
-  background-color: #d7d7d7;
-  border: 1px solid #d7d7d7;
+  background-color: #e7e7e7;
+  border: 1px solid #e7e7e7;
   border-radius: 2px;
 }
 .input-group-addon.input-sm {
@@ -4734,7 +4734,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
 }
 .nav > li.disabled > a {
   color: #cccccc;
@@ -4749,7 +4749,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
   border-color: #7770A1;
 }
 .nav .nav-divider {
@@ -4775,7 +4775,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-radius: 2px 2px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #d7d7d7 #d7d7d7 #ddd;
+  border-color: #e7e7e7 #e7e7e7 #ddd;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -5487,7 +5487,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > li > span:focus {
   z-index: 2;
   color: #544e77;
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
   border-color: #ddd;
 }
 .pagination > .active > a,
@@ -5565,7 +5565,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pager li > a:hover,
 .pager li > a:focus {
   text-decoration: none;
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
 }
 .pager .next > a,
 .pager .next > span {
@@ -5701,7 +5701,7 @@ a.badge:focus {
   padding-bottom: 24px;
   margin-bottom: 24px;
   color: inherit;
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -5713,7 +5713,7 @@ a.badge:focus {
   font-weight: 200;
 }
 .jumbotron > hr {
-  border-top-color: #bebebe;
+  border-top-color: #cecece;
 }
 .container .jumbotron,
 .container-fluid .jumbotron {
@@ -6011,7 +6011,7 @@ button.list-group-item {
 .list-group-item.disabled,
 .list-group-item.disabled:hover,
 .list-group-item.disabled:focus {
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
   color: #cccccc;
   cursor: not-allowed;
 }
@@ -6655,7 +6655,7 @@ button.close {
   position: relative;
 }
 .modal-header:after {
-  background: #d7d7d7;
+  background: #e7e7e7;
   content: ' ';
   display: block;
   position: absolute;
@@ -6694,7 +6694,7 @@ button.close {
   position: relative;
 }
 .modal-footer:before {
-  background: #d7d7d7;
+  background: #e7e7e7;
   content: ' ';
   display: block;
   position: absolute;
@@ -7681,7 +7681,7 @@ button.close {
   padding: 0 !important;
 }
 .site-body {
-  background: #d7d7d7;
+  background: #e7e7e7;
 }
 .site-body > .media-bg-img {
   padding-top: 52px;
@@ -7961,7 +7961,7 @@ button.close {
 }
 .profile-picture {
   border-radius: 50%;
-  border: 4px solid #d7d7d7;
+  border: 4px solid #e7e7e7;
   width: 96px;
   margin-top: 40px;
 }
@@ -8114,7 +8114,7 @@ form.profile-settings-update .profile-label.notification h3 {
   margin: 0 -12px 12px;
   padding: 0 12px 12px;
   line-height: 1;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid #e7e7e7;
   color: #cccccc;
 }
 .content-card + .content-card {
@@ -8275,7 +8275,7 @@ form.profile-settings-update .profile-label.notification h3 {
   background-color: #f7f7f7;
 }
 #Stellaroute .bg-G__ltr {
-  background-color: #d7d7d7;
+  background-color: #e7e7e7;
 }
 #Stellaroute .bg-G__lt {
   background-color: #cccccc;
@@ -8342,7 +8342,7 @@ form.profile-settings-update .profile-label.notification h3 {
     background-color: #f7f7f7;
   }
   #Stellaroute .bg-G__ltr--sm {
-    background-color: #d7d7d7;
+    background-color: #e7e7e7;
   }
   #Stellaroute .bg-G__lt--sm {
     background-color: #cccccc;
@@ -8410,7 +8410,7 @@ form.profile-settings-update .profile-label.notification h3 {
     background-color: #f7f7f7;
   }
   #Stellaroute .bg-G__ltr--md {
-    background-color: #d7d7d7;
+    background-color: #e7e7e7;
   }
   #Stellaroute .bg-G__lt--md {
     background-color: #cccccc;
@@ -8579,7 +8579,7 @@ form.profile-settings-update .profile-label.notification h3 {
   border-color: #f7f7f7;
 }
 #Stellaroute .bc-G__ltr {
-  border-color: #d7d7d7;
+  border-color: #e7e7e7;
 }
 #Stellaroute .bc-G__lt {
   border-color: #cccccc;
@@ -8703,7 +8703,7 @@ form.profile-settings-update .profile-label.notification h3 {
     border-color: #f7f7f7;
   }
   #Stellaroute .bc-G__ltr--sm {
-    border-color: #d7d7d7;
+    border-color: #e7e7e7;
   }
   #Stellaroute .bc-G__lt--sm {
     border-color: #cccccc;
@@ -8818,7 +8818,7 @@ form.profile-settings-update .profile-label.notification h3 {
     border-color: #f7f7f7;
   }
   #Stellaroute .bc-G__ltr--md {
-    border-color: #d7d7d7;
+    border-color: #e7e7e7;
   }
   #Stellaroute .bc-G__lt--md {
     border-color: #cccccc;
@@ -12320,7 +12320,7 @@ form.profile-settings-update .profile-label.notification h3 {
   color: #f7f7f7;
 }
 #Stellaroute .fc-G__ltr {
-  color: #d7d7d7;
+  color: #e7e7e7;
 }
 #Stellaroute .fc-G__lt {
   color: #cccccc;
@@ -12462,7 +12462,7 @@ form.profile-settings-update .profile-label.notification h3 {
     color: #f7f7f7;
   }
   #Stellaroute .fc-G__ltr--sm {
-    color: #d7d7d7;
+    color: #e7e7e7;
   }
   #Stellaroute .fc-G__lt--sm {
     color: #cccccc;
@@ -12590,7 +12590,7 @@ form.profile-settings-update .profile-label.notification h3 {
     color: #f7f7f7;
   }
   #Stellaroute .fc-G__ltr--md {
-    color: #d7d7d7;
+    color: #e7e7e7;
   }
   #Stellaroute .fc-G__lt--md {
     color: #cccccc;

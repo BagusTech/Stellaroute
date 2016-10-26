@@ -9,3 +9,4 @@
 public/styles/styles.css.map
 *.map
 npm-debug.log
+yarn.lock

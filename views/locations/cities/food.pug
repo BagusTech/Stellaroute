@@ -2,9 +2,209 @@ extends ../../layout.pug
 
 block content
 	.media-bg-img.request-page-header
-		h1= "Food and Drinks in " + city.names.display
+		.container
+			h1= "Food and Drinks in " + city.names.display
 
-	.container.ptb-Sm
+	.container
+		.row
+			.hidden-xs.col-sm-3.col-md-2
+				.content-card
+					h2 Legend
+					ul.ls-N.pl-Sm
+						li
+							span(data-icon='fa fa-search') &nbsp;Breakfast
+						li
+							span(data-icon='fa fa-search') &nbsp;Lunch
+						li
+							span(data-icon='fa fa-search') &nbsp;Dinner
+						li
+							span(data-icon='fa fa-search') &nbsp;Dessert
+						li
+							span(data-icon='fa fa-search') &nbsp;Snack
+						li
+							span(data-icon='fa fa-search') &nbsp;On the Go
+
+				.content-card
+					h2 Filters
+					.checkbox
+						label
+							input(type='checkbox')
+							| Only in Chicago
+					.checkbox
+						label
+							input(type='checkbox')
+							| Local Cuisine
+					.checkbox
+						label
+							input(type='checkbox')
+							| Best Dishes
+					.checkbox
+						label
+							input(type='checkbox')
+							| Drinks
+					.checkbox
+						label
+							input(type='checkbox')
+							| Restaurants
+
+			.col-xs-12.col-md-10.col-sm-9
+				h2 Something
+
+			.masonry.masonry-grid-1.masonry-grid-3--md.col-xs-12.col-md-10.col-sm-9.pt-Sm
+				#testItem.masonry--item.content-card.p-0.p-R.mt-Md(data-function='toggle', data-event='hover', data-target='#testDescription, #testTitle, #testContent')
+					div.o-H(style='background: url("https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg") no-repeat center center / cover')
+						#testDescription.p-A.b-100.r-0.bg-Gr.fc-W.p-Xs.an-F.br-Sm.lh-1 Only in Chicago
+						#testContent.m-0.p-Sm.bg-Ltst2.o-0.mt-Xl.an-F(data-toggle='o-0')
+							p.lead The pan in which it is baked gives the pizza its characteristically high edge and a deep surface for large amounts of cheese and a chunky tomato sauce. Chicago-style pizza may be prepared in deep-dish style and as a stuffed pizza.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Pequods, in&nbsp;
+								a(href='#') Lincoln Park
+					h2#testTitle.p-A.t-100.l-0.r-0.m-0.bg-Dkst.p-Sm.bw-0.fc-W.an-Xf.mt-NegXl(data-toggle='t-100 t-0 mt-NegXl mt-0') Deep Dish
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Gr.fc-W.plr-Xs Only in Chicago
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Chicago Dog
+					div.o-H(style='background: url("https://c5.staticflickr.com/2/1157/3173462588_b9f0fd35aa_b.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead If you ask a local, the Chicago Dog, rather than Deep Dish, is the city’s quintessential street food. With a very specific list of ingredients, the most important thing to know is to never, ever, order it with ketchup.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Bari
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Gr.fc-W.plr-Xs Only in Chicago
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Italian Beef
+					div.o-H(style='background: url("http://kronosfoodscorp.com/assets/italian-beef-feature-720x328.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead A thinly sliced roast beef sandwich might not seem like magic, but there is something special about the combination between the beef broth it’s soaked in or the spicy giardiniera peppers.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Bari
+				
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Polish
+					div.o-H(style='background: url("http://pixel.nymag.com/imgs/slideshows/2012/08/chicago-videos/chivid-polish.nocrop.w670.h455.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead With a massive concentration of Poles in Chicago, this is where you can get arguably the best Polish food outside of Poland. While the level’s of English spoken vary from restaurant to restaurant, you can always just point.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Staropolska
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
+					h2.m-0.bg-G__dk.p-Sm.bw-0 BBQ
+					div.o-H(style='background: url("http://chicago.seriouseats.com/images/2012/02/20120205-191429-gapersblockpiggeryribs.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead Being a part of the midwest, Chicago naturally has a plethora of wonderful Barbecue (BBQ). BBQ is a wonderfully delicious way to cook meat over low heat, usually being accompanied with being smoked.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Honey 1 BBQ, The Piggery (pictured)
+							h3 Dishes
+							ul
+								li Rib Tips
+								li Brisket
+								li Chicken
+								li Any other meat you can think of!
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Modern American
+					div.o-H(style='background: url("http://chicago.seriouseats.com/images/2012/02/20120205-191429-gapersblockpiggeryribs.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead A generation of young, American chefs grew up hearing that American cuisine peaked at a McDonald’s cheeseburger and great food could only be served by a waiter in a tuxedo. They took exception and decided that locally sourced, regionally inspired food with an approachable atmosphere made for an incredible experience. Chicago is one of the best cities in the country to experience this wonderful phenomenon.
+							p
+								strong Best Place to Get It:&nbsp;
+								| The Girl and the Goat, Bangers &amp; Lace
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Tacos
+					div.o-H(style='background: url("https://c2.staticflickr.com/4/3630/3361913336_b4c180dfaf_b.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead There are really two types of tacos: delicious hipsterfied tacos and delicious traditional tacos. Traditional tacos have a simpler list of ingredients while hipsterfied tacos can fold in new ingredients and flavors. You can’t go wrong either way.
+							p
+								strong Best Place to Get It:&nbsp;
+								| Antique Taco, Big Star Taqueria, Taqueria Sabor y Sazon
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Pierogi
+					div.o-H(style='background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pierogi_z_cebulk%C4%85.jpg/220px-Pierogi_z_cebulk%C4%85.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead An Eastern European dish which consists of unleavened dough stuffed with a sweet or savory filling then boiled to cook. Almost like the Polish version of dumplings, you can have these just about anytime you get hungry. 
+							p
+								strong Best Place to Get It:&nbsp;
+								| Pierogi Heaven
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Ramen
+					div.o-H(style='background: url("https://s3-media2.fl.yelpcdn.com/bphoto/Ja82cy6FmDCb_IXyDB4CAQ/348s.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead This dish is far from instant and full of flavor. Native to Japan, Chicago is one of the few cities in the U.S. that does it justice. A soupy, savory broth full of noodles, usually accompanied by mean, veggies and an egg, Ramen is a must try if you haven’t it had before (and no, out of a packet doesn’t count).
+							p
+								strong Best Place to Get It:&nbsp;
+								| Furious Spoon, Strings Ramen
+				
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Orange.fc-W.plr-Xs Drinks!
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Malort
+					div.o-H(style='background: url("https://upload.wikimedia.org/wikipedia/en/thumb/b/b7/JeppsonsMalort.jpg/440px-JeppsonsMalort.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead If you want the true Chicago experience, buy you and your friends a round of Malort. If you want to keep those friends, you might want to pass. This wormwood based liqueur is great if you want to try “The Champagne of pain” or to “Kick your mouth in the balls!”
+
+		.clear
+			.hidden-xs.col-sm-3.col-md-2
+			.col-xs-12.col-md-10.col-sm-9
+				h2 Restaurants
+		.clear
+			.hidden-xs.col-sm-3.col-md-2
+			.masonry.masonry-grid-1.masonry-grid-3--md.col-xs-12.col-md-10.col-sm-9
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Billy Goat Tavern
+					div.o-H(style='background: url("https://fairfieldsuiteschicago.files.wordpress.com/2013/04/tavern1.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead Staying true to their mantra, "Cheezborger, Cheezborger, Cheezborger. No Pepsi, Coke. No Fries, Cheeps." this world famous burger joint has been around since 1934 and has been keeping locals coming back ever since.
+
+							h3 What to Have
+							p Cheezborger Cheezborger! The Double Cheezborger, or the Triple Cheezborger if you’re really hungry.
+
+							h3 Where is It
+							address
+								| 430 N. Michigan Ave
+								| Below the south end of the Magnificent Mile, under Michicagn Ave.
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
+					h2.m-0.bg-G__dk.p-Sm.bw-0 Pequods
+					div.o-H(style='background: url("http://www.kailleyskitchen.com/wp-content/uploads/2013/06/pequods.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead Pequods isn’t where Trip Advisor will tell you to go, but it IS where anyone from Chicago will. Listed at #2 for Top 5 Pizzas in AMERICA, this truly fantastic pizza is cooked in a fire brick oven and known for its signature caramelized parmesan cheese crust. Pequods is a can’t miss.
+
+							h3 What to Have
+							p Deep Dish Pizza, pick whichever ingredients floats your boat and you will go home a happy camper.
+
+							h3 Where is It
+							address
+								| 2207 N. Clybourn Ave
+								| Lincoln Park at Clybourn and Webster
+
+				.masonry--item.content-card.p-0.p-R.mt-Md
+					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
+					h2.m-0.bg-G__dk.p-Sm.bw-0 DryHop Brewers
+					div.o-H(style='background: url("https://static.urbandaddy.com/uploads/assets/image/articles/standard/22731f34fbd8f74f4bd6ba7ff6951b345598ca17.jpg") no-repeat center center / cover')
+						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
+							p.lead A local brewpub whose taps change more often than a Facebook status update. Always brewing something new, they also have an incredible Whiskey list and one of the best burgers in town.
+							h3 Where Is It?
+							address
+								| 3155 N. Broadway
+								| Off the Belmont stop from the Red, Brown, or Purple line
+
+	// Peters Stuff
+	//.container.ptb-Sm
 		.row
 			.col-xs-3
 				.content-card.pb-0

@@ -4,7 +4,50 @@ block content
 	.media-bg-img.request-page-header
 		h1= "Food and Drinks in " + country.names.display
 
-	.container.ptb-Sm
+	.container
+		.row
+			.hidden-sm.col-sm-3
+				.content-card
+					h2 Legend
+					ul
+						li
+							span(data-icon='fa fa-search') Breakfast
+						li
+							span(data-icon='fa fa-search') Lunch
+						li
+							span(data-icon='fa fa-search') Dinner
+						li
+							span(data-icon='fa fa-search') Dessert
+						li
+							span(data-icon='fa fa-search') Snack
+						li
+							span(data-icon='fa fa-search') On the Go
+
+			.col-xs-12.col-sm-9(data-function='masonry')
+				.content-card(data-masonry='item')
+					h2 Deep Dish
+					img(src='http://placebear.com/300/300')
+				.content-card(data-masonry='item')
+					h2 Italian Beef
+					img(src='http://placebear.com/250/300')
+				.content-card(data-masonry='item')
+					h2 Chicago Dog
+					img(src='http://placebear.com/300/250')
+				.content-card(data-masonry='item')
+					h2 Polish
+					img(src='http://placebear.com/190/300')
+				.content-card(data-masonry='item')
+					h2 BBQ
+					img(src='http://placebear.com/320/240')
+				.content-card(data-masonry='item')
+					h2 Malort
+					img(src='http://placebear.com/600/400')
+				.content-card(data-masonry='item')
+					h2 Billy Goat Tavern
+					img(src='http://placebear.com/350/720')
+
+	// Peters stuff
+	//.container.ptb-Sm
 		div.panel-group#accordion(role="tablist" aria-multiselectable="true")
 			div.panel.panel-default
 				div.panel-heading.bg-Gr.p-N(role="tab" id="headingOne")

@@ -1,0 +1,52 @@
+.make-masonry-col(@col){
+	-moz-column-count: @col;
+	-webkit-column-count: @col;
+	column-count: @col;
+}
+
+.make-masonry-cols(@breakpoint: xs, @maxCols: 12, @cols: 1) when (@cols <= @maxCols){
+
+	& when (@breakpoint = xs) {
+		.masonry-grid-@{cols} {
+			-moz-column-count: @cols;
+			-webkit-column-count: @cols;
+			column-count: @cols;
+		}
+	}
+
+	& when not (@breakpoint = xs) {
+		.masonry-grid-@{cols}--@{breakpoint} {
+			-moz-column-count: @cols;
+			-webkit-column-count: @cols;
+			column-count: @cols;
+		}
+	}
+
+	.make-masonry-cols(@breakpoint, @maxCols, @cols+1)
+}
+
+.masonry {
+	-moz-column-gap: @gw-Md;
+	-webkit-column-gap: @gw-Md;
+	column-gap: @gw-Md;
+
+	.masonry--item {
+		display: inline-block;
+		width: 100%;
+		margin: 0 0 @gw-Md;
+	}
+}
+
+.make-masonry-cols();
+
+@media (min-width: @screen-Sm){
+	.make-masonry-cols(sm)
+}
+
+@media (min-width: @screen-Md){
+	.make-masonry-cols(md)
+}
+
+@media (min-width: @screen-Lg){
+	.make-masonry-cols(lg)
+}

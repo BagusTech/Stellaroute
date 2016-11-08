@@ -14,7 +14,7 @@ const router           = express.Router();
 strategies.local(passport);
 strategies.instagram(passport);
 
-router.get('/', (req, res, next) => {res.locals.user = req.user; next();}, function(req, res, next){
+router.get('/', function(req, res, next){
 	
 	/*
 	City.find().items.forEach(function(item){

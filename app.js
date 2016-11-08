@@ -9,6 +9,7 @@ const favicon          = require('serve-favicon');
 const cookieParser     = require('cookie-parser');
 const bodyParser       = require('body-parser');
 const session          = require('cookie-session');
+const getUser          = require('./middleware/getUser');
 const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
@@ -62,6 +63,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
+
+// get the user
+app.use(getUser);
 
 // location cache
 app.use(Guide.getCached(),

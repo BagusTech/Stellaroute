@@ -421,7 +421,6 @@
 .clearfix,
 .c-B,
 .clear-both,
-.dl-horizontal dd,
 .container,
 .container-fluid,
 .row,
@@ -447,8 +446,6 @@
 .clearfix:after,
 .c-B:after,
 .clear-both:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
 .container:before,
 .container:after,
 .container-fluid:before,
@@ -489,8 +486,6 @@
 .clearfix:after,
 .c-B:after,
 .clear-both:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
 .container:before,
 .container:after,
 .container-fluid:before,
@@ -1612,6 +1607,7 @@ textarea {
 a {
   color: #7770A1;
   text-decoration: none;
+  font-weight: 700;
 }
 a:hover,
 a:focus {
@@ -1638,7 +1634,7 @@ img {
   height: auto;
 }
 .img-rounded {
-  border-radius: 6px;
+  border-radius: 4px;
 }
 .img-thumbnail {
   padding: 4px;
@@ -1936,6 +1932,7 @@ a.bg-danger:focus {
 }
 ul,
 ol {
+  padding-left: 15px;
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -2010,6 +2007,10 @@ dt {
 }
 dd {
   margin-left: 0;
+}
+.dl-horizontal dd:after {
+  display: table;
+  clear: both;
 }
 @media (min-width: 767px) {
   .dl-horizontal dt {
@@ -3318,7 +3319,7 @@ select[multiple].input-lg {
   padding: 14px 16px;
   font-size: 18px;
   line-height: 1.3333333;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 .form-group-lg select.form-control {
   height: 54px;
@@ -4915,7 +4916,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-addon.input-lg {
   padding: 14px 16px;
   font-size: 18px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 .input-group-addon input[type="radio"],
 .input-group-addon input[type="checkbox"] {
@@ -5776,13 +5777,13 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pagination-lg > li:first-child > a,
 .pagination-lg > li:first-child > span {
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
 }
 .pagination-lg > li:last-child > a,
 .pagination-lg > li:last-child > span {
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .pagination-sm > li > a,
 .pagination-sm > li > span {
@@ -5972,7 +5973,7 @@ a.badge:focus {
 }
 .container .jumbotron,
 .container-fluid .jumbotron {
-  border-radius: 6px;
+  border-radius: 4px;
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -6811,7 +6812,7 @@ button.list-group-item-danger.active:focus {
 }
 .well-lg {
   padding: 24px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 .well-sm {
   padding: 9px;
@@ -6883,7 +6884,7 @@ button.close {
   background-color: #fff;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   background-clip: padding-box;
   outline: 0;
@@ -7134,7 +7135,7 @@ button.close {
   background-clip: padding-box;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .popover.top {
@@ -7155,7 +7156,7 @@ button.close {
   font-size: 14px;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
-  border-radius: 5px 5px 0 0;
+  border-radius: 3px 3px 0 0;
 }
 .popover-content {
   padding: 9px 14px;
@@ -7456,7 +7457,6 @@ button.close {
   }
 }
 .clearfix,
-.dl-horizontal dd,
 .container,
 .container-fluid,
 .row,
@@ -7476,8 +7476,6 @@ button.close {
 }
 .clearfix:before,
 .clearfix:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
 .container:before,
 .container:after,
 .container-fluid:before,
@@ -7512,8 +7510,6 @@ button.close {
 }
 .clearfix:before,
 .clearfix:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
 .container:before,
 .container:after,
 .container-fluid:before,
@@ -8889,7 +8885,7 @@ form.profile-settings-update .profile-label.notification h3 {
   border-radius: 2px;
 }
 #Stellaroute .br-Lg {
-  border-radius: 6px;
+  border-radius: 4px;
 }
 #Stellaroute .br-N {
   border-radius: 0;

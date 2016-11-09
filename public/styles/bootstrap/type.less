@@ -162,6 +162,7 @@ mark,
 // Unordered and Ordered lists
 ul,
 ol {
+  padding-left: 15px;
   margin-top: 0;
   margin-bottom: (@line-height-computed / 2);
   ul,
@@ -251,7 +252,10 @@ dd {
 
 .dl-horizontal {
   dd {
-    &:extend(.clearfix all); // Clear the floated `dt` if an empty `dd` is present
+    &:after{
+      display: table; 
+      clear: both; // Clear the floated `dt` if an empty `dd` is present
+    } 
   }
 
   @media (min-width: @dl-horizontal-breakpoint) {

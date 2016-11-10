@@ -9,6 +9,8 @@
   list-style: none;
   background-color: @breadcrumb-bg;
   border-radius: @border-radius-base;
+  font-size: @breadcrumb-font-size;
+  border-bottom: 1px solid @breadcrumb-color;
 
   > li {
     display: inline-block;
@@ -18,9 +20,14 @@
       padding: 0 5px;
       color: @breadcrumb-color;
     }
+
+    a {
+      color: @breadcrumb-color;
+      font-weight: normal;
+    }
   }
 
-  > .active {
+  > .active{
     color: @breadcrumb-active-color;
   }
 }

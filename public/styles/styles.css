@@ -3,6 +3,7 @@
 }
 [role='tab'] {
   display: block;
+  cursor: pointer;
 }
 @media (max-width: 1023px) {
   [data-function='tabs'] {
@@ -5688,11 +5689,13 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444;
 }
 .breadcrumb {
-  padding: 8px 12px;
+  padding: 12px 0;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #f5f5f5;
+  background-color: none;
   border-radius: 2px;
+  font-size: 16px;
+  border-bottom: 1px solid #cccccc;
 }
 .breadcrumb > li {
   display: inline-block;
@@ -5700,7 +5703,11 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .breadcrumb > li + li:before {
   content: "/\00a0";
   padding: 0 5px;
-  color: #ccc;
+  color: #cccccc;
+}
+.breadcrumb > li a {
+  color: #cccccc;
+  font-weight: normal;
 }
 .breadcrumb > .active {
   color: #cccccc;
@@ -7934,9 +7941,6 @@ button.close {
 .site-body {
   background: #e7e7e7;
 }
-.site-body > .media-bg-img {
-  padding-top: 52px;
-}
 .feedback-header {
   padding-bottom: 36px;
   background-image: url('/images/feedback_header_image.jpg');
@@ -8497,6 +8501,138 @@ form.profile-settings-update .profile-label.notification h3 {
 #Stellaroute .tt-Ss {
   -webkit-transition-timing-function: step-start;
           transition-timing-function: step-start;
+}
+#Stellaroute .rotate-0 {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+#Stellaroute .rotate-30 {
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
+}
+#Stellaroute .rotate-45 {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+#Stellaroute .rotate-60 {
+  -webkit-transform: rotate(60deg);
+          transform: rotate(60deg);
+}
+#Stellaroute .rotate-90 {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+#Stellaroute .rotate-120 {
+  -webkit-transform: rotate(120deg);
+          transform: rotate(120deg);
+}
+#Stellaroute .rotate-135 {
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+#Stellaroute .rotate-150 {
+  -webkit-transform: rotate(150deg);
+          transform: rotate(150deg);
+}
+#Stellaroute .rotate-180 {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+#Stellaroute .rotate-210 {
+  -webkit-transform: rotate(210deg);
+          transform: rotate(210deg);
+}
+#Stellaroute .rotate-225 {
+  -webkit-transform: rotate(225deg);
+          transform: rotate(225deg);
+}
+#Stellaroute .rotate-240 {
+  -webkit-transform: rotate(240deg);
+          transform: rotate(240deg);
+}
+#Stellaroute .rotate-270 {
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+#Stellaroute .rotate-300 {
+  -webkit-transform: rotate(300deg);
+          transform: rotate(300deg);
+}
+#Stellaroute .rotate-315 {
+  -webkit-transform: rotate(315deg);
+          transform: rotate(315deg);
+}
+#Stellaroute .rotate-330 {
+  -webkit-transform: rotate(330deg);
+          transform: rotate(330deg);
+}
+#Stellaroute .rotate-360 {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+#Stellaroute .rotate-Neg30 {
+  -webkit-transform: rotate(-30deg);
+          transform: rotate(-30deg);
+}
+#Stellaroute .rotate-Neg45 {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+#Stellaroute .rotate-Neg60 {
+  -webkit-transform: rotate(-60deg);
+          transform: rotate(-60deg);
+}
+#Stellaroute .rotate-Neg90 {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+#Stellaroute .rotate-Neg120 {
+  -webkit-transform: rotate(-120deg);
+          transform: rotate(-120deg);
+}
+#Stellaroute .rotate-Neg135 {
+  -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+}
+#Stellaroute .rotate-Neg150 {
+  -webkit-transform: rotate(-150deg);
+          transform: rotate(-150deg);
+}
+#Stellaroute .rotate-Neg180 {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+#Stellaroute .rotate-Neg210 {
+  -webkit-transform: rotate(-210deg);
+          transform: rotate(-210deg);
+}
+#Stellaroute .rotate-Neg225 {
+  -webkit-transform: rotate(-225deg);
+          transform: rotate(-225deg);
+}
+#Stellaroute .rotate-Neg240 {
+  -webkit-transform: rotate(-240deg);
+          transform: rotate(-240deg);
+}
+#Stellaroute .rotate-Neg270 {
+  -webkit-transform: rotate(-270deg);
+          transform: rotate(-270deg);
+}
+#Stellaroute .rotate-Neg300 {
+  -webkit-transform: rotate(-300deg);
+          transform: rotate(-300deg);
+}
+#Stellaroute .rotate-Neg315 {
+  -webkit-transform: rotate(-315deg);
+          transform: rotate(-315deg);
+}
+#Stellaroute .rotate-Neg330 {
+  -webkit-transform: rotate(-330deg);
+          transform: rotate(-330deg);
+}
+#Stellaroute .rotate-Neg360 {
+  -webkit-transform: rotate(-360deg);
+          transform: rotate(-360deg);
 }
 #Stellaroute .bg-Gr {
   background-color: #59D087;

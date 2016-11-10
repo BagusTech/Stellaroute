@@ -2,6 +2,25 @@
 void function initializeAccordionsTabs($) {
     'use strict';
 
+    function removeHash() { 
+        let scrollV, scrollH;
+        const loc = window.location;
+        if ("pushState" in history) {
+            history.pushState("", document.title, loc.pathname + loc.search);
+        }
+        else {
+            // Prevent scrolling by storing the page's current scroll offset
+            scrollV = document.body.scrollTop;
+            scrollH = document.body.scrollLeft;
+
+            loc.hash = "";
+
+            // Restore the scroll offset, should be flicker free
+            document.body.scrollTop = scrollV;
+            document.body.scrollLeft = scrollH;
+        }
+    }
+
     // on click of any link that starts with a hash, if it is a tab, then change that tab
     $('a[href^="#"]').on('click', function clickAnchor(e) {
         const $goToVal = $($(this).attr('href'));
@@ -82,7 +101,7 @@ void function initializeAccordionsTabs($) {
         const defaultBreakpoint = 1170;
         const breakpoint = parseInt($wrapper.attr('data-breakpoint'), 10) || defaultBreakpoint;
 
-        const defaultAnimationSpeed = 750;
+        const defaultAnimationSpeed = 270;
         const animationSpeed = parseInt($wrapper.attr('data-animation-speed'), 10) || defaultAnimationSpeed;
 
         const alwaysShowOne = isTabs || $wrapper.attr('data-always-show-one') === 'true' ? true : false;
@@ -100,6 +119,7 @@ void function initializeAccordionsTabs($) {
 
         $wrapper.removeClass('no-js');
 
+        // make sure what is supposed to be shown is, and what isn't, isn't
         $wrapper.find('> [aria-hidden="false"]').css({'display': 'block' });
         $wrapper.find('> [aria-hidden="true"]').css({'display': 'none' });
 
@@ -118,12 +138,14 @@ void function initializeAccordionsTabs($) {
             const animate = !(isTabs && $(window).innerWidth() > breakpoint);
             const currentId = $tab.attr('id');
 
+            // if trying to toggle the current tab and one must always be shown, do nothing
             if (alwaysShowOne && currentTabIsActiveTab){
-                // trigger tab-changed event, but pass false because nothing changed
-                $tab.trigger('tab-changed', [ false ]);
+                $tab.trigger('tab-changed', [ false ]); // trigger tab-changed event, but pass false because nothing changed
+                return; // return to stop anything else from happeneing
+            } 
 
-                return;
-            } else if (!currentTabIsActiveTab && $activeTab.length > 0 && !allowMultiple){
+            // close other active tab 
+            if (!currentTabIsActiveTab && $activeTab.length > 0 && !allowMultiple){
                 toggleTab($activeTab, animate, animationSpeed);
             }
 
@@ -137,15 +159,20 @@ void function initializeAccordionsTabs($) {
 
             // set hash but don't move the page
             if (!isOnLoad) {
-                $tab.attr('id', '');
-                window.location.hash = currentId;
-                $tab.attr('id', currentId);
+                if(!alwaysShowOne && currentTabIsActiveTab){
+                    removeHash();
+                } else {
+                    $tab.attr('id', '');
+                    window.location.hash = currentId;
+                    $tab.attr('id', currentId);
+                }
             }
 
             // trigger tab-changed event when done
             $tab.trigger('tab-changed', [ true ]);
         });
 
+        // on click of tab, trigger the tab change
         $tabs.click(function clickTab(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -153,12 +180,18 @@ void function initializeAccordionsTabs($) {
             $(this).trigger('tab-change');
         });
 
+        // if there isn't a page anchor, end here
         if (!pageAnchor) {
             return;
         }
 
+        // get the tab that is being linked to in top
         const $anchorTab = $tabs.filter(pageAnchor);
-        $anchorTab.trigger('tab-change', [ true ]);
+
+        //only trigger tab change if the tab we are going to isn't currently open
+        if($anchorTab.attr('aria-expanded') === 'false'){
+            $anchorTab.trigger('tab-change', [ true ]);
+        }
     }
 
     $.fn.makeAccordion = function makeAccordion() {
@@ -181,6 +214,7 @@ void function initializeAccordionsTabs($) {
         });
     };
 
+    // initialize default accordions and tabs
     jQuery(() => {
         $('[data-function="accordion"]').makeAccordion();
         $('[data-function="tabs"]').makeTabs();

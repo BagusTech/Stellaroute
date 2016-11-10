@@ -6,8 +6,8 @@ const smtp = nodemailer.createTransport(smtpTransport({
 	port: 465,
 	secure: true,
 	auth: {	
-		user: process.env.AWS_SMTP_ID,
-		pass: process.env.AWS_SMTP_KEY
+		user: process.env.AWS_SMPT_ID,
+		pass: process.env.AWS_SMPT_KEY
 	  }
 }));
 

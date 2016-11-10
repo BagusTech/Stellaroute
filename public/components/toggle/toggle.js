@@ -35,12 +35,15 @@ void function initializeToggle($) {
 
     function makeToggle(wrapper) {
         const $this = $(wrapper);
-        const targets = ($this.attr('data-target') && $this.attr('data-target').split(',')) || [$this];
+        const targets = ($this.attr('data-target') && $this.attr('data-target').split(',')) || ['this'];
         const event = $this.attr('data-event') || 'click';
-
         
         for(const i in targets){
-            const $target = targets[i] === ' this' ? $this : $(targets[i]);
+            const isSelf = (targets[i] === ' this' || targets[i] === 'this');
+            const thisIndex = targets[i].indexOf('this');
+            const referencesSelf = !isSelf && (thisIndex === 0 || (thisIndex === 1 && targets[i][0] === ' '));
+            const $target = isSelf ? $this : 
+                                    referencesSelf ? $this.find(targets[i].substring(5)) : $(targets[i]);
             const classes = ($target.attr('data-toggle') && $target.attr('data-toggle').split(' ')) || ['active'];
             const toggleEventName = `${getElementString($this)}.toggles.${getElementString($target)}.to.${classes.join('.')}`;
             

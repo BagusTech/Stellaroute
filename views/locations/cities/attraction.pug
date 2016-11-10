@@ -16,15 +16,11 @@ block content
 	.container
 		.row
 			.col-xs-12.col-sm-6.col-md-8.f-R
-				.content-card.pt-0.pb-0
-					.row
-						figure.p-R
-							img.w-100(src='http://legacy.skyscrapercenter.com/class-image.php/userpics/10003/?width=1000&height=800&image=/images/albums/userpics/10003/Sears_ViewFromRiver1_AW.jpg', alt='Willis Tower')
-							//figcaption.p-A.b-Md.r-Sm.p-Sm.bg-Dkst.fc-W The View from Willis Tower
-							p.lead.fc-W.m-0.mt-Sm.p-A.p-Sm.b-0.l-0.r-0.bg-Dkst While technically called Skydeck Chicago, and Willis owns the naming rights, this beautiful skyscrapper has, and always will be, known as <strong>Sears Tower</strong>. Although it lost it's status of tallest building in the world, Sears Tower is still an impressive piece of architecture.
+				.content-card.p-0(style='background: url("http://legacy.skyscrapercenter.com/class-image.php/userpics/10003/?width=1000&height=800&image=/images/albums/userpics/10003/Sears_ViewFromRiver1_AW.jpg") no-repeat scroll center center / cover; padding-top: 50%;')
+							p.lead.fc-W.m-0.p-Sm.bg-Dkst While technically called Skydeck Chicago, and Willis owns the naming rights, this beautiful skyscrapper has, and always will be, known as <strong>Sears Tower</strong>. Although it lost it's status of tallest building in the world, Sears Tower is still an impressive piece of architecture.
 
 				.content-card
-					h2 Need to Know
+					h2.content-card--header Need to Know
 					.row(data-function='accordion', data-allow-multiple='true')
 							h3.m-0.p-Sm(role='tab',aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i')
 								i.fa.fa-chevron-down.rotate-Neg180.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
@@ -61,7 +57,7 @@ block content
 
 			.col-xs-12.col-sm-6.col-md-4
 				.content-card
-					h2 Quick Info
+					h2.content-card--header Quick Info
 					p
 						span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
 						span.d-B.ml-Md $22&nbsp;
@@ -74,7 +70,7 @@ block content
 						span.d-B.ml-Md 233 S. Wacker Dr.&nbsp;
 
 				.content-card
-					h2 Orientation
+					h2.content-card--header Orientation
 					p Willis Tower is in Downtown Chicago and inside The Loop. It is also about a 5 minute walk from Union Station.
 
 					button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
@@ -148,7 +144,7 @@ block content
 			
 			.col-xs-12.col-sm-6.col-md-8.f-R
 				.content-card
-					h2 Fun Facts
+					h2.content-card--header Fun Facts
 					ul.ls-N.p-0
 						li
 							h3 Officially Not Sears Tower
@@ -157,19 +153,22 @@ block content
 							h3 Almost 25 Years as the Tallest
 							p It was a good run. Upon its completion in 1973 Sears Tower edged out the World Trade Center to become the largest skyscraper in the world up until 1998. Though it now is only the 14th largest building in the world (2nd in the US), those 25 years holding the title have left an indelible impression in the collective conscious and ensured it will always stand tall in our minds.
 
-				h2.mb-0.fc-G Guides that Get you there
+				h2.mb-0.fc-G Guides that Get You There
 				.masonry.masonry-grid-1.masonry-grid-3--md
 					.masonry--item.content-card.p-0.p-R.mt-Md
 						a(href='#')
 							img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14712200_1107617126019713_8733391228445392896_n.jpg?ig_cache_key=MTM3OTg1NjgwMDkwNzg5MTIyMA%3D%3D.2')
 							h3.m-0.p-Sm 3 Days in Chicago
+							p.fw-N.fc-B.plr-Sm The essential guide covering all the major sites and activities in Chicago
 
 					.masonry--item.content-card.p-0.p-R
 						a(href='#')
 							img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14574078_708839315941440_613905595744911360_n.jpg?ig_cache_key=MTM3OTg1NDk5MjEzMTY5NDEwNQ%3D%3D.2')
 							h3.m-0.p-Sm Best Food of Chicago
+							p.fw-N.fc-B.plr-Sm Chicago is a food lover’s dream and to get the full Chicago experience travelers should be sure to sample cuisine they normally wouldn’t associate with the American Midwest.
 
 					.masonry--item.content-card.p-0.p-R
 						a(href='#')
 							img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/s480x480/e35/14474098_1418595098447455_5968997491868172288_n.jpg?ig_cache_key=MTM3OTM3NDM0ODY0MTgwNzkzMQ%3D%3D.2')
 							h3.m-0.p-Sm Long Weekend in Chicago
+							p.fw-N.fc-B.plr-Sm The perfect guide for anyone who has a 3day weekend and a thirst for adventure. Focused on exploring the city through it's food while making sure to see sights worth seeing.

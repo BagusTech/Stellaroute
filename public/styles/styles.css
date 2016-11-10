@@ -8365,15 +8365,15 @@ form.profile-settings-update .profile-label.notification h3 {
   margin: 12px 0;
   padding: 12px;
 }
-.content-card h2 {
+.content-card + .content-card {
+  margin-top: 24px;
+}
+.content-card--header {
   margin: 0 -12px 12px;
   padding: 0 12px 12px;
   line-height: 1;
   border-bottom: 1px solid #e7e7e7;
-  color: #cccccc;
-}
-.content-card + .content-card {
-  margin-top: 24px;
+  color: #959ca2;
 }
 .text-wings {
   position: relative;

@@ -382,18 +382,19 @@
   left: -17px;
 }
 [data-scroll='scrollbar'] {
-  height: 100%;
   width: 12px;
-  border-left: 1px solid #ccc;
+  border-width: 0 3px;
+  border-style: solid;
+  border-color: transparent;
   position: absolute;
-  top: 0;
+  top: 3px;
+  bottom: 3px;
   right: 0;
   cursor: pointer;
   z-index: 1;
-  background: white;
 }
 [data-scroll='scrollbar'] button {
-  background: rgba(50, 50, 50, 0.5);
+  background: rgba(50, 50, 50, 0.25);
   min-height: 30px;
   max-height: 100%;
   width: 100%;
@@ -407,7 +408,6 @@
   -webkit-transition: height 0.3s ease-out;
   transition: height 0.3s ease-out;
   border-radius: 15px;
-  border: 2px solid white;
 }
 [data-scroll='scrollbar'] button:focus {
   outline: none;

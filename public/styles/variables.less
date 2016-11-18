@@ -1,5 +1,5 @@
 // breakpoints
-@site-width: 1440px;
+@site-width: @screen-Lg;
 @screen-Xs: 480px;
 @screen-Sm: 767px;
 @screen-Md: 1023px;
@@ -391,17 +391,17 @@
 //## Define the maximum width of `.container` for different screen sizes.
 
 // Small screen / tablet
-@container-tablet:             (720px + @grid-gutter-width);
+@container-tablet:             (@screen-Sm + @grid-gutter-width);
 //** For `@screen-sm-min` and up.
 @container-sm:                 @container-tablet;
 
 // Medium screen / desktop
-@container-desktop:            (940px + @grid-gutter-width);
+@container-desktop:            (@screen-Md + @grid-gutter-width);
 //** For `@screen-md-min` and up.
 @container-md:                 @container-desktop;
 
 // Large screen / wide desktop
-@container-large-desktop:      (1140px + @grid-gutter-width);
+@container-large-desktop:      (@screen-Lg + @grid-gutter-width);
 //** For `@screen-lg-min` and up.
 @container-lg:                 @container-large-desktop;
 

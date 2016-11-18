@@ -360,58 +360,57 @@
   width: 100%;
 }
 [data-function='scroll'].no-scrollbar [data-scroll='content-wrapper'] {
-  padding-right: 0;
+  right: 0;
+}
+[data-function='scroll'].no-scrollbar [data-scroll='content-wrapper'] .container {
+  left: 0;
 }
 [data-function='scroll'].no-scrollbar [data-scroll='scrollbar'] {
   display: none;
 }
 [data-scroll='content-wrapper'] {
-  height: 100%;
-  width: 100%;
-  padding-right: 27px;
-  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: -17px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+[data-scroll='content-wrapper'] .container {
+  position: relative;
+  left: -17px;
 }
 [data-scroll='scrollbar'] {
   height: 100%;
-  width: 24px;
+  width: 12px;
+  border-left: 1px solid #ccc;
   position: absolute;
   top: 0;
   right: 0;
   cursor: pointer;
+  z-index: 1;
+  background: white;
 }
 [data-scroll='scrollbar'] button {
+  background: rgba(50, 50, 50, 0.5);
   min-height: 30px;
   max-height: 100%;
   width: 100%;
-  padding: 4px;
+  padding: 0;
+  margin: 0;
   display: block;
-  background: none;
   border: none;
   position: absolute;
-  margin: 0;
   top: 0;
   right: 0;
   -webkit-transition: height 0.3s ease-out;
   transition: height 0.3s ease-out;
+  border-radius: 15px;
+  border: 2px solid white;
 }
 [data-scroll='scrollbar'] button:focus {
   outline: none;
-}
-[data-scroll='scrollbar'] button:hover {
-  background: none;
-}
-[data-scroll='scrollbar'] button:hover:after {
-  background: rgba(50, 50, 50, 0.75);
-}
-[data-scroll='scrollbar'] button:after {
-  content: '\00A0';
-  background: rgba(50, 50, 50, 0.5);
-  height: 100%;
-  width: 100%;
-  display: block;
-  border-radius: 15px;
-  -webkit-transition: background 1s ease-out;
-  transition: background 1s ease-out;
 }
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -2150,17 +2149,17 @@ pre code {
 }
 @media (min-width: 767px) {
   .container {
-    width: 744px;
+    width: 791px;
   }
 }
 @media (min-width: 1023px) {
   .container {
-    width: 964px;
+    width: 1047px;
   }
 }
 @media (min-width: 1600px) {
   .container {
-    width: 1164px;
+    width: 1624px;
   }
 }
 .container-fluid {
@@ -8032,7 +8031,7 @@ button.close {
   }
 }
 .container {
-  max-width: 1440px;
+  max-width: 1600px;
 }
 .container.landing-container {
   padding: 36px 24px 0;

@@ -176,8 +176,6 @@ router.get('/:country/transportation', function(req, res, next){
 	});
 });
 
-
-
 router.get('/:country/:attraction', function(req, res, next){
 	const country = Country.findOne('url', req.params.country).items;
 
@@ -409,6 +407,88 @@ router.get('/:country/:city/food', function(req, res, next){
 	});
 
 	res.render('locations/cities/food', {
+		title: `Stellaroute: ${city.names.display}`,
+		description: 'Stellaroute: ${city.names.display} Overview',
+		key: City.hash,
+		countryRegions: countryRegions,
+		provinces: provinces,
+		provinceRegions: provinceRegions,
+		city: city,
+		cityRegions: cityRegions,
+		neighborhoods: neighborhoods,
+	});
+});
+
+router.get('/:country/:city/explore', function(req, res, next){
+	const city = City.findOne('url', req.params.city)
+					 .join('country', Country.cached(), 'Id', 'names.display')
+					 .join('country', Country.cached(), 'Id', 'url')
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
+					 .join('province', Province.cached(), 'Id', 'names.display' )
+					 .join('province', Province.cached(), 'Id', 'url' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
+					 .items[0];
+	
+	if(!city){
+		req.flash('error', missingLocationMessage);
+		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const countryRegions = CountryRegion.find('country', city.country).items
+	const provinces = Province.find('country', city.country).items
+	var provinceRegions = [];
+	const cityRegions = CityRegion.find('city', city.Id).items;
+	const neighborhoods = Neighborhood.find('city', city.Id).items;
+
+	provinces.forEach(function(p){
+		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
+	});
+
+	res.render('locations/cities/explore', {
+		title: `Stellaroute: ${city.names.display}`,
+		description: 'Stellaroute: ${city.names.display} Overview',
+		key: City.hash,
+		countryRegions: countryRegions,
+		provinces: provinces,
+		provinceRegions: provinceRegions,
+		city: city,
+		cityRegions: cityRegions,
+		neighborhoods: neighborhoods,
+	});
+});
+
+router.get('/:country/:city/guides', function(req, res, next){
+	const city = City.findOne('url', req.params.city)
+					 .join('country', Country.cached(), 'Id', 'names.display')
+					 .join('country', Country.cached(), 'Id', 'url')
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
+					 .join('province', Province.cached(), 'Id', 'names.display' )
+					 .join('province', Province.cached(), 'Id', 'url' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
+					 .items[0];
+	
+	if(!city){
+		req.flash('error', missingLocationMessage);
+		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const countryRegions = CountryRegion.find('country', city.country).items
+	const provinces = Province.find('country', city.country).items
+	var provinceRegions = [];
+	const cityRegions = CityRegion.find('city', city.Id).items;
+	const neighborhoods = Neighborhood.find('city', city.Id).items;
+
+	provinces.forEach(function(p){
+		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
+	});
+
+	res.render('locations/cities/guide', {
 		title: `Stellaroute: ${city.names.display}`,
 		description: 'Stellaroute: ${city.names.display} Overview',
 		key: City.hash,

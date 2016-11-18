@@ -1,0 +1,355 @@
+extends ../../layout.pug
+
+append header
+	script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
+	script.
+		jQuery(function(){
+			var clientId = '43dbe271616e4c15a1afb304037bb603';
+			var accessToken = '3607994591.43dbe27.c597fb393c7e417cb094c3b2c91d4841';
+
+			var feed = new Instafeed({
+				get: 'user',
+				userId: 3607994591,
+				target: 'DeepDish',
+				clientId: clientId,
+				accessToken: accessToken,
+				template: '<img class="w-30" src="{{image}}" alt="{{model}}" />'
+			});
+
+			//feed.run();
+		})
+
+	style.
+		.masonry--item .content-card:hover img{
+			transform: scale(1.1);
+		}
+
+	-
+		var items = [{
+				name: 'Deep Dish',
+				image: 'https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg',
+				category: 'Only In',
+				description: 'The pan in which it is baked gives the pizza its characteristically high edge and a deep surface for large amounts of cheese and a chunky tomato sauce. Chicago-style pizza may be prepared in deep-dish style and as a stuffed pizza.',
+				suggested: 'Pequods in Lincoln Park',
+				contains: ['dairy', 'gluten']
+			}, {
+				name: 'Chicago Dog',
+				image: 'https://c5.staticflickr.com/2/1157/3173462588_b9f0fd35aa_b.jpg',
+				category: 'Only In',
+				description: 'If you ask a local, the Chicago Dog, rather than Deep Dish, is the city’s quintessential street food. With a very specific list of ingredients, the most important thing to know is to never, ever, order it with ketchup.',
+				suggested: 'Weiner Circle',
+				contains: ['meat', 'gluten']
+			}, {
+				name: 'Italian Beef',
+				image: 'http://kronosfoodscorp.com/assets/italian-beef-feature-720x328.jpg',
+				category: 'Only In',
+				description: 'A thinly sliced roast beef sandwich might not seem like magic, but there is something special about the combination between the beef broth it’s soaked in or the spicy giardiniera peppers.',
+				suggested: 'Bari',
+				contains: ['meat', 'gluten']
+			}, {
+				name: 'BBQ',
+				image: 'http://chicago.seriouseats.com/images/2012/02/20120205-191429-gapersblockpiggeryribs.jpg',
+				category: 'Local Cuisine',
+				description: 'Being a part of the midwest, Chicago naturally has a plethora of wonderful Barbecue (BBQ). BBQ is a wonderfully delicious way to cook meat over low heat, usually being accompanied with being smoked.',
+				suggested: 'Honey 1 BBQ, The Piggery (pictured)',
+				dishes: ['Rib Tips', 'Brisket', 'Chicken', 'Any other meat you can think of!'],
+				contains: ['meat']
+			}, {
+				name: 'Polish',
+				image: 'http://pixel.nymag.com/imgs/slideshows/2012/08/chicago-videos/chivid-polish.nocrop.w670.h455.jpg',
+				category: 'Local Cuisine',
+				description: 'With a massive concentration of Poles in Chicago, this is where you can get arguably the best Polish food outside of Poland. While the level’s of English spoken vary from restaurant to restaurant, you can always just point.',
+				suggested: 'Staropolska'
+			}, {
+				name: 'Modern American',
+				image: 'http://darnasac.com/themes/darna/assets/images/home/3.jpg',
+				category: 'Local Cuisine',
+				description: 'A generation of young, American chefs grew up hearing that American cuisine peaked at a McDonald’s cheeseburger and great food could only be served by a waiter in a tuxedo. They took exception and decided that locally sourced, regionally inspired food with an approachable atmosphere made for an incredible experience. Chicago is one of the best cities in the country to experience this wonderful phenomenon.',
+				suggested: 'The Girl and the Goat, Bangers &amp; Lace'
+			}, {
+				name: 'Tacos',
+				image: 'https://c2.staticflickr.com/4/3630/3361913336_b4c180dfaf_b.jpg',
+				category: 'Best Dishes',
+				description: 'There are really two types of tacos: delicious hipsterfied tacos and delicious traditional tacos. Traditional tacos have a simpler list of ingredients while hipsterfied tacos can fold in new ingredients and flavors. You can’t go wrong either way.',
+				suggested: 'Antique Taco, Big Star Taqueria, Taqueria Sabor y Sazon'
+			}, {
+				name: 'Pierogi',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pierogi_z_cebulk%C4%85.jpg/220px-Pierogi_z_cebulk%C4%85.jpg',
+				category: 'Best Dishes',
+				description: 'An Eastern European dish which consists of unleavened dough stuffed with a sweet or savory filling then boiled to cook. Almost like the Polish version of dumplings, you can have these just about anytime you get hungry.',
+				suggested: 'Pierogi Heaven'
+			}, {
+				name: 'Ramen',
+				image: 'https://s3-media2.fl.yelpcdn.com/bphoto/Ja82cy6FmDCb_IXyDB4CAQ/348s.jpg',
+				category: 'Best Dishes',
+				description: 'This dish is far from instant and full of flavor. Native to Japan, Chicago is one of the few cities in the U.S. that does it justice. A soupy, savory broth full of noodles, usually accompanied by mean, veggies and an egg, Ramen is a must try if you haven’t it had before (and no, out of a packet doesn’t count).',
+				suggested: 'Furious Spoon, Strings Ramen'
+			}, {
+				name: 'Malort',
+				image: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b7/JeppsonsMalort.jpg/440px-JeppsonsMalort.jpg',
+				category: 'Drinks',
+				description: 'If you want the true Chicago experience, buy you and your friends a round of Malort. If you want to keep those friends, you might want to pass. This wormwood based liqueur is great if you want to try “The Champagne of pain” or to “Kick your mouth in the balls!”'
+			}, {
+				name: 'Billy Goat Tavern',
+				image: 'https://fairfieldsuiteschicago.files.wordpress.com/2013/04/tavern1.jpg',
+				category: 'Restaurant',
+				description: 'Staying true to their mantra, "Cheezborger, Cheezborger, Cheezborger. No Pepsi, Coke. No Fries, Cheeps." this world famous burger joint has been around since 1934 and has been keeping locals coming back ever since.',
+				area: 'Below the south end of the Magnificent Mile, under Michicagn Ave.',
+				address: '430 N. Michigan Ave',
+				order: 'Cheezborger Cheezborger! The Double Cheezborger, or the Triple Cheezborger if you’re really hungry.'
+			}, {
+				name: 'Pequods',
+				image: 'http://www.kailleyskitchen.com/wp-content/uploads/2013/06/pequods.jpg',
+				category: 'Restaurant',
+				description: 'Pequods isn’t where Trip Advisor will tell you to go, but it IS where anyone from Chicago will. Listed at #2 for Top 5 Pizzas in AMERICA, this truly fantastic pizza is cooked in a fire brick oven and known for its signature caramelized parmesan cheese crust. Pequods is a can’t miss.',
+				area: 'Lincoln Park at Clybourn and Webster',
+				address: '2207 N. Clybourn Ave',
+				order: 'Deep Dish Pizza, pick whichever ingredients floats your boat and you will go home a happy camper.'
+			}, {
+				name: 'DryHop Brewers',
+				image: 'https://static.urbandaddy.com/uploads/assets/image/articles/standard/22731f34fbd8f74f4bd6ba7ff6951b345598ca17.jpg',
+				category: 'Restaurant',
+				description: 'A local brewpub whose taps change more often than a Facebook status update. Always brewing something new, they also have an incredible Whiskey list and one of the best burgers in town.',
+				area: 'Off the Belmont stop from the Red, Brown, or Purple line',
+				address: '3155 N. Broadway'
+			}, {
+				name: 'The Art Institute',
+				image: 'http://urbanmatter.com/wp-content/uploads/2015/04/Art-Institute-of-Chicago.jpg',
+				description: 'Home to one of the best art collections in the US',
+				category: 'Attraction'
+			}, {
+				name: 'Riverwalk',
+				image: 'https://cdn0.vox-cdn.com/uploads/chorus_image/image/47913373/riverwalk-insta.0.png',
+				description: 'The Riverwalk offers a variety of opportunities to find the beauty and spirit of the Chicago River.',
+				category: 'Attraction'
+			}, {
+				name: 'Magnificent Mile',
+				image: 'http://doubletree-hotel-magnificent-mile.chicagotophotels.com/data/Photos/OriginalPhoto/1920/192010/192010453.JPEG',
+				description: 'Chicago\'s version of the Champs-Elysées: a grand wide boulevard with exclusive shops, museums, restaurants and ritzy hotels.',
+				category: 'Large Attraction'
+			}, {
+				name: 'Millennium Park',
+				image: 'http://www.chicagotraveler.com/images/general-chicago/34-4-aerial.jpg',
+				description: 'A new kind of town square – a lively, spectacular gathering spot located in the heart of the city and a destination for Chicagoans and visitors alike.',
+				category: 'Large Attraction'
+			}, {
+				name: 'Cloud Gate',
+				image: 'http://millenniumparkfoundation.org/wp-content/uploads/2014/04/cloud-gate-big.jpg',
+				description: 'Inspired by liquid mercury, the sculpture is among the largest of its kind in the world, measuring 66-feet long by 33-feet high.',
+				category: 'Attraction',
+				area: 'Millennium Park'
+			}, {
+				name: 'Buckingham Fountain',
+				image: 'http://evansvillewinsupply.com/wp-content/uploads/2015/06/Buckingham_Fountain_in_Chicago_at_night.jpg',
+				description: 'Buckingham Fountain is a Chicago landmark in the center of Grant Park. Dedicated in 1927, it is one of the largest fountains in the world.',
+				category: 'Attraction',
+				area: 'Grant Park'
+			}, {
+				name: 'Grant Park',
+				image: 'http://svcdn.simpleviewinc.com/v3/cache/chicago/7D5B48744E38337E5DD846D0A57C9281.jpg',
+				description: 'Grant Park is a public park next to Lake Michigan that connects Museum Campus and Millennium Park.',
+				category: 'Large Attraction',
+			}, {
+				name: 'Shedd Aquarium',
+				image: 'http://thingstodo.net/wp-content/uploads/2015/08/2174_Shedd-4.jpg',
+				description: 'A step behind the world’s premiere aquariums, this offers a wide-range of displays on aquatic life in a scenic section of Chicago.',
+				category: 'Attraction',
+			}, {
+				name: 'Chicago Water Tower',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Chicago_Water_Tower_by_night.JPG',
+				description: 'One of the few buildings to survive the Great Chicago Fire of 1871, it now serves as an art gallery and eye-candy for Michigan Avenue passer-byers.',
+				category: 'Attraction',
+				area: 'Magnificent Mile'
+			}, {
+				name: 'Skydeck Chicago',
+				image: 'https://c2.staticflickr.com/6/5503/9181577556_c31a42cb6e_b.jpg',
+				description: 'Incredible views of the Chicagoland area seen from the Western Hemisphere’s tallest building.',
+				category: 'Attraction',
+			}, {
+				name: 'Chicago Theatre',
+				image: 'http://www.panicstream.com/vault/wp-content/uploads/2012/04/chicago-theatre.jpg',
+				description: 'A landmark theater located on North State Street in the Loop area of Chicago, Illinois, in the United State',
+				category: 'Attraction',
+			}, {
+				name: 'The Wrigley Building',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Wrigley_Building_-_Chicago,_Illinois.JPG',
+				description: 'One of the earliest skyscrapers in Chicago, the Wrigley Building is actually made up of two separate building with a bridge connecting them. Built in, 1924, the Wrigley Building is representative of Chicago’s architectural treasures and historic industriousness.',
+				category: 'Attraction',
+				area: 'Magnificent Mile'
+			}, {
+				name: 'The Loop',
+				image: 'https://c1.staticflickr.com/3/2880/11280275215_7934af3418_b.jpg',
+				description: 'Chicago’s geographic and economic center has all the sights, but is wanting for food and culture. Tourists will undoubtedly spend a good amount of time here as it’s home to the vast majority of museums and tourist attractions. However, locals flee the area after working hours in favor of cozier neighborhoods with better food and watering holes. Spend part of a day here, but don’t linger.',
+				category: 'Neighborhood',
+			}, {
+				name: 'Lincoln Park',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Nature_Boardwalk_Lincoln_Park.JPG',
+				description: 'It should come as no surprise that one of Chicago’s most popular neighborhoods to live is also one of its best to stay in. Lincoln Park is a neighborhood with broad appeal which is reflected by the varied demographics of its residents. Its many great restaurants, bars and close proximity to downtown make it popular with young professionals; DePaul University adds a college vibe to the neighborhood; and its green space and parks attract affluent families. But this neighborhood is best known for its famous entertainment: Second City which is essentially SNL’s farm system and Kingston Mines a mecca for blues enthusiasts.',
+				category: 'Neighborhood',
+			}, {
+				name: 'Lakeview',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Chicago_Skyline_as_seen_from_Lakeview.JPG',
+				description: 'Chicago’s most densely populated neighborhood, Lakeview is home to a large population of young professionals that help sustain street after street of bars, restaurants and great boutique shops. The many great streets worth exploring and the quick access to downtown make this one of the top neighborhoods to stay in. Note: Lakeview is home to two prominent areas which we have in-depth guides for: Wrigleyville and Boystown. ',
+				category: 'Neighborhood',
+			}, {
+				name: 'Boystown',
+				image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Pride_Balloons_(7491623912).jpg/1024px-Pride_Balloons_(7491623912).jpg',
+				description: 'The epicenter of the LGBT community in Chicago, these bars offer a great atmosphere for everyone. While Boystown might be famous for its gay bars and sex shops, to limit it to this characterization is doing the neighborhood a great disservice. A small walkable area brimming with great boutique restaurants and shops, this is a must visit neighborhood of Chicago.',
+				category: 'Neighborhood',
+			}, {
+				name: 'Wrigleyville',
+				image: 'https://c1.staticflickr.com/5/4091/4979789147_77f602f773_b.jpg',
+				description: 'This area might be named after the Cubs’ stadium but it doesn’t just come alive during baseball games. The passion and love for Chicago is on full display anytime a Chicago sports team is playing (with the exception of the White Sox) and really anytime there is a reason to watch sports or celebrate. During the football season, many bars associate themselves with college and NFL teams which makes Wrigleyville one of the best places to watch football. It also means that during the weekend the party starts early in the day and obviously goes late into the night where the focus shifts off of drinking during a game to just pure drinking. The high density of bars also means this is the go-to place for bar crawls, bachelor parties, out-of-towners, and anyone looking to bar hop. Whether it’s drinking with friends in a pub, belting out lyrics to karaoke, playing beer pong, or listening to live music, Wrigleyville will meet your drinking needs. The emphasis in Wrigleyville is on bars, and as such, the restaurants in the area are primarily concerned with catering to the drinking population. Traditional American pub food is common along with cheap late night drunk food options.  But there is a lot in the area and chances are you will be able to find just about anything you would want either in Wrigleyville or somewhere else nearby in Lakeview.',
+				category: 'Neighborhood',
+			}, {
+				name: '3 Days in Chicago',
+				image: 'https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14712200_1107617126019713_8733391228445392896_n.jpg?ig_cache_key=MTM3OTg1NjgwMDkwNzg5MTIyMA%3D%3D.2',
+				description: 'The essential guide covering all the major sites and activities in Chicago',
+				category: 'Guide',
+			}, {
+				name: 'Best Food of Chicago',
+				image: 'https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14574078_708839315941440_613905595744911360_n.jpg?ig_cache_key=MTM3OTg1NDk5MjEzMTY5NDEwNQ%3D%3D.2',
+				description: 'Chicago is a food lover’s dream and to get the full Chicago experience travelers should be sure to sample cuisine they normally wouldn’t associate with the American Midwest.',
+				category: 'Guide',
+			}, {
+				name: 'Long Weekend in Chicago',
+				image: 'https://scontent-ord1-1.cdninstagram.com/t51.2885-15/s480x480/e35/14474098_1418595098447455_5968997491868172288_n.jpg?ig_cache_key=MTM3OTM3NDM0ODY0MTgwNzkzMQ%3D%3D.2',
+				description: 'The perfect guide for anyone who has a 3day weekend and a thirst for adventure. Focused on exploring the city through it\'s food while making sure to see sights worth seeing.',
+				category: 'Guide',
+			}].sort((a, b) => { var x = Math.random(); if(x>.5){return 1} if(x<.5){return -1} if(x==.5){return 0}})
+
+	-
+		var gold = '#ccab60';
+		var blue = '#60b3cc';
+		var purple = '#7770a1';
+		var red = '#c11410';
+		var green = '#59D087';
+		var tagColor = {
+			"Only In": gold,
+			"Local Cuisine": gold,
+			"Best Dishes": gold,
+			"Drinks": gold,
+			"Restaurant": gold,
+			"Attraction": purple,
+			"Large Attraction": green,
+			"Neighborhood": blue,
+			"Guide": red,
+		}
+
+
+block content
+	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+			.bg-Dkr
+				.container.ptb-0
+					ol.breadcrumb
+						li.active United Sates
+						li.active Midwest
+						li.active #{city.names.display}
+					h1 #{city.names.display}
+						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+
+					nav.pt-Md
+						ul.account-pages.m-0
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
+							li.p-0
+								a.fw-N(href='/united-states-of-america/chicago/explore') Explore
+
+	.container
+		.row
+			.hidden-xs.col-sm-3.col-md-2
+				.content-card
+					h2 Filters
+					h3 Category
+					.checkbox
+						label
+							input(type='checkbox')
+							| Only in Chicago
+					.checkbox
+						label
+							input(type='checkbox')
+							| Local Cuisine
+					.checkbox
+						label
+							input(type='checkbox')
+							| Best Dishes
+					.checkbox
+						label
+							input(type='checkbox')
+							| Drinks
+					.checkbox
+						label
+							input(type='checkbox')
+							| Restaurants
+					h3 Dietary Restrictions
+					.checkbox
+						label
+							input(type='checkbox')
+							| Shellfish
+					.checkbox
+						label
+							input(type='checkbox')
+							| Gluten
+					.checkbox
+						label
+							input(type='checkbox')
+							| Nuts
+					.checkbox
+						label
+							input(type='checkbox')
+							| Meat
+					.checkbox
+						label
+							input(type='checkbox')
+							| Dairy
+
+			.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.col-xs-12.col-md-10.col-sm-9.pt-Md
+				for item in items
+					.masonry--item.m-0(data-category=item.category)
+						.content-card.p-R.p-0.c-P(style='border-radius: 2px 0 2px 2px;', data-toggle="modal" data-target=`#${item.name.replace(/\s/g, '-')}`)
+							.o-H
+								img.w-100.an-Xf(src=item.image, alt=item.name , style='border-radius: 2px 0 2px 2px;')
+							.p-A.t-0.r-0.fc-W.p-Xs.br-Sm.lh-1(style=`border-radius: 2px 2px 0 0; background-color: ${tagColor[item.category]};`)!= item.category == 'Only In' ? `Only In ${city.names.display}` : (item.category === 'Attraction' && item.area ? `${item.category} <span class='d-Ib p-Xs mtb-NegXs mr-NegXs' style='background-color: ${green};'>${item.area}</span>` : item.category)
+							h2.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W(style='border-radius: 0 0 2px 2px;')= item.name
+
+				
+	for item in items
+		.modal.fade(id=item.name.replace(/\s/g, '-'), tabindex="-1", role="dialog", aria-labelledby="myModalLabel")
+			.modal-dialog
+				.content-card
+					h2.content-card--header.fw-B.fc-B= item.name
+					p.lead= item.description
+					img.w-100(src= item.image)
+
+					if (item.suggested)
+						h3 Best Place to Get it:
+						p= item.suggested
+
+					if (item.dishes)
+						h3 Dishes
+						ul
+							for dish in item.dishes
+								li= dish
+
+					if (item.order)
+						h3 What to Have
+						p= item.order
+
+					if (item.address)
+						h3 Where is It?
+						address
+							span= item.address
+							span= item.area
+					a.btn.btn-secondary.btn-lg.mt-Sm(href='#') Read More
+
+					//hr
+
+					//h3 Pics
+						small testing instagram
+					//#DeepDish

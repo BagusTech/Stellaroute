@@ -30,10 +30,9 @@ void function initializeStickeyAddon($) {
 								$wrapper.closest('[data-scroll="content-wrapper"').length ?
 									$wrapper.closest('[data-scroll="content-wrapper"') :
 									$(window);
-
 		const offset = getOffset($wrapper, $scrollWrapper, userDefinedOffset, nextStickeyElem);
 
-		$scrollWrapper.on('scroll', () => {
+		const makeStickey = function() {
 			const scrollTop = $scrollWrapper.scrollTop();
 			let top = 0;
 
@@ -44,7 +43,18 @@ void function initializeStickeyAddon($) {
 			}
 
 			$wrapper.css('top', `${top}px`);
-		})
+		}
+
+		const reInitStickey = function(){
+			$(window).off('resize', reInitStickey)
+			$scrollWrapper.off('scroll', makeStickey);
+
+			$wrapper.stickey(userDefinedOffset, nextStickeyElem);
+		}
+
+		$scrollWrapper.on('scroll', makeStickey);
+
+		$(window).on('resize', reInitStickey);
 	}
 
 	$.fn.stickey = function init(offset, nextStickeyElem) {

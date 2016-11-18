@@ -1,13 +1,17 @@
-@scrollbar-width: @gw;
+@scrollbar-width: @gw-Sm;
 
-[data-function='scroll']{
+ [data-function='scroll']{
 	position: relative;
 	height: 100%;
 	width: 100%;
 
 	&.no-scrollbar{
 		[data-scroll='content-wrapper']{
-			padding-right: 0;
+			right: 0;
+
+			.container{
+				left: 0;
+			}
 		}
 
 		[data-scroll='scrollbar']{
@@ -17,53 +21,49 @@
 }
 
 [data-scroll='content-wrapper']{
-	height: 100%;
-	width: 100%;
-	padding-right: @scrollbar-width + 3;
-	overflow: hidden;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: -17px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	.container{
+		position: relative;
+		left: -17px;
+	}
 }
 
 [data-scroll='scrollbar']{
 	height: 100%;
 	width: @scrollbar-width;
+	border-left: 1px solid #ccc;
 	position: absolute;
 	top: 0;
 	right: 0;
 	cursor: pointer;
+	z-index: 1;
+	background: white;
 
 	button{
+		background: rgba(50, 50, 50, .5);
 		min-height: 30px;
 		max-height: 100%;
 		width: 100%;
-		padding: 4px;
+		padding: 0;
+		margin: 0;
 		display: block;
-		background: none;
 		border: none;
 		position: absolute;
-		margin: 0;
 		top: 0;
 		right: 0;
 		transition: height .3s ease-out;
+		border-radius: 15px;
+		border: 2px solid white;
 
 		&:focus{
 			outline: none;
-		}
-		&:hover{
-			background: none;
-
-			&:after{
-				background: rgba(50, 50, 50, .75);
-			}
-		}
-
-		&:after{
-			content: '\00A0';
-			background: rgba(50, 50, 50, .5);
-			height: 100%;
-			width: 100%;
-			display: block;
-			border-radius: 15px;
-			transition: background 1s ease-out;
 		}
 	}
 }

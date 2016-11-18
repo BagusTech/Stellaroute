@@ -10,59 +10,49 @@ void function initializeCustomScroll($) {
         const contentHeight = $content.outerHeight();
         const $scrollBar = $wrapper.find('> [data-scroll="scrollbar"]');
         const $scrollBarButton = $scrollBar.find('button');
-        const currentScrollBarHeight = $scrollBarButton.outerHeight();
         const scrollBarHeightRatio = contentWrapperHeight / contentHeight;
         const scrollBarHeightTrue = contentWrapperHeight * scrollBarHeightRatio;
-        const scrollBarHeight = scrollBarHeightTrue < currentScrollBarHeight ? currentScrollBarHeight
-                                                                             : scrollBarHeightTrue;
+        const scrollBarHeight = scrollBarHeightTrue < 0 ? 0 : scrollBarHeightTrue;
         const maxScroll = contentHeight - contentWrapperHeight;
         const ratio = contentHeight/ (contentWrapperHeight - scrollBarHeight);
         const topOffset = contentHeight - maxScroll;
         const maxTop = contentWrapperHeight - scrollBarHeight;
         const leftClick = 1;
-        const middleClick = 2;
         let moving = false;
-        let top = 0;
         let offset = 0;
 
         $scrollBarButton.outerHeight(scrollBarHeight);
 
-        // I think this can be removed, but not 100% sure
-        // $wrapper.on('reInitScroll', () => initScroll($wrapper));
+        const percentDone = function() { return $contentWrapper.scrollTop() / ((maxTop*ratio)-contentWrapperHeight);}
+
+        const checkReInit = function() {
+            if (contentWrapperHeight !== $contentWrapper.outerHeight() || contentHeight !== $content.outerHeight()){
+                $wrapper.trigger('reinit');
+                return;
+            }
+        };
 
         const customScrolling = function customScrolling(e, animate) {
+            e.stopPropagation();
+
             if (moving){
                 const trueTop = (e.clientY - offset);
-                const percentDone = trueTop / maxTop >= 0 ? trueTop / maxTop : 0;
                 const trueScrollTop = trueTop * ratio;
-                const scrollTopOffset = topOffset * percentDone;
+                const scrollTopOffset = topOffset * percentDone();
                 const scrollTopCalc = trueScrollTop - scrollTopOffset;
                 const scrollTopMax = scrollTopCalc > maxScroll ? maxScroll : scrollTopCalc;
-                const scrollTopVal = scrollTopCalc > 0 ? scrollTopMax : 0;
-                const topVal = trueTop > 0 ? trueTop : 0;
-
-                top = topVal > maxTop ? maxTop : topVal;
+                const scrollTop = scrollTopCalc > 0 ? scrollTopMax : 0;
 
                 if (animate){
-                    $scrollBarButton.animate({'top': `${top}px`});
-                    $contentWrapper.animate({scrollTop: scrollTopVal});
+                    $contentWrapper.animate({scrollTop});
                 } else {
-                    $scrollBarButton.css('top', `${top}px`);
-                    $contentWrapper.scrollTop(scrollTopVal);
+                    $contentWrapper.scrollTop(scrollTop);
                 }
-
-                $contentWrapper.trigger('scrolling');
             }
         };
 
         const startScrolling = function startScrolling(e) {
             e.stopPropagation();
-
-            if (contentWrapperHeight !== $contentWrapper.outerHeight()){
-                $wrapper.trigger('reinit');
-
-                return;
-            }
 
             if (e.which === leftClick){
                 moving = true;
@@ -79,7 +69,8 @@ void function initializeCustomScroll($) {
         };
 
         const sideBarScroll = function sideBarScroll(e) {
-            const middle = 2;
+            e.stopPropagation();
+
             const scrollSpeed = 50;
             let scrollBy = 2;
             moving = true;
@@ -87,19 +78,17 @@ void function initializeCustomScroll($) {
             const scrolling = setInterval(() => {
                 if (moving){
                     const isOverScrollBarButton = $scrollBarButton.offset().top > e.clientY;
-                    const isUnderScrollBarButton = $scrollBarButton.offset().top + (scrollBarHeight / middle)
+                    const isUnderScrollBarButton = $scrollBarButton.offset().top + (scrollBarHeight / 2)
                                                    < e.clientY;
 
                     if (!isOverScrollBarButton && !isUnderScrollBarButton){
                         return;
                     }
 
-                    offset = 0;
-
                     if (isOverScrollBarButton) {
-                        customScrolling({ clientY: top - scrollBy});
+                        $contentWrapper.scrollTop($contentWrapper.scrollTop() - scrollBy);
                     } else if (isUnderScrollBarButton){
-                        customScrolling({ clientY: top + scrollBy});
+                        $contentWrapper.scrollTop($contentWrapper.scrollTop() + scrollBy);
                     }
 
                     scrollBy++;
@@ -109,65 +98,24 @@ void function initializeCustomScroll($) {
             }, scrollSpeed);
         };
 
-        const mouseWheelScroll = function mouseWheelScroll(e) {
-            e.preventDefault();
+        const moveScrollBar = function moveScrollBar(e){
             e.stopPropagation();
 
-            // different browsers use different event properties
-            const scrollValue = e.originalEvent.wheelDelta || -e.originalEvent.detail;
-            const scrollBy = 3;
+            checkReInit();
 
-            offset = 0;
-            moving = true;
-
-            if (scrollValue > 0) {
-                // scroll up
-
-                customScrolling({ clientY: top - scrollBy});
-            } else {
-                // scroll down
-
-                customScrolling({ clientY: top + scrollBy});
-            }
-
-            moving = false;
-        };
-
-        const middleClickScroll = function middleClickScroll(e) {
-            e.stopPropagation();
-
-            if (contentWrapperHeight !== $contentWrapper.outerHeight()){
-                $wrapper.trigger('reinit');
-
-                return;
-            }
-
-            if (e.which === middleClick){
-                e.preventDefault();
-
-                moving = true;
-                offset = e.clientY - $scrollBarButton.position().top;
-              $('body').mousemove(customScrolling);
-            }
-        };
+            const moveTop = maxTop*percentDone();
+            $scrollBarButton.css('top', `${moveTop}px`);
+        }
 
         const scrollTo = function scrollTo(e, value) {
-            const scrollbarTop = value / ratio;
-            const percentDone = (scrollbarTop / maxScroll);
-            const scrollTop = scrollbarTop + (topOffset * percentDone);
-
-            moving = true;
-            offset = 0;
-            customScrolling({ clientY: scrollTop }, true);
-            moving = false;
+            $contentWrapper.animate({scrollTop: value});
         };
 
         const reInit = function reInit() {
             $wrapper.removeClass('no-scrollbar');
             $scrollBar.unbind('mousedown', sideBarScroll);
             $scrollBarButton.unbind('mousedown', startScrolling);
-            $contentWrapper.unbind('mousewheel', mouseWheelScroll);
-            $contentWrapper.unbind('mousedown', middleClickScroll);
+            $contentWrapper.unbind('scroll', moveScrollBar);
             $contentWrapper.unbind('scrollTo', scrollTo);
             $(document).unbind('mouseup', stopScrolling);
             $wrapper.unbind('reinit', reInit);
@@ -179,25 +127,25 @@ void function initializeCustomScroll($) {
 
         $scrollBar.mousedown(sideBarScroll);
         $scrollBarButton.mousedown(startScrolling);
-        $contentWrapper.mousedown(middleClickScroll);
-        $contentWrapper.mousewheel(mouseWheelScroll);
+        $contentWrapper.on('scroll', moveScrollBar)      
         $contentWrapper.on('scrollTo', scrollTo);
         $(document).mouseup(stopScrolling);
         $wrapper.on('reinit', reInit);
 
         if (scrollBarHeightRatio >= 1){
             $wrapper.addClass('no-scrollbar');
-            return false;
         }
+
+        $(window).on('load', checkReInit);
 
         return false;
     };
 
     $.fn.customScroll = function init() {
         return this.each((index, wrapper) => {
-            initScroll($(wrapper));
+            initScroll(wrapper);
         });
     };
 
-    jQuery(() => $('[data-function="scroll"]').customScroll());
+    jQuery(() => $('[data-function*="scroll"]').customScroll());
 }(jQuery);

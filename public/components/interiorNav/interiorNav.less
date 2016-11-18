@@ -1,0 +1,31 @@
+[data-function*='interiorNav'] {
+	> a{
+		padding-left: @gw;
+	}
+		h3{
+			font-weight: normal;
+		}
+
+	a{
+		color: @grey-dark;
+		display: block;
+		font-weight: normal;
+		padding-left: @gw-Sm;
+
+		&:hover{
+			border-left: 3px solid @purple-light;
+			margin-left: -3px;
+		}
+	}
+		.active{
+			color: @purple;
+			border-left: 3px solid @purple;
+			margin-left: -3px;
+		}
+
+	ul{
+		margin: 0 0 0 @gw-Lg;
+		padding: 0;
+		list-style: none;
+	}
+}

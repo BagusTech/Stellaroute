@@ -98,6 +98,32 @@
   -webkit-transition: opacity 0.2s ease-out;
   transition: opacity 0.2s ease-out;
 }
+[data-function*='interiorNav'] > a {
+  padding-left: 24px;
+}
+[data-function*='interiorNav'] h3 {
+  font-weight: normal;
+}
+[data-function*='interiorNav'] a {
+  color: #4a4d50;
+  display: block;
+  font-weight: normal;
+  padding-left: 12px;
+}
+[data-function*='interiorNav'] a:hover {
+  border-left: 3px solid #aaa3d4;
+  margin-left: -3px;
+}
+[data-function*='interiorNav'] .active {
+  color: #7770A1;
+  border-left: 3px solid #7770A1;
+  margin-left: -3px;
+}
+[data-function*='interiorNav'] ul {
+  margin: 0 0 0 36px;
+  padding: 0;
+  list-style: none;
+}
 .masonry {
   -moz-column-gap: 24px;
   -webkit-column-gap: 24px;
@@ -411,6 +437,9 @@
 }
 [data-scroll='scrollbar'] button:focus {
   outline: none;
+}
+[data-function*='stickey'] {
+  position: relative;
 }
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -3123,9 +3152,9 @@ output {
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control:focus {
-  border-color: #E5D4E7;
+  border-color: #aaa3d4;
   outline: 0;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(229, 212, 231, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 163, 212, 0.6);
 }
 .form-control::-moz-placeholder {
   color: #cccccc;
@@ -8640,7 +8669,7 @@ form.profile-settings-update .profile-label.notification h3 {
   background-color: #2C794A;
 }
 #Stellaroute .bg-Purp__lt {
-  background-color: #E5D4E7;
+  background-color: #aaa3d4;
 }
 #Stellaroute .bg-Purp {
   background-color: #7770A1;
@@ -8722,7 +8751,7 @@ form.profile-settings-update .profile-label.notification h3 {
     background-color: #2C794A;
   }
   #Stellaroute .bg-Purp__lt--sm {
-    background-color: #E5D4E7;
+    background-color: #aaa3d4;
   }
   #Stellaroute .bg-Purp--sm {
     background-color: #7770A1;
@@ -8799,7 +8828,7 @@ form.profile-settings-update .profile-label.notification h3 {
     background-color: #2C794A;
   }
   #Stellaroute .bg-Purp__lt--md {
-    background-color: #E5D4E7;
+    background-color: #aaa3d4;
   }
   #Stellaroute .bg-Purp--md {
     background-color: #7770A1;
@@ -8980,7 +9009,7 @@ form.profile-settings-update .profile-label.notification h3 {
   border-color: #2C794A;
 }
 #Stellaroute .bc-Purp__lt {
-  border-color: #E5D4E7;
+  border-color: #aaa3d4;
 }
 #Stellaroute .bc-Purp {
   border-color: #7770A1;
@@ -9104,7 +9133,7 @@ form.profile-settings-update .profile-label.notification h3 {
     border-color: #2C794A;
   }
   #Stellaroute .bc-Purp__lt--sm {
-    border-color: #E5D4E7;
+    border-color: #aaa3d4;
   }
   #Stellaroute .bc-Purp--sm {
     border-color: #7770A1;
@@ -9219,7 +9248,7 @@ form.profile-settings-update .profile-label.notification h3 {
     border-color: #2C794A;
   }
   #Stellaroute .bc-Purp__lt--md {
-    border-color: #E5D4E7;
+    border-color: #aaa3d4;
   }
   #Stellaroute .bc-Purp--md {
     border-color: #7770A1;
@@ -12739,7 +12768,7 @@ form.profile-settings-update .profile-label.notification h3 {
   color: #2C794A;
 }
 #Stellaroute .fc-Purp__lt {
-  color: #E5D4E7;
+  color: #aaa3d4;
 }
 #Stellaroute .fc-Purp {
   color: #7770A1;
@@ -12881,7 +12910,7 @@ form.profile-settings-update .profile-label.notification h3 {
     color: #2C794A;
   }
   #Stellaroute .fc-Purp__lt--sm {
-    color: #E5D4E7;
+    color: #aaa3d4;
   }
   #Stellaroute .fc-Purp--sm {
     color: #7770A1;
@@ -13009,7 +13038,7 @@ form.profile-settings-update .profile-label.notification h3 {
     color: #2C794A;
   }
   #Stellaroute .fc-Purp__lt--md {
-    color: #E5D4E7;
+    color: #aaa3d4;
   }
   #Stellaroute .fc-Purp--md {
     color: #7770A1;

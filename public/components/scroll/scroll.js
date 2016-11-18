@@ -5,7 +5,7 @@ void function initializeCustomScroll($) {
     const initScroll = function initScroll(wrapper) {
         const $wrapper = $(wrapper);
         const $contentWrapper = $wrapper.find('> [data-scroll="content-wrapper"]');
-        const contentWrapperHeight = $contentWrapper.outerHeight();
+        const contentWrapperHeight = $contentWrapper.outerHeight()-6;
         const $content = $contentWrapper.find('[data-scroll="content"]');
         const contentHeight = $content.outerHeight();
         const $scrollBar = $wrapper.find('> [data-scroll="scrollbar"]');
@@ -25,9 +25,9 @@ void function initializeCustomScroll($) {
 
         const percentDone = function() { return $contentWrapper.scrollTop() / ((maxTop*ratio)-contentWrapperHeight);}
 
-        const checkReInit = function() {
+        const checkReInitScroll = function() {
             if (contentWrapperHeight !== $contentWrapper.outerHeight() || contentHeight !== $content.outerHeight()){
-                $wrapper.trigger('reinit');
+                $wrapper.trigger('reInitScroll');
                 return;
             }
         };
@@ -101,7 +101,7 @@ void function initializeCustomScroll($) {
         const moveScrollBar = function moveScrollBar(e){
             e.stopPropagation();
 
-            checkReInit();
+            checkReInitScroll();
 
             const moveTop = maxTop*percentDone();
             $scrollBarButton.css('top', `${moveTop}px`);
@@ -118,7 +118,7 @@ void function initializeCustomScroll($) {
             $contentWrapper.unbind('scroll', moveScrollBar);
             $contentWrapper.unbind('scrollTo', scrollTo);
             $(document).unbind('mouseup', stopScrolling);
-            $wrapper.unbind('reinit', reInit);
+            $wrapper.unbind('reInitScroll', reInit);
 
             $wrapper.customScroll();
 
@@ -130,13 +130,13 @@ void function initializeCustomScroll($) {
         $contentWrapper.on('scroll', moveScrollBar)      
         $contentWrapper.on('scrollTo', scrollTo);
         $(document).mouseup(stopScrolling);
-        $wrapper.on('reinit', reInit);
+        $wrapper.on('reInitScroll', reInit);
 
         if (scrollBarHeightRatio >= 1){
             $wrapper.addClass('no-scrollbar');
         }
 
-        $(window).on('load', checkReInit);
+        $(window).on('load', checkReInitScroll);
 
         return false;
     };

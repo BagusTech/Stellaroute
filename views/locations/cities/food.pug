@@ -1,29 +1,51 @@
 extends ../../layout.pug
 
+append header
+	script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
+	script.
+		jQuery(function(){
+			var clientId = '43dbe271616e4c15a1afb304037bb603';
+			var accessToken = '3607994591.43dbe27.c597fb393c7e417cb094c3b2c91d4841';
+
+			var feed = new Instafeed({
+				get: 'user',
+				userId: 3607994591,
+				target: 'DeepDish',
+				clientId: clientId,
+				accessToken: accessToken,
+				template: '<img class="w-30" src="{{image}}" alt="{{model}}" />'
+			});
+
+			feed.run();
+		})
+
 block content
-	.media-bg-img.request-page-header
-		.container
-			h1= "Food and Drinks in " + city.names.display
+	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+			.bg-Dkr
+				.container.ptb-0
+					ol.breadcrumb
+						li.active United Sates
+						li.active Midwest
+						li.active #{city.names.display}
+					h1 #{city.names.display}
+						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+
+					nav.pt-Md
+						ul.account-pages.m-0
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
+							li.p-0
+								a.fw-N(href='/united-states-of-america/chicago/food') Food
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
 
 	.container
 		.row
 			.hidden-xs.col-sm-3.col-md-2
-				//.content-card
-					h2 Legend
-					ul.ls-N.pl-Sm
-						li
-							span(data-icon='fa fa-search') &nbsp;Breakfast
-						li
-							span(data-icon='fa fa-search') &nbsp;Lunch
-						li
-							span(data-icon='fa fa-search') &nbsp;Dinner
-						li
-							span(data-icon='fa fa-search') &nbsp;Dessert
-						li
-							span(data-icon='fa fa-search') &nbsp;Snack
-						li
-							span(data-icon='fa fa-search') &nbsp;On the Go
-
 				.content-card
 					h2 Filters
 					h3 Category
@@ -69,20 +91,18 @@ block content
 							input(type='checkbox')
 							| Dairy
 
-			.col-xs-12.col-md-10.col-sm-9
-				h2 Something
-
 			.masonry.masonry-grid-1.masonry-grid-3--md.col-xs-12.col-md-10.col-sm-9.pt-Sm
-				#testItem.masonry--item.content-card.p-0.p-R.mt-Md(data-function='toggle', data-event='hover', data-target='#testDescription, #testTitle, #testContent')
-					div.o-H(style='background: url("https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg") no-repeat center center / cover')
-						#testDescription.p-A.b-100.r-0.bg-Gr.fc-W.p-Xs.an-F.br-Sm.lh-1 Only in Chicago
-						#testContent.m-0.p-Sm.bg-Ltst2.o-0.mt-Xl.an-F(data-toggle='o-0')
-							p.lead The pan in which it is baked gives the pizza its characteristically high edge and a deep surface for large amounts of cheese and a chunky tomato sauce. Chicago-style pizza may be prepared in deep-dish style and as a stuffed pizza.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Pequods, in&nbsp;
-								a(href='#') Lincoln Park
-					h2#testTitle.p-A.t-100.l-0.r-0.m-0.bg-Ltst2.p-Sm.bw-0.fc-B.an-Xf.mt-NegXl(data-toggle='t-100 t-0 mt-NegXl mt-0 bbw-Sm bs-S bc-G') Deep Dish
+				.masonry--item(data-toggle="modal" data-target="#myModal2")
+					style.
+						.masonry--item .content-card, 
+						.masonry--item .p-A.b-100.r-0{transition: all .1s;}
+						.masonry--item:hover .content-card{box-shadow: -2px 2px 2px #777; top: -2px !important; left: 2px !important;}
+						.masonry--item:hover .p-A.b-100.r-0{box-shadow: -2px 2px 2px #777;}
+					
+					.content-card.p-0.p-R.mt-Md.c-P.z-1.t-0.l-0(style='border-radius: 2px 0 2px 2px;')
+						img.w-100.z-1(src='https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg', alt='Deep Dish Pizza', style='border-radius: 2px 0 2px 2px;')
+						.p-A.b-100.r-0.bg-Gr.fc-W.p-Xs.br-Sm.lh-1.z-Neg1(style='border-radius: 2px 2px 0 0;') Only in Chicago
+						h2.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W(style='border-radius: 0 0 2px 2px;') Deep Dish
 
 				.masonry--item.content-card.p-0.p-R.mt-Md
 					.p-A.b-100.r-0.bg-Gr.fc-W.plr-Xs Only in Chicago
@@ -233,130 +253,19 @@ block content
 								| 3155 N. Broadway
 								| Off the Belmont stop from the Red, Brown, or Purple line
 
-	// Peters Stuff
-	//.container.ptb-Sm
-		.row
-			.col-xs-3
-				.content-card.pb-0
-					h2 Sections
-					ol.mtb-Sm
-						li Types of American Food
-							ul.fs-Xs.ls-Lr
-								li Traditaional American Cuisine
-								li American BBQ
-								li TextMex (Mexican Food)
-								li Health Food
-								li Deli
-						li Appetizers
-						li Main Dishes
-						li Local Fruits and Vegetables 
-						li Desserts
-						li Drinks 
-			.col-xs-9
-				.content-card
-					h2 
-						a.fc-G__lt(href="www.nhl.com") Types of American Food
-					ol.ls-N.p-N.mlr-NegSm
-						li
-							.row.d-F.pl-Xs
-								.col-xs-12.ta-C
-									h3 Traditional American Cuisine
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Sm
-									span <img src="https://placebear.com/640/240">
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Xs
-									p Perhaps nothing better characterizes the melting pot of American culture more than the food. It really is an amalgamation of food from around the world so making generalizations can be difficult. With that said, if one thing characterizes American food it's the large portions. Being full and satisfied is far more important than being healthy. Meals are typically served with some kind of meat and bread. Processed food is very common in the States. 
-									Strong Popular Disshes: 
-									| Hamburgers, pizza, sandwiches, mac-and-cheese, hotdogs 
-						li.bg-G__ltr
-							.row.d-F.pl-Xs
-								.col-xs-12.ta-C
-									h3 American BBQ
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Sm
-									span <img src="https://placebear.com/640/240">
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Xs
-									p No type of food is more quintessentially American than BBQ.  While each region will have its own distinct flavor, there are a few common elements you’ll find no matter where you are. BBQ (barbeque) is a cooking technique that cooks meat slowly, usually with indirect contact from smoke, to bring out the flavor of the meat. Often served buffet (or family style) BBQ joints tend to be casual and offer a good glimpse at American hospitality.
-									Strong Popular Disshes: 
-									| Ribs, pulled pork
-						li
-							.row.d-F.pl-Xs
-								.col-xs-12.ta-C
-									h3 TexMex (or Mexican Food)
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Sm
-									span <img src="https://placebear.com/640/240">
-							.row.d-F.pl-Xs
-								.col-xs-12.plr-Md.mb-Xs
-									p America’s friends from the South have added a lot of flavor to the American palette. Most Mexican food found in America (sometimes referred to as TexMex) should not be confused with authentic Mexican food. It is its own unique blend of beans, rice, guacamole, salsa, and meat. The Mexican food you’ll find in the States tends to have milder spices though there are certainly opportunities to spicen it up for the more courageous.
-									Strong Popular Disshes: 
-									| Burritos, tacos, nachos, enchiladas 
-		//TESTING
-		div.panel-group#accordion2(role="tablist" aria-multiselectable="true")
-			div.panel.panel-default
-				div.panel-heading.bg-Purp.p-N(role="tab" id="headingTwo")
-					.text-wings
-						span.ta-L
-							h2.panel-title
-								i.fa.fa-chevron-down.p-Sm
-								a(role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo") Main Dishes
-						hr.w-A
-			.div#collapseTwo.panel-collapse.collapse.in.m-0(role="tabpanel" aria-labelledby="headingTwo")
-				div
-					.row
-						.col-xs-9
-							.content-card#collapseOne.panel-collapse.collapse.in.m-0.mt-Sm(role="tabpanel" aria-labelledby="headingOne")
-								div
-									.row
-										ul.nav.nav-tabs.bw-N(role="tablist")
-											li.active.col-xs-6.ta-C.p-0(role="presentation")
-												a(href="#verified", aria-controls="verified", role="tab", data-toggle="tab") Verified
-											li.col-xs-6.ta-C.p-0(role="presentation")
-												a(href="#community", aria-controls="community", role="tab", data-toggle="tab") Community
-									div.tab-content
-										ol.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
-											li
-												span.lh-1.fc-Gr <img src="https://placebear.com/620/220">
-												h3.d-IB.pr-Xs.m-0.lh-1 Hamburger
-												| /Hamburguesa
-												p If there is one food that epitomizes American sensibilities, it is the hamburger. Sure, this dish can be found around the globe but no one does it quite like the Americans (or quite as well). Throughout the States there are local restaurants competing for the best burger in town so be sure to find a non-chain. American hamburgers are served with a beef patty, buns, lettuce, onions, tomatoes, pickles, and ketchup. When cheese is added (typically cheddar) it becomes a cheeseburger.
-												ul
-													li
-														Strong.pr-Xs Tip:
-														| Ask for it cooked well-done. While many Americans choose to have it served medium, hamburger meat is processed and often contains bacteria.
-													li
-														Strong.pr-Xs Contains:
-														| Beef, grains 
-													li
-														Strong.pr-Xs Cuisine:
-														| Traditional American
-													li
-														Strong.pr-Xs Flavor:
-														| N/A
-										div.tab-pane#community(role="tabpanel")
-											ol.ls-N.p-N.tab-pane.active#verified(role="tabpanel")
-												li
-													.row.d-F.plr-Sm.mtb-Xs
-														.col-xs-2.col-sm-1.ta-C
-															span.fs-48.lh-1.fc-Gr 1
-														.col-xs-3
-															span.lh-1.fc-Gr <img src="https://placebear.com/120/120">
-														.col-xs-7.col-sm-8
-															h3.d-IB.pr-Xs.m-0.lh-1 Test Format
-															| /Hamburguesa
-															p If there is one food that epitomizes American sensibilities, it is the hamburger. Sure, this dish can be found around the globe but no one does it quite like the Americans (or quite as well). Throughout the States there are local restaurants competing for the best burger in town so be sure to find a non-chain. American hamburgers are served with a beef patty, buns, lettuce, onions, tomatoes, pickles, and ketchup. When cheese is added (typically cheddar) it becomes a cheeseburger.
-															ul
-																li
-																	Strong.pr-Xs Tip:
-																	| Ask for it cooked well-done. While many Americans choose to have it served medium, hamburger meat is processed and often contains bacteria.
-																li
-																	Strong.pr-Xs Contains:
-																	| Beef, grains 
-																li
-																	Strong.pr-Xs Cuisine:
-																	| Traditional American
-																li
-																	Strong.pr-Xs Flavor:
-																	| N/A
+	#myModal2.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel")
+		.modal-dialog
+			.content-card
+				h2.content-card--header.fw-B.fc-B Deep Dish Pizza
+				p.lead The pan in which it is baked gives the pizza its characteristically high edge and a deep surface for large amounts of cheese and a chunky tomato sauce. Chicago-style pizza may be prepared in deep-dish style and as a stuffed pizza.
+				img.w-100(src='https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg')
+				p.mb-0.mt-XXs
+					strong Best Place to Get It:&nbsp;
+					| Pequods, in&nbsp;
+					a(href='#') Lincoln Park
+
+				hr
+
+				h3 Pics
+					small testing instagram
+				//#DeepDish

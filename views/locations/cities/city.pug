@@ -3,13 +3,26 @@ extends ../../layout.pug
 block content
 	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 			.bg-Dkr
-				.container.pt-0.pb-Md
+				.container.ptb-0
 					ol.breadcrumb
 						li.active United Sates
 						li.active Midwest
 						li.active #{city.names.display}
 					h1 #{city.names.display}
 						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+
+					nav.pt-Md
+						ul.account-pages.m-0
+							li.p-0
+								a.fw-N(href='/united-states-of-america/chicago') Overview
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
+							li.p-0
+								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
 
 	.container.ptb-Sm
 		.row

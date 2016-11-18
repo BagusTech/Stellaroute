@@ -1,60 +1,5 @@
 extends ../../layout.pug
 
-append header
-	script.
-		jQuery(function($) {
-			void function initGuideNav() {
-				var $nav = $('.js-guide-nav');
-				var $contentScrollWrap = $('[data-scroll=content-wrapper]').first();
-				var $content = $('[data-scroll="content"]');
-
-				var checkForActiveTabChange = function checkForActiveTabChange() {
-					var $activeNodes = $('.js-nav-nodes [data-position]').filter(function checkTop() {
-						return $(this).offset().top <= 24;
-					});
-
-					$nav.find('a').removeClass('active');
-
-					if ($activeNodes.length){
-						console.log('true')
-						var currentPosition = $activeNodes.last().attr('data-position');
-						var $activeNode = $nav.find(`[data-position="${currentPosition}"]`);
-						var $activeNodeParent = $nav.find(`[data-position="${currentPosition.split('.')[0]}"]`);
-
-						if ($activeNodeParent.attr('aria-expanded') === 'false') {
-							$activeNodeParent.trigger('tab-change');
-						}
-
-						$activeNodeParent.addClass('active')
-						$activeNode.addClass('active');
-					}
-				};
-
-				var scrollTo = function scrollTo(e) {
-					e.preventDefault();
-
-					const $this = $(this);
-					const position = $this.attr('data-position');
-					const $goTo = $(`.js-nav-nodes [data-position="${position}"]`);
-					const goToVal = $goTo.offset().top - $content.offset().top - 24;
-
-					$nav.find('a').removeClass('active');
-					$this.addClass('active');
-					$contentScrollWrap.off('scroll', checkForActiveTabChange);
-					$contentScrollWrap.trigger('scrollTo', [goToVal, ]);
-
-					// don't check for active tab change when we know it's happening causing it to trigger twice
-					setTimeout(() => {
-						$contentScrollWrap.on('scroll', checkForActiveTabChange);
-					}, $nav.attr('data-animation-speed') || 500);
-				};
-
-			
-				$nav.find('a').click(scrollTo);
-				$contentScrollWrap.on('scroll', checkForActiveTabChange);
-			}();
-		});
-
 block content
 	div.city-header(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 			.bg-Dkr
@@ -79,19 +24,20 @@ block content
 							li.p-0
 								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
 	style.
-		.js-guide-nav .active{
+		.guide-nav .active{
 			color: #7770a1 !important;
 			border-left: 3px solid #7770a1 !important;;
 			margin-left: -3px;
 		}
-		.js-guide-nav a:hover{
+		.guide-nav a:hover{
 			border-left: 3px solid #aaa3d4;
 			margin-left: -3px;
 		}
+
 	.container
 		.row
-			.col-sm-5.col-md-4.col-lg-3
-				nav.t-0.p-R.o-H.js-guide-nav(data-function='accordion, stickey', data-always-show-one='true')
+			.col-sm-5.col-md-4.col-lg-3(data-function='stickey')
+				nav.t-0.p-R.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
 					a.pl-Md.d-B.fc-G__Dk(href='#', role='tab', aria-expanded='true', data-position='0')
 						h3.fw-N Overview
 					ul.m-0.ml-Lg.p-0.ls-N(role='tabpanel', aria-hidden='false')

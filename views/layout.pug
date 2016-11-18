@@ -3,16 +3,23 @@ block options
 	- var headerBackground = 'white'
 	- var showHeaderSearch = true;
 
-html(lang='en')
+html(lang='en', style='height: 100%')
 	include controls/common-resources.pug
 
-	body#Stellaroute
-		block header
-			include controls/header.pug
-			
-		main.site-body
-			include controls/flash.pug
-			block content
+	body#Stellaroute(data-function='scroll')
+		noscript
+			iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NG3DCTG", height="0", width="0", style="display:none;visibility:hidden")
+<!-- End Google Tag Manager (noscript) -->
+		div#Body(data-scroll='content-wrapper')
+			div(data-scroll='content')
+				block header
+					include controls/header.pug
+					
+				main.site-body
+					include controls/flash.pug
+					block content
 
-		block footer
-			include controls/footer.pug
+				block footer
+					include controls/footer.pug
+		div(data-scroll='scrollbar')
+			button

@@ -93,8 +93,7 @@ void function initializeAccordionsTabs($) {
         }
     }
 
-    function makeTabPanel(wrapper, isTabs) {
-        const $wrapper = $(wrapper);
+    function makeTabPanel($wrapper, isTabs) {
         const $tabs = $('[role="tab"]', $wrapper);
         const pageAnchor = window.location.hash;
 
@@ -216,7 +215,7 @@ void function initializeAccordionsTabs($) {
 
     // initialize default accordions and tabs
     jQuery(() => {
-        $('[data-function="accordion"]').makeAccordion();
-        $('[data-function="tabs"]').makeTabs();
+        $('[data-function*="accordion"]').makeAccordion();
+        $('[data-function*="tabs"]').makeTabs();
     });
 }(jQuery);

@@ -64,5 +64,5 @@ void function initializeToggle($) {
         });
     };
 
-    jQuery(() => $('[data-function="toggle"]').makeToggle());
+    jQuery(() => $('[data-function*="toggle"]').makeToggle());
 }(jQuery);

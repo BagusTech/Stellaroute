@@ -10,13 +10,13 @@ const CityRegion = require('../schemas/city-region');
 const Neighborhood = require('../schemas/neighborhood');
 const router = express.Router();
 
-router.get('/', function(req, res){
+router.get('/', (req, res) => {
 	req.flash('info', 'That page doesn\'t exist, but this is a close second!');
 	res.redirect('/countries');
 	return;
 });
 
-router.post('/new', function(req, res){
+router.post('/new', (req, res) => {
 	const params = req.body;
 	params.url = params.url || params['names.display'].replace(/ /g, '-').toLowerCase();
 
@@ -66,7 +66,7 @@ router.post('/new', function(req, res){
 	});
 });
 
-router.post('/update', function(req, res){
+router.post('/update', (req, res) => {
 	const redirect = req.body.delete ? req.body.deleteRedirect : req.body.redirect;
 	delete req.body.redirect;
 	delete req.body.deleteRedirect;

@@ -17,14 +17,82 @@ const router         = express.Router();
 const missingLocationUrl = '/'
 const missingLocationMessage = 'Sorry, that location doesn\'t exist.';
 
-router.get('/:continent', function(req, res, next){
+// ajax
+router.get('/get/:table', (req, res) => {
+	const field = req.query.field
+	const value = req.query.value
+	const findOne = req.query.findOne
+	let table;
+
+	switch(req.params.table){
+		case 'Continents':{
+			table = Continent;
+			break;
+		}
+		case 'WorldRegions':{
+			table = WorldRegion;
+			break;
+		}
+		case 'Countries':{
+			table = Countrie;
+			break;
+		}
+		case 'CountryRegions':{
+			table = CountryRegion;
+			break;
+		}
+		case 'Provinces':{
+			table = Province;
+			break;
+		}
+		case 'ProvinceRegions':{
+			table = ProvinceRegion;
+			break;
+		}
+		case 'Cities':{
+			table = City;
+			break;
+		}
+		case 'CityRegions':{
+			table = CityRegion;
+			break;
+		}
+		case 'Neighborhoods':{
+			table = Neighborhood;
+			break;
+		}
+		default:
+			console.error('Please choose a table.')
+			res.send('Please choose a table.');
+			return;
+	}
+
+	if(findOne){
+		const item = table.findOne(field, value).items;
+
+		if(item){
+			res.send(item);
+		} else {
+			res.send('Nothing Found');
+		}
+	} else {
+		const items = table.find(field, value).items
+
+		if(items){
+			res.send(items)
+		} else {
+			res.send('Nothing Found');
+		}
+	}
+});
+
+router.get('/:continent', (req, res, next) => {
 	const continent = Continent.findOne('url', req.params.continent).items;
 
 	if(!continent){
 		next();
 		return;
 	}
-
 
 	const worldRegions = WorldRegion.find('continent', continent.Id).items.sort(sortBy('url'));
 	const countries = Country.find('continent', continent.Id).items.sort(sortBy('url'));
@@ -39,7 +107,7 @@ router.get('/:continent', function(req, res, next){
 	});
 });
 
-router.get('/:worldRegion', function(req, res, next){
+router.get('/:worldRegion', (req, res, next) => {
 	const worldRegion = WorldRegion.findOne('url', req.params.worldRegion)
 								   .join('continent', Continent.cached(), 'Id', 'names.display')
 								   .items[0];
@@ -48,7 +116,6 @@ router.get('/:worldRegion', function(req, res, next){
 		next();
 		return;
 	}
-
 
 	const countries = Country.find('worldRegions', worldRegion.Id).items.sort(sortBy('url'));
 
@@ -62,7 +129,7 @@ router.get('/:worldRegion', function(req, res, next){
 	});
 });
 
-router.get('/:country', function(req, res, next){
+router.get('/:country', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country)
 						   .join('continent', Continent.cached(), 'Id', 'names.display')
 						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -92,7 +159,7 @@ router.get('/:country', function(req, res, next){
 	});
 });
 
-router.get('/:country/food', function(req, res, next){
+router.get('/:country/food', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country)
 						   .join('continent', Continent.cached(), 'Id', 'names.display')
 						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -120,7 +187,7 @@ router.get('/:country/food', function(req, res, next){
 	});
 });
 
-router.get('/:country/transit', function(req, res, next){
+router.get('/:country/transit', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country)
 						   .join('continent', Continent.cached(), 'Id', 'names.display')
 						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -148,7 +215,7 @@ router.get('/:country/transit', function(req, res, next){
 	});
 });
 
-router.get('/:country/transportation', function(req, res, next){
+router.get('/:country/transportation', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country)
 						   .join('continent', Continent.cached(), 'Id', 'names.display')
 						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -176,7 +243,7 @@ router.get('/:country/transportation', function(req, res, next){
 	});
 });
 
-router.get('/:country/:attraction', function(req, res, next){
+router.get('/:country/:attraction', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
 	if(!country){
@@ -200,7 +267,7 @@ router.get('/:country/:attraction', function(req, res, next){
 	});
 });
 
-router.get('/:country/:countryRegion', function(req, res, next){
+router.get('/:country/:countryRegion', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
 	if(!country){
@@ -228,7 +295,7 @@ router.get('/:country/:countryRegion', function(req, res, next){
 	});
 });
 
-router.get('/:country/:province', function(req, res, next){
+router.get('/:country/:province', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 	const province = Province.findOne(['url', 'country'], [req.params.province, country.Id])
 							 .join('continent', Continent.cached(), 'Id', 'names.display')
@@ -262,7 +329,7 @@ router.get('/:country/:province', function(req, res, next){
 	});
 });
 
-router.get('/:country/:province/:provinceRegion', function(req, res, next){
+router.get('/:country/:province/:provinceRegion', (req, res, next) => {
 	const province = Province.findOne('url', req.params.province).items;
 	
 	if(!province){
@@ -296,7 +363,7 @@ router.get('/:country/:province/:provinceRegion', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city', function(req, res, next){
+router.get('/:country/:city', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -316,7 +383,7 @@ router.get('/:country/:city', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -337,7 +404,7 @@ router.get('/:country/:city', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/transit', function(req, res, next){
+router.get('/:country/:city/transit', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -357,7 +424,7 @@ router.get('/:country/:city/transit', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -378,7 +445,7 @@ router.get('/:country/:city/transit', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/food', function(req, res, next){
+router.get('/:country/:city/food', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -398,7 +465,7 @@ router.get('/:country/:city/food', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -419,7 +486,7 @@ router.get('/:country/:city/food', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/explore', function(req, res, next){
+router.get('/:country/:city/explore', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -439,7 +506,7 @@ router.get('/:country/:city/explore', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -460,7 +527,7 @@ router.get('/:country/:city/explore', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/guides', function(req, res, next){
+router.get('/:country/:city/guides', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -480,7 +547,7 @@ router.get('/:country/:city/guides', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -501,7 +568,7 @@ router.get('/:country/:city/guides', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/attraction', function(req, res, next){
+router.get('/:country/:city/attraction', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -521,7 +588,7 @@ router.get('/:country/:city/attraction', function(req, res, next){
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
-	var provinceRegions = [];
+	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
 
@@ -542,8 +609,7 @@ router.get('/:country/:city/attraction', function(req, res, next){
 	});
 });
 
-
-router.get('/:country/:city/:cityRegion', function(req, res, next){
+router.get('/:country/:city/:cityRegion', (req, res, next) => {
 
 	const country = Country.findOne('url', req.params.country)
 						   .items;
@@ -584,7 +650,7 @@ router.get('/:country/:city/:cityRegion', function(req, res, next){
 	});
 });
 
-router.get('/:country/:city/:neighborhood', function(req, res, next){
+router.get('/:country/:city/:neighborhood', (req, res, next) => {
 	const neighborhood = Neighborhood.findOne('url', req.params.neighborhood)
 									 .join('city', City.cached(), 'Id', 'names.display')
 									 .join('city', City.cached(), 'Id', 'url')
@@ -609,22 +675,119 @@ router.get('/:country/:city/:neighborhood', function(req, res, next){
 	});
 });
 
-router.post('/delete', function(req, res){
-	const params = req.body;
+router.post('/update/:table', (req, res) => {
+	const item = req.body;
+	let table;
 
-	duck({Table: params.table, HASH: params.keyName,})
-	.delete(params.key)
-	.then(function success(){
-		cache.del(params.table);
+	switch(req.params.table){
+		case 'Continents':{
+			table = Continent;
+			break;
+		}
+		case 'WorldRegions':{
+			table = WorldRegion;
+			break;
+		}
+		case 'Countries':{
+			table = Countrie;
+			break;
+		}
+		case 'CountryRegions':{
+			table = CountryRegion;
+			break;
+		}
+		case 'Provinces':{
+			table = Province;
+			break;
+		}
+		case 'ProvinceRegions':{
+			table = ProvinceRegion;
+			break;
+		}
+		case 'Cities':{
+			table = City;
+			break;
+		}
+		case 'CityRegions':{
+			table = CityRegion;
+			break;
+		}
+		case 'Neighborhoods':{
+			table = Neighborhood;
+			break;
+		}
+		default:
+			console.error('Please choose a table.')
+			res.send('Please choose a table.');
+			return;
+	}
 
-		req.flash('success', 'Successfully deleted!');
-		res.redirect(params.redirect);
-		return;
-	}, function failed(err){
+	table.update(item)
+		.then(() => {
+			table.updateCache().then(() => {
+				res.send('success');
+			});
+		}, (err) => {
+			console.error(err);
+			res.send(err);
+		});
+});
+
+router.post('/delete/:table', (req, res) => {
+	const id = req.body;
+	let table;
+
+	switch(req.params.table){
+		case 'Continents':{
+			table = Continent;
+			break;
+		}
+		case 'WorldRegions':{
+			table = WorldRegion;
+			break;
+		}
+		case 'Countries':{
+			table = Countrie;
+			break;
+		}
+		case 'CountryRegions':{
+			table = CountryRegion;
+			break;
+		}
+		case 'Provinces':{
+			table = Province;
+			break;
+		}
+		case 'ProvinceRegions':{
+			table = ProvinceRegion;
+			break;
+		}
+		case 'Cities':{
+			table = City;
+			break;
+		}
+		case 'CityRegions':{
+			table = CityRegion;
+			break;
+		}
+		case 'Neighborhoods':{
+			table = Neighborhood;
+			break;
+		}
+		default:
+			console.error('Please choose a table.')
+			res.send('Please choose a table.');
+			return;
+	}
+
+	table.delete(id)
+	.then(() => {
+		table.updateCache().then(() => {
+			res.send('success');
+		});
+	}, (err) => {
 		console.error(err);
-		req.flash('error', 'Something went wrong, please try again.');
-		res.redirect(params.retry);
-		return;
+		res.send(err);
 	});
 });
 

@@ -346,7 +346,9 @@ block content
 						address
 							span= item.address
 							span= item.area
-					a.btn.btn-secondary.btn-lg.mt-Sm(href='#') Read More
+
+					if (item.readMore)
+						a.btn.btn-secondary.btn-lg.mt-Sm(href='#') Read More
 
 					//hr
 

@@ -293,6 +293,20 @@ const City = Duck({
 				title: String,
 				explanation: String,
 			}],
+			foods: [{
+				Id: String,
+				order: Number,
+				category: String,
+				tagline: String,
+				description: String,
+				suggestedRestaurant: String,
+				dishes: Array,
+				area: String,
+				address: String,
+				whatToOrder: String,
+				contains: Array,
+				readMore: String
+			}],
 			dishs: [{
 				order: Number,
 				endorse: Boolean,

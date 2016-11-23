@@ -1,0 +1,140 @@
+mixin cardStyle1(item)
+	.masonry--item(data-toggle="modal" data-target=`#${item.name && item.name.replace(/\s/g, '-')}`)
+		.masonry--tag(style='border-radius: 2px 2px 0 0;', class=item.category && item.category.replace(/\s/g, '-'))= item.category
+		.content-card(style='border-radius: 2px 0 2px 2px;')
+			.o-H
+				img.masonry--cover-img(src=item.image, alt=item.name, style='border-radius: 2px 0 2px 2px;')
+			h3.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W.fw-N(style='border-radius: 0 0 2px 2px;')= item.name
+
+mixin cardStyle2(item)
+	.masonry--item(data-toggle="modal", data-target=`#${item.name && item.name.replace(/\s/g, '-')}`)
+		.masonry--tag(class=item.category && item.category.replace(/\s/g, '-'))= item.category
+		.content-card(style='border-radius: 2px 0 2px 2px;')
+			.o-H
+				img.masonry--cover-img(src=item.image, alt=item.name, style='border-radius: 2px 0 2px 2px;')
+			h3.m-0.p-Sm.fc-Purp(style='border-radius: 0 0 2px 2px;')= item.name
+			.plr-Sm!= item.description
+
+mixin modalStyle1(item)
+	.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", id=item.name && item.name.replace(/\s/g, '-'))
+		.modal-dialog
+			.content-card
+				.js-food-item
+					h2.content-card--header.fw-B.fc-B= item.name
+					.lead!= item.description
+					img.w-100(src= item.image, alt= item.name)
+					if (item.suggestedRestaurant)
+						h3 Best Place to Get it:
+						p!= item.suggestedRestaurant
+
+					if (item.dishes)
+						h3 Dishes
+						ul
+							for dish in item.dishes
+								li= dish
+
+					if (item.whatToOrder)
+						h3 What to Have
+						p= item.whatToOrder
+
+					if (item.address)
+						h3 Where is It?
+						address
+							span= item.address
+							span= item.area
+
+					if (item.blog)
+						a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+
+				if user && user.isAdmin
+					.js-update-food-item.hidden
+						.form-group
+							label(for='FoodName') Name
+							input#FoodName.form-control.js-food-field(type='text', required, name='name', value=item.name)
+						.form-group
+							label(for='FoodImage') Image
+							input#FoodImage.form-control.js-food-field(type='text', required, name='image', value=item.image)
+						.form-group
+							label(for='FoodCategory') Category
+							select#FoodCategory.form-control.js-food-field(name='category')
+								option(selected= item.category === 'Only In') Only In
+								option(selected= item.category === 'Local Cuisine') Local Cuisine
+								option(selected= item.category === 'Best Dishes') Best Dishes
+								option(selected= item.category === 'Drinks') Drinks
+								option(selected= item.category === 'Restaurant') Restaurant
+						.form-group
+							label(for='FoodTagline') Tagline
+							input#FoodTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
+						.form-group
+							label(for='FoodDescription') Description
+							#FoodDescription.js-food-field(name='description', data-summernote)
+								.summernote!= item.description
+
+						.form-group
+							h3 Contains
+							.checkbox
+								label
+									input.js-food-field(name='contains', type='checkbox', value='Shellfish', checked= item.contains && item.contains.indexOf('Shellfish') > -1)
+									| Shellfish
+							.checkbox
+								label
+									input.js-food-field(name='contains', type='checkbox', value='Gluten', checked= item.contains && item.contains.indexOf('Gluten') > -1)
+									| Gluten
+							.checkbox
+								label
+									input.js-food-field(name='contains', type='checkbox', value='Nuts', checked= item.contains && item.contains.indexOf('Nuts') > -1)
+									| Nuts
+							.checkbox
+								label
+									input.js-food-field(name='contains', type='checkbox', value='Meat', checked= item.contains && item.contains.indexOf('Meat') > -1)
+									| Meat
+							.checkbox
+								label
+									input.js-food-field(name='contains', type='checkbox', value='Dairy', checked= item.contains && item.contains.indexOf('Dairy') > -1)
+									| Dairy
+
+						.form-group
+							label(for='FoodDishes') Dishes
+							input#FoodDishes.form-control.js-food-field(type='text', name='dishes', value= item.dishes && item.dishes.join(', '))
+						.form-group
+							label(for='FoodArea') Area
+							input#FoodArea.form-control.js-food-field(type='text', name='area', value= item.area)
+						.form-group
+							label(for='FoodAddress') Address
+							input#FoodAddress.form-control.js-food-field(type='text', name='address', value= item.address)
+						.form-group
+							label(for='FoodWhatToOrder') What to Order
+							input#FoodWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder', value= item.whatToOrder)
+						.form-group
+							label(for='FoodSuggestedRestaurant') Suggested Restaurant
+							input#FoodSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant', value= item.suggestedRestaurant)
+						.form-group
+							label(for='FoodReadMore') Read More
+							input#FoodReadMore.form-control.js-food-field(type='text', name='readMore', value= item.readMore)
+					hr
+
+					.d-F.fj-B
+						button.btn.btn-primary.js-edit-food Edit
+						button.btn.btn-primary.js-edit-food-submit.hidden Save
+						input.js-food-id(type='hidden', value=item.Id)
+
+
+
+				//hr
+
+				//h3 Pics
+					small testing instagram
+					#DeepDish
+
+mixin masonry(items, masonryClasses, altCard)
+	if(items)
+		.masonry(class=masonryClasses.split('.'))
+			if(altCard)
+				for item in items
+					+cardStyle2(item)
+			else
+				for item in items
+					+cardStyle1(item)
+		
+		for item in items
+			+modalStyle1(item)

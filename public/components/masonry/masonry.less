@@ -31,9 +31,45 @@
 	column-gap: @gw-Md;
 
 	.masonry--item {
+		.clear;
+
 		display: inline-block;
 		width: 100%;
 		margin: 0 0 @gw-Md;
+		position: relative;
+
+		&[data-target]{
+			cursor: pointer;
+		}
+
+		.content-card{
+			.clear;
+
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	.masonry--tag{
+		color: white;
+		padding: @gw-Xs;
+		border-radius: 2px 2px 0 0;
+		line-height: 1;
+		float: right;
+
+		&.Only-In{ background: @green;}
+		&.Local-Cuisine{ background: @purple;}
+		&.Restaurant{ background: @blue;}
+		&.Drinks{ background: @orange;}
+		&.Best-Dishes{ background: @red;}
+	}
+
+	.masonry--cover-img{
+		transition: all .17s;
+		-webkit-backface-visibility: hidden;
+		width: 100%;
+
+		&:hover{ transform: scale(1.1); }
 	}
 }
 

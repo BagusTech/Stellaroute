@@ -130,9 +130,77 @@
   column-gap: 24px;
 }
 .masonry .masonry--item {
+  clear: both;
+  zoom: 1;
   display: inline-block;
   width: 100%;
   margin: 0 0 24px;
+  position: relative;
+}
+.masonry .masonry--item:before,
+.masonry .masonry--item:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.masonry .masonry--item:before,
+.masonry .masonry--item:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.masonry .masonry--item[data-target] {
+  cursor: pointer;
+}
+.masonry .masonry--item .content-card {
+  clear: both;
+  zoom: 1;
+  margin: 0;
+  padding: 0;
+}
+.masonry .masonry--item .content-card:before,
+.masonry .masonry--item .content-card:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.masonry .masonry--item .content-card:before,
+.masonry .masonry--item .content-card:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.masonry .masonry--tag {
+  color: white;
+  padding: 6px;
+  border-radius: 2px 2px 0 0;
+  line-height: 1;
+  float: right;
+}
+.masonry .masonry--tag.Only-In {
+  background: #59D087;
+}
+.masonry .masonry--tag.Local-Cuisine {
+  background: #7770A1;
+}
+.masonry .masonry--tag.Restaurant {
+  background: #2296bc;
+}
+.masonry .masonry--tag.Drinks {
+  background: #ef7a29;
+}
+.masonry .masonry--tag.Best-Dishes {
+  background: #c11410;
+}
+.masonry .masonry--cover-img {
+  -webkit-transition: all .17s;
+  transition: all .17s;
+  -webkit-backface-visibility: hidden;
+  width: 100%;
+}
+.masonry .masonry--cover-img:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 .masonry-grid-1 {
   -moz-column-count: 1;
@@ -2116,6 +2184,10 @@ address {
   margin-bottom: 20px;
   font-style: normal;
   line-height: 1.42857143;
+  white-space: pre-line;
+}
+address span {
+  display: block;
 }
 code,
 kbd,

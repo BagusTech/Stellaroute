@@ -1,8 +1,8 @@
 extends ../../layout.pug
 
 append header
-	script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
-	script.
+	//script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
+	//script.
 		jQuery(function(){
 			var clientId = '43dbe271616e4c15a1afb304037bb603';
 			var accessToken = '3607994591.43dbe27.c597fb393c7e417cb094c3b2c91d4841';
@@ -19,6 +19,10 @@ append header
 			feed.run();
 		})
 
+	-
+		function randomizeArray(a, b) { var x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
+		
+
 block content
 	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 			.bg-Dkr
@@ -29,6 +33,8 @@ block content
 						li.active #{city.names.display}
 					h1 #{city.names.display}
 						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+						if (user && user.isAdmin)
+							button.btn.btn-primary.f-R(data-target='#AddFood', data-toggle='modal') Add Item
 
 					nav.pt-Md
 						ul.account-pages.m-0
@@ -44,228 +50,145 @@ block content
 								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
 
 	.container
-		.row
-			.hidden-xs.col-sm-3.col-md-2
-				.content-card
-					h2 Filters
-					h3 Category
-					.checkbox
-						label
-							input(type='checkbox')
-							| Only in Chicago
-					.checkbox
-						label
-							input(type='checkbox')
-							| Local Cuisine
-					.checkbox
-						label
-							input(type='checkbox')
-							| Best Dishes
-					.checkbox
-						label
-							input(type='checkbox')
-							| Drinks
-					.checkbox
-						label
-							input(type='checkbox')
-							| Restaurants
-					h3 Dietary Restrictions
-					.checkbox
-						label
-							input(type='checkbox')
-							| Shellfish
-					.checkbox
-						label
-							input(type='checkbox')
-							| Gluten
-					.checkbox
-						label
-							input(type='checkbox')
-							| Nuts
-					.checkbox
-						label
-							input(type='checkbox')
-							| Meat
-					.checkbox
-						label
-							input(type='checkbox')
-							| Dairy
+		if (city.food && city.food.foods)
+			.row
+				//.hidden-xs.col-sm-3.col-md-2
+					.content-card
+						h2 Filters
+						h3 Category
+						.checkbox
+							label
+								input(type='checkbox')
+								| Only in Chicago
+						.checkbox
+							label
+								input(type='checkbox')
+								| Local Cuisine
+						.checkbox
+							label
+								input(type='checkbox')
+								| Best Dishes
+						.checkbox
+							label
+								input(type='checkbox')
+								| Drinks
+						.checkbox
+							label
+								input(type='checkbox')
+								| Restaurants
+						h3 Dietary Restrictions
+						.checkbox
+							label
+								input(type='checkbox')
+								| Shellfish
+						.checkbox
+							label
+								input(type='checkbox')
+								| Gluten
+						.checkbox
+							label
+								input(type='checkbox')
+								| Nuts
+						.checkbox
+							label
+								input(type='checkbox')
+								| Meat
+						.checkbox
+							label
+								input(type='checkbox')
+								| Dairy
 
-			.masonry.masonry-grid-1.masonry-grid-3--md.col-xs-12.col-md-10.col-sm-9.pt-Sm
-				.masonry--item(data-toggle="modal" data-target="#myModal2")
-					style.
-						.masonry--item .content-card, 
-						.masonry--item .p-A.b-100.r-0{transition: all .1s;}
-						.masonry--item:hover .content-card{box-shadow: -2px 2px 2px #777; top: -2px !important; left: 2px !important;}
-						.masonry--item:hover .p-A.b-100.r-0{box-shadow: -2px 2px 2px #777;}
+				.col-xs-12
+					+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(randomizeArray).sort(function(a, b){ if(a.category == 'Only In'){return -1} return 1; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
 					
-					.content-card.p-0.p-R.mt-Md.c-P.z-1.t-0.l-0(style='border-radius: 2px 0 2px 2px;')
-						img.w-100.z-1(src='https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg', alt='Deep Dish Pizza', style='border-radius: 2px 0 2px 2px;')
-						.p-A.b-100.r-0.bg-Gr.fc-W.p-Xs.br-Sm.lh-1.z-Neg1(style='border-radius: 2px 2px 0 0;') Only in Chicago
-						h2.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W(style='border-radius: 0 0 2px 2px;') Deep Dish
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Gr.fc-W.plr-Xs Only in Chicago
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Chicago Dog
-					div.o-H(style='background: url("https://c5.staticflickr.com/2/1157/3173462588_b9f0fd35aa_b.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead If you ask a local, the Chicago Dog, rather than Deep Dish, is the city’s quintessential street food. With a very specific list of ingredients, the most important thing to know is to never, ever, order it with ketchup.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Bari
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Gr.fc-W.plr-Xs Only in Chicago
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Italian Beef
-					div.o-H(style='background: url("http://kronosfoodscorp.com/assets/italian-beef-feature-720x328.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead A thinly sliced roast beef sandwich might not seem like magic, but there is something special about the combination between the beef broth it’s soaked in or the spicy giardiniera peppers.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Bari
-				
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Polish
-					div.o-H(style='background: url("http://pixel.nymag.com/imgs/slideshows/2012/08/chicago-videos/chivid-polish.nocrop.w670.h455.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead With a massive concentration of Poles in Chicago, this is where you can get arguably the best Polish food outside of Poland. While the level’s of English spoken vary from restaurant to restaurant, you can always just point.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Staropolska
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
-					h2.m-0.bg-G__dk.p-Sm.bw-0 BBQ
-					div.o-H(style='background: url("http://chicago.seriouseats.com/images/2012/02/20120205-191429-gapersblockpiggeryribs.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead Being a part of the midwest, Chicago naturally has a plethora of wonderful Barbecue (BBQ). BBQ is a wonderfully delicious way to cook meat over low heat, usually being accompanied with being smoked.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Honey 1 BBQ, The Piggery (pictured)
-							h3 Dishes
-							ul
-								li Rib Tips
-								li Brisket
-								li Chicken
-								li Any other meat you can think of!
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Purp.fc-W.plr-Xs Local Cuisine
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Modern American
-					div.o-H(style='background: url("http://chicago.seriouseats.com/images/2012/02/20120205-191429-gapersblockpiggeryribs.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead A generation of young, American chefs grew up hearing that American cuisine peaked at a McDonald’s cheeseburger and great food could only be served by a waiter in a tuxedo. They took exception and decided that locally sourced, regionally inspired food with an approachable atmosphere made for an incredible experience. Chicago is one of the best cities in the country to experience this wonderful phenomenon.
-							p
-								strong Best Place to Get It:&nbsp;
-								| The Girl and the Goat, Bangers &amp; Lace
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Tacos
-					div.o-H(style='background: url("https://c2.staticflickr.com/4/3630/3361913336_b4c180dfaf_b.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead There are really two types of tacos: delicious hipsterfied tacos and delicious traditional tacos. Traditional tacos have a simpler list of ingredients while hipsterfied tacos can fold in new ingredients and flavors. You can’t go wrong either way.
-							p
-								strong Best Place to Get It:&nbsp;
-								| Antique Taco, Big Star Taqueria, Taqueria Sabor y Sazon
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Pierogi
-					div.o-H(style='background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pierogi_z_cebulk%C4%85.jpg/220px-Pierogi_z_cebulk%C4%85.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead An Eastern European dish which consists of unleavened dough stuffed with a sweet or savory filling then boiled to cook. Almost like the Polish version of dumplings, you can have these just about anytime you get hungry. 
-							p
-								strong Best Place to Get It:&nbsp;
-								| Pierogi Heaven
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Red.fc-W.plr-Xs Best Dishes
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Ramen
-					div.o-H(style='background: url("https://s3-media2.fl.yelpcdn.com/bphoto/Ja82cy6FmDCb_IXyDB4CAQ/348s.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead This dish is far from instant and full of flavor. Native to Japan, Chicago is one of the few cities in the U.S. that does it justice. A soupy, savory broth full of noodles, usually accompanied by mean, veggies and an egg, Ramen is a must try if you haven’t it had before (and no, out of a packet doesn’t count).
-							p
-								strong Best Place to Get It:&nbsp;
-								| Furious Spoon, Strings Ramen
-				
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Orange.fc-W.plr-Xs Drinks!
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Malort
-					blockquote.instagram-media(data-instgrm-captioned, data-instgrm-version="7", style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);")
-						div(style="padding:8px;")
-							div(style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;")
-								div(style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;")
-									p(style=" margin:8px 0 0 0; padding:0 4px;")
-										a(href="https://www.instagram.com/p/BMgWXhhjyME/", style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;", target="_blank") If you&#39;re not in Chicago or a bartender, you probably ain&#39;t had this. It&#39;s an experience to say the least. I brought 2 bottles back to California. Would love someone else in #la to experience the #malortface like I have. 😖I might take this to my bar... . . . . . . . . . . . . . . . . . . #Malort #jeppsonsmalort #chicago #bartender #liqueur #cocktails #cocktail #bArtenders #alcohol #drinks #dranks #
-									p(style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;") A photo posted by ferrarrr (@ferrarrr) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-11-07T10:24:07+00:00">Nov 7, 2016 at 2:24am PST</time>
-					script(async, defer, src="//platform.instagram.com/en_US/embeds.js")
-					div.o-H(style='background: url("https://upload.wikimedia.org/wikipedia/en/thumb/b/b7/JeppsonsMalort.jpg/440px-JeppsonsMalort.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead If you want the true Chicago experience, buy you and your friends a round of Malort. If you want to keep those friends, you might want to pass. This wormwood based liqueur is great if you want to try “The Champagne of pain” or to “Kick your mouth in the balls!”
-
-		.clear
-			.hidden-xs.col-sm-3.col-md-2
-			.col-xs-12.col-md-10.col-sm-9
-				h2 Restaurants
-		.clear
-			.hidden-xs.col-sm-3.col-md-2
-			.masonry.masonry-grid-1.masonry-grid-3--md.col-xs-12.col-md-10.col-sm-9
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Billy Goat Tavern
-					div.o-H(style='background: url("https://fairfieldsuiteschicago.files.wordpress.com/2013/04/tavern1.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead Staying true to their mantra, "Cheezborger, Cheezborger, Cheezborger. No Pepsi, Coke. No Fries, Cheeps." this world famous burger joint has been around since 1934 and has been keeping locals coming back ever since.
-
-							h3 What to Have
-							p Cheezborger Cheezborger! The Double Cheezborger, or the Triple Cheezborger if you’re really hungry.
-
-							h3 Where is It
-							address
-								| 430 N. Michigan Ave
-								| Below the south end of the Magnificent Mile, under Michicagn Ave.
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
-					h2.m-0.bg-G__dk.p-Sm.bw-0 Pequods
-					div.o-H(style='background: url("http://www.kailleyskitchen.com/wp-content/uploads/2013/06/pequods.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead Pequods isn’t where Trip Advisor will tell you to go, but it IS where anyone from Chicago will. Listed at #2 for Top 5 Pizzas in AMERICA, this truly fantastic pizza is cooked in a fire brick oven and known for its signature caramelized parmesan cheese crust. Pequods is a can’t miss.
-
-							h3 What to Have
-							p Deep Dish Pizza, pick whichever ingredients floats your boat and you will go home a happy camper.
-
-							h3 Where is It
-							address
-								| 2207 N. Clybourn Ave
-								| Lincoln Park at Clybourn and Webster
-
-				.masonry--item.content-card.p-0.p-R.mt-Md
-					.p-A.b-100.r-0.bg-Bl.fc-W.plr-Xs Favorite Restaurants
-					h2.m-0.bg-G__dk.p-Sm.bw-0 DryHop Brewers
-					div.o-H(style='background: url("https://static.urbandaddy.com/uploads/assets/image/articles/standard/22731f34fbd8f74f4bd6ba7ff6951b345598ca17.jpg") no-repeat center center / cover')
-						.m-0.p-Sm.bg-Ltst.o-0.an-F.c-P(data-function='toggle', data-event='hover', data-toggle='o-0')
-							p.lead A local brewpub whose taps change more often than a Facebook status update. Always brewing something new, they also have an incredible Whiskey list and one of the best burgers in town.
-							h3 Where Is It?
-							address
-								| 3155 N. Broadway
-								| Off the Belmont stop from the Red, Brown, or Purple line
-
-	#myModal2.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel")
-		.modal-dialog
+			.clear
+				// add onto below column when filter is there .col-sm-9.col-md-10.col-sm-push-3.col-sm-push-2
+				.col-xs-12
+					h2 Restaurants
+					+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+		else
 			.content-card
-				h2.content-card--header.fw-B.fc-B Deep Dish Pizza
-				p.lead The pan in which it is baked gives the pizza its characteristically high edge and a deep surface for large amounts of cheese and a chunky tomato sauce. Chicago-style pizza may be prepared in deep-dish style and as a stuffed pizza.
-				img.w-100(src='https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg')
-				p.mb-0.mt-XXs
-					strong Best Place to Get It:&nbsp;
-					| Pequods, in&nbsp;
-					a(href='#') Lincoln Park
+				p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
+				p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.
 
-				hr
+	script.
+		jQuery(function($){
+			$('.summernote').summernote({height: 150});
+		});
 
-				h3 Pics
-					small testing instagram
-				//#DeepDish
+	if (user && user.isAdmin)
+		#AddFood.modal.fade(tabindex="-1", role="dialog")
+			.modal-dialog.modal-lg
+				.content-card
+					h2.content-card--header Add New Food Item
+					.row
+						.col-xs-12#AddFoodForm
+							.form-group
+								label(for='FoodName') Name
+								input#FoodName.form-control.js-food-field(type='text', required, name='name')
+							.form-group
+								label(for='FoodImage') Image
+								input#FoodImage.form-control.js-food-field(type='text', required, name='image')
+							.form-group
+								label(for='FoodCategory') Category
+								select#FoodCategory.form-control.js-food-field(name='category')
+									option Only In
+									option Local Cuisine
+									option Restaurant
+									option Drinks
+									option Best Dishes
+							.form-group
+								label(for='FoodTagline') Tagline
+								input#FoodTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
+							.form-group
+								label(for='FoodDescription') Description
+								#FoodDescription.js-food-field(name='description', data-summernote)
+									.summernote
+
+							.form-group
+								h3 Contains
+								.checkbox
+									label
+										input.js-food-field(name='contains', type='checkbox', value='Shellfish')
+										| Shellfish
+								.checkbox
+									label
+										input.js-food-field(name='contains', type='checkbox', value='Gluten')
+										| Gluten
+								.checkbox
+									label
+										input.js-food-field(name='contains', type='checkbox', value='Nuts')
+										| Nuts
+								.checkbox
+									label
+										input.js-food-field(name='contains', type='checkbox', value='Meat')
+										| Meat
+								.checkbox
+									label
+										input.js-food-field(name='contains', type='checkbox', value='Dairy')
+										| Dairy
+							.form-group
+								label(for='FoodDishes') Dishes
+								input#FoodDishes.form-control.js-food-field(type='text', name='dishes')
+							.form-group
+								label(for='FoodArea') Area
+								input#FoodArea.form-control.js-food-field(type='text', name='area')
+							.form-group
+								label(for='FoodAddress') Address
+								input#FoodAddress.form-control.js-food-field(type='text', name='address')
+							.form-group
+								label(for='FoodWhatToOrder') What to Order
+								input#FoodWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder')
+							.form-group
+								label(for='FoodSuggestedRestaurant') Suggested Restaurant
+								input#FoodSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant')
+							.form-group
+								label(for='FoodReadMore') Read More
+								input#FoodReadMore.form-control.js-food-field(type='text', name='readMore')
+
+							.ta-R
+								button#AddFoodSubmit.btn.btn-primary(type='button') Submit
+								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
+
+		input#CityId(type='hidden', value=city.Id)
+		script(src='/js/pages/city.min.js')

@@ -252,18 +252,18 @@ module.exports = function(_duck){
 						// 'a.b.c' => 'a.#b.#c'
 						var concatinatedExpression = item.replace('.', '.#');
 
-						updateExpression += ' #' + concatinatedExpression + '= :' + expressionCounter + ',';
+						updateExpression += ` #${concatinatedExpression}= :${expressionCounter},`;
 
 						var arr = item.split('.');
 						for(i in arr){
-							if (!params.ExpressionAttributeNames['#' + arr[i]]) {
-								params.ExpressionAttributeNames['#' + arr[i]] = arr[i];
+							if (!params.ExpressionAttributeNames[`#${arr[i]}`]) {
+								params.ExpressionAttributeNames[`#${arr[i]}`] = arr[i];
 							}
 						}
 
 						// DynamoDB doesn't except empty strings as ReturnValues, so the value to null if that's the case
 						var attributeValue = flattenedData[item] == String() ? null : flattenedData[item];
-						params.ExpressionAttributeValues[':' + expressionCounter] = attributeValue;
+						params.ExpressionAttributeValues[`:${expressionCounter}`] = attributeValue;
 							
 					}
 

@@ -12,6 +12,12 @@ void function initDuck($){
 
 	function _duck(table) {
 		this.add = (item) => {return item}
+
+		// (object)options
+		// -- (string)field - the field to search on
+		// -- (dynamic)value - matches the type the field represents
+		// -- (bool)findOne - if true, returns at most 1 item
+		// if no options are passed in, return all items in provided table
 		this.get = (options, successCallback, errorCallback) => {
 			$.ajax({
 				url: `/get/${table}`,
@@ -23,6 +29,7 @@ void function initDuck($){
 			});
 		}
 
+		// (object)item is what will be added to the table provided
 		this.update = (item, successCallback, errorCallback) => {
 			$.ajax({
 				url: `/update/${table}`,
@@ -34,14 +41,22 @@ void function initDuck($){
 			});
 		}
 
-		this.delete = (id) => {return id}
-
-		this.uuid = uuid;
+		// (string)id is which item will be deleted from the provided table
+		this.delete = (id, successCallback, errorCallback) => {
+			$.ajax({
+				url: `/delete/${table}`,
+				contentType: 'text/plain',
+				method: 'POST',
+				data: id,
+				success: successCallback,
+				error: errorCallback,
+			});
+		}
 	}
 
-	const duck = (table) => {
-		return new _duck(table);
-	}
+	// initialize with table name
+	const duck = (table) => (new _duck(table));
+	duck.uuid = uuid;
 
 	window.duck = duck;
 }(jQuery);

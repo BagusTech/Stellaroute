@@ -1,194 +1,111 @@
-extends ../../layout.pug
-
-append header
-	//script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
-	//script.
-		jQuery(function(){
-			var clientId = '43dbe271616e4c15a1afb304037bb603';
-			var accessToken = '3607994591.43dbe27.c597fb393c7e417cb094c3b2c91d4841';
-
-			var feed = new Instafeed({
-				get: 'user',
-				userId: 3607994591,
-				target: 'DeepDish',
-				clientId: clientId,
-				accessToken: accessToken,
-				template: '<img class="w-30" src="{{image}}" alt="{{model}}" />'
-			});
-
-			feed.run();
-		})
-
-	-
-		function randomizeArray(a, b) { var x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
-		
-
 block content
-	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
-			.bg-Dkr
-				.container.ptb-0
-					ol.breadcrumb
-						li.active United Sates
-						li.active Midwest
-						li.active #{city.names.display}
-					h1 #{city.names.display}
-						small.ml-Md Broad Shoulders, Down to Earch, Great Food
-						if (user && user.isAdmin)
-							button.btn.btn-primary.f-R(data-target='#AddFood', data-toggle='modal') Add Item
-
-					nav.pt-Md
-						ul.account-pages.m-0
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
-							li.p-0
-								a.fw-N(href='/united-states-of-america/chicago/food') Food
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
-
-	.container
-		if (city.food && city.food.foods)
-			.row
-				//.hidden-xs.col-sm-3.col-md-2
-					.content-card
-						h2 Filters
-						h3 Category
-						.checkbox
-							label
-								input(type='checkbox')
-								| Only in Chicago
-						.checkbox
-							label
-								input(type='checkbox')
-								| Local Cuisine
-						.checkbox
-							label
-								input(type='checkbox')
-								| Best Dishes
-						.checkbox
-							label
-								input(type='checkbox')
-								| Drinks
-						.checkbox
-							label
-								input(type='checkbox')
-								| Restaurants
-						h3 Dietary Restrictions
-						.checkbox
-							label
-								input(type='checkbox')
-								| Shellfish
-						.checkbox
-							label
-								input(type='checkbox')
-								| Gluten
-						.checkbox
-							label
-								input(type='checkbox')
-								| Nuts
-						.checkbox
-							label
-								input(type='checkbox')
-								| Meat
-						.checkbox
-							label
-								input(type='checkbox')
-								| Dairy
-
-				.col-xs-12
-					+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(randomizeArray).sort(function(a, b){ if(a.category == 'Only In'){return -1} return 1; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
-					
-			.clear
-				// add onto below column when filter is there .col-sm-9.col-md-10.col-sm-push-3.col-sm-push-2
-				.col-xs-12
-					h2 Restaurants
-					+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
-		else
-			.content-card
-				p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
-				p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.
-
-	script.
-		jQuery(function($){
-			$('.summernote').summernote({height: 150});
-		});
-
 	if (user && user.isAdmin)
+		.ta-r
+			button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
+
 		#AddFood.modal.fade(tabindex="-1", role="dialog")
 			.modal-dialog.modal-lg
 				.content-card
 					h2.content-card--header Add New Food Item
 					.row
-						.col-xs-12#AddFoodForm
-							.form-group
-								label(for='FoodName') Name
-								input#FoodName.form-control.js-food-field(type='text', required, name='name')
-							.form-group
-								label(for='FoodImage') Image
-								input#FoodImage.form-control.js-food-field(type='text', required, name='image')
-							.form-group
-								label(for='FoodCategory') Category
-								select#FoodCategory.form-control.js-food-field(name='category')
-									option Only In
-									option Local Cuisine
-									option Restaurant
-									option Drinks
-									option Best Dishes
-							.form-group
-								label(for='FoodTagline') Tagline
-								input#FoodTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
-							.form-group
-								label(for='FoodDescription') Description
-								#FoodDescription.js-food-field(name='description', data-summernote)
-									.summernote
+						.col-xs-12(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
+							div(duck-field='food', duck-type='object')
+								div(duck-field='foods', duck-type='array')
+									div(duck-type='object', duck-key='Id')
+										.form-group(duck-field='name', duck-type='string') <!-- name -->
+											label(for='FoodName') Name
+											input#FoodName.form-control(type='text', required, duck-value)
 
-							.form-group
-								h3 Contains
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Shellfish')
-										| Shellfish
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Gluten')
-										| Gluten
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Nuts')
-										| Nuts
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Meat')
-										| Meat
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Dairy')
-										| Dairy
-							.form-group
-								label(for='FoodDishes') Dishes
-								input#FoodDishes.form-control.js-food-field(type='text', name='dishes')
-							.form-group
-								label(for='FoodArea') Area
-								input#FoodArea.form-control.js-food-field(type='text', name='area')
-							.form-group
-								label(for='FoodAddress') Address
-								input#FoodAddress.form-control.js-food-field(type='text', name='address')
-							.form-group
-								label(for='FoodWhatToOrder') What to Order
-								input#FoodWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder')
-							.form-group
-								label(for='FoodSuggestedRestaurant') Suggested Restaurant
-								input#FoodSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant')
-							.form-group
-								label(for='FoodReadMore') Read More
-								input#FoodReadMore.form-control.js-food-field(type='text', name='readMore')
+										.form-group(duck-field='image', duck-type='string') <!-- image -->
+											label(for='FoodImage') Image
+											input#FoodImage.form-control(type='text', required, duck-value)
+
+										.form-group(duck-field='category', duck-type='select') <!-- category -->
+											label(for='FoodCategory') Category
+											select#FoodCategory.form-control(duck-value)
+												option Only In
+												option Local Cuisine
+												option Restaurant
+												option Drinks
+												option Best Dishes
+
+										.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
+											label(for='FoodTagline') Tagline
+											input#FoodTagline.form-control(type='text', maxlength='130', duck-value)
+
+										.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
+											label(for='FoodDescription') Description
+											.summernote
+
+										.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
+											h3 Contains
+											.checkbox
+												label
+													input(type='checkbox', value='Shellfish')
+													| Shellfish
+											.checkbox
+												label
+													input(type='checkbox', value='Gluten')
+													| Gluten
+											.checkbox
+												label
+													input(type='checkbox', value='Nuts')
+													| Nuts
+											.checkbox
+												label
+													input(type='checkbox', value='Meat')
+													| Meat
+											.checkbox
+												label
+													input(type='checkbox', value='Dairy')
+													| Dairy
+
+										.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
+											label(for='FoodDishes') Dishes
+											input#FoodDishes.form-control(type='text', duck-value)
+
+										.form-group(duck-field='area', duck-type='string') <!-- area -->
+											label(for='FoodArea') Area
+											input#FoodArea.form-control(type='text', duck-value)
+
+										.form-group(duck-field='address', duck-type='string') <!-- address -->
+											label(for='FoodAddress') Address
+											input#FoodAddress.form-control(type='text', duck-value)
+
+										.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
+											label(for='FoodWhatToOrder') What to Order
+											input#FoodWhatToOrder.form-control(type='text', duck-value)
+
+										.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
+											label(for='FoodSuggestedRestaurant') Suggested Restaurant
+											input#FoodSuggestedRestaurant.form-control(type='text', duck-value)
+
+										.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
+											label(for='FoodReadMore') Read More
+											input#FoodReadMore.form-control(type='text', duck-value)
 
 							.ta-R
-								button#AddFoodSubmit.btn.btn-primary(type='button') Submit
+								button.btn.btn-primary(type='button', duck-button='submit') Submit
 								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
 
-		input#CityId(type='hidden', value=city.Id)
-		script(src='/js/pages/city.min.js')
+	if (city.food && city.food.foods)
+		+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(function(a, b){ if(a.order > b.order){return 1} if(a.order < b.order){return -1} return 0; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
+				
+		h2 Restaurants
+		+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+	else
+		.content-card
+			p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
+			p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.
+
+//
+	types:
+		-string
+		-select
+		-number
+		wysiwyg
+		-array
+		-object
+		bool
+		radio
+		checkbox

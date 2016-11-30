@@ -1,111 +1,64 @@
 extends ../../layout.pug
 
+append head
+	script(src='/js/pages/city.min.js')
+	-
+		function randomizeArray(a, b) { var x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
+
+	script.
+		function changeTab(i){
+			return function(){
+				var $navTabs = $('.city-nav--tab');
+				var $navTab = $(this);
+				var $tabPanels = $('.city-nav--tabpanel');
+				var $tabPanel = $tabPanels.eq(i);
+
+				$navTabs.attr('aria-expanded', false);
+				$navTab.attr('aria-expanded', true);
+
+				$tabPanels.attr('aria-hidden', true);
+				$tabPanel.attr('aria-hidden', false);
+			};
+		};
+
+		jQuery(($) => {
+			$('.city-nav--tab').each((i, item) => {
+				$(item).click(changeTab(i));
+			})
+		});
+
 block content
 	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 			.bg-Dkr
 				.container.ptb-0
 					ol.breadcrumb
-						li.active United Sates
-						li.active Midwest
-						li.active #{city.names.display}
-					h1 #{city.names.display}
+						li.active= city.countryDisplay
+						li.active= city.provinceDisplay
+						li.active= city.names.display
+					h1= city.names.display
 						small.ml-Md Broad Shoulders, Down to Earch, Great Food
 
-					nav.pt-Md
-						ul.account-pages.m-0
-							li.p-0
-								a.fw-N(href='/united-states-of-america/chicago') Overview
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
+					nav.city-nav
+						button.city-nav--tab(role='tab', aria-expanded='true') Overview
+						button.city-nav--tab(role='tab', aria-expanded='false') Attactions
+						button.city-nav--tab(role='tab', aria-expanded='false') Food
+						button.city-nav--tab(role='tab', aria-expanded='false') Guides
+						button.city-nav--tab(role='tab', aria-expanded='false') Neighborhoods
 
 	.container.ptb-Sm
-		.row
-			.col-xs-12.col-sm-4.col-md-3
-				.content-card
-					h2 At a Glance
-					dl
-						dt Length of Stay
-						dd 3 day
-						dt Best Time to Visit
-						dd Apr - Jun; Aug - Sep
-						dt Top places to stay
-						dd Lincoln Park, River North
-			.col-xs-12.col-sm-8.col-md-9
-				.content-card.p-0
-					.d-F.fj-B.fai-C.bg-Purp.fc-W
-						button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.ml-A(data-icon='fa fa-chevron-left')
-						h2.bw-N.fc-W.m-0.p-0 Sightseeing
-						button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.mr-A(data-icon='fa fa-chevron-right')
-					.js-map-overview.p-R
-						nav.p-A.l-0.t-0.b-0.w-25.bg-Dk
-							ul.ls-N.p-0
-								li(data-map='legend', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover')
-									img.img-responsive(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
-								li
-									img.img-responsive(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
-								li(data-map='legend', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover')
-									img.img-responsive(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
-								li(data-map='legend', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card', data-event='hover')
-									img.img-responsive(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
-								li
-									img.img-responsive(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
-						.p-A.br-C(data-map='icon', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:380px; left:550px; background: url("http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg") no-repeat center center/cover;border: 2px solid #333')
-							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-								h2 John Hancock Center
-								| Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
-						.p-A.br-C(data-map='icon', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:530px; left:485px; background: url("http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg") no-repeat center center/cover;border: 2px solid #333')
-							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-								h2 Willis Tower
-								| Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
-						.p-A.br-C.bc-G__dkr.bw-Md.bs-S(data-map='icon', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card, this', data-event='hover', data-toggle='bc-Gr', style='height: 50px; width: 50px; top:500px; left:570px; background: url("http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg") no-repeat center center/cover;')
-							.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-								h2 Millennium Park
-								| Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
+		.city-nav--tabpanel(role='tabpanel', aria-hidden='false')
+			include overview.pug
+		.city-nav--tabpanel(role='tabpanel', aria-hidden='true')
+			include attractions.pug
+		.city-nav--tabpanel(role='tabpanel', aria-hidden='true')
+			include food.pug
+		.city-nav--tabpanel(role='tabpanel', aria-hidden='true')
+			include guides.pug
+		.city-nav--tabpanel(role='tabpanel', aria-hidden='true')
+			include neighborhoods.pug
 
-						img.w-100(src='/images/chicago-map.jpg')
-					//ol.ls-N.p-0
-						li
-							.d-F
-								.w-10.fc-Gr.fs-48.fas-C.ta-C 1
-								img.w-30(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
-								.p-Md
-									h3.mt-0.lh-1 John Hancock Center
-									p.m-0 Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
-						li.bg-G__ltr
-							.d-F
-								.w-10.fc-Gr.fs-48.fas-C.ta-C 2
-								img.w-30(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
-								.p-Md
-									h3.mt-0.lh-1 Buckingham Fountain
-									p.m-0 Located in Grant Park, the Beaux Arts-style Buckingham Fountain was designed by architect Edward Bennett after the Latona Fountain at Versailles. The font is famous for its grand size and for the height of its spray, which can reach as high as 15 stories. The fountain’s four water-spouting sea horse statues are said to represent the four states that surround Lake Michigan, while the fountain’s pool symbolizes the lake itself.
-						li
-							.d-F
-								.w-10.fc-Gr.fs-48.fas-C.ta-C 3
-								img.w-30(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
-								.p-Md
-									h3.mt-0.lh-1 Willis Tower
-									p.m-0 Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
-						li.bg-G__ltr
-							.d-F
-								.w-10.fc-Gr.fs-48.fas-C.ta-C 4
-								img.w-30(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
-								.p-Md
-									h3.mt-0.lh-1 Millennium Park
-									p.m-0 Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
-						li
-							.d-F
-								.w-10.fc-Gr.fs-48.fas-C.ta-C 5
-								img.w-30(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
-								.p-Md
-									h3.mt-0.lh-1 Chicago Water Tower
-									p.m-0 One of the few surviving structures of the infamous Great Chicago Fire, the Chicago Water Tower is a symbol of the city’s resilience. Today, the beautiful limestone structure is home to the City Gallery, which exhibits works by local artists and photographers.
-
+	if (user && user.isAdmin)
+		input#CityId(type='hidden', value=city.Id)
 	//.container.ptb-Sm
 		.row
 			.col-xs-12.col-sm-6.col-md-4
@@ -433,7 +386,7 @@ block content
 					.clear
 						button.btn.btn-primary.f-R(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
 					button.btn.btn-primary.p-A.t-Md.r-Md(data-toggle='modal', data-target='#AddNeighborhood') Add Neighborhood
-	if user && user.isAdmin
+	//if user && user.isAdmin
 		.modal.fade#AddCityRegion(tab-index='-1', role='dialog')
 				.modal-dialog(role='document')
 					form.modal-content(method='POST', action='/city-regions/new')
@@ -473,3 +426,40 @@ block content
 							.form-group.mb-0
 								input.hidden(name='city', value=city.Id)
 								button.btn.btn-primary.btn-Sm(type='submit', value= `/${city.countryUrl}/${city.url}`, name='redirect') Save
+
+	//ol.ls-N.p-0
+		li
+			.d-F
+				.w-10.fc-Gr.fs-48.fas-C.ta-C 1
+				img.w-30(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
+				.p-Md
+					h3.mt-0.lh-1 John Hancock Center
+					p.m-0 Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
+		li.bg-G__ltr
+			.d-F
+				.w-10.fc-Gr.fs-48.fas-C.ta-C 2
+				img.w-30(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
+				.p-Md
+					h3.mt-0.lh-1 Buckingham Fountain
+					p.m-0 Located in Grant Park, the Beaux Arts-style Buckingham Fountain was designed by architect Edward Bennett after the Latona Fountain at Versailles. The font is famous for its grand size and for the height of its spray, which can reach as high as 15 stories. The fountain’s four water-spouting sea horse statues are said to represent the four states that surround Lake Michigan, while the fountain’s pool symbolizes the lake itself.
+		li
+			.d-F
+				.w-10.fc-Gr.fs-48.fas-C.ta-C 3
+				img.w-30(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
+				.p-Md
+					h3.mt-0.lh-1 Willis Tower
+					p.m-0 Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
+		li.bg-G__ltr
+			.d-F
+				.w-10.fc-Gr.fs-48.fas-C.ta-C 4
+				img.w-30(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
+				.p-Md
+					h3.mt-0.lh-1 Millennium Park
+					p.m-0 Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
+		li
+			.d-F
+				.w-10.fc-Gr.fs-48.fas-C.ta-C 5
+				img.w-30(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
+				.p-Md
+					h3.mt-0.lh-1 Chicago Water Tower
+					p.m-0 One of the few surviving structures of the infamous Great Chicago Fire, the Chicago Water Tower is a symbol of the city’s resilience. Today, the beautiful limestone structure is home to the City Gallery, which exhibits works by local artists and photographers.

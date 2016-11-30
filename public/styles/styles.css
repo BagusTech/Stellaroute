@@ -8035,6 +8035,24 @@ button.close {
     display: none;
   }
 }
+.city-nav {
+  margin-top: 36px;
+}
+.city-nav--tab {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  -webkit-transition: all 0.17s ease-out;
+  transition: all 0.17s ease-out;
+}
+.city-nav--tab[aria-expanded='true'] {
+  background: rgba(100, 100, 100, 0.5);
+}
+.city-nav--tabpanel[aria-hidden='true'] {
+  display: none;
+}
 #Stellaroute {
   padding: 0 !important;
 }

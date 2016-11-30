@@ -1,8 +1,8 @@
-extends ../../layout.pug
+//extends ../../layout.pug
 
-append header
-	script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
-	script.
+//append header
+	//script(src='https://raw.githubusercontent.com/stevenschobert/instafeed.js/master/instafeed.min.js')
+	//script.
 		jQuery(function(){
 			var clientId = '43dbe271616e4c15a1afb304037bb603';
 			var accessToken = '3607994591.43dbe27.c597fb393c7e417cb094c3b2c91d4841';
@@ -16,15 +16,15 @@ append header
 				template: '<img class="w-30" src="{{image}}" alt="{{model}}" />'
 			});
 
-			//feed.run();
+			feed.run();
 		})
 
-	style.
+	//style.
 		.masonry--item .content-card:hover img{
 			transform: scale(1.1);
 		}
 
-	-
+	//-
 		var items = [{
 				name: 'Deep Dish',
 				image: 'https://chewoutloud.files.wordpress.com/2013/02/deep-dish-pizza-3.jpg',
@@ -218,7 +218,7 @@ append header
 				category: 'Guide',
 			}].sort((a, b) => { var x = Math.random(); if(x>.5){return 1} if(x<.5){return -1} if(x==.5){return 0}})
 
-	-
+	//-
 		var gold = '#ccab60';
 		var blue = '#60b3cc';
 		var purple = '#7770a1';
@@ -235,88 +235,23 @@ append header
 			"Neighborhood": blue,
 			"Guide": red,
 		}
-
-
 block content
-	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
-			.bg-Dkr
-				.container.ptb-0
-					ol.breadcrumb
-						li.active United Sates
-						li.active Midwest
-						li.active #{city.names.display}
-					h1 #{city.names.display}
-						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+	.col-xs-12.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
+		.content-card
+			h2.content-card--header Coming Soon!
+			p.lead This currently under development, please check back soon or send an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> for more information
 
-					nav.pt-Md
-						ul.account-pages.m-0
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
-							li.p-0
-								a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
-							li.p-0
-								a.fw-N(href='/united-states-of-america/chicago/explore') Explore
+			p We appreciate all feedback, thank!
 
-	.container
-		.row
-			.hidden-xs.col-sm-3.col-md-2
-				.content-card
-					h2 Filters
-					h3 Category
-					.checkbox
-						label
-							input(type='checkbox')
-							| Only in Chicago
-					.checkbox
-						label
-							input(type='checkbox')
-							| Local Cuisine
-					.checkbox
-						label
-							input(type='checkbox')
-							| Best Dishes
-					.checkbox
-						label
-							input(type='checkbox')
-							| Drinks
-					.checkbox
-						label
-							input(type='checkbox')
-							| Restaurants
-					h3 Dietary Restrictions
-					.checkbox
-						label
-							input(type='checkbox')
-							| Shellfish
-					.checkbox
-						label
-							input(type='checkbox')
-							| Gluten
-					.checkbox
-						label
-							input(type='checkbox')
-							| Nuts
-					.checkbox
-						label
-							input(type='checkbox')
-							| Meat
-					.checkbox
-						label
-							input(type='checkbox')
-							| Dairy
-
-			.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.col-xs-12.col-md-10.col-sm-9.pt-Md
-				for item in items
-					.masonry--item.m-0(data-category=item.category)
-						.content-card.p-R.p-0.c-P(style='border-radius: 2px 0 2px 2px;', data-toggle="modal" data-target=`#${item.name.replace(/\s/g, '-')}`)
-							.o-H
-								img.w-100.an-Xf(src=item.image, alt=item.name , style='border-radius: 2px 0 2px 2px;')
-							.p-A.t-0.r-0.fc-W.p-Xs.br-Sm.lh-1(style=`border-radius: 2px 2px 0 0; background-color: ${tagColor[item.category]};`)!= item.category == 'Only In' ? `Only In ${city.names.display}` : (item.category === 'Attraction' && item.area ? `${item.category} <span class='d-Ib p-Xs mtb-NegXs mr-NegXs' style='background-color: ${green};'>${item.area}</span>` : item.category)
-							h2.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W(style='border-radius: 0 0 2px 2px;')= item.name
+//block content
+	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+		for item in items
+			.masonry--item.m-0(data-category=item.category)
+				.content-card.p-R.p-0.c-P(style='border-radius: 2px 0 2px 2px;', data-toggle="modal" data-target=`#${item.name.replace(/\s/g, '-')}`)
+					.o-H
+						img.w-100.an-Xf(src=item.image, alt=item.name , style='border-radius: 2px 0 2px 2px;')
+					.p-A.t-0.r-0.fc-W.p-Xs.br-Sm.lh-1(style=`border-radius: 2px 2px 0 0; background-color: ${tagColor[item.category]};`)!= item.category == 'Only In' ? `Only In ${city.names.display}` : (item.category === 'Attraction' && item.area ? `${item.category} <span class='d-Ib p-Xs mtb-NegXs mr-NegXs' style='background-color: ${green};'>${item.area}</span>` : item.category)
+					h2.m-0.p-A.b-0.l-0.r-0.bg-Dkst.p-Sm.fc-W(style='border-radius: 0 0 2px 2px;')= item.name
 
 				
 	for item in items

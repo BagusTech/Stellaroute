@@ -1,0 +1,20 @@
+.city-nav{
+	margin-top: @gw-Lg;
+}
+	.city-nav--tab{
+		display: inline-block;
+		background: rgba(0, 0, 0, .5);
+		color: white;
+		border: none;
+		padding: @gw-Sm @gw-Md;
+		transition: all .17s ease-out;
+
+		&[aria-expanded='true']{
+			background: rgba(100, 100, 100, .5);
+		}
+	}
+	.city-nav--tabpanel{
+		&[aria-hidden='true']{
+			display: none;
+		}
+	}

@@ -5,7 +5,7 @@ const City = Duck({
 	Item: {
 		Id: String,
 		url: String,
-	//Modal Fields Card
+	// Modal Fields Card
 		names: {
 			display: String,
 			official: String,
@@ -17,7 +17,8 @@ const City = Duck({
 		},
 		abbreviation: String,
 		isAutonomous: Boolean,
-		image: String,
+		backgroundImage: String,
+		images: Array,
 		mapImage: String,
 		continent: Array,
 		worldRegions: Array,
@@ -25,7 +26,7 @@ const City = Duck({
 		countryRegions: Array,
 		province: Array,
 		provinceRegions: Array,
-	//At a Glance Card
+	// At a Glance Card
 		averageStay: String,
 		bestTimeToVisit: Array,
 		topPlaces: Array,	
@@ -39,7 +40,7 @@ const City = Duck({
 			title: String,
 			explanation: String,
 		}],
-	////Quick Facts (or Fun Facts)
+	// Quick Facts (or Fun Facts)
 		quickFact: [{
 			order: Number,
 			endorse: Boolean,
@@ -47,7 +48,7 @@ const City = Duck({
 			title: String,
 			explanation: String,
 		}],
-	//Travel Basics
+	// Travel Basics
 		entryTax: {
 			amount: String,
 			explanation: String,
@@ -347,7 +348,7 @@ const City = Duck({
 				explanation: String,
 			}],
 		},
-	//Top Places
+	// Top Places
 		top: {
 			destinations: [{
 				order: String,

@@ -67,22 +67,12 @@ router.get('/get/:table', (req, res) => {
 			return;
 	}
 
-	if(findOne){
-		const item = table.findOne(field, value).items;
+	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items
 
-		if(item){
-			res.send(item);
-		} else {
-			res.send('Nothing Found');
-		}
+	if(items){
+		res.send(items)
 	} else {
-		const items = table.find(field, value).items
-
-		if(items){
-			res.send(items)
-		} else {
-			res.send('Nothing Found');
-		}
+		res.send('Nothing Found');
 	}
 });
 
@@ -445,7 +435,7 @@ router.get('/:country/:city/transit', (req, res, next) => {
 	});
 });
 
-router.get('/:country/:city/food', (req, res, next) => {
+/* router.get('/:country/:city/food', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -484,7 +474,7 @@ router.get('/:country/:city/food', (req, res, next) => {
 		cityRegions: cityRegions,
 		neighborhoods: neighborhoods,
 	});
-});
+}); */
 
 router.get('/:country/:city/explore', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)

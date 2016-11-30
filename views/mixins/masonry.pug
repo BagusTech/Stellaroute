@@ -15,7 +15,7 @@ mixin cardStyle2(item)
 			h3.m-0.p-Sm.fc-Purp(style='border-radius: 0 0 2px 2px;')= item.name
 			.plr-Sm!= item.description
 
-mixin modalStyle1(item)
+mixin modalStyle1(item, i)
 	.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", id=item.name && item.name.replace(/\s/g, '-'))
 		.modal-dialog
 			.content-card
@@ -48,26 +48,32 @@ mixin modalStyle1(item)
 
 				if user && user.isAdmin
 					.js-update-food-item.hidden
+						.row
+							.col-xs-10
+								.form-group
+									label(for=`FoodName${i}`) Name
+									input.form-control.js-food-field(type='text', required, name='name', value=item.name, id= `FoodName${i}`)
+							.col-xs-2
+								.form-group
+									label(for=`FoodName${i}`) Order
+									input.form-control.js-food-field(type='number', required, name='order', value=item.order || 0, id= `FoodName${i}`)
 						.form-group
-							label(for='FoodName') Name
-							input#FoodName.form-control.js-food-field(type='text', required, name='name', value=item.name)
+							label(for=`FoodImage${i}`) Image
+							input.form-control.js-food-field(type='text', required, name='image', value=item.image, id= `FoodImage${i}`)
 						.form-group
-							label(for='FoodImage') Image
-							input#FoodImage.form-control.js-food-field(type='text', required, name='image', value=item.image)
-						.form-group
-							label(for='FoodCategory') Category
-							select#FoodCategory.form-control.js-food-field(name='category')
+							label(for=`FoodCategory${i}`) Category
+							select.form-control.js-food-field(name='category', id= `FoodCategory${i}`)
 								option(selected= item.category === 'Only In') Only In
 								option(selected= item.category === 'Local Cuisine') Local Cuisine
 								option(selected= item.category === 'Best Dishes') Best Dishes
 								option(selected= item.category === 'Drinks') Drinks
 								option(selected= item.category === 'Restaurant') Restaurant
 						.form-group
-							label(for='FoodTagline') Tagline
-							input#FoodTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
+							label(for=`FoodTagline${i}`) Tagline
+							input.form-control.js-food-field(type='text', maxlength='130', name='tagline', id= `FoodTagline${i}`)
 						.form-group
-							label(for='FoodDescription') Description
-							#FoodDescription.js-food-field(name='description', data-summernote)
+							label(for=`FoodDescription${i}`) Description
+							.js-food-field(name='description', data-summernote, id= `FoodDescription${i}`)
 								.summernote!= item.description
 
 						.form-group
@@ -94,29 +100,33 @@ mixin modalStyle1(item)
 									| Dairy
 
 						.form-group
-							label(for='FoodDishes') Dishes
-							input#FoodDishes.form-control.js-food-field(type='text', name='dishes', value= item.dishes && item.dishes.join(', '))
+							label(for=`FoodDishes${i}`) Dishes
+							input.form-control.js-food-field(type='text', name='dishes', value= item.dishes && item.dishes.join(', '), id= `FoodDishes${i}`)
 						.form-group
-							label(for='FoodArea') Area
-							input#FoodArea.form-control.js-food-field(type='text', name='area', value= item.area)
+							label(for=`FoodArea${i}`) Area
+							input.form-control.js-food-field(type='text', name='area', value= item.area, id= `FoodArea${i}`)
 						.form-group
-							label(for='FoodAddress') Address
-							input#FoodAddress.form-control.js-food-field(type='text', name='address', value= item.address)
+							label(for=`FoodAddress${i}`) Address
+							input.form-control.js-food-field(type='text', name='address', value= item.address, id= `FoodAddress${i}`)
 						.form-group
-							label(for='FoodWhatToOrder') What to Order
-							input#FoodWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder', value= item.whatToOrder)
+							label(for=`FoodWhatToOrder${i}`) What to Order
+							input.form-control.js-food-field(type='text', name='whatToOrder', value= item.whatToOrder, id= `FoodWhatToOrder${i}`)
 						.form-group
-							label(for='FoodSuggestedRestaurant') Suggested Restaurant
-							input#FoodSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant', value= item.suggestedRestaurant)
+							label(for=`FoodSuggestedRestaurant${i}`) Suggested Restaurant
+							input.form-control.js-food-field(type='text', name='suggestedRestaurant', value= item.suggestedRestaurant, id= `FoodSuggestedRestaurant${i}`)
 						.form-group
-							label(for='FoodReadMore') Read More
-							input#FoodReadMore.form-control.js-food-field(type='text', name='readMore', value= item.readMore)
+							label(for=`FoodReadMore${i}`) Read More
+							input.form-control.js-food-field(type='text', name='readMore', value= item.readMore, id= `FoodReadMore${i}`)
 					hr
 
-					.d-F.fj-B
-						button.btn.btn-primary.js-edit-food Edit
-						button.btn.btn-primary.js-edit-food-submit.hidden Save
-						input.js-food-id(type='hidden', value=item.Id)
+					.row
+						.col-xs-6
+							button.btn.btn-primary.js-edit-food Edit
+							button.btn.btn-primary.js-edit-food-submit.hidden.ml-Sm Save
+						.col-xs-6.ta-R
+							button.btn.btn-danger.js-delete-food-submit.hidden.mr-Sm Delete
+							button.btn.btn-danger.js-delete-food Delete
+					input.js-food-id(type='hidden', value=item.Id)
 
 
 
@@ -136,5 +146,6 @@ mixin masonry(items, masonryClasses, altCard)
 				for item in items
 					+cardStyle1(item)
 		
-		for item in items
-			+modalStyle1(item)
+		for item, i in items
+			+modalStyle1(item, i)
+	-console.log('~~')

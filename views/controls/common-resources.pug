@@ -36,6 +36,9 @@ head
 	script(src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js")
 
 	// hosted local
+	script(type='text/javascript', src='/components/duck/duck.min.js')
+	if (user && user.isAdmin)
+		script(type='text/javascript', src='/components/duckForm/duckForm.min.js')
 	script(type='text/javascript', src='/components/accordionsTabs/accordions-tabs.min.js')
 	script(type='text/javascript', src='/components/banner/banner.min.js')
 	script(type='text/javascript', src='/components/copy/copy.min.js')
@@ -44,9 +47,10 @@ head
 	script(type='text/javascript', src='/components/scroll/scroll.min.js')
 	script(type='text/javascript', src='/components/stickey/stickey.min.js')
 	script(type='text/javascript', src='/components/stopProp/stopProp.min.js')
+	script(type='text/javascript', src='/components/tabs/tabs.min.js')
 	script(type='text/javascript', src='/components/toggle/toggle.min.js')
 	script(type='text/javascript', src='/js/scripts.min.js')
-	script(type='text/javascript', src='/js/duck.min.js')
+	
 
 	// include summernote css/js
 	link(href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css", rel="stylesheet")
@@ -59,4 +63,8 @@ head
 	// api calls
 		script(type='text/javascript', src='/scripts/calls.js')
 
+	// scripts
+	-
+		function randomizeArray(a, b) { var x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
+		function sortByOrder(a, b){ if(a.order > b.order){return 1} if(a.order < b.order){return -1} return 0; }
 	block head

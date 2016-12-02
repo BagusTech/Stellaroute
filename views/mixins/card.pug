@@ -1,0 +1,19 @@
+-
+	var colorClasses = {
+		purple: 'bg-Purp',
+		green: 'bg-Gr',
+		red: 'bg-Red',
+		orange: 'bg-Orange',
+		blue: 'bg-Bl',
+	}
+
+mixin card(image, title, tagName, tagColor, description)
+	if title
+		if tagName
+			.card--tag(class=tagColor ? colorClasses[tagColor] : 'bg-Purp')= tagName
+		.card(class=description ? 'card__description' : '')
+			.card--img-wrapper
+				img.card--img(src= image || 'http://placebear.com/400/600', alt= title)
+			h3.card--title= title
+			if description
+				.card--description!= description

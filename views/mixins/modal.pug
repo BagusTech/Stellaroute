@@ -1,0 +1,9 @@
+mixin modal(id)
+	if id
+		.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", id=id)
+			.modal-dialog&attributes(attributes)
+				.content-card
+					if block
+						block
+					else
+						p.lead This is an empty Modal

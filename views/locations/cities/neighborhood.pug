@@ -2,60 +2,13 @@ extends ../../layout.pug
 
 block content
 	.media-bg-img.request-page-header
-		h1= neighborhood.name
+		.container
+			h1= neighborhood.names.display
 
 	.container.ptb-Sm
 		small
 			a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
 
 		.content-card
-			form.update-form(method='POST', action='/neighborhoods/update')
-				.row
-					.col-xs-12.col-sm-6.col-md-4
-						.form-group
-							label Name
-							p.form-control-static= neighborhood.names.display
-							.hidden
-								input.form-control#ContinentName(name='names.display', type='text', placeholder='name', value=neighborhood.names.display)
-
-						.form-group
-							label(for='CityRegions') City Region(s)
-							p.form-control-static
-								if (neighborhood.cityRegions)
-									- for (var i = 0; i < neighborhood.cityRegions.length; i++)
-										a(href=`/${country.name}/${neighborhood.cityName}/${neighborhood.cityRegionsDisplay[i]}`)= neighborhood.cityRegionsDisplay[i]
-
-										if ((i+1) !== neighborhood.cityRegions.length)
-											|,&nbsp;
-								else
-									| Please Select a City Region
-							.hidden
-								select.form-control#CityRegions(name='cityRegions',  multiple='true')
-									-for (i in cityRegions)
-										option(value= cityRegions[i].Id, selected= neighborhood.cityRegionsDisplay && neighborhood.cityRegionsDisplay.toString().indexOf(cityRegions[i].names.display) > -1)= cityRegions[i].names.display
-
-				input(type='hidden', name='redirect', value=`/${country.url}/${neighborhood.cityUrl}/${neighborhood.url}`)
-				input(type='hidden', name='deleteRedirect', value=`/${country.url}/${neighborhood.cityUrl}`)
-				input(type='hidden', name= key, value= neighborhood[key])
-				input.btn.btn-primary.btn-update(type='button', value='Update')
-				| &nbsp;
-				input.btn.btn-primary.btn-save.hidden(type='submit', value='Save', name='update')
-				button.btn.btn-danger.ml-Sm(type='button', data-toggle='modal', data-target='#DeleteModal') Delete
-				
-				.modal.fade#DeleteModal(tab-index='-1', role='dialog', aria-labelledby="DeleteModalLabel")
-					.modal-dialog(role='document')
-						.modal-content
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-label='Close')
-									span(aria-hidden='true') &times;
-								h4.modal-title#DeleteModalLabel= `Delete ${neighborhood.names.display}`
-							.modal-body
-								.alert.alert-danger
-									p
-										| Are you sure you want to delete&nbsp;
-										= neighborhood.names.display + '?'
-									p This action cannot be undone
-								input.btn.btn-danger(type='submit', value='Delete', name='delete')
-
-							.modal-footer
-								button.btn.btn-default(type='button', data-dismiss='modal') Close
+			h2.content-card--header Coming soon!
+			p.lead.m-0!= `More information about ${neighborhood.names.display} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`

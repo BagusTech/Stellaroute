@@ -6,81 +6,76 @@ block content
 		#AddAttraction.modal.fade(tabindex="-1", role="dialog")
 			.modal-dialog.modal-lg
 				.content-card
-					h2.content-card--header Add New Attraction
+					h2.content-card--header Add New Attraction Item
 					.row
-						.col-xs-12#AddAttractionForm
-							.form-group
-								label(for='AttractionName') Name
-								input#AttractionName.form-control.js-food-field(type='text', required, name='name')
-							.form-group
-								label(for='AttractionImage') Image
-								input#AttractionImage.form-control.js-food-field(type='text', required, name='image')
-							.form-group
-								label(for='AttractionCategory') Category
-								select#AttractionCategory.form-control.js-food-field(name='category')
-									option Only In
-									option Local Cuisine
-									option Restaurant
-									option Drinks
-									option Best Dishes
-							.form-group
-								label(for='AttractionTagline') Tagline
-								input#AttractionTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
-							.form-group
-								label(for='AttractionDescription') Description
-								#AttractionDescription.js-food-field(name='description', data-summernote)
-									.summernote
+						form(duck-table='Attractions', duck-function='add', duck-key='Id')
+							.col-xs-12.col-sm-6(duck-field='names', duck-type='object')
+								.form-group(duck-field='display', duck-type='string')
+									label Name
+										input.form-control(type='text', required, duck-value)
+							.col-xs-12.col-sm-6.form-group(duck-field='url', duck-type='string')
+									label Url
+										input.form-control(type='text', required, duck-value, disabled)
 
-							.form-group
-								h3 Contains
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Shellfish')
-										| Shellfish
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Gluten')
-										| Gluten
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Nuts')
-										| Nuts
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Meat')
-										| Meat
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Dairy')
-										| Dairy
-							.form-group
-								label(for='AttractionDishes') Dishes
-								input#AttractionDishes.form-control.js-food-field(type='text', name='dishes')
-							.form-group
-								label(for='AttractionArea') Area
-								input#AttractionArea.form-control.js-food-field(type='text', name='area')
-							.form-group
-								label(for='AttractionAddress') Address
-								input#AttractionAddress.form-control.js-food-field(type='text', name='address')
-							.form-group
-								label(for='AttractionWhatToOrder') What to Order
-								input#AttractionWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder')
-							.form-group
-								label(for='AttractionSuggestedRestaurant') Suggested Restaurant
-								input#AttractionSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant')
-							.form-group
-								label(for='AttractionReadMore') Read More
-								input#AttractionReadMore.form-control.js-food-field(type='text', name='readMore')
+							.col-xs-12(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote
+									p Write something about the attraction
 
-							.ta-R
-								button#AddAttractionSubmit.btn.btn-primary(type='button') Submit
+							.col-xs-12(duck-field='cardImage', duck-type='string')
+								.form-group
+									label Card Image
+										input.form-control(type='text', required, duck-value)
+							.form-group.hidden(duck-field='city', duck-type='array')
+									input(type='text', required, duck-value, value=city.Id, disabled)
+
+							.col-xs-12.ta-R
+								button.btn.btn-primary(type='button', duck-button='submit') Add
 								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddAttraction') Cancel
 
-	if (city.attractions)
-		+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(function(a, b){ if(a.order > b.order){return 1} if(a.order < b.order){return -1} return 0; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
-				
-		h2 Restaurants
-		+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+	if (attractions.length)
+		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+			for attraction in attractions
+				.masonry--item(data-toggle='modal', data-target= `#${attraction.names.display.replace(/\s/g, '-')}`)
+					+card(attraction.cardImage, attraction.names.display)
+					
+		-var attractionCounter = 0;
+		for attraction in attractions
+			+modal(attraction.names.display.replace(/\s/g, '-'))(class='modal-lg')
+				div(id=`AttractionOverview${attractionCounter}`, data-toggle='hidden')
+					h2.content-card--header.fw-B.fc-B= attraction.names.display
+						if user && user.isAdmin
+							div.f-R(duck-table='Attractions', duck-function='delete', duck-key='Id', duck-key-value= attraction.Id, duck-goTo=`/${city.countryUrl}/${city.url}`)
+								button.btn.btn-danger.btn-sm(id=`AttractionDeleteToggle${attractionCounter}`, data-function='toggle', data-target=`this, #AttractionDelete${attractionCounter}`, data-toggle='hidden', type='button') Delete
+								.hidden(id=`AttractionDelete${attractionCounter}`, data-toggle='hidden')
+									button.btn.btn-danger.btn-sm(duck-button='submit') Delete
+									button.btn.btn-warning.btn-sm.ml-Xs(data-function='toggle', data-target=`#AttractionDelete${attractionCounter}, #AttractionDeleteToggle${attractionCounter}`, type='button') Cancel
+
+					.lead!= attraction.description
+					img.w-100(src= attraction.cardImage || 'http://placebear.com/600/400', alt= attraction.names.display)
+
+					.ta-R.mt-Md
+						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${attraction.url}`) Read More
+
+				if user && user.isAdmin
+					form.hidden(id=`AttractionEdit${attractionCounter}`, duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, data-toggle='hidden')
+						div(duck-field='names', duck-type='object')
+							.form-group(duck-field='display', duck-type='string')
+								label(for=`AttractionName${attractionCounter}`) Name
+								input.form-control(id=`AttractionName${attractionCounter}`, type='text', required, duck-value, value= attraction.names.display)
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= attraction.description || `<p>Write something about ${attraction.names.display}</p>`
+						.form-group(duck-field='cardImage', duck-type='string')
+							label Card Image
+							input.form-control(duck-value, type='text', required, value= attraction.cardImage)
+
+						button.btn.btn-warning.mr-Xs(data-function='toggle', data-target=`#AttractionEdit${attractionCounter}, #AttractionEditToggle${attractionCounter}, #AttractionOverview${attractionCounter}`, type='button') Cancel
+						button.btn.btn-primary(duck-button='submit') Save
+
+				button.btn.btn-primary(id=`AttractionEditToggle${attractionCounter}`, data-function='toggle', data-target=`this, #AttractionEdit${attractionCounter}, #AttractionOverview${attractionCounter}`, data-toggle='hidden', type='button') Edit
+			- attractionCounter++;
+		
 	else
 		.content-card
 			p.lead Sorry, but it appears that no attractions have been added for this city yet, please check back soon.

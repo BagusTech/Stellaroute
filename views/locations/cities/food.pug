@@ -1,4 +1,13 @@
 block content
+	-
+		var foodTagColors = {
+			'Only In': 'green',
+			'Local Cuisine': 'purple',
+			'Restaurant': 'blue',
+			'Drinks': 'orange',
+			'Best Dishes': 'red',
+		};
+
 	if (user && user.isAdmin)
 		.ta-r
 			button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
@@ -61,8 +70,9 @@ block content
 													| Dairy
 
 										.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
-											label(for='FoodDishes') Dishes
-											input#FoodDishes.form-control(type='text', duck-value)
+											label Dishes
+											div(duck-type='string')
+												input.form-control(type='text', duck-value)
 
 										.form-group(duck-field='area', duck-type='string') <!-- area -->
 											label(for='FoodArea') Area
@@ -85,27 +95,161 @@ block content
 											input#FoodReadMore.form-control(type='text', duck-value)
 
 							.ta-R
-								button.btn.btn-primary(type='button', duck-button='submit') Submit
+								button.btn.btn-primary(type='button', duck-button='submit') Add
 								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
 
 	if (city.food && city.food.foods)
-		+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(function(a, b){ if(a.order > b.order){return 1} if(a.order < b.order){return -1} return 0; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
+		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+			for food in city.food.foods.filter((i) => i.category !== 'Restaurant' && i.name).sort(sortByOrder)
+				.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
+					+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+
+		//+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(sortByOrder), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
 				
 		h2 Restaurants
-		+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+		//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+			for restaurant in city.food.foods.filter((i) => i.category === 'Restaurant' && i.name)
+				.masonry--item(data-toggle='modal', data-target= `#${restaurant.name.replace(/\s/g, '-')}`)
+					+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
+
+		- var foodCounter = 0;
+
+		for item in city.food.foods
+			if item.name
+				+modal(item.name.replace(/\s/g, '-'))
+					div(id=`FoodItem${foodCounter}`, data-toggle='hidden')
+						h2.content-card--header.fw-B.fc-B= item.name
+						.lead!= item.description
+						img.w-100(src= item.image, alt= item.name)
+						if (item.suggestedRestaurant)
+							h3 Best Place to Get it:
+							p!= item.suggestedRestaurant
+
+						if (item.dishes)
+							h3 Dishes
+							ul
+								for dish in item.dishes
+									li= dish
+
+						if (item.whatToOrder)
+							h3 What to Have
+							p= item.whatToOrder
+
+						if (item.address)
+							h3 Where is It?
+							address
+								span= item.address
+								span= item.area
+
+						if (item.blog)
+							a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+
+					if user && user.isAdmin
+						.hidden(id=`FoodItemUpdate${foodCounter}`, data-toggle='hidden')
+							div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
+								div(duck-field='food', duck-type='object')
+									div(duck-field='foods', duck-type='array')
+										div(duck-type='object', duck-key='Id', duck-key-value=item.Id)
+											.form-group(duck-field='name', duck-type='string') <!-- name -->
+												label(for=`FoodName${foodCounter}`) Name
+												input#FoodName.form-control(type='text', required, duck-value, value=item.name)
+
+											.form-group(duck-field='order', duck-type='number') <!-- order -->
+												label(for=`FoodOrder${foodCounter}`) Order
+												input#FoodName.form-control(type='number', required, duck-value, value=item.order)
+
+											.form-group(duck-field='image', duck-type='string') <!-- image -->
+												label(for=`FoodImage${foodCounter}`) Image
+												input#FoodImage.form-control(type='text', required, duck-value, value=item.image)
+
+											.form-group(duck-field='category', duck-type='select') <!-- category -->
+												label(for=`FoodCategory${foodCounter}`) Category
+												select#FoodCategory.form-control(duck-value)
+													option(selected= item.category === 'Only In') Only In
+													option(selected= item.category === 'Local Cuisine') Local Cuisine
+													option(selected= item.category === 'Best Dishes') Best Dishes
+													option(selected= item.category === 'Drinks') Drinks
+													option(selected= item.category === 'Restaurant') Restaurant
+
+											.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
+												label(for=`FoodTagline${foodCounter}`) Tagline
+												input#FoodTagline.form-control(type='text', maxlength='130', duck-value, value=item.tagline)
+
+											.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
+												label(for=`FoodDescription${foodCounter}`) Description
+												.summernote!= item.description
+
+											.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
+												h3 Contains
+												.checkbox
+													label
+														input(type='checkbox', value='Shellfish', checked= item.contains && item.contains.indexOf('Shellfish') > -1)
+														| Shellfish
+												.checkbox
+													label
+														input(type='checkbox', value='Gluten', checked= item.contains && item.contains.indexOf('Gluten') > -1)
+														| Gluten
+												.checkbox
+													label
+														input(type='checkbox', value='Nuts', checked= item.contains && item.contains.indexOf('Nuts') > -1)
+														| Nuts
+												.checkbox
+													label
+														input(type='checkbox', value='Meat', checked= item.contains && item.contains.indexOf('Meat') > -1)
+														| Meat
+												.checkbox
+													label
+														input(type='checkbox', value='Dairy', checked= item.contains && item.contains.indexOf('Dairy') > -1)
+														| Dairy
+
+											.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
+												label Dishes
+												if (item.dishes)
+													for dish in item.dishes
+														div(duck-type='string')
+															input.form-control(type='text', duck-value, value=dish)
+												else
+													div(duck-type='string')
+														input.form-control(type='text', duck-value)
+
+											.form-group(duck-field='area', duck-type='string') <!-- area -->
+												label(for=`FoodArea${foodCounter}`) Area
+												input#FoodArea.form-control(type='text', duck-value, value= item.area)
+
+											.form-group(duck-field='address', duck-type='string') <!-- address -->
+												label(for=`FoodAddress${foodCounter}`) Address
+												input#FoodAddress.form-control(type='text', duck-value, value= item.address)
+
+											.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
+												label(for=`FoodWhatToOrder${foodCounter}`) What to Order
+												input#FoodWhatToOrder.form-control(type='text', duck-value, value= item.whatToOrder)
+
+											.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
+												label(for=`FoodSuggestedRestaurant${foodCounter}`) Suggested Restaurant
+												input#FoodSuggestedRestaurant.form-control(type='text', duck-value, value=item.suggestedRestaurant)
+
+											.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
+												label(for=`FoodReadMore${foodCounter}`) Read More
+												input#FoodReadMore.form-control(type='text', duck-value, value=item.readMore)
+								
+								button.btn.btn-primary(duck-button='submit') Save
+						hr
+
+						.row
+							.col-xs-6
+								button.btn.btn-primary(id=`FoodItemEdit${foodCounter}`, data-function='toggle', data-target=`this, #FoodItem${foodCounter}, #FoodItemUpdate${foodCounter}, #FoodItemCancelSave${foodCounter}`, data-toggle='hidden') Edit
+								button.btn.btn-warning.hidden(id=`FoodItemCancelSave${foodCounter}`, data-function='toggle', data-target=`this, #FoodItem${foodCounter}, #FoodItemUpdate${foodCounter}, #FoodItemEdit${foodCounter}`, data-toggle='hidden') Cancel
+								
+							.col-xs-6.ta-R
+								button.btn.btn-danger(id=`FoodDelete${foodCounter}`, data-function='toggle', data-target=`this, #FoodDeleteForm${foodCounter}`, data-toggle='hidden') Delete
+
+								div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${foodCounter}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
+									button.btn.btn-danger(duck-button='submit') Delete
+									button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${foodCounter}, #FoodDeleteForm${foodCounter}`) Cancel
+			
+			- foodCounter++;
 	else
 		.content-card
 			p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
 			p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.
-
-//
-	types:
-		-string
-		-select
-		-number
-		wysiwyg
-		-array
-		-object
-		bool
-		radio
-		checkbox

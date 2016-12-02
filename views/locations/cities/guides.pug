@@ -6,82 +6,77 @@ block content
 		#AddGuide.modal.fade(tabindex="-1", role="dialog")
 			.modal-dialog.modal-lg
 				.content-card
-					h2.content-card--header Add New Guide
+					h2.content-card--header Add New Guide Item
 					.row
-						.col-xs-12#AddFoodForm
-							.form-group
-								label(for='FoodName') Name
-								input#FoodName.form-control.js-food-field(type='text', required, name='name')
-							.form-group
-								label(for='FoodImage') Image
-								input#FoodImage.form-control.js-food-field(type='text', required, name='image')
-							.form-group
-								label(for='FoodCategory') Category
-								select#FoodCategory.form-control.js-food-field(name='category')
-									option Only In
-									option Local Cuisine
-									option Restaurant
-									option Drinks
-									option Best Dishes
-							.form-group
-								label(for='FoodTagline') Tagline
-								input#FoodTagline.form-control.js-food-field(type='text', maxlength='130', name='tagline')
-							.form-group
-								label(for='FoodDescription') Description
-								#FoodDescription.js-food-field(name='description', data-summernote)
-									.summernote
+						form(duck-table='Guides', duck-function='add', duck-key='Id')
+							.col-xs-12.col-sm-6(duck-field='names', duck-type='object')
+								.form-group(duck-field='display', duck-type='string')
+									label Name
+										input.form-control(type='text', required, duck-value)
+							.col-xs-12.col-sm-6.form-group(duck-field='url', duck-type='string')
+									label Url
+										input.form-control(type='text', required, duck-value, disabled)
 
-							.form-group
-								h3 Contains
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Shellfish')
-										| Shellfish
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Gluten')
-										| Gluten
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Nuts')
-										| Nuts
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Meat')
-										| Meat
-								.checkbox
-									label
-										input.js-food-field(name='contains', type='checkbox', value='Dairy')
-										| Dairy
-							.form-group
-								label(for='FoodDishes') Dishes
-								input#FoodDishes.form-control.js-food-field(type='text', name='dishes')
-							.form-group
-								label(for='FoodArea') Area
-								input#FoodArea.form-control.js-food-field(type='text', name='area')
-							.form-group
-								label(for='FoodAddress') Address
-								input#FoodAddress.form-control.js-food-field(type='text', name='address')
-							.form-group
-								label(for='FoodWhatToOrder') What to Order
-								input#FoodWhatToOrder.form-control.js-food-field(type='text', name='whatToOrder')
-							.form-group
-								label(for='FoodSuggestedRestaurant') Suggested Restaurant
-								input#FoodSuggestedRestaurant.form-control.js-food-field(type='text', name='suggestedRestaurant')
-							.form-group
-								label(for='FoodReadMore') Read More
-								input#FoodReadMore.form-control.js-food-field(type='text', name='readMore')
+							.col-xs-12(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote
+									p Write something about the guide
 
-							.ta-R
-								button#AddFoodSubmit.btn.btn-primary(type='button') Submit
-								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
+							.col-xs-12(duck-field='cardImage', duck-type='string')
+								.form-group
+									label Card Image
+										input.form-control(type='text', required, duck-value)
+							.form-group.hidden(duck-field='city', duck-type='array')
+									input(type='text', required, duck-value, value=city.Id, disabled)
 
-	if (city.guides)
-		+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(function(a, b){ if(a.order > b.order){return 1} if(a.order < b.order){return -1} return 0; }), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
-				
-		h2 Restaurants
-		+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+							.col-xs-12.ta-R
+								button.btn.btn-primary(type='button', duck-button='submit') Add
+								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddGuide') Cancel
+
+	if (guides.length)
+		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+			for guide in guides
+				.masonry--item(data-toggle='modal', data-target= `#${guide.names.display.replace(/\s/g, '-')}`)
+					+card(guide.cardImage, guide.names.display)
+					
+		-var guideCounter = 0;
+		for guide in guides
+			+modal(guide.names.display.replace(/\s/g, '-'))(class='modal-lg')
+				div(id=`GuideOverview${guideCounter}`, data-toggle='hidden')
+					h2.content-card--header.fw-B.fc-B= guide.names.display
+						if user && user.isAdmin
+							div.f-R(duck-table='Guides', duck-function='delete', duck-key='Id', duck-key-value= guide.Id, duck-goTo=`/${city.countryUrl}/${city.url}`)
+								button.btn.btn-danger.btn-sm(id=`GuideDeleteToggle${guideCounter}`, data-function='toggle', data-target=`this, #GuideDelete${guideCounter}`, data-toggle='hidden', type='button') Delete
+								.hidden(id=`GuideDelete${guideCounter}`, data-toggle='hidden')
+									button.btn.btn-danger.btn-sm(duck-button='submit') Delete
+									button.btn.btn-warning.btn-sm.ml-Xs(data-function='toggle', data-target=`#GuideDelete${guideCounter}, #GuideDeleteToggle${guideCounter}`, type='button') Cancel
+
+					.lead!= guide.description
+					img.w-100(src= guide.cardImage || 'http://placebear.com/600/400', alt= guide.names.display)
+
+					.ta-R.mt-Md
+						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
+
+				if user && user.isAdmin
+					form.hidden(id=`GuideEdit${guideCounter}`, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, data-toggle='hidden')
+						div(duck-field='names', duck-type='object')
+							.form-group(duck-field='display', duck-type='string')
+								label(for=`GuideName${guideCounter}`) Name
+								input.form-control(id=`GuideName${guideCounter}`, type='text', required, duck-value, value= guide.names.display)
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= guide.description || `<p>Write something about ${guide.names.display}</p>`
+						.form-group(duck-field='cardImage', duck-type='string')
+							label Card Image
+							input.form-control(duck-value, type='text', required, value= guide.cardImage)
+
+						button.btn.btn-warning.mr-Xs(data-function='toggle', data-target=`#GuideEdit${guideCounter}, #GuideEditToggle${guideCounter}, #GuideOverview${guideCounter}`, type='button') Cancel
+						button.btn.btn-primary(duck-button='submit') Save
+
+				button.btn.btn-primary(id=`GuideEditToggle${guideCounter}`, data-function='toggle', data-target=`this, #GuideEdit${guideCounter}, #GuideOverview${guideCounter}`, data-toggle='hidden', type='button') Edit
+			- guideCounter++;
+		
 	else
 		.content-card
-			p.lead Sorry, but it appears that no guides have been created for this city yet, please check back soon.
+			p.lead Sorry, but it appears that no guides have been added for this city yet, please check back soon.
 			p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.

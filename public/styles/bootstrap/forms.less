@@ -32,11 +32,17 @@ legend {
 label {
   display: inline-block;
   max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
-  margin-bottom: 12px;
   font-weight: 400;
   //color: @grey-light;
   //line-height: 1;
-  font-size: 14px;
+  //font-size: 14px;
+
+  input[type='text'],
+  input[type='password'],
+  input[type='number'],
+  select{
+    margin-top: @gw-Xs;
+  }
 }
 
 
@@ -215,6 +221,10 @@ input[type="search"] {
 
 .form-group {
   margin-bottom: @form-group-margin-bottom;
+
+  label {
+    width: 100%;
+  }
 }
 
 

@@ -1,20 +1,29 @@
-.city-nav{
+.tabbed-nav{
 	margin-top: @gw-Lg;
 }
-	.city-nav--tab{
+	.tabbed-nav--tab{
 		display: inline-block;
 		background: rgba(0, 0, 0, .5);
-		color: white;
 		border: none;
+		transition: background .13s ease-out;
+		color: white;
+		font-weight: normal;
 		padding: @gw-Sm @gw-Md;
-		transition: all .17s ease-out;
+		
 
-		&[aria-expanded='true']{
+		&[aria-expanded='true'], &.active{
 			background: rgba(100, 100, 100, .5);
 		}
-	}
-	.city-nav--tabpanel{
-		&[aria-hidden='true']{
-			display: none;
+
+		&:hover{
+			background: rgba(50, 50, 50, .5);	
 		}
+
+		&:hover, &:active, &:focus{
+			color: white;
+		}
+	}
+
+	.tabbed-nav--tabpanel{
+		width: 100%;
 	}

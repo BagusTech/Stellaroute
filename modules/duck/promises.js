@@ -20,7 +20,7 @@ module.exports = function(_duck){
 		const uniqueBy = this.uniqueBy;
 		const items = this.cached() || [];
 
-		reAssign = reAssign === undefined ? true : reAssign;
+		reAssign = reAssign === undefined ? false : reAssign;
 		checkSchema = checkSchema === undefined ? true : checkSchema;
 
 		return new Promise(function(resolve, reject){

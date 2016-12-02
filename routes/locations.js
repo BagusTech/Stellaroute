@@ -2,7 +2,9 @@ const express        = require('express');
 const flash          = require('connect-flash');
 const duck           = require('../modules/duck');
 const sortBy         = require('../modules/sortBy');
+const pickTable      = require('../modules/pickTable');
 const Attraction     = require('../schemas/attraction');
+const Guide          = require('../schemas/guide');
 const Continent      = require('../schemas/continent');
 const WorldRegion    = require('../schemas/world-region');
 const Country        = require('../schemas/country');
@@ -22,49 +24,11 @@ router.get('/get/:table', (req, res) => {
 	const field = req.query.field
 	const value = req.query.value
 	const findOne = req.query.findOne
-	let table;
+	const table = pickTable(req.params.table);
 
-	switch(req.params.table){
-		case 'Continents':{
-			table = Continent;
-			break;
-		}
-		case 'WorldRegions':{
-			table = WorldRegion;
-			break;
-		}
-		case 'Countries':{
-			table = Countrie;
-			break;
-		}
-		case 'CountryRegions':{
-			table = CountryRegion;
-			break;
-		}
-		case 'Provinces':{
-			table = Province;
-			break;
-		}
-		case 'ProvinceRegions':{
-			table = ProvinceRegion;
-			break;
-		}
-		case 'Cities':{
-			table = City;
-			break;
-		}
-		case 'CityRegions':{
-			table = CityRegion;
-			break;
-		}
-		case 'Neighborhoods':{
-			table = Neighborhood;
-			break;
-		}
-		default:
-			console.error('Please choose a table.')
-			res.send('Please choose a table.');
-			return;
+	if(!table){
+		console.error('Please choose a table.');
+		res.status(500).send('Please choose a table.');
 	}
 
 	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items
@@ -371,8 +335,10 @@ router.get('/:country/:city', (req, res, next) => {
 		return;
 	}
 
-	const countryRegions = CountryRegion.find('country', city.country).items
-	const provinces = Province.find('country', city.country).items
+	const attractions = Attraction.find('city', city.Id).items;
+	const guides = Guide.find('city', city.Id).items;
+	const countryRegions = CountryRegion.find('country', city.country).items;
+	const provinces = Province.find('country', city.country).items;
 	let provinceRegions = [];
 	const cityRegions = CityRegion.find('city', city.Id).items;
 	const neighborhoods = Neighborhood.find('city', city.Id).items;
@@ -385,6 +351,8 @@ router.get('/:country/:city', (req, res, next) => {
 		title: `Stellaroute: ${city.names.display}`,
 		description: 'Stellaroute: ${city.names.display} Overview',
 		key: City.hash,
+		attractions: attractions,
+		guides: guides,
 		countryRegions: countryRegions,
 		provinces: provinces,
 		provinceRegions: provinceRegions,
@@ -405,12 +373,6 @@ router.get('/:country/:city/transit', (req, res, next) => {
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
-	
-	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
-		return;
-	}
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
@@ -435,47 +397,6 @@ router.get('/:country/:city/transit', (req, res, next) => {
 	});
 });
 
-/* router.get('/:country/:city/food', (req, res, next) => {
-	const city = City.findOne('url', req.params.city)
-					 .join('country', Country.cached(), 'Id', 'names.display')
-					 .join('country', Country.cached(), 'Id', 'url')
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
-					 .join('province', Province.cached(), 'Id', 'names.display' )
-					 .join('province', Province.cached(), 'Id', 'url' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
-					 .items[0];
-	
-	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
-		return;
-	}
-
-	const countryRegions = CountryRegion.find('country', city.country).items
-	const provinces = Province.find('country', city.country).items
-	let provinceRegions = [];
-	const cityRegions = CityRegion.find('city', city.Id).items;
-	const neighborhoods = Neighborhood.find('city', city.Id).items;
-
-	provinces.forEach(function(p){
-		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
-	});
-
-	res.render('locations/cities/food', {
-		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
-		key: City.hash,
-		countryRegions: countryRegions,
-		provinces: provinces,
-		provinceRegions: provinceRegions,
-		city: city,
-		cityRegions: cityRegions,
-		neighborhoods: neighborhoods,
-	});
-}); */
-
 router.get('/:country/:city/explore', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
@@ -487,12 +408,6 @@ router.get('/:country/:city/explore', (req, res, next) => {
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
-	
-	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
-		return;
-	}
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
@@ -517,7 +432,7 @@ router.get('/:country/:city/explore', (req, res, next) => {
 	});
 });
 
-router.get('/:country/:city/guides', (req, res, next) => {
+router.get('/:country/:city/:guide', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -528,10 +443,17 @@ router.get('/:country/:city/guides', (req, res, next) => {
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
-	
+
 	if(!city){
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
+		return;
+	}
+
+	const guide = Guide.findOne('url', req.params.guide).items;
+
+	if(!guide){
+		next();
 		return;
 	}
 
@@ -549,6 +471,7 @@ router.get('/:country/:city/guides', (req, res, next) => {
 		title: `Stellaroute: ${city.names.display}`,
 		description: 'Stellaroute: ${city.names.display} Overview',
 		key: City.hash,
+		guide: guide,
 		countryRegions: countryRegions,
 		provinces: provinces,
 		provinceRegions: provinceRegions,
@@ -558,7 +481,7 @@ router.get('/:country/:city/guides', (req, res, next) => {
 	});
 });
 
-router.get('/:country/:city/attraction', (req, res, next) => {
+router.get('/:country/:city/:attraction', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -569,12 +492,15 @@ router.get('/:country/:city/attraction', (req, res, next) => {
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
-	
-	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+
+	const attraction = Attraction.findOne('url', req.params.attraction).items;
+
+	if(!attraction){
+		next();
 		return;
 	}
+
+	console.log(city);
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
@@ -587,9 +513,10 @@ router.get('/:country/:city/attraction', (req, res, next) => {
 	});
 
 	res.render('locations/cities/attraction', {
-		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
+		title: `Stellaroute: ${attraction.names.display}`,
+		description: 'Stellaroute: ${attraction.names.display} Overview',
 		key: City.hash,
+		attraction: attraction,
 		countryRegions: countryRegions,
 		provinces: provinces,
 		provinceRegions: provinceRegions,
@@ -665,51 +592,33 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 	});
 });
 
+router.post('/add/:table', (req, res) => {
+	const item = req.body;
+	const table = pickTable(req.params.table);
+
+	if(!table){
+		console.error('Please choose a table.');
+		res.status(500).send('Please choose a table.');
+	}
+
+	table.add(item)
+	.then(() => {
+		table.updateCache().then(() => {
+			res.send('success');
+		});
+	}, (err) => {
+		console.error(err);
+		res.status(500).send(err);
+	});
+});
+
 router.post('/update/:table', (req, res) => {
 	const item = req.body;
-	let table;
+	const table = pickTable(req.params.table);
 
-	switch(req.params.table){
-		case 'Continents':{
-			table = Continent;
-			break;
-		}
-		case 'WorldRegions':{
-			table = WorldRegion;
-			break;
-		}
-		case 'Countries':{
-			table = Countrie;
-			break;
-		}
-		case 'CountryRegions':{
-			table = CountryRegion;
-			break;
-		}
-		case 'Provinces':{
-			table = Province;
-			break;
-		}
-		case 'ProvinceRegions':{
-			table = ProvinceRegion;
-			break;
-		}
-		case 'Cities':{
-			table = City;
-			break;
-		}
-		case 'CityRegions':{
-			table = CityRegion;
-			break;
-		}
-		case 'Neighborhoods':{
-			table = Neighborhood;
-			break;
-		}
-		default:
-			console.error('Please choose a table.')
-			res.send('Please choose a table.');
-			return;
+	if(!table){
+		console.error('Please choose a table.');
+		res.status(500).send('Please choose a table.');
 	}
 
 	table.update(item)
@@ -719,65 +628,27 @@ router.post('/update/:table', (req, res) => {
 			});
 		}, (err) => {
 			console.error(err);
-			res.send(err);
+			res.status(500).send(err);
 		});
 });
 
 router.post('/delete/:table', (req, res) => {
-	const id = req.body;
-	let table;
+	const key = req.body['key'];
+	const table = pickTable(req.params.table);
 
-	switch(req.params.table){
-		case 'Continents':{
-			table = Continent;
-			break;
-		}
-		case 'WorldRegions':{
-			table = WorldRegion;
-			break;
-		}
-		case 'Countries':{
-			table = Countrie;
-			break;
-		}
-		case 'CountryRegions':{
-			table = CountryRegion;
-			break;
-		}
-		case 'Provinces':{
-			table = Province;
-			break;
-		}
-		case 'ProvinceRegions':{
-			table = ProvinceRegion;
-			break;
-		}
-		case 'Cities':{
-			table = City;
-			break;
-		}
-		case 'CityRegions':{
-			table = CityRegion;
-			break;
-		}
-		case 'Neighborhoods':{
-			table = Neighborhood;
-			break;
-		}
-		default:
-			console.error('Please choose a table.')
-			res.send('Please choose a table.');
-			return;
+	if(!table){
+		console.error('Please choose a table.');
+		res.status(500).send('Please choose a table.');
 	}
 
-	table.delete(id)
+	table.delete(key)
 	.then(() => {
 		table.updateCache().then(() => {
 			res.send('success');
 		});
 	}, (err) => {
 		console.error(err);
-		res.send(err);
+		res.status(500).send(err);
 	});
 });
 

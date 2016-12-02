@@ -52,7 +52,7 @@ router.get('/:worldRegion', (req, res, next) => {
 
 	res.render('locations/world-regions/world-region', {
 		title: `Stellaroute: ${worldRegion.names.display}`,
-		description: 'Stellaroute: ${worldRegion.names.display} Overview',
+		description: `Stellaroute: ${worldRegion.names.display} Overview`,
 		continents: Continent.cached().sort(sortBy('url')),
 		countries: countries,
 		key: WorldRegion.hash,
@@ -78,7 +78,7 @@ router.get('/:country', (req, res, next) => {
 
 	res.render('locations/countries/country', {
 		title: `Stellaroute: ${country.names.display}`,
-		description: 'Stellaroute: ${country.names.display} Overview',
+		description: `Stellaroute: ${country.names.display} Overview`,
 		continents: Continent.cached().sort(sortBy('url')),
 		country: country,
 		key: Country.hash,
@@ -107,7 +107,7 @@ router.get('/:country/food', (req, res, next) => {
 
 	res.render('locations/countries/food', {
 		title: `Stellaroute: ${country.names.display}`,
-		description: 'Stellaroute: ${country.names.display} Overview',
+		description: `Stellaroute: ${country.names.display} Overview`,
 		continents: Continent.cached().sort(sortBy('url')),
 		country: country,
 		key: Country.hash,
@@ -135,7 +135,7 @@ router.get('/:country/transit', (req, res, next) => {
 
 	res.render('locations/countries/transit', {
 		title: `Stellaroute: ${country.names.display}`,
-		description: 'Stellaroute: ${country.names.display} Overview',
+		description: `Stellaroute: ${country.names.display} Overview`,
 		continents: Continent.cached().sort(sortBy('url')),
 		country: country,
 		key: Country.hash,
@@ -163,7 +163,7 @@ router.get('/:country/transportation', (req, res, next) => {
 
 	res.render('locations/countries/transportation', {
 		title: `Stellaroute: ${country.names.display}`,
-		description: 'Stellaroute: ${country.names.display} Overview',
+		description: `Stellaroute: ${country.names.display} Overview`,
 		continents: Continent.cached().sort(sortBy('url')),
 		country: country,
 		key: Country.hash,
@@ -191,7 +191,7 @@ router.get('/:country/:attraction', (req, res, next) => {
 
 	res.render('locations/countries/attraction', {
 		title: `Stellaroute: ${attraction.names.display}`,
-		description: 'Stellaroute: ${attraction.names.display} Overview',
+		description: `Stellaroute: ${attraction.names.display} Overview`,
 		key: Attraction.hash,
 		country: country,
 		attraction: attraction,
@@ -217,7 +217,7 @@ router.get('/:country/:countryRegion', (req, res, next) => {
 
 	res.render('locations/countries/country-region', {
 		title: `Stellaroute: ${countryRegion.names.display}`,
-		description: 'Stellaroute: ${countryRegion.names.display} Overview',
+		description: `Stellaroute: ${countryRegion.names.display} Overview`,
 		countries: Country.cached().sort(sortBy('url')),
 		key: CountryRegion.hash,
 		country: country,
@@ -248,7 +248,7 @@ router.get('/:country/:province', (req, res, next) => {
 
 	res.render('locations/provinces/province', {
 		title: `Stellaroute: ${province.names.display}`,
-		description: 'Stellaroute: ${province.names.display} Overview',
+		description: `Stellaroute: ${province.names.display} Overview`,
 		key: Province.hash,
 		continents: Continent.cached().sort(sortBy('url')),
 		worldRegions: WorldRegion.cached().sort(sortBy('url')),
@@ -285,7 +285,7 @@ router.get('/:country/:province/:provinceRegion', (req, res, next) => {
 
 	res.render('locations/provinces/province-region', {
 		title: `Stellaroute: ${provinceRegion.names.display}`,
-		description: 'Stellaroute: ${provinceRegion.names.display} Overview',
+		description: `Stellaroute: ${provinceRegion.names.display} Overview`,
 		key: ProvinceRegion.hash,
 		countryRegions: countryRegions,
 		provinceRegion: provinceRegion,
@@ -326,7 +326,7 @@ router.get('/:country/:city', (req, res, next) => {
 
 	res.render('locations/cities/city', {
 		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
+		description: `Stellaroute: ${city.names.display} Overview`,
 		key: City.hash,
 		attractions: attractions,
 		guides: guides,
@@ -363,7 +363,7 @@ router.get('/:country/:city/transit', (req, res, next) => {
 
 	res.render('locations/cities/transit', {
 		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
+		description: `Stellaroute: ${city.names.display} Overview`,
 		key: City.hash,
 		countryRegions: countryRegions,
 		provinces: provinces,
@@ -398,7 +398,7 @@ router.get('/:country/:city/explore', (req, res, next) => {
 
 	res.render('locations/cities/explore', {
 		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
+		description: `Stellaroute: ${city.names.display} Overview`,
 		key: City.hash,
 		countryRegions: countryRegions,
 		provinces: provinces,
@@ -446,7 +446,7 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 
 	res.render('locations/cities/guide', {
 		title: `Stellaroute: ${city.names.display}`,
-		description: 'Stellaroute: ${city.names.display} Overview',
+		description: `Stellaroute: ${city.names.display} Overview`,
 		key: City.hash,
 		guide: guide,
 		countryRegions: countryRegions,
@@ -489,7 +489,7 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 
 	res.render('locations/cities/attraction', {
 		title: `Stellaroute: ${attraction.names.display}`,
-		description: 'Stellaroute: ${attraction.names.display} Overview',
+		description: `Stellaroute: ${attraction.names.display} Overview`,
 		key: City.hash,
 		attraction: attraction,
 		countryRegions: countryRegions,
@@ -533,7 +533,7 @@ router.get('/:country/:city/:cityRegion', (req, res, next) => {
 
 	res.render('locations/cities/city-region', {
 		title: `Stellaroute: ${cityRegion.names.display}`,
-		description: 'Stellaroute: ${cityRegion.names.display} Overview',
+		description: `Stellaroute: ${cityRegion.names.display} Overview`,
 		key: CityRegion.hash,
 		country: country,
 		city: city,
@@ -559,7 +559,7 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 
 	res.render('locations/cities/neighborhood', {
 		title: `Stellaroute: ${neighborhood.names.display}`,
-		description: 'Stellaroute: ${neighborhood.names.display} Overview',
+		description: `Stellaroute: ${neighborhood.names.display} Overview`,
 		key: Neighborhood.hash,
 		country: country,
 		cityRegions: cityRegions,

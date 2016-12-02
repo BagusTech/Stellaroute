@@ -5,7 +5,7 @@ const Neighborhood = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		overveiw: String,
+		description: String,
 		names: {
 			display: String,
 			official: String,
@@ -17,8 +17,8 @@ const Neighborhood = Duck({
 		},
 		abbreviation: String,
 		isAutonomous: Boolean,
-		image: String,
-		mapImage: String,
+		cardImage: String,
+		images: Array,
 		city: String,
 		cityRegions: Array,
 	//At a Glance Card

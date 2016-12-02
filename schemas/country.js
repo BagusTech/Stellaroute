@@ -10,7 +10,7 @@ const Country = Duck({
 		continent: Array,
 		worldRegions: Array,
 	//At a Glance Card
-		overview: String,
+		description: String,
 		tagline: String,
 		averageStay: String,
 		bestTimeToVisit: Array,

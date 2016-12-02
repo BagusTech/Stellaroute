@@ -26,7 +26,7 @@ var Attraction = Duck({
 		},
 		description: String,
 		tagline: String,
-		backgroundImage: String,
+		cardImage: String,
 		images: Array,
 		needToKnow: [{
 			order: Number,

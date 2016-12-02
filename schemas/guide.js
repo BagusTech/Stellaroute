@@ -6,7 +6,11 @@ var Attraction = Duck({
 	Item: {
 		Id: String,
 		url: String,
-		/* continents: Array,
+		names: {
+			display: String,
+			Alias: Array
+		},
+		continents: Array,
 		worldRegions: Array,
 		country: Array,
 		countryRegions: Array,
@@ -14,11 +18,9 @@ var Attraction = Duck({
 		provinceRegions: Array,
 		city: Array,
 		cityRegions: Array,
-		neighborhoods: Array, */
-		names: {
-			display: String,
-			Alias: Array
-		}
+		neighborhoods: Array,
+		cardImage: String,
+		description: String,
 	},
 	HASH: 'Id',
 	HASHType: 'S',

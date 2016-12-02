@@ -16,5 +16,5 @@ void function stopProp($) {
         });
     };
 
-    jQuery(() => $('[data-function*="stopProp"]').makeStopProp());
-}(jQuery);
+    $(() => $('[data-function*="stopProp"]').makeStopProp());
+}(jQuery.noConflict());

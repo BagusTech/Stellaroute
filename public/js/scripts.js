@@ -1,17 +1,49 @@
 /*global jQuery */
 
 // Once window is loaded, do this
-jQuery(($) => {
+void function initScripts($){
 	'use strict'
 
-	setTimeout(() => {
-		$('.flash-message-container').slideUp(1000);
-	}, 1500);
+	$(() => {
+		// hide flash message after 1.5s
+		setTimeout(() => {
+			$('.flash-message-container').slideUp(1000);
+		}, 1500);
+		
+		// style multiselect via http://davidstutz.github.io/bootstrap-multiselect/
+		$('select[multiple]').multiselect();
 
-	
-	// style multiselect via http://davidstutz.github.io/bootstrap-multiselect/
-	$('select[multiple]').multiselect();
+		// have cursor focus on input after modal opens
+		$('button[data-target="#LoginModal"]').click(function onClick(){
+			const id = $(this).attr('data-target');
+			setTimeout(() => {
+				$(`${id} input`).first().focus();
+			}, 200);
+		});
 
+		// initialize summernote where it is being used
+		$('.summernote').summernote({height: 150});
+	});	
+
+	/* eslint-disable */
+	// polyfills
+	if (!String.prototype.contains) {
+		String.prototype.contains = function(search, start) {
+		if (typeof start !== 'number') {
+			start = 0;
+		}
+
+		if (start + search.length > this.length) {
+				return false;
+			} else {
+				return this.indexOf(search, start) !== -1;
+			}
+		};
+	}
+	/* eslint-enable */
+}(jQuery.noConflict());
+
+/*
 	// should probably be moved into it's own file
 	$('.js-new-country .js-make-duplicate').click(() => {
 		const duplicate = $('.js-duplicate').last().clone();
@@ -89,13 +121,8 @@ jQuery(($) => {
 		}, 100);
 	});
 	// end new file
-
-	$('button[data-target="#LoginModal"]').click(function onClick(){
-		const id = $(this).attr('data-target');
-		setTimeout(() => {
-			$(`${id} input`).first().focus();
-		}, 200);
-	});
+	
+	
 
 	// for updating countries
 	$('.js-update-country').click(function(){
@@ -143,21 +170,4 @@ jQuery(($) => {
 
 	// initilize all update pages
 	update();
-});	
-
-/* eslint-disable */
-// polyfills
-if (!String.prototype.contains) {
-	String.prototype.contains = function(search, start) {
-	if (typeof start !== 'number') {
-		start = 0;
-	}
-
-	if (start + search.length > this.length) {
-			return false;
-		} else {
-			return this.indexOf(search, start) !== -1;
-		}
-	};
-}
-/* eslint-enable */
+*/

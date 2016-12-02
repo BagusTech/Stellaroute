@@ -213,8 +213,7 @@ void function initializeAccordionsTabs($) {
     };
 
     // initialize default accordions and tabs
-    jQuery(() => {
+    $(() => {
         $('[data-function*="accordion"]').makeAccordion();
-        $('[data-function*="tabs"]').makeTabs();
     });
-}(jQuery);
+}(jQuery.noConflict());

@@ -63,5 +63,5 @@ void function initInteriorNav($) {
 		});
 	};
 
-	jQuery(() => $('[data-function*="interiorNav"]').interiorNav());
-}(jQuery);
+	$(() => $('[data-function*="interiorNav"]').interiorNav());
+}(jQuery.noConflict());

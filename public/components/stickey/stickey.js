@@ -64,4 +64,4 @@ void function initializeStickeyAddon($) {
 	};
 
 	$(window).on('load', () => { $('[data-function*="stickey"]').stickey(); })
-}(jQuery)
+}(jQuery.noConflict())

@@ -147,5 +147,5 @@ void function initializeCustomScroll($) {
         });
     };
 
-    jQuery(() => $('[data-function*="scroll"]').customScroll());
-}(jQuery);
+    $(() => $('[data-function*="scroll"]').customScroll());
+}(jQuery.noConflict());

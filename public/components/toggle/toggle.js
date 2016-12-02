@@ -6,7 +6,9 @@ void function initializeToggle($) {
     function toggleClasses($target, classes){
         return (e) => {
             e.stopPropagation();
-            for(const i in classes){
+
+            const length = classes.length
+            for(let i = 0; i < length; i++ ){
                 $target.toggleClass(classes[i])
             }
 
@@ -37,8 +39,9 @@ void function initializeToggle($) {
         const $this = $(wrapper);
         const targets = ($this.attr('data-target') && $this.attr('data-target').split(',')) || ['this'];
         const event = $this.attr('data-event') || 'click';
-        
-        for(const i in targets){
+        const length = targets.length;
+
+        for(let i = 0; i < length ; i++){
             const isSelf = (targets[i] === ' this' || targets[i] === 'this');
             const thisIndex = targets[i].indexOf('this');
             const referencesSelf = !isSelf && (thisIndex === 0 || (thisIndex === 1 && targets[i][0] === ' '));
@@ -64,5 +67,5 @@ void function initializeToggle($) {
         });
     };
 
-    jQuery(() => $('[data-function*="toggle"]').makeToggle());
-}(jQuery);
+    $(() => $('[data-function*="toggle"]').makeToggle());
+}(jQuery.noConflict());

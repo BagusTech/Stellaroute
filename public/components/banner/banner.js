@@ -39,5 +39,5 @@ void function initializeBanner($) {
         return this.each((index, wrapper) => makeBanner(wrapper));
     };
 
-    jQuery(() => $('[data-function*="banner"]').makeBanner());
-}(jQuery);
+    $(() => $('[data-function*="banner"]').makeBanner());
+}(jQuery.noConflict());

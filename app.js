@@ -13,6 +13,7 @@ const getUser          = require('./middleware/getUser');
 const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
 const routes           = require('./routes/index');
+const ajax             = require('./routes/ajax');
 const guides           = require('./routes/guides');
 const attractions      = require('./routes/attractions');
 const locations        = require('./routes/locations');
@@ -84,6 +85,7 @@ app.use(Guide.getCached(),
 app.use('/', routes);
 
 // CRUD
+app.use('/', ajax);
 app.use('/guides', isLoggedIn,  guides);
 app.use('/attractions', isLoggedIn, attractions);
 app.use('/continents', isLoggedIn, continents);

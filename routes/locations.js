@@ -1,8 +1,6 @@
 const express        = require('express');
 const flash          = require('connect-flash');
-const duck           = require('../modules/duck');
 const sortBy         = require('../modules/sortBy');
-const pickTable      = require('../modules/pickTable');
 const Attraction     = require('../schemas/attraction');
 const Guide          = require('../schemas/guide');
 const Continent      = require('../schemas/continent');
@@ -18,27 +16,6 @@ const router         = express.Router();
 
 const missingLocationUrl = '/'
 const missingLocationMessage = 'Sorry, that location doesn\'t exist.';
-
-// ajax
-router.get('/get/:table', (req, res) => {
-	const field = req.query.field
-	const value = req.query.value
-	const findOne = req.query.findOne
-	const table = pickTable(req.params.table);
-
-	if(!table){
-		console.error('Please choose a table.');
-		res.status(500).send('Please choose a table.');
-	}
-
-	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items
-
-	if(items){
-		res.send(items)
-	} else {
-		res.send('Nothing Found');
-	}
-});
 
 router.get('/:continent', (req, res, next) => {
 	const continent = Continent.findOne('url', req.params.continent).items;
@@ -500,8 +477,6 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 		return;
 	}
 
-	console.log(city);
-
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
 	let provinceRegions = [];
@@ -589,66 +564,6 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 		country: country,
 		cityRegions: cityRegions,
 		neighborhood: neighborhood,
-	});
-});
-
-router.post('/add/:table', (req, res) => {
-	const item = req.body;
-	const table = pickTable(req.params.table);
-
-	if(!table){
-		console.error('Please choose a table.');
-		res.status(500).send('Please choose a table.');
-	}
-
-	table.add(item)
-	.then(() => {
-		table.updateCache().then(() => {
-			res.send('success');
-		});
-	}, (err) => {
-		console.error(err);
-		res.status(500).send(err);
-	});
-});
-
-router.post('/update/:table', (req, res) => {
-	const item = req.body;
-	const table = pickTable(req.params.table);
-
-	if(!table){
-		console.error('Please choose a table.');
-		res.status(500).send('Please choose a table.');
-	}
-
-	table.update(item)
-		.then(() => {
-			table.updateCache().then(() => {
-				res.send('success');
-			});
-		}, (err) => {
-			console.error(err);
-			res.status(500).send(err);
-		});
-});
-
-router.post('/delete/:table', (req, res) => {
-	const key = req.body['key'];
-	const table = pickTable(req.params.table);
-
-	if(!table){
-		console.error('Please choose a table.');
-		res.status(500).send('Please choose a table.');
-	}
-
-	table.delete(key)
-	.then(() => {
-		table.updateCache().then(() => {
-			res.send('success');
-		});
-	}, (err) => {
-		console.error(err);
-		res.status(500).send(err);
 	});
 });
 

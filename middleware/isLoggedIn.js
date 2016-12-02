@@ -6,6 +6,7 @@ function isLoggedIn(req, res, next) {
 		return next();
 	} else {
 		// if they aren't redirect them to the home page
+		req.flash('error', 'Sorry, you are\'t allowed to go there :(');
 		res.redirect('/');
 	}
 }

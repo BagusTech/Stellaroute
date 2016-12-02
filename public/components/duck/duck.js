@@ -11,7 +11,16 @@ void function initDuck($){
 	}
 
 	function _duck(table) {
-		this.add = (item) => {return item}
+		this.add = (item, successCallback, errorCallback) => {
+			$.ajax({
+				url: `/add/${table}`,
+				contentType: 'application/json',
+				method: 'POST',
+				data: JSON.stringify(item),
+				success: successCallback,
+				error: errorCallback,
+			});
+		}
 
 		// (object)options
 		// -- (string)field - the field to search on
@@ -45,9 +54,9 @@ void function initDuck($){
 		this.delete = (id, successCallback, errorCallback) => {
 			$.ajax({
 				url: `/delete/${table}`,
-				contentType: 'text/plain',
+				contentType: 'application/json',
 				method: 'POST',
-				data: id,
+				data: JSON.stringify({key: id}),
 				success: successCallback,
 				error: errorCallback,
 			});
@@ -59,4 +68,4 @@ void function initDuck($){
 	duck.uuid = uuid;
 
 	window.duck = duck;
-}(jQuery);
+}(jQuery.noConflict());

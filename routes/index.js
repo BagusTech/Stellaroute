@@ -126,7 +126,7 @@ router.post('/newsletter-signup', User.getCached(), function(req, res){
 		return;
 	}
 
-	User.add(req.body).then(function added(){
+	User.add(req.body, true).then(function added(){
 		sendEmail(email, subject, template);
 
 		User.updateCache().then(function(){

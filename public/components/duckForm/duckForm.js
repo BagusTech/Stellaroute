@@ -17,7 +17,7 @@ void function initCityFood($, duck, window) {
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
-			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').summernote({height: 150});
+			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote({height: 150});
 			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
 		}
 
@@ -25,6 +25,7 @@ void function initCityFood($, duck, window) {
 					text: 'Delete',
 					'class': 'btn btn-danger btn-small',
 					'duck-button': 'add',
+					type: 'button',
 					click: deleteArrayItem,
 				}));
 
@@ -86,7 +87,7 @@ void function initCityFood($, duck, window) {
 				}
 				case 'array': {
 					const $objectToUpdate = $item.find('> [duck-type="object"]');
-					const value = obj[fieldName] || [];
+					const value = $objectToUpdate.first().attr('duck-key') ? obj[fieldName] : [];
 
 					if($objectToUpdate.length) {
 						$objectToUpdate.each((j, objec) => {
@@ -94,20 +95,18 @@ void function initCityFood($, duck, window) {
 							const key = $objec.attr('duck-key');
 							const newObj = {}
 
-							// if the key is not defined, break because we can't know which item to update
-							if(!key){
-								return;
-							}
+							// if the key is defined, the object is being altered/added without the context of the other items
+							if(key){
+								// if the key doesn't have a preset value, give it a uuid
+								newObj[key] = $objec.attr('duck-key-value') || duck.uuid();
 
-							// if the key doesn't have a preset value, give it a uuid
-							newObj[key] = $objec.attr('duck-key-value') || duck.uuid();
+								// check to see if an item with the same key exists in the array
+								const indexOfCurrentId = value.map((o) => o[key]).indexOf(newObj[key]);
 
-							// check to see if an item with the same key exists in the array
-							const indexOfCurrentId = value.map((o) => o[key]).indexOf(newObj[key]);
-
-							// if it does, remove it from the list of values
-							if(indexOfCurrentId !== -1){
-								value.splice(indexOfCurrentId, 1);
+								// if it does, remove it from the list of values
+								if(indexOfCurrentId !== -1){
+									value.splice(indexOfCurrentId, 1);
+								}
 							}
 
 							// add the new object to the list of values
@@ -189,7 +188,7 @@ void function initCityFood($, duck, window) {
 
 	function autoSetUrl($urlField, $urlFromField) {
 		$urlFromField.on('input', () => {
-			$urlField.val($urlFromField.val().replace(/\s/g, '-').toLowerCase());
+			$urlField.val($urlFromField.val().replace(/'/g, '').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
 		});
 	}
 
@@ -287,6 +286,7 @@ void function initCityFood($, duck, window) {
 				text: `Add ${$item.attr('duck-field')}`,
 				'class': 'btn btn-primary btn-small',
 				'duck-button': 'add',
+				type: 'button',
 				click: addArrayItem,
 			});
 

@@ -1,10 +1,10 @@
 extends ../../layout.pug
 
 block content
-	if !user || !user.isAdmin
+	if !user || !attraction
 		.media-bg-img.request-page-header
 			.container
-				h1= attraction.names.display
+				h1= attraction && attraction.names && attraction.names.display || 'Unknown Attraction'
 
 		.container.ptb-Sm
 			small
@@ -12,38 +12,43 @@ block content
 
 			.content-card
 				h2.content-card--header Coming soon!
-				p.lead.m-0!= `More information about ${attraction.names.display} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
+				p.lead.m-0!= `More information about ${attraction && attraction.names && attraction.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
 	else
 		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
-				.bg-Dkr
+				.bg-Dkr.p-R
+					if user && user.isAdmin
+						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditAttractionForm') Edit
 					.container.ptb-0
 						ol.breadcrumb
 							li.active United Sates
 							li.active Midwest
 							li.active #{city.names.display}
-						h1 #{city.names.display}
-							small.ml-Md Broad Shoulders, Down to Earch, Great Food
+						h1= attraction.names.display
+							small.ml-Md= attraction.tagline
 
-						nav.pt-Md
-							ul.account-pages.m-0
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
-								li.p-0
-									a.fw-N(href='/united-states-of-america/chicago/attraction') Attractions
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/guides') Guides
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
+		if user && user.isAdmin
+			+modal('EditAttractionForm')
+				+attractionForm('update', attraction)
 
 		.container
 			.row
 				.col-xs-12.col-sm-6.col-md-8.f-R
-					.content-card.p-0(style='background: url("http://legacy.skyscrapercenter.com/class-image.php/userpics/10003/?width=1000&height=800&image=/images/albums/userpics/10003/Sears_ViewFromRiver1_AW.jpg") no-repeat scroll center center / cover; padding-top: 50%;')
-								p.lead.fc-W.m-0.p-Sm.bg-Dkst While technically called Skydeck Chicago, and Willis owns the naming rights, this beautiful skyscrapper has, and always will be, known as <strong>Sears Tower</strong>. Although it lost it's status of tallest building in the world, Sears Tower is still an impressive piece of architecture.
+					.content-card.p-0(style=`background: url("${attraction.images ? attraction.images[0] : (attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300')}") no-repeat scroll center center / cover; padding-top: 50%;`)
+								.lead.fc-W.m-0.p-Sm.bg-Dkst!= attraction.description
 
-					.content-card
+					if attraction.needToKnow
+						.content-card
+							h2.content-card--header Need to Know
+
+							.row(data-function='accordion', data-allow-multiple='true')
+								for advice, i in attraction.needToKnow.sort((a, b) => {if(a.order > b.order){return -1;}if(a.order < b.order){return 1;}return 0;})
+									h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+										i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+										= advice.title
+									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+
+
+					//.content-card
 						h2.content-card--header Need to Know
 						.row(data-function='accordion', data-allow-multiple='true')
 								h3.m-0.p-Sm(role='tab',aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i')
@@ -84,39 +89,38 @@ block content
 						h2.content-card--header Quick Info
 						p
 							span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
-							span.d-B.ml-Md $22&nbsp;
-						p
+							span.d-B.ml-Md= attraction.price
+						div
 							span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
-							span.d-B.ml-Md 9:00am-10:00pm (Mar-Sep)
-							span.d-B.ml-Md 10:00am-8:00pm (Oct-Feb)
+							.ml-Md!= attraction.hours
 						p
 							span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
-							span.d-B.ml-Md 233 S. Wacker Dr.&nbsp;
+							.ml-Md!= attraction.address
 
-					.content-card
-						h2.content-card--header Orientation
-						p Willis Tower is in Downtown Chicago and inside The Loop. It is also about a 5 minute walk from Union Station.
+					if attraction.orientation
+						.content-card
+							h2.content-card--header Orientation
+							div!= attraction.orientation.description
+							
+							if attraction.orientation.map
+							button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+								img.w-100(src= attraction.orientation.map)
 
-						button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
-							img.w-100(src='/images/willis-tower-orentation.png')
+							h3
+								span.fs-16(data-icon='fa fa-subway')
+								| &nbsp;Getting There
 
-						h3
-							span.fs-16(data-icon='fa fa-subway')
-							| &nbsp;Getting There
-						ul
-							li Quincy/Wells (Brown, Pink, Orange, Purple)
-							li Jackson (Red)
-							li Monroe (Blue)
+							div!= attraction.orientation.gettingThere
 
 				
-						
-				.modal.fade#MapModal(tab-index='-1', role='dialog')
-					.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
-						.modal-content.p-Md
-							img.w-100(src='/images/willis-tower-orentation.png')
+						if attraction.orientation.map
+							.modal.fade#MapModal(tab-index='-1', role='dialog')
+								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
+									.modal-content.p-Md
+										img.w-100(src=attraction.orientation.map)
 
 
-				.col-xs-12.col-sm-6.col-md-4
+				//.col-xs-12.col-sm-6.col-md-4
 					h2.mb-0.fc-G Nearby Attractions
 
 					.row
@@ -167,18 +171,25 @@ block content
 										p.fc-B.fw-N.lh-1.m-0 Buckingham Fountain is a Chicago landmark in the center of Grant Park. Dedicated in 1927, it is one of the largest fountains in the world.
 				
 				.col-xs-12.col-sm-6.col-md-8.f-R
-					.content-card
-						h2.content-card--header Fun Facts
-						ul.ls-N.p-0
-							li
-								h3 Officially Not Sears Tower
-								p Remember how Sears used to be a big thing? Well the retailer might not be such a big deal anymore but this skyscraper is still just as big. The naming rights to Sears Tower expired and a few years later a London based insurance company that no one has heard of decided to pay for the right. Like a family member that tries to change her name, the skyscraper might officially be Willis Tower but everyone still calls it Sears Tower even a decade after the name change.
-							li
-								h3 Almost 25 Years as the Tallest
-								p It was a good run. Upon its completion in 1973 Sears Tower edged out the World Trade Center to become the largest skyscraper in the world up until 1998. Though it now is only the 14th largest building in the world (2nd in the US), those 25 years holding the title have left an indelible impression in the collective conscious and ensured it will always stand tall in our minds.
+					if attraction.quickFacts
+						.content-card
+							h2.content-card--header Fun Facts
+							ul.ls-N.p-0
+								for fact in attraction.quickFacts
+									li
+										h3= fact.title
+										div!= fact.description
 
-					h2.mb-0.fc-G Guides that Get You There
-					.masonry.masonry-grid-1.masonry-grid-3--md
+							//ul.ls-N.p-0
+								li
+									h3 Officially Not Sears Tower
+									p Remember how Sears used to be a big thing? Well the retailer might not be such a big deal anymore but this skyscraper is still just as big. The naming rights to Sears Tower expired and a few years later a London based insurance company that no one has heard of decided to pay for the right. Like a family member that tries to change her name, the skyscraper might officially be Willis Tower but everyone still calls it Sears Tower even a decade after the name change.
+								li
+									h3 Almost 25 Years as the Tallest
+									p It was a good run. Upon its completion in 1973 Sears Tower edged out the World Trade Center to become the largest skyscraper in the world up until 1998. Though it now is only the 14th largest building in the world (2nd in the US), those 25 years holding the title have left an indelible impression in the collective conscious and ensured it will always stand tall in our minds.
+
+					//h2.mb-0.fc-G Guides that Get You There
+					//.masonry.masonry-grid-1.masonry-grid-3--md
 						.masonry--item.content-card.p-0.p-R.mt-Md
 							a(href='#')
 								img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14712200_1107617126019713_8733391228445392896_n.jpg?ig_cache_key=MTM3OTg1NjgwMDkwNzg5MTIyMA%3D%3D.2')

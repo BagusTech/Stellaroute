@@ -1,0 +1,216 @@
+-var formId = 0
+
+mixin attractionForm(crud, attraction, locations, cancel)
+	form(id=`AttractionForm${formId}`, duck-table='Attractions', duck-function= crud, duck-key='Id', duck-key-value= attraction && attraction.Id)
+		div(duck-field='names', duck-type='object')
+			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
+				.form-group
+					label Display Name
+						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.display)
+			.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
+				.form-group
+					label Official Name
+						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.official)
+			.c-B(duck-field='alias', duck-type='array')
+				label Alias'
+				if attraction && attraction.names.alias
+					for alias in attraction.names.alias
+						.form-group(duck-type='string')
+							input.form-control(type='text', required, duck-value, value= alias)
+				else
+					.form-group(duck-type='string')
+						input.form-control(type='text', required, duck-value)
+
+		if (!attraction)
+			.form-group(duck-field='url', duck-type='string')
+					label Url
+						input.form-control(type='text', required, duck-value, disabled)
+		
+		.form-group(duck-field='price', duck-type='text')
+			label Price
+				input.form-control(type='text', duck-value, value= attraction && attraction.price)
+
+		.form-group(duck-field='hours', duck-type='wysiwyg')
+			label Hours
+			.summernote!= attraction && attraction.hours
+
+		.form-group(duck-field='address', duck-type='wysiwyg')
+			label Address
+			.summernote!= attraction && attraction.address
+		
+		.form-group(duck-field='tagline', duck-type='string')
+			label Tagline
+				input.form-control(type='text', duck-value, value= attraction && attraction.tagline)
+
+		div(duck-field='description', duck-type='wysiwyg')
+			label Description
+			.summernote!= attraction && attraction.description
+
+		.form-group(duck-field='cardImage', duck-type='string')
+			label Card Image
+				input.form-control(type='text', required, duck-value, value= attraction && attraction.cardImage)
+
+		div(duck-field='images', duck-type='array')
+			h3 Images
+			if attraction && attraction.images
+				for image in attraction.images
+					.form-group(duck-type='string')
+						input.form-control(type='string', duck-value, value= image)
+			else
+				.form-group(duck-type='string')
+					input.form-control(type='string', duck-value)
+
+		div(duck-field='needToKnow', duck-type='array')
+			h3 Need To Know
+			if attraction && attraction.needToKnow
+				for advice in attraction.needToKnow
+					.row(duck-type='object')
+						h4 Advice
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Title
+							.summernote!= advice.description
+			else
+				.row(duck-type='object')
+					h4 Advice
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+		div(duck-field='quickFacts', duck-type='array')
+			h3 Quick Facts
+			if attraction && attraction.quickFacts
+				for advice in attraction.quickFacts
+					.row(duck-type='object')
+						h4 Fact
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Title
+							.summernote!= advice.description
+			else
+				.row(duck-type='object')
+					h4 Fact
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+		div(duck-field='orientation', duck-type='object')
+			h3 Orientation
+			.form-group(duck-field='description', duck-type='wysiwyg')
+				label Description
+				.summernote!= attraction && attraction.orientation && attraction.orientation.description
+			.form-group(duck-field='map', duck-type='string')
+				label Map
+					input.form-control(type='text', duck-value, value= attraction && attraction.orientation && attraction.orientation.map)
+			.form-group(duck-field='gettingThere', duck-type='wysiwyg')
+				label Getting There
+				.summernote!= attraction && attraction.orientation && attraction.orientation.gettingThere
+
+		if locations && locations.continent
+			.form-group.hidden(duck-field='continent', duck-type='array')
+				for continent in locations.continent
+					input(type='text', required, duck-value, value=continent, disabled)
+		else if attraction && attraction.continent
+			.form-group.hidden(duck-field='continent', duck-type='array')
+				for continent in attraction.continent
+					input(type='text', required, duck-value, value=continent, disabled)
+
+		if locations && locations.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in locations.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+		else if attraction && attraction.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in attraction.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+
+		if locations && locations.country
+			.form-group.hidden(duck-field='country', duck-type='array')
+				for country in locations.country
+					input(type='text', required, duck-value, value=country, disabled)
+		else if attraction && attraction.country
+			.form-group.hidden(duck-field='country', duck-type='array')
+				for country in attraction.country
+					input(type='text', required, duck-value, value=country, disabled)
+		
+		if locations && locations.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in locations.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+		else if attraction && attraction.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in attraction.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+
+		if locations && locations.province
+			.form-group.hidden(duck-field='province', duck-type='array')
+				for province in locations.province
+					input(type='text', required, duck-value, value=province, disabled)
+		else if attraction && attraction.province
+			.form-group.hidden(duck-field='province', duck-type='array')
+				for province in attraction.province
+					input(type='text', required, duck-value, value=province, disabled)
+
+		if locations && locations.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in locations.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+		else if attraction && attraction.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in attraction.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+
+		if locations && locations.city
+			.form-group.hidden(duck-field='city', duck-type='array')
+				for city in locations.city
+					input(type='text', required, duck-value, value=city, disabled)
+		else if attraction && attraction.city
+			.form-group.hidden(duck-field='city', duck-type='array')
+				for city in attraction.city
+					input(type='text', required, duck-value, value=city, disabled)
+
+		if locations && locations.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in locations.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+		else if attraction && attraction.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in attraction.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+
+		if locations && locations.neighborhoods
+			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
+				for neighborhoods in locations.neighborhoods
+					input(type='text', required, duck-value, value=neighborhoods, disabled)
+		else if attraction && attraction.neighborhoods
+			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
+				for neighborhoods in attraction.neighborhoods
+					input(type='text', required, duck-value, value=neighborhoods, disabled)
+
+		.ta-R
+			button.btn.btn-primary(type='button', duck-button='submit')= attraction ? 'Update' : 'Add'
+			!= cancel
+
+	- formId++

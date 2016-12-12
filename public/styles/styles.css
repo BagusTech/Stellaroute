@@ -98,6 +98,43 @@
   -webkit-transition: opacity 0.2s ease-out;
   transition: opacity 0.2s ease-out;
 }
+[duck-type='array'] {
+  border: 1px solid #777;
+  border-radius: 2px;
+  background: #e7e7e7;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+[duck-type='array'] > label {
+  margin-bottom: 6px;
+}
+[duck-type='array'] > [duck-type='string']:not(:first-of-type),
+[duck-type='array'] > [duck-type='number']:not(:first-of-type),
+[duck-type='array'] > [duck-type='select']:not(:first-of-type) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+[duck-type='array'] > [duck-type='string']:not(:first-of-type) .form-control,
+[duck-type='array'] > [duck-type='number']:not(:first-of-type) .form-control,
+[duck-type='array'] > [duck-type='select']:not(:first-of-type) .form-control {
+  border-radius: 2px 0 0 2px;
+}
+[duck-type='array'] > [duck-type='string']:not(:first-of-type) .btn,
+[duck-type='array'] > [duck-type='number']:not(:first-of-type) .btn,
+[duck-type='array'] > [duck-type='select']:not(:first-of-type) .btn {
+  border-radius: 0 2px 2px 0;
+}
+[duck-type='array'] > [duck-type='object'] {
+  margin: 24px 0;
+}
+[duck-type='array'] > [duck-type='object']:not(:first-of-type) .form-group:last-of-type,
+[duck-type='array'] > [duck-type='object']:not(:first-of-type) .form-group:last-of-type .panel {
+  margin-bottom: 6px;
+}
+[duck-type='array'] .form-control {
+  border: 1px solid #959ca2;
+}
 [data-function*='interiorNav'] > a {
   padding-left: 24px;
 }

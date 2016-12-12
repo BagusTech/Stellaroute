@@ -24,7 +24,7 @@ block content
 			fillOpacity: 1
 		};
 
-		$.getJSON(myGeoJSONPath, {format: "json"}).done(function(data){
+		jQuery.getJSON(myGeoJSONPath, {format: "json"}).done(function(data){
 			var map = L.map('ExploreMap', {zoomControl: false}).setView([45, 0], 2);
 
 			var geoContinents = L.geoJson(data, {

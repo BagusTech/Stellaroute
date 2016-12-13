@@ -18,13 +18,15 @@ block content
 				.bg-Dkr.p-R
 					if user && user.isAdmin
 						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditAttractionForm') Edit
+						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= attraction.Id
 					.container.ptb-0
 						ol.breadcrumb
 							li.active United Sates
 							li.active Midwest
-							li.active #{city.names.display}
+							li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
 						h1= attraction.names.display
 							small.ml-Md= attraction.tagline
+
 
 		if user && user.isAdmin
 			+modal('EditAttractionForm')
@@ -33,8 +35,16 @@ block content
 		.container
 			.row
 				.col-xs-12.col-sm-6.col-md-8.f-R
-					.content-card.p-0(style=`background: url("${attraction.images ? attraction.images[0] : (attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300')}") no-repeat scroll center center / cover; padding-top: 50%;`)
-								.lead.fc-W.m-0.p-Sm.bg-Dkst!= attraction.description
+					.content-card.p-0
+						if attraction.images && attraction.images.length > 2
+							div(data-function='banner')
+								for img, i in attraction.images
+									img(src=img, alt=`${attraction.names.display} Banner ${i+1}`, data-banner-item)
+						else 
+							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
+						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description
+					//.content-card.p-0(style=`background: url("${attraction.images ? attraction.images[0] : (attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300')}") no-repeat scroll center top / cover; padding-top: 50%;`)
+						
 
 					if attraction.needToKnow
 						.content-card
@@ -118,7 +128,16 @@ block content
 								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
 									.modal-content.p-Md
 										img.w-100(src=attraction.orientation.map)
+				
+				if attraction.nearbyAttractions
+					.col-xs-12.col-sm-6.col-md-4
+						h2.mb-0.fc-G Nearby Attractions
 
+						.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
+							for nearbyAttraction in nearbyAttractions
+								.masonry--item
+									a(href=`/${city.countryUrl}/${city.url}/${nearbyAttraction.url}`, target='_blank')
+									+card(nearbyAttraction.cardImage, nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
 				//.col-xs-12.col-sm-6.col-md-4
 					h2.mb-0.fc-G Nearby Attractions

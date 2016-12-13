@@ -471,6 +471,7 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 					 .items[0];
 
 	const attraction = Attraction.findOne('url', req.params.attraction).items;
+	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : [];
 
 	if(!attraction){
 		next();
@@ -498,6 +499,7 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 		city: city,
 		cityRegions: cityRegions,
 		neighborhoods: neighborhoods,
+		nearbyAttractions: nearbyAttractions,
 	});
 });
 

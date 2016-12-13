@@ -65,23 +65,23 @@ block content
 									+card(subAttraction.cardImage, subAttraction.names.display, null, null, subAttraction.description)
 
 				.col-xs-12.col-sm-6.col-md-4
-					if attraction.price || attraction.hours || attraction.address
+					if (attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>') || (attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>') || (attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>')
 						.content-card
 							h2.content-card--header Quick Info
-							if attraction.price
+							if attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>'
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
 									.ml-Md!= attraction.price
-							if attraction.hours
+							if attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>'
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
 									.ml-Md!= attraction.hours
-							if attraction.address
+							if attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>'
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
 									.ml-Md!= attraction.address
 
-					if attraction.orientation
+					if attraction.orientation && attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
 						.content-card
 							h2.content-card--header Orientation
 							if attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
@@ -104,6 +104,21 @@ block content
 									.modal-content.p-Md
 										img.w-100(src=attraction.orientation.map)
 				
+				if siblingAttractions
+					.col-xs-12.col-sm-6.col-md-4
+						h2.fc-G Other Attraction in #{parentAttraction.names.display}
+						img.w-100(src=parentAttraction.cardImage, alt= parentAttraction.names.display)
+						.p-Sm.bg-Purp
+							h3.fc-W.mt-0= parentAttraction.names.display
+							.fc-W!= parentAttraction.description
+
+						for siblingAttraction, i in siblingAttractions
+							a.d-F.fai-Str.fc-I.fw-N(href=`/${city.countryUrl}/${city.url}/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
+									.w-25(style= `background: url('${siblingAttraction.cardImage}') no-repeat scroll center center / cover`)
+									.w-75.p-Sm
+										h4.mt-0= siblingAttraction.names.display 
+										!= siblingAttraction.description
+
 				if attraction.nearbyAttractions
 					.col-xs-12.col-sm-6.col-md-4
 						h2.fc-G Nearby Attractions

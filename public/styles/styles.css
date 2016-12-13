@@ -8550,6 +8550,7 @@ form.profile-settings-update .profile-label.notification h3 {
   margin: 0;
   padding: 0 12px 12px;
   color: #4a4d50;
+  font-weight: normal;
 }
 .content-card {
   clear: both;

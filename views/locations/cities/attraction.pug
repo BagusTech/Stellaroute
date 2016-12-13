@@ -57,6 +57,13 @@ block content
 										= advice.title
 									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
 
+					if subAttractions
+						h2.fc-G Attractions in #{attraction.names.display}
+						.masonry.masonry-grid-1.masonry-grid-2--md
+							for subAttraction in subAttractions
+								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${subAttraction.url}`)
+									+card(subAttraction.cardImage, subAttraction.names.display, null, null, subAttraction.description)
+
 				.col-xs-12.col-sm-6.col-md-4
 					if attraction.price || attraction.hours || attraction.address
 						.content-card
@@ -103,11 +110,10 @@ block content
 
 						.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyAttraction in nearbyAttractions
-								.masonry--item
-									a(href=`/${city.countryUrl}/${city.url}/${nearbyAttraction.url}`, target='_blank')
+								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${nearbyAttraction.url}`, target='_blank')
 									+card(nearbyAttraction.cardImage, nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
-				if attraction.quickFacts
+				if attraction.quickFacts && attraction.quickFacts[0].description !== '<p><br></p>' && attraction.quickFacts[0].description !== '<br>'
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card
 							h2.content-card--header Fun Facts

@@ -122,7 +122,7 @@ void function initCityFood($, duck, window) {
 						});
 					}
 
-					if(value.length){
+					if(obj[fieldName] || value.length){
 						obj[fieldName] = value;
 					}
 					break;
@@ -138,7 +138,7 @@ void function initCityFood($, duck, window) {
 						}
 					});
 
-					if(value.length){
+					if(obj[fieldName] || value.length){
 						obj[fieldName] = value;
 					}
 
@@ -147,7 +147,7 @@ void function initCityFood($, duck, window) {
 				case 'radio': {
 					const value = $item.find('input[type="radio"]:checked').val();
 
-					if(value){
+					if(obj[fieldName] || value){
 						obj[fieldName] = value;
 					}			
 
@@ -174,7 +174,7 @@ void function initCityFood($, duck, window) {
 					const isInputValue = $item.val();
 					const value = isInputValue ? isInputValue : $item.find('[duck-value]').val();
 
-					if(value){
+					if(obj[fieldName] || value){
 						obj[fieldName] = value;
 					}
 

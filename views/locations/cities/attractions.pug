@@ -7,31 +7,7 @@ block content
 			.modal-dialog.modal-lg
 				.content-card
 					h2.content-card--header Add New Attraction Item
-					.row
-						form(duck-table='Attractions', duck-function='add', duck-key='Id')
-							.col-xs-12.col-sm-6(duck-field='names', duck-type='object')
-								.form-group(duck-field='display', duck-type='string')
-									label Name
-										input.form-control(type='text', required, duck-value)
-							.col-xs-12.col-sm-6.form-group(duck-field='url', duck-type='string')
-									label Url
-										input.form-control(type='text', required, duck-value, disabled)
-
-							.col-xs-12(duck-field='description', duck-type='wysiwyg')
-								label Description
-								.summernote
-									p Write something about the attraction
-
-							.col-xs-12(duck-field='cardImage', duck-type='string')
-								.form-group
-									label Card Image
-										input.form-control(type='text', required, duck-value)
-							.form-group.hidden(duck-field='city', duck-type='array')
-									input(type='text', required, duck-value, value=city.Id, disabled)
-
-							.col-xs-12.ta-R
-								button.btn.btn-primary(type='button', duck-button='submit') Add
-								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddAttraction') Cancel
+					+attractionForm('add', null, {city: [city.Id]})
 
 	if (attractions.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm

@@ -49,6 +49,8 @@ var Attraction = Duck({
 		price: String,
 		hours: String,
 		nearbyAttractions: Array,
+		subAttractions: Array,
+		parentAttraction: String
 	},
 	HASH: 'Id',
 	HASHType: 'S',

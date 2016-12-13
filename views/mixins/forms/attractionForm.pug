@@ -26,9 +26,9 @@ mixin attractionForm(crud, attraction, locations, cancel)
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
 		
-		.form-group(duck-field='price', duck-type='text')
+		.form-group(duck-field='price', duck-type='wysiwyg')
 			label Price
-				input.form-control(type='text', duck-value, value= attraction && attraction.price)
+			.summernote!= attraction && attraction.price
 
 		.form-group(duck-field='hours', duck-type='wysiwyg')
 			label Hours
@@ -139,6 +139,22 @@ mixin attractionForm(crud, attraction, locations, cancel)
 			else
 				.form-group(duck-type='string')
 					input.form-control(type='text', duck-value)
+
+		div(duck-field='subAttractions', duck-type='array')
+			label Sub Attractions
+			if attraction && attraction.subAttractions
+				for subAttraction in attraction.subAttractions
+					if (subAttractions)
+						div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
+					.form-group(duck-type='string')
+						input.form-control(type='text', duck-value, value= subAttraction)
+			else
+				.form-group(duck-type='string')
+					input.form-control(type='text', duck-value)
+
+		.form-group(duck-field='parentAttraction', duck-type='string')
+			label Parent Attraction
+				input.form-control(type='text', duck-value, value= attraction && attraction.parentAttraction)
 
 		if locations && locations.continent
 			.form-group.hidden(duck-field='continent', duck-type='array')

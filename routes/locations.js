@@ -472,6 +472,8 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 
 	const attraction = Attraction.findOne('url', req.params.attraction).items;
 	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : [];
+	const subAttractions = attraction.subAttractions ? Attraction.find().items.filter((i) => attraction.subAttractions.indexOf(i.Id) > -1) : null;
+	const parentAttraction = attraction.parentAttraction ? Attraction.findOne('Id', attraction.parentAttraction).items : null;
 
 	if(!attraction){
 		next();
@@ -500,6 +502,8 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 		cityRegions: cityRegions,
 		neighborhoods: neighborhoods,
 		nearbyAttractions: nearbyAttractions,
+		subAttractions: subAttractions,
+		parentAttraction: parentAttraction,
 	});
 });
 

@@ -31,6 +31,8 @@ block content
 		if user && user.isAdmin
 			+modal('EditAttractionForm')
 				+attractionForm('update', attraction)
+				div(duck-table='Attractions', duck-key='Id', duck-key-value= attraction.Id, duck-function='delete')
+					button.btn.btn-danger(duck-button='submit') Delete
 
 		.container
 			.row
@@ -42,9 +44,7 @@ block content
 									img(src=img, alt=`${attraction.names.display} Banner ${i+1}`, data-banner-item)
 						else 
 							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
-						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description
-					//.content-card.p-0(style=`background: url("${attraction.images ? attraction.images[0] : (attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300')}") no-repeat scroll center top / cover; padding-top: 50%;`)
-						
+						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description						
 
 					if attraction.needToKnow
 						.content-card
@@ -57,64 +57,32 @@ block content
 										= advice.title
 									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
 
-
-					//.content-card
-						h2.content-card--header Need to Know
-						.row(data-function='accordion', data-allow-multiple='true')
-								h3.m-0.p-Sm(role='tab',aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.rotate-Neg180.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;Watch Out for the Clouds
-								p.p-Sm.pt-0.m-0.bw-0(role='tabpanel', aria-hidden='false') Pay attention to the weather before going. This skyscraper stretches up beyond the clouds. That makes the Skydeck the best place for a bird’s eye view of the city...provided the weather isn’t overcast. The Windy City’s infamous temperamental weather can bring in a blanket of clouds that will completely obscure these views and make it a big waste of time and money.
-
-								h3.m-0.p-Sm.bw-0(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;Dreamy Landscapes Best Seen at Night 
-								p.p-Sm.pt-0.m-0.bw-0(role='tabpanel', aria-hidden='true') These views are incredible no matter what type of light is shining on them. But there is something that is just magical about seeing the surrounding skyscrapers a glow and a city of golden lights stretching out as far as the eye can see.
-
-								h3.m-0.p-Sm.bw-0(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;The Pic You’ll Wait in 4 Lines for
-								p.p-Sm.pt-0.m-0.bw-0(role='tabpanel', aria-hidden='true') You know that picture you see of people standing on a pane of glass on the 103rd floor? Yeah - they waited in several lines to get there. There’s the line to buy the ticket, there’s the line to ride up the elevator, then there’s the line to get into the viewing area, and finally there’s the line to stand on that pane of glass. Be patient, if it’s crowded (and it probably will be) then you’ll be waiting awhile. 
-								//ul#MoreAdvice.collapse.ls-N.p-0.m-0.o-H
-
-								h3.m-0.p-Sm.bw-0(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;The Choice: Willis or Hancock?
-								p.p-Sm.pt-0.m-0.bw-0(role='tabpanel', aria-hidden='true') Chicago has two very good options to lookout onto the city from up on high: Willis Tower’s Skydeck or the Hancock’s 360 Chicago. These two options are very similar; however; the Hancock gets a slight edge because its proximity to Lake Michigan offers a better view and being on the Magnificent Mile it’s more convenient. The other huge advantage the Hancock has is the Signature Lounge which gives you the view without the long wait or high price of admission. This cocktail bar on the 93rd floor offers the same spectacular view for the cost of an overpriced drink. The reason to go to Willis is its cultural significance and to say you went to the tallest building in the Western Hemisphere. It all really boils down to how important is it to say you went to the tallest building in Chicago? If it’s not that important than Hancock is where you should go. 
-
-								h3.m-0.p-Sm.bw-0(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;The Rollercoaster Elevator Ride
-								p.plr-Sm.pt-0.pb-Md.m-0.bw-0(role='tabpanel', aria-hidden='true') Okay the title might be a little misleading. It is one of the smoothest elevator rides you’ll go on, but it’s also probably the fastest getting you to the 103rd floor in 90 seconds. While your ears are popping there is a screen telling you how high up you are and what famous buildings stand that tall. 
-
-								h3.m-0.p-Sm.bw-0(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
-									i.fa.fa-chevron-down.an-F(aria-hidden='true', data-toggle='rotate-Neg180')
-									| &nbsp;How to Save
-								p.p-Sm.pt-0.m-0.bw-0(role='tabpanel', aria-hidden='true') Go Chicago Card or CityPass offers the most affordable way to view the Skydeck provided you plan on visiting this in addition to other museums like the Art Institute of Chicago, Shedd Aquarium or Field Museum.
-						//.row
-							button.btn.btn-default.btn-lg.blw-0.brw-0.bbw-0.btw-Sm.br-N.fc-G(type='button', data-toggle='collapse', data-target='#MoreAdvice', aria-expanded='false', aria-controls='MoreAdvice', data-icon='fa fa-chevron-down') &nbsp;More
-
 				.col-xs-12.col-sm-6.col-md-4
-					.content-card
-						h2.content-card--header Quick Info
-						p
-							span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
-							span.d-B.ml-Md= attraction.price
-						div
-							span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
-							.ml-Md!= attraction.hours
-						p
-							span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
-							.ml-Md!= attraction.address
+					if attraction.price || attraction.hours || attraction.address
+						.content-card
+							h2.content-card--header Quick Info
+							if attraction.price
+								.mb-Sm
+									span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
+									.ml-Md!= attraction.price
+							if attraction.hours
+								.mb-Sm
+									span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
+									.ml-Md!= attraction.hours
+							if attraction.address
+								.mb-Sm
+									span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
+									.ml-Md!= attraction.address
 
 					if attraction.orientation
 						.content-card
 							h2.content-card--header Orientation
-							div!= attraction.orientation.description
+							if attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
+								div!= attraction.orientation.description
 							
 							if attraction.orientation.map
-							button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
-								img.w-100(src= attraction.orientation.map)
+								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+									img.w-100(src= attraction.orientation.map)
 
 							h3
 								span.fs-16(data-icon='fa fa-subway')
@@ -131,7 +99,7 @@ block content
 				
 				if attraction.nearbyAttractions
 					.col-xs-12.col-sm-6.col-md-4
-						h2.mb-0.fc-G Nearby Attractions
+						h2.fc-G Nearby Attractions
 
 						.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyAttraction in nearbyAttractions
@@ -139,58 +107,8 @@ block content
 									a(href=`/${city.countryUrl}/${city.url}/${nearbyAttraction.url}`, target='_blank')
 									+card(nearbyAttraction.cardImage, nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
-				//.col-xs-12.col-sm-6.col-md-4
-					h2.mb-0.fc-G Nearby Attractions
-
-					.row
-						.col-xs-12.col-sm-6
-							.content-card.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://www.panicstream.com/vault/wp-content/uploads/2012/04/chicago-theatre.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Chicago Theatre
-									p.fc-B.fw-N.lh-1.pb-Sm.plr-Sm A landmark theater located on North State Street in the Loop area of Chicago, Illinois, in the United State
-							.content-card.p-0
-								a.d-D(href="#")
-									img.w-100(src='http://urbanmatter.com/wp-content/uploads/2015/04/Art-Institute-of-Chicago.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 The Art Institute of Chicago
-									p.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Home to one of the best art collections in the US
-
-						.col-xs-12.col-sm-6
-							.content-card.p-0
-								a.d-B(href="#")
-									img.w-100(src='https://cdn0.vox-cdn.com/uploads/chorus_image/image/47913373/riverwalk-insta.0.png')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Riverwalk
-									p.fc-B.fw-N.lh-1.pb-Sm.plr-Sm The Riverwalk offers a variety of opportunities to find the beauty and spirit of the Chicago River.
-							.content-card.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://doubletree-hotel-magnificent-mile.chicagotophotels.com/data/Photos/OriginalPhoto/1920/192010/192010453.JPEG')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Magnificent Mile
-									p.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Chicago's version of the Champs-Elysées: a grand wide boulevard with exclusive shops, museums, restaurants and ritzy hotels.
-					
-					.content-card.p-0.p-R
-						//small.bg-Gr.fc-W.p-Xs.p-A.b-100.r-0 Area Attraction
-						a.d-B(href="#")
-							img.w-100(src='http://www.chicagotraveler.com/images/general-chicago/34-4-aerial.jpg')
-							h3.m-0.plr-Sm.ptb-Xs.bg-Gr.fc-W.fw-N.fs-18 Millennium Park
-							p.fw-N.lh-1.pb-Sm.plr-Sm.m-0.bg-Gr.fc-W A new kind of town square – a lively, spectacular gathering spot located in the heart of the city and a destination for Chicagoans and visitors alike.
-							
-
-						.clear
-							.bg-G__ltr
-								a.d-F.fai-Str(href="#")
-									.w-35(style='background: url("http://millenniumparkfoundation.org/wp-content/uploads/2014/04/cloud-gate-big.jpg") no-repeat center center / cover;')
-									.w-65.p-Sm
-										h4.m-0.pb-Xs Cloud Gate (The Bean)
-										p.fc-B.fw-N.lh-1.m-0 Inspired by liquid mercury, the sculpture is among the largest of its kind in the world, measuring 66-feet long by 33-feet high.
-							.bg-W
-								a.d-F.fai-Str(href="#")
-									.w-35(style='background: url(http://evansvillewinsupply.com/wp-content/uploads/2015/06/Buckingham_Fountain_in_Chicago_at_night.jpg) no-repeat center center / cover;')
-									.w-65.p-Sm
-										h4.m-0.pb-Xs Buckingham Fountain
-										p.fc-B.fw-N.lh-1.m-0 Buckingham Fountain is a Chicago landmark in the center of Grant Park. Dedicated in 1927, it is one of the largest fountains in the world.
-				
-				.col-xs-12.col-sm-6.col-md-8.f-R
-					if attraction.quickFacts
+				if attraction.quickFacts
+					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card
 							h2.content-card--header Fun Facts
 							ul.ls-N.p-0
@@ -198,31 +116,3 @@ block content
 									li
 										h3= fact.title
 										div!= fact.description
-
-							//ul.ls-N.p-0
-								li
-									h3 Officially Not Sears Tower
-									p Remember how Sears used to be a big thing? Well the retailer might not be such a big deal anymore but this skyscraper is still just as big. The naming rights to Sears Tower expired and a few years later a London based insurance company that no one has heard of decided to pay for the right. Like a family member that tries to change her name, the skyscraper might officially be Willis Tower but everyone still calls it Sears Tower even a decade after the name change.
-								li
-									h3 Almost 25 Years as the Tallest
-									p It was a good run. Upon its completion in 1973 Sears Tower edged out the World Trade Center to become the largest skyscraper in the world up until 1998. Though it now is only the 14th largest building in the world (2nd in the US), those 25 years holding the title have left an indelible impression in the collective conscious and ensured it will always stand tall in our minds.
-
-					//h2.mb-0.fc-G Guides that Get You There
-					//.masonry.masonry-grid-1.masonry-grid-3--md
-						.masonry--item.content-card.p-0.p-R.mt-Md
-							a(href='#')
-								img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14712200_1107617126019713_8733391228445392896_n.jpg?ig_cache_key=MTM3OTg1NjgwMDkwNzg5MTIyMA%3D%3D.2')
-								h3.m-0.p-Sm 3 Days in Chicago
-								p.fw-N.fc-B.plr-Sm The essential guide covering all the major sites and activities in Chicago
-
-						.masonry--item.content-card.p-0.p-R
-							a(href='#')
-								img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/e35/14574078_708839315941440_613905595744911360_n.jpg?ig_cache_key=MTM3OTg1NDk5MjEzMTY5NDEwNQ%3D%3D.2')
-								h3.m-0.p-Sm Best Food of Chicago
-								p.fw-N.fc-B.plr-Sm Chicago is a food lover’s dream and to get the full Chicago experience travelers should be sure to sample cuisine they normally wouldn’t associate with the American Midwest.
-
-						.masonry--item.content-card.p-0.p-R
-							a(href='#')
-								img.w-100(src='https://scontent-ord1-1.cdninstagram.com/t51.2885-15/s480x480/e35/14474098_1418595098447455_5968997491868172288_n.jpg?ig_cache_key=MTM3OTM3NDM0ODY0MTgwNzkzMQ%3D%3D.2')
-								h3.m-0.p-Sm Long Weekend in Chicago
-								p.fw-N.fc-B.plr-Sm The perfect guide for anyone who has a 3day weekend and a thirst for adventure. Focused on exploring the city through it's food while making sure to see sights worth seeing.

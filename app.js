@@ -12,10 +12,9 @@ const session          = require('cookie-session');
 const getUser          = require('./middleware/getUser');
 const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
+
 const routes           = require('./routes/index');
 const ajax             = require('./routes/ajax');
-const guides           = require('./routes/guides');
-const attractions      = require('./routes/attractions');
 const locations        = require('./routes/locations');
 const continents       = require('./routes/continents');
 const countries        = require('./routes/countries');
@@ -24,9 +23,7 @@ const profile          = require('./routes/profile');
 const worldRegions     = require('./routes/world-regions');
 const provinces        = require('./routes/provinces');
 const provinceRegions  = require('./routes/province-regions');
-const cities           = require('./routes/cities');
-const cityRegions      = require('./routes/city-regions');
-const neighborhoods    = require('./routes/neighborhoods');
+
 const Guide            = require('./schemas/guide');
 const Attraction       = require('./schemas/attraction');
 const Continent        = require('./schemas/continent');
@@ -38,6 +35,7 @@ const ProvinceRegion   = require('./schemas/province-region');
 const City             = require('./schemas/city');
 const CityRegion       = require('./schemas/city-region');
 const Neighborhood     = require('./schemas/neighborhood');
+
 const fs               = require('fs');
 const app              = express();
 
@@ -86,8 +84,8 @@ app.use('/', routes);
 
 // CRUD
 app.use('/', ajax);
-app.use('/guides', isLoggedIn,  guides);
-app.use('/attractions', isLoggedIn, attractions);
+
+
 app.use('/continents', isLoggedIn, continents);
 app.use('/countries', isLoggedIn, countries);
 app.use('/country-regions', isLoggedIn, countryRegions);
@@ -95,9 +93,6 @@ app.use('/profile', isLoggedIn, profile);
 app.use('/world-regions', isLoggedIn, worldRegions);
 app.use('/provinces', isLoggedIn, provinces);
 app.use('/province-regions', isLoggedIn, provinceRegions);
-app.use('/cities', isLoggedIn, cities);
-app.use('/city-regions', isLoggedIn, cityRegions);
-app.use('/neighborhoods', isLoggedIn, neighborhoods);
 
 // view locations
 app.use('/', locations);

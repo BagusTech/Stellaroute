@@ -128,6 +128,18 @@ mixin attractionForm(crud, attraction, locations, cancel)
 				label Getting There
 				.summernote!= attraction && attraction.orientation && attraction.orientation.gettingThere
 
+		div(duck-field='nearbyAttractions', duck-type='array')
+			label Nearby Attractions
+			if attraction && attraction.nearbyAttractions
+				for nearbyAttraction in attraction.nearbyAttractions
+					if (nearbyAttractions)
+						div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
+					.form-group(duck-type='string')
+						input.form-control(type='text', duck-value, value= nearbyAttraction)
+			else
+				.form-group(duck-type='string')
+					input.form-control(type='text', duck-value)
+
 		if locations && locations.continent
 			.form-group.hidden(duck-field='continent', duck-type='array')
 				for continent in locations.continent

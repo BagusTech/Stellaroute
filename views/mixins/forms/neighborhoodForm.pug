@@ -1,0 +1,190 @@
+- var neighborhoodFormId = 0
+
+mixin neighborhoodForm(crud, neighborhood, locations, cancel)
+	form(id=`NeighborhoodForm${neighborhoodFormId}`, duck-table='Neighborhoods', duck-function= crud, duck-key='Id', duck-key-value= neighborhood && neighborhood.Id)
+		div(duck-field='names', duck-type='object')
+			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
+				.form-group
+					label Display Name
+						input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.names.display)
+			.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
+				.form-group
+					label Official Name
+						input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.names.official)
+			.c-B(duck-field='alias', duck-type='array')
+				label Alias'
+				if neighborhood && neighborhood.names.alias
+					for alias in neighborhood.names.alias
+						.form-group(duck-type='string')
+							input.form-control(type='text', required, duck-value, value= alias)
+				else
+					.form-group(duck-type='string')
+						input.form-control(type='text', required, duck-value)
+
+		if (!neighborhood)
+			.form-group(duck-field='url', duck-type='string')
+					label Url
+						input.form-control(type='text', required, duck-value, disabled)
+
+		.form-group(duck-field='tagline', duck-type='string')
+			label Tagline
+				input.form-control(type='text', duck-value, value= neighborhood && neighborhood.tagline)
+
+		div(duck-field='description', duck-type='wysiwyg')
+			label Description
+			.summernote!= neighborhood && neighborhood.description
+
+		.form-group(duck-field='cardImage', duck-type='string')
+			label Card Image
+				input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.cardImage)
+
+		.form-group(duck-field='backgroundImage', duck-type='string')
+			label Background Image
+				input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.backgroundImage)
+
+		div(duck-field='images', duck-type='array')
+			h3 Images
+			if neighborhood && neighborhood.images
+				for image in neighborhood.images
+					.form-group(duck-type='string')
+						input.form-control(type='string', duck-value, value= image)
+			else
+				.form-group(duck-type='string')
+					input.form-control(type='string', duck-value)
+
+		div(duck-field='orientation', duck-type='object')
+			.form-group(duck-field='description', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.description
+
+			.form-group(duck-field='map', duck-type='string')
+				label Map
+					input.form-control(type='text', duck-value, value= neighborhood && neighborhood.orientation && neighborhood.orientation.map)
+
+			.form-group(duck-field='gettingThere', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.gettingThere
+
+			.form-group(duck-field='mainIntersection', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.mainIntersection
+
+			.form-group(duck-field='mainStrip', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.mainStrip
+
+			div(duck-field='distanceFrom', duck-type='array')
+				div(duck-type='object')
+					.form-group(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value, value= neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom.order)
+					.form-group(duck-field='name', duck-type='string')
+						label Name
+							input.form-control(type='text', duck-value, value= neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom.name)
+					.form-group(duck-field='type', duck-type='string')
+						label Type
+							select.form-control(duck-value)
+								option(value='airport', selected= neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom.type === 'airport') Airport
+								option(value='attraction', selected= neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom.type === 'attraction') Attraction
+								option(value='station', selected= neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom.type === 'station') Station
+
+		div(duck-field='needToKnow', duck-type='array')
+			h3 Need To Know
+			if neighborhood && neighborhood.needToKnow
+				for advice in neighborhood.needToKnow
+					.row(duck-type='object')
+						h4 Advice
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Title
+							.summernote!= advice.description
+			else
+				.row(duck-type='object')
+					h4 Advice
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+		div(duck-field='eatingDrinking', duck-type='object')
+			h4 Eating and Drinking
+			.form-group(duck-field='image', duck-type='string')
+				label Image
+					input.form-control(type='text', duck-value, value= neighborhood && neighborhood.eatingDrinking && neighborhood.eatingDrinking.image)
+			.form-group(duck-field='description', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.eatingDrinking && neighborhood.eatingDrinking.description
+
+		div(duck-field='shopping', duck-type='object')
+			h4 Shopping
+			.form-group(duck-field='image', duck-type='string')
+				label Image
+					input.form-control(type='text', duck-value, value= neighborhood && neighborhood.shopping && neighborhood.shopping.image)
+			.form-group(duck-field='description', duck-type='wysiwyg')
+				label Description
+				.summernote!= neighborhood && neighborhood.shopping && neighborhood.shopping.description
+
+		div(duck-field='quickFacts', duck-type='array')
+			h3 Quick Facts
+			if neighborhood && neighborhood.quickFacts
+				for advice in neighborhood.quickFacts
+					.row(duck-type='object')
+						h4 Fact
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Title
+							.summernote!= advice.description
+			else
+				.row(duck-type='object')
+					h4 Fact
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+
+
+		if locations && locations.city
+			.form-group.hidden(duck-field='city', duck-type='string')
+				input(type='text', required, duck-value, value=locations.city, disabled)
+		else if neighborhood && neighborhood.city
+			.form-group.hidden(duck-field='city', duck-type='string')
+				input(type='text', required, duck-value, value=neighborhood.city, disabled)
+
+		if locations && locations.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in locations.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+		else if neighborhood && neighborhood.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in neighborhood.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+
+		.ta-R
+			if neighborhood
+				+deleteForm('Neighborhoods', neighborhood.Id)(class='mr-Xs')
+
+			button.btn.btn-primary(type='button', duck-button='submit')= neighborhood ? 'Update' : 'Add'
+			!= cancel
+
+	- neighborhoodFormId++

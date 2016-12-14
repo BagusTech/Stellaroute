@@ -6,7 +6,6 @@ const City = Duck({
 		Id: String,
 		url: String,
 		isPublic: Boolean,
-	// Modal Fields Card
 		names: {
 			display: String,
 			official: String,
@@ -33,7 +32,7 @@ const City = Duck({
 		bestTimeToVisit: Array,
 		topPlaces: Array,	
 		tagline: String,
-		overview: String,
+		description: String,
 	// Need to Know
 		needToKnow: [{
 			order: Number,

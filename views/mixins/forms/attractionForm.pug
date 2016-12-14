@@ -1,7 +1,7 @@
--var formId = 0
+-var attractionFormId = 0
 
 mixin attractionForm(crud, attraction, locations, cancel)
-	form(id=`AttractionForm${formId}`, duck-table='Attractions', duck-function= crud, duck-key='Id', duck-key-value= attraction && attraction.Id)
+	form(id=`AttractionForm${attractionFormId}`, duck-table='Attractions', duck-function= crud, duck-key='Id', duck-key-value= attraction && attraction.Id)
 		div(duck-field='names', duck-type='object')
 			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
 				.form-group
@@ -244,4 +244,4 @@ mixin attractionForm(crud, attraction, locations, cancel)
 			button.btn.btn-primary(type='button', duck-button='submit')= attraction ? 'Update' : 'Add'
 			!= cancel
 
-	- formId++
+	- attractionFormId++

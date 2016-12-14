@@ -48,7 +48,7 @@ module.exports = function(_duck){
 		}
 
 		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
-		const values = typeof value === 'string' ? Array(value) : value;
+		const values = value instanceof Array ? value : Array(value);
 		const items = this.items || this.cached();
 
 		const foundItems = items.map(function(item){
@@ -81,7 +81,7 @@ module.exports = function(_duck){
 	// same as find, but only returns one result, does not allow contains
 	_duck.prototype.findOne = function(field, value){
 		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
-		const values = typeof value === 'string' ? Array(value) : value;
+		const values = value instanceof Array ? value : Array(value);
 		const items = this.items || this.cached();
 
 		for (var item in items){

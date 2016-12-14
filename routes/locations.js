@@ -471,15 +471,16 @@ router.get('/:country/:city/:attraction', (req, res, next) => {
 					 .items[0];
 
 	const attraction = Attraction.findOne('url', req.params.attraction).items;
-	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : [];
-	const subAttractions = attraction.subAttractions ? Attraction.find().items.filter((i) => attraction.subAttractions.indexOf(i.Id) > -1) : null;
-	const parentAttraction = attraction.parentAttraction ? Attraction.findOne('Id', attraction.parentAttraction).items : null;
-	const siblingAttractions = parentAttraction ? Attraction.find('parentAttraction', attraction.parentAttraction).items.filter((i) => i.Id !== attraction.Id) : null;
 
 	if(!attraction){
 		next();
 		return;
 	}
+
+	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : [];
+	const subAttractions = attraction.subAttractions ? Attraction.find().items.filter((i) => attraction.subAttractions.indexOf(i.Id) > -1) : null;
+	const parentAttraction = attraction.parentAttraction ? Attraction.findOne('Id', attraction.parentAttraction).items : null;
+	const siblingAttractions = parentAttraction ? Attraction.find('parentAttraction', attraction.parentAttraction).items.filter((i) => i.Id !== attraction.Id) : null;
 
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items

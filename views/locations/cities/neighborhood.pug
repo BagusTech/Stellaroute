@@ -1,14 +1,100 @@
 extends ../../layout.pug
 
 block content
-	.media-bg-img.request-page-header
+	if !user || !neighborhood
+		.media-bg-img.request-page-header
+			.container
+				h1= neighborhood && neighborhood.names && neighborhood.names.display || 'Unknown Neighborhood'
+
+		.container.ptb-Sm
+			small
+				a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
+
+			.content-card
+				h2.content-card--header Coming soon!
+				p.lead.m-0!= `More information about ${neighborhood && neighborhood.names && neighborhood.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
+	else
+		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+				.bg-Dkr.p-R
+					if user && user.isAdmin
+						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditNeighborhoodForm') Edit
+						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= neighborhood.Id
+					.container.ptb-0
+						ol.breadcrumb
+							li.active United Sates
+							li.active Midwest
+							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}`)= neighborhood.cityDisplay
+						h1= neighborhood.names.display
+							small.ml-Md= neighborhood.tagline
+
+
+		if user && user.isAdmin
+			+modal('EditNeighborhoodForm')(class='modal-lg')
+				+neighborhoodForm('update', neighborhood)
+
 		.container
-			h1= neighborhood.names.display
+			.row
+				.col-xs-12.col-sm-6.col-md-8.f-R
+					.content-card.p-0
+						if neighborhood.images && neighborhood.images.length > 2
+							div(data-function='banner')
+								for img, i in neighborhood.images
+									img(src=img, alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
+						else 
+							img.w-100(src= neighborhood.cardImage ? neighborhood.cardImage : 'http://placebear.com/300/300', alt= neighborhood.names.display)
+						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= neighborhood.description						
 
-	.container.ptb-Sm
-		small
-			a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
+					if neighborhood.needToKnow && neighborhood.needToKnow[0].description !== '<p><br></p>' && neighborhood.needToKnow[0].description !== '<br>'
+						.content-card
+							h2.content-card--header Need to Know
 
-		.content-card
-			h2.content-card--header Coming soon!
-			p.lead.m-0!= `More information about ${neighborhood.names.display} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
+							.row(data-function='accordion', data-allow-multiple='true')
+								for advice, i in neighborhood.needToKnow.sort((a, b) => {if(a.order > b.order){return -1;}if(a.order < b.order){return 1;}return 0;})
+									h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+										i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+										= advice.title
+									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+
+				.col-xs-12.col-sm-6.col-md-4
+					if neighborhood.orientation && neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
+						.content-card
+							h2.content-card--header Orientation
+							if neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
+								div!= neighborhood.orientation.description
+							
+							if neighborhood.orientation.map
+								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+									img.w-100(src= neighborhood.orientation.map)
+							if neighborhood.orientation && neighborhood.orientation.gettingThere && neighborhood.orientation.gettingThere !== '<p><br></p>' && neighborhood.orientation.gettingThere !== '<br>'
+								.clear
+									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
+										span.sr-only Getting There
+
+									.ml-Lg.mt-Md!= neighborhood.orientation.gettingThere
+
+				
+						if neighborhood.orientation.map
+							.modal.fade#MapModal(tab-index='-1', role='dialog')
+								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
+									.modal-content.p-Md
+										img.w-100(src=neighborhood.orientation.map)
+	
+
+				if neighborhood.nearbyNeighborhoods
+					.col-xs-12.col-sm-6.col-md-4
+						h2.fc-G Nearby Neighborhoods
+
+						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
+							for nearbyNeighborhood in nearbyNeighborhoods
+								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${nearbyNeighborhood.url}`, target='_blank')
+									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
+
+				if neighborhood.quickFacts && neighborhood.quickFacts[0].description !== '<p><br></p>' && neighborhood.quickFacts[0].description !== '<br>'
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card
+							h2.content-card--header Fun Facts
+							ul.ls-N.p-0
+								for fact in neighborhood.quickFacts
+									li
+										h3= fact.title
+										div!= fact.description

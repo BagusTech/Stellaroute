@@ -3,53 +3,20 @@ block content
 		.ta-r
 			button.btn.btn-primary(data-target='#AddNeighborhood', data-toggle='modal') Add Neighborhood
 
-		#AddNeighborhood.modal.fade(tabindex="-1", role="dialog")
-			.modal-dialog.modal-lg
-				.content-card
-					h2.content-card--header Add New Neighborhood Item
-					.row
-						form(duck-table='Neighborhoods', duck-function='add', duck-key='Id')
-							.col-xs-12.col-sm-6(duck-field='names', duck-type='object')
-								.form-group(duck-field='display', duck-type='string')
-									label Name
-										input.form-control(type='text', required, duck-value)
-							.col-xs-12.col-sm-6.form-group(duck-field='url', duck-type='string')
-									label Url
-										input.form-control(type='text', required, duck-value, disabled)
-
-							.col-xs-12(duck-field='description', duck-type='wysiwyg')
-								label Description
-								.summernote
-									p Write something about the neighborhood
-
-							.col-xs-12(duck-field='cardImage', duck-type='string')
-								.form-group
-									label Card Image
-										input.form-control(type='text', required, duck-value)
-							.form-group.hidden(duck-field='city', duck-type='string')
-									input(type='text', required, duck-value, value=city.Id, disabled)
-
-							.col-xs-12.ta-R
-								button.btn.btn-primary(type='button', duck-button='submit') Add
-								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddNeighborhood') Cancel
+		+modal('AddNeighborhood')(class='modal-lg')
+			+neighborhoodForm('add', null, {city: city.Id})
 
 	if (neighborhoods.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for neighborhood in neighborhoods
-				.masonry--item(data-toggle='modal', data-target= `#${neighborhood.names.display.replace(/\s/g, '-')}`)
+				.masonry--item(data-toggle='modal', data-target= `#${neighborhood.url}`)
 					+card(neighborhood.cardImage, neighborhood.names.display)
 					
 		-var neighborhoodCounter = 0;
 		for neighborhood in neighborhoods
-			+modal(neighborhood.names.display.replace(/\s/g, '-'))(class='modal-lg')
+			+modal(neighborhood.url)(class='modal-lg')
 				div(id=`NeighborhoodOverview${neighborhoodCounter}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= neighborhood.names.display
-						if user && user.isAdmin
-							div.f-R(duck-table='Neighborhoods', duck-function='delete', duck-key='Id', duck-key-value= neighborhood.Id, duck-goTo=`/${city.countryUrl}/${city.url}`)
-								button.btn.btn-danger.btn-sm(id=`NeighborhoodDeleteToggle${neighborhoodCounter}`, data-function='toggle', data-target=`this, #NeighborhoodDelete${neighborhoodCounter}`, data-toggle='hidden', type='button') Delete
-								.hidden(id=`NeighborhoodDelete${neighborhoodCounter}`, data-toggle='hidden')
-									button.btn.btn-danger.btn-sm(duck-button='submit') Delete
-									button.btn.btn-warning.btn-sm.ml-Xs(data-function='toggle', data-target=`#NeighborhoodDelete${neighborhoodCounter}, #NeighborhoodDeleteToggle${neighborhoodCounter}`, type='button') Cancel
 
 					.lead!= neighborhood.description
 					img.w-100(src= neighborhood.cardImage || 'http://placebear.com/600/400', alt= neighborhood.names.display)
@@ -57,23 +24,6 @@ block content
 					.ta-R.mt-Md
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`) Read More
 
-				if user && user.isAdmin
-					form.hidden(id=`NeighborhoodEdit${neighborhoodCounter}`, duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, data-toggle='hidden')
-						div(duck-field='names', duck-type='object')
-							.form-group(duck-field='display', duck-type='string')
-								label(for=`NeighborhoodName${neighborhoodCounter}`) Name
-								input.form-control(id=`NeighborhoodName${neighborhoodCounter}`, type='text', required, duck-value, value= neighborhood.names.display)
-						.form-group(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= neighborhood.description || `<p>Write something about ${neighborhood.names.display}</p>`
-						.form-group(duck-field='cardImage', duck-type='string')
-							label Card Image
-							input.form-control(duck-value, type='text', required, value= neighborhood.cardImage)
-
-						button.btn.btn-warning.mr-Xs(data-function='toggle', data-target=`#NeighborhoodEdit${neighborhoodCounter}, #NeighborhoodEditToggle${neighborhoodCounter}, #NeighborhoodOverview${neighborhoodCounter}`, type='button') Cancel
-						button.btn.btn-primary(duck-button='submit') Save
-
-				button.btn.btn-primary(id=`NeighborhoodEditToggle${neighborhoodCounter}`, data-function='toggle', data-target=`this, #NeighborhoodEdit${neighborhoodCounter}, #NeighborhoodOverview${neighborhoodCounter}`, data-toggle='hidden', type='button') Edit
 			- neighborhoodCounter++;
 		
 	else

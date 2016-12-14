@@ -135,6 +135,9 @@
 [duck-type='array'] .form-control {
   border: 1px solid #959ca2;
 }
+[data-icon] > .fa {
+  line-height: inherit;
+}
 [data-function*='interiorNav'] > a {
   padding-left: 24px;
 }
@@ -13050,6 +13053,11 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 #Stellaroute .lh-1 {
   line-height: 1;
+}
+#Stellaroute .lh-B,
+#Stellaroute .lh-A,
+#Stellaroute .lh-I {
+  line-height: 1.42857143;
 }
 @media (min-width: 767px) {
   #Stellaroute .fs-XXs--sm {

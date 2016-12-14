@@ -88,12 +88,12 @@ block content
 							if attraction.orientation.map
 								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= attraction.orientation.map)
+							if attraction.orientation && attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'
+								.clear
+									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
+										span.sr-only Getting There
 
-							h3
-								span.fs-16(data-icon='fa fa-subway')
-								| &nbsp;Getting There
-
-							div!= attraction.orientation.gettingThere
+									.ml-Lg.mt-Md!= attraction.orientation.gettingThere
 
 				
 						if attraction.orientation.map

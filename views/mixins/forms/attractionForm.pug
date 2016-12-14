@@ -238,6 +238,9 @@ mixin attractionForm(crud, attraction, locations, cancel)
 					input(type='text', required, duck-value, value=neighborhoods, disabled)
 
 		.ta-R
+			if attraction
+				+deleteForm('Attractions', attraction.Id)(class='mr-Xs')
+
 			button.btn.btn-primary(type='button', duck-button='submit')= attraction ? 'Update' : 'Add'
 			!= cancel
 

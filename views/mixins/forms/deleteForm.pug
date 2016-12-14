@@ -1,0 +1,11 @@
+- var deleteFormId = 0
+
+mixin deleteForm(table, key, redirect)
+	.d-Ib(duck-table= table, duck-function='delete', duck-key='Id', duck-key-value= key, duck-goTo= redirect)&attributes(attributes)
+		button.btn.btn-danger(id=`DeleteForm${deleteFormId}`, data-function='toggle', data-target=`this, #DeleteFormSubmit${deleteFormId}`, data-toggle='hidden', type='button') Delete
+
+		.hidden.d-Ib(id=`DeleteFormSubmit${deleteFormId}`, data-toggle='hidden')
+			button.btn.btn-danger(duck-button='submit') Delete
+			button.btn.btn-warning.ml-Xs(data-function='toggle', data-target=`#DeleteFormSubmit${deleteFormId}, #DeleteForm${deleteFormId}`, type='button') Cancel
+
+	- deleteFormId++

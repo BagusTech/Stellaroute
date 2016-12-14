@@ -15,18 +15,10 @@ block content
 				.masonry--item(data-toggle='modal', data-target= `#${attraction.url}`)
 					+card(attraction.cardImage, attraction.names.display)
 					
-		-var attractionCounter = 0;
-		for attraction in attractions
+		for attraction, i in attractions
 			+modal(attraction.url)(class='modal-lg')
-				div(id=`AttractionOverview${attractionCounter}`, data-toggle='hidden')
+				div(id=`AttractionOverview${i}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= attraction.names.display
-						if user && user.isAdmin
-							div.f-R(duck-table='Attractions', duck-function='delete', duck-key='Id', duck-key-value= attraction.Id, duck-goTo=`/${city.countryUrl}/${city.url}`)
-								button.btn.btn-danger.btn-sm(id=`AttractionDeleteToggle${attractionCounter}`, data-function='toggle', data-target=`this, #AttractionDelete${attractionCounter}`, data-toggle='hidden', type='button') Delete
-								.hidden(id=`AttractionDelete${attractionCounter}`, data-toggle='hidden')
-									button.btn.btn-danger.btn-sm(duck-button='submit') Delete
-									button.btn.btn-warning.btn-sm.ml-Xs(data-function='toggle', data-target=`#AttractionDelete${attractionCounter}, #AttractionDeleteToggle${attractionCounter}`, type='button') Cancel
-
 					.lead!= attraction.description
 					img.w-100(src= attraction.cardImage || 'http://placebear.com/600/400', alt= attraction.names.display)
 
@@ -34,26 +26,12 @@ block content
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${attraction.url}`) Read More
 
 				if user && user.isAdmin
-					.hidden(id=`AttractionEdit${attractionCounter}`, data-toggle='hidden')
-						+attractionForm('update', attraction, null, `<button class='btn btn-warning ml-Xs' data-function='toggle' data-target='#AttractionEdit${attractionCounter}, #AttractionEditToggle${attractionCounter}, #AttractionOverview${attractionCounter}', type='button'>Cancel</button>`)
+					.hidden(id=`AttractionEdit${i}`, data-toggle='hidden')
+						-var cancelButton = `<button class='btn btn-warning ml-Xs' data-function='toggle' data-target='#AttractionEdit${i}, #AttractionEditToggle${i}, #AttractionOverview${i}', type='button'>Cancel</button>`
 
-					//form.hidden(id=`AttractionEdit${attractionCounter}`, duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, data-toggle='hidden')
-						div(duck-field='names', duck-type='object')
-							.form-group(duck-field='display', duck-type='string')
-								label(for=`AttractionName${attractionCounter}`) Name
-								input.form-control(id=`AttractionName${attractionCounter}`, type='text', required, duck-value, value= attraction.names.display)
-						.form-group(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= attraction.description || `<p>Write something about ${attraction.names.display}</p>`
-						.form-group(duck-field='cardImage', duck-type='string')
-							label Card Image
-							input.form-control(duck-value, type='text', required, value= attraction.cardImage)
+						+attractionForm('update', attraction, null, cancelButton)
 
-						button.btn.btn-warning.mr-Xs(data-function='toggle', data-target=`#AttractionEdit${attractionCounter}, #AttractionEditToggle${attractionCounter}, #AttractionOverview${attractionCounter}`, type='button') Cancel
-						button.btn.btn-primary(duck-button='submit') Save
-
-				button.btn.btn-primary(id=`AttractionEditToggle${attractionCounter}`, data-function='toggle', data-target=`this, #AttractionEdit${attractionCounter}, #AttractionOverview${attractionCounter}`, data-toggle='hidden', type='button') Edit
-			- attractionCounter++;
+				button.btn.btn-primary(id=`AttractionEditToggle${i}`, data-function='toggle', data-target=`this, #AttractionEdit${i}, #AttractionOverview${i}`, data-toggle='hidden', type='button') Edit
 		
 	else
 		.content-card

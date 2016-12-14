@@ -29,10 +29,8 @@ block content
 
 
 		if user && user.isAdmin
-			+modal('EditAttractionForm')
+			+modal('EditAttractionForm')(class='modal-lg')
 				+attractionForm('update', attraction)
-				div(duck-table='Attractions', duck-key='Id', duck-key-value= attraction.Id, duck-function='delete')
-					button.btn.btn-danger(duck-button='submit') Delete
 
 		.container
 			.row
@@ -46,7 +44,7 @@ block content
 							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
 						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description						
 
-					if attraction.needToKnow
+					if attraction.needToKnow && attraction.needToKnow[0].description !== '<p><br></p>' && attraction.needToKnow[0].description !== '<br>'
 						.content-card
 							h2.content-card--header Need to Know
 

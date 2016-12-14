@@ -72,7 +72,7 @@ jQuery(($) => {
 			contentType: 'application/json',
 		}).done((response) => {
 			if(response.msg === "success"){
-				$header.text('Success! You\'ve Requested a Guide.');
+				$header.text('Thanks for the request!');
 				$text.text('We\'ll get back to you as quickly as we can. Feel free to request another.');
 				$guideInput.val('');
 			} else {

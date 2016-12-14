@@ -5,6 +5,7 @@ const City = Duck({
 	Item: {
 		Id: String,
 		url: String,
+		isPublic: Boolean,
 	// Modal Fields Card
 		names: {
 			display: String,
@@ -18,6 +19,7 @@ const City = Duck({
 		abbreviation: String,
 		isAutonomous: Boolean,
 		backgroundImage: String,
+		cardImage: String,
 		images: Array,
 		mapImage: String,
 		continent: Array,

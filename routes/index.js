@@ -8,52 +8,22 @@ const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
 const Continent 	   = require('../schemas/continent');
+const Country     	   = require('../schemas/country');
+const City       	   = require('../schemas/city');
 const db               = require('../config/db');
 const router           = express.Router();
 
 strategies.local(passport);
 strategies.instagram(passport);
 
+// home page
 router.get('/', function(req, res, next){
-	
-	/*
-	City.find().items.forEach(function(item){
-		item.names = {};
-		item.names.display = item.name;
-		delete item.name;
-
-		City.update(item).then(function(){
-			console.log('succesfully updated item')
-		});
-
-		var params = {
-		    TableName: City.table,
-		    Key: { // The primary key of the item (a map of attribute name to AttributeValue)
-
-		        Id: { S: item.Id}
-		        // more attributes...
-		    },
-		    AttributeUpdates: { // The attributes to update (map of attribute name to AttributeValueUpdate)
-
-		        name: {
-		            Action: 'DELETE', // PUT (replace)
-		                           // ADD (adds to number or set)
-		                           // DELETE (delete attribute or remove from set)
-		        },
-		        // more attribute updates: ...
-		    },
-		};
-
-		db.updateItem(params, function(err, data) {
-		    if (err) console.log(err); // an error occurred
-		    else console.log('succesfully deleted param'); // successful response
-		});
-	});
-	//*/	
+	const approvedLocations = req.user ? City.find('isPublic', true).join('country', Country.cached(), 'Id', 'url').items : [];
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
 		description: 'Stellaroute, founded in 2016, is the world\'s foremost innovator in travel technologies and services.',
+		approvedLocations: approvedLocations
 	});
 });
 

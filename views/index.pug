@@ -76,9 +76,70 @@ block content
 							.screen-shot-black-phone
 								img(src="/images/screenshot-ratings.jpg")
 	else
-		.media-bg-img.home-bg-img
-			.container.d-F.fd-C.fj-C.p-A.t-0.b-0.l-0.r-0
-				.row.plr-Sm
+		.media-bg-img.home-bg-img.pt-Xl
+			.container.ptb-Xl.plr-Lg
+				.row
+					.col-xs-12
+						h1.mt-0.mb-Md.ta-C
+							span.fs-Xl--sm stellaroute
+							br
+							small.tt-U.fs-32--sm Plan Spontaneity
+
+						p.lead.ta-J.mlr-A.w-60--sm.fc-W Welcome to our Beta. We’re excited to help travelers experience their world, their way. We’d love to hear about where you want to go next and how you like to travel.
+		.bg-W
+			.container
+
+				h2.fc-G Locations
+				.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
+					for location in approvedLocations
+						a.masonry--item(href=`/${location.countryUrl}/${location.url}`)
+							+card(location.cardImage, location.names.display)
+
+					.masonry--item(data-toggle='modal', data-target='#RequestLocation')
+						.card
+							.ta-C.fc-Purp(style='padding: 40% 0 ; font-size: 60px;')
+								i.fa.fa-plus(aria-hidden='true')
+								.sr-only Request
+
+							h3.card--title Request a Location
+				+modal('RequestLocation')(class='t-XXl')
+					form.d-B.bg-W.p-0.p-S.m-0(data-beta-signup="success")
+						input#EmailCaptureInput(type='hidden', value= user.local.email)
+						.fc-B.p-Sm(data-beta-signup="success-content")
+							h2.mb-0.plr-Sm.plr-0--sm(data-submit-guide="header") Where would you like to go?
+							hr.w-75
+							p.fw-Sb.mb-Md(data-submit-guide="text") We are expanding to new location everyday.
+							.input-group.input-submit-group.m-0
+								input#RequestGuideInput.form-control(type='text', placeholder='Where do you want to go?', name='travel')
+								.input-group-btn
+									input#RequestGuideButton.btn.btn-primary(type='submit', value='Request a Location')
+				script(type='text/javascript', src='/js/controls/betaSignup.min.js')
+
+				hr.mb-Lg
+
+				h2.fc-G Coming Soon
+				.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
+					.masonry--item
+						+card('http://az616578.vo.msecnd.net/files/2016/04/27/635973353399336445-1421152854_NYC-1.jpg', 'New York')
+					.masonry--item
+						+card('http://cdn.ek.aero/english/images/London-1_tcm233-2111842.jpg', 'London')
+					.masonry--item
+						+card('http://www.accessmba.com/uploads/tx_templavoila/Amsterdam.jpg', 'Amsterdam')
+					.masonry--item
+						+card('http://cdn.boulevards.com/imgs/efm-hotel-billboard-washingtondc.com.jpg', 'Washington, D.C.')
+
+				hr.mb-Lg
+
+				h2.fc-G Upcoming Features
+				ul.fs-Xl.mt-Sm.mb-XXl
+					li Export to PDF
+					li Create &amp; Edit Personalized Guides
+					li Forums
+					li Rate Attractions
+					li Interactive Map
+					li Upload Pictures
+					
+				//.row
 					h1.mt-0.mb-Md.ta-C Plan Spontaneity
 					.col-xs-12.col-md-6.col-md-push-3
 						.input-group
@@ -101,20 +162,3 @@ block footer
 			small 
 				| Copyright &copy; 2016 Bagus Tech LLC. 
 				span All rights reserved
-
-
-
-	//.row
-		.col-sm-3.col-sm-push-3.col-xs-12
-			p
-				a(href='/continents').btn.btn-primary.btn-block.btn-lg Continent
-		.col-sm-3.col-sm-push-3.col-xs-12
-			p
-				a(href='/world-regions').btn.btn-primary.btn-block.btn-lg World Region
-	//.row
-		.col-sm-3.col-sm-push-3.col-xs-12
-			p
-				a(href='/countries').btn.btn-primary.btn-block.btn-lg Country
-		.col-sm-3.col-sm-push-3.col-xs-12
-			p
-				a(href='/attractions').btn.btn-primary.btn-block.btn-lg Attraction

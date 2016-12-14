@@ -8057,7 +8057,6 @@ button.close {
 .site-body {
   background: #e7e7e7;
   min-height: 67vh;
-  padding-bottom: 24px;
   z-index: 2;
 }
 .site-footer {
@@ -8107,7 +8106,6 @@ button.close {
 }
 .home-bg-img {
   background-image: url("/images/index-bg.jpg");
-  min-height: 100vh;
 }
 .landing-header .email-capture-wrapper {
   max-width: 560px;
@@ -9186,6 +9184,12 @@ form.profile-settings-update .profile-label.notification h3 {
 #Stellaroute .bs-D {
   border-style: dashed;
 }
+#Stellaroute .bc-W {
+  border-color: white;
+}
+#Stellaroute .bc-B {
+  border-color: #222;
+}
 #Stellaroute .bc-Gr {
   border-color: #59D087;
 }
@@ -9310,6 +9314,12 @@ form.profile-settings-update .profile-label.notification h3 {
   #Stellaroute .bs-D--sm {
     border-style: dashed;
   }
+  #Stellaroute .bc-W--sm {
+    border-color: white;
+  }
+  #Stellaroute .bc-B--sm {
+    border-color: #222;
+  }
   #Stellaroute .bc-Gr--sm {
     border-color: #59D087;
   }
@@ -9424,6 +9434,12 @@ form.profile-settings-update .profile-label.notification h3 {
   }
   #Stellaroute .bs-D--md {
     border-style: dashed;
+  }
+  #Stellaroute .bc-W--md {
+    border-color: white;
+  }
+  #Stellaroute .bc-B--md {
+    border-color: #222;
   }
   #Stellaroute .bc-Gr--md {
     border-color: #59D087;
@@ -13084,6 +13100,21 @@ form.profile-settings-update .profile-label.notification h3 {
   #Stellaroute .fs-24--sm {
     font-size: 24px;
   }
+  #Stellaroute .fs-28--sm {
+    font-size: 28px;
+  }
+  #Stellaroute .fs-32--sm {
+    font-size: 32px;
+  }
+  #Stellaroute .fs-48--sm {
+    font-size: 48px;
+  }
+  #Stellaroute .fs-64--sm {
+    font-size: 64px;
+  }
+  #Stellaroute .fs-72--sm {
+    font-size: 72px;
+  }
   #Stellaroute .fc-I--sm {
     color: inherit;
   }
@@ -13211,6 +13242,21 @@ form.profile-settings-update .profile-label.notification h3 {
   }
   #Stellaroute .fs-24--md {
     font-size: 24px;
+  }
+  #Stellaroute .fs-28--md {
+    font-size: 28px;
+  }
+  #Stellaroute .fs-32--md {
+    font-size: 32px;
+  }
+  #Stellaroute .fs-48--md {
+    font-size: 48px;
+  }
+  #Stellaroute .fs-64--md {
+    font-size: 64px;
+  }
+  #Stellaroute .fs-72--md {
+    font-size: 72px;
   }
   #Stellaroute .fc-I--md {
     color: inherit;

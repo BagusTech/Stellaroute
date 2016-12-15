@@ -73,7 +73,7 @@ mixin attractionForm(crud, attraction, locations, cancel)
 							label Order
 								input.form-control(type='number', duck-value, value= advice.order)
 						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Title
+							label Description
 							.summernote!= advice.description
 			else
 				.row(duck-type='object')
@@ -101,7 +101,7 @@ mixin attractionForm(crud, attraction, locations, cancel)
 							label Order
 								input.form-control(type='number', duck-value, value= advice.order)
 						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Title
+							label Description
 							.summernote!= advice.description
 			else
 				.row(duck-type='object')

@@ -39,7 +39,7 @@ strategies.local = function(passport){
 			passwordField: 'local.password',
 			passReqToCallback: true // allows us to pass back the entire request to the callback
 		}, function(req, email, password, done){
-			if (User.findOne('local.email', email)) {
+			if (User.findOne('local.email', email).items) {
 				return done(null, false, req.flash('error', 'That email is already taken'));
 			} else if(password.length < 4) {
 				return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));

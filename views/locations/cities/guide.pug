@@ -1,10 +1,10 @@
 extends ../../layout.pug
 
 block content
-	if !user || !user.isAdmin
+	if !user || !guide
 		.media-bg-img.request-page-header
 			.container
-				h1= guide.names.display
+				h1= guide && guide.names && guide.names.display || 'Guide Not Found'
 
 		.container.ptb-Sm
 			small
@@ -14,357 +14,117 @@ block content
 				h2.content-card--header Coming soon!
 				p.lead.m-0!= `More information about ${guide.names.display} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
 	else
-		div.city-header(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+		div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage}") no-repeat scroll center 57% / cover;`)
 				.bg-Dkr
 					.container.ptb-0
 						ol.breadcrumb
 							li.active United Sates
 							li.active Midwest
-							li.active #{city.names.display}
-						h1 #{city.names.display}
-							small.ml-Md Broad Shoulders, Down to Earth, Great Food
+							li.active: a(href= `/${city.countryUrl}/${city.url}`) #{city.names.display}
+						h1 #{guide.names.display}
+							if guide.author
+								small.pl-Xs= guide.author
 
-						nav.pt-Md
-							ul.account-pages.m-0
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago') Overview
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/attraction') Attractions
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/food') Food
-								li.p-0
-									a.fw-N(href='/united-states-of-america/chicago/guides') Guides
-								li.p-0
-									a.fw-N.bg-Dkr(href='/united-states-of-america/chicago/explore') Explore
+							if guide.tagline
+								small.d-B.mt-Sm= guide.tagline
 
 		.container
+			if user.isAdmin
+				.ta-R
+					button.btn.btn-primary(data-toggle='modal', data-target='#AddGuideModal') Edit Guide
+				+modal('AddGuideModal')(class='modal-lg')
+					+guideForm('update', guide)
 			.row
 				.col-sm-5.col-md-4.col-lg-3(data-function='stickey')
 					nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
 						a(href='#', role='tab', aria-expanded='true', data-position='0')
 							h3 Overview
 						ul(role='tabpanel', aria-hidden='false')
-							li
-								a(href='#', data-position='0.0') Travel Hacks
-							li
-								a(href='#', data-position='0.1') Highlights
-							li
-								a(href='#', data-position='0.2') Where to Stay
-							li
-								a(href='#', data-position='0.3') Where to Go Out
-							li
-								a(href='#', data-position='0.4') Where to Eat
-							li
-								a(href='#', data-position='0.5') Where to Explore
-							li
-								a(href='#', data-position='0.6') Where to Drink
+							if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].description !== '<p><br></p>' && guide.travelHacks[0].description !== '<br>'
+								li
+									a(href='#', data-position='0.0') Travel Hacks
 
-						a(href='#', role='tab', aria-expanded='false', data-position='1')
-							h3 Day One: The Loop
-						ul(role='tabpanel', aria-hidden='true')
-							li
-								a(href='#', data-position='1.0') The Art Institute of Chicago
-							li
-								a(href='#', data-position='1.1') Lunch: Pierogi Heaven
-							li
-								a(href='#', data-position='1.2') Millennium Park
-							li
-								a(href='#', data-position='1.3') Cloud Gate
-							li
-								a(href='#', data-position='1.4') Grant Park
-							li
-								a(href='#', data-position='1.5') Buckinham Fountain
-							li
-								a(href='#', data-position='1.6') Dinner: West Loop
+							if guide.highlights && guide.highlights[0] && guide.highlights[0].description !== '<p><br></p>' && guide.highlights[0].description !== '<br>'
+								li
+									a(href='#', data-position='0.1') Highlights
+							
+							if guide.whereToStay && guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+								li
+									a(href='#', data-position='0.2') Where to Stay
+							
+							if guide.whereToGoOut && guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+								li
+									a(href='#', data-position='0.3') Where to Go Out
+							
+							if guide.whereToEat && guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+								li
+									a(href='#', data-position='0.4') Where to Eat
+							
+							if guide.whereToExplore && guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+								li
+									a(href='#', data-position='0.5') Where to Explore
 
-						a(href='#', role='tab', aria-expanded='false', data-position='2')
-							h3 Day Two: River North &amp; Lincoln Park
-						ul(role='tabpanel', aria-hidden='true')
-							li
-								a(href='#', data-position='2.0') The Art Institute of Chicago
-							li
-								a(href='#', data-position='2.1') Lunch: Pierogi Heaven
-							li
-								a(href='#', data-position='2.2') Millennium Park
-							li
-								a(href='#', data-position='2.3') Cloud Gate
-							li
-								a(href='#', data-position='2.4') Grant Park
-							li
-								a(href='#', data-position='2.5') Buckinham Fountain
-							li
-								a(href='#', data-position='2.6') Dinner: West Loop
+						if guide.days
+							for day, i in guide.days.sort(sortByOrder)
+								a(href='#', role='tab', aria-expanded='false', data-position= i+1)
+									h3= `Day ${i+1}: ${day.title}`
+
+								if day.cards
+									ul(role='tabpanel', aria-hidden='true')
+										for card, j in day.cards.sort(sortByOrder)
+											li: a(href='#', data-position= `${i+1}.${j}`)= card.title
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
 					.content-card(data-position='0')
 						h2.content-card--header.fw-B.p-R.bg-W(data-function='stickey') Overview
-						p.lead A three-day, food centric guide that emphasized the city's must eat food, chill nightlife, and great attractions.
+						.lead!= guide.description
 
 					.content-card.p-0
-						img.w-100(src='http://placebear.com/500/500')
+						img.w-100(src= guide.map, alt= guide.names.display)
 
-					.content-card
-						h2.content-card--header(data-position='0.0') Travel Hacks
-						h3 It's a City of Neighborhoods
-						p You can tell a lout about a Chicagoan by which part of town they call home. Each one is distinctive and offers a sfferent experience.
+					if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].description !== '<p><br></p>' && guide.travelHacks[0].description !== '<br>'
+						.content-card
+							h2.content-card--header(data-position='0.0') Travel Hacks
+							div(data-function='accordion', data-allow-multiple='true')
+								for hack, i in guide.travelHacks
+									h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+										i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+										= hack.title
+									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= hack.description
 
-						h3 Public Transit
-						p If you're takin public transit it's good to know the city's subway, The 'L', is organized in a spoke-and-wheel. It's very easy to get from different enighborhoods to and from downtown, but sometimes hard to get from one neighborhood to another. Depending on where you stay, you might be somewhat limited by what's on your line.
+					if guide.highlights && guide.highlights[0] && guide.highlights[0].description !== '<p><br></p>' && guide.highlights[0].description !== '<br>'
+						h2.fc-G(data-position='0.1') Highlights
+						.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
+							for highlight in guide.highlights
+								.masonry--item
+									+card(highlight.cardImage, highlight.title, null, null, highlight.description)
 
-						h3 CTA Pass
-						p If you do plan on takin public transit, there are Three Day CTA passes that you can purchase in advance and receive via mail or at any 'L' stop work for the 'L' and buses (which can be mroe convenient depending on your route).
+					if guide.whereToStay && guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+						.content-card
+							h2.content-card--header(data-position='0.2') Where to Stay
+							!= guide.whereToStay
+					
+					if guide.whereToGoOut && guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+						.content-card
+							h2.content-card--header(data-position='0.3') Where to Go Out
+							!= guide.whereToGoOut
+					
+					if guide.whereToEat && guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+						.content-card
+							h2.content-card--header(data-position='0.4') Where to Eat
+							!= guide.whereToEat
+					
+					if guide.whereToExplore && guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+						.content-card
+							h2.content-card--header(data-position='0.5') Where to Explore
+							!= guide.whereToExplore
 
-						.ta-C.mt-Lg
-							a.btn.btn-default.plr-Lg View More
+					if guide.days
+						for day, i in guide.days.sort(sortByOrder)
+							.content-card(data-position= i+1)
+								h2= `Day ${i+1}: ${day.title}`
+								.lead!= day.description
 
-					h2(data-position='0.1') Highlights
-					.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
-					.d-F.fj-S
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://www.panicstream.com/vault/wp-content/uploads/2012/04/chicago-theatre.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Chicago Theatre
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm A landmark theater located on North State Street in the Loop area of Chicago, Illinois, in the United State
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-D(href="#")
-									img.w-100(src='http://urbanmatter.com/wp-content/uploads/2015/04/Art-Institute-of-Chicago.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 The Art Institute of Chicago
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Home to one of the best art collections in the US
-
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='https://cdn0.vox-cdn.com/uploads/chorus_image/image/47913373/riverwalk-insta.0.png')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Riverwalk
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm The Riverwalk offers a variety of opportunities to find the beauty and spirit of the Chicago River.
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://doubletree-hotel-magnificent-mile.chicagotophotels.com/data/Photos/OriginalPhoto/1920/192010/192010453.JPEG')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Magnificent Mile
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Chicago's version of the Champs-Elysées: a grand wide boulevard with exclusive shops, museums, restaurants and ritzy hotels.
-
-					h2(data-position='0.2') Where to Stay
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='0.3') Where to Go Out
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='0.4') Where to Eat
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='0.5') Where to Explore
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='0.6') Where to Drink
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-					.content-card(data-position='1')
-						h2.content-card--header.fw-B.p-R.bg-W(data-function='stickey') Day One: The Loop
-						p.lead A three-day, food centric guide that emphasized the city's must eat food, chill nightlife, and great attractions.
-
-					.content-card.p-0
-						img.w-100(src='http://placebear.com/500/500')
-
-					.content-card
-						h2.content-card--header(data-position='1.0') Travel Hacks
-						h3 It's a City of Neighborhoods
-						p You can tell a lout about a Chicagoan by which part of town they call home. Each one is distinctive and offers a sfferent experience.
-
-						h3 Public Transit
-						p If you're takin public transit it's good to know the city's subway, The 'L', is organized in a spoke-and-wheel. It's very easy to get from different enighborhoods to and from downtown, but sometimes hard to get from one neighborhood to another. Depending on where you stay, you might be somewhat limited by what's on your line.
-
-						h3 CTA Pass
-						p If you do plan on takin public transit, there are Three Day CTA passes that you can purchase in advance and receive via mail or at any 'L' stop work for the 'L' and buses (which can be mroe convenient depending on your route).
-
-						.ta-C.mt-Lg
-							a.btn.btn-default.plr-Lg View More
-
-					h2(data-position='1.1') Highlights
-					.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
-					.d-F.fj-S
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://www.panicstream.com/vault/wp-content/uploads/2012/04/chicago-theatre.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Chicago Theatre
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm A landmark theater located on North State Street in the Loop area of Chicago, Illinois, in the United State
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-D(href="#")
-									img.w-100(src='http://urbanmatter.com/wp-content/uploads/2015/04/Art-Institute-of-Chicago.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 The Art Institute of Chicago
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Home to one of the best art collections in the US
-
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='https://cdn0.vox-cdn.com/uploads/chorus_image/image/47913373/riverwalk-insta.0.png')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Riverwalk
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm The Riverwalk offers a variety of opportunities to find the beauty and spirit of the Chicago River.
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://doubletree-hotel-magnificent-mile.chicagotophotels.com/data/Photos/OriginalPhoto/1920/192010/192010453.JPEG')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Magnificent Mile
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Chicago's version of the Champs-Elysées: a grand wide boulevard with exclusive shops, museums, restaurants and ritzy hotels.
-
-					h2(data-position='1.2') Where to Stay
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='1.3') Where to Go Out
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='1.4') Where to Eat
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='1.5') Where to Explore
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='1.6') Where to Drink
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-					.content-card(data-position='2')
-						h2.content-card--header.fw-B.p-R.bg-W(data-function='stickey') Day Two: River North &amp; Lincoln Park
-						p.lead A three-day, food centric guide that emphasized the city's must eat food, chill nightlife, and great attractions.
-
-					.content-card.p-0
-						img.w-100(src='http://placebear.com/500/500')
-
-					.content-card
-						h2.content-card--header(data-position='2.0') Travel Hacks
-						h3 It's a City of Neighborhoods
-						p You can tell a lout about a Chicagoan by which part of town they call home. Each one is distinctive and offers a sfferent experience.
-
-						h3 Public Transit
-						p If you're takin public transit it's good to know the city's subway, The 'L', is organized in a spoke-and-wheel. It's very easy to get from different enighborhoods to and from downtown, but sometimes hard to get from one neighborhood to another. Depending on where you stay, you might be somewhat limited by what's on your line.
-
-						h3 CTA Pass
-						p If you do plan on takin public transit, there are Three Day CTA passes that you can purchase in advance and receive via mail or at any 'L' stop work for the 'L' and buses (which can be mroe convenient depending on your route).
-
-						.ta-C.mt-Lg
-							a.btn.btn-default.plr-Lg View More
-
-					h2(data-position='2.1') Highlights
-					.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
-					.d-F.fj-S
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://www.panicstream.com/vault/wp-content/uploads/2012/04/chicago-theatre.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Chicago Theatre
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm A landmark theater located on North State Street in the Loop area of Chicago, Illinois, in the United State
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-D(href="#")
-									img.w-100(src='http://urbanmatter.com/wp-content/uploads/2015/04/Art-Institute-of-Chicago.jpg')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 The Art Institute of Chicago
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Home to one of the best art collections in the US
-
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='https://cdn0.vox-cdn.com/uploads/chorus_image/image/47913373/riverwalk-insta.0.png')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Riverwalk
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm The Riverwalk offers a variety of opportunities to find the beauty and spirit of the Chicago River.
-						.masonry--items.mlr-Sm
-							.content-card.m-0.p-0
-								a.d-B(href="#")
-									img.w-100(src='http://doubletree-hotel-magnificent-mile.chicagotophotels.com/data/Photos/OriginalPhoto/1920/192010/192010453.JPEG')
-									h3.m-0.mb-Xs.plr-Sm.ptb-Xs.fs-16 Magnificent Mile
-									p.m-0.fc-B.fw-N.lh-1.pb-Sm.plr-Sm Chicago's version of the Champs-Elysées: a grand wide boulevard with exclusive shops, museums, restaurants and ritzy hotels.
-
-					h2(data-position='2.2') Where to Stay
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='2.3') Where to Go Out
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='2.4') Where to Eat
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='2.5') Where to Explore
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					h2(data-position='2.6') Where to Drink
-					p.
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							if day.cards
+								for card, j in day.cards.sort(sortByOrder)
+									.content-card(data-position= `${i+1}.${j}`)

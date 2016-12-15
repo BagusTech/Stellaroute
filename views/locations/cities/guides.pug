@@ -7,74 +7,23 @@ block content
 			.modal-dialog.modal-lg
 				.content-card
 					h2.content-card--header Add New Guide Item
-					.row
-						form(duck-table='Guides', duck-function='add', duck-key='Id')
-							.col-xs-12.col-sm-6(duck-field='names', duck-type='object')
-								.form-group(duck-field='display', duck-type='string')
-									label Name
-										input.form-control(type='text', required, duck-value)
-							.col-xs-12.col-sm-6.form-group(duck-field='url', duck-type='string')
-									label Url
-										input.form-control(type='text', required, duck-value, disabled)
-
-							.col-xs-12(duck-field='description', duck-type='wysiwyg')
-								label Description
-								.summernote
-									p Write something about the guide
-
-							.col-xs-12(duck-field='cardImage', duck-type='string')
-								.form-group
-									label Card Image
-										input.form-control(type='text', required, duck-value)
-							.form-group.hidden(duck-field='city', duck-type='array')
-									input(type='text', required, duck-value, value=city.Id, disabled)
-
-							.col-xs-12.ta-R
-								button.btn.btn-primary(type='button', duck-button='submit') Add
-								button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddGuide') Cancel
+					+guideForm('add', null, {cities: [city.Id]})
 
 	if (guides.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for guide in guides
-				.masonry--item(data-toggle='modal', data-target= `#${guide.names.display.replace(/\s/g, '-')}`)
+				.masonry--item(data-toggle='modal', data-target= `#${guide.url}`)
 					+card(guide.cardImage, guide.names.display)
 					
-		-var guideCounter = 0;
-		for guide in guides
-			+modal(guide.names.display.replace(/\s/g, '-'))(class='modal-lg')
-				div(id=`GuideOverview${guideCounter}`, data-toggle='hidden')
+		for guide, i in guides
+			+modal(guide.url)(class='modal-lg')
+				div(id=`GuideOverview${i}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= guide.names.display
-						if user && user.isAdmin
-							div.f-R(duck-table='Guides', duck-function='delete', duck-key='Id', duck-key-value= guide.Id, duck-goTo=`/${city.countryUrl}/${city.url}`)
-								button.btn.btn-danger.btn-sm(id=`GuideDeleteToggle${guideCounter}`, data-function='toggle', data-target=`this, #GuideDelete${guideCounter}`, data-toggle='hidden', type='button') Delete
-								.hidden(id=`GuideDelete${guideCounter}`, data-toggle='hidden')
-									button.btn.btn-danger.btn-sm(duck-button='submit') Delete
-									button.btn.btn-warning.btn-sm.ml-Xs(data-function='toggle', data-target=`#GuideDelete${guideCounter}, #GuideDeleteToggle${guideCounter}`, type='button') Cancel
-
 					.lead!= guide.description
 					img.w-100(src= guide.cardImage || 'http://placebear.com/600/400', alt= guide.names.display)
 
 					.ta-R.mt-Md
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
-
-				if user && user.isAdmin
-					form.hidden(id=`GuideEdit${guideCounter}`, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, data-toggle='hidden')
-						div(duck-field='names', duck-type='object')
-							.form-group(duck-field='display', duck-type='string')
-								label(for=`GuideName${guideCounter}`) Name
-								input.form-control(id=`GuideName${guideCounter}`, type='text', required, duck-value, value= guide.names.display)
-						.form-group(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= guide.description || `<p>Write something about ${guide.names.display}</p>`
-						.form-group(duck-field='cardImage', duck-type='string')
-							label Card Image
-							input.form-control(duck-value, type='text', required, value= guide.cardImage)
-
-						button.btn.btn-warning.mr-Xs(data-function='toggle', data-target=`#GuideEdit${guideCounter}, #GuideEditToggle${guideCounter}, #GuideOverview${guideCounter}`, type='button') Cancel
-						button.btn.btn-primary(duck-button='submit') Save
-
-				button.btn.btn-primary(id=`GuideEditToggle${guideCounter}`, data-function='toggle', data-target=`this, #GuideEdit${guideCounter}, #GuideOverview${guideCounter}`, data-toggle='hidden', type='button') Edit
-			- guideCounter++;
 		
 	else
 		.content-card

@@ -1,0 +1,514 @@
+-var guideFormId = 0
+
+mixin guideForm(crud, guide, locations, cancel)
+	form(id=`GuideForm${guideFormId}`, duck-table='Guides', duck-function= crud, duck-key='Id', duck-key-value= guide && guide.Id)
+		div(duck-field='names', duck-type='object')
+			.form-group(duck-field='display', duck-type='string')
+				label Display Name
+					input.form-control(type='text', required, duck-value, value= guide && guide.names.display)
+
+			div(duck-field='alias', duck-type='array')
+				label Alias'
+				if guide && guide.names.alias
+					for alias in guide.names.alias
+						.form-group(duck-type='string')
+							input.form-control(type='text', required, duck-value, value= alias)
+				else
+					.form-group(duck-type='string')
+						input.form-control(type='text', required, duck-value)
+
+		if (!guide)
+			.form-group(duck-field='url', duck-type='string')
+					label Url
+						input.form-control(type='text', required, duck-value, disabled)
+		
+		.form-group(duck-field='tagline', duck-type='string')
+			label Tagline
+				input.form-control(type='text', duck-value, value= guide && guide.tagline)
+
+		div(duck-field='description', duck-type='wysiwyg')
+			label Description
+			.summernote!= guide && guide.description
+
+		.form-group(duck-field='backgroundImage', duck-type='string')
+			label Background Image
+				input.form-control(type='text', required, duck-value, value= guide && guide.backgroundImage)
+
+		.form-group(duck-field='cardImage', duck-type='string')
+			label Card Image
+				input.form-control(type='text', required, duck-value, value= guide && guide.cardImage)
+
+		.form-group(duck-field='map', duck-type='string')
+			label Map
+				input.form-control(type='text', required, duck-value, value= guide && guide.map)
+
+
+		div(duck-field='travelHacks', duck-type='array')
+			h3 Travel Hacks
+			if guide && guide.travelHacks
+				for hack in guide.travelHacks
+					.row(duck-type='object')
+						h4 Hack
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= hack.title)
+
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= hack.order)
+
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= hack.description
+			else
+				.row(duck-type='object')
+					h4 Hack
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+		.form-group(duck-field='whereToStay', duck-type='wysiwyg')
+			label Where to Stay
+			.summernote!= guide && guide.whereToStay
+
+		.form-group(duck-field='whereToGoOut', duck-type='wysiwyg')
+			label Where to Go Out
+			.summernote!= guide && guide.whereToGoOut
+
+		.form-group(duck-field='whereToEat', duck-type='wysiwyg')
+			label Where to Eat
+			.summernote!= guide && guide.whereToEat
+
+		.form-group(duck-field='whereToExplore', duck-type='wysiwyg')
+			label Where to Explore
+			.summernote!= guide && guide.whereToExplore
+
+		div(duck-field='highlights', duck-type='array')
+			h3 Highlights
+			if guide && guide.highlights
+				for highlight in guide.highlights
+					div(duck-type='object')
+						label Highlight
+
+						.form-group(duck-field='Id', duck-type='string')
+							label Id of Highlight (attraction, city, etc)
+								input.form-control(type='text', duck-value, value= highlight.Id)
+
+						.form-group(duck-field='table', duck-type='string')
+							label Table of above Id
+								select.form-control(duck-value)
+									option(selected= highlight.table === 'Attractions') Attractions
+									option(selected= highlight.table === 'Neighborhoods') Neighborhoods
+									option(selected= highlight.table === 'CityRegions', value='CityRegions') City Regions
+									option(selected= highlight.table === 'Cities') Cities
+									option(selected= highlight.table === 'ProvinceRegions', value='ProvinceRegions') Province Regions
+									option(selected= highlight.table === 'Provinces') Provinces
+									option(selected= highlight.table === 'CountryRegions', value='CountryRegions') Country Regions
+									option(selected= highlight.table === 'Countries') Countries
+									option(selected= highlight.table === 'WorldRegions', value='WorldRegions') World Regions
+									option(selected= highlight.table === 'Continents') Continents
+
+						.form-group(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= highlight.order)
+
+						.form-group(duck-field='cardImage', duck-type='string')
+							label Card Image
+								input.form-control(type='text', duck-value, value= highlight.cardImage)
+
+						.form-group(duck-field='title', duck-type='string')
+							label title
+								input.form-control(type='text', duck-value, value= highlight.title)
+
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= highlight.description
+
+						.form-group(duck-field='readMoreText', duck-type='string')
+							label Read More Text
+								input.form-control(type='text', duck-value, value= highlight.readMoreText)
+
+						.form-group(duck-field='readMoreLink', duck-type='string')
+							label Read More Link
+								input.form-control(type='text', duck-value, value= highlight.readMoreLink)
+			else
+				div(duck-type='object')
+					label Highlight
+
+					.form-group(duck-field='Id', duck-type='string')
+						label Id of Highlight (attraction, city, etc)
+							input.form-control(type='text', duck-value)
+
+					.form-group(duck-field='table', duck-type='string')
+						label Table of above Id
+							select.form-control(duck-value)
+								option Attractions
+								option Neighborhoods
+								option(value='CityRegions') City Regions
+								option Cities
+								option(value='ProvinceRegions') Province Regions
+								option Provinces
+								option(value='CountryRegions') Country Regions
+								option Countries
+								option(value='WorldRegions') World Regions
+								option Continents
+
+					.form-group(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+
+					.form-group(duck-field='cardImage', duck-type='string')
+						label Card Image
+							input.form-control(type='text', duck-value)
+
+					.form-group(duck-field='title', duck-type='string')
+						label title
+							input.form-control(type='text', duck-value)
+
+					.form-group(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+					.form-group(duck-field='readMoreText', duck-type='string')
+						label Read More Text
+							input.form-control(type='text', duck-value)
+
+					.form-group(duck-field='readMoreLink', duck-type='string')
+						label Read More Link
+							input.form-control(type='text', duck-value)
+
+		div(duck-field='days', duck-type='array')
+			h3 Days
+			if guide && guide.days
+				for day in guide.days
+					div(duck-type='object')
+						h4 Day
+						.form-group(duck-field='title', duck-type='string')
+							label Title (not including the word "Day")
+								input.form-control(type='text', duck-value, value= day.title)
+
+						.form-group(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= day.order)
+
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= day.description
+
+						div(duck-field='cards', duck-type='array')
+							h5 Cards
+							if day.cards
+								for card in day.cards
+									div(duck-type='object')
+										h6 Card
+										.form-group(duck-field='title', duck-type='string')
+											label Title
+												input.form-control(type='text', duck-value, value= card.title)
+
+										.form-group(duck-field='order', duck-type='number')
+											label Order
+												input.form-control(type='number', duck-value, value= card.order)
+
+										.form-group(duck-field='image', duck-type='string')
+											label Image
+												input.form-control(type='text', duck-value, value= card.image)
+
+										.form-group(duck-field='description', duck-type='wysiwyg')
+											label Description
+											.summernote!= card.description
+
+										.form-group(duck-field='Id', duck-type='string')
+											label Id of what is being related to (such as an attraction or city)
+												input.form-control(type='text', duck-value, value= card.Id)
+
+										.form-group(duck-field='table', duck-type='string')
+											label Table of what the Id is in
+												select.form-control(duck-value)
+													option
+													option(selected= card.table === 'Attractions') Attractions
+													option(selected= card.table === 'Neighborhoods') Neighborhoods
+													option(selected= card.table === 'CityRegions', value='CityRegions') City Regions
+													option(selected= card.table === 'Cities') Cities
+													option(selected= card.table === 'ProvinceRegions', value='ProvinceRegions') Province Regions
+													option(selected= card.table === 'Provinces') Provinces
+													option(selected= card.table === 'CountryRegions', value='CountryRegions') Country Regions
+													option(selected= card.table === 'Countries') Countries
+													option(selected= card.table === 'WorldRegions', value='WorldRegions') World Regions
+													option(selected= card.table === 'Continents') Continents
+
+										.form-group(duck-field='tagTitle', duck-type='string')
+											label Tag Title
+												input.form-control(type='text', duck-value, value= card.tagTitle)
+
+										.form-group(duck-field='cardType', duck-type='string', value= card.cardType)
+											label Card Type
+												select.form-control(duck-value)
+													option
+													option(selected= card.cardType === 'food', value='food') Food
+													option(selected= card.cardType === 'area', value='area') Area Attraction
+													option(selected= card.cardType === 'sub', value='sub') Sub Attraction
+													option(selected= card.cardType === 'attraction', value='attraction') Attraction
+													option(selected= card.cardType === 'location', value='location') Location (City/Country)
+													option(selected= card.cardType === 'activity', value='activity') Activity (Event/Explore)
+													option(selected= card.cardType === 'note', value='note') Note (or Advice)
+
+										.form-group(duck-field='directionsTo', duck-type='string')
+											label Direction To
+												input.form-control(type='text', duck-value, value= card.directionsTo)
+
+										.form-group(duck-field='readMoreText', duck-type='string')
+											label Read More Text
+												input.form-control(type='text', duck-value, value= card.readMoreText)
+
+										.form-group(duck-field='readMoreLink', duck-type='string')
+											label Read More Link
+												input.form-control(type='text', duck-value, value= card.readMoreLink)
+							else
+								div(duck-type='object')
+									h6 Card
+									.form-group(duck-field='title', duck-type='string')
+										label Title
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='order', duck-type='number')
+										label Order
+											input.form-control(type='number', duck-value)
+
+									.form-group(duck-field='image', duck-type='string')
+										label Image
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label Description
+										.summernote
+
+									.form-group(duck-field='Id', duck-type='string')
+										label Id of what is being related to (such as an attraction or city)
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='table', duck-type='string')
+										label Table of what the Id is in
+											select.form-control(duck-value)
+												option
+												option Attractions
+												option Neighborhoods
+												option(value='CityRegions') City Regions
+												option Cities
+												option(value='ProvinceRegions') Province Regions
+												option Provinces
+												option(value='CountryRegions') Country Regions
+												option Countries
+												option(value='WorldRegions') World Regions
+												option Continents
+
+									.form-group(duck-field='tagTitle', duck-type='string')
+										label Tag Title
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='cardType', duck-type='string')
+										label Card Type
+											select.form-control(duck-value)
+												option(value='food') Food
+												option(value='area') Area Attraction
+												option(value='sub') Sub Attraction
+												option(value='attraction') Attraction
+												option(value='location') Location (City/Country)
+												option(value='activity') Activity (Event/Explore)
+												option(value='note') Note (or Advice)
+
+									.form-group(duck-field='directionsTo', duck-type='string')
+										label Direction To
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='readMoreText', duck-type='string')
+										label Read More Text
+											input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='readMoreLink', duck-type='string')
+										label Read More Link
+											input.form-control(type='text', duck-value)
+			else
+				div(duck-type='object')
+					h4 Day
+					.form-group(duck-field='title', duck-type='string')
+						label Title (not including the word "Day")
+							input.form-control(type='text', duck-value)
+
+					.form-group(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value)
+
+					.form-group(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote
+
+					div(duck-field='cards', duck-type='array')
+						h5 Cards
+						div(duck-type='object')
+							h6 Card
+							.form-group(duck-field='title', duck-type='string')
+								label Title
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='order', duck-type='number')
+								label Order
+									input.form-control(type='number', duck-value)
+
+							.form-group(duck-field='image', duck-type='string')
+								label Image
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote
+
+							.form-group(duck-field='Id', duck-type='string')
+								label Id of what is being related to (such as an attraction or city)
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='table', duck-type='string')
+								label Table of what the Id is in
+									select.form-control(duck-value)
+										option
+										option Attractions
+										option Neighborhoods
+										option(value='CityRegions') City Regions
+										option Cities
+										option(value='ProvinceRegions') Province Regions
+										option Provinces
+										option(value='CountryRegions') Country Regions
+										option Countries
+										option(value='WorldRegions') World Regions
+										option Continents
+
+							.form-group(duck-field='tagTitle', duck-type='string')
+								label Tag Title
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='cardType', duck-type='string')
+								label Card Type
+									select.form-control(duck-value)
+										option(value='food') Food
+										option(value='area') Area Attraction
+										option(value='sub') Sub Attraction
+										option(value='attraction') Attraction
+										option(value='location') Location (City/Country)
+										option(value='activity') Activity (Event/Explore)
+										option(value='note') Note (or Advice)
+
+							.form-group(duck-field='directionsTo', duck-type='string')
+								label Direction To
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='readMoreText', duck-type='string')
+								label Read More Text
+									input.form-control(type='text', duck-value)
+
+							.form-group(duck-field='readMoreLink', duck-type='string')
+								label Read More Link
+									input.form-control(type='text', duck-value)
+
+		if locations && locations.continents
+			.form-group.hidden(duck-field='continents', duck-type='array')
+				for continent in locations.continents
+					input(type='text', required, duck-value, value=continent, disabled)
+		else if guide && guide.continents
+			.form-group.hidden(duck-field='continents', duck-type='array')
+				for continent in guide.continents
+					input(type='text', required, duck-value, value=continent, disabled)
+
+		if locations && locations.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in locations.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+		else if guide && guide.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in guide.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+
+		if locations && locations.countries
+			.form-group.hidden(duck-field='countries', duck-type='array')
+				for country in locations.countries
+					input(type='text', required, duck-value, value=country, disabled)
+		else if guide && guide.countries
+			.form-group.hidden(duck-field='countries', duck-type='array')
+				for country in guide.countries
+					input(type='text', required, duck-value, value=country, disabled)
+		
+		if locations && locations.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in locations.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+		else if guide && guide.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in guide.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+
+		if locations && locations.provinces
+			.form-group.hidden(duck-field='provinces', duck-type='array')
+				for province in locations.provinces
+					input(type='text', required, duck-value, value=province, disabled)
+		else if guide && guide.provinces
+			.form-group.hidden(duck-field='provinces', duck-type='array')
+				for province in guide.provinces
+					input(type='text', required, duck-value, value=province, disabled)
+
+		if locations && locations.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in locations.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+		else if guide && guide.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in guide.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+
+		if locations && locations.cities
+			.form-group.hidden(duck-field='cities', duck-type='array')
+				for city in locations.cities
+					input(type='text', required, duck-value, value=city, disabled)
+		else if guide && guide.cities
+			.form-group.hidden(duck-field='cities', duck-type='array')
+				for city in guide.cities
+					input(type='text', required, duck-value, value=city, disabled)
+
+		if locations && locations.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in locations.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+		else if guide && guide.cityRegions
+			.form-group.hidden(duck-field='cityRegions', duck-type='array')
+				for cityRegions in guide.cityRegions
+					input(type='text', required, duck-value, value=cityRegions, disabled)
+
+		if locations && locations.neighborhoods
+			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
+				for neighborhoods in locations.neighborhoods
+					input(type='text', required, duck-value, value=neighborhoods, disabled)
+		else if guide && guide.neighborhoods
+			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
+				for neighborhoods in guide.neighborhoods
+					input(type='text', required, duck-value, value=neighborhoods, disabled)
+
+		if locations && locations.attractions
+			.form-group.hidden(duck-field='attractions', duck-type='array')
+				for attractions in locations.attractions
+					input(type='text', required, duck-value, value=attractions, disabled)
+		else if guide && guide.attractions
+			.form-group.hidden(duck-field='attractions', duck-type='array')
+				for attractions in guide.attractions
+					input(type='text', required, duck-value, value=attractions, disabled)
+
+		.ta-R
+			if guide
+				+deleteForm('Guides', guide.Id)(class='mr-Xs')
+
+			button.btn.btn-primary(type='button', duck-button='submit')= guide ? 'Update' : 'Add'
+			!= cancel
+
+	- guideFormId++

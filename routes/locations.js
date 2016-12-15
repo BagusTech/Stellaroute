@@ -1,6 +1,7 @@
 const express        = require('express');
 const flash          = require('connect-flash');
 const sortBy         = require('../modules/sortBy');
+const pickTable      = require('../modules/pickTable');
 const Attraction     = require('../schemas/attraction');
 const Guide          = require('../schemas/guide');
 const Continent      = require('../schemas/continent');
@@ -313,7 +314,7 @@ router.get('/:country/:city', (req, res, next) => {
 	}
 
 	const attractions = Attraction.find('city', city.Id).items;
-	const guides = Guide.find('city', city.Id).items;
+	const guides = Guide.find('cities', city.Id).items;
 	const countryRegions = CountryRegion.find('country', city.country).items;
 	const provinces = Province.find('country', city.country).items;
 	let provinceRegions = [];
@@ -339,7 +340,7 @@ router.get('/:country/:city', (req, res, next) => {
 	});
 });
 
-router.get('/:country/:city/transit', (req, res, next) => {
+/* router.get('/:country/:city/transit', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -372,9 +373,9 @@ router.get('/:country/:city/transit', (req, res, next) => {
 		cityRegions: cityRegions,
 		neighborhoods: neighborhoods,
 	});
-});
+}); */
 
-router.get('/:country/:city/explore', (req, res, next) => {
+/* router.get('/:country/:city/explore', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -407,7 +408,7 @@ router.get('/:country/:city/explore', (req, res, next) => {
 		cityRegions: cityRegions,
 		neighborhoods: neighborhoods,
 	});
-});
+}); */
 
 router.get('/:country/:city/:guide', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
@@ -421,7 +422,7 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
 					 .items[0];
 
-	if(!city){
+	if(!city) {
 		req.flash('error', missingLocationMessage);
 		res.redirect(missingLocationUrl);
 		return;
@@ -429,9 +430,29 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 
 	const guide = Guide.findOne('url', req.params.guide).items;
 
-	if(!guide){
+	if(!guide) {
 		next();
 		return;
+	}
+
+	if(guide.highlights) {
+		const length = guide.highlights.length
+
+		for (let i = 0; i < length; i++) {
+			const highlight = guide.highlights[i];
+
+			if(highlight.Id && highlight.table) {
+				const table = pickTable(highlight.table);
+
+				const referenceItem = table.findOne('Id', highlight.Id).items
+
+				if(referenceItem) {
+					guide.highlights[i].cardImage = guide.highlights[i].cardImage || referenceItem.cardImage;
+					guide.highlights[i].title = guide.highlights[i].title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';
+					guide.highlights[i].description = (guide.highlights[i].description && guide.highlights[i].description !== '<p><br></p>' && guide.highlights[i].description !== '<br>') ? guide.highlights[i].description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
+				}
+			}
+		}
 	}
 
 	const countryRegions = CountryRegion.find('country', city.country).items

@@ -47,7 +47,7 @@ if (!user)
 	
 	//.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
 		.modal-dialog(role='document')
-			.modal-content
+			form.modal-content(method='POST', action='/signup')
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
@@ -56,7 +56,7 @@ if (!user)
 					.col-xs-12
 						h3 Coming Soon...
 						p.lead We are currently in a closed Beta. If you would like to be put in the list to get in on it sign up for below!
-					//.form-horizontal
+					.form-horizontal
 						.form-group
 							label.control-label.col-sm-2(for='First') First Name
 							.col-sm-10
@@ -81,8 +81,8 @@ if (!user)
 					.col-xs-12
 						p Already have an account?
 						button.signup-login-btn(type='button', data-dismiss='modal', data-toggle='modal', data-target='#LoginModal') Log In
-					//button.btn.btn-default(type='button', data-dismiss='modal') Close
-						input.btn.btn-primary(type='submit', value='Create')
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					input.btn.btn-primary(type='submit', value='Create')
 else
 	- var loginClasses = `bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;
 

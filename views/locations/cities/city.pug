@@ -4,6 +4,8 @@ block content
 	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 			.bg-Dkr
 				.container.ptb-0
+					if user && user.isAdmin
+						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= city.Id
 					ol.breadcrumb
 						li.active= city.countryDisplay
 						li.active= city.provinceDisplay

@@ -484,6 +484,7 @@
 }
 [data-function*='stickey'] {
   position: relative;
+  z-index: 1;
 }
 [data-tabs='panel'] {
   opacity: 0;

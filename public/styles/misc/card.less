@@ -56,19 +56,108 @@
 		font-weight: normal; // here for when card is inside a link
 	}
 
-.content-card{
+.content-card {
 	.card;
 	margin: @gw-Sm 0;
 	padding: @gw-Sm;
 
-	+ .content-card{
+	+ .content-card {
 		margin-top: @gw-Md;
 	}
 }
-	.content-card--header{
+	.content-card--header {
 		margin: 0 -@gw-Sm @gw-Sm;
 		padding: 0 @gw-Sm @gw-Sm;
 		line-height: 1;
 		border-bottom: 1px solid @grey-lighter; 
 		color: @grey;
 	}
+
+.guide-card {
+	margin-top: @gw-Md;
+}
+	.guide-card__food {}
+	.guide-card__area {}
+	.guide-card__sub {margin-top: 0;}
+	.guide-card__attraction {}
+	.guide-card__location {}
+	.guide-card__activity {}
+	.guide-card__note {}
+	.guide-card__map {}
+
+	.guide-card--directions {
+		margin-top: -@gw-Md;
+		padding: @gw-Md;
+		text-align: center;
+		font-size: 24px;
+
+		.guide-card__sub & {
+			background: @grey-light;
+			margin-top: 0;
+			padding: @gw-Sm
+		}
+	}
+		.directions--method {}
+		.directions--time { padding-left: @gw-Md;}
+		.directions--distance { padding-left: @gw-Sm; }
+
+	.guide-card--tag {
+		text-align: center;
+		padding: @gw-Xs;
+		border-radius: @br-Md @br-Md 0 0;
+		color: white;
+		font-size: 18px;
+
+		+ .guide-card--content {
+			border-radius: 0 0 @br-Md @br-Md;
+		}
+	}
+
+	.guide-card--content {
+		.card;
+
+		overflow: hidden;
+
+		.guide-card__sub & {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: stretch;
+		}
+
+		.guide-card__area & {
+			background: @purple;
+			color: white;
+		}
+	}
+
+		.guide-card--img-wrapper {
+			.guide-card__sub & {
+				width: 25%;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center center;
+			}
+		}
+			.guide-card--img {
+				width: 100%;
+			}
+
+		.guide-card--info {
+			padding: @gw-Sm;
+
+			.guide-card__sub & {
+				width: 75%;
+			}
+		}
+			.guide-card--header {
+				margin: 0 0 @gw-Md;
+			}
+
+			.guide-card--description {}
+			.guide-card--suggested-time {
+				color: @grey;
+
+				.guide-card__area & {
+					color: white;
+				}
+			}

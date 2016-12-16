@@ -8589,6 +8589,101 @@ form.profile-settings-update .profile-label.notification h3 {
   border-bottom: 1px solid #e7e7e7;
   color: #959ca2;
 }
+.guide-card {
+  margin-top: 24px;
+}
+.guide-card__sub {
+  margin-top: 0;
+}
+.guide-card--directions {
+  margin-top: -24px;
+  padding: 24px;
+  text-align: center;
+  font-size: 24px;
+}
+.guide-card__sub .guide-card--directions {
+  background: #cccccc;
+  margin-top: 0;
+  padding: 12px;
+}
+.directions--time {
+  padding-left: 24px;
+}
+.directions--distance {
+  padding-left: 12px;
+}
+.guide-card--tag {
+  text-align: center;
+  padding: 6px;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  font-size: 18px;
+}
+.guide-card--tag + .guide-card--content {
+  border-radius: 0 0 2px 2px;
+}
+.guide-card--content {
+  clear: both;
+  zoom: 1;
+  background: white;
+  box-shadow: 0 1px 3px #777;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.guide-card--content:before,
+.guide-card--content:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.guide-card--content:before,
+.guide-card--content:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.card--tag + .guide-card--content {
+  border-radius: 2px 0 2px 2px;
+}
+.guide-card__sub .guide-card--content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+.guide-card__area .guide-card--content {
+  background: #7770A1;
+  color: white;
+}
+.guide-card__sub .guide-card--img-wrapper {
+  width: 25%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.guide-card--img {
+  width: 100%;
+}
+.guide-card--info {
+  padding: 12px;
+}
+.guide-card__sub .guide-card--info {
+  width: 75%;
+}
+.guide-card--header {
+  margin: 0 0 24px;
+}
+.guide-card--suggested-time {
+  color: #959ca2;
+}
+.guide-card__area .guide-card--suggested-time {
+  color: white;
+}
 .text-wings {
   position: relative;
   display: table;

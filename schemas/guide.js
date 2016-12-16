@@ -38,8 +38,6 @@ var Attraction = Duck({
 			cardImage: String,
 			title: String,
 			description: String,
-			readMoreText: String,
-			readMoreLink: String,
 		}],
 		whereToStay: String,
 		whereToGoOut: String,
@@ -56,11 +54,14 @@ var Attraction = Duck({
 				description: String,
 				Id: String, // id of what is being highlighted i.e. the Id of an attraction or City
 				table: String, // the table the id corresponds to i.e. Attractions, Cities
-				cardType: String, // food/attraction/area attraction/sub attraction/city
+				type: String, // food/attraction/area attraction/sub attraction/city
 				tagTitle: String,
-				directionsTo: String,
-				readMoreText: String,
-				readMoreLink: String,
+				directionsTo: [{
+					method: String,
+					time: String,
+					distance: String,
+				}],
+				suggestedTime: String,
 			}]
 		}],
 	},

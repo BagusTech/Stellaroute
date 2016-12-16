@@ -1,10 +1,42 @@
 -
-	var colorClasses = {
+	// for generic cards
+	const colorClasses = {
 		purple: 'bg-Purp',
 		green: 'bg-Gr',
 		red: 'bg-Red',
 		orange: 'bg-Orange',
 		blue: 'bg-Bl',
+	}
+
+	// for guide cards
+	function tagBackground(type) {
+		const types = {
+			food: 'bg-Orange',
+			activity: 'bg-Bl',
+			area: false,
+			sub: false,
+			attraction: false,
+			location: false,
+			note: false,
+			map: false
+		};
+
+		return types[type];
+	}
+
+	function directionMethod(method) {
+		const methods = {
+			walk: 'fa fa-blind',
+			car: 'fa fa-car',
+			bicycle: 'fa fa-bicycle',
+			bus: 'fa fa-bus',
+			subway: 'fa fa-subway',
+			train: 'fa fa-train',
+			boat: 'fa fa-ship',
+			plane: 'fa fa-plane'
+		};
+
+		return methods[method];
 	}
 
 mixin card(image, title, tagName, tagColor, description)
@@ -17,3 +49,38 @@ mixin card(image, title, tagName, tagColor, description)
 			h3.card--title= title
 			if description
 				.card--description!= description
+
+mixin guideCard(card)
+	- const tagBackgroundColor = tagBackground(card.type);
+
+	.guide-card(class= `guide-card__${card.type}`)&attributes(attributes)
+		each directionTo in card.directionsTo ? card.directionsTo : []
+			if directionTo.time || directionTo.distance
+				.guide-card--directions
+					span.directions--method(data-icon= directionMethod(directionTo.method)): span.sr-only= directionTo.method
+					span.directions--time= directionTo.time
+					
+					if directionTo.distance
+						span.directions--distance= `// ${directionTo.distance}`
+
+		.guide-card--content
+			if tagBackgroundColor && card.tagTitle
+				.guide-card--tag(class= tagBackgroundColor)= card.tagTitle
+
+			if card.image
+				.guide-card--img-wrapper(style= card.type === 'sub' && `background-image: url('${card.image}');`)
+					if card.type !== 'sub'
+						img.guide-card--img(src= card.image, title= card.title || card.type)
+			
+			if card.title || (card.description !== '<p><br></p>' && card.description !== '<br>')
+				.guide-card--info
+					if card.title
+						h2.guide-card--header= card.title
+
+					if card.description !== '<p><br></p>' && card.description !== '<br>'
+						.guide-card--description!= card.description
+
+					if card.suggestedTime
+						p.guide-card--suggested-time
+							| Suggested Time:&nbsp;
+							strong= card.suggestedTime

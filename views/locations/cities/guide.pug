@@ -48,31 +48,30 @@ block content
 								li
 									a(href='#', data-position='0.1') Highlights
 							
-							if guide.whereToStay && guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+							if guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
 								li
 									a(href='#', data-position='0.2') Where to Stay
 							
-							if guide.whereToGoOut && guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+							if guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
 								li
 									a(href='#', data-position='0.3') Where to Go Out
 							
-							if guide.whereToEat && guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+							if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
 								li
 									a(href='#', data-position='0.4') Where to Eat
 							
-							if guide.whereToExplore && guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+							if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
 								li
 									a(href='#', data-position='0.5') Where to Explore
 
-						if guide.days
-							for day, i in guide.days.sort(sortByOrder)
-								a(href='#', role='tab', aria-expanded='false', data-position= i+1)
-									h3= `Day ${i+1}: ${day.title}`
+						for day, i in guide.days ? guide.days.sort(sortByOrder) : []
+							a(href='#', role='tab', aria-expanded='false', data-position= i+1)
+								h3= `Day ${i+1}: ${day.title}`
 
-								if day.cards
-									ul(role='tabpanel', aria-hidden='true')
-										for card, j in day.cards.sort(sortByOrder)
-											li: a(href='#', data-position= `${i+1}.${j}`)= card.title
+							if day.cards
+								ul(role='tabpanel', aria-hidden='true')
+									for card, j in day.cards.sort(sortByOrder)
+										li: a(href='#', data-position= `${i+1}.${j}`)= card.title
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
 					.content-card(data-position='0')
@@ -99,32 +98,30 @@ block content
 								.masonry--item
 									+card(highlight.cardImage, highlight.title, null, null, highlight.description)
 
-					if guide.whereToStay && guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+					if guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
 						.content-card
 							h2.content-card--header(data-position='0.2') Where to Stay
 							!= guide.whereToStay
 					
-					if guide.whereToGoOut && guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+					if guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
 						.content-card
 							h2.content-card--header(data-position='0.3') Where to Go Out
 							!= guide.whereToGoOut
 					
-					if guide.whereToEat && guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+					if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
 						.content-card
 							h2.content-card--header(data-position='0.4') Where to Eat
 							!= guide.whereToEat
 					
-					if guide.whereToExplore && guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+					if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
 						.content-card
 							h2.content-card--header(data-position='0.5') Where to Explore
 							!= guide.whereToExplore
 
-					if guide.days
-						for day, i in guide.days.sort(sortByOrder)
-							.content-card(data-position= i+1)
-								h2= `Day ${i+1}: ${day.title}`
-								.lead!= day.description
+					for day, i in guide.days ? guide.days.sort(sortByOrder) : []
+						.content-card(data-position= i+1)
+							h2.content-card--header.bg-W(data-function='stickey')= `Day ${i+1}: ${day.title}`
+							.lead!= day.description
 
-							if day.cards
-								for card, j in day.cards.sort(sortByOrder)
-									.content-card(data-position= `${i+1}.${j}`)
+						for card, j in day.cards ? day.cards.sort(sortByOrder) : []
+							+guideCard(card)(data-position= `${i+1}.${j}`)

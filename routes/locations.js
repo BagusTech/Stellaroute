@@ -296,7 +296,9 @@ router.get('/:country/:province/:provinceRegion', (req, res, next) => {
 });
 
 router.get('/:country/:city', (req, res, next) => {
-	const city = City.findOne('url', req.params.city)
+	const country = Country.findOne('url', req.params.country).items;
+	const city = City.find('url', req.params.city)
+					 .findOne('country', country.Id)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
 					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )

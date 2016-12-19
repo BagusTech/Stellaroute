@@ -20,7 +20,6 @@ const City = Duck({
 		backgroundImage: String,
 		cardImage: String,
 		images: Array,
-		mapImage: String,
 		continent: Array,
 		worldRegions: Array,
 		country: String,
@@ -33,6 +32,10 @@ const City = Duck({
 		topPlaces: Array,	
 		tagline: String,
 		description: String,
+	// Orientation
+		orientation: {
+			map: String,
+		},
 	// Need to Know
 		needToKnow: [{
 			order: Number,
@@ -42,7 +45,7 @@ const City = Duck({
 			explanation: String,
 		}],
 	// Quick Facts (or Fun Facts)
-		quickFact: [{
+		quickFacts: [{
 			order: Number,
 			endorse: Boolean,
 			remove: Boolean, 
@@ -188,8 +191,12 @@ const City = Duck({
 		},
 	// Getting Around
 		transit: {
-			overview: String,
-			card: [{
+			tagline: String,
+			transitFacts: [{
+				title: String,
+				description: String
+			}],
+			/* card: [{
 				image: String, 
 				title: String, 
 				arrive: String,
@@ -282,19 +289,11 @@ const City = Duck({
 				remove: Boolean, 
 				title: String,
 				explanation: String,
-			}],
+			}], */
 		},
 	// Eating and Meals
 		food: {
 			overview: String,
-			habits: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String,
-				title: String,
-				explanation: String,
-			}],
 			foods: [{
 				Id: String,
 				order: Number,
@@ -308,6 +307,14 @@ const City = Duck({
 				whatToOrder: String,
 				contains: Array,
 				readMore: String
+			}],
+			/* habits: [{
+				order: Number,
+				endorse: Boolean,
+				remove: Boolean, 
+				image: String,
+				title: String,
+				explanation: String,
 			}],
 			dishs: [{
 				order: Number,
@@ -347,7 +354,7 @@ const City = Duck({
 				address: String,
 				title: String,
 				explanation: String,
-			}],
+			}], */
 		},
 	// Top Places
 		top: {

@@ -1,0 +1,172 @@
+- var cityhoodFormId = 0
+
+mixin cityForm(crud, city, locations, cancel)
+	form(id=`CityForm${cityFormId}`, duck-table='Cities', duck-function= crud, duck-key='Id', duck-key-value= city && city.Id)
+		div(duck-field='names', duck-type='object')
+			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
+				.form-group
+					label Display Name
+						input.form-control(type='text', required, duck-value, value= city && city.names.display)
+			.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
+				.form-group
+					label Official Name
+						input.form-control(type='text', required, duck-value, value= city && city.names.official)
+			.c-B(duck-field='alias', duck-type='array')
+				label Alias'
+				for alias in city && city.names && city.names.alias ? city.names.alias : [null]
+					.form-group(duck-type='string')
+						input.form-control(type='text', required, duck-value, value= alias)
+
+		if (!city)
+			.form-group(duck-field='url', duck-type='string')
+					label Url
+						input.form-control(type='text', required, duck-value, disabled)
+
+		.form-group(duck-field='tagline', duck-type='string')
+			label Tagline
+				input.form-control(type='text', duck-value, value= city && city.tagline)
+
+		div(duck-field='description', duck-type='wysiwyg')
+			label City Description
+			.summernote!= city && city.description
+
+		.form-group(duck-field='cardImage', duck-type='string')
+			label Card Image
+				input.form-control(type='text', required, duck-value, value= city && city.cardImage)
+
+		.form-group(duck-field='backgroundImage', duck-type='string')
+			label Background Image
+				input.form-control(type='text', required, duck-value, value= city && city.backgroundImage)
+
+		div(duck-field='images', duck-type='array')
+			h3 Images
+			for image in city && city.images ? city.images : [null]
+				.form-group(duck-type='string')
+					input.form-control(type='string', duck-value, value= image)
+
+		.form-group(duck-field='averageStay', duck-type='string')
+			label Suggested / Average Length of Stay
+				input.form-control(type='text', duck-value, value= city && city.averageStay)
+
+		.form-group(duck-field='bestTimeToVisit', duck-type='array')
+			label Best Time(s) to Visit
+			for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
+				.form-group(duck-type='string')
+					input.form-control(type='text', duck-value, value= time)
+
+		.form-group(duck-field='topPlaces', duck-type='array')
+			label Top Places (Neighborhoods) to Stay
+			for place in city && city.topPlaces ? city.topPlaces : [null]
+				.form-group(duck-type='string')
+					input.form-control(type='text', duck-value, value= place)
+
+		div(duck-field='orientation', duck-type='object')
+			h3 Orientation
+			.form-group(duck-field='map', duck-type='string')
+				label Map
+					input.form-control(type='text', duck-value, value= city && city.orientation && city.orientation.map)
+
+		div(duck-field='needToKnow', duck-type='array')
+			h3 Need To Know
+			for advice in city && city.needToKnow ? city.needToKnow : [{}]
+				.row(duck-type='object')
+					h4 Advice
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value, value= advice.title)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value, value= advice.order)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Advice
+						.summernote!= advice.description
+
+		div(duck-field='transit', duck-type='object')
+			h3 Transit
+			.form-group(duck-field='tagline', duck-type='string')
+				label Transity Tagline
+					input.form-control(type='text', duck-value, value= city && city.transit && city.transit.tagline)
+			div(duck-field='transitFacts', duck-type='array')
+				h4 Transit Facts
+				for fact in city && city.transit && city.transit.transitFacts ? city.transit.transitFacts : [{}]
+					div(duck-type='object')
+						.form-group(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= fact.title)
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= fact.description
+
+		div(duck-field='quickFacts', duck-type='array')
+			h3 Quick Facts
+			for advice in city && city.quickFacts ? city.quickFacts : [{}]
+				.row(duck-type='object')
+					h4 Fact
+					.form-group.col-xs-10(duck-field='title', duck-type='string')
+						label Title
+							input.form-control(type='text', duck-value, value= advice.title)
+					.form-group.col-xs-2(duck-field='order', duck-type='number')
+						label Order
+							input.form-control(type='number', duck-value, value= advice.order)
+					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+						label Fact
+						.summernote!= advice.description
+
+		if locations && locations.continent
+			.form-group.hidden(duck-field='continent', duck-type='array')
+				for continent in locations.continent
+					input(type='text', required, duck-value, value=continent, disabled)
+		else if city && city.continent
+			.form-group.hidden(duck-field='continent', duck-type='array')
+				for continent in city.continent
+					input(type='text', required, duck-value, value=continent, disabled)
+
+		if locations && locations.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in locations.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+		else if city && city.worldRegions
+			.form-group.hidden(duck-field='worldRegions', duck-type='array')
+				for worldRegions in city.worldRegions
+					input(type='text', required, duck-value, value=worldRegions, disabled)
+
+		if locations && locations.country
+			.form-group.hidden(duck-field='country', duck-type='string')
+				input(type='text', required, duck-value, value=locations.country, disabled)
+		else if city && city.country
+			.form-group.hidden(duck-field='country', duck-type='string')
+				input(type='text', required, duck-value, value=city.country, disabled)
+		
+		if locations && locations.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in locations.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+		else if city && city.countryRegions
+			.form-group.hidden(duck-field='countryRegions', duck-type='array')
+				for countryRegions in city.countryRegions
+					input(type='text', required, duck-value, value=countryRegions, disabled)
+
+		if locations && locations.province
+			.form-group.hidden(duck-field='province', duck-type='array')
+				for province in locations.province
+					input(type='text', required, duck-value, value=province, disabled)
+		else if city && city.province
+			.form-group.hidden(duck-field='province', duck-type='array')
+				for province in city.province
+					input(type='text', required, duck-value, value=province, disabled)
+
+		if locations && locations.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in locations.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+		else if city && city.provinceRegions
+			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
+				for provinceRegions in city.provinceRegions
+					input(type='text', required, duck-value, value=provinceRegions, disabled)
+
+		.ta-R
+			if city
+				+deleteForm('Attractions', city.Id)(class='mr-Xs')
+
+			button.btn.btn-primary(type='button', duck-button='submit')= city ? 'Update' : 'Add'
+			!= cancel

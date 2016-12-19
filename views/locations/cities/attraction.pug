@@ -131,7 +131,7 @@ block content
 						.content-card
 							h2.content-card--header Fun Facts
 							ul.ls-N.p-0
-								for fact in attraction.quickFacts
+								for fact in attraction.quickFacts.sort(sortByOrder)
 									li
 										h3= fact.title
 										div!= fact.description

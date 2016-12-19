@@ -3,14 +3,18 @@
 		.content-card
 			h2.content-card--header At a Glance
 			dl
-				dt Length of Stay
-				dd 3 day
-				dt Best Time to Visit
-				dd Apr - Jun; Aug - Sep
-				dt Top places to stay
-				dd Lincoln Park, River North
+				if city.averageStay
+					dt Length of Stay
+					dd= city.averageStay
+				if city.bestTimeToVisit
+					dt Best Time to Visit
+					dd= city.bestTimeToVisit.join('; ')
+				if city.topPlacesDisplay
+					dt Top places to stay
+					dd= city.topPlacesDisplay.join('; ')
+
 	.col-xs-12.col-sm-8.col-md-9
-		.content-card.p-0
+		//.content-card.p-0
 			.d-F.fj-B.fai-C.bg-Purp.fc-W
 				button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.ml-A(data-icon='fa fa-chevron-left')
 				h2.bw-N.fc-W.m-0.p-0 Sightseeing

@@ -1,10 +1,11 @@
 extends ../../layout.pug
 
 block content
-	div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
 				.container.ptb-0
 					if user && user.isAdmin
+						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditCityForm') Edit
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= city.Id
 					ol.breadcrumb
 						li.active= city.countryDisplay
@@ -19,7 +20,11 @@ block content
 						a.tabbed-nav--tab(href='#Food', data-tabs='control') Food
 						a.tabbed-nav--tab(href='#Guides', data-tabs='control') Guides
 						a.tabbed-nav--tab(href='#Neighborhoods', data-tabs='control') Neighborhoods
-
+	
+	if user && user.isAdmin
+		+modal('EditCityForm')(class='modal-lg')
+			+cityForm('update', city)
+	
 	.container.ptb-Sm(data-function='tabs')
 		#Overview.tabbed-nav--tabpanel.active(data-tabs='panel')
 			include overview.pug

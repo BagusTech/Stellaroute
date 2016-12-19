@@ -307,6 +307,7 @@ router.get('/:country/:city', (req, res, next) => {
 					 .join('province', Province.cached(), 'Id', 'url' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
 					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
+					 .join('topPlaces', Neighborhood.cached(), 'Id', 'names.display')
 					 .items[0];
 	
 	if(!city){

@@ -43,8 +43,12 @@ const Neighborhood = Duck({
 				order: Number,
 				name: String,
 				type: String,
-				description: String,
-			}]
+				waysToGetThere: [{
+					method: String,
+					distance: String,
+					time: String,
+				}],
+			}],
 		},
 	// Exploreing
 		explore: {

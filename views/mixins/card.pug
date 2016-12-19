@@ -24,21 +24,6 @@
 		return types[type];
 	}
 
-	function directionMethod(method) {
-		const methods = {
-			walk: 'fa fa-blind',
-			car: 'fa fa-car',
-			bicycle: 'fa fa-bicycle',
-			bus: 'fa fa-bus',
-			subway: 'fa fa-subway',
-			train: 'fa fa-train',
-			boat: 'fa fa-ship',
-			plane: 'fa fa-plane'
-		};
-
-		return methods[method];
-	}
-
 mixin card(image, title, tagName, tagColor, description)
 	if title
 		if tagName
@@ -57,7 +42,7 @@ mixin guideCard(card)
 		each directionTo in card.directionsTo ? card.directionsTo : []
 			if directionTo.time || directionTo.distance
 				.guide-card--directions
-					span.directions--method(data-icon= directionMethod(directionTo.method)): span.sr-only= directionTo.method
+					span.directions--method(data-icon= getTransitMethodIcon(directionTo.method)): span.sr-only= directionTo.method
 					span.directions--time= directionTo.time
 					
 					if directionTo.distance

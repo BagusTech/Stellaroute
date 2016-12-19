@@ -131,7 +131,7 @@ mixin attractionForm(crud, attraction, locations, cancel)
 		div(duck-field='nearbyAttractions', duck-type='array')
 			label Nearby Attractions
 			if attraction && attraction.nearbyAttractions
-				for nearbyAttraction in attraction.nearbyAttractions
+				for nearbyAttraction in attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
 					if (nearbyAttractions)
 						div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
 					.form-group(duck-type='string')
@@ -142,15 +142,11 @@ mixin attractionForm(crud, attraction, locations, cancel)
 
 		div(duck-field='subAttractions', duck-type='array')
 			label Sub Attractions
-			if attraction && attraction.subAttractions
-				for subAttraction in attraction.subAttractions
-					if (subAttractions)
-						div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
-					.form-group(duck-type='string')
-						input.form-control(type='text', duck-value, value= subAttraction)
-			else
+			for subAttraction in attraction.subAttractions ? attraction.subAttractions : [null]
+				if (subAttractions)
+					div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
 				.form-group(duck-type='string')
-					input.form-control(type='text', duck-value)
+					input.form-control(type='text', duck-value, value= subAttraction)
 
 		.form-group(duck-field='parentAttraction', duck-type='string')
 			label Parent Attraction

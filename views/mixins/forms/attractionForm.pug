@@ -13,13 +13,9 @@ mixin attractionForm(crud, attraction, locations, cancel)
 						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.official)
 			.c-B(duck-field='alias', duck-type='array')
 				label Alias'
-				if attraction && attraction.names.alias
-					for alias in attraction.names.alias
-						.form-group(duck-type='string')
-							input.form-control(type='text', required, duck-value, value= alias)
-				else
+				for alias in attraction && attraction.names && attraction.names.alias ? attraction.names.alias : [null]
 					.form-group(duck-type='string')
-						input.form-control(type='text', required, duck-value)
+						input.form-control(type='text', required, duck-value, value= alias)
 
 		if (!attraction)
 			.form-group(duck-field='url', duck-type='string')
@@ -52,69 +48,39 @@ mixin attractionForm(crud, attraction, locations, cancel)
 
 		div(duck-field='images', duck-type='array')
 			h3 Images
-			if attraction && attraction.images
-				for image in attraction.images
-					.form-group(duck-type='string')
-						input.form-control(type='string', duck-value, value= image)
-			else
+			for image in attraction && attraction.images ? attraction.images : [null]
 				.form-group(duck-type='string')
-					input.form-control(type='string', duck-value)
+					input.form-control(type='string', duck-value, value= image)
 
 		div(duck-field='needToKnow', duck-type='array')
 			h3 Need To Know
-			if attraction && attraction.needToKnow
-				for advice in attraction.needToKnow
-					.row(duck-type='object')
-						h4 Advice
-						.form-group.col-xs-10(duck-field='title', duck-type='string')
-							label Title
-								input.form-control(type='text', duck-value, value= advice.title)
-						.form-group.col-xs-2(duck-field='order', duck-type='number')
-							label Order
-								input.form-control(type='number', duck-value, value= advice.order)
-						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= advice.description
-			else
+			for advice in attraction && attraction.needToKnow ? attraction.needToKnow : [{}]
 				.row(duck-type='object')
 					h4 Advice
 					.form-group.col-xs-10(duck-field='title', duck-type='string')
 						label Title
-							input.form-control(type='text', duck-value)
+							input.form-control(type='text', duck-value, value= advice.title)
 					.form-group.col-xs-2(duck-field='order', duck-type='number')
 						label Order
-							input.form-control(type='number', duck-value)
+							input.form-control(type='number', duck-value, value= advice.order)
 					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 						label Description
-						.summernote
+						.summernote!= advice.description
 
 		div(duck-field='quickFacts', duck-type='array')
 			h3 Quick Facts
-			if attraction && attraction.quickFacts
-				for advice in attraction.quickFacts
-					.row(duck-type='object')
-						h4 Fact
-						.form-group.col-xs-10(duck-field='title', duck-type='string')
-							label Title
-								input.form-control(type='text', duck-value, value= advice.title)
-						.form-group.col-xs-2(duck-field='order', duck-type='number')
-							label Order
-								input.form-control(type='number', duck-value, value= advice.order)
-						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= advice.description
-			else
+			for advice in attraction && attraction.quickFacts ? attraction.quickFacts : [{}]
 				.row(duck-type='object')
 					h4 Fact
 					.form-group.col-xs-10(duck-field='title', duck-type='string')
 						label Title
-							input.form-control(type='text', duck-value)
+							input.form-control(type='text', duck-value, value= advice.title)
 					.form-group.col-xs-2(duck-field='order', duck-type='number')
 						label Order
-							input.form-control(type='number', duck-value)
+							input.form-control(type='number', duck-value, value= advice.order)
 					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 						label Description
-						.summernote
+						.summernote!= advice.description
 
 		div(duck-field='orientation', duck-type='object')
 			h3 Orientation
@@ -130,19 +96,15 @@ mixin attractionForm(crud, attraction, locations, cancel)
 
 		div(duck-field='nearbyAttractions', duck-type='array')
 			label Nearby Attractions
-			if attraction && attraction.nearbyAttractions
-				for nearbyAttraction in attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
-					if (nearbyAttractions)
-						div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
-					.form-group(duck-type='string')
-						input.form-control(type='text', duck-value, value= nearbyAttraction)
-			else
+			for nearbyAttraction in attraction && attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
+				if (nearbyAttractions)
+					div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
 				.form-group(duck-type='string')
-					input.form-control(type='text', duck-value)
+					input.form-control(type='text', duck-value, value= nearbyAttraction)
 
 		div(duck-field='subAttractions', duck-type='array')
 			label Sub Attractions
-			for subAttraction in attraction.subAttractions ? attraction.subAttractions : [null]
+			for subAttraction in attraction && attraction.subAttractions ? attraction.subAttractions : [null]
 				if (subAttractions)
 					div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
 				.form-group(duck-type='string')

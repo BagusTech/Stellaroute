@@ -588,6 +588,7 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 
 	const country = Country.findOne('url', req.params.country).items;
 	const cityRegions = CityRegion.find('city', neighborhood.city).items.sort(sortBy('url'))
+	const nearbyNeighborhoods = neighborhood.nearbyNeighborhoods ? Neighborhood.find().items.filter((i) => neighborhood.nearbyNeighborhoods.indexOf(i.Id) > -1) : []
 
 	res.render('locations/cities/neighborhood', {
 		title: `Stellaroute: ${neighborhood.names.display}`,
@@ -596,6 +597,7 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 		country: country,
 		cityRegions: cityRegions,
 		neighborhood: neighborhood,
+		nearbyNeighborhoods: nearbyNeighborhoods,
 	});
 });
 

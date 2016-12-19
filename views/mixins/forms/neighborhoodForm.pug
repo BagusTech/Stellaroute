@@ -13,7 +13,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 						input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.names.official)
 			.c-B(duck-field='alias', duck-type='array')
 				label Alias'
-				for alias in neighborhood.names.alias ? neighborhood.names.alias : [null]
+				for alias in neighborhood && neighborhood.names && neighborhood.names.alias ? neighborhood.names.alias : [null]
 					.form-group(duck-type='string')
 						input.form-control(type='text', required, duck-value, value= alias)
 
@@ -40,7 +40,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 
 		div(duck-field='images', duck-type='array')
 			h3 Images
-			for image in neighborhood.images ? neighborhood.images : [null]
+			for image in neighborhood && neighborhood.images ? neighborhood.images : [null]
 				.form-group(duck-type='string')
 					input.form-control(type='string', duck-value, value= image)
 
@@ -54,9 +54,29 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 				label Map
 					input.form-control(type='text', duck-value, value= neighborhood && neighborhood.orientation && neighborhood.orientation.map)
 
-			.form-group(duck-field='gettingThere', duck-type='wysiwyg')
-				label Getting There
-				.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.gettingThere
+			.form-group(duck-field='waysToGetThere', duck-type='array')
+				h4 Ways to Get There
+				for wayToGetThere in neighborhood && neighborhood.orientation && neighborhood.orientation.waysToGetThere ? neighborhood.orientation.waysToGetThere : [{}]
+					div(duck-type='object')
+						.form-group(duck-field='name', duck-type='string')
+							label Name
+								input.form-control(type='text', duck-value, value= wayToGetThere.name)
+						.form-group(duck-field='method', duck-type='select')
+							label Method of Transportation
+								select.form-control(duck-value)
+									option(value='walk', selected= wayToGetThere.method === 'walk') Walking
+									option(value='car', selected= wayToGetThere.method === 'car') Car or Taxi
+									option(value='bicycle', selected= wayToGetThere.method === 'bicycle') Bicycle
+									option(value='subway', selected= wayToGetThere.method === 'subway') Subway
+									option(value='train', selected= wayToGetThere.method === 'train') Train
+									option(value='plane', selected= wayToGetThere.method === 'plane') Plane
+									option(value='bus', selected= wayToGetThere.method === 'bus') Bus
+									option(value='boat', selected= wayToGetThere.method === 'boat') Boat
+						div(duck-field='stops', duck-type='array')
+							label Stops
+							for stop in wayToGetThere.stops ? wayToGetThere.stops : [null]
+								.form-group(duck-type='string')
+									input.form-control(type='text', duck-value, value= stop)
 
 			.form-group(duck-field='mainIntersection', duck-type='wysiwyg')
 				label Main Intersection
@@ -68,21 +88,21 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 
 			div(duck-field='distanceFrom', duck-type='array')
 				h4 Distance From
-				for distanceFrom in neighborhood.orientation.distanceFrom ? neighborhood.orientation.distanceFrom : [{}]
-					div(duck-type='object')
-						.form-group(duck-field='order', duck-type='number')
+				for distanceFrom in neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom ? neighborhood.orientation.distanceFrom : [{}]
+					.row(duck-type='object')
+						.col-xs-2.form-group(duck-field='order', duck-type='number')
 							label Order
 								input.form-control(type='number', duck-value, value= distanceFrom.order)
-						.form-group(duck-field='name', duck-type='string')
+						.col-xs-10.form-group(duck-field='name', duck-type='string')
 							label Name of Location
 								input.form-control(type='text', duck-value, value= distanceFrom.name)
-						.form-group(duck-field='type', duck-type='select')
+						.col-xs-12.form-group(duck-field='type', duck-type='select')
 							label Type of Location
 								select.form-control(duck-value)
 									option(value='airport', selected= distanceFrom.type === 'airport') Airport
 									option(value='attraction', selected= distanceFrom.type === 'attraction') Attraction
 									option(value='station', selected= distanceFrom.type === 'station') Station
-						div(duck-field='waysToGetThere', duck-type='array')
+						.col-xs-12(duck-field='waysToGetThere', duck-type='array')
 							h5 Ways to Get There
 							for wayToGetThere in distanceFrom.waysToGetThere ? distanceFrom.waysToGetThere : [{}]
 								div(duck-type='object')
@@ -103,11 +123,14 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 									.form-group(duck-field='time', duck-type='string')
 										label Time
 											input.form-control(type='text', duck-value, value= wayToGetThere.time)
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label Description
+										.summernote!= wayToGetThere.description
 
 
 		div(duck-field='needToKnow', duck-type='array')
 			h3 Need To Know
-			for advice in neighborhood.needToKnow ? neighborhood.needToKnow : [{}]
+			for advice in neighborhood && neighborhood.needToKnow ? neighborhood.needToKnow : [{}]
 				.row(duck-type='object')
 					h4 Advice
 					.form-group.col-xs-10(duck-field='title', duck-type='string')
@@ -140,7 +163,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 
 		div(duck-field='quickFacts', duck-type='array')
 			h3 Quick Facts
-			for advice in neighborhood.quickFacts ? neighborhood.quickFacts : [{}]
+			for advice in neighborhood && neighborhood.quickFacts ? neighborhood.quickFacts : [{}]
 				.row(duck-type='object')
 					h4 Fact
 					.form-group.col-xs-10(duck-field='title', duck-type='string')
@@ -152,6 +175,63 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 						label Fact
 						.summernote!= advice.description
+
+		div(duck-field='explore', duck-type='object')
+			h3 Where to Explore
+			.form-group(duck-field='map', duck-type='string')
+				label Map
+					input.form-control(type='text', duck-value, value= neighborhood && neighborhood.explore && neighborhood.explore.map)
+			div(duck-field='areas', duck-type='array')
+				label Areas
+				for area in neighborhood && neighborhood.explore && neighborhood.explore.areas ? neighborhood.explore.areas : [{}]
+					div(duck-type='object')
+						h5 Area
+						.form-group(duck-field='name', duck-type='string')
+							label Name / Location / Cross Street
+								input.form-control(type='text', duck-value, value= area.name)
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= area.description
+						div(duck-field='suggestedSpots', duck-type='array')
+							h5 Suggested Spots
+							for spot in area.suggestedSpots ? area.suggestedSpots : [{}]
+								div(duck-type='object')
+									.form-group(duck-field='name', duck-type='string')
+										label Name
+											input.form-control(type='text', duck-value, value= spot.name)
+									.form-group(duck-field='link', duck-type='string')
+										label Link
+											input.form-control(type='text', duck-value, value= spot.link)
+									.form-group(duck-field='type', duck-type='select')
+										label Type
+											select.form-control(duck-value)
+												option(value='restaurant', selected= spot.type === 'restaurant') Restaurant
+												option(value='bar', selected= spot.type === 'bar') Bar
+												option(value='store', selected= spot.type === 'store') Store
+												option(value='other', selected= spot.type === 'other') Other
+
+		div(duck-field='nearbyNeighborhoods', duck-type='array')
+			h3 Nearby Neighborhoods
+			for nearbyNeighborhood in neighborhood && neighborhood.nearbyNeighborhoods ? neighborhood.nearbyNeighborhoods : [null]
+				.form-group(type='string')
+					input.form-control(type='text', duck-value, value= nearbyNeighborhood)
+
+		div(duck-field='notiblePlaces', duck-type='array')
+			h3 Notible Places
+			for place in neighborhood && neighborhood.notiblePlaces ? neighborhood.notiblePlaces : [{}]
+				div(duck-type='object')
+					.form-group(duck-field='name', duck-type='string')
+						label Name
+							input.form-control(type='text', duck-value, value= place.name)
+					.form-group(duck-field='image', duck-type='string')
+						label Image
+							input.form-control(type='text', duck-value, value= place.image)
+					.form-group(duck-field='address', duck-type='wysiwyg')
+						label Address
+						.summernote!= place.address
+					.form-group(duck-field='description', duck-type='wysiwyg')
+						label description
+						.summernote!= place.description
 
 		if locations && locations.city
 			.form-group.hidden(duck-field='city', duck-type='string')

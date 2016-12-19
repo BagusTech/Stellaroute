@@ -36,7 +36,11 @@ const Neighborhood = Duck({
 		orientation: {
 			description: String,
 			map: String,
-			gettingThere: String,
+			waysToGetThere: [{
+				name: String,
+				method: String,
+				stops: Array,
+			}],
 			mainIntersection: String,
 			mainStrip: String,
 			distanceFrom: [{
@@ -46,6 +50,7 @@ const Neighborhood = Duck({
 				waysToGetThere: [{
 					method: String,
 					distance: String,
+					description: String,
 					time: String,
 				}],
 			}],
@@ -59,6 +64,7 @@ const Neighborhood = Duck({
 				suggestedSpots: [{
 					type: String,
 					name: String,
+					link: String,
 				}],
 			}],
 		},

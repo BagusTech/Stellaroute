@@ -46,7 +46,7 @@ block content
 
 					if neighborhood.needToKnow && neighborhood.needToKnow[0].description !== '<p><br></p>' && neighborhood.needToKnow[0].description !== '<br>'
 						.content-card
-							h2.content-card--header Need to Know
+							h2.content-card--header Advice
 
 							.row(data-function='accordion', data-allow-multiple='true')
 								for advice, i in neighborhood.needToKnow.sort(sortByOrder)
@@ -63,14 +63,43 @@ block content
 								div!= neighborhood.orientation.description
 							
 							if neighborhood.orientation.map
-								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+								button.bg-N.bw-0.p-0.w-100(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= neighborhood.orientation.map)
-							if neighborhood.orientation && neighborhood.orientation.gettingThere && neighborhood.orientation.gettingThere !== '<p><br></p>' && neighborhood.orientation.gettingThere !== '<br>'
-								.clear
-									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
-										span.sr-only Getting There
 
-									.ml-Lg.mt-Md!= neighborhood.orientation.gettingThere
+							if neighborhood.orientation.mainIntersection
+								h3 Main Intersection
+								div!= neighborhood.orientation.mainIntersection
+
+							if neighborhood.orientation.mainStrip
+								h3 Main Strip
+								div!= neighborhood.orientation.mainStrip
+
+							if neighborhood.orientation && neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name
+								h3 Main Transit Stops
+								for wayToGetThere in neighborhood.orientation.waysToGetThere
+									h4.row
+										.col-xs-1.ta-C(data-icon= getIcon(wayToGetThere.method))
+										.col-xs-11.pl-0= wayToGetThere.name
+									.row
+										.col-xs-11.col-xs-push-1.pl-0
+											ul.list-unstyled
+												for stop in wayToGetThere.stops
+													li= stop
+
+							if neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name
+								h3 Distance To...
+								for location in neighborhood.orientation.distanceFrom.sort(sortByOrder)
+									h4.row
+										.col-xs-1.ta-C(data-icon= getIcon(location.type))
+										.col-xs-11.pl-0= location.name
+									.row
+										.col-xs-11.col-xs-push-1.pl-0
+											ul.list-unstyled.fc-G
+												for wayToGetThere in location.waysToGetThere
+													li.clear
+														h5.d-Ib.m-0.f-L.lh-B(data-icon= getIcon(wayToGetThere.method))
+														.ml-Md= `${wayToGetThere.time} - ${wayToGetThere.description} - ${wayToGetThere.distance}`
+
 
 				
 						if neighborhood.orientation.map
@@ -78,16 +107,69 @@ block content
 								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
 									.modal-content.p-Md
 										img.w-100(src=neighborhood.orientation.map)
-	
 
-				if neighborhood.nearbyNeighborhoods
+				.col-xs-12.col-sm-6.col-md-8.f-R
+					if  neighborhood.eatingDrinking && neighborhood.eatingDrinking.description && neighborhood.eatingDrinking.description !== '<p><br></p>' && neighborhood.eatingDrinking.description !== '<br>'
+						.content-card
+							h2.content-card--header Eating &amp; Drinking
+							img.f-L.w-25(src=neighborhood.eatingDrinking.image, alt='Eating and Drinking')
+							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
+
+					if  neighborhood.shopping && neighborhood.shopping.description && neighborhood.shopping.description !== '<p><br></p>' && neighborhood.shopping.description !== '<br>'
+						.content-card
+							h2.content-card--header Shopping
+							img.f-L.w-25(src=neighborhood.shopping.image, alt='Shopping')
+							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
+
+				if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
 					.col-xs-12.col-sm-6.col-md-4
 						h2.fc-G Nearby Neighborhoods
 
 						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyNeighborhood in nearbyNeighborhoods
-								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${nearbyNeighborhood.url}`, target='_blank')
+								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`, target='_blank')
 									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
+
+				if neighborhood.explore && (neighborhood.explore.map || (neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name))
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card
+							h2.content-card--header.mb-0 Where to Explore
+							if neighborhood.explore.map
+								img.w-100(src=neighborhood.explore.map, alt='Where to Explore')
+							for area in neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name ? neighborhood.explore.areas : []
+								h3= area.name
+								!= area.description
+
+								if area.suggestedSpots && area.suggestedSpots[0] && area.suggestedSpots[0].name
+									h4 Suggested Spots
+									ul
+									for spot in area.suggestedSpots
+										li
+											if spot.link
+												a(href= spot.link)= spot.name
+											else
+												= spot.name
+
+				if neighborhood.notiblePlaces && neighborhood.notiblePlaces[0] && neighborhood.notiblePlaces[0].name
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card
+							h2.content-card--header Other Notible Places
+							ul.list-unstyled
+								for place in neighborhood.notiblePlaces
+									li.clear
+										if place.image
+											.w-25.f-L
+												img.w-100(src=place.image, alt= place.name)
+										div.pl-Sm(class= place.image ? 'w-75 f-L' : '')
+											h3.mt-N= place.name
+											!= place.description
+											.clear
+												div.d-B.f-L
+													i.fa.fa-map-pin.lh-B(aria-hidden='true')
+												div.ml-Md!= place.address
+
+
+
 
 				if neighborhood.quickFacts && neighborhood.quickFacts[0].description !== '<p><br></p>' && neighborhood.quickFacts[0].description !== '<br>'
 					.col-xs-12.col-sm-6.col-md-8.f-R

@@ -42,7 +42,7 @@ mixin guideCard(card)
 		each directionTo in card.directionsTo ? card.directionsTo : []
 			if directionTo.time || directionTo.distance
 				.guide-card--directions
-					span.directions--method(data-icon= getTransitMethodIcon(directionTo.method)): span.sr-only= directionTo.method
+					span.directions--method(data-icon= getIcon(directionTo.method)): span.sr-only= directionTo.method
 					span.directions--time= directionTo.time
 					
 					if directionTo.distance

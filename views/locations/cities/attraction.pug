@@ -42,11 +42,11 @@ block content
 									img(src=img, alt=`${attraction.names.display} Banner ${i+1}`, data-banner-item)
 						else 
 							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
-						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description						
+						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description
 
 					if attraction.needToKnow && attraction.needToKnow[0].description !== '<p><br></p>' && attraction.needToKnow[0].description !== '<br>'
 						.content-card
-							h2.content-card--header Need to Know
+							h2.content-card--header Travel Hacks
 
 							.row(data-function='accordion', data-allow-multiple='true')
 								for advice, i in attraction.needToKnow.sort(sortByOrder)

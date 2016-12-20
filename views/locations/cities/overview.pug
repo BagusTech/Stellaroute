@@ -34,6 +34,30 @@
 							= advice.title
 						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
 
+		if guides && guides.length > 0
+			.content-card.p-0
+				h2.content-card--header.m-0.mt-Sm Guides
+				div(data-function='banner', data-banner-auto-rotate='false')
+					button.p-A.t-Md.l-Md.fc-W.bg-N.bw-0.fs-Lg(data-banner='back', data-icon='fa fa-chevron-left')
+					button.p-A.t-Md.r-Md.fc-W.bg-N.bw-0.fs-Lg(data-banner='forward', data-icon='fa fa-chevron-right')
+					for guide in guides.filter((g) => g.map)
+						div(data-banner='item')
+							h3.ta-C.bg-Purp.fc-W.p-Md.m-0= guide.names.display
+							.o-H.p-R(style='padding-left: 25%')
+								img.w-100(src=guide.map, alt= guide.names.display)
+								.p-A.t-0.l-0.b-0.w-25(data-function='scroll')
+									div#Body(data-scroll='content-wrapper')
+										div(data-scroll='content')
+											for day, i in guide.days && guide.days[0] && guide.days[0].title ? guide.days : [{}]
+												h4.bg-W.ta-C.p-Xs= `Day ${i+1}`
+												for card in day.cards && day.cards[0] && day.cards[0].title ? day.cards : [{}]
+													if card.image
+														.p-R
+															img.w-100(src= card.image, alt= card.title)
+															h5.p-A.d-F.fj-C.fai-C.bg-Dkr.t-0.b-0.l-0.r-0.fc-W.m-0= card.title
+									div(data-scroll='scrollbar')
+										button
+
 	.col-xs-12.col-sm-4.col-md-3
 		if city.orientation && city.orientation.map
 			.content-card
@@ -45,12 +69,38 @@
 
 		if city.food && city.food.foods
 			h2.fc-G Food &amp; Drinks
-			- var cityFoodCounter = 0
+			for food, i in city.food.foods.sort(sortByOrder)
+				if i < 3
+					.mb-Md
+						+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 
-			while cityFoodCounter < 3
-				+card(city.food.foods[cityFoodCounter].image, city.food.foods[cityFoodCounter].name, city.food.foods[cityFoodCounter].category, foodTagColors[city.food.foods[cityFoodCounter].category], city.food.foods[cityFoodCounter].description)
-				- cityFoodCounter++
+		if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
+			.content-card
+				h2.content-card--header Getting Around
+				if city.transit.tagline
+					.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs(style='width: 50px; height: 50px;')
+						i.fa.fa-train
+						i.fa.fa-train
+						i.fa.fa-train
+					h3= city.transit.tagline
 
+				.row(data-function='accordion', data-allow-multiple='true')
+					for fact, i in city.transit.transitFacts
+						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+							= fact.title
+						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= fact.description
+
+		if city.quickFacts && city.quickFacts[0].description !== '<p><br></p>' && city.quickFacts[0].description !== '<br>'
+			.content-card
+				h2.content-card--header Travel Hacks
+
+				.row(data-function='accordion', data-allow-multiple='true')
+					for fact, i in city.quickFacts.sort(sortByOrder)
+						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+							= fact.title
+						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= fact.description
 
 		//.content-card.p-0
 			.d-F.fj-B.fai-C.bg-Purp.fc-W

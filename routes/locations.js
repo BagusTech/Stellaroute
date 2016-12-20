@@ -458,6 +458,34 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 		}
 	}
 
+	if(guide.days) {
+		const daysLength = guide.days.length
+
+		for (let i = 0; i < daysLength; i++) {
+			const day = guide.days[i];
+
+			if(day.cards){
+				const cardsLength = day.cards.length;
+
+				for (let j = 0; j < cardsLength; j++) {
+					const card = day.cards[j];
+
+					if(card.Id && card.table) {
+						const table = pickTable(card.table);
+
+						const referenceItem = table.findOne('Id', card.Id).items
+
+						if(referenceItem) {
+							guide.days[i].cards[j].image = guide.days[i].cards[j].image || referenceItem.cardImage;
+							guide.days[i].cards[j].title = guide.days[i].cards[j].title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';
+							guide.days[i].cards[j].description = (guide.days[i].cards[j].description && guide.days[i].cards[j].description !== '<p><br></p>' && guide.highlights[i].description !== '<br>') ? guide.highlights[i].description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
+						}
+					}
+				}
+			}
+		}
+	}
+
 	const countryRegions = CountryRegion.find('country', city.country).items
 	const provinces = Province.find('country', city.country).items
 	let provinceRegions = [];

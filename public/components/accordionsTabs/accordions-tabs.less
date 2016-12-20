@@ -24,18 +24,18 @@
 		position: relative;
 		transition: margin-bottom .3s ease-out;
 
-		[role='tab']{
+		> [role='tab']{
 			display: inline-block;
 		}
 
-		[role='tabpanel']{
+		> [role='tabpanel']{
 			opacity: 0;
 			position: absolute;
 			top: 100%;
 			transition: all .3s ease-out;
 			z-index: -1;
 		}
-			[aria-hidden='false']{
+			> [aria-hidden='false']{
 				opacity: 1;
 				z-index: 1;
 			}

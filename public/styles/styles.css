@@ -16,10 +16,10 @@
     -webkit-transition: margin-bottom 0.3s ease-out;
     transition: margin-bottom 0.3s ease-out;
   }
-  [data-function='tabs'] [role='tab'] {
+  [data-function='tabs'] > [role='tab'] {
     display: inline-block;
   }
-  [data-function='tabs'] [role='tabpanel'] {
+  [data-function='tabs'] > [role='tabpanel'] {
     opacity: 0;
     position: absolute;
     top: 100%;
@@ -27,7 +27,7 @@
     transition: all 0.3s ease-out;
     z-index: -1;
   }
-  [data-function='tabs'] [aria-hidden='false'] {
+  [data-function='tabs'] > [aria-hidden='false'] {
     opacity: 1;
     z-index: 1;
   }

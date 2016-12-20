@@ -39,10 +39,11 @@ block content
 						if attraction.images && attraction.images.length > 2
 							div(data-function='banner')
 								for img, i in attraction.images
-									img(src=img, alt=`${attraction.names.display} Banner ${i+1}`, data-banner-item)
+									div(data-banner='item')
+										img.w-100(src=img, alt=`${attraction.names.display} Banner ${i+1}`)
 						else 
 							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
-						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= attraction.description
+						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0(style='z-index: 2;')!= attraction.description
 
 					if attraction.needToKnow && attraction.needToKnow[0].description !== '<p><br></p>' && attraction.needToKnow[0].description !== '<br>'
 						.content-card

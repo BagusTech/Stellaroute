@@ -1,5 +1,15 @@
 extends ../../layout.pug
 
+append header
+	-
+		var foodTagColors = {
+			'Only In': 'green',
+			'Local Cuisine': 'purple',
+			'Restaurant': 'blue',
+			'Drinks': 'orange',
+			'Best Dishes': 'red',
+		};
+
 block content
 	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
@@ -15,7 +25,7 @@ block content
 						small.ml-Md Broad Shoulders, Down to Earch, Great Food
 
 					nav(data-tabs='controls')
-						a.tabbed-nav--tab(href='#Overview', data-tabs='control') Overview
+						a.tabbed-nav--tab.active(href='#Overview', data-tabs='control') Overview
 						a.tabbed-nav--tab(href='#Attractions', data-tabs='control') Attractions
 						a.tabbed-nav--tab(href='#Food', data-tabs='control') Food
 						a.tabbed-nav--tab(href='#Guides', data-tabs='control') Guides

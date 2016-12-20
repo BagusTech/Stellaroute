@@ -13,7 +13,45 @@
 					dt Top places to stay
 					dd= city.topPlacesDisplay.join('; ')
 
-	.col-xs-12.col-sm-8.col-md-9
+	.col-xs-12.col-sm-8.col-md-9.f-R
+		.content-card.p-0
+			if city.images && city.images.length > 2
+				div(data-function='banner')
+					for img, i in city.images
+						img(src=img, alt=`${city.names.display} Banner ${i+1}`, data-banner-item)
+			else 
+				img.w-100(src= city.cardImage ? city.cardImage : 'http://placebear.com/300/300', alt= city.names.display)
+			.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= city.description
+
+		if city.needToKnow && city.needToKnow[0].description !== '<p><br></p>' && city.needToKnow[0].description !== '<br>'
+			.content-card
+				h2.content-card--header Travel Hacks
+
+				.row(data-function='accordion', data-allow-multiple='true')
+					for advice, i in city.needToKnow.sort(sortByOrder)
+						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+							= advice.title
+						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+
+	.col-xs-12.col-sm-4.col-md-3
+		if city.orientation && city.orientation.map
+			.content-card
+				h2.content-card--header Orientation
+				button.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`).d-B
+					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
+			+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
+				img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
+
+		if city.food && city.food.foods
+			h2.fc-G Food &amp; Drinks
+			- var cityFoodCounter = 0
+
+			while cityFoodCounter < 3
+				+card(city.food.foods[cityFoodCounter].image, city.food.foods[cityFoodCounter].name, city.food.foods[cityFoodCounter].category, foodTagColors[city.food.foods[cityFoodCounter].category], city.food.foods[cityFoodCounter].description)
+				- cityFoodCounter++
+
+
 		//.content-card.p-0
 			.d-F.fj-B.fai-C.bg-Purp.fc-W
 				button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.ml-A(data-icon='fa fa-chevron-left')
@@ -31,7 +69,7 @@
 						li(data-map='legend', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card', data-event='hover')
 							img.img-responsive(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
 						li
-							img.img-responsive(src='http://resources.touropia.com/gfx/d/tourist-attractions-in-chicago/chicago_water_tower.jpg')
+							img.img-responsive(src='http://resources.touropia.com/gfx/d/tourist-citys-in-chicago/chicago_water_tower.jpg')
 				.p-A.br-C(data-map='icon', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:380px; left:550px; background: url("http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg") no-repeat center center/cover;border: 2px solid #333')
 					.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
 						h2 John Hancock Center

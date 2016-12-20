@@ -1,7 +1,7 @@
 const Duck = require('../modules/duck');
 
 // Not used anywhere yet
-var Attraction = Duck({
+var Guide = Duck({
 	Table: 'Guides',
 	Item: {
 		Id: String,
@@ -70,4 +70,4 @@ var Attraction = Duck({
 	UniqueBy: ['url']
 }, null, false);
 
-module.exports = Attraction;
+module.exports = Guide;

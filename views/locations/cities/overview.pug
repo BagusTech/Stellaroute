@@ -1,5 +1,5 @@
 .row
-	.col-xs-12.col-sm-4.col-md-3
+	.col-xs-12.col-sm-4.col-lg-3
 		.content-card
 			h2.content-card--header At a Glance
 			dl
@@ -13,7 +13,7 @@
 					dt Top places to stay
 					dd= city.topPlacesDisplay.join('; ')
 
-	.col-xs-12.col-sm-8.col-md-9.f-R
+	.col-xs-12.col-sm-8.col-lg-9.f-R
 		.content-card.p-0
 			if city.images && city.images.length > 2
 				div(data-function='banner')
@@ -27,12 +27,7 @@
 			.content-card
 				h2.content-card--header Travel Hacks
 
-				.row(data-function='accordion', data-allow-multiple='true')
-					for advice, i in city.needToKnow.sort(sortByOrder)
-						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
-							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
-							= advice.title
-						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+				+accordion(city.needToKnow.sort(sortByOrder))(class='row', data-allow-multiple='true')
 
 		if guides && guides.length > 0
 			.content-card.p-0
@@ -58,79 +53,45 @@
 									div(data-scroll='scrollbar')
 										button
 
-	.col-xs-12.col-sm-4.col-md-3
+		if  neighborhoods && neighborhoods.length > 0
+			h2.fc-G Neighborhoods
+			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md
+				for neighborhood in neighborhoods
+					a.masonry--item(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)
+						+card(neighborhood.cardImage, neighborhood.names.display)
+
+	.col-xs-12.col-sm-4.col-lg-3
 		if city.orientation && city.orientation.map
-			.content-card
-				h2.content-card--header Orientation
+			+contentCard('Orientation')
 				button.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`).d-B
 					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
-			+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
-				img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
+				+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
+					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
 
 		if city.food && city.food.foods
-			h2.fc-G Food &amp; Drinks
-			for food, i in city.food.foods.sort(sortByOrder)
-				if i < 3
-					.mb-Md
-						+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+			.content-card.p-0
+				h2.content-card--header.m-0.p-Sm Food &amp; Drinks
+				for food, i in city.food.foods.sort(sortByOrder)
+					if i < 3
+						.p-R
+							img.w-100(src= food.image, alt= food.name)
+							h3.bg-Dk.p-A.t-0.b-0.l-0.r-0.m-0.d-F.fai-C.fj-C.fc-W= food.name
+							.p-A.t-Xs.r-Xs.p-XXs.fs-Sm.fc-W.br-Md(class= colorClasses[foodTagColors[food.category]])= food.category
+							//+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+				a.fc-B.w-100.ta-C.p-Xs.d-B(href='#Food') More Food
 
 		if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
-			.content-card
-				h2.content-card--header Getting Around
+			+contentCard('Getting Around')
 				if city.transit.tagline
-					.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs(style='width: 50px; height: 50px;')
-						i.fa.fa-train
-						i.fa.fa-train
-						i.fa.fa-train
-					h3= city.transit.tagline
+					.d-F.fai-C.fj-C
+						.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs.fw-N.fs-18(style='width: 50px; height: 50px; flex-grow: 2;')
+							i.fa.fa-train.p-A(style='top: 5px; left: -5px')
+							i.fa.fa-plane.p-A(style='top: 5px; right: -5px')
+							i.fa.fa-ship.p-A(style='bottom: -7px; left: 14px')
+						h3.ta-C= city.transit.tagline
 
-				.row(data-function='accordion', data-allow-multiple='true')
-					for fact, i in city.transit.transitFacts
-						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
-							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
-							= fact.title
-						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= fact.description
+				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 
 		if city.quickFacts && city.quickFacts[0].description !== '<p><br></p>' && city.quickFacts[0].description !== '<br>'
-			.content-card
-				h2.content-card--header Travel Hacks
-
-				.row(data-function='accordion', data-allow-multiple='true')
-					for fact, i in city.quickFacts.sort(sortByOrder)
-						h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
-							i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
-							= fact.title
-						div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= fact.description
-
-		//.content-card.p-0
-			.d-F.fj-B.fai-C.bg-Purp.fc-W
-				button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.ml-A(data-icon='fa fa-chevron-left')
-				h2.bw-N.fc-W.m-0.p-0 Sightseeing
-				button.bg-N.bw-N.plr-Lg.ptb-Sm.mtb-XXs.mr-A(data-icon='fa fa-chevron-right')
-			.js-map-overview.p-R
-				nav.p-A.l-0.t-0.b-0.w-25.bg-Dk
-					ul.ls-N.p-0
-						li(data-map='legend', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover')
-							img.img-responsive(src='http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg')
-						li
-							img.img-responsive(src='http://farm3.static.flickr.com/2597/3727516493_f66b9ed6ee_b.jpg')
-						li(data-map='legend', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover')
-							img.img-responsive(src='http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg')
-						li(data-map='legend', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card', data-event='hover')
-							img.img-responsive(src='http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg')
-						li
-							img.img-responsive(src='http://resources.touropia.com/gfx/d/tourist-citys-in-chicago/chicago_water_tower.jpg')
-				.p-A.br-C(data-map='icon', data-location='John Hancock Center', data-function='toggle', data-target='[data-map="icon"][data-location="John Hancock Center"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:380px; left:550px; background: url("http://farm3.static.flickr.com/2227/2551783570_7dfab464a3_b.jpg") no-repeat center center/cover;border: 2px solid #333')
-					.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-						h2 John Hancock Center
-						| Located on the shore of Lake Michigan, the skyscraper offers panoramic views of the entire city. Completed in 1968, the 100-story structure boasts a number of records, including the world’s highest indoor swimming pool and ice-skating rink. Visitors can take a 40-second elevator ride to the Observatory on the 94th floor, which features an open-air skywalk. On the 96th floor is a lounge where guests can sip a cocktail or beverage while enjoying the view.
-				.p-A.br-C(data-map='icon', data-location='Willis Tower', data-function='toggle', data-target='[data-map="icon"][data-location="Willis Tower"] .content-card', data-event='hover', style='height: 50px; width: 50px; top:530px; left:485px; background: url("http://resources.touropia.com/gfx/d/iconic-skyscrapers/sears_tower.jpg") no-repeat center center/cover;border: 2px solid #333')
-					.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-						h2 Willis Tower
-						| Willis Tower (or still Sears Tower if you're from Chicago) is arguably the most defining structure of the Chicago skyline. While you can get an amazing view from the top as well as a history lesson while you are there, going up the <a href="#">John Hancock</a> building as actually a better value (plus you get to see the iconic Willis Tower from the view!)
-				.p-A.br-C.bc-G__dkr.bw-Md.bs-S(data-map='icon', data-location='Millennium Park', data-function='toggle', data-target='[data-map="icon"][data-location="Millennium Park"] .content-card, this', data-event='hover', data-toggle='bc-Gr', style='height: 50px; width: 50px; top:500px; left:570px; background: url("http://farm5.static.flickr.com/4121/4824173611_a0864cb83b_b.jpg") no-repeat center center/cover;')
-					.content-card.p-A.b-100.mb-Sm.an-Xf.o-0.pe-N(data-toggle='o-1 pe-N', style='width: 300px; left: -125px')
-						h2 Millennium Park
-						| Long before it opened, Millennium Park had become notorious for delays and cost-overruns, missing its titular date by a wide margin. However, when it was finished, the biggest shock of all came when it turned out to be quite nice. Aside from plenty of grass and open space, it has modern sculptures in steel and glass, including Chicago’s newest must-photo for visitors, The Bean (properly known as Cloud Gate), and the Frank Gehry-designed Pritzker Pavilion for outdoor concerts.
-
-				img.w-100(src='/images/chicago-map.jpg')
+			+contentCard('Quick Facts')
+				+accordion(city.quickFacts.sort(sortByOrder))(class='row', data-allow-multiple='true')

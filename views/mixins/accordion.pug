@@ -1,0 +1,8 @@
+mixin accordion(items)
+	if items
+		div(data-function='accordion')&attributes(attributes)
+			for item, i in items
+				h3(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
+					i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
+					= item.title
+				div(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= item.description

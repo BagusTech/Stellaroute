@@ -49,12 +49,7 @@ block content
 						.content-card
 							h2.content-card--header Travel Hacks
 
-							.row(data-function='accordion', data-allow-multiple='true')
-								for advice, i in attraction.needToKnow.sort(sortByOrder)
-									h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
-										i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
-										= advice.title
-									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+							+accordion(attraction.needToKnow.sort(sortByOrder))(class='row', data-allow-multiple='true')
 
 					if subAttractions
 						h2.fc-G Attractions in #{attraction.names.display}
@@ -65,8 +60,7 @@ block content
 
 				.col-xs-12.col-sm-6.col-md-4
 					if (attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>') || (attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>') || (attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>')
-						.content-card
-							h2.content-card--header Quick Info
+						+contentCart('Quick Info')
 							if attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>'
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
@@ -81,14 +75,14 @@ block content
 									.ml-Md!= attraction.address
 
 					if attraction.orientation && attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
-						.content-card
-							h2.content-card--header Orientation
+						+contentCard('Orientation')
 							if attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
 								div!= attraction.orientation.description
 							
 							if attraction.orientation.map
 								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= attraction.orientation.map)
+
 							if attraction.orientation && attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'
 								.clear
 									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
@@ -98,10 +92,9 @@ block content
 
 				
 						if attraction.orientation.map
-							.modal.fade#MapModal(tab-index='-1', role='dialog')
-								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
-									.modal-content.p-Md
-										img.w-100(src=attraction.orientation.map)
+							+modal('MapModal')
+								img.w-100(src=attraction.orientation.map)
+										
 				
 				if siblingAttractions
 					.col-xs-12.col-sm-6.col-md-4
@@ -131,8 +124,5 @@ block content
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card
 							h2.content-card--header Fun Facts
-							ul.ls-N.p-0
-								for fact in attraction.quickFacts.sort(sortByOrder)
-									li
-										h3= fact.title
-										div!= fact.description
+
+							+accordion(attraction.quickFacts.sort(sortByOrder))(class='row', data-allow-multiple='true')

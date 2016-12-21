@@ -10,8 +10,7 @@ block content
 			small
 				a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
 
-			.content-card
-				h2.content-card--header Coming soon!
+			+contentCard('Coming soon!')
 				p.lead.m-0!= `More information about ${neighborhood && neighborhood.names && neighborhood.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
 	else
 		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
@@ -57,8 +56,7 @@ block content
 
 				.col-xs-12.col-sm-6.col-md-4
 					if neighborhood.orientation && neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
-						.content-card
-							h2.content-card--header Orientation
+						+contentCard('Orientation')
 							if neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
 								div!= neighborhood.orientation.description
 							
@@ -110,14 +108,12 @@ block content
 
 				.col-xs-12.col-sm-6.col-md-8.f-R
 					if  neighborhood.eatingDrinking && neighborhood.eatingDrinking.description && neighborhood.eatingDrinking.description !== '<p><br></p>' && neighborhood.eatingDrinking.description !== '<br>'
-						.content-card
-							h2.content-card--header Eating &amp; Drinking
+						+contentCard('Eating & Drinking')
 							img.f-L.w-25(src=neighborhood.eatingDrinking.image, alt='Eating and Drinking')
 							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 
 					if  neighborhood.shopping && neighborhood.shopping.description && neighborhood.shopping.description !== '<p><br></p>' && neighborhood.shopping.description !== '<br>'
-						.content-card
-							h2.content-card--header Shopping
+						+contentCard('Shopping')
 							img.f-L.w-25(src=neighborhood.shopping.image, alt='Shopping')
 							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
 
@@ -152,8 +148,7 @@ block content
 
 				if neighborhood.notiblePlaces && neighborhood.notiblePlaces[0] && neighborhood.notiblePlaces[0].name
 					.col-xs-12.col-sm-6.col-md-8.f-R
-						.content-card
-							h2.content-card--header Other Notible Places
+						+contentCard('Other Notible Places')
 							ul.list-unstyled
 								for place in neighborhood.notiblePlaces
 									li.clear
@@ -173,10 +168,5 @@ block content
 
 				if neighborhood.quickFacts && neighborhood.quickFacts[0].description !== '<p><br></p>' && neighborhood.quickFacts[0].description !== '<br>'
 					.col-xs-12.col-sm-6.col-md-8.f-R
-						.content-card
-							h2.content-card--header Fun Facts
-							ul.ls-N.p-0
-								for fact in neighborhood.quickFacts
-									li
-										h3= fact.title
-										div!= fact.description
+						+contentCard('Fun Facts')
+							+accordion(neighborhood.quickFacts)

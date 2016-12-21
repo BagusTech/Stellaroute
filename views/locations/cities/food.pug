@@ -95,8 +95,6 @@ block content
 				.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
 					+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 
-		//+masonry(city.food.foods.filter((i) => i.category !== 'Restaurant').sort(sortByOrder), 'masonry-grid-1 masonry-grid-3--md masonry-grid-4--lg pt-Sm', true)
-				
 		h2 Restaurants
 		//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
@@ -104,12 +102,10 @@ block content
 				.masonry--item(data-toggle='modal', data-target= `#${restaurant.name.replace(/\s/g, '-')}`)
 					+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
 
-		- var foodCounter = 0;
-
-		for item in city.food.foods
+		for item, i in city.food.foods
 			if item.name
 				+modal(item.name.replace(/\s/g, '-'))
-					div(id=`FoodItem${foodCounter}`, data-toggle='hidden')
+					div(id=`FoodItem${i}`, data-toggle='hidden')
 						h2.content-card--header.fw-B.fc-B= item.name
 						.lead!= item.description
 						img.w-100(src= item.image, alt= item.name)
@@ -137,25 +133,25 @@ block content
 							a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
 
 					if user && user.isAdmin
-						.hidden(id=`FoodItemUpdate${foodCounter}`, data-toggle='hidden')
+						.hidden(id=`FoodItemUpdate${i}`, data-toggle='hidden')
 							div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
 								div(duck-field='food', duck-type='object')
 									div(duck-field='foods', duck-type='array')
 										div(duck-type='object', duck-key='Id', duck-key-value=item.Id)
 											.form-group(duck-field='name', duck-type='string') <!-- name -->
-												label(for=`FoodName${foodCounter}`) Name
+												label(for=`FoodName${i}`) Name
 												input#FoodName.form-control(type='text', required, duck-value, value=item.name)
 
 											.form-group(duck-field='order', duck-type='number') <!-- order -->
-												label(for=`FoodOrder${foodCounter}`) Order
+												label(for=`FoodOrder${i}`) Order
 												input#FoodName.form-control(type='number', required, duck-value, value=item.order)
 
 											.form-group(duck-field='image', duck-type='string') <!-- image -->
-												label(for=`FoodImage${foodCounter}`) Image
+												label(for=`FoodImage${i}`) Image
 												input#FoodImage.form-control(type='text', required, duck-value, value=item.image)
 
 											.form-group(duck-field='category', duck-type='select') <!-- category -->
-												label(for=`FoodCategory${foodCounter}`) Category
+												label(for=`FoodCategory${i}`) Category
 												select#FoodCategory.form-control(duck-value)
 													option(selected= item.category === 'Only In') Only In
 													option(selected= item.category === 'Local Cuisine') Local Cuisine
@@ -164,11 +160,11 @@ block content
 													option(selected= item.category === 'Restaurant') Restaurant
 
 											.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
-												label(for=`FoodTagline${foodCounter}`) Tagline
+												label(for=`FoodTagline${i}`) Tagline
 												input#FoodTagline.form-control(type='text', maxlength='130', duck-value, value=item.tagline)
 
 											.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
-												label(for=`FoodDescription${foodCounter}`) Description
+												label(for=`FoodDescription${i}`) Description
 												.summernote!= item.description
 
 											.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
@@ -205,23 +201,23 @@ block content
 														input.form-control(type='text', duck-value)
 
 											.form-group(duck-field='area', duck-type='string') <!-- area -->
-												label(for=`FoodArea${foodCounter}`) Area
+												label(for=`FoodArea${i}`) Area
 												input#FoodArea.form-control(type='text', duck-value, value= item.area)
 
 											.form-group(duck-field='address', duck-type='string') <!-- address -->
-												label(for=`FoodAddress${foodCounter}`) Address
+												label(for=`FoodAddress${i}`) Address
 												input#FoodAddress.form-control(type='text', duck-value, value= item.address)
 
 											.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
-												label(for=`FoodWhatToOrder${foodCounter}`) What to Order
+												label(for=`FoodWhatToOrder${i}`) What to Order
 												input#FoodWhatToOrder.form-control(type='text', duck-value, value= item.whatToOrder)
 
 											.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
-												label(for=`FoodSuggestedRestaurant${foodCounter}`) Suggested Restaurant
+												label(for=`FoodSuggestedRestaurant${i}`) Suggested Restaurant
 												input#FoodSuggestedRestaurant.form-control(type='text', duck-value, value=item.suggestedRestaurant)
 
 											.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
-												label(for=`FoodReadMore${foodCounter}`) Read More
+												label(for=`FoodReadMore${i}`) Read More
 												input#FoodReadMore.form-control(type='text', duck-value, value=item.readMore)
 								
 								button.btn.btn-primary(duck-button='submit') Save
@@ -229,17 +225,15 @@ block content
 
 						.row
 							.col-xs-6
-								button.btn.btn-primary(id=`FoodItemEdit${foodCounter}`, data-function='toggle', data-target=`this, #FoodItem${foodCounter}, #FoodItemUpdate${foodCounter}, #FoodItemCancelSave${foodCounter}`, data-toggle='hidden') Edit
-								button.btn.btn-warning.hidden(id=`FoodItemCancelSave${foodCounter}`, data-function='toggle', data-target=`this, #FoodItem${foodCounter}, #FoodItemUpdate${foodCounter}, #FoodItemEdit${foodCounter}`, data-toggle='hidden') Cancel
+								button.btn.btn-primary(id=`FoodItemEdit${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemCancelSave${i}`, data-toggle='hidden') Edit
+								button.btn.btn-warning.hidden(id=`FoodItemCancelSave${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemEdit${i}`, data-toggle='hidden') Cancel
 								
 							.col-xs-6.ta-R
-								button.btn.btn-danger(id=`FoodDelete${foodCounter}`, data-function='toggle', data-target=`this, #FoodDeleteForm${foodCounter}`, data-toggle='hidden') Delete
+								button.btn.btn-danger(id=`FoodDelete${i}`, data-function='toggle', data-target=`this, #FoodDeleteForm${i}`, data-toggle='hidden') Delete
 
-								div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${foodCounter}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
+								div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${i}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
 									button.btn.btn-danger(duck-button='submit') Delete
-									button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${foodCounter}, #FoodDeleteForm${foodCounter}`) Cancel
-			
-			- foodCounter++;
+									button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${i}, #FoodDeleteForm${i}`) Cancel
 	else
 		.content-card
 			p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.

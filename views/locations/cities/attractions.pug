@@ -3,11 +3,9 @@ block content
 		.ta-r
 			button.btn.btn-primary(data-target='#AddAttraction', data-toggle='modal') Add Attraction
 
-		#AddAttraction.modal.fade(tabindex="-1", role="dialog")
-			.modal-dialog.modal-lg
-				.content-card
-					h2.content-card--header Add New Attraction Item
-					+attractionForm('add', null, {city: [city.Id]})
+		+modal('AddAttraction')
+			h2.content-card--header Add New Attraction Item
+			+attractionForm('add', null, {city: [city.Id]})
 
 	if (attractions.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm

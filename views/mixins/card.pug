@@ -69,3 +69,9 @@ mixin guideCard(card)
 						p.guide-card--suggested-time
 							| Suggested Time:&nbsp;
 							strong= card.suggestedTime
+
+mixin contentCard(title)
+	.content-card&attributes(attributes)
+		if title
+			h2.content-card--header= title
+		block 

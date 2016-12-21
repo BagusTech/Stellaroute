@@ -4,40 +4,20 @@
 	}
 }
 
-[role='tab']{
-	display: block;
-	cursor: pointer;
-}
+[data-function='accordion']{
+	> [role='tab'] {
+		cursor: pointer;
+		margin: 0;
+		padding: @gw-Sm;
 
-[data-function='accordion']{}
-
-[data-function='tabs']{}
-
-@media(max-width: @screen-md){ // using max-width because it is a JS override that only happens on mobile
-	[data-function='tabs']{
-		margin-bottom: 0 !important; // override the tab's bottom margin on when acting as accordion
+		.fa{
+			transition: all .27s ease-out;
+			margin-right: @gw-Sm;
+		}
 	}
-}
 
-@media(min-width: @screen-md){
-	[data-function='tabs']{
-		position: relative;
-		transition: margin-bottom .3s ease-out;
+	> [role='tabpanel'] {
+		padding: 0 @gw-Sm @gw-Sm;
 
-		> [role='tab']{
-			display: inline-block;
-		}
-
-		> [role='tabpanel']{
-			opacity: 0;
-			position: absolute;
-			top: 100%;
-			transition: all .3s ease-out;
-			z-index: -1;
-		}
-			> [aria-hidden='false']{
-				opacity: 1;
-				z-index: 1;
-			}
 	}
 }

@@ -132,7 +132,12 @@
 [data-icon] > .fa {
   line-height: inherit;
 }
-[data-function*='interiorNav'] > a {
+[data-function*='interiorNav'] {
+  background: white;
+  margin: 0 -24px;
+  z-index: 2;
+}
+[data-function*='interiorNav'] > [role='tab'] {
   padding-left: 24px;
 }
 [data-function*='interiorNav'] h3 {
@@ -153,10 +158,42 @@
   border-left: 3px solid #7770A1;
   margin-left: -3px;
 }
-[data-function*='interiorNav'] ul {
+[data-function*='interiorNav'] [role='tabpanel'] {
   margin: 0 0 0 36px;
   padding: 0;
   list-style: none;
+}
+@media (min-width: 767px) {
+  [data-function*='interiorNav'] {
+    background: none;
+    margin: 0;
+  }
+  [data-function*='interiorNav'] > [role='tab'] {
+    padding-left: 24px;
+  }
+  [data-function*='interiorNav'] h3 {
+    font-weight: normal;
+  }
+  [data-function*='interiorNav'] a {
+    color: #4a4d50;
+    display: block;
+    font-weight: normal;
+    padding-left: 12px;
+  }
+  [data-function*='interiorNav'] a:hover {
+    border-left: 3px solid #aaa3d4;
+    margin-left: -3px;
+  }
+  [data-function*='interiorNav'] .active {
+    color: #7770A1;
+    border-left: 3px solid #7770A1;
+    margin-left: -3px;
+  }
+  [data-function*='interiorNav'] [role='tabpanel'] {
+    margin: 0 0 0 36px;
+    padding: 0;
+    list-style: none;
+  }
 }
 .masonry {
   -moz-column-gap: 24px;
@@ -10925,31 +10962,31 @@ form.profile-settings-update .profile-label.notification h3 {
 @media (min-width: 767px) {
   #Stellaroute .m-0--sm,
   #Stellaroute .m-N--sm {
-    --smmargin: 0;
+    margin: 0;
   }
   #Stellaroute .m-A--sm {
-    --smmargin: auto;
+    margin: auto;
   }
   #Stellaroute .m-XXs--sm {
-    --smmargin: 4px;
+    margin: 4px;
   }
   #Stellaroute .m-Xs--sm {
-    --smmargin: 6px;
+    margin: 6px;
   }
   #Stellaroute .m-Sm--sm {
-    --smmargin: 12px;
+    margin: 12px;
   }
   #Stellaroute .m-Md--sm {
-    --smmargin: 24px;
+    margin: 24px;
   }
   #Stellaroute .m-Lg--sm {
-    --smmargin: 36px;
+    margin: 36px;
   }
   #Stellaroute .m-Xl--sm {
-    --smmargin: 48px;
+    margin: 48px;
   }
   #Stellaroute .m-XXl--sm {
-    --smmargin: 60px;
+    margin: 60px;
   }
   #Stellaroute .mt-0--sm,
   #Stellaroute .mt-N--sm {

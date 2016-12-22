@@ -476,9 +476,9 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 						const referenceItem = table.findOne('Id', card.Id).items
 
 						if(referenceItem) {
-							guide.days[i].cards[j].image = guide.days[i].cards[j].image || referenceItem.cardImage;
-							guide.days[i].cards[j].title = guide.days[i].cards[j].title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';
-							guide.days[i].cards[j].description = (guide.days[i].cards[j].description && guide.days[i].cards[j].description !== '<p><br></p>' && guide.highlights[i].description !== '<br>') ? guide.highlights[i].description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
+							card.image = card.image || referenceItem.cardImage;
+							card.title = card.title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';							
+							card.description = (card.description && card.description !== '<p><br></p>' && card.description !== '<br>') ? card.description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
 						}
 					}
 				}
@@ -510,7 +510,7 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 	});
 });
 
-router.get('/:country/:city/:attraction', (req, res, next) => {
+router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')

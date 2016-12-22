@@ -29,7 +29,7 @@ block content
 								small.d-B.mt-Sm= guide.tagline
 
 		.container.p-R
-			if user.isAdmin
+			if user && user.isAdmin
 				.ta-R.d-N.d-B--sm
 					button.btn.btn-primary(data-toggle='modal', data-target='#AddGuideModal') Edit Guide
 				+modal('AddGuideModal')(class='modal-lg')
@@ -76,7 +76,7 @@ block content
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
 					.content-card(data-position='0')
 						h2.content-card--header.fw-B.p-R.bg-W(data-function='stickey') Overview
-						.lead!= guide.description
+						.lead(duck-value)!= guide.description
 
 					.content-card.p-0
 						img.w-100(src= guide.map, alt= guide.names.display)

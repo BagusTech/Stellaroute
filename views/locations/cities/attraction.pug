@@ -55,7 +55,7 @@ block content
 						h2.fc-G Attractions in #{attraction.names.display}
 						.masonry.masonry-grid-1.masonry-grid-2--md
 							for subAttraction in subAttractions
-								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${subAttraction.url}`)
+								a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${subAttraction.url}`)
 									+card(subAttraction.cardImage, subAttraction.names.display, null, null, subAttraction.description)
 
 				.col-xs-12.col-sm-6.col-md-4
@@ -99,14 +99,14 @@ block content
 				if siblingAttractions
 					.col-xs-12.col-sm-6.col-md-4
 						h2.fc-G Other Attractions in #{parentAttraction.names.display}
-						a.d-B(href=`/${city.countryUrl}/${city.url}/${parentAttraction.url}`)
+						a.d-B(href=`/${city.countryUrl}/${city.url}/attraction/${parentAttraction.url}`)
 							img.w-100(src=parentAttraction.cardImage, alt= parentAttraction.names.display)
 							.p-Sm.bg-Purp
 								h3.fc-W.mt-0= parentAttraction.names.display
 								.fc-W.fw-N!= parentAttraction.description
 
 						for siblingAttraction, i in siblingAttractions
-							a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
+							a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/attraction/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
 									.w-25(style= `background: url('${siblingAttraction.cardImage}') no-repeat scroll center center / cover`)
 									.w-75.p-Sm
 										h4.mt-0= siblingAttraction.names.display 
@@ -119,7 +119,7 @@ block content
 
 						.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyAttraction in nearbyAttractions
-								a.masonry--item(href=`/${city.countryUrl}/${city.url}/${nearbyAttraction.url}`, target='_blank')
+								a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
 									+card(nearbyAttraction.cardImage, nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
 				if attraction.quickFacts && attraction.quickFacts[0].description !== '<p><br></p>' && attraction.quickFacts[0].description !== '<br>'

@@ -9,22 +9,19 @@ block content
 	if (neighborhoods.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for neighborhood in neighborhoods
-				.masonry--item(data-toggle='modal', data-target= `#${neighborhood.url}`)
+				.masonry--item(data-toggle='modal', data-target= `#${neighborhood.url}-neighborhood`)
 					+card(neighborhood.cardImage, neighborhood.names.display)
 					
-		-var neighborhoodCounter = 0;
 		for neighborhood in neighborhoods
-			+modal(neighborhood.url)
-				div(id=`NeighborhoodOverview${neighborhoodCounter}`, data-toggle='hidden')
+			+modal(`${neighborhood.url}-neighborhood`)
+				div(data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= neighborhood.names.display
 
 					.lead!= neighborhood.description
-					img.w-100(src= neighborhood.cardImage || 'http://placebear.com/600/400', alt= neighborhood.names.display)
+					img.w-100(src= neighborhood.cardImage || 'http://placebear.com/300/100', alt= neighborhood.names.display)
 
 					.ta-R.mt-Md
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`) Read More
-
-			- neighborhoodCounter++;
 		
 	else
 		.content-card

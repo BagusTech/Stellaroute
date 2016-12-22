@@ -12,11 +12,11 @@ block content
 	if (guides.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for guide in guides
-				.masonry--item(data-toggle='modal', data-target= `#${guide.url}`)
+				.masonry--item(data-toggle='modal', data-target= `#${guide.url}-guide`)
 					+card(guide.cardImage, guide.names.display)
 					
 		for guide, i in guides
-			+modal(guide.url)
+			+modal(`${guide.url}-guide`)
 				div(id=`GuideOverview${i}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= guide.names.display
 					.lead!= guide.description

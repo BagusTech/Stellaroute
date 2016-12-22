@@ -14,7 +14,7 @@ block content
 					+card(attraction.cardImage, attraction.names.display)
 					
 		for attraction, i in attractions
-			+modal(attraction.url)(class='modal-lg')
+			+modal(attraction.url)
 				div(id=`AttractionOverview${i}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= attraction.names.display
 					.lead!= attraction.description
@@ -22,14 +22,6 @@ block content
 
 					.ta-R.mt-Md
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${attraction.url}`) Read More
-
-				if user && user.isAdmin
-					.hidden(id=`AttractionEdit${i}`, data-toggle='hidden')
-						-var cancelButton = `<button class='btn btn-warning ml-Xs' data-function='toggle' data-target='#AttractionEdit${i}, #AttractionEditToggle${i}, #AttractionOverview${i}', type='button'>Cancel</button>`
-
-						+attractionForm('update', attraction, null, cancelButton)
-
-				button.btn.btn-primary(id=`AttractionEditToggle${i}`, data-function='toggle', data-target=`this, #AttractionEdit${i}, #AttractionOverview${i}`, data-toggle='hidden', type='button') Edit
 		
 	else
 		.content-card

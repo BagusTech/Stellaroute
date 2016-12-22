@@ -6,22 +6,21 @@
 	height: 100%;
 	width: 100%;
 
-	&.no-scrollbar{
-		[data-scroll='content-wrapper']{
+	&.no-scrollbar {
+		[data-scroll='content-wrapper'] {
 			right: 0;
-
-			.container{
-				left: 0;
-			}
 		}
+			[data-scroll='content'] {
+				padding-right: 0;
+			}
 
-		[data-scroll='scrollbar']{
+		[data-scroll='scrollbar'] {
 			display: none;
 		}
 	}
 }
 
-[data-scroll='content-wrapper']{
+[data-scroll='content-wrapper'] {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -29,14 +28,18 @@
 	right: -17px;
 	overflow-x: hidden;
 	overflow-y: scroll;
-
-	.container{
-		position: relative;
-		left: -17px;
-	}
 }
+	[data-scroll='content'] {
+		padding-right: 17px;
+	}
 
-[data-scroll='scrollbar']{
+	@media (min-width: @screen-Sm) {
+		[data-scroll='content'] {
+			padding-right: 0;
+		}		
+	}
+
+[data-scroll='scrollbar'] {
 	width: @scrollbar-width;
 	border-width: 0 3px;
 	border-style: solid;
@@ -48,7 +51,7 @@
 	cursor: pointer;
 	z-index: 1;
 
-	button{
+	button {
 		background: rgba(50, 50, 50, .25);
 		min-height: 30px;
 		max-height: 100%;
@@ -63,7 +66,7 @@
 		transition: height .3s ease-out;
 		border-radius: 15px;
 
-		&:focus{
+		&:focus {
 			outline: none;
 		}
 	}

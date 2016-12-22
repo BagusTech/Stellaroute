@@ -13,23 +13,23 @@ append header
 block content
 	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
-				.container.ptb-0
+				.container.ptb-0.p-R
 					if user && user.isAdmin
-						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditCityForm') Edit
-						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= city.Id
+						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditCityForm') Edit
+						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= city.Id
 					ol.breadcrumb
-						li.active= city.countryDisplay
-						li.active= city.provinceDisplay
-						li.active= city.names.display
+						li(title= city.countryDisplay).active= city.countryDisplay
+						li(title= city.provinceDisplay).active= city.provinceDisplay
+						li(title= city.names.display).active= city.names.display
 					h1= city.names.display
-						small.ml-Md Broad Shoulders, Down to Earch, Great Food
+						small.ml-Md= city.tagline
 
-					nav(data-tabs='controls')
-						a.tabbed-nav--tab.active(href='#Overview', data-tabs='control') Overview
-						a.tabbed-nav--tab(href='#Attractions', data-tabs='control') Attractions
-						a.tabbed-nav--tab(href='#Food', data-tabs='control') Food
-						a.tabbed-nav--tab(href='#Guides', data-tabs='control') Guides
-						a.tabbed-nav--tab(href='#Neighborhoods', data-tabs='control') Neighborhoods
+				nav.tabbed-nav(data-tabs='controls')
+					a.tabbed-nav--tab.active(href='#Overview', data-tabs='control') Overview
+					a.tabbed-nav--tab(href='#Attractions', data-tabs='control') Attractions
+					a.tabbed-nav--tab(href='#Food', data-tabs='control') Food
+					a.tabbed-nav--tab(href='#Guides', data-tabs='control') Guides
+					a.tabbed-nav--tab(href='#Neighborhoods', data-tabs='control') Neighborhoods
 	
 	if user && user.isAdmin
 		+modal('EditCityForm')(class='modal-lg')

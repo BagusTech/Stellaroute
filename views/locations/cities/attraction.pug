@@ -17,8 +17,8 @@ block content
 		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 				.bg-Dkr.p-R
 					if user && user.isAdmin
-						button.btn.btn-primary.p-A.r-Sm.t-Sm(data-toggle='modal', data-target='#EditAttractionForm') Edit
-						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1= attraction.Id
+						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditAttractionForm') Edit
+						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= attraction.Id
 					.container.ptb-0
 						ol.breadcrumb
 							li.active United Sates
@@ -60,7 +60,7 @@ block content
 
 				.col-xs-12.col-sm-6.col-md-4
 					if (attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>') || (attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>') || (attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>')
-						+contentCart('Quick Info')
+						+contentCard('Quick Info')
 							if attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>'
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
@@ -74,7 +74,7 @@ block content
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
 									.ml-Md!= attraction.address
 
-					if attraction.orientation && attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
+					if attraction.orientation && ((attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>') || attraction.orientation.map || (attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'))
 						+contentCard('Orientation')
 							if attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
 								div!= attraction.orientation.description
@@ -83,7 +83,7 @@ block content
 								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= attraction.orientation.map)
 
-							if attraction.orientation && attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'
+							if attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'
 								.clear
 									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
 										span.sr-only Getting There

@@ -16,7 +16,7 @@ block content
 					+card(guide.cardImage, guide.names.display)
 					
 		for guide, i in guides
-			+modal(guide.url)(class='modal-lg')
+			+modal(guide.url)
 				div(id=`GuideOverview${i}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= guide.names.display
 					.lead!= guide.description

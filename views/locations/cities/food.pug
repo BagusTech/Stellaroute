@@ -1,6 +1,6 @@
 block content
 	if (user && user.isAdmin)
-		.ta-r
+		.ta-r.d-N.d-B--sm
 			button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
 
 		#AddFood.modal.fade(tabindex="-1", role="dialog")
@@ -223,7 +223,7 @@ block content
 								button.btn.btn-primary(duck-button='submit') Save
 						hr
 
-						.row
+						.row.d-N.d-B--sm
 							.col-xs-6
 								button.btn.btn-primary(id=`FoodItemEdit${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemCancelSave${i}`, data-toggle='hidden') Edit
 								button.btn.btn-warning.hidden(id=`FoodItemCancelSave${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemEdit${i}`, data-toggle='hidden') Cancel

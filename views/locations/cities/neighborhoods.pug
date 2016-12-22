@@ -14,7 +14,7 @@ block content
 					
 		-var neighborhoodCounter = 0;
 		for neighborhood in neighborhoods
-			+modal(neighborhood.url)(class='modal-lg')
+			+modal(neighborhood.url)
 				div(id=`NeighborhoodOverview${neighborhoodCounter}`, data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= neighborhood.names.display
 

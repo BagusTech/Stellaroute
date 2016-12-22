@@ -17,7 +17,7 @@ footer.site-footer
 							i.fa.fa-facebook(aria-hidden="true")
 							span.sr-only Facebook
 					li
-						a(href='https://www.instagram.com/stellaroute_travel/', target='blank', title="instagram.com/stellaroute_travel")
+						a(href='https://www.instagram.com/stellaroute_com/', target='blank', title="instagram.com/stellaroute_com")
 							i.fa.fa-instagram(aria-hidden="true")
 							span.sr-only Instagram
 					li
@@ -36,7 +36,9 @@ footer.site-footer
 			.col-xs-12.col-sm-6.col-sm-push-1.col-md-push-2
 				h3.mt-0.fc-W.fs-XL.ta-C.ta-L--sm Sign Up for Our Beta
 					small.d-N.d-B--sm.fc-G__ltr.pt-Xs We'll keep you updated leading up to our launch
-				include beta-signup
+
+				if !user
+					include beta-signup
 
 	ul.list-inline.bg-Steel.ta-C.fs-Xs.ptb-Xs.mb-0
 		li.hidden-xs

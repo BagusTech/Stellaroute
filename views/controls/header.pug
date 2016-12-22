@@ -1,13 +1,13 @@
 header.site-header(style={'background-color': headerBackground}, class= headerClasses)
 	if showHeaderSearch
-		button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
-		input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
+		//button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
+		//input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
 
-	a#SiteLogo.w-50.plr-Sm(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
+	a#SiteLogo(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
 		img.img-responsive(src=`/images/logo_${logoColor}.svg`, alt='Stellaroute')
 
 	button.hamburger-menu--toggle(data-icon='fa fa-ellipsis-v', data-function='toggle', data-target='.hamburger-menu')
-	nav.hamburger-menu.z-1(data-function='toggle')
+	nav.hamburger-menu(data-function='toggle')
 		button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
 		ul.hamburger-menu--options(data-function='stopProp')
 			li

@@ -1,7 +1,6 @@
 .row
 	.col-xs-12.col-sm-4.col-lg-3
-		.content-card
-			h2.content-card--header At a Glance
+		+contentCard('At a Glance')
 			dl
 				if city.averageStay
 					dt Length of Stay
@@ -21,7 +20,7 @@
 						img(src=img, alt=`${city.names.display} Banner ${i+1}`, data-banner-item)
 			else 
 				img.w-100(src= city.cardImage ? city.cardImage : 'http://placebear.com/300/300', alt= city.names.display)
-			.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= city.description
+			.lead.fc-W--sm.m-0--sm.p-Sm.bg-Dkst--sm.p-A--sm.b-0--sm.l-0--sm.r-0--sm!= city.description
 
 		if city.needToKnow && city.needToKnow[0].description !== '<p><br></p>' && city.needToKnow[0].description !== '<br>'
 			.content-card

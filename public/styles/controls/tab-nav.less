@@ -1,5 +1,6 @@
 .tabbed-nav{
-	margin-top: @gw-Lg;
+	margin: @gw-Sm auto 0;
+	display: flex;
 }
 	.tabbed-nav--tab{
 		display: inline-block;
@@ -8,8 +9,11 @@
 		transition: background .13s ease-out;
 		color: white;
 		font-weight: normal;
-		padding: @gw-Sm @gw-Md;
-		
+		font-size: .8em;
+		padding: @gw-Sm @gw-Xs;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		min-width: 14%;
 
 		&[aria-expanded='true'], &.active{
 			background: rgba(100, 100, 100, .5);
@@ -27,3 +31,15 @@
 	.tabbed-nav--tabpanel{
 		width: 100%;
 	}
+
+@media (min-width: @screen-Sm) {
+	.tabbed-nav{
+		max-width: @site-width;
+		display: block;
+	}
+		.tabbed-nav--tab{
+			font-size: 1em;
+			padding: @gw-Sm @gw-Md;
+			min-width: 0;
+		}
+}

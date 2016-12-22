@@ -316,7 +316,7 @@ void function initCityFood($, duck, window) {
 		});
 	}
 
-	$(window).load(() => {
+	$(window).on('load', () => {
 		$('[duck-table]').duckForm();
 	});
 }(jQuery.noConflict(), duck, window)

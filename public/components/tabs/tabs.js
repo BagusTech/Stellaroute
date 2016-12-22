@@ -47,7 +47,7 @@ void function initializeTabs($) {
 
             $panel.on('tab-change', changeTabs);
 
-            $(`a[href=#${id}]`).click(function triggerTab(e) {
+            $(`a[href="#${id}"]`).click(function triggerTab(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -66,7 +66,7 @@ void function initializeTabs($) {
             return;
         }
 
-        const $anchorToClick = $(`a[data-tabs='control'][href=${pageAnchor}]`);
+        const $anchorToClick = $(`a[data-tabs='control'][href="${pageAnchor}"]`);
 
         if($anchorToClick.length === 1){
             $anchorToClick.click();

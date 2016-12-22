@@ -1901,7 +1901,7 @@ h2,
 h3,
 .h3 {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 6px;
 }
 h4,
@@ -11611,11 +11611,17 @@ form.profile-settings-update .profile-label.notification h3 {
 #Stellaroute .z-A {
   z-index: auto;
 }
+#Stellaroute .z-Neg1 {
+  z-index: -1;
+}
+#Stellaroute .z-0 {
+  z-index: 0;
+}
 #Stellaroute .z-1 {
   z-index: 1;
 }
-#Stellaroute .z-Neg1 {
-  z-index: -1;
+#Stellaroute .z-2 {
+  z-index: 2;
 }
 @media (min-width: 767px) {
   #Stellaroute .c-D--sm {
@@ -11670,11 +11676,17 @@ form.profile-settings-update .profile-label.notification h3 {
   #Stellaroute .z-A--sm {
     z-index: auto;
   }
+  #Stellaroute .z-Neg1--sm {
+    z-index: -1;
+  }
+  #Stellaroute .z-0--sm {
+    z-index: 0;
+  }
   #Stellaroute .z-1--sm {
     z-index: 1;
   }
-  #Stellaroute .z-Neg1--sm {
-    z-index: -1;
+  #Stellaroute .z-2--sm {
+    z-index: 2;
   }
 }
 @media (min-width: 1023px) {
@@ -11730,11 +11742,17 @@ form.profile-settings-update .profile-label.notification h3 {
   #Stellaroute .z-A--md {
     z-index: auto;
   }
+  #Stellaroute .z-Neg1--md {
+    z-index: -1;
+  }
+  #Stellaroute .z-0--md {
+    z-index: 0;
+  }
   #Stellaroute .z-1--md {
     z-index: 1;
   }
-  #Stellaroute .z-Neg1--md {
-    z-index: -1;
+  #Stellaroute .z-2--md {
+    z-index: 2;
   }
 }
 #Stellaroute .p-0,

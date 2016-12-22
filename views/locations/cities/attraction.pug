@@ -21,9 +21,9 @@ block content
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= attraction.Id
 					.container.ptb-0
 						ol.breadcrumb
-							li.active United Sates
 							li.active Midwest
 							li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
+							li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
 						h1= attraction.names.display
 							small.ml-Md= attraction.tagline
 
@@ -98,11 +98,12 @@ block content
 				
 				if siblingAttractions
 					.col-xs-12.col-sm-6.col-md-4
-						h2.fc-G Other Attraction in #{parentAttraction.names.display}
-						img.w-100(src=parentAttraction.cardImage, alt= parentAttraction.names.display)
-						.p-Sm.bg-Purp
-							h3.fc-W.mt-0= parentAttraction.names.display
-							.fc-W!= parentAttraction.description
+						h2.fc-G Other Attractions in #{parentAttraction.names.display}
+						a.d-B(href=`/${city.countryUrl}/${city.url}/${parentAttraction.url}`)
+							img.w-100(src=parentAttraction.cardImage, alt= parentAttraction.names.display)
+							.p-Sm.bg-Purp
+								h3.fc-W.mt-0= parentAttraction.names.display
+								.fc-W.fw-N!= parentAttraction.description
 
 						for siblingAttraction, i in siblingAttractions
 							a.d-F.fai-Str.fc-I.fw-N(href=`/${city.countryUrl}/${city.url}/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')

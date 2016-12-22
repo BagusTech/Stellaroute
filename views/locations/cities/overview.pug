@@ -28,7 +28,7 @@
 
 				+accordion(city.needToKnow.sort(sortByOrder))(class='row', data-allow-multiple='true')
 
-		if guides && guides.length > 0
+		if guides && guides.filter((g) => g.map).length > 2
 			.content-card.p-0
 				h2.content-card--header.m-0.mt-Sm Guides
 				div(data-function='banner', data-banner-auto-rotate='false')
@@ -51,8 +51,21 @@
 															h5.p-A.d-F.fj-C.fai-C.bg-Dkr.t-0.b-0.l-0.r-0.fc-W.m-0= card.title
 									div(data-scroll='scrollbar')
 										button
+		else if guides && guides.length > 0
+			.content-card.p-0
+				h2.content-card--header.mb-0.p-Sm Guides
+				for guide, i in guides
+					.clear.p-R(class= i % 2 === 0 ? '' : 'bg-G__ltr')
+						.w-25.f-L
+							img.w-100(src= guide.cardImage || guide.map, alt= guide.names.display)
+						.w-75.f-L.p-Sm.pb-Lg
+							h3.mt-0= guide.names.display
+							!= guide.description
+							a.p-A.b-Sm.r-Sm.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
 
-		if  neighborhoods && neighborhoods.length > 0
+
+
+		if neighborhoods && neighborhoods.length > 0
 			h2.fc-G Neighborhoods
 			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md
 				for neighborhood in neighborhoods

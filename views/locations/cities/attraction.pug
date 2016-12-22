@@ -106,11 +106,12 @@ block content
 								.fc-W.fw-N!= parentAttraction.description
 
 						for siblingAttraction, i in siblingAttractions
-							a.d-F.fai-Str.fc-I.fw-N(href=`/${city.countryUrl}/${city.url}/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
+							a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
 									.w-25(style= `background: url('${siblingAttraction.cardImage}') no-repeat scroll center center / cover`)
 									.w-75.p-Sm
 										h4.mt-0= siblingAttraction.names.display 
 										!= siblingAttraction.description
+						.bw-0.bbw-Sm.bs-S.bc-G
 
 				if attraction.nearbyAttractions
 					.col-xs-12.col-sm-6.col-md-4

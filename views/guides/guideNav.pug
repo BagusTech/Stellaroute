@@ -1,0 +1,36 @@
+nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
+	a(href='#', role='tab', aria-expanded='true', data-position='0')
+		h3 Overview
+	ul(role='tabpanel', aria-hidden='false')
+		if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].description !== '<p><br></p>' && guide.travelHacks[0].description !== '<br>'
+			li
+				a(href='#', data-position='0.0') Travel Hacks
+
+		if guide.highlights && guide.highlights[0] && guide.highlights[0].description !== '<p><br></p>' && guide.highlights[0].description !== '<br>'
+			li
+				a(href='#', data-position='0.1') Highlights
+		
+		if guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+			li
+				a(href='#', data-position='0.2') Where to Stay
+		
+		if guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+			li
+				a(href='#', data-position='0.3') Where to Go Out
+		
+		if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+			li
+				a(href='#', data-position='0.4') Where to Eat
+		
+		if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+			li
+				a(href='#', data-position='0.5') Where to Explore
+
+	for day, i in guide.days ? guide.days.sort(sortByOrder) : []
+		a(href='#', role='tab', aria-expanded='false', data-position= i+1)
+			h3= `Day ${i+1}: ${day.title}`
+
+		if day.cards
+			ul(role='tabpanel', aria-hidden='true')
+				for card, j in day.cards.sort(sortByOrder)
+					li: a(href='#', data-position= `${i+1}.${j}`)= card.title

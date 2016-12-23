@@ -1,0 +1,10 @@
+mixin guideEdit(guide)
+	if block
+		if user && user.isAdmin
+			//div(data-position='0', duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+				button.btn.btn-edit(duck-button='edit', data-icon='fa fa-pencil')
+				block 
+				button.btn.btn-warning(duck-button='cancel') Cancel
+				button.btn.btn-primary(duck-button='submit') Save
+		else
+			block 

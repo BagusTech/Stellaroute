@@ -48,6 +48,7 @@ var Guide = Duck({
 			title: String,
 			description: String,
 			cards: [{
+				cardId: String, // the card's unique id
 				title: String,
 				order: Number,
 				image: String,

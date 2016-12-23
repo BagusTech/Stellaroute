@@ -24,6 +24,12 @@ void function initScripts($){
 		$('.modal').on('shown.bs.modal', () => {
 			$('.summernote:visible').summernote({height: 150});
 		});
+
+		$('[duck-button="edit"]').on('click', () => {
+			setTimeout(() => {
+				$('.summernote:visible').summernote({height: 150});
+			}, 10)
+		});
 	});
 
 	$(window).on('load', () => {

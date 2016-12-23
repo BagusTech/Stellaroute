@@ -213,7 +213,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 		div(duck-field='nearbyNeighborhoods', duck-type='array')
 			h3 Nearby Neighborhoods
 			for nearbyNeighborhood in neighborhood && neighborhood.nearbyNeighborhoods ? neighborhood.nearbyNeighborhoods : [null]
-				.form-group(type='string')
+				.form-group(duck-type='string')
 					input.form-control(type='text', duck-value, value= nearbyNeighborhood)
 
 		div(duck-field='notiblePlaces', duck-type='array')

@@ -217,7 +217,9 @@ mixin guideForm(crud, guide, locations, cancel)
 								.form-group(duck-field='suggestedTime', duck-type='string')
 									label Suggested Time
 										input.form-control(type='text', duck-value, value= card.suggestedTime)
-			
+								
+								.form-group.hidden(duck-field='cardId', duck-type='string')
+									input(type='text', duck-value, value= card.cardId || uuid())
 
 		if locations && locations.continents
 			.form-group.hidden(duck-field='continents', duck-type='array')

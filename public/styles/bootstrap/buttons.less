@@ -57,6 +57,10 @@
       pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
     }
   }
+
+  + .btn {
+    margin-left: @gw-Xs;
+  }
 }
 
 
@@ -75,6 +79,10 @@
 .btn-secondary {
   .btn;
   .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
+}
+.btn-edit {
+  .btn;
+  .button-variant(@btn-edit-color; @btn-edit-bg; @btn-edit-border);
 }
 
 // Success appears as green

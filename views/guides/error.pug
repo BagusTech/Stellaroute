@@ -1,0 +1,11 @@
+.media-bg-img.request-page-header
+	.container
+		h1= guide && guide.names && guide.names.display || 'Guide Not Found'
+
+.container.ptb-Sm
+	small
+		a.fc-G(href= `/${city.countryUrl}/${city.url}`)= `< Back to ${city.names.display}`
+
+	.content-card
+		h2.content-card--header Coming soon!
+		p.lead.m-0!= `More information about ${guide.names.display} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`

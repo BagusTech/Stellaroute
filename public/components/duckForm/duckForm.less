@@ -1,3 +1,18 @@
+[duck-edit-form='view'] {
+	[duck-field],
+	[duck-type],
+	[duck-button="submit"],
+	[duck-button="cancel"] {
+		display: none !important;
+	}
+}
+	[duck-edit-form='edit'] {
+		[duck-current-value],
+		[duck-button='edit'] {
+			display: none;
+		}
+	}
+
 [duck-type='array']{
 	border: 1px solid #777;
 	border-radius: @br-Md;
@@ -38,4 +53,22 @@
 	.form-control{
 		border: 1px solid @grey;
 	}
+
+	&[duck-only-edit] {
+		padding: 0;
+		border: none;
+		background: none;
+		margin: none;
+
+		> [duck-button='add'] {
+			display: none;
+		}
+	}
+}
+
+[duck-button='edit'] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 2;
 }

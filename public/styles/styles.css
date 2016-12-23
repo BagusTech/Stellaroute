@@ -92,6 +92,16 @@
   -webkit-transition: opacity 0.2s ease-out;
   transition: opacity 0.2s ease-out;
 }
+[duck-edit-form='view'] [duck-field],
+[duck-edit-form='view'] [duck-type],
+[duck-edit-form='view'] [duck-button="submit"],
+[duck-edit-form='view'] [duck-button="cancel"] {
+  display: none !important;
+}
+[duck-edit-form='edit'] [duck-current-value],
+[duck-edit-form='edit'] [duck-button='edit'] {
+  display: none;
+}
 [duck-type='array'] {
   border: 1px solid #777;
   border-radius: 2px;
@@ -128,6 +138,21 @@
 }
 [duck-type='array'] .form-control {
   border: 1px solid #959ca2;
+}
+[duck-type='array'][duck-only-edit] {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: none;
+}
+[duck-type='array'][duck-only-edit] > [duck-button='add'] {
+  display: none;
+}
+[duck-button='edit'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
 }
 [data-icon] > .fa {
   line-height: inherit;
@@ -3735,6 +3760,9 @@ a.btn.disabled,
 fieldset[disabled] a.btn {
   pointer-events: none;
 }
+.btn + .btn {
+  margin-left: 6px;
+}
 .btn-default {
   display: inline-block;
   margin-bottom: 0;
@@ -3791,6 +3819,9 @@ fieldset[disabled] .btn-default {
 a.btn-default.disabled,
 fieldset[disabled] a.btn-default {
   pointer-events: none;
+}
+.btn-default + .btn {
+  margin-left: 6px;
 }
 .btn-default:focus,
 .btn-default.focus {
@@ -3902,6 +3933,9 @@ a.btn-primary.disabled,
 fieldset[disabled] a.btn-primary {
   pointer-events: none;
 }
+.btn-primary + .btn {
+  margin-left: 6px;
+}
 .btn-primary:focus,
 .btn-primary.focus {
   color: #fff;
@@ -4011,6 +4045,9 @@ a.btn-secondary.disabled,
 fieldset[disabled] a.btn-secondary {
   pointer-events: none;
 }
+.btn-secondary + .btn {
+  margin-left: 6px;
+}
 .btn-secondary:focus,
 .btn-secondary.focus {
   color: #fff;
@@ -4062,6 +4099,118 @@ fieldset[disabled] .btn-secondary.focus {
 .btn-secondary .badge {
   color: #7770A1;
   background-color: #fff;
+}
+.btn-edit {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #4a4d50;
+  background-color: transparent;
+  border-color: transparent;
+}
+.btn-edit:focus,
+.btn-edit:active:focus,
+.btn-edit.active:focus,
+.btn-edit.focus,
+.btn-edit:active.focus,
+.btn-edit.active.focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn-edit:hover,
+.btn-edit:focus,
+.btn-edit.focus {
+  color: #4a4d50;
+  text-decoration: none;
+}
+.btn-edit:active,
+.btn-edit.active {
+  outline: 0;
+  background-image: none;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.btn-edit.disabled,
+.btn-edit[disabled],
+fieldset[disabled] .btn-edit {
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  box-shadow: none;
+}
+a.btn-edit.disabled,
+fieldset[disabled] a.btn-edit {
+  pointer-events: none;
+}
+.btn-edit + .btn {
+  margin-left: 6px;
+}
+.btn-edit:focus,
+.btn-edit.focus {
+  color: #4a4d50;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}
+.btn-edit:hover {
+  color: #4a4d50;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}
+.btn-edit:active,
+.btn-edit.active,
+.open > .dropdown-toggle.btn-edit {
+  color: #4a4d50;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}
+.btn-edit:active:hover,
+.btn-edit.active:hover,
+.open > .dropdown-toggle.btn-edit:hover,
+.btn-edit:active:focus,
+.btn-edit.active:focus,
+.open > .dropdown-toggle.btn-edit:focus,
+.btn-edit:active.focus,
+.btn-edit.active.focus,
+.open > .dropdown-toggle.btn-edit.focus {
+  color: #4a4d50;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}
+.btn-edit:active,
+.btn-edit.active,
+.open > .dropdown-toggle.btn-edit {
+  background-image: none;
+}
+.btn-edit.disabled:hover,
+.btn-edit[disabled]:hover,
+fieldset[disabled] .btn-edit:hover,
+.btn-edit.disabled:focus,
+.btn-edit[disabled]:focus,
+fieldset[disabled] .btn-edit:focus,
+.btn-edit.disabled.focus,
+.btn-edit[disabled].focus,
+fieldset[disabled] .btn-edit.focus {
+  background-color: transparent;
+  border-color: transparent;
+}
+.btn-edit .badge {
+  color: transparent;
+  background-color: #4a4d50;
 }
 .btn-success {
   display: inline-block;
@@ -4119,6 +4268,9 @@ fieldset[disabled] .btn-success {
 a.btn-success.disabled,
 fieldset[disabled] a.btn-success {
   pointer-events: none;
+}
+.btn-success + .btn {
+  margin-left: 6px;
 }
 .btn-success:focus,
 .btn-success.focus {
@@ -4229,6 +4381,9 @@ a.btn-info.disabled,
 fieldset[disabled] a.btn-info {
   pointer-events: none;
 }
+.btn-info + .btn {
+  margin-left: 6px;
+}
 .btn-info:focus,
 .btn-info.focus {
   color: #fff;
@@ -4338,6 +4493,9 @@ a.btn-warning.disabled,
 fieldset[disabled] a.btn-warning {
   pointer-events: none;
 }
+.btn-warning + .btn {
+  margin-left: 6px;
+}
 .btn-warning:focus,
 .btn-warning.focus {
   color: #fff;
@@ -4446,6 +4604,9 @@ fieldset[disabled] .btn-danger {
 a.btn-danger.disabled,
 fieldset[disabled] a.btn-danger {
   pointer-events: none;
+}
+.btn-danger + .btn {
+  margin-left: 6px;
 }
 .btn-danger:focus,
 .btn-danger.focus {
@@ -8655,6 +8816,7 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card {
   margin-top: 24px;
+  position: relative;
 }
 .guide-card__sub {
   margin-top: 0;

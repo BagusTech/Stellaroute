@@ -8151,6 +8151,7 @@ button.close {
   color: #7770A1;
   font-size: 24px;
   margin-left: auto;
+  margin-right: 29px;
   padding: 0 12px;
   border: 1px solid #ccc;
 }
@@ -8547,15 +8548,18 @@ button.close {
   padding: 0;
 }
 .profile-header {
-  background-image: url('/images/profile_header_image_mirrored.jpg');
+  background: url('/images/profile_header_image_mirrored.jpg') no-repeat scroll center center / cover;
   text-align: center;
 }
 .profile-info h1 {
   line-height: 1;
   margin-top: 6px;
   margin-bottom: 12px;
-  font-size: 18px;
   font-weight: normal;
+}
+.profile-info h1 small {
+  display: block;
+  margin-top: 6px;
 }
 .profile-info h2 {
   line-height: 1;

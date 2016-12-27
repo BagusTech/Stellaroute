@@ -4,7 +4,7 @@
 
 // profile-header section
 	.profile-header{
-		background-image: url('/images/profile_header_image_mirrored.jpg');
+		background: url('/images/profile_header_image_mirrored.jpg') no-repeat scroll center center / cover;
 		text-align: center;
 	}
 		.profile-info{
@@ -12,8 +12,12 @@
 				line-height: 1;
 				margin-top: @gw-Xs;
 				margin-bottom: @gw-Sm;
-				font-size: 18px;
 				font-weight: normal;
+
+				small {
+					display: block;
+					margin-top: @gw-Xs;
+				}
 			}
 
 			h2{

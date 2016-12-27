@@ -11,13 +11,13 @@ header.site-header(style={'background-color': headerBackground}, class= headerCl
 		button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
 		ul.hamburger-menu--options(data-function='stopProp')
 			li
-				a(href='http://stellaroute.com/profile') My Accounts
+				a(href='/profile') My Accounts
 			li
-				a(href='http://stellaroute.com/request') Make A Request
+				a(href='/request') Make A Request
 			li
-				a(href='http://stellaroute.com/feedback') Give Us Feedback
+				a(href='/feedback') Give Us Feedback
 			li
-				button.btn.log-out(type='button') Log Out
+				a.btn.log-out(href='/logout') Log Out
 
 	.d-N.d-B--sm.ml-A
 		include login

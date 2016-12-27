@@ -68,11 +68,11 @@ block content
 					if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
 						+contentCard('Where to Eat')(data-position='0.4')
 							+guideEdit(guide)
-								div(duck-current-value)!= guide.whereToGoOut
+								div(duck-current-value)!= guide.whereToEat
 
 								if user && user.isAdmin
-									div(duck-field='whereToGoOut', duck-type='wysiwyg')
-										.summernote!= guide.whereToGoOut
+									div(duck-field='whereToEat', duck-type='wysiwyg')
+										.summernote!= guide.whereToEat
 					
 					if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
 						+contentCard('Where to Explore')(data-position='0.5')

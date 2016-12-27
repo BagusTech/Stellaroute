@@ -1,30 +1,31 @@
+- let visibleNav = 0;
 nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
 	a(href='#', role='tab', aria-expanded='true', data-position='0')
 		h3 Overview
 	ul(role='tabpanel', aria-hidden='false')
-		if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].description !== '<p><br></p>' && guide.travelHacks[0].description !== '<br>'
+		if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
 			li
-				a(href='#', data-position='0.0') Travel Hacks
+				a(href='#', data-position=`0.${visibleNav++}`) Travel Hacks
 
-		if guide.highlights && guide.highlights[0] && guide.highlights[0].description !== '<p><br></p>' && guide.highlights[0].description !== '<br>'
+		if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
 			li
-				a(href='#', data-position='0.1') Highlights
+				a(href='#', data-position=`0.${visibleNav++}`) Highlights
 		
-		if guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
+		if wysiwygHasData(guide.whereToStay)
 			li
-				a(href='#', data-position='0.2') Where to Stay
+				a(href='#', data-position=`0.${visibleNav++}`) Where to Stay
 		
-		if guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
+		if wysiwygHasData(guide.whereToGoOut)
 			li
-				a(href='#', data-position='0.3') Where to Go Out
+				a(href='#', data-position=`0.${visibleNav++}`) Where to Go Out
 		
-		if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
+		if wysiwygHasData(guide.whereToEat)
 			li
-				a(href='#', data-position='0.4') Where to Eat
+				a(href='#', data-position=`0.${visibleNav++}`) Where to Eat
 		
-		if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
+		if wysiwygHasData(guide.whereToExplore)
 			li
-				a(href='#', data-position='0.5') Where to Explore
+				a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
 
 	for day, i in guide.days ? guide.days.sort(sortByOrder) : []
 		a(href='#', role='tab', aria-expanded='false', data-position= i+1)

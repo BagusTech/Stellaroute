@@ -22,7 +22,7 @@
 				img.w-100(src= city.cardImage ? city.cardImage : 'http://placebear.com/300/300', alt= city.names.display)
 			.lead.fc-W--sm.m-0--sm.p-Sm.bg-Dkst--sm.p-A--sm.b-0--sm.l-0--sm.r-0--sm!= city.description
 
-		if city.needToKnow && city.needToKnow[0].description !== '<p><br></p>' && city.needToKnow[0].description !== '<br>'
+		if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
 			.content-card
 				h2.content-card--header Travel Hacks
 
@@ -105,6 +105,6 @@
 
 				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 
-		if city.quickFacts && city.quickFacts[0].description !== '<p><br></p>' && city.quickFacts[0].description !== '<br>'
+		if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
 			+contentCard('Quick Facts')
 				+accordion(city.quickFacts.sort(sortByOrder))(class='row', data-allow-multiple='true')

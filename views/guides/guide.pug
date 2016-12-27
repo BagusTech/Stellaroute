@@ -1,6 +1,7 @@
 extends ../layout.pug
 
 block content
+	- let visibleGuideSecions = 0;
 	if !user || !guide
 		include error.pug
 	else
@@ -18,8 +19,8 @@ block content
 					include guideNav.pug
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-					.content-card
-						+guideEdit(guide)
+					.content-card(data-position='0')
+						+guideEditForm(guide)
 							h2.content-card--header.fw-B.p-R.bg-W Overview
 							.lead(duck-current-value)!= guide.description
 
@@ -28,27 +29,27 @@ block content
 									.summernote!= guide.description
 					
 					.content-card.p-0
-						+guideEdit(guide)
+						+guideEditForm(guide)
 							img.w-100(duck-current-value, src= guide.map, alt= guide.names.display)
 
 							if user && user.isAdmin
 								.form-group(duck-field='map', duck-type='image')
 									input.form-control(type='text', duck-value, value= guide.map)
 
-					if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].description !== '<p><br></p>' && guide.travelHacks[0].description !== '<br>'
-						+contentCard('Travel Hacks')(data-position='0.0')
+					if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
+						+contentCard('Travel Hacks')(data-position=`0.${visibleGuideSecions++}`)
 							+accordion(guide.travelHacks)(data-allow-multiple='true')
 
-					if guide.highlights && guide.highlights[0] && guide.highlights[0].description !== '<p><br></p>' && guide.highlights[0].description !== '<br>'
-						h2.fc-G(data-position='0.1') Highlights
+					if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
+						h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
 						.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
 							for highlight in guide.highlights
 								.masonry--item
 									+card(highlight.cardImage, highlight.title, null, null, highlight.description)
 
-					if guide.whereToStay !== '<p><br></p>' && guide.whereToStay !== '<br>'
-						+contentCard('Where to Stay')(data-position='0.2')
-							+guideEdit(guide)
+					if wysiwygHasData(guide.whereToStay)
+						+contentCard('Where to Stay')(data-position=`0.${visibleGuideSecions++}`)
+							+guideEditForm(guide)
 								div(duck-current-value)!= guide.whereToStay
 
 								if user && user.isAdmin
@@ -56,27 +57,27 @@ block content
 										.summernote!= guide.whereToStay
 
 					
-					if guide.whereToGoOut !== '<p><br></p>' && guide.whereToGoOut !== '<br>'
-						+contentCard('Where to Go Out')(data-position='0.3')
-							+guideEdit(guide)
+					if wysiwygHasData(guide.whereToGoOut)
+						+contentCard('Where to Go Out')(data-position=`0.${visibleGuideSecions++}`)
+							+guideEditForm(guide)
 								div(duck-current-value)!= guide.whereToGoOut
 
 								if user && user.isAdmin
 									div(duck-field='whereToGoOut', duck-type='wysiwyg')
 										.summernote!= guide.whereToGoOut
 					
-					if guide.whereToEat !== '<p><br></p>' && guide.whereToEat !== '<br>'
-						+contentCard('Where to Eat')(data-position='0.4')
-							+guideEdit(guide)
+					if wysiwygHasData(guide.whereToEat)
+						+contentCard('Where to Eat')(data-position=`0.${visibleGuideSecions++}`)
+							+guideEditForm(guide)
 								div(duck-current-value)!= guide.whereToEat
 
 								if user && user.isAdmin
 									div(duck-field='whereToEat', duck-type='wysiwyg')
 										.summernote!= guide.whereToEat
 					
-					if guide.whereToExplore !== '<p><br></p>' && guide.whereToExplore !== '<br>'
-						+contentCard('Where to Explore')(data-position='0.5')
-							+guideEdit(guide)
+					if wysiwygHasData(guide.whereToExplore)
+						+contentCard('Where to Explore')(data-position=`0.${visibleGuideSecions++}`)
+							+guideEditForm(guide)
 								div(duck-current-value)!= guide.whereToExplore
 
 								if user && user.isAdmin
@@ -88,7 +89,7 @@ block content
 							h2.content-card--header= `Day ${i+1}: ${day.title}`
 								if user && user.isAdmin
 									.f-R.mt-NegSm.mr-NegSm
-										+guideEdit(guide)
+										+guideEditForm(guide)
 											.ptb-Sm.mt-XXs.mr-Xs.plr-Lg.d-Ib
 												small Order&nbsp;
 												small(duck-current-value)= day.order
@@ -99,7 +100,7 @@ block content
 
 
 							if user && user.isAdmin
-								+guideEdit(guide)
+								+guideEditForm(guide)
 									.lead(duck-current-value)!= day.description
 
 									div(duck-field='days', duck-type='array', duck-only-edit)

@@ -45,7 +45,7 @@ block content
 							img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
 						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0(style='z-index: 2;')!= attraction.description
 
-					if attraction.needToKnow && attraction.needToKnow[0].description !== '<p><br></p>' && attraction.needToKnow[0].description !== '<br>'
+					if attraction.needToKnow && attraction.needToKnow[0].description && wysiwygHasData(attraction.needToKnow[0].description)
 						.content-card
 							h2.content-card--header Travel Hacks
 
@@ -59,31 +59,31 @@ block content
 									+card(subAttraction.cardImage, subAttraction.names.display, null, null, subAttraction.description)
 
 				.col-xs-12.col-sm-6.col-md-4
-					if (attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>') || (attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>') || (attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>')
+					if wysiwygHasData(attraction.price) || wysiwygHasData(attraction.hours) || wysiwygHasData(attraction.address)
 						+contentCard('Quick Info')
-							if attraction.price && attraction.price !== '<p><br></p>' && attraction.price !== '<br>'
+							if wysiwygHasData(attraction.price)
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
 									.ml-Md!= attraction.price
-							if attraction.hours && attraction.hours !== '<p><br></p>' && attraction.hours !== '<br>'
+							if wysiwygHasData(attraction.hours)
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
 									.ml-Md!= attraction.hours
-							if attraction.address && attraction.address !== '<p><br></p>' && attraction.address !== '<br>'
+							if wysiwygHasData(attraction.address)
 								.mb-Sm
 									span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
 									.ml-Md!= attraction.address
 
-					if attraction.orientation && ((attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>') || attraction.orientation.map || (attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'))
+					if attraction.orientation && (wysiwygHasData(attraction.orientation.description) || attraction.orientation.map ||wysiwygHasData(attraction.orientation.gettingThere))
 						+contentCard('Orientation')
-							if attraction.orientation.description && attraction.orientation.description !== '<p><br></p>' && attraction.orientation.description !== '<br>'
+							if wysiwygHasData(attraction.orientation.description)
 								div!= attraction.orientation.description
 							
 							if attraction.orientation.map
 								button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= attraction.orientation.map)
 
-							if attraction.orientation.gettingThere && attraction.orientation.gettingThere !== '<p><br></p>' && attraction.orientation.gettingThere !== '<br>'
+							if wysiwygHasData(attraction.orientation.gettingThere)
 								.clear
 									h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
 										span.sr-only Getting There
@@ -122,7 +122,7 @@ block content
 								a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
 									+card(nearbyAttraction.cardImage, nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
-				if attraction.quickFacts && attraction.quickFacts[0].description !== '<p><br></p>' && attraction.quickFacts[0].description !== '<br>'
+				if attraction.quickFacts && attraction.quickFacts[0] && wysiwygHasData(attraction.quickFacts[0].description)
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card
 							h2.content-card--header Fun Facts

@@ -43,7 +43,7 @@ block content
 							img.w-100(src= neighborhood.cardImage ? neighborhood.cardImage : 'http://placebear.com/300/300', alt= neighborhood.names.display)
 						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= neighborhood.description						
 
-					if neighborhood.needToKnow && neighborhood.needToKnow[0].description !== '<p><br></p>' && neighborhood.needToKnow[0].description !== '<br>'
+					if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
 						.content-card
 							h2.content-card--header Advice
 
@@ -55,9 +55,9 @@ block content
 									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
 
 				.col-xs-12.col-sm-6.col-md-4
-					if neighborhood.orientation && neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
+					if neighborhood.orientation && (wysiwygHasData(neighborhood.orientation.description) || neighborhood.orientation.map || neighborhood.orientation.mainIntersection || neighborhood.orientation.mainStrip || (neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name) || (neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name))
 						+contentCard('Orientation')
-							if neighborhood.orientation.description && neighborhood.orientation.description !== '<p><br></p>' && neighborhood.orientation.description !== '<br>'
+							if ysiwygHasData(neighborhood.orientation.description)
 								div!= neighborhood.orientation.description
 							
 							if neighborhood.orientation.map
@@ -72,7 +72,7 @@ block content
 								h3 Main Strip
 								div!= neighborhood.orientation.mainStrip
 
-							if neighborhood.orientation && neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name
+							if neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name
 								h3 Main Transit Stops
 								for wayToGetThere in neighborhood.orientation.waysToGetThere
 									h4.row
@@ -84,7 +84,7 @@ block content
 												for stop in wayToGetThere.stops
 													li= stop
 
-							if neighborhood.orientation && neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name
+							if neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name
 								h3 Distance To...
 								for location in neighborhood.orientation.distanceFrom.sort(sortByOrder)
 									h4.row
@@ -107,12 +107,12 @@ block content
 										img.w-100(src=neighborhood.orientation.map)
 
 				.col-xs-12.col-sm-6.col-md-8.f-R
-					if  neighborhood.eatingDrinking && neighborhood.eatingDrinking.description && neighborhood.eatingDrinking.description !== '<p><br></p>' && neighborhood.eatingDrinking.description !== '<br>'
+					if  neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
 						+contentCard('Eating & Drinking')
 							img.f-L.w-25(src=neighborhood.eatingDrinking.image, alt='Eating and Drinking')
 							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 
-					if  neighborhood.shopping && neighborhood.shopping.description && neighborhood.shopping.description !== '<p><br></p>' && neighborhood.shopping.description !== '<br>'
+					if  neighborhood.shopping && wysiwygHasData(neighborhood.shopping.description)
 						+contentCard('Shopping')
 							img.f-L.w-25(src=neighborhood.shopping.image, alt='Shopping')
 							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
@@ -166,7 +166,7 @@ block content
 
 
 
-				if neighborhood.quickFacts && neighborhood.quickFacts[0].description !== '<p><br></p>' && neighborhood.quickFacts[0].description !== '<br>'
+				if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						+contentCard('Fun Facts')
 							+accordion(neighborhood.quickFacts)

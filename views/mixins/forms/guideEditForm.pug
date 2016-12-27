@@ -1,7 +1,7 @@
-mixin guideEdit(guide)
+mixin guideEditForm(guide)
 	if block
 		if user && user.isAdmin
-			.p-R(data-position='0', duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+			.p-R(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 				button.btn.btn-edit(duck-button='edit', data-icon='fa fa-pencil')
 				block 
 				button.btn.btn-warning(duck-button='cancel') Cancel

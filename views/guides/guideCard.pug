@@ -23,9 +23,9 @@ mixin editCard(day, card)
 				.m-0(duck-type='object', duck-key='cardId', duck-key-value= card.cardId)
 					block
 
-.guide-card(class= `guide-card__${card.type}`)
+.guide-card(class= `guide-card__${card.type}`, data-position=`${i+1}.${j}`)
 	if card.directionsTo && card.directionsTo[0] && card.directionsTo && (card.directionsTo[0].distance || card.directionsTo[0].time)
-		+guideEdit(guide)
+		+guideEditForm(guide)
 			div(duck-current-value)
 				each directionTo in card.directionsTo ? card.directionsTo : [{}]
 					if directionTo.time || directionTo.distance
@@ -57,7 +57,7 @@ mixin editCard(day, card)
 	.guide-card--content
 		if tagBackgroundColor && card.tagTitle
 			if user && user.isAdmin
-				+guideEdit(guide)
+				+guideEditForm(guide)
 					.guide-card--tag(class= tagBackgroundColor): span(duck-current-value)= card.tagTitle
 					+editCard(day, card)
 						.form-group.bg-N.m-0(duck-field='tagTitle', duck-type='string')
@@ -68,7 +68,7 @@ mixin editCard(day, card)
 		if card.image
 			.guide-card--img-wrapper(style= card.type === 'sub' && `background-image: url('${card.image}');`)
 				if user && user.isAdmin
-					+guideEdit(guide)
+					+guideEditForm(guide)
 						if card.type !== 'sub'
 							img.guide-card--img(src= card.image, title= card.title || card.type)
 
@@ -79,12 +79,12 @@ mixin editCard(day, card)
 					if card.type !== 'sub'
 						img.guide-card--img(src= card.image, title= card.title || card.type)
 		
-		if card.title || (card.description !== '<p><br></p>' && card.description !== '<br>')
+		if card.title || wysiwygHasData(card.description)
 			.guide-card--info
 				if card.title
 					if user && user.isAdmin
 						.w-50.f-L
-							+guideEdit(guide)
+							+guideEditForm(guide)
 								h2.guide-card--header(duck-current-value)= card.title
 								+editCard(day, card)
 									.form-group(duck-field='title', duck-type='string')
@@ -94,7 +94,7 @@ mixin editCard(day, card)
 
 				if user && user.isAdmin
 					.p-R.w-50.f-L.ta-R
-						+guideEdit(guide)
+						+guideEditForm(guide)
 							.pr-Lg.d-Ib
 								h4.d-Ib Order&nbsp;
 								span(duck-current-value)= card.order
@@ -107,7 +107,7 @@ mixin editCard(day, card)
 					.clear
 				if card.description !== '<p><br></p>' && card.description !== '<br>'
 					if user && user.isAdmin
-						+guideEdit(guide)
+						+guideEditForm(guide)
 							.guide-card--description(duck-current-value)!= card.description
 							+editCard(day, card)
 									.form-group(duck-field='description', duck-type='wysiwyg')
@@ -119,7 +119,7 @@ mixin editCard(day, card)
 					if user && user.isAdmin
 						.guide-card--suggested-time(duck-current-value)
 							| Suggested Time:&nbsp;
-							.d-Ib(data-position='0', duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view', style='vertical-align: middle;')
+							.d-Ib(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view', style='vertical-align: middle;')
 								strong(duck-current-value)= card.suggestedTime
 								.d-Ib.m-0(duck-field='days', duck-type='array', duck-only-edit, style='vertical-align: middle;')
 									.d-Ib.m-0(duck-type='object', duck-key='title', duck-key-value= day.title, style='vertical-align: middle;')
@@ -137,7 +137,7 @@ mixin editCard(day, card)
 		else
 			if user && user.isAdmin
 				.p-A.t-Sm.l-Sm.ta-R.p-Sm.bg-W
-					+guideEdit(guide)
+					+guideEditForm(guide)
 						.pr-Lg.d-Ib
 							h4.d-Ib Order&nbsp;
 							span(duck-current-value)= card.order

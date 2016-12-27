@@ -96,7 +96,7 @@ block content
 												for wayToGetThere in location.waysToGetThere
 													li.clear
 														h5.d-Ib.m-0.f-L.lh-B(data-icon= getIcon(wayToGetThere.method))
-														.ml-Md= `${wayToGetThere.time} - ${wayToGetThere.description} - ${wayToGetThere.distance}`
+														.ml-Md= `${wayToGetThere.time ? wayToGetThere.time : ''} ${wayToGetThere.description ? '- ' + wayToGetThere.description : ''} ${wayToGetThere.distance ? '- ' + wayToGetThere.distance : ''}`
 
 
 				

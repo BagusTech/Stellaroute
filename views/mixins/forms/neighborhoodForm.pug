@@ -88,7 +88,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 
 			div(duck-field='distanceFrom', duck-type='array')
 				h4 Distance From
-				for distanceFrom in neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom ? neighborhood.orientation.distanceFrom : [{}]
+				for distanceFrom in neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom ? neighborhood.orientation.distanceFrom.sort(sortByOrder) : [{}]
 					.row(duck-type='object')
 						.col-xs-2.form-group(duck-field='order', duck-type='number')
 							label Order
@@ -123,9 +123,9 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 									.form-group(duck-field='time', duck-type='string')
 										label Time
 											input.form-control(type='text', duck-value, value= wayToGetThere.time)
-									.form-group(duck-field='description', duck-type='wysiwyg')
+									.form-group(duck-field='description', duck-type='string')
 										label Description
-										.summernote!= wayToGetThere.description
+											input.form-control(type='text', duck-value, value= wayToGetThere.description)
 
 
 		div(duck-field='needToKnow', duck-type='array')

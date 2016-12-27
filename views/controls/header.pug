@@ -1,7 +1,7 @@
 header.site-header(style={'background-color': headerBackground}, class= headerClasses)
-	if showHeaderSearch
-		//button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
-		//input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
+	//if showHeaderSearch
+		button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
+		input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
 
 	a#SiteLogo(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
 		img.img-responsive(src=`/images/logo_${logoColor}.svg`, alt='Stellaroute')
@@ -11,7 +11,7 @@ header.site-header(style={'background-color': headerBackground}, class= headerCl
 		button.exit-icon(data-icon='fa fa-times', data-function='toggle', data-target='.hamburger-menu')
 		ul.hamburger-menu--options(data-function='stopProp')
 			li
-				a(href='/profile') My Accounts
+				a(href='/profile') My Account
 			li
 				a(href='/request') Make A Request
 			li

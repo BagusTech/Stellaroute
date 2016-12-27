@@ -57,7 +57,7 @@ block content
 				.col-xs-12.col-sm-6.col-md-4
 					if neighborhood.orientation && (wysiwygHasData(neighborhood.orientation.description) || neighborhood.orientation.map || neighborhood.orientation.mainIntersection || neighborhood.orientation.mainStrip || (neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name) || (neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name))
 						+contentCard('Orientation')
-							if ysiwygHasData(neighborhood.orientation.description)
+							if wysiwygHasData(neighborhood.orientation.description)
 								div!= neighborhood.orientation.description
 							
 							if neighborhood.orientation.map

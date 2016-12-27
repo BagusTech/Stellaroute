@@ -35,24 +35,25 @@ mixin editCard(day, card)
 							
 							if directionTo.distance
 								span.directions--distance= `// ${directionTo.distance}`
-			+editCard(day, card)
-				div(duck-field='directionsTo', duck-type='array')
-					each directionTo in card.directionsTo
-						.row(duck-type='object')
-							.form-group.col-xs-4(duck-field='method', duck-type='select')
-								select.form-control(duck-value)
-									option(value='walk', selected= directionTo.method === 'walk') Walking
-									option(value='car', selected= directionTo.method === 'car') Car or Taxi
-									option(value='bicycle', selected= directionTo.method === 'bicycle') Bicycle
-									option(value='subway', selected= directionTo.method === 'subway') Subway
-									option(value='train', selected= directionTo.method === 'train') Train
-									option(value='plane', selected= directionTo.method === 'plane') Plane
-									option(value='bus', selected= directionTo.method === 'bus') Bus
-									option(value='boat', selected= directionTo.method === 'boat') Boat
-							.form-group.col-xs-4(duck-field='time', duck-type='string')
-								input.form-control(type='text', duck-value, value= directionTo.time, placeholder='Time')
-							.form-group.col-xs-4(duck-field='distance', duck-type='string')
-								input.form-control(type='text', duck-value, value= directionTo.distance, placeholder='Distance')
+			if user && user.isAdmin
+				+editCard(day, card)
+					div(duck-field='directionsTo', duck-type='array')
+						each directionTo in card.directionsTo
+							.row(duck-type='object')
+								.form-group.col-xs-4(duck-field='method', duck-type='select')
+									select.form-control(duck-value)
+										option(value='walk', selected= directionTo.method === 'walk') Walking
+										option(value='car', selected= directionTo.method === 'car') Car or Taxi
+										option(value='bicycle', selected= directionTo.method === 'bicycle') Bicycle
+										option(value='subway', selected= directionTo.method === 'subway') Subway
+										option(value='train', selected= directionTo.method === 'train') Train
+										option(value='plane', selected= directionTo.method === 'plane') Plane
+										option(value='bus', selected= directionTo.method === 'bus') Bus
+										option(value='boat', selected= directionTo.method === 'boat') Boat
+								.form-group.col-xs-4(duck-field='time', duck-type='string')
+									input.form-control(type='text', duck-value, value= directionTo.time, placeholder='Time')
+								.form-group.col-xs-4(duck-field='distance', duck-type='string')
+									input.form-control(type='text', duck-value, value= directionTo.distance, placeholder='Distance')
 
 	.guide-card--content
 		if tagBackgroundColor && card.tagTitle

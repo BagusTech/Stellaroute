@@ -84,6 +84,7 @@
 			.content-card.p-0
 				h2.content-card--header.m-0.p-Sm Food &amp; Drinks
 				for food, i in city.food.foods.sort(sortByOrder)
+					- console.log(i)
 					if i < 3
 						.p-R
 							img.w-100(src= food.image, alt= food.name)

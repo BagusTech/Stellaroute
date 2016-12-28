@@ -54,6 +54,19 @@ mixin editCard(day, card)
 									input.form-control(type='text', duck-value, value= directionTo.time, placeholder='Time')
 								.form-group.col-xs-4(duck-field='distance', duck-type='string')
 									input.form-control(type='text', duck-value, value= directionTo.distance, placeholder='Distance')
+	// alt styles for directions
+	//if card.directionsTo && card.directionsTo[0] && card.directionsTo && (card.directionsTo[0].distance || card.directionsTo[0].time)
+		each directionTo in card.directionsTo ? card.directionsTo : [{}]
+			if directionTo.time || directionTo.distance
+				.p-Lg.p-R
+					.p-A.bg-W.bw-Sm.bs-S.bc-G.br-C(style='height: 33px; width: 33px; left: -41px; top: 21px;')
+						i.p-A.l-0.ta-C(class=getIcon(directionTo.method), aria-hidden='true', style='top: 7px; width: 33px;')
+						span.sr-only= directionTo.method							
+						.p-Xs.p-A.l-100.t-0.ml-Md.bg-W.bw-Sm.bc-G.bs-S.test-test(style='white-space: nowrap;')
+							span= directionTo.time
+							
+							if directionTo.distance
+								span= ` // ${directionTo.distance}`
 
 	.guide-card--content
 		if tagBackgroundColor && card.tagTitle

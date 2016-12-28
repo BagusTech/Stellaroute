@@ -189,6 +189,7 @@ mixin guideForm(crud, guide, locations, cancel)
 											option(selected= card.type === 'activity', value='activity') Activity (Event/Explore)
 											option(selected= card.type === 'note', value='note') Note (or Advice)
 											option(selected= card.type === 'map', value='map') Map
+											option(selected= card.type === 'separator', value='separator') Separator
 
 								div(duck-field='directionsTo', duck-type='array')
 									label Directions To

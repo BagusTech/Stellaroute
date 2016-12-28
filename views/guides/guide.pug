@@ -85,8 +85,8 @@ block content
 										.summernote!= guide.whereToExplore
 
 					for day, i in guide.days ? guide.days.sort(sortByOrder) : []
-						.content-card(data-position=i+1)
-							h2.content-card--header= `Day ${i+1}: ${day.title}`
+						.mtb-XXl(data-position=i+1)
+							h2.fs-32.fw-B.m-0.ta-C= `Day ${i+1}: ${day.title}`
 								if user && user.isAdmin
 									.f-R.mt-NegSm.mr-NegSm
 										+guideEditForm(guide)
@@ -101,14 +101,14 @@ block content
 
 							if user && user.isAdmin
 								+guideEditForm(guide)
-									.lead(duck-current-value)!= day.description
+									.lead.p-Md.ta-C(duck-current-value)!= day.description
 
 									div(duck-field='days', duck-type='array', duck-only-edit)
 										div(duck-type='object', duck-key='title', duck-key-value= day.title)
 											div(duck-field='description', duck-type='wysiwyg')
 												.summernote!= day.description
 							else
-								.lead!= day.description
-
-						for card, j in day.cards ? day.cards.sort(sortByOrder) : []
-							include guideCard.pug
+								.lead.p-Md.ta-C!= day.description
+						.ml-Md.mb-Md.pl-Md.bw-0.blw-Sm.bs-S.bc-G
+							for card, j in day.cards ? day.cards.sort(sortByOrder) : []
+								include guideCard.pug

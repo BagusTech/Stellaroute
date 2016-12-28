@@ -1,3 +1,24 @@
+.test-test{height: 34px;}
+	.test-test:after{
+		content: '';
+		position: absolute;
+		border-width: 16px;
+		border-color: transparent white transparent transparent;
+		border-style: solid;
+		top: 0;
+		right: 100%;
+	}
+	.test-test:before{
+		content: '';
+		position: absolute;
+		border-width: 17px;
+		border-color: transparent #959ca2 transparent transparent;
+		border-style: solid;
+		top: -1px;
+		right: 100%;
+
+	}
+
 .loading {
 	.card {
 		min-height: 150px;
@@ -82,15 +103,53 @@
 .guide-card {
 	margin-top: @gw-Md;
 	position: relative;
+
+	&:first-child {
+		&:after{
+			content: '';
+			top: 0;
+			left: -@gw-Md - 1;
+			background: @grey-lighter;
+			width: 3px;
+			height: 1.2em;
+			position: absolute;
+		}
+	}
+
+	&:last-child {
+		&:after{
+			content: '';
+			bottom: 0;
+			left: -@gw-Md - 1;
+			background: @grey-lighter;
+			width: 3px;
+			height: 1.2em;
+			position: absolute;
+		}
+	}
 }
 	.guide-card__food {}
 	.guide-card__area {}
-	.guide-card__sub {margin-top: 0;}
+	.guide-card__sub {margin-top: 0; position: relative;}
 	.guide-card__attraction {}
 	.guide-card__location {}
 	.guide-card__activity {}
 	.guide-card__note {}
 	.guide-card__map {}
+	.guide-card__separator {
+		font-size: 1.2em;
+
+		&:before{
+			content: '';
+			top: 1.2em;
+			left: -@gw-Lg + @gw-Xs - 1;
+			background: @grey-dark;
+			width: @gw-Sm+1;
+			height: @gw-Sm+1;
+			border-radius: 50%;
+			position: absolute;
+		}
+	}
 
 	.guide-card--directions {
 		margin-top: -@gw-Md;
@@ -99,9 +158,18 @@
 		font-size: 24px;
 
 		.guide-card__sub & {
-			background: @grey-light;
+			position: absolute;
+			background: white;
 			margin-top: 0;
-			padding: @gw-Sm
+			padding: @gw-Xs;
+			font-size: 16px;
+			left: 2%;
+			right: 77%;
+			top: -20px;
+			z-index: 1;
+			border: 1px solid @grey;
+
+			.directions--distance { padding-left: @gw-Xs;}
 		}
 	}
 		.directions--method {}
@@ -135,6 +203,11 @@
 			background: @purple;
 			color: white;
 		}
+
+		.guide-card__separator & {
+			background: @grey-light;
+			text-align: center;
+		}
 	}
 
 		.guide-card--img-wrapper {
@@ -158,6 +231,11 @@
 		}
 			.guide-card--header {
 				margin: 0 0 @gw-Md;
+
+				.guide-card__separator & {
+					margin: 0;
+					font-weight: bold;
+				}
 			}
 
 			.guide-card--description {}

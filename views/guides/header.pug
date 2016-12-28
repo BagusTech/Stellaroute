@@ -3,8 +3,8 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage
 		.container.ptb-0
 			ol.breadcrumb
 				li.active United Sates
-				li.active Midwest
-				li.active: a(href= `/${city.countryUrl}/${city.url}`) #{city.names.display}
+				li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
+				li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides
 			h1 #{guide.names.display}
 				if guide.author
 					small.pl-Xs= guide.author

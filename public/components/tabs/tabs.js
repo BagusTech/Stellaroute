@@ -37,8 +37,8 @@ void function initializeTabs($) {
         const $panels = $wrapper.find('[data-tabs="panel"]');
         const pageAnchor = window.location.hash;
 
-        $panels.each((i, item) => {
-            const $panel = $(item);
+        $panels.each((i, panel) => {
+            const $panel = $(panel);
             const id = $panel.attr('id');
 
             if(!id){
@@ -47,14 +47,22 @@ void function initializeTabs($) {
 
             $panel.on('tab-change', changeTabs);
 
-            $(`a[href="#${id}"]`).click(function triggerTab(e) {
+            $(`a[href="#${id}"]`).click((e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const $this = $(this);
+                const $controls = $('[data-tabs="controls"]');
 
-                $this.parents('[data-tabs]').find('[data-tabs]').removeClass('active');
-                $this.addClass('active');
+                $controls.each((j, tabControls) => {
+                    const $tabControls = $(tabControls);
+                    const $activeTab = $tabControls.find(`a[href="#${id}"]`);
+                    const isActiveControl = $activeTab.length > 0;
+
+                    if(isActiveControl) {
+                        $tabControls.find('[data-tabs]').removeClass('active');
+                        $activeTab.addClass('active');
+                    }
+                });
 
                 $panel.trigger('tab-change');
             });
@@ -66,7 +74,7 @@ void function initializeTabs($) {
             return;
         }
 
-        const $anchorToClick = $(`a[data-tabs='control'][href="${pageAnchor}"]`);
+        const $anchorToClick = $(`a[href="${pageAnchor}"][data-tabs='control']`);
 
         if($anchorToClick.length === 1){
             $anchorToClick.click();

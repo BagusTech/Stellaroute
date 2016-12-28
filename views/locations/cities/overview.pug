@@ -1,7 +1,7 @@
 .row
 	.col-xs-12.col-sm-4.col-lg-3
 		+contentCard('At a Glance')
-			dl
+			dl.m-0
 				if city.averageStay
 					dt Length of Stay
 					dd= city.averageStay
@@ -53,15 +53,17 @@
 										button
 		else if guides && guides.length > 0
 			.content-card.p-0
-				h2.content-card--header.mb-0.p-Sm Guides
+				h2.content-card--header.m-0.p-Sm Guides
 				for guide, i in guides
 					.clear.p-R(class= i % 2 === 0 ? '' : 'bg-G__ltr')
-						.w-25.f-L
+						.w-25--sm.f-L--sm
 							img.w-100(src= guide.cardImage || guide.map, alt= guide.names.display)
-						.w-75.f-L.p-Sm.pb-Lg
+						.w-75--sm.f-L--sm.p-Sm.pb-Lg--sm
 							h3.mt-0= guide.names.display
 							!= guide.description
-							a.p-A.b-Sm.r-Sm.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
+
+							.ta-R.p-A--sm.b-Sm--sm.r-Sm--sm
+								a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
 
 
 
@@ -75,7 +77,7 @@
 	.col-xs-12.col-sm-4.col-lg-3
 		if city.orientation && city.orientation.map
 			+contentCard('Orientation')
-				button.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`).d-B
+				button.d-B.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`)
 					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
 				+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
 					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
@@ -83,10 +85,11 @@
 		if city.food && city.food.foods
 			.content-card.p-0
 				h2.content-card--header.m-0.p-Sm Food &amp; Drinks
-				for food, i in city.food.foods.sort(sortByOrder)
-					- console.log(i)
+
+				// this is being double sorted due to a bug I can't find yet
+				for food, i in city.food.foods.sort().sort(sortByOrder)
 					if i < 3
-						.p-R
+						button.bg-N.bw-0.p-R.p-0.w-100(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`, type='button')
 							img.w-100(src= food.image, alt= food.name)
 							h3.bg-Dk.p-A.t-0.b-0.l-0.r-0.m-0.d-F.fai-C.fj-C.fc-W= food.name
 							.p-A.t-Xs.r-Xs.p-XXs.fs-Sm.fc-W.br-Md(class= colorClasses[foodTagColors[food.category]])= food.category
@@ -96,12 +99,12 @@
 		if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
 			+contentCard('Getting Around')
 				if city.transit.tagline
-					.d-F.fai-C.fj-C
+					//.d-F.fai-C.fj-C
 						.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs.fw-N.fs-18(style='width: 50px; height: 50px; flex-grow: 2;')
 							i.fa.fa-train.p-A(style='top: 5px; left: -5px')
 							i.fa.fa-plane.p-A(style='top: 5px; right: -5px')
 							i.fa.fa-ship.p-A(style='bottom: -7px; left: 14px')
-						h3.ta-C= city.transit.tagline
+					h3.mtb-Sm.ta-C= city.transit.tagline
 
 				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 

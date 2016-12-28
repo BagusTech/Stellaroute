@@ -1,106 +1,106 @@
-block content
-	if (user && user.isAdmin)
-		.ta-r.d-N.d-B--sm
-			button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
+if (user && user.isAdmin)
+	.ta-r.d-N.d-B--sm
+		button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
 
-		+modal('AddFood')(class='modal-lg')
-			+contentCard('Add New Food Item')
-				.row
-					.col-xs-12(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
-						div(duck-field='food', duck-type='object')
-							div(duck-field='foods', duck-type='array')
-								div(duck-type='object', duck-key='Id')
-									.form-group(duck-field='name', duck-type='string') <!-- name -->
-										label(for='FoodName') Name
-										input#FoodName.form-control(type='text', required, duck-value)
+	+modal('AddFood')(class='modal-lg')
+		+contentCard('Add New Food Item')
+			.row
+				.col-xs-12(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
+					div(duck-field='food', duck-type='object')
+						div(duck-field='foods', duck-type='array')
+							div(duck-type='object', duck-key='Id')
+								.form-group(duck-field='name', duck-type='string') <!-- name -->
+									label(for='FoodName') Name
+									input#FoodName.form-control(type='text', required, duck-value)
 
-									.form-group(duck-field='image', duck-type='string') <!-- image -->
-										label(for='FoodImage') Image
-										input#FoodImage.form-control(type='text', required, duck-value)
+								.form-group(duck-field='image', duck-type='string') <!-- image -->
+									label(for='FoodImage') Image
+									input#FoodImage.form-control(type='text', required, duck-value)
 
-									.form-group(duck-field='category', duck-type='select') <!-- category -->
-										label(for='FoodCategory') Category
-										select#FoodCategory.form-control(duck-value)
-											option Only In
-											option Local Cuisine
-											option Best Dishes
-											option Drinks
-											option Restaurant
-											option Bar
+								.form-group(duck-field='category', duck-type='select') <!-- category -->
+									label(for='FoodCategory') Category
+									select#FoodCategory.form-control(duck-value)
+										option Only In
+										option Local Cuisine
+										option Best Dishes
+										option Drinks
+										option Restaurant
+										option Bar
 
-									.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
-										label(for='FoodTagline') Tagline
-										input#FoodTagline.form-control(type='text', maxlength='130', duck-value)
+								.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
+									label(for='FoodTagline') Tagline
+									input#FoodTagline.form-control(type='text', maxlength='130', duck-value)
 
-									.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
-										label(for='FoodDescription') Description
-										.summernote
+								.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
+									label(for='FoodDescription') Description
+									.summernote
 
-									.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
-										h3 Contains
-										.checkbox
-											label
-												input(type='checkbox', value='Shellfish')
-												| Shellfish
-										.checkbox
-											label
-												input(type='checkbox', value='Gluten')
-												| Gluten
-										.checkbox
-											label
-												input(type='checkbox', value='Nuts')
-												| Nuts
-										.checkbox
-											label
-												input(type='checkbox', value='Meat')
-												| Meat
-										.checkbox
-											label
-												input(type='checkbox', value='Dairy')
-												| Dairy
+								.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
+									h3 Contains
+									.checkbox
+										label
+											input(type='checkbox', value='Shellfish')
+											| Shellfish
+									.checkbox
+										label
+											input(type='checkbox', value='Gluten')
+											| Gluten
+									.checkbox
+										label
+											input(type='checkbox', value='Nuts')
+											| Nuts
+									.checkbox
+										label
+											input(type='checkbox', value='Meat')
+											| Meat
+									.checkbox
+										label
+											input(type='checkbox', value='Dairy')
+											| Dairy
 
-									.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
-										label Dishes
-										div(duck-type='string')
-											input.form-control(type='text', duck-value)
+								.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
+									label Dishes
+									div(duck-type='string')
+										input.form-control(type='text', duck-value)
 
-									.form-group(duck-field='area', duck-type='string') <!-- area -->
-										label(for='FoodArea') Area
-										input#FoodArea.form-control(type='text', duck-value)
+								.form-group(duck-field='area', duck-type='string') <!-- area -->
+									label(for='FoodArea') Area
+									input#FoodArea.form-control(type='text', duck-value)
 
-									.form-group(duck-field='address', duck-type='string') <!-- address -->
-										label(for='FoodAddress') Address
-										input#FoodAddress.form-control(type='text', duck-value)
+								.form-group(duck-field='address', duck-type='string') <!-- address -->
+									label(for='FoodAddress') Address
+									input#FoodAddress.form-control(type='text', duck-value)
 
-									.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
-										label(for='FoodWhatToOrder') What to Order
-										input#FoodWhatToOrder.form-control(type='text', duck-value)
+								.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
+									label(for='FoodWhatToOrder') What to Order
+									input#FoodWhatToOrder.form-control(type='text', duck-value)
 
-									.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
-										label(for='FoodSuggestedRestaurant') Suggested Restaurant
-										input#FoodSuggestedRestaurant.form-control(type='text', duck-value)
+								.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
+									label(for='FoodSuggestedRestaurant') Suggested Restaurant
+									input#FoodSuggestedRestaurant.form-control(type='text', duck-value)
 
-									.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
-										label(for='FoodReadMore') Read More
-										input#FoodReadMore.form-control(type='text', duck-value)
+								.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
+									label(for='FoodReadMore') Read More
+									input#FoodReadMore.form-control(type='text', duck-value)
 
-						.ta-R
-							button.btn.btn-primary(type='button', duck-button='submit') Add
-							button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
+					.ta-R
+						button.btn.btn-primary(type='button', duck-button='submit') Add
+						button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
 
-	if (city.food && city.food.foods)
-		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
-			for food in city.food.foods.filter((i) => (i.category !== 'Restaurant' && i.category !== 'Bar') && i.name).sort(sortByOrder)
-				.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
-					+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+if (city.food && city.food.foods)
+	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+		for food in city.food.foods.filter((i) => (i.category !== 'Restaurant' && i.category !== 'Bar') && i.name).sort(sortByOrder)
+			.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
+				+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 
-		h2 Restaurants
-		//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
-		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-			for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)
-				.masonry--item(data-toggle='modal', data-target= `#${restaurant.name.replace(/\s/g, '-')}`)
-					+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
+	h2 Restaurants
+	//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
+	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+		for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)
+			.masonry--item(data-toggle='modal', data-target= `#${restaurant.name.replace(/\s/g, '-')}`)
+				+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
 
+	append header
 		for item, i in city.food.foods
 			if item.name
 				+modal(item.name.replace(/\s/g, '-'))
@@ -234,7 +234,7 @@ block content
 								div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${i}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
 									button.btn.btn-danger(duck-button='submit') Delete
 									button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${i}, #FoodDeleteForm${i}`) Cancel
-	else
-		.content-card
-			p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
-			p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.
+else
+	.content-card
+		p.lead Sorry, but it appears that no food as been added for this city yet, please check back soon.
+		p If you would like to help us fill out content for this area, please send us an email to <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a> and we will get back to you shortly.

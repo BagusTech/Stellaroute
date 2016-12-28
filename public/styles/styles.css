@@ -8269,13 +8269,26 @@ button.close {
 }
 @media (min-width: 767px) {
   .tabbed-nav {
-    max-width: 1600px;
+    margin-top: 24px;
+    max-width: 791px;
     display: block;
   }
   .tabbed-nav--tab {
     font-size: 1em;
     padding: 12px 24px;
     min-width: 0;
+  }
+}
+@media (min-width: 1023px) {
+  .tabbed-nav {
+    max-width: 1047px;
+    display: block;
+  }
+}
+@media (min-width: 1600px) {
+  .tabbed-nav {
+    max-width: 1624px;
+    display: block;
   }
 }
 #Stellaroute {
@@ -8712,6 +8725,27 @@ form.profile-settings-update .profile-label.notification h3 {
   padding: 24px 24px 36px;
   background-image: url("/images/request_header_image.jpg");
 }
+.test-test {
+  height: 34px;
+}
+.test-test:after {
+  content: '';
+  position: absolute;
+  border-width: 16px;
+  border-color: transparent white transparent transparent;
+  border-style: solid;
+  top: 0;
+  right: 100%;
+}
+.test-test:before {
+  content: '';
+  position: absolute;
+  border-width: 17px;
+  border-color: transparent #959ca2 transparent transparent;
+  border-style: solid;
+  top: -1px;
+  right: 100%;
+}
 .loading .card {
   min-height: 150px;
 }
@@ -8822,8 +8856,40 @@ form.profile-settings-update .profile-label.notification h3 {
   margin-top: 24px;
   position: relative;
 }
+.guide-card:first-child:after {
+  content: '';
+  top: 0;
+  left: -25px;
+  background: #e7e7e7;
+  width: 3px;
+  height: 1.2em;
+  position: absolute;
+}
+.guide-card:last-child:after {
+  content: '';
+  bottom: 0;
+  left: -25px;
+  background: #e7e7e7;
+  width: 3px;
+  height: 1.2em;
+  position: absolute;
+}
 .guide-card__sub {
   margin-top: 0;
+  position: relative;
+}
+.guide-card__separator {
+  font-size: 1.2em;
+}
+.guide-card__separator:before {
+  content: '';
+  top: 1.2em;
+  left: -31px;
+  background: #4a4d50;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  position: absolute;
 }
 .guide-card--directions {
   margin-top: -24px;
@@ -8832,9 +8898,19 @@ form.profile-settings-update .profile-label.notification h3 {
   font-size: 24px;
 }
 .guide-card__sub .guide-card--directions {
-  background: #cccccc;
+  position: absolute;
+  background: white;
   margin-top: 0;
-  padding: 12px;
+  padding: 6px;
+  font-size: 16px;
+  left: 2%;
+  right: 77%;
+  top: -20px;
+  z-index: 1;
+  border: 1px solid #959ca2;
+}
+.guide-card__sub .guide-card--directions .directions--distance {
+  padding-left: 6px;
 }
 .directions--time {
   padding-left: 24px;
@@ -8890,6 +8966,10 @@ form.profile-settings-update .profile-label.notification h3 {
   background: #7770A1;
   color: white;
 }
+.guide-card__separator .guide-card--content {
+  background: #cccccc;
+  text-align: center;
+}
 .guide-card__sub .guide-card--img-wrapper {
   width: 25%;
   background-repeat: no-repeat;
@@ -8907,6 +8987,10 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card--header {
   margin: 0 0 24px;
+}
+.guide-card__separator .guide-card--header {
+  margin: 0;
+  font-weight: bold;
 }
 .guide-card--suggested-time {
   color: #959ca2;

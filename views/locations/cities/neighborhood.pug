@@ -21,8 +21,8 @@ block content
 					.container.ptb-0
 						ol.breadcrumb
 							li.active United Sates
-							li.active Midwest
 							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}`)= neighborhood.cityDisplay
+							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}/#Neighborhoods`) Neighborhoods
 						h1= neighborhood.names.display
 							small.ml-Md= neighborhood.tagline
 
@@ -64,13 +64,13 @@ block content
 								button.bg-N.bw-0.p-0.w-100(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 									img.w-100(src= neighborhood.orientation.map)
 
-							if neighborhood.orientation.mainIntersection
+							if wysiwygHasData(neighborhood.orientation.mainIntersection)
 								h3 Main Intersection
-								div!= neighborhood.orientation.mainIntersection
+								!= neighborhood.orientation.mainIntersection
 
-							if neighborhood.orientation.mainStrip
+							if wysiwygHasData(neighborhood.orientation.mainStrip)
 								h3 Main Strip
-								div!= neighborhood.orientation.mainStrip
+								!= neighborhood.orientation.mainStrip
 
 							if neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name
 								h3 Main Transit Stops
@@ -106,6 +106,14 @@ block content
 									.modal-content.p-Md
 										img.w-100(src=neighborhood.orientation.map)
 
+					if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
+						h2.fc-G Nearby Neighborhoods
+
+						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
+							for nearbyNeighborhood in nearbyNeighborhoods
+								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`, target='_blank')
+									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
+
 				.col-xs-12.col-sm-6.col-md-8.f-R
 					if  neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
 						+contentCard('Eating & Drinking')
@@ -116,15 +124,6 @@ block content
 						+contentCard('Shopping')
 							img.f-L.w-25(src=neighborhood.shopping.image, alt='Shopping')
 							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
-
-				if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
-					.col-xs-12.col-sm-6.col-md-4
-						h2.fc-G Nearby Neighborhoods
-
-						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
-							for nearbyNeighborhood in nearbyNeighborhoods
-								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`, target='_blank')
-									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 
 				if neighborhood.explore && (neighborhood.explore.map || (neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name))
 					.col-xs-12.col-sm-6.col-md-8.f-R

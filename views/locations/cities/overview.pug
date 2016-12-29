@@ -13,7 +13,7 @@
 					dd= city.topPlacesDisplay.join('; ')
 
 	.col-xs-12.col-sm-8.col-lg-9.f-R
-		.content-card.p-0
+		.content-card.card.p-0
 			if city.images && city.images.length > 2
 				div(data-function='banner')
 					for img, i in city.images
@@ -80,7 +80,8 @@
 				button.d-B.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`)
 					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
 				+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
-					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
+					div(style='overflow-x: scroll;')
+						img(src= city.orientation.map, alt=`Map of ${city.names.display}`)
 
 		if city.food && city.food.foods
 			.content-card.p-0

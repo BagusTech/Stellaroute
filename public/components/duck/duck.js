@@ -10,6 +10,19 @@ void function initDuck($){
 		})
 	}
 
+	// sends an email, needs the html OR the template
+	// request = {html: (optional)String, template: (optional)String, toEmail: (optional)String, subject: String}
+	// success = function
+	// failure = function
+	function sendEmail (request, success, failure) {
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(request),
+			url: '/sendEmail',
+			contentType: 'application/json',
+		}).done(success).fail(failure);
+	}
+
 	function _duck(table) {
 		this.add = (item, successCallback, errorCallback) => {
 			$.ajax({
@@ -66,6 +79,7 @@ void function initDuck($){
 	// initialize with table name
 	const duck = (table) => (new _duck(table));
 	duck.uuid = uuid;
+	duck.sendEmail = sendEmail;
 
 	window.duck = duck;
 }(jQuery.noConflict());

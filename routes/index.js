@@ -110,6 +110,17 @@ router.post('/newsletter-signup', User.getCached(), function(req, res){
 });
 
 // request a location
+router.post('/sendEmail', function(req, res){
+	const html = req.body.html;
+	const template = req.body.template;
+	const toEmail = req.body.toEmail || 'info@stellaroute.com';
+	const subject = req.body.subject || 'Request';
+
+	sendEmail(toEmail, subject, template, html);
+	res.send({msg: 'success'});
+});
+
+// request a location
 router.post('/request-location', function(req, res){
 	const toEmail = 'info@stellaroute.com';
 	const subject = 'Location Request';

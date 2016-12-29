@@ -93,7 +93,7 @@ if (city.food && city.food.foods)
 			.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
 				+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 
-	h2 Restaurants
+	h2 Restaurants &amp; Bars
 	//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
 	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 		for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)

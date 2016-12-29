@@ -1,0 +1,18 @@
+#RequestLocationMessage.p-A.t-Md.r-Md.d-N
+	p.alert.alert-success.d-N Request successfully submitted, feel free to make more!
+	p.alert.alert-danger.d-N Sorry, something went wrong. If this continues please let us know and we will fix is shortly.
+
++modal('RequestLocation')(class='t-XXl')
+	form.d-B.bg-W.p-0.p-S.m-0
+		input(name='from', type='hidden', value= user ? (user.name ? `${user.name.first} ${user.name.last}` : (user.local.email || 'Anonymous')) : 'Anonymous')
+		.fc-B.p-Sm
+			h2.mb-0.plr-Sm.plr-0--sm.ta-C Where would you like to go?
+			hr.w-75
+			p.fw-Sb.mb-Md.ta-C We are working on new locations everyday.
+			.input-group.input-submit-group.m-0
+				input.form-control(type='text', placeholder='Where do you want to go?', name='location')
+				.input-group-btn
+					input.btn.btn-primary(type='submit', value='Request a Location')
+
+script(src='js/controls/requestLocation.min.js')
+	

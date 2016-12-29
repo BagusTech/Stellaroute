@@ -1,5 +1,10 @@
 extends layout.pug
 
+append header
+	#MakeRequestMessage.p-A.t-Md.r-Md.d-N
+		p.alert.alert-success.d-N Request successfully submitted, feel free to make more!
+		p.alert.alert-danger.d-N Sorry, something went wrong. If this continues please let us know and we will fix is shortly.
+
 block content
 	.media-bg-img.request-page-header
 		.container
@@ -12,48 +17,50 @@ block content
 				.col-xs-12.col-sm-8.col-sm-push-2.form-group
 					p.lead If you don’t see a <strong>location</strong>, <strong>attraction</strong>, or <strong>guide</strong> that you think we should have, let us know what we’re missing so we can help travelers like you.
 					label Location, Attraction or Guide?
-					select#SelectRequestForm.form-control
-						option(value="location") Location
-						option(value="attraction") Attraction
-						option(value="guide") Guide
+						select#SelectRequestForm.form-control
+							option(value="location") Location
+							option(value="attraction") Attraction
+							option(value="guide") Guide
 			form.js-request-form.request-location
+				input(type='hidden', name='type', value='Location')
+				input(name='from', type='hidden', value= user ? (user.name ? `${user.name.first} ${user.name.last}` : (user.local.email || 'Anonymous')) : 'Anonymous')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						label What's the name of the location?
-						input.form-control.short-statement(type="text", name="location", placeholder="Japan")
+							input.form-control.short-statement(type="text", name="location", placeholder="Japan")
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						label 
-							| What about this location makes it interesting?
-							small (optional)
-						textarea.form-control(placeholder="I want to try the food")
+						label What about this location makes it interesting?
+							textarea.form-control(name='description', placeholder="I want to try the food")
 					.col-xs-12.col-sm-8.col-sm-push-2
-						button.btn-primary.btn-block(type='button') Send Request
+						button.btn-primary.btn-block(type='submit') Send Request
+
 			form.js-request-form.request-attraction.hidden
+				input(type='hidden', name='type', value='Attraction')
+				input(name='from', type='hidden', value= user ? (user.name ? `${user.name.first} ${user.name.last}` : (user.local.email || 'Anonymous')) : 'Anonymous')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						label What's the name of the attraction?
-						input.form-control.short-statement(type="text", name="attraction", placeholder="Taj Mahal")
+							input.form-control.short-statement(type="text", name="attraction", placeholder="Taj Mahal")
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						label Where is this attraction located?
-						input.form-control.short-statement(type="text", name="location", placeholder="Agra, India")
+							input.form-control.short-statement(type="text", name="location", placeholder="Agra, India")
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						label 
-							| What about this attraction makes it interesting?
-							small (optional)
-						textarea.form-control(placeholder="I've always wanted to go there")
+						label What about this attraction makes it interesting?
+							textarea.form-control(name='description', placeholder="I've always wanted to go there")
 					.col-xs-12.col-sm-8.col-sm-push-2
-						button.btn-primary.btn-block(type='button') Send Request
+						button.btn-primary.btn-block(type='submit') Send Request
+
 			form.js-request-form.request-guide.hidden
+				input(type='hidden', name='type', value='Guide')
+				input(name='from', type='hidden', value= user ? (user.name ? `${user.name.first} ${user.name.last}` : (user.local.email || 'Anonymous')) : 'Anonymous')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						label Where do you want to go for this guide?
-						input.form-control.short-statement(type="text", name="guide", placeholder="Southeast Asia")
+							input.form-control.short-statement(type="text", name="location", placeholder="Southeast Asia")
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						label 
-							| Is there anything specific you want us to include in this guide?
-							small (optional)
-						textarea.form-control(placeholder="Angkor Wat")
+						label Is there anything specific you want us to include in this guide?
+							textarea.form-control(name='description', placeholder="Angkor Wat")
 					.col-xs-12.col-sm-8.col-sm-push-2
-						button.btn-primary.btn-block(type='button') Send Request
+						button.btn-primary.btn-block(type='submit') Send Request
 
 	script(src='/js/pages/request.min.js')

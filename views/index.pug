@@ -97,22 +97,14 @@ block content
 
 					.masonry--item(data-toggle='modal', data-target='#RequestLocation')
 						.card
-							.ta-C.fc-Purp(style='padding: 40% 0 ; font-size: 60px;')
+							.ta-C.fc-Purp(style='padding: 30% 0 ; font-size: 60px;')
 								i.fa.fa-plus(aria-hidden='true')
 								.sr-only Request
 
 							h3.card--title Request a Location
-				+modal('RequestLocation')(class='t-XXl')
-					form.d-B.bg-W.p-0.p-S.m-0(data-beta-signup="success")
-						input#EmailCaptureInput(type='hidden', value= user.local.email)
-						.fc-B.p-Sm(data-beta-signup="success-content")
-							h2.mb-0.plr-Sm.plr-0--sm(data-submit-guide="header") Where would you like to go?
-							hr.w-75
-							p.fw-Sb.mb-Md(data-submit-guide="text") We are expanding to new location everyday.
-							.input-group.input-submit-group.m-0
-								input#RequestGuideInput.form-control(type='text', placeholder='Where do you want to go?', name='travel')
-								.input-group-btn
-									input#RequestGuideButton.btn.btn-primary(type='submit', value='Request a Location')
+
+				include controls/requestLocation.pug
+
 				script(type='text/javascript', src='/js/controls/betaSignup.min.js')
 
 				hr.mb-Lg

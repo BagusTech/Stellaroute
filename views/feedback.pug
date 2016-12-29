@@ -1,24 +1,31 @@
 extends layout.pug
 
+append header
+	#FeedbackMessage.p-A.t-Md.r-Md.d-N
+		p.alert.alert-success.d-N Request successfully submitted, feel free to make more!
+		p.alert.alert-danger.d-N Sorry, something went wrong. If this continues please let us know and we will fix is shortly.
+
 block content
 	.media-bg-img.feedback-header
 		.container
 			h1 We Want to Know What What You Think!		
-	form.feedback-form
+	form#FeedbackForm.feedback-form
 			.container
 				p.lead.text-center We are always trying to improve our site and we take your feedback very seriously. Let us know how we can improve.
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						input.form-control(name='name', type='text', placeholder='Name')
+						input.form-control(name='user', type='text', placeholder='Name')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						input.form-control(name='email', type='email', placeholder='Email')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						input.form-control(name='Subject', type='text', placeholder='Subject')
+						input.form-control(name='subject', type='text', placeholder='Subject')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2.form-group
 						textarea.form-control(name='feedback', placeholder='Tell us how we can improve')
 				.row
 					.col-xs-12.col-sm-8.col-sm-push-2
-						button.btn-primary.btn-block(type='button') Send Your Feedback
+						button.btn-primary.btn-block(type='submit') Send Your Feedback
+
+	script(src='/js/pages/feedback.min.js')

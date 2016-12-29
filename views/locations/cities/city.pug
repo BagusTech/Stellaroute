@@ -47,3 +47,138 @@ block content
 			include guides.pug
 		#Neighborhoods.tabbed-nav--tabpanel.hidden(data-tabs='panel')
 			include neighborhoods.pug
+
+	// food modals
+	for item, i in city.food.foods.filter((i) => i.name)
+		+modal(item.name.replace(/\s/g, '-'))
+			div(id=`FoodItem${i}`, data-toggle='hidden')
+				h2.content-card--header.fw-B.fc-B= item.name
+				.lead!= item.description
+				img.w-100(src= item.image, alt= item.name)
+				if (item.suggestedRestaurant)
+					h3 Best Place to Get it:
+					p!= item.suggestedRestaurant
+
+				if (item.dishes)
+					h3 Dishes
+					ul
+						for dish in item.dishes
+							li= dish
+
+				if (item.whatToOrder)
+					h3 What to Have
+					p= item.whatToOrder
+
+				if (item.address)
+					h3 Where is It?
+					address
+						span= item.address
+						span= item.area
+
+				if (item.blog)
+					a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+
+			if user && user.isAdmin
+				.hidden(id=`FoodItemUpdate${i}`, data-toggle='hidden')
+					div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
+						div(duck-field='food', duck-type='object')
+							div(duck-field='foods', duck-type='array')
+								div(duck-type='object', duck-key='Id', duck-key-value=item.Id)
+									.form-group(duck-field='name', duck-type='string') <!-- name -->
+										label(for=`FoodName${i}`) Name
+										input#FoodName.form-control(type='text', required, duck-value, value=item.name)
+
+									.form-group(duck-field='order', duck-type='number') <!-- order -->
+										label(for=`FoodOrder${i}`) Order
+										input#FoodName.form-control(type='number', required, duck-value, value=item.order)
+
+									.form-group(duck-field='image', duck-type='string') <!-- image -->
+										label(for=`FoodImage${i}`) Image
+										input#FoodImage.form-control(type='text', required, duck-value, value=item.image)
+
+									.form-group(duck-field='category', duck-type='select') <!-- category -->
+										label(for=`FoodCategory${i}`) Category
+										select#FoodCategory.form-control(duck-value)
+											option(selected= item.category === 'Only In') Only In
+											option(selected= item.category === 'Local Cuisine') Local Cuisine
+											option(selected= item.category === 'Best Dishes') Best Dishes
+											option(selected= item.category === 'Drinks') Drinks
+											option(selected= item.category === 'Restaurant') Restaurant
+											option(selected= item.category === 'Bar') Bar
+
+									.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
+										label(for=`FoodTagline${i}`) Tagline
+										input#FoodTagline.form-control(type='text', maxlength='130', duck-value, value=item.tagline)
+
+									.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
+										label(for=`FoodDescription${i}`) Description
+										.summernote!= item.description
+
+									.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
+										h3 Contains
+										.checkbox
+											label
+												input(type='checkbox', value='Shellfish', checked= item.contains && item.contains.indexOf('Shellfish') > -1)
+												| Shellfish
+										.checkbox
+											label
+												input(type='checkbox', value='Gluten', checked= item.contains && item.contains.indexOf('Gluten') > -1)
+												| Gluten
+										.checkbox
+											label
+												input(type='checkbox', value='Nuts', checked= item.contains && item.contains.indexOf('Nuts') > -1)
+												| Nuts
+										.checkbox
+											label
+												input(type='checkbox', value='Meat', checked= item.contains && item.contains.indexOf('Meat') > -1)
+												| Meat
+										.checkbox
+											label
+												input(type='checkbox', value='Dairy', checked= item.contains && item.contains.indexOf('Dairy') > -1)
+												| Dairy
+
+									.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
+										label Dishes
+										if (item.dishes)
+											for dish in item.dishes
+												div(duck-type='string')
+													input.form-control(type='text', duck-value, value=dish)
+										else
+											div(duck-type='string')
+												input.form-control(type='text', duck-value)
+
+									.form-group(duck-field='area', duck-type='string') <!-- area -->
+										label(for=`FoodArea${i}`) Area
+										input#FoodArea.form-control(type='text', duck-value, value= item.area)
+
+									.form-group(duck-field='address', duck-type='string') <!-- address -->
+										label(for=`FoodAddress${i}`) Address
+										input#FoodAddress.form-control(type='text', duck-value, value= item.address)
+
+									.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
+										label(for=`FoodWhatToOrder${i}`) What to Order
+										input#FoodWhatToOrder.form-control(type='text', duck-value, value= item.whatToOrder)
+
+									.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
+										label(for=`FoodSuggestedRestaurant${i}`) Suggested Restaurant
+										input#FoodSuggestedRestaurant.form-control(type='text', duck-value, value=item.suggestedRestaurant)
+
+									.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
+										label(for=`FoodReadMore${i}`) Read More
+										input#FoodReadMore.form-control(type='text', duck-value, value=item.readMore)
+						
+						button.btn.btn-primary(duck-button='submit') Save
+				hr
+
+				.row.d-N.d-B--sm
+					.col-xs-6
+						-console.log(i)
+						button.btn.btn-primary(id=`FoodItemEdit${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemCancelSave${i}`, data-toggle='hidden') Edit
+						button.btn.btn-warning.hidden(id=`FoodItemCancelSave${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemEdit${i}`, data-toggle='hidden') Cancel
+						
+					.col-xs-6.ta-R
+						button.btn.btn-danger(id=`FoodDelete${i}`, data-function='toggle', data-target=`this, #FoodDeleteForm${i}`, data-toggle='hidden') Delete
+
+						div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${i}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
+							button.btn.btn-danger(duck-button='submit') Delete
+							button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${i}, #FoodDeleteForm${i}`) Cancel

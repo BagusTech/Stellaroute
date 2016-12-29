@@ -29,7 +29,7 @@ nav(data-function='accordion, interiorNav', data-always-show-one='true', data-in
 
 	for day, i in guide.days ? guide.days.sort(sortByOrder) : []
 		a(href='#', role='tab', aria-expanded='false', data-position= i+1)
-			h3= `Day ${i+1}: ${day.title}`
+			h3= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
 
 		if day.cards
 			ul(role='tabpanel', aria-hidden='true')

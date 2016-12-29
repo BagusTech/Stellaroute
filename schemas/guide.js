@@ -21,6 +21,7 @@ var Guide = Duck({
 		cityRegions: Array,
 		neighborhoods: Array,
 		attractions: Array,
+		isGroupedByDay: Boolean,
 		backgroundImage: String,
 		cardImage: String,
 		map: String,

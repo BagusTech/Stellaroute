@@ -2,18 +2,21 @@
 
 mixin guideForm(crud, guide, locations, cancel)
 	form(id=`GuideForm${guideFormId}`, duck-table='Guides', duck-function= crud, duck-key='Id', duck-key-value= guide && guide.Id)
-		div(duck-field='names', duck-type='object')
+		.w-50.f-L.pr-Sm(duck-field='names', duck-type='object')
 			.form-group(duck-field='display', duck-type='string')
 				label Display Name
 					input.form-control(type='text', required, duck-value, value= guide && guide.names.display)
 
-			div(duck-field='alias', duck-type='array')
+			//div(duck-field='alias', duck-type='array')
 				label Alias'
 
 				for alias in guide && guide.names.alias ? guide.names.alias : [null]
 					.form-group(duck-type='string')
 						input.form-control(type='text', required, duck-value, value= alias)
-
+		.checkbox.w-50.f-L.pl-Sm(duck-field='isGroupedByDay', duck-type='bool')
+			label.mt-Md
+				input(type='checkbox', duck-value, checked= guide && guide.isGroupedByDay)
+				| This Guide is Grouped by Days
 		if (!guide)
 			.form-group(duck-field='url', duck-type='string')
 					label Url
@@ -27,11 +30,11 @@ mixin guideForm(crud, guide, locations, cancel)
 			label Description
 			.summernote!= guide && guide.description
 
-		.form-group(duck-field='backgroundImage', duck-type='string')
+		.form-group.w-50.f-L.pr-Sm(duck-field='backgroundImage', duck-type='string')
 			label Background Image
 				input.form-control(type='text', required, duck-value, value= guide && guide.backgroundImage)
 
-		.form-group(duck-field='cardImage', duck-type='string')
+		.form-group.w-50.f-L.pl-Sm(duck-field='cardImage', duck-type='string')
 			label Card Image
 				input.form-control(type='text', required, duck-value, value= guide && guide.cardImage)
 

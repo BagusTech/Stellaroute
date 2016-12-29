@@ -100,7 +100,7 @@ block content
 
 					for day, i in guide.days ? guide.days.sort(sortByOrder) : []
 						.mtb-XXl(data-position=i+1)
-							h2.fs-32.fw-B.m-0.ta-C= `Day ${i+1}: ${day.title}`
+							h2.fs-32.fw-B.m-0.ta-C= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
 								if user && user.isAdmin
 									.f-R.mt-NegSm.mr-NegSm
 										+guideEditForm(guide)

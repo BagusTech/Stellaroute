@@ -158,25 +158,26 @@
   line-height: inherit;
 }
 [data-function*='interiorNav'] {
-  background: white;
   margin: 0 -24px;
   z-index: 2;
+  white-space: nowrap;
+  position: relative;
 }
 [data-function*='interiorNav'] > [role='tab'] {
-  padding-left: 24px;
+  background: white;
+  padding: 12px;
+  display: inline-block;
+  border-right: 1px solid #959ca2;
 }
 [data-function*='interiorNav'] h3 {
   font-weight: normal;
+  margin: 0;
 }
 [data-function*='interiorNav'] a {
   color: #4a4d50;
   display: block;
   font-weight: normal;
-  padding-left: 12px;
-}
-[data-function*='interiorNav'] a:hover {
-  border-left: 3px solid #aaa3d4;
-  margin-left: -3px;
+  padding: 6px;
 }
 [data-function*='interiorNav'] .active {
   color: #7770A1;
@@ -184,30 +185,48 @@
   margin-left: -3px;
 }
 [data-function*='interiorNav'] [role='tabpanel'] {
-  margin: 0 0 0 36px;
+  background: #f7f7f7;
   padding: 0;
   list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+[data-function*='interiorNav'] [role='tabpanel'] a:hover {
+  border-bottom: 3px solid #aaa3d4;
+  margin-bottom: -3px;
+}
+[data-function*='interiorNav'] li {
+  border: 1px solid #4a4d50;
+  display: inline-block;
 }
 @media (min-width: 767px) {
   [data-function*='interiorNav'] {
-    background: none;
     margin: 0;
+    white-space: inherit;
   }
   [data-function*='interiorNav'] > [role='tab'] {
-    padding-left: 24px;
+    background: none;
+    display: block;
+    padding: 0 0 0 24px;
+    border: none;
   }
   [data-function*='interiorNav'] h3 {
+    margin: 20px 0 6px;
     font-weight: normal;
   }
   [data-function*='interiorNav'] a {
     color: #4a4d50;
     display: block;
     font-weight: normal;
-    padding-left: 12px;
+    padding: 0 0 0 12px;
   }
   [data-function*='interiorNav'] a:hover {
     border-left: 3px solid #aaa3d4;
     margin-left: -3px;
+  }
+  [data-function*='interiorNav'] a:focus {
+    outline: none;
   }
   [data-function*='interiorNav'] .active {
     color: #7770A1;
@@ -215,9 +234,19 @@
     margin-left: -3px;
   }
   [data-function*='interiorNav'] [role='tabpanel'] {
+    background: none;
     margin: 0 0 0 36px;
     padding: 0;
     list-style: none;
+    position: static;
+  }
+  [data-function*='interiorNav'] [role='tabpanel'] a:hover {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  [data-function*='interiorNav'] li {
+    display: block;
+    border: none;
   }
 }
 .masonry {

@@ -41,7 +41,7 @@ block content
 									img(src=img, alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
 						else 
 							img.w-100(src= neighborhood.cardImage ? neighborhood.cardImage : 'http://placebear.com/300/300', alt= neighborhood.names.display)
-						.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0!= neighborhood.description						
+						.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description						
 
 					if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
 						.content-card
@@ -76,10 +76,10 @@ block content
 								h3 Main Transit Stops
 								for wayToGetThere in neighborhood.orientation.waysToGetThere
 									h4.row
-										.col-xs-1.ta-C(data-icon= getIcon(wayToGetThere.method))
-										.col-xs-11.pl-0= wayToGetThere.name
+										.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(wayToGetThere.method))
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= wayToGetThere.name
 									.row
-										.col-xs-11.col-xs-push-1.pl-0
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-pus2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
 											ul.list-unstyled
 												for stop in wayToGetThere.stops
 													li= stop
@@ -88,10 +88,10 @@ block content
 								h3 Distance To...
 								for location in neighborhood.orientation.distanceFrom.sort(sortByOrder)
 									h4.row
-										.col-xs-1.ta-C(data-icon= getIcon(location.type))
-										.col-xs-11.pl-0= location.name
+										.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(location.type))
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= location.name
 									.row
-										.col-xs-11.col-xs-push-1.pl-0
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-pus2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
 											ul.list-unstyled.fc-G
 												for wayToGetThere in location.waysToGetThere
 													li.clear
@@ -141,7 +141,7 @@ block content
 									for spot in area.suggestedSpots
 										li
 											if spot.link
-												a(href= spot.link)= spot.name
+												a(href= spot.link, target='blank')= spot.name
 											else
 												= spot.name
 

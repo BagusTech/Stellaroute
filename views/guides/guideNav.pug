@@ -1,31 +1,26 @@
 - let visibleNav = 0;
-nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
+
+nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
 	a(href='#', role='tab', aria-expanded='true', data-position='0')
 		h3 Overview
 	ul(role='tabpanel', aria-hidden='false')
 		if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Travel Hacks
+			li: a(href='#', data-position=`0.${visibleNav++}`) Travel Hacks
 
 		if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Highlights
+			li: a(href='#', data-position=`0.${visibleNav++}`) Highlights
 		
 		if wysiwygHasData(guide.whereToStay)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Where to Stay
+			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Stay
 		
 		if wysiwygHasData(guide.whereToGoOut)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Where to Go Out
+			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Go Out
 		
 		if wysiwygHasData(guide.whereToEat)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Where to Eat
+			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Eat
 		
 		if wysiwygHasData(guide.whereToExplore)
-			li
-				a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
+			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
 
 	for day, i in guide.days ? guide.days.sort(sortByOrder) : []
 		a(href='#', role='tab', aria-expanded='false', data-position= i+1)
@@ -34,4 +29,5 @@ nav(data-function='accordion, interiorNav', data-always-show-one='true', data-in
 		if day.cards
 			ul(role='tabpanel', aria-hidden='true')
 				for card, j in day.cards.sort(sortByOrder)
-					li: a(href='#', data-position= `${i+1}.${j}`)= card.title
+					if card.title
+						li: a(href='#', data-position= `${i+1}.${j}`)= card.title

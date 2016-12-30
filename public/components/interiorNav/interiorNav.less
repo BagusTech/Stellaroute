@@ -1,25 +1,25 @@
 [data-function*='interiorNav'] {
-	background: white;
 	margin: 0 -@gw-Md;
 	z-index: 2;
+	white-space: nowrap;
+	position: relative;
 
 	> [role='tab']{
-		padding-left: @gw;
+		background: white;
+		padding: @gw-Sm;
+		display: inline-block;
+		border-right: 1px solid @grey;
 	}
 		h3{
 			font-weight: normal;
+			margin: 0;
 		}
 
 	a{
 		color: @grey-dark;
 		display: block;
 		font-weight: normal;
-		padding-left: @gw-Sm;
-
-		&:hover{
-			border-left: 3px solid @purple-light;
-			margin-left: -3px;
-		}
+		padding: @gw-Xs;
 	}
 		.active{
 			color: @purple;
@@ -28,21 +28,39 @@
 		}
 
 	[role='tabpanel']{
-		margin: 0 0 0 @gw-Lg;
+		background: @grey-lightest;
 		padding: 0;
 		list-style: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+
+		a {
+			&:hover{
+				border-bottom: 3px solid @purple-light;
+				margin-bottom: -3px;
+			}
+		}
 	}
+		li {
+			border: 1px solid @grey-dark;
+			display: inline-block;
+		}
 }
 
 @media(min-width: @screen-Sm) {
 	[data-function*='interiorNav'] {
-		background: none;
-		margin: 0; 
+		margin: 0;
+		white-space: inherit;
 
 		> [role='tab']{
-			padding-left: @gw;
+			background: none;
+			display: block;
+			padding: 0 0 0 @gw;
+			border: none;
 		}
 			h3{
+				margin: 20px 0 6px;
 				font-weight: normal;
 			}
 
@@ -50,11 +68,15 @@
 			color: @grey-dark;
 			display: block;
 			font-weight: normal;
-			padding-left: @gw-Sm;
+			padding: 0 0 0 @gw-Sm;
 
 			&:hover{
 				border-left: 3px solid @purple-light;
 				margin-left: -3px;
+			}
+
+			&:focus {
+				outline: none;
 			}
 		}
 			.active{
@@ -64,9 +86,22 @@
 			}
 
 		[role='tabpanel']{
+			background: none;
 			margin: 0 0 0 @gw-Lg;
 			padding: 0;
 			list-style: none;
+			position: static;
+
+			a {
+				&:hover{
+					border-bottom: none;
+					margin-bottom: 0;
+				}
+			}
 		}
+			li {
+				display: block;
+				border: none;
+			}
 	}
 }

@@ -8,7 +8,9 @@ block content
 		include header.pug
 
 		+modal('OverviewMap')(class='modal-lg')
-			img.w-100(src= guide.map, alt= guide.names.display)
+			div(style='overflow-x: scroll')
+				img(src= guide.map, alt= guide.names.display)
+			button.btn.btn-default.btn-lg.mt-XXs(type='button', data-dismiss='modal', aria-label='Close') Close
 
 		.container.p-R
 			if user && user.isAdmin
@@ -18,7 +20,7 @@ block content
 					+guideForm('update', guide)
 
 			.row
-				.col-sm-5.col-md-4.col-lg-3(data-function='stickey')
+				.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--Sm(data-function='stickey')
 					include guideNav.pug
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
@@ -33,20 +35,20 @@ block content
 					
 					.content-card.p-0(data-position='0')
 						.row
-							.col-xs-4
+							.col-xs-12.col-sm-8.f-R
+								+guideEditForm(guide)
+									h2.content-card--header.ml-NegMd--sm.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W Overview
+									.lead.plr-Sm.p-0--sm(duck-current-value)!= guide.description
+									if user && user.isAdmin
+										div(duck-field='description', duck-type='wysiwyg')
+											.summernote!= guide.description
+							.col-xs-12.col-sm-4
 								+guideEditForm(guide)
 									button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
 										img.w-100(src= guide.map, alt= guide.names.display)
 									if user && user.isAdmin
 										.form-group(duck-field='map', duck-type='image')
 											input.form-control(type='text', duck-value, value= guide.map)
-							.col-xs-8
-								+guideEditForm(guide)
-									h2.content-card--header.ml-NegMd.mr-0.pt-Sm.pl-Md.fw-B.p-R.bg-W Overview
-									.lead(duck-current-value)!= guide.description
-									if user && user.isAdmin
-										div(duck-field='description', duck-type='wysiwyg')
-											.summernote!= guide.description
 
 							
 

@@ -9,12 +9,19 @@ void function initInteriorNav($) {
 													($wrapper.attr('data-interior-nav-content-wrapper') ? $($wrapper.attr('data-interior-nav-content-wrapper')) :
 																											$('[data-scroll=content-wrapper]').first());
 		const $content = $contentScrollWrap.find('> [data-scroll="content"]');
+		const $nodes = $('.js-nav-nodes [data-position]');
 		const offset = userDefinedOffset || $wrapper.attr('data-interior-nav-offset') || 24;
 
-		const checkForActiveTabChange = function checkForActiveTabChange() {
-			const $activeNodes = $('.js-nav-nodes [data-position]').filter(function checkTop() {
-				return $(this).offset().top <= offset;
-			});
+		function becomeActiveNode(e, test) {
+			console.log(test)
+			
+			if((window).width() > 767) {
+				return;
+			}
+		}
+
+		function checkForActiveTabChange() {
+			const $activeNodes = $nodes.filter((i, node) => $(node).offset().top <= offset);
 
 			$wrapper.find('a').removeClass('active');
 
@@ -27,18 +34,18 @@ void function initInteriorNav($) {
 					$activeNodeParent.trigger('tab-change');
 				}
 
-				$activeNodeParent.addClass('active')
-				$activeNode.addClass('active');
+				$activeNodeParent.addClass('active').trigger('becomeActiveNode', ['parent'])
+				$activeNode.addClass('active').trigger('becomeActiveNode');
 			}
-		};
+		}
 
-		const scrollTo = function scrollTo(e) {
+		function scrollTo(e) {
 			e.preventDefault();
 
 			const $this = $(this);
 			const position = $this.attr('data-position');
 			const $thisParent = $wrapper.find(`[data-position="${position.split('.')[0]}"]`);
-			const $goTo = $(`.js-nav-nodes [data-position="${position}"]`);
+			const $goTo = $nodes.filter((i, node) => $(node).attr('data-position') === position);
 			const goToVal = $goTo.offset().top - $content.offset().top - offset;
 
 			$wrapper.find('a').removeClass('active');
@@ -51,7 +58,9 @@ void function initInteriorNav($) {
 			setTimeout(() => {
 				$contentScrollWrap.on('scroll', checkForActiveTabChange);
 			}, $wrapper.attr('data-animation-speed') || 500);
-		};
+		}
+
+		$nodes.on('becomeActiveNode', becomeActiveNode)
 
 		$wrapper.find('a').click(scrollTo);
 		$contentScrollWrap.on('scroll', checkForActiveTabChange);

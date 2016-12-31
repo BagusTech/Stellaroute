@@ -3,28 +3,40 @@
 	z-index: 2;
 	white-space: nowrap;
 	position: relative;
+	transition: left .17s ease-out;
+	display: inline-block;
 
 	> [role='tab']{
 		background: white;
 		padding: @gw-Sm;
 		display: inline-block;
-		border-right: 1px solid @grey;
+		border-right: 1px solid @grey-light;
+		border-bottom: 1px solid @grey;
+		max-width: 200px;
+		position: relative;
+
+		&.active {
+			background: @purple;
+		}
 	}
 		h3{
-			font-weight: normal;
+			font-weight: inherit;
 			margin: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%
 		}
 
 	a{
 		color: @grey-dark;
 		display: block;
 		font-weight: normal;
-		padding: @gw-Xs;
+		padding: @gw-Xs @gw-Sm;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 		.active{
-			color: @purple;
-			border-left: 3px solid @purple;
-			margin-left: -3px;
+			color: white;
 		}
 
 	[role='tabpanel']{
@@ -34,17 +46,20 @@
 		position: absolute;
 		top: 100%;
 		left: 0;
+		transition: left .17s ease-out;
 
 		a {
-			&:hover{
-				border-bottom: 3px solid @purple-light;
-				margin-bottom: -3px;
-			}
+			display: block;
+			width: 100%;
 		}
+			.active{
+				background: @purple-light;
+			}
 	}
 		li {
-			border: 1px solid @grey-dark;
 			display: inline-block;
+			max-width: 150px;
+			border-right: 1px solid @grey-light;
 		}
 }
 
@@ -52,6 +67,7 @@
 	[data-function*='interiorNav'] {
 		margin: 0;
 		white-space: inherit;
+		position: static;
 
 		> [role='tab']{
 			background: none;

@@ -162,27 +162,39 @@
   z-index: 2;
   white-space: nowrap;
   position: relative;
+  -webkit-transition: left 0.17s ease-out;
+  transition: left 0.17s ease-out;
+  display: inline-block;
 }
 [data-function*='interiorNav'] > [role='tab'] {
   background: white;
   padding: 12px;
   display: inline-block;
-  border-right: 1px solid #959ca2;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #959ca2;
+  max-width: 200px;
+  position: relative;
+}
+[data-function*='interiorNav'] > [role='tab'].active {
+  background: #7770A1;
 }
 [data-function*='interiorNav'] h3 {
-  font-weight: normal;
+  font-weight: inherit;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 [data-function*='interiorNav'] a {
   color: #4a4d50;
   display: block;
   font-weight: normal;
-  padding: 6px;
+  padding: 6px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 [data-function*='interiorNav'] .active {
-  color: #7770A1;
-  border-left: 3px solid #7770A1;
-  margin-left: -3px;
+  color: white;
 }
 [data-function*='interiorNav'] [role='tabpanel'] {
   background: #f7f7f7;
@@ -191,19 +203,26 @@
   position: absolute;
   top: 100%;
   left: 0;
+  -webkit-transition: left 0.17s ease-out;
+  transition: left 0.17s ease-out;
 }
-[data-function*='interiorNav'] [role='tabpanel'] a:hover {
-  border-bottom: 3px solid #aaa3d4;
-  margin-bottom: -3px;
+[data-function*='interiorNav'] [role='tabpanel'] a {
+  display: block;
+  width: 100%;
+}
+[data-function*='interiorNav'] [role='tabpanel'] .active {
+  background: #aaa3d4;
 }
 [data-function*='interiorNav'] li {
-  border: 1px solid #4a4d50;
   display: inline-block;
+  max-width: 150px;
+  border-right: 1px solid #cccccc;
 }
 @media (min-width: 767px) {
   [data-function*='interiorNav'] {
     margin: 0;
     white-space: inherit;
+    position: static;
   }
   [data-function*='interiorNav'] > [role='tab'] {
     background: none;
@@ -8881,6 +8900,11 @@ form.profile-settings-update .profile-label.notification h3 {
   border-bottom: 1px solid #e7e7e7;
   color: #959ca2;
 }
+.guide-card--wrapper {
+  margin: 0 0 24px -12px;
+  padding: 0 0 0 12px;
+  border-left: 1px solid #959ca2;
+}
 .guide-card {
   margin-top: 24px;
   position: relative;
@@ -8888,7 +8912,7 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card:first-child:after {
   content: '';
   top: 0;
-  left: -25px;
+  left: -13px;
   background: #e7e7e7;
   width: 3px;
   height: 1.2em;
@@ -8897,7 +8921,7 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card:last-child:after {
   content: '';
   bottom: 0;
-  left: -25px;
+  left: -13px;
   background: #e7e7e7;
   width: 3px;
   height: 1.2em;
@@ -8913,7 +8937,7 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card__separator:before {
   content: '';
   top: 1.2em;
-  left: -31px;
+  left: -19px;
   background: #4a4d50;
   width: 13px;
   height: 13px;
@@ -8922,21 +8946,14 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card--directions {
   margin-top: -24px;
-  padding: 24px;
+  padding: 12px;
   text-align: center;
-  font-size: 24px;
+  font-size: 16px;
 }
 .guide-card__sub .guide-card--directions {
-  position: absolute;
-  background: white;
+  background: #cccccc;
   margin-top: 0;
   padding: 6px;
-  font-size: 16px;
-  left: 2%;
-  right: 77%;
-  top: -20px;
-  z-index: 1;
-  border: 1px solid #959ca2;
 }
 .guide-card__sub .guide-card--directions .directions--distance {
   padding-left: 6px;
@@ -8981,16 +8998,6 @@ form.profile-settings-update .profile-label.notification h3 {
 .card--tag + .guide-card--content {
   border-radius: 2px 0 2px 2px;
 }
-.guide-card__sub .guide-card--content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-}
 .guide-card__area .guide-card--content {
   background: #7770A1;
   color: white;
@@ -9000,7 +9007,7 @@ form.profile-settings-update .profile-label.notification h3 {
   text-align: center;
 }
 .guide-card__sub .guide-card--img-wrapper {
-  width: 25%;
+  height: 100px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -9010,9 +9017,6 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card--info {
   padding: 12px;
-}
-.guide-card__sub .guide-card--info {
-  width: 75%;
 }
 .guide-card--header {
   margin: 0 0 24px;
@@ -9026,6 +9030,99 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card__area .guide-card--suggested-time {
   color: white;
+}
+@media (min-width: 767px) {
+  .guide-card--wrapper {
+    margin-left: 24px;
+    padding-left: 24px;
+  }
+  .guide-card:first-child:after {
+    left: -25px;
+  }
+  .guide-card:last-child:after {
+    left: -25px;
+  }
+  .guide-card__separator:before {
+    left: -31px;
+  }
+  .guide-card--directions {
+    padding: 24px;
+    font-size: 24px;
+  }
+  .guide-card__sub .guide-card--directions {
+    position: absolute;
+    background: white;
+    margin-top: 0;
+    padding: 6px;
+    font-size: 16px;
+    left: 2%;
+    right: 77%;
+    top: -20px;
+    z-index: 1;
+    border: 1px solid #959ca2;
+  }
+  .guide-card__sub .guide-card--directions .directions--distance {
+    padding-left: 6px;
+  }
+  .directions--time {
+    padding-left: 24px;
+  }
+  .directions--distance {
+    padding-left: 12px;
+  }
+  /* .guide-card--tag {
+			text-align: center;
+			padding: @gw-Xs;
+			border-radius: @br-Md @br-Md 0 0;
+			color: white;
+			font-size: 18px;
+
+			+ .guide-card--content {
+				border-radius: 0 0 @br-Md @br-Md;
+			}
+		} */
+  .guide-card__sub .guide-card--content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+  }
+  .guide-card__sub .guide-card--img-wrapper {
+    width: 25%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .guide-card--img {
+    width: 100%;
+  }
+  .guide-card--info {
+    padding: 12px;
+  }
+  .guide-card__sub .guide-card--info {
+    width: 75%;
+  }
+  /* .guide-card--header {
+					margin: 0 0 @gw-Md;
+
+					.guide-card__separator & {
+						margin: 0;
+						font-weight: bold;
+					}
+				}
+
+				.guide-card--description {}
+				.guide-card--suggested-time {
+					color: @grey;
+
+					.guide-card__area & {
+						color: white;
+					}
+				} */
 }
 .text-wings {
   position: relative;

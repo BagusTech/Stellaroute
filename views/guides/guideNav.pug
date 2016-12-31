@@ -29,5 +29,5 @@ nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true
 		if day.cards
 			ul(role='tabpanel', aria-hidden='true')
 				for card, j in day.cards.sort(sortByOrder)
-					if card.title
-						li: a(href='#', data-position= `${i+1}.${j}`)= card.title
+					if card.title || card.tagTitle
+						li: a(href='#', data-position= `${i+1}.${j}`)= card.title || card.tagTitle

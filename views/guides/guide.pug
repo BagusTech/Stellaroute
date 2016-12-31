@@ -125,6 +125,6 @@ block content
 												.summernote!= day.description
 							else
 								.lead.p-Md.ta-C!= day.description
-						.ml-Md.mb-Md.pl-Md.bw-0.blw-Sm.bs-S.bc-G
+						.guide-card--wrapper
 							for card, j in day.cards ? day.cards.sort(sortByOrder) : []
 								include guideCard.pug

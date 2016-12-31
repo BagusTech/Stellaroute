@@ -74,6 +74,11 @@
 			display: block;
 			padding: 0 0 0 @gw;
 			border: none;
+			max-width: none;
+
+			&.active {
+				background: none;
+			}
 		}
 			h3{
 				margin: 20px 0 6px;
@@ -113,11 +118,16 @@
 					border-bottom: none;
 					margin-bottom: 0;
 				}
+
+				&.active {
+					background: none;
+				}
 			}
 		}
 			li {
 				display: block;
 				border: none;
+				max-width: none;
 			}
 	}
 }

@@ -235,7 +235,7 @@
     background: none;
   }
   [data-function*='interiorNav'] h3 {
-    margin: 20px 0 6px;
+    margin: 12px 0 6px;
     font-weight: normal;
   }
   [data-function*='interiorNav'] a {

@@ -24,7 +24,9 @@ void function initInteriorNav($) {
 			const leftOffset = isParent ? 0 : parseInt($wrapper.css('left'), 10) || 0;
 			const maxLeft = windowWidth - $toMove.outerWidth() - leftOffset;
 			const baseLeft = (leftOffset*-1) - $node.position().left;
-			const left = baseLeft <= maxLeft ? maxLeft : baseLeft;
+			const nodePosition = $node.attr('data-position').split('.');
+			const baseWithOffset = nodePosition[nodePosition.length - 1] === '0' ? baseLeft : baseLeft + 40;
+			const left = baseLeft <= maxLeft ? maxLeft : baseWithOffset;
 
 			// if there isn't a change between what we are setting and what it is, don't do anything
 			if(parseInt($toMove.css('left'), 10) === left) {

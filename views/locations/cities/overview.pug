@@ -80,8 +80,9 @@
 				button.d-B.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`)
 					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
 				+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
-					div(style='overflow-x: scroll;')
+					.ta-C(style='overflow-x: scroll;')
 						img(src= city.orientation.map, alt=`Map of ${city.names.display}`)
+					a.btn.btn-default(data-dismiss='modal') Close
 
 		if city.food && city.food.foods
 			.content-card.p-0

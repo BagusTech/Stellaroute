@@ -21,6 +21,7 @@ block content
 					img.w-100(src= neighborhood.cardImage || 'http://placebear.com/300/100', alt= neighborhood.names.display)
 
 					.ta-R.mt-Md
+						a.btn.btn-default(data-dismiss='modal') Close
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`) Read More
 		
 	else

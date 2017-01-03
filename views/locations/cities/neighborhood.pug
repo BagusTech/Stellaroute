@@ -79,7 +79,7 @@ block content
 										.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(wayToGetThere.method))
 										.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= wayToGetThere.name
 									.row
-										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-pus2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-push-2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
 											ul.list-unstyled
 												for stop in wayToGetThere.stops
 													li= stop
@@ -91,7 +91,7 @@ block content
 										.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(location.type))
 										.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= location.name
 									.row
-										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-pus2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
+										.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-push-2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
 											ul.list-unstyled.fc-G
 												for wayToGetThere in location.waysToGetThere
 													li.clear
@@ -101,10 +101,10 @@ block content
 
 				
 						if neighborhood.orientation.map
-							.modal.fade#MapModal(tab-index='-1', role='dialog')
-								.modal-dialog(role='document', style='width: 100%; max-width: 1200px')
-									.modal-content.p-Md
-										img.w-100(src=neighborhood.orientation.map)
+							+modal('MapModal')
+								.ta-C(style='overflow-x: scroll;')
+									img(src= neighborhood.orientation.map, alt=`Map of ${neighborhood.names.display}`)
+								a.btn.btn-default(data-dismiss='modal') Close
 
 					if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
 						h2.fc-G Nearby Neighborhoods

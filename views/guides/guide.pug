@@ -44,8 +44,6 @@ block content
 										.form-group(duck-field='map', duck-type='image')
 											input.form-control(type='text', duck-value, value= guide.map)
 
-							
-
 					if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
 						+contentCard('Travel Hacks')(data-position=`0.${visibleGuideSecions++}`)
 							+accordion(guide.travelHacks)(data-allow-multiple='true')
@@ -66,7 +64,6 @@ block content
 									div(duck-field='whereToStay', duck-type='wysiwyg')
 										.summernote!= guide.whereToStay
 
-					
 					if wysiwygHasData(guide.whereToGoOut)
 						+contentCard('Where to Go Out')(data-position=`0.${visibleGuideSecions++}`)
 							+guideEditForm(guide)

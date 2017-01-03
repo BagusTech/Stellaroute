@@ -21,6 +21,7 @@ block content
 					img.w-100(src= attraction.cardImage || 'http://placebear.com/600/400', alt= attraction.names.display)
 
 					.ta-R.mt-Md
+						a.btn.btn-default(data-dismiss='modal') Close
 						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`) Read More
 		
 	else

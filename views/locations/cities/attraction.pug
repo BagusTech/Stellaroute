@@ -93,7 +93,9 @@ block content
 				
 						if attraction.orientation.map
 							+modal('MapModal')
-								img.w-100(src=attraction.orientation.map)
+								.ta-C(style='overflow-x: scroll;')
+									img(src=attraction.orientation.map)
+								a.btn.btn-default(data-dismiss='modal') Close
 										
 				
 				if siblingAttractions

@@ -1,5 +1,5 @@
 [data-function*='interiorNav'] {
-	margin: 0 -@gw-Md;
+	margin: 0;
 	z-index: 2;
 	white-space: nowrap;
 	position: relative;
@@ -65,7 +65,6 @@
 
 @media(min-width: @screen-Sm) {
 	[data-function*='interiorNav'] {
-		margin: 0;
 		white-space: inherit;
 		position: static;
 
@@ -78,6 +77,7 @@
 
 			&.active {
 				background: none;
+				padding-left: @gw - 3px;
 			}
 		}
 			h3{
@@ -93,7 +93,7 @@
 
 			&:hover{
 				border-left: 3px solid @purple-light;
-				margin-left: -3px;
+				padding-left: @gw-Sm - 3px;
 			}
 
 			&:focus {
@@ -103,7 +103,7 @@
 			.active{
 				color: @purple;
 				border-left: 3px solid @purple;
-				margin-left: -3px;
+				padding-left: @gw-Sm - 3px;
 			}
 
 		[role='tabpanel']{

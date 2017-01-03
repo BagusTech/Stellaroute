@@ -26,10 +26,6 @@ void function initInteriorNav($) {
 			const baseLeft = (leftOffset*-1) - $node.position().left;
 			const left = baseLeft <= maxLeft ? maxLeft : baseLeft;
 
-			console.log(windowWidth, $toMove.outerWidth())
-			console.log(maxLeft, baseLeft)
-			console.log('~~~~~~~~~~~~~')
-
 			// if there isn't a change between what we are setting and what it is, don't do anything
 			if(parseInt($toMove.css('left'), 10) === left) {
 				return;

@@ -20,18 +20,12 @@ block content
 					+guideForm('update', guide)
 
 			.row
-				.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--Sm(data-function='stickey')
-					include guideNav.pug
+				.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--sm.mlr-NegMd.mlr-0--sm
+					div(data-function='stickey')
+						div(data-stickey='content')
+							include guideNav.pug
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-					//.content-card
-						+guideEditForm(guide)
-							h2.content-card--header.fw-B.p-R.bg-W Overview
-							.lead(duck-current-value)!= guide.description
-
-							if user && user.isAdmin
-								div(duck-field='description', duck-type='wysiwyg')
-									.summernote!= guide.description
 					
 					.content-card.p-0(data-position='0')
 						.row

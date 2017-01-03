@@ -26,26 +26,40 @@ void function initializeStickeyAddon($) {
 
 	const initStickey = function(wrapper, userDefinedOffset, nextStickeyElem){
 		const $wrapper = $(wrapper);
+		const $content = $wrapper.find('[data-stickey="content"]');
 		const $scrollWrapper = $wrapper.attr('data-stickey-scroll-wrapper') || 
 								$wrapper.closest('[data-scroll="content-wrapper"').length ?
 									$wrapper.closest('[data-scroll="content-wrapper"') :
 									$(window);
 		const offset = getOffset($wrapper, $scrollWrapper, userDefinedOffset, nextStickeyElem);
 
-		const makeStickey = function() {
+		function makeStickey() {
 			const scrollTop = $scrollWrapper.scrollTop();
-			let top = 0;
 
 			if(scrollTop > offset.top && (!offset.bottom || scrollTop < offset.bottom)){
-				top = $wrapper.position().top - $wrapper.offset().top - offset.start;
+				if(!$wrapper.hasClass('stickey')){
+					$wrapper.height($wrapper.height());
+					$content.css('width', $wrapper.width())
+					$wrapper.addClass('stickey');
+					$wrapper.removeClass('stuck');
+				}
 			} else if (offset.bottom && scrollTop >= (offset.bottom)){
-				top = offset.bottom - offset.top;
-			}
+				if(!$wrapper.hasClass('stuck')){
+					const top = scrollTop - offset.top;
 
-			$wrapper.css('top', `${top}px`);
+					$wrapper.removeClass('stickey');
+					$wrapper.height($wrapper.height());
+					$wrapper.addClass('stuck');
+					$content.css('top', `${top}px`)
+				}
+			} else {
+				$wrapper.css('height', 'auto');
+				$content.css('width', 'auto');
+				$wrapper.removeClass('stickey stuck');
+			}
 		}
 
-		const reInitStickey = function(){
+		function reInitStickey() {
 			$(window).off('resize', reInitStickey)
 			$scrollWrapper.off('scroll', makeStickey);
 

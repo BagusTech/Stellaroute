@@ -4,15 +4,19 @@
 
 +modal('RequestLocation')(class='t-XXl')
 	form.d-B.bg-W.p-0.p-S.m-0
-		input(name='from', type='hidden', value= user ? (user.name ? `${user.name.first} ${user.name.last}` : (user.local.email || 'Anonymous')) : 'Anonymous')
 		.fc-B.p-Sm
 			h2.mb-0.plr-Sm.plr-0--sm.ta-C Where would you like to go?
 			hr.w-75
 			p.fw-Sb.mb-Md.ta-C We are working on new locations everyday.
-			.input-group.input-submit-group.m-0
-				input.form-control(type='text', placeholder='Where do you want to go?', name='location')
-				.input-group-btn
-					input.btn.btn-primary(type='submit', value='Request a Location')
+			.row
+				.col-xs-12.col-md-8.col-md-push-2
+					.form-group.mb-Xs
+						input.form-control(type='text', placeholder='Email', name='from', value= user && user.local && user.local.email)
+
+					.form-group
+						input.form-control(type='text', placeholder='Where do you want to go?', name='location')
+
+					input.btn.btn-primary.btn-lg(type='submit', value='Request a Location')
 
 script(src='js/controls/requestLocation.min.js')
 	

@@ -4,7 +4,7 @@ const sortBy     = require('../modules/sortBy');
 const User       = require('../schemas/user');
 const router     = express.Router();
 
-router.get('/', function(req, res, next){
+router.get('/', (req, res, next) => {
 	res.render('profile/profile', {
 		title: 'StellaRoute: My Profile',
 		description: 'This is used to view, edit, and delete my profile',
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next){
 	});
 });
 
-router.post('/update', function(req, res){
+router.post('/update', (req, res) => {
 	if (req.body.delete){
 		User.delete(req.body[User.hash]).then(function(){
 			// resolved

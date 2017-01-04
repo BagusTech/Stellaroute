@@ -7,30 +7,33 @@ block content
 	.container
 		.row
 			.col-xs-12.col-sm-6
-				+contentCard('Update Users\' Permissions')
-					ul.p-0
-						-var liClasses = 'm-0 ls-N p-Sm checkbox'
-						for user, i in users.sort((a, b) => {if(a.isAdmin){return -1;} return 1;})
-							-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
+				+contentCard('Tools')
+					button#ClearCache.btn-primary Clear Cache
+		h2.fc-G Update Users
+		.row
+			ul#UserList.p-0
+				for user, i in users.sort((a, b) => {if(a.isAdmin){return -1;} return 1;})
+					-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
 
-							li(class=`${liClasses} ${isAlt}`)
-								form.profile-settings-update.p-R(method='POST', action='/profile/update')
-									.row
-										.col-xs-12
-											strong Name:&nbsp;
-											span= user.name ? `${user.name.first} ${user.name.last}` : 'N/A'
-										.col-xs-12
-											strong Email:&nbsp;
-											span= user.local ? user.local.email : 'N/A'
-									br
-									.pl-Md
-										input(type='hidden', name='isAdmin', value='false')
-										input(type='checkbox', name='isAdmin', checked= user.isAdmin, value='true')
+					li.col-xs-12.col-sm-6.col-md-4.col-lg-3.ls-N
+						+contentCard()
+							h3.content-card--header= user.name ? `${user.name.first} ${user.name.last}` : 'N/A'
+								button.btn-warning.f-R.mt-NegSm.mr-NegSm.js-password-reset(type='button') Reset Password
+							strong Email:&nbsp;
+							span.js-user-email= user.local ? user.local.email : 'N/A'
+
+
+							.mt-Md(duck-function='update', duck-key-value= user['Id'])
+								.checkbox.d-Ib(duck-field='isAdmin', duck-type='bool')
+									label
+										input(type='checkbox', duck-value, checked= user.isAdmin, value='true')
 										| Administrator
-									input(type='hidden', name= key, value= user[key])
-									input.btn-primary.p-A.r-XXs.t-0(type='submit', name='update', value='Save')
-	// change password
-	// send email to user
-	// delete user
-	// make user admin
-	// clear cache
+
+								button.btn-primary.f-R(type='button', duck-button='submit') Save
+									i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')
+	// reset password []
+	// make user a member []
+	// make user an admin [x]
+	// clear cache [x]
+
+	script(src='js/pages/admin.min.js')

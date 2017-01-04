@@ -217,17 +217,19 @@ void function initCityFood($, duck, window) {
 		});
 	}
 
-	function duckForm(wrapper){
+	function duckForm(wrapper, options){
 		const $wrapper = $(wrapper);
 		const $startOfFields = $wrapper.find('> [duck-field]');
 		//const $submit = $wrapper.find('[duck-button="submit"]');
 		const $editButton = $wrapper.find('[duck-button="edit"]');
 		const $cancelButton = $wrapper.find('[duck-button="cancel"]');
-		const table = $wrapper.attr('duck-table');
-		const crud = $wrapper.attr('duck-function');
-		const key = $wrapper.attr('duck-key');
-		const keyValue = $wrapper.attr('duck-key-value');
+		const table = (options && options.table) || $wrapper.attr('duck-table');
+		const crud = (options && options.crud) || $wrapper.attr('duck-function');
+		const key = (options && options.key) || $wrapper.attr('duck-key');
+		const keyValue = (options && options.keyValue) || $wrapper.attr('duck-key-value');
 		const $urlField = $wrapper.find('[duck-field="url"] input');
+		const successCallback = (options && options.successCallback) || (() => {window.location.reload(true)});
+		const failureCallBack = (options && options.failureCallBack) || (() => {window.location.reload(true)});
 
 		if($urlField.length){
 			autoSetUrl($urlField, $wrapper.find('[duck-field="names"] [duck-field="display"] input'));
@@ -258,7 +260,7 @@ void function initCityFood($, duck, window) {
 					const item = {};
 					item[key] = keyValue || duck.uuid();
 
-					duck(table).add(buildObject(item, $startOfFields), () => {window.location.reload(true)});
+					duck(table).add(buildObject(item, $startOfFields), successCallback, failureCallBack);
 
 					break;
 				}
@@ -267,7 +269,7 @@ void function initCityFood($, duck, window) {
 				case 'update':{
 					duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
 						const item = buildObject(data, $startOfFields);
-						duck(table).update(item, () => {window.location.reload(true)});
+						duck(table).update(item, successCallback, failureCallBack);
 					});
 
 					break;
@@ -305,7 +307,7 @@ void function initCityFood($, duck, window) {
 					duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
 						const item = removeFromObject(data, path, value);
 
-						duck(table).update(item, () => {window.location.reload(true)});
+						duck(table).update(item, successCallback, failureCallBack);
 					});
 
 					break;
@@ -345,9 +347,9 @@ void function initCityFood($, duck, window) {
 		});
 	}
 
-	$.fn.duckForm = function init() {
+	$.fn.duckForm = function init(options) {
 		return this.each((index, wrapper) => {
-			duckForm(wrapper);
+			duckForm(wrapper, options);
 		});
 	}
 

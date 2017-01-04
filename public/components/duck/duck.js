@@ -3,6 +3,7 @@
 void function initDuck($){
 	'use strict'
 
+	// generates a universally unique ID (UUID)
 	function uuid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
 			const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
@@ -21,6 +22,23 @@ void function initDuck($){
 			url: '/sendEmail',
 			contentType: 'application/json',
 		}).done(success).fail(failure);
+	}
+
+	// send an email to the appropiate user, giving them a randomized, unique password
+	// id = string (id of user in database)
+	// successCallback = function
+	// errorCallback = function
+	function sendResetEmail(email, successCallback, errorCallback) {
+		return () => {
+			$.ajax({
+				url: `/reset-password`,
+				contentType: 'application/json',
+				data: JSON.stringify({ email }),
+				method: 'POST',
+				success: successCallback,
+				error: errorCallback,
+			});
+		}
 	}
 
 	function _duck(table) {
@@ -74,12 +92,23 @@ void function initDuck($){
 				error: errorCallback,
 			});
 		}
+
+		this.clearCache = (successCallback, errorCallback) => {
+			$.ajax({
+				url: `/admin/clear-cache/${table}`,
+				method: 'POST',
+				success: successCallback,
+				error: errorCallback,
+			});
+		}
 	}
 
 	// initialize with table name
 	const duck = (table) => (new _duck(table));
+
 	duck.uuid = uuid;
 	duck.sendEmail = sendEmail;
+	duck.sendResetEmail = sendResetEmail;
 
 	window.duck = duck;
 }(jQuery.noConflict());

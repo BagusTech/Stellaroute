@@ -69,21 +69,6 @@ router.get('/explore', (req, res) => {
 	});
 });
 
-// admin
-router.get('/admin', isLoggedIn, (req, res) => {
-	if (!req.user.isAdmin) {
-		// if they aren't an admin
-		req.flash('error', 'Sorry, you are\'t allowed to go there :(');
-		res.redirect('/');
-	}
-
-	res.render('admin', {
-		title: 'Stellaroute: Admin Controls',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		users: User.cached(),
-	});
-})
-
 router.get('/logout', (req, res) => {
 	req.logout();
 	res.redirect('/');
@@ -147,6 +132,35 @@ router.post('/request-location', (req, res) => {
 });
 
 // authentication
+router.get('/reset-password', (req, res) => {
+	res.render('reset-password', {
+		title: 'Stellaroute: Password Reset',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+	})
+})
+
+router.post('/reset-password', (req, res) => {
+	const newPassword = 'xxxxxx'.replace(/x/g, (c) => {const r = Math.random()*16|0;return r.toString(16);});
+	const userEmail = req.body.email;
+	const userToUpdate = User.findOne('local.email', userEmail).items;
+
+	if(!userToUpdate) {
+		res.send('success');
+	}
+
+	User.update({Id: userToUpdate.Id, local: {password: User.generateHash(newPassword)}}).then(() => {
+		const html = `<h1>Your Password Has Been Reset!</h1><p>Your new password is</p><h2>${newPassword}</h2><p>Please log in at <a href="https://stellaroute.com/">Stellaroute</a> with your new password. We advise going into your profile and changing it something else as soon as possible</p>`
+
+		User.updateCache().then(() => {
+			sendEmail(userEmail, 'Stellaroute Password Reset', null, html);
+			res.send('success');
+		});
+	}, (err) => {
+		console.error(err);
+		res.status(500).send(err);
+	});
+});
+
 router.post('/signup', passport.authenticate('local-signup', {
 	successRedirect: '/profile',
 	failureRedirect: '/',

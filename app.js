@@ -14,6 +14,7 @@ const isLoggedIn       = require('./middleware/isLoggedIn');
 const setFlash         = require('./modules/setFlash');
 
 const routes           = require('./routes/index');
+const admin            = require('./routes/admin');
 const ajax             = require('./routes/ajax');
 const locations        = require('./routes/locations');
 const continents       = require('./routes/continents');
@@ -85,14 +86,14 @@ app.use('/', routes);
 // CRUD
 app.use('/', ajax);
 
-
-app.use('/continents', isLoggedIn, continents);
-app.use('/countries', isLoggedIn, countries);
-app.use('/country-regions', isLoggedIn, countryRegions);
-app.use('/profile', isLoggedIn, profile);
-app.use('/world-regions', isLoggedIn, worldRegions);
-app.use('/provinces', isLoggedIn, provinces);
-app.use('/province-regions', isLoggedIn, provinceRegions);
+app.use('/admin', isLoggedIn(true), admin)
+app.use('/continents', isLoggedIn(true), continents);
+app.use('/countries', isLoggedIn(true), countries);
+app.use('/country-regions', isLoggedIn(true), countryRegions);
+app.use('/profile', isLoggedIn(), profile);
+app.use('/world-regions', isLoggedIn(true), worldRegions);
+app.use('/provinces', isLoggedIn(true), provinces);
+app.use('/province-regions', isLoggedIn(true), provinceRegions);
 
 // view locations
 app.use('/', locations);

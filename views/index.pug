@@ -112,9 +112,12 @@ block content
 				h2.fc-G Coming Soon
 				.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
 					.masonry--item
-						+card('http://az616578.vo.msecnd.net/files/2016/04/27/635973353399336445-1421152854_NYC-1.jpg', 'New York')
+						+card('http://i1.trekearth.com/photos/1577/st._louis_riverfront-1.jpg', 'St. Louis')
 					.masonry--item
-						+card('http://cdn.ek.aero/english/images/London-1_tcm233-2111842.jpg', 'London')
+						+card('http://az616578.vo.msecnd.net/files/2016/04/27/635973353399336445-1421152854_NYC-1.jpg', 'New York')
+					// REMOVED AS SUPERFLOUS, MIGHT PUT BACK ON LATER
+						.masonry--item
+							+card('http://cdn.ek.aero/english/images/London-1_tcm233-2111842.jpg', 'London')
 					.masonry--item
 						+card('http://www.accessmba.com/uploads/tx_templavoila/Amsterdam.jpg', 'Amsterdam')
 					.masonry--item
@@ -131,22 +134,23 @@ block content
 					li Interactive Map
 					li Upload Pictures
 					
-				//.row
-					h1.mt-0.mb-Md.ta-C Plan Spontaneity
-					.col-xs-12.col-md-6.col-md-push-3
-						.input-group
-							input.form-control.p-S(type='text', placeholder='Where do you want to go?')
-							.input-group-btn
-								button.btn.btn-primary.p-S(type='submit')
-									span.hidden-Xs Search
-									span.visible-Xs
-										i.fa.fa-search(aria-hidden="true")
-						.text-wings.fc-W.mtb-Lg
-							hr
-							span or
-							hr
+				// REMOVED UNTIL SEARCH IS WORKING
+					.row
+						h1.mt-0.mb-Md.ta-C Plan Spontaneity
+						.col-xs-12.col-md-6.col-md-push-3
+							.input-group
+								input.form-control.p-S(type='text', placeholder='Where do you want to go?')
+								.input-group-btn
+									button.btn.btn-primary.p-S(type='submit')
+										span.hidden-Xs Search
+										span.visible-Xs
+											i.fa.fa-search(aria-hidden="true")
+							.text-wings.fc-W.mtb-Lg
+								hr
+								span or
+								hr
 
-						a.btn.btn-primary.btn-lg.fs-Lg(href="/explore", data-icon='fa fa-location-arrow') &nbsp;Explore
+							a.btn.btn-primary.btn-lg.fs-Lg(href="/explore", data-icon='fa fa-location-arrow') &nbsp;Explore
 
 block footer
 	if (!user)

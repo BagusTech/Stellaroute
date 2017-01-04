@@ -21,7 +21,7 @@ block content
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= attraction.Id
 					.container.ptb-0
 						ol.breadcrumb
-							li.active Midwest
+							li.active: a(href= '/') Home
 							li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
 							li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
 						h1= attraction.names.display

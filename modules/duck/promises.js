@@ -6,7 +6,7 @@ const flattenObject = require('../flattenObject');
 const parseData     = require('../parseData');
 const readJSON      = require('../readJSON');
 
-module.exports = function(_duck){
+module.exports = (_duck) => {
 	// Write an item into the database
 	// Data is the object being added to the database
 	// Conditions - TODO

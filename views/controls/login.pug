@@ -86,7 +86,7 @@ if (!user)
 else
 	- var loginClasses = `bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;
 
-	nav.dropdown.navbar-right
+	nav.dropdown
 		button#UserMenu(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", class= loginClasses)
 			if (user.name && user.name.first)
 				span= user.name.first + ' '
@@ -98,7 +98,7 @@ else
 			else
 				i.fa.fa-user(aria-hidden="true")
 
-		ul.dropdown-menu.ta-R(aria-labelledby="UserMenu")
+		ul.dropdown-menu.l-A.r-0(aria-labelledby="UserMenu")
 			li
 				a(href='/profile') My Account
 			li

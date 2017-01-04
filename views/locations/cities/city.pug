@@ -19,9 +19,7 @@ block content
 						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditCityForm') Edit
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= city.Id
 					ol.breadcrumb
-						li(title= city.countryDisplay).active= city.countryDisplay
-						li(title= city.provinceDisplay.join(', ')).active= city.provinceDisplay.join(', ')
-						li(title= city.names.display).active= city.names.display
+						li.active: a(href= '/') Home
 					h1= city.names.display
 						small.ml-Md= city.tagline
 

@@ -62,7 +62,6 @@ void function initInteriorNav($) {
 
 				$activeNodeParent.addClass('active').trigger('becomeActiveNode', [true]);
 				$activeNode.addClass('active').trigger('becomeActiveNode');
-				
 			}
 		}
 

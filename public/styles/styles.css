@@ -234,6 +234,9 @@
     background: none;
     padding-left: 21px;
   }
+  [data-function*='interiorNav'] > [role='tab']:hover {
+    padding-left: 21px;
+  }
   [data-function*='interiorNav'] h3 {
     margin: 12px 0 6px;
     font-weight: normal;

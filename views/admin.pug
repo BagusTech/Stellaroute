@@ -1,0 +1,36 @@
+extends layout.pug
+
+block content
+	.media-bg-img.request-page-header
+		.container
+			h1 Control Panel
+	.container
+		.row
+			.col-xs-12.col-sm-6
+				+contentCard('Update Users\' Permissions')
+					ul.p-0
+						-var liClasses = 'm-0 ls-N p-Sm checkbox'
+						for user, i in users.sort((a, b) => {if(a.isAdmin){return -1;} return 1;})
+							-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
+
+							li(class=`${liClasses} ${isAlt}`)
+								form.profile-settings-update.p-R(method='POST', action='/profile/update')
+									.row
+										.col-xs-12
+											strong Name:&nbsp;
+											span= user.name ? `${user.name.first} ${user.name.last}` : 'N/A'
+										.col-xs-12
+											strong Email:&nbsp;
+											span= user.local ? user.local.email : 'N/A'
+									br
+									.pl-Md
+										input(type='hidden', name='isAdmin', value='false')
+										input(type='checkbox', name='isAdmin', checked= user.isAdmin, value='true')
+										| Administrator
+									input(type='hidden', name= key, value= user[key])
+									input.btn-primary.p-A.r-XXs.t-0(type='submit', name='update', value='Save')
+	// change password
+	// send email to user
+	// delete user
+	// make user admin
+	// clear cache

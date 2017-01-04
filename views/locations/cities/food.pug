@@ -90,14 +90,14 @@ if (user && user.isAdmin)
 if (city.food && city.food.foods)
 	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 		for food in city.food.foods.filter((i) => (i.category !== 'Restaurant' && i.category !== 'Bar') && i.name).sort(sortByOrder)
-			.masonry--item(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`)
+			.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(food.name)}`)
 				+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 
 	h2 Restaurants &amp; Bars
 	//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
 	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 		for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)
-			.masonry--item(data-toggle='modal', data-target= `#${restaurant.name.replace(/\s/g, '-')}`)
+			.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(restaurant.name)}`)
 				+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
 		
 else

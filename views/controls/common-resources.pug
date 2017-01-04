@@ -99,4 +99,14 @@ head
 
 			return !(empytValues.indexOf(data) > -1)
 		}
+		function createValidAttributeFromTitle(title) {
+			const findInvalidAttributeCharacters = /[^a-z0-9\s]|^[^a-z\s]+/gi;
+			const findMultipleSpaces = /\s\s+/g;
+			const findAllSpaces = /\s/g;
+
+			return title.replace(findInvalidAttributeCharacters, '')
+				.replace(findMultipleSpaces, ' ')
+				.trim()
+				.replace(findAllSpaces, '-');
+		}
 	block head

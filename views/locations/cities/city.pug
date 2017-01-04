@@ -48,7 +48,7 @@ block content
 
 	// food modals
 	for item, i in city.food.foods.filter((i) => i.name)
-		+modal(item.name.replace(/\s/g, '-'))
+		+modal(createValidAttributeFromTitle(item.name))
 			div(id=`FoodItem${i}`, data-toggle='hidden')
 				h2.content-card--header.fw-B.fc-B= item.name
 				.lead!= item.description

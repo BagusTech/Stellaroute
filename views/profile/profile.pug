@@ -19,7 +19,7 @@ block content
 					li.active
 						a(href="#") Settings
 		.container.p-Xs
-				.col-xs-12.col-sm-6(class= !user.isAdmin && 'col-sm-push-3')
+				.col-xs-12.col-sm-6.col-sm-push-3
 					+contentCard('Info')
 						form.profile-settings-update(method='POST', action='/profile/update')
 							.row
@@ -51,24 +51,3 @@ block content
 								.col-xs-12
 									input(type='hidden', name= key, value= user[key])
 									input.btn-primary.btn-block(type='submit', name='update', value='Save')
-
-				if (user.isAdmin)
-					.col-xs-12.col-sm-6
-						+contentCard('Update Users\' Permissions')
-							ul.p-0
-								-var liClasses = 'm-0 ls-N p-Sm checkbox'
-								for user, i in users
-									-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
-
-									li(class=`${liClasses} ${isAlt}`)
-										form.profile-settings-update.p-R(method='POST', action='/profile/update')
-											strong= user.name ? user.name.first : 'N/A' 
-											| :&nbsp;
-											span= user.local ? user.local.email : 'N/A'
-											br
-											.pl-Md
-												input(type='hidden', name='isAdmin', value='false')
-												input(type='checkbox', name='isAdmin', checked= user.isAdmin, value='true')
-												| Administrator
-											input(type='hidden', name= key, value= user[key])
-											input.btn-primary.p-A.r-XXs.t-0(type='submit', name='update', value='Save')

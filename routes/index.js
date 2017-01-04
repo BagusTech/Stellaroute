@@ -4,6 +4,7 @@ const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const strategies       = require('../config/passport');
 const instagram        = require('../config/instagram');
+const isLoggedIn       = require('../middleware/isLoggedIn');
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
@@ -17,8 +18,8 @@ strategies.local(passport);
 strategies.instagram(passport);
 
 // home page
-router.get('/', function(req, res, next){
-	const approvedLocations = req.user ? City.find('isPublic', true).join('country', Country.cached(), 'Id', 'url').items : [];
+router.get('/', (req, res, next) => {
+	const approvedLocations = City.find('isPublic', true).join('country', Country.cached(), 'Id', 'url').items;
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
@@ -28,7 +29,7 @@ router.get('/', function(req, res, next){
 });
 
 // terms and privacy
-router.get('/privacy-and-terms', function(req, res){
+router.get('/privacy-and-terms', (req, res) => {
 	res.render('privacy-terms', {
 		title: 'Stellaroute\'s Privacy Agreement and Terms of Service',
 		description: 'Stellaroute\'s Privacy Agreement and Terms of Service'
@@ -36,7 +37,7 @@ router.get('/privacy-and-terms', function(req, res){
 });
 
 // about
-router.get('/about', function(req, res){
+router.get('/about', (req, res) => {
 	res.render('about', {
 		title: 'Stellaroute: Learn Everything About Us',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
@@ -44,7 +45,7 @@ router.get('/about', function(req, res){
 });
 
 // request
-router.get('/request', function(req, res){
+router.get('/request', (req, res) => {
 	res.render('request', {
 		title: 'Stellaroute: Learn Everything About Us',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
@@ -52,7 +53,7 @@ router.get('/request', function(req, res){
 });
 
 // feedback
-router.get('/feedback', function(req, res){
+router.get('/feedback', (req, res) => {
 	res.render('feedback', {
 		title: 'Stellaroute: Learn Everything About Us',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
@@ -60,7 +61,7 @@ router.get('/feedback', function(req, res){
 });
 
 // explore
-router.get('/explore', function(req, res){
+router.get('/explore', (req, res) => {
 	res.render('explore', {
 		title: 'Stellaroute: Learn Everything About Us',
 		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
@@ -68,14 +69,29 @@ router.get('/explore', function(req, res){
 	});
 });
 
-router.get('/logout', function(req, res){
+// admin
+router.get('/admin', isLoggedIn, (req, res) => {
+	if (!req.user.isAdmin) {
+		// if they aren't an admin
+		req.flash('error', 'Sorry, you are\'t allowed to go there :(');
+		res.redirect('/');
+	}
+
+	res.render('admin', {
+		title: 'Stellaroute: Admin Controls',
+		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
+		users: User.cached(),
+	});
+})
+
+router.get('/logout', (req, res) => {
 	req.logout();
 	res.redirect('/');
 	return;
 });
 
 // sign up for newsletter
-router.post('/newsletter-signup', User.getCached(), function(req, res){
+router.post('/newsletter-signup', User.getCached(), (req, res) => {
 	const email = req.body['local.email'];
 	const user = User.findOne('local.email', email).items;
 	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
@@ -110,7 +126,7 @@ router.post('/newsletter-signup', User.getCached(), function(req, res){
 });
 
 // request a location
-router.post('/sendEmail', function(req, res){
+router.post('/sendEmail', (req, res) => {
 	const html = req.body.html;
 	const template = req.body.template;
 	const toEmail = req.body.toEmail || 'info@stellaroute.com';
@@ -121,7 +137,7 @@ router.post('/sendEmail', function(req, res){
 });
 
 // request a location
-router.post('/request-location', function(req, res){
+router.post('/request-location', (req, res) => {
 	const toEmail = 'info@stellaroute.com';
 	const subject = 'Location Request';
 	const html = '<h1>'+ req.body.fromEmail +' Made a Request!</h1><p>'+ req.body.request +'</p>'

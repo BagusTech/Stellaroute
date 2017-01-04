@@ -1,7 +1,7 @@
 extends ../../layout.pug
 
 block content
-	if !user || !neighborhood
+	if !neighborhood
 		.media-bg-img.request-page-header
 			.container
 				h1= neighborhood && neighborhood.names && neighborhood.names.display || 'Unknown Neighborhood'

@@ -1,7 +1,7 @@
 extends ../../layout.pug
 
 block content
-	if !user || !attraction
+	if !attraction
 		.media-bg-img.request-page-header
 			.container
 				h1= attraction && attraction.names && attraction.names.display || 'Unknown Attraction'

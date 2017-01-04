@@ -2,7 +2,7 @@ extends ../layout.pug
 
 block content
 	- let visibleGuideSecions = 0;
-	if !user || !guide
+	if !guide
 		include error.pug
 	else
 		include header.pug

@@ -58,8 +58,7 @@ strategies.local = function(passport){
 			}
 
 			User.add(newUser).then(function(user){
-				User.updateCache();
-				done(null, newUser);
+				User.updateCache().then(() => {done(null, newUser);});
 			}, function(err){
 				console.error(err);
 				return done(null, false, req.flash('error', 'Something went wrong, please try again.'));

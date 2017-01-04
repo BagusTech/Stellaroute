@@ -1,3 +1,4 @@
+const User           = require('../schemas/user');
 const Attraction     = require('../schemas/attraction');
 const Guide          = require('../schemas/guide');
 const Continent      = require('../schemas/continent');
@@ -12,6 +13,9 @@ const Neighborhood   = require('../schemas/neighborhood');
 
 function pickTable(table) {
 	switch(table) {
+		case 'Users': {
+			return User;
+		}
 		case 'Attractions': {
 			return Attraction;
 		}
@@ -25,7 +29,7 @@ function pickTable(table) {
 			return WorldRegion;
 		}
 		case 'Countries': {
-			return Countrie;
+			return Country;
 		}
 		case 'CountryRegions': {
 			return CountryRegion;

@@ -13,13 +13,19 @@ var http = require('http');
  */
 
 var port = normalizePort(process.env.PORT || '80');
+//console.log(port);
 app.set('port', port);
+
+app.use(enforceHTTPS());
+
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app).listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + app.get('port'));
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +94,26 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+function enforceHTTPS() {
+
+  return function(req, res, next) {
+
+    var isHttps = req.secure;
+
+    if (isHttps) {
+      next();
+    } else {
+      redirectUrl(req, res);
+    }
+  };
+
+};
+
+var redirectUrl = function (req, res) {
+  if (req.method === "GET") {
+    res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+  } else {
+    res.status(403).send("Please use HTTPS when submitting data to this server.");
+  }
+};

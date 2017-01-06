@@ -111,7 +111,7 @@ block content
 
 						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyNeighborhood in nearbyNeighborhoods
-								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`, target='_blank')
+								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`)
 									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 
 				.col-xs-12.col-sm-6.col-md-8.f-R

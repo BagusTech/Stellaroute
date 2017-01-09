@@ -15,9 +15,6 @@ const CityRegion     = require('../schemas/city-region');
 const Neighborhood   = require('../schemas/neighborhood');
 const router         = express.Router();
 
-const missingLocationUrl = '/'
-const missingLocationMessage = 'Sorry, that location doesn\'t exist.';
-
 router.get('/:continent', (req, res, next) => {
 	const continent = Continent.findOne('url', req.params.continent).items;
 
@@ -68,8 +65,7 @@ router.get('/:country', (req, res, next) => {
 						   .items[0];
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -98,8 +94,7 @@ router.get('/:country/food', (req, res, next) => {
 						   .items[0];
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -126,8 +121,7 @@ router.get('/:country/transit', (req, res, next) => {
 						   .items[0];
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -154,8 +148,7 @@ router.get('/:country/transportation', (req, res, next) => {
 						   .items[0];
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -179,8 +172,7 @@ router.get('/:country/:attraction', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -203,8 +195,7 @@ router.get('/:country/:countryRegion', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -311,8 +302,7 @@ router.get('/:country/:city', (req, res, next) => {
 					 .items[0];
 	
 	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -426,8 +416,7 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 					 .items[0];
 
 	if(!city) {
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -568,8 +557,7 @@ router.get('/:country/:city/:cityRegion', (req, res, next) => {
 						   .items;
 
 	if(!country){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -577,8 +565,7 @@ router.get('/:country/:city/:cityRegion', (req, res, next) => {
 					 .items;
 	
 	if(!city){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 
@@ -610,8 +597,7 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 									 .join('cityRegions', CityRegion.cached(), 'Id', 'names.display')
 									 .items[0];
 	if(!neighborhood){
-		req.flash('error', missingLocationMessage);
-		res.redirect(missingLocationUrl);
+		next();
 		return;
 	}
 

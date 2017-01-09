@@ -1,0 +1,35 @@
+if wysiwygHasData(guide.whereToStay)
+	+contentCard('Where to Stay')(data-position=`0.${visibleGuideSecions++}`)
+		+guideEditForm(guide)
+			div(duck-current-value)!= guide.whereToStay
+
+			if user && user.isAdmin
+				div(duck-field='whereToStay', duck-type='wysiwyg')
+					.summernote!= guide.whereToStay
+
+if wysiwygHasData(guide.whereToGoOut)
+	+contentCard('Where to Go Out')(data-position=`0.${visibleGuideSecions++}`)
+		+guideEditForm(guide)
+			div(duck-current-value)!= guide.whereToGoOut
+
+			if user && user.isAdmin
+				div(duck-field='whereToGoOut', duck-type='wysiwyg')
+					.summernote!= guide.whereToGoOut
+
+if wysiwygHasData(guide.whereToEat)
+	+contentCard('Where to Eat')(data-position=`0.${visibleGuideSecions++}`)
+		+guideEditForm(guide)
+			div(duck-current-value)!= guide.whereToEat
+
+			if user && user.isAdmin
+				div(duck-field='whereToEat', duck-type='wysiwyg')
+					.summernote!= guide.whereToEat
+
+if wysiwygHasData(guide.whereToExplore)
+	+contentCard('Where to Explore')(data-position=`0.${visibleGuideSecions++}`)
+		+guideEditForm(guide)
+			div(duck-current-value)!= guide.whereToExplore
+
+			if user && user.isAdmin
+				div(duck-field='whereToExplore', duck-type='wysiwyg')
+					.summernote!= guide.whereToExplore

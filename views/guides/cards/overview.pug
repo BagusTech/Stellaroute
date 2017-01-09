@@ -1,0 +1,30 @@
+.content-card.p-0(data-position='0')
+	if user && user.isAdmin
+		.row(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+			.col-xs-12.col-sm-8.f-R
+				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W.ml-NegMd--sm Overview
+					button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+				.lead.plr-Sm.p-0--sm(duck-current-value)!= guide.description
+				div(duck-field='description', duck-type='wysiwyg')
+					.summernote!= guide.description
+
+				button.btn.btn-primary(duck-button='submit') Save
+				button.btn.btn-warning(duck-button='cancel') Cancel
+
+			.col-xs-12.col-sm-4
+				.form-group.p-A.l-Sm.r-Sm.t-0.p-Sm.bg-Ltst(duck-field='map', duck-type='image')
+					label Map Link
+						input.form-control(type='text', duck-value, value= guide.map)
+				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
+					img.w-100(src= guide.map, alt= guide.names.display)
+
+	else
+		.row
+			.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
+				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
+				.lead.plr-Sm(class= guide.map ? 'p-0--sm' : '')!= guide.description
+
+			if guide.map
+				.col-xs-12.col-sm-4
+					button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
+						img.w-100(src= guide.map, alt= guide.names.display)

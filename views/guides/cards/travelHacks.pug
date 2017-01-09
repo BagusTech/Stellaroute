@@ -1,0 +1,35 @@
+if user && user.isAdmin
+	.content-card(data-position=`0.${visibleGuideSecions++}`, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+		h2.content-card--header Travel Hacks
+			button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+		+accordion(guide.travelHacks)(data-allow-multiple='true', duck-current-value)
+
+		div(duck-field='travelHacks', duck-type='array')
+			button.btn-primary(duck-button='add') Add New Travel Hack
+			for hack in guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].title ? guide.travelHacks : [{}]
+				div(duck-type='object')
+					.p-R
+						.p-A.t-Sm.l-0(data-sort-buttons)
+							button.bg-N.bw-0.p-Xs(data-sort='up'): i.fa.fa-chevron-up
+							br
+							button.bg-N.bw-0.p-Xs(data-sort='down'): i.fa.fa-chevron-down
+
+					.ml-Lg.bg-G__ltr.p-Sm
+						.form-group(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= hack.title)
+
+						.form-group(duck-field='description', duck-type='wysiwyg')
+							label Description
+							.summernote!= hack.description
+
+						button.btn.btn-danger(duck-button='delete') Delete Travel Hack
+
+		button.btn.btn-primary(duck-button='submit') Save
+		button.btn.btn-warning(duck-button='cancel') Cancel
+
+
+
+else if guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].title
+	+contentCard('Travel Hacks')(data-position=`0.${visibleGuideSecions++}`)
+		+accordion(guide.travelHacks)(data-allow-multiple='true')

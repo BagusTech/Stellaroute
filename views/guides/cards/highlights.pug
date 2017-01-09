@@ -1,0 +1,6 @@
+if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
+	h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
+	.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
+		for highlight in guide.highlights
+			.masonry--item
+				+card(highlight.cardImage, highlight.title, null, null, highlight.description)

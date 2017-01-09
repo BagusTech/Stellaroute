@@ -27,70 +27,10 @@ block content
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
 					
-					.content-card.p-0(data-position='0')
-						.row
-							.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
-								+guideEditForm(guide)
-									h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
-									.lead.plr-Sm(class= guide.map ? 'p-0--sm' : '', duck-current-value)!= guide.description
-									if user && user.isAdmin
-										div(duck-field='description', duck-type='wysiwyg')
-											.summernote!= guide.description
-							if guide.map
-								.col-xs-12.col-sm-4
-									+guideEditForm(guide)
-										button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
-											img.w-100(src= guide.map, alt= guide.names.display)
-										if user && user.isAdmin
-											.form-group(duck-field='map', duck-type='image')
-												input.form-control(type='text', duck-value, value= guide.map)
-
-					if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
-						+contentCard('Travel Hacks')(data-position=`0.${visibleGuideSecions++}`)
-							+accordion(guide.travelHacks)(data-allow-multiple='true')
-
-					if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
-						h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
-						.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
-							for highlight in guide.highlights
-								.masonry--item
-									+card(highlight.cardImage, highlight.title, null, null, highlight.description)
-
-					if wysiwygHasData(guide.whereToStay)
-						+contentCard('Where to Stay')(data-position=`0.${visibleGuideSecions++}`)
-							+guideEditForm(guide)
-								div(duck-current-value)!= guide.whereToStay
-
-								if user && user.isAdmin
-									div(duck-field='whereToStay', duck-type='wysiwyg')
-										.summernote!= guide.whereToStay
-
-					if wysiwygHasData(guide.whereToGoOut)
-						+contentCard('Where to Go Out')(data-position=`0.${visibleGuideSecions++}`)
-							+guideEditForm(guide)
-								div(duck-current-value)!= guide.whereToGoOut
-
-								if user && user.isAdmin
-									div(duck-field='whereToGoOut', duck-type='wysiwyg')
-										.summernote!= guide.whereToGoOut
-					
-					if wysiwygHasData(guide.whereToEat)
-						+contentCard('Where to Eat')(data-position=`0.${visibleGuideSecions++}`)
-							+guideEditForm(guide)
-								div(duck-current-value)!= guide.whereToEat
-
-								if user && user.isAdmin
-									div(duck-field='whereToEat', duck-type='wysiwyg')
-										.summernote!= guide.whereToEat
-					
-					if wysiwygHasData(guide.whereToExplore)
-						+contentCard('Where to Explore')(data-position=`0.${visibleGuideSecions++}`)
-							+guideEditForm(guide)
-								div(duck-current-value)!= guide.whereToExplore
-
-								if user && user.isAdmin
-									div(duck-field='whereToExplore', duck-type='wysiwyg')
-										.summernote!= guide.whereToExplore
+					include ./cards/overview.pug
+					include ./cards/travelHacks.pug
+					include ./cards/highlights.pug
+					include ./cards/whereTo.pug
 
 					for day, i in guide.days ? guide.days.sort(sortByOrder) : []
 						.mtb-XXl(data-position=i+1)

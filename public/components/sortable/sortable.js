@@ -1,4 +1,4 @@
-/*global jQuery */
+/*global jQuery, duck */
 
 void function initializeIcon($) {
 	'use strict';
@@ -118,8 +118,9 @@ void function initializeIcon($) {
 		const sortItemQuery = sortItems || '[data-sort="item"]';
 		const $items = $wrapper.find(`> ${sortItemQuery}`).attr('data-sort', 'item');
 		if($items.length < 2) {return;}
-		const $upButtons = $items.find('> [data-sort-buttons] [data-sort="up"]');
-		const $downButtons = $items.find('> [data-sort-buttons] [data-sort="down"]');
+		const $sortButtons = duck.findRelevantChildren($items, '[data-sort-buttons]');
+		const $upButtons = $sortButtons.find('[data-sort="up"]');
+		const $downButtons = $sortButtons.find('[data-sort="down"]');
 
 		if($wrapper.prop('sortInitaited')) {
 			$upButtons.off('mousedown', stopProp);
@@ -155,4 +156,4 @@ void function initializeIcon($) {
 	};
 
 	$(() => $('[data-function*="sort"]').sortable());
-}(jQuery.noConflict());
+}(jQuery.noConflict(), duck);

@@ -1,17 +1,17 @@
 /* global jQuery, duck, window */
 
-void function initCityFood($, duck, window) {
+void function initDuckForm($, duck, window) {
 	'use strict'
 
 	function deleteArrayItem(e) {
 		e.stopPropagation();
-		$(this).parent().remove();
+		$(this).closest('[duck-type]').remove();
 	}
 
 	function addArrayItem() {
 		const $this = $(this);
-		const $wrapper = $this.parent();
-		const $item = $wrapper.find('> [duck-type]').first();
+		const $wrapper = $this.closest('[duck-type="array"]');
+		const $item = $wrapper.find('[duck-type]').first();
 		const $clone = $item.clone();
 
 		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null).on('mousedown', (e) => {e.stopPropagation()});
@@ -69,7 +69,7 @@ void function initCityFood($, duck, window) {
 			newObj[key] = $item.attr('duck-key-value') || duck.uuid();
 		}
 
-		obj[fieldName] = buildObjectFunction(newObj, $item.find('> [duck-field]'));
+		obj[fieldName] = buildObjectFunction(newObj, duck.findRelevantChildren($item, '[duck-field]'));
 	}
 
 	function parseArray(obj, $item, fieldName, buildObjectFunction) {
@@ -98,7 +98,7 @@ void function initCityFood($, duck, window) {
 				}
 
 				// add the new object to the list of values
-				value.push(buildObjectFunction(newObj, $objec.find('> [duck-field]')));
+				value.push(buildObjectFunction(newObj, duck.findRelevantChildren($objec, '[duck-field]')));
 			});
 		} else {
 			$item.find('[duck-value]').each((i, arrayItem) => {
@@ -213,7 +213,7 @@ void function initCityFood($, duck, window) {
 
 	function duckForm(wrapper, options){
 		const $wrapper = $(wrapper);
-		const $startOfFields = $wrapper.find('> [duck-field]');
+		const $startOfFields = duck.findRelevantChildren($wrapper, '[duck-field]');
 		//const $submit = $wrapper.find('[duck-button="submit"]');
 		const $editButton = $wrapper.find('[duck-button="edit"]');
 		const $cancelButton = $wrapper.find('[duck-button="cancel"]');
@@ -314,27 +314,39 @@ void function initCityFood($, duck, window) {
 		$wrapper.find('[duck-type="array"]')
 				.each((i, item) => {
 					const $item = $(item);
-					const $addItem = $('<button>', {
-						'class': 'btn-small',
-						'duck-button': 'add',
-						type: 'button',
-						click: addArrayItem,
-						mousedown: (e) => {e.stopPropagation();},
-					});
+					const $addItems = $item.find('[duck-button="add"]');
 
-					$item.prepend($addItem);
-
-					$item.find('> [duck-type]').each((j, subItem) => {
-						const $subItem = $(subItem);
-						const $deleteItem = $('<button>', {
-							'class': 'btn-danger btn-small',
-							'duck-button': 'delete',
-							'type': 'button',
-							click: deleteArrayItem,
+					if($addItems.length === 0) {
+						const $addItem = $('<button>', {
+							'class': 'btn-small',
+							'duck-button': 'add',
+							type: 'button',
+							click: addArrayItem,
 							mousedown: (e) => {e.stopPropagation();},
 						});
 
-						$subItem.append($deleteItem);
+						$item.prepend($addItem);
+					} else {
+						$addItems.click(addArrayItem).on('mousedown', (e) => {e.stopPropagation();})
+					}
+
+					$item.find('> [duck-type]').each((j, subItem) => {
+						const $subItem = $(subItem);
+						const $deleteItems = $subItem.find('[duck-button="delete"]');
+
+						if($deleteItems.length === 0) {
+							const $deleteItem = $('<button>', {
+								'class': 'btn-danger btn-small',
+								'duck-button': 'delete',
+								'type': 'button',
+								click: deleteArrayItem,
+								mousedown: (e) => {e.stopPropagation();},
+							});
+
+							$subItem.append($deleteItem);
+						} else {
+							$deleteItems.click(deleteArrayItem).on('mousedown', (e) => {e.stopPropagation();});
+						}
 					});
 				})
 				.sortable('[duck-type]')

@@ -41,6 +41,43 @@ void function initDuck($){
 		}
 	}
 
+	// finds the first level of children that match a selector
+	// $elem = jQuery object
+	// selector = string
+	// example
+	/*
+		html:
+			.foo
+				.bar
+					.bar
+				.other
+					.bar
+		findRelevantChildren($('.foo'), '.bar')
+
+		elems that are returned
+		html:
+			.foo
+				.bar(I AM RETURNED)
+					.bar
+				.other
+					.bar(I AM RETURNED)
+	*/
+	function findRelevantChildren($elem, selector) {
+		if(!$elem || !selector) {
+			return false;
+		}
+
+		const allChildren = $elem.children();
+		const relevantChildren = allChildren.filter((i, item) => $(item).is(selector));
+		const otherChildren = allChildren.not(selector);
+
+		if(otherChildren.length){
+				return relevantChildren.add(findRelevantChildren(otherChildren, selector));
+		}
+		
+		return relevantChildren;
+	}
+
 	function _duck(table) {
 		this.add = (item, successCallback, errorCallback) => {
 			$.ajax({
@@ -109,6 +146,7 @@ void function initDuck($){
 	duck.uuid = uuid;
 	duck.sendEmail = sendEmail;
 	duck.sendResetEmail = sendResetEmail;
+	duck.findRelevantChildren = findRelevantChildren;
 
 	window.duck = duck;
 }(jQuery.noConflict());

@@ -53,10 +53,6 @@ mixin guideForm(crud, guide, locations, cancel)
 							label Title
 								input.form-control(type='text', duck-value, value= hack.title)
 
-						.form-group.col-xs-2(duck-field='order', duck-type='number')
-							label Order
-								input.form-control(type='number', duck-value, value= hack.order)
-
 						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 							label Description
 							.summernote!= hack.description

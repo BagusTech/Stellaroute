@@ -1,74 +1,121 @@
-[duck-edit-form='view'] {
-	[duck-field],
-	[duck-type],
-	[duck-button="submit"],
-	[duck-button="cancel"] {
-		display: none !important;
-	}
-}
-	[duck-edit-form='edit'] {
-		[duck-current-value],
-		[duck-button='edit'] {
-			display: none;
+.modal {
+	[duck-edit-form='view'] {
+		[duck-field],
+		[duck-type],
+		[duck-button="submit"],
+		[duck-button="cancel"] {
+			display: none !important;
 		}
 	}
+		[duck-edit-form='edit'] {
+			[duck-current-value],
+			[duck-button='edit'] {
+				display: none;
+			}
+		}
 
-[duck-type='array']{
-	border: 1px solid #777;
-	border-radius: @br-Md;
-	background: @grey-lighter;
-	padding: @gw-Sm;
-	margin-bottom: @gw-Sm;
+	[duck-type='array']{
+		> label {
+			margin-bottom: @gw-Xs;
+		}
 
-	> label {
-		margin-bottom: @gw-Xs;
-	}
-
-	> [duck-type='string'],
-	> [duck-type='number'],
-	> [duck-type='select'] {
-		&:not(:first-of-type){
+		> [duck-type='string'],
+		> [duck-type='number'],
+		> [duck-type='select'] {
 			display: flex;
 
 			.form-control{
 				border-radius: @br-Md 0 0 @br-Md;
 			}
 
-			.btn {
+			.btn-danger {
 				border-radius: 0 @br-Md @br-Md 0;
 			}
+
+			&:first-of-type {
+				.form-control{
+					border-radius: @br-Md;
+				}
+
+				.btn-danger {
+					display: none;
+				}
+			}
 		}
-	}
 
-	> [duck-type='object']{
-		margin: @gw-Md 0;
+		> [duck-type='object']{
+			margin: @gw-Md 0;
 
-		&:not(:first-of-type) .form-group:last-of-type{
-			&, & .panel{
-				margin-bottom: @gw-Xs;
+			&:not(:first-of-type) .form-group:last-of-type{
+				&, & .panel{
+					margin-bottom: @gw-Xs;
+				}
+			}
+
+			&:before {
+				display: none !important;
+			}
+		}
+
+		.form-control{
+			border: 1px solid @grey;
+		}
+
+		&[duck-only-edit] {
+			padding: 0;
+			border: none;
+			background: none;
+			margin: none;
+
+			> [duck-button='add'] {
+				display: none;
+			}
+		}
+
+		> [duck-type] {
+			border: 1px solid #777;
+			border-radius: @br-Md;
+			margin-bottom: @gw-Sm;
+			background: @grey-lighter;
+			padding: @gw-Sm;
+
+			&:before {
+				content: '\f07d ';
+				font-family: FontAwesome;
+				padding: @gw-Xs;
+				position: relative;
+				top: 5px;
+				left: -5px;
+				display: inline-block;
 			}
 		}
 	}
 
-	.form-control{
-		border: 1px solid @grey;
+	[duck-button='edit'] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 2;
 	}
 
-	&[duck-only-edit] {
-		padding: 0;
+	[duck-button='add'] {
+		color: @green;
 		border: none;
 		background: none;
-		margin: none;
+		position: absolute;
+		top: 0;
+		right: 0;
 
-		> [duck-button='add'] {
-			display: none;
+		&:after {
+			content: '\f067';
+			font-family: FontAwesome;
 		}
 	}
-}
 
-[duck-button='edit'] {
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 2;
+	[duck-button='delete'] {
+		&:after {
+			content: '\f068';
+			font-family: FontAwesome;
+		}
+	}
 }

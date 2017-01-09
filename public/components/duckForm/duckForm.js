@@ -3,7 +3,8 @@
 void function initCityFood($, duck, window) {
 	'use strict'
 
-	function deleteArrayItem() {
+	function deleteArrayItem(e) {
+		e.stopPropagation();
 		$(this).parent().remove();
 	}
 
@@ -13,25 +14,18 @@ void function initCityFood($, duck, window) {
 		const $item = $wrapper.find('> [duck-type]').first();
 		const $clone = $item.clone();
 
-		$clone.find('[duck-value]').val(null);
+		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null).on('mousedown', (e) => {e.stopPropagation()});
+		$clone.find('.btn-danger').click(deleteArrayItem).on('mousedown', (e) => {e.stopPropagation()});
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
 			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote({height: 150});
 			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
+			$clone.find('[duck-button="add"]').click(addArrayItem);
 		}
-
-		$clone.append($('<button>', {
-					text: 'Delete',
-					'class': 'btn btn-danger btn-small',
-					'duck-button': 'add',
-					type: 'button',
-					click: deleteArrayItem,
-				}));
-
-		$clone.find('[duck-button="add"]').click(addArrayItem);
 		
-		$this.before($clone);
+		$wrapper.append($clone);
+		$wrapper.sortable();
 	}
 
 	function removeFromObject(obj, path, value) {
@@ -317,34 +311,35 @@ void function initCityFood($, duck, window) {
 		});
 
 		// set arrays to add and remove items
-		$wrapper.find('[duck-type="array"]').each((i, item) => {
-			const $item = $(item);
-			const $addItem = $('<button>', {
-				text: `Add ${$item.attr('duck-field')}`,
-				'class': 'btn btn-primary btn-small',
-				'duck-button': 'add',
-				type: 'button',
-				click: addArrayItem,
-			});
+		$wrapper.find('[duck-type="array"]')
+				.each((i, item) => {
+					const $item = $(item);
+					const $addItem = $('<button>', {
+						'class': 'btn-small',
+						'duck-button': 'add',
+						type: 'button',
+						click: addArrayItem,
+						mousedown: (e) => {e.stopPropagation();},
+					});
 
-			$item.append($addItem);
+					$item.prepend($addItem);
 
-			$item.find('> [duck-type]').each((j, subItem) => {
-				if(j === 0){
-					return;
-				}
+					$item.find('> [duck-type]').each((j, subItem) => {
+						const $subItem = $(subItem);
+						const $deleteItem = $('<button>', {
+							'class': 'btn-danger btn-small',
+							'duck-button': 'delete',
+							'type': 'button',
+							click: deleteArrayItem,
+							mousedown: (e) => {e.stopPropagation();},
+						});
 
-				const $subItem = $(subItem);
-				const $deleteItem = $('<button>', {
-					text: 'Delete',
-					'class': 'btn btn-danger btn-small',
-					'duck-button': 'delete',
-					click: deleteArrayItem,
-				});
-
-				$subItem.append($deleteItem);
-			});
-		});
+						$subItem.append($deleteItem);
+					});
+				})
+				.sortable('[duck-type]')
+				.find('[duck-value], [duck-type="wysiwyg"]')
+				.on('mousedown', (e) => {e.stopPropagation()});
 	}
 
 	$.fn.duckForm = function init(options) {
@@ -353,7 +348,5 @@ void function initCityFood($, duck, window) {
 		});
 	}
 
-	$(window).on('load', () => {
-		$('[duck-table]').duckForm();
-	});
+	$(() => {$('[duck-table]').duckForm();});
 }(jQuery.noConflict(), duck, window)

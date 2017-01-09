@@ -80,6 +80,45 @@ app.use(Guide.getCached(),
         CityRegion.getCached(),
         Neighborhood.getCached());
 
+function redirectUrl(req, res) {
+  if (req.method === "GET") {
+    res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+  } else {
+    res.status(403).send("Please use HTTPS when submitting data to this server.");
+  }
+};
+
+function enforceWWW(req, res, next) {
+    const isWWW = req.headers.host.split('.')[0].toLowerCase() === 'www';
+
+    if (!isWWW) {
+        req.headers.host = `www.${req.headers.host}`
+        redirectUrl(req, res);
+        return;
+    }
+
+    next();
+};
+
+function enforceHTTPS(req, res, next) {
+    const isHttps = req.secure;
+
+    if (!isHttps) {
+      redirectUrl(req, res);
+      return;
+    }
+
+   next();
+};
+
+if(app.get('env') === 'production') {
+    app.use(enforceWWW);
+}
+
+if(app.get('env') === 'staging' || app.get('env') === 'production') {
+    app.use(enforceHTTPS);
+}
+
 // Set index.js to be the main router
 app.use('/', routes);
 

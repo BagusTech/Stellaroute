@@ -95,11 +95,13 @@
 [duck-edit-form='view'] [duck-field],
 [duck-edit-form='view'] [duck-type],
 [duck-edit-form='view'] [duck-button="submit"],
-[duck-edit-form='view'] [duck-button="cancel"] {
+[duck-edit-form='view'] [duck-button="cancel"],
+[duck-edit-form='view'] .duck-view-hidden {
   display: none !important;
 }
 [duck-edit-form='edit'] [duck-current-value],
-[duck-edit-form='edit'] [duck-button='edit'] {
+[duck-edit-form='edit'] [duck-button='edit'],
+[duck-edit-form='edit'] .duck-edit-hidden {
   display: none;
 }
 [duck-type='array'] > label {
@@ -569,6 +571,7 @@
 }
 [data-function='scroll'].no-scrollbar [data-scroll='content-wrapper'] {
   right: 0;
+  overflow: hidden;
 }
 [data-function='scroll'].no-scrollbar [data-scroll='content'] {
   padding-right: 0;

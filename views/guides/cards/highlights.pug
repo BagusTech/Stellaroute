@@ -7,7 +7,7 @@ if user && user.isAdmin
 				.masonry--item
 					+card(highlight.cardImage, highlight.title, null, null, highlight.description)
 
-		.bg-W.p-Sm.bw-Sm.bs-S.bc-G__lt
+		.bg-W.p-Sm.bw-Sm.bs-S.bc-G__lt.duck-view-hidden
 			div(duck-field='highlights', duck-type='array')
 				h3 Highlights
 				button.btn.btn-primary(duck-button='add') Add Highlight

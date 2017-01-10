@@ -1,35 +1,19 @@
-if wysiwygHasData(guide.whereToStay)
-	+contentCard('Where to Stay')(data-position=`0.${visibleGuideSecions++}`)
-		+guideEditForm(guide)
-			div(duck-current-value)!= guide.whereToStay
+mixin whereTo(guide, user, option, title, dataPosition)
+	if user && user.isAdmin
+		.content-card(data-position=dataPosition, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+			h2.content-card--header= title
+				button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 
-			if user && user.isAdmin
-				div(duck-field='whereToStay', duck-type='wysiwyg')
-					.summernote!= guide.whereToStay
+			div(duck-current-value)!= guide[option]
+			.form-group(duck-field=option, duck-type='wysiwyg')
+				.summernote!= guide[option]
+			button.btn.btn-primary(duck-button='submit') Save
+			button.btn.btn-warning(duck-button='cancel') Cancel
+	else if wysiwygHasData(guide.whereToEat)
+		+contentCard(title)(data-position=dataPosition)
+			!= guide[option]
 
-if wysiwygHasData(guide.whereToGoOut)
-	+contentCard('Where to Go Out')(data-position=`0.${visibleGuideSecions++}`)
-		+guideEditForm(guide)
-			div(duck-current-value)!= guide.whereToGoOut
-
-			if user && user.isAdmin
-				div(duck-field='whereToGoOut', duck-type='wysiwyg')
-					.summernote!= guide.whereToGoOut
-
-if wysiwygHasData(guide.whereToEat)
-	+contentCard('Where to Eat')(data-position=`0.${visibleGuideSecions++}`)
-		+guideEditForm(guide)
-			div(duck-current-value)!= guide.whereToEat
-
-			if user && user.isAdmin
-				div(duck-field='whereToEat', duck-type='wysiwyg')
-					.summernote!= guide.whereToEat
-
-if wysiwygHasData(guide.whereToExplore)
-	+contentCard('Where to Explore')(data-position=`0.${visibleGuideSecions++}`)
-		+guideEditForm(guide)
-			div(duck-current-value)!= guide.whereToExplore
-
-			if user && user.isAdmin
-				div(duck-field='whereToExplore', duck-type='wysiwyg')
-					.summernote!= guide.whereToExplore
++whereTo(guide, user, 'whereToStay', 'Where to Stay', `0.${visibleGuideSecions++}`)
++whereTo(guide, user, 'whereToGoOut', 'Where to Go Out', `0.${visibleGuideSecions++}`)
++whereTo(guide, user, 'whereToEat', 'Where to Eat', `0.${visibleGuideSecions++}`)
++whereTo(guide, user, 'whereToExplore', 'Where to Explore', `0.${visibleGuideSecions++}`)

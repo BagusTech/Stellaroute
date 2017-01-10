@@ -1,4 +1,58 @@
-if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
+if user && user.isAdmin
+	div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+		h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
+			button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+		.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg(duck-current-value)
+			for highlight in guide.highlights ? guide.highlights : []
+				.masonry--item
+					+card(highlight.cardImage, highlight.title, null, null, highlight.description)
+
+		.bg-W.p-Sm.bw-Sm.bs-S.bc-G__lt
+			div(duck-field='highlights', duck-type='array')
+				h3 Highlights
+				button.btn.btn-primary(duck-button='add') Add Highlight
+				for highlight in guide.highlights ? guide.highlights : [{}]
+					div(duck-type='object')
+						h4 Link Highlight to Existing Item
+						.row
+							.col-xs-12.col-md-6
+								.form-group(duck-field='table', duck-type='select')
+									label Highlight Type (only use if you are linking to another, existing location/attraction)
+										select.form-control(duck-value)
+											option(selected= highlight.table === 'Attractions', value='Attractions') Attractions
+											option(selected= highlight.table === 'Neighborhoods', value='Neighborhoods') Neighborhoods
+											option(selected= highlight.table === 'CityRegions', value='CityRegions') City Regions
+											option(selected= highlight.table === 'Cities', value='Cities') Cities
+											option(selected= highlight.table === 'ProvinceRegions', value='ProvinceRegions') Province Regions
+											option(selected= highlight.table === 'Provinces', value='Provinces') Provinces
+											option(selected= highlight.table === 'CountryRegions', value='CountryRegions') Country Regions
+											option(selected= highlight.table === 'Countries', value='Countries') Countries
+											option(selected= highlight.table === 'WorldRegions', value='WorldRegions') World Regions
+											option(selected= highlight.table === 'Continents', value='Continents') Continents
+							.col-xs-12.col-md-6
+								label.w-100 Id of linked Highlight Type (only use if Highlight Type is being used)
+									input.form-control(type='text', duck-value, value= highlight.Id)
+
+						h4 Edit Linked Highlight info -- OR -- Create non-linked Highlight
+						.row
+							.col-xs-12.col-sm-6
+								.form-group(duck-field='title', duck-type='string')
+									label Title (optional if linked above)
+										input.form-control(type='text', duck-value, value= highlight.title)
+							.col-xs-12.col-sm-6
+								.form-group(duck-field='cardImage', duck-type='image')
+									label Image (optional if linked above)
+										input.form-control(type='text', duck-value, value= highlight.image)
+							.col-xs-12
+								.form-group(duck-field='description', duck-type='wysiwyg')
+									label Description (optional if linked above)
+									.summernote!= highlight.description
+						button.btn.btn-danger(duck-button='delete') Delete Highlight
+
+			button.btn.btn-primary(duck-button='submit') Save
+			button.btn.btn-warning(duck-button='cancel') Cancel
+
+else if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
 	h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
 	.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
 		for highlight in guide.highlights

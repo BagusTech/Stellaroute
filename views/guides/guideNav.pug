@@ -4,22 +4,22 @@ nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true
 	a(href='#', role='tab', aria-expanded='true', data-position='0')
 		h3 Overview
 	ul(role='tabpanel', aria-hidden='false')
-		if guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
+		if (user && user.isAdmin) || guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Travel Hacks
 
-		if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
+		if (user && user.isAdmin) || guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Highlights
 		
-		if wysiwygHasData(guide.whereToStay)
+		if (user && user.isAdmin) || wysiwygHasData(guide.whereToStay)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Stay
 		
-		if wysiwygHasData(guide.whereToGoOut)
+		if (user && user.isAdmin) || wysiwygHasData(guide.whereToGoOut)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Go Out
 		
-		if wysiwygHasData(guide.whereToEat)
+		if (user && user.isAdmin) || wysiwygHasData(guide.whereToEat)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Eat
 		
-		if wysiwygHasData(guide.whereToExplore)
+		if (user && user.isAdmin) || wysiwygHasData(guide.whereToExplore)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
 
 	for day, i in guide.days ? guide.days.sort(sortByOrder) : []

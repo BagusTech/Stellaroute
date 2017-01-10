@@ -35,10 +35,10 @@ var Guide = Duck({
 		highlights: [{
 			Id: String, // id of what is being highlighted i.e. the Id of an attraction or City
 			table: String, // the table the id corresponds to i.e. Attractions, Cities
-			order: Number,
 			cardImage: String,
 			title: String,
 			description: String,
+			readMore: String,
 		}],
 		whereToStay: String,
 		whereToGoOut: String,
@@ -54,7 +54,7 @@ var Guide = Duck({
 				order: Number,
 				image: String,
 				description: String,
-				Id: String, // id of what is being highlighted i.e. the Id of an attraction or City
+				Id: String, // id of what the card is i.e. the Id of an attraction or City
 				table: String, // the table the id corresponds to i.e. Attractions, Cities
 				type: String, // food/attraction/area attraction/sub attraction/city
 				tagTitle: String,

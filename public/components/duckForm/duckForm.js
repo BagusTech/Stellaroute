@@ -211,6 +211,10 @@ void function initDuckForm($, duck, window) {
 		});
 	}
 
+	function stopProp(e) {
+		e.stopPropagation();
+	}
+
 	function duckForm(wrapper, options){
 		const $wrapper = $(wrapper);
 		const $startOfFields = duck.findRelevantChildren($wrapper, '[duck-field]');
@@ -322,12 +326,12 @@ void function initDuckForm($, duck, window) {
 							'duck-button': 'add',
 							type: 'button',
 							click: addArrayItem,
-							mousedown: (e) => {e.stopPropagation();},
+							mousedown: stopProp,
 						});
 
 						$item.prepend($addItem);
 					} else {
-						$addItems.click(addArrayItem).on('mousedown', (e) => {e.stopPropagation();})
+						$addItems.off('click', addArrayItem).click(addArrayItem).off('mousedown', stopProp).on('mousedown', stopProp)
 					}
 
 					$item.find('> [duck-type]').each((j, subItem) => {
@@ -340,12 +344,12 @@ void function initDuckForm($, duck, window) {
 								'duck-button': 'delete',
 								'type': 'button',
 								click: deleteArrayItem,
-								mousedown: (e) => {e.stopPropagation();},
+								mousedown: stopProp,
 							});
 
 							$subItem.append($deleteItem);
 						} else {
-							$deleteItems.click(deleteArrayItem).on('mousedown', (e) => {e.stopPropagation();});
+							$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem).off('mousedown', stopProp).on('mousedown', stopProp);
 						}
 					});
 				})

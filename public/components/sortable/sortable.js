@@ -3,8 +3,6 @@
 void function initializeIcon($) {
 	'use strict';
 
-	function stopProp(e) {e.stopPropagation();}
-
 	function moveItem(e, movingDown, $active, $sibling, siblingTop, siblingHeight) {
 		if(siblingTop && siblingHeight) {
 			const newSiblingTop = movingDown ? siblingTop - siblingHeight : siblingTop + siblingHeight;
@@ -29,7 +27,7 @@ void function initializeIcon($) {
 		const activeTop = $active.position().top;
 		const siblingTop = $sibling.position().top;
 		const siblingHeight = $sibling.outerHeight();
-		const isMoving = movingDown ? activeTop > siblingTop : activeTop < siblingTop;
+		const isMoving = movingDown ? activeTop > siblingTop : activeTop < (siblingTop + (siblingHeight/2));
 
 
 		if(isMoving) {
@@ -42,12 +40,23 @@ void function initializeIcon($) {
 
 		const mouseTop = e.clientY;
 		const $item = e.data.itemToSort;
+		const $windowToScroll = e.data.windowToScroll;
+		const scrollTop = $windowToScroll.scrollTop();
 		const offset = mouseTop - e.data.mouseStartTop;
-		const top = e.data.itemStartTop + offset
+		const top = e.data.itemStartTop + offset + e.data.scrollOffset;
 		const currentTop = parseInt($item.css('top'), 10);
 		const movingDown = top - currentTop > 0
 
 		$item.css('top', `${top}px`);
+
+		// if mouse top is near top of window in view while moving up
+		if(!movingDown && mouseTop < 100) {
+			$windowToScroll.scrollTop(scrollTop - 5);
+			e.data.scrollOffset -= 5;
+		} else if(movingDown && e.data.windowHeight - mouseTop < 100) {
+			$windowToScroll.scrollTop(scrollTop + 5);
+			e.data.scrollOffset += 5;
+		}
 
 		checkPosition(e.data.itemToSort, movingDown, e.data.sortItemQuery)
 	}
@@ -77,6 +86,9 @@ void function initializeIcon($) {
 			itemToSort: $this,
 			itemStartTop: parseInt($this.css('top'), 10),
 			mouseStartTop: e.clientY,
+			windowToScroll: e.data.windowToScroll,
+			windowHeight: e.data.windowToScroll.outerHeight(),
+			scrollOffset: 0,
 			sortItemQuery,
 		}, sort);
 	}
@@ -115,6 +127,8 @@ void function initializeIcon($) {
 
 	function sortable(wrapper, sortItems) {
 		const $wrapper = $(wrapper).attr('data-function', 'sort');
+		const $customScroll = $wrapper.closest('[data-scroll="content-wrapper"]');
+		const $windowToScroll = $customScroll.length ? $customScroll : $(window);
 		const sortItemQuery = sortItems || '[data-sort="item"]';
 		const $items = $wrapper.find(`> ${sortItemQuery}`).attr('data-sort', 'item');
 		if($items.length < 2) {return;}
@@ -123,10 +137,10 @@ void function initializeIcon($) {
 		const $downButtons = $sortButtons.find('[data-sort="down"]');
 
 		if($wrapper.prop('sortInitaited')) {
-			$upButtons.off('mousedown', stopProp);
+			$upButtons.off('mousedown', duck.stopProp);
 			$upButtons.off('click', moveUp);
 
-			$downButtons.off('mousedown', stopProp);
+			$downButtons.off('mousedown', duck.stopProp);
 			$downButtons.off('click', moveDown);
 
 			$items.off('mousedown', startSort);
@@ -135,13 +149,13 @@ void function initializeIcon($) {
 			$(document).off('mouseup', stopSort);
 		}
 
-		$upButtons.on('mousedown', stopProp);
+		$upButtons.on('mousedown', duck.stopProp);
 		$upButtons.on('click', {sortItemQuery}, moveUp);
 
-		$downButtons.on('mousedown', stopProp);
+		$downButtons.on('mousedown', duck.stopProp);
 		$downButtons.on('click', {sortItemQuery}, moveDown);
 
-		$items.on('mousedown', {wrapper: $wrapper, items: $items, sortItemQuery}, startSort);
+		$items.on('mousedown', {wrapper: $wrapper, items: $items, windowToScroll: $windowToScroll, sortItemQuery}, startSort);
 		$items.on('moveItem', moveItem);
 
 		$(document).on('mouseup', stopSort);

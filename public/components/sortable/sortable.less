@@ -12,20 +12,22 @@
 
 	    > [data-sort='item'] {
 			position: absolute;
+			width: auto;
 		}
 
 		[data-sort-buttons] {
 			display: none;
 		}
 	}
-}
 
-[data-sort='item'] {
-	cursor: pointer;
+	[data-sort='item'] {
+		cursor: pointer;
+		position: static;
 
-	&.sorting{
-		border: 1px dashed grey;
-		background: white;
-		z-index: 1;
+		&.sorting{
+			border: 1px dashed grey;
+			background: white;
+			z-index: 1;
+		}
 	}
 }

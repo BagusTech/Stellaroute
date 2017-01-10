@@ -3,6 +3,11 @@
 void function initDuck($){
 	'use strict'
 
+	// stops propagation
+	function stopProp(e) {
+		e.stopPropagation();
+	}
+
 	// generates a universally unique ID (UUID)
 	function uuid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -143,6 +148,7 @@ void function initDuck($){
 	// initialize with table name
 	const duck = (table) => (new _duck(table));
 
+	duck.stopProp = stopProp;
 	duck.uuid = uuid;
 	duck.sendEmail = sendEmail;
 	duck.sendResetEmail = sendResetEmail;

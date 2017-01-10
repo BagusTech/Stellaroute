@@ -87,7 +87,7 @@ void function initializeIcon($) {
 		const $sorting = $('.sorting');
 
 		if($sorting.length) {
-			e.data.wrapper.height('')
+			$('[data-function*="sort"]').height('')
 			$sorting.removeClass('sorting');
 			$(document).off('mousemove', sort);
 		}
@@ -144,7 +144,7 @@ void function initializeIcon($) {
 		$items.on('mousedown', {wrapper: $wrapper, items: $items, sortItemQuery}, startSort);
 		$items.on('moveItem', moveItem);
 
-		$(document).on('mouseup', {wrapper: $wrapper}, stopSort);
+		$(document).on('mouseup', stopSort);
 
 		$wrapper.prop('sortInitaited', true);
 	}

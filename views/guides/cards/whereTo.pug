@@ -4,11 +4,13 @@ mixin whereTo(guide, user, option, title, dataPosition)
 			h2.content-card--header= title
 				button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 
-			div(duck-current-value)!= guide[option]
-			.form-group(duck-field=option, duck-type='wysiwyg')
-				.summernote!= guide[option]
-			button.btn.btn-primary(duck-button='submit') Save
-			button.btn.btn-warning(duck-button='cancel') Cancel
+			.duck-edit-hidden!= guide[option]
+
+			.duck-view-hidden
+				.form-group(duck-field=option, duck-type='wysiwyg')
+					.summernote!= guide[option]
+				button.btn.btn-primary(duck-button='submit') Save
+				button.btn.btn-warning(duck-button='cancel') Cancel
 	else if wysiwygHasData(guide.whereToEat)
 		+contentCard(title)(data-position=dataPosition)
 			!= guide[option]

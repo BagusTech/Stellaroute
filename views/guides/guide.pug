@@ -1,7 +1,30 @@
 extends ../layout.pug
 
 block content
-	- let visibleGuideSecions = 0;
+	-
+		let visibleGuideSecions = 0;
+		function tagBackground(type) {
+			const types = {
+				food: 'bg-Orange',
+				activity: 'bg-Bl',
+				area: false,
+				sub: false,
+				attraction: false,
+				location: false,
+				note: false,
+				map: false
+			};
+
+			return types[type];
+		}
+
+	mixin editCard(day, card)
+		.m-0(duck-field='days', duck-type='array', duck-only-edit)
+			.m-0(duck-type='object', duck-key='title', duck-key-value= day.title)
+				.m-0(duck-field='cards', duck-type='array', duck-only-edit)
+					.m-0(duck-type='object', duck-key='cardId', duck-key-value= card.cardId)
+						block
+
 	if !guide
 		include error.pug
 	else
@@ -32,31 +55,41 @@ block content
 					include ./cards/highlights.pug
 					include ./cards/whereTo.pug
 
-					for day, i in guide.days ? guide.days.sort(sortByOrder) : []
-						.mtb-XXl(data-position=i+1)
-							h2.fs-32.fw-B.m-0.ta-C= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
-								if user && user.isAdmin
-									.f-R.mt-NegSm.mr-NegSm
-										+guideEditForm(guide)
-											.ptb-Sm.mt-XXs.mr-Xs.plr-Lg.d-Ib
-												small Order&nbsp;
-												small(duck-current-value)= day.order
-											.m-0.d-Ib(duck-field='days', duck-type='array', duck-only-edit)
-												.m-0.d-Ib(duck-type='object', duck-key='title', duck-key-value= day.title)
-													.form-group.m-0.d-Ib.pr-Sm(duck-field='order', duck-type='number', style='vertical-align: middle;')
-														input.form-control(type='number', duck-value, value= day.order)
+					if user && user.isAdmin
+						div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
+							button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							button.btn.btn-primary.duck-view-hidden(data-function='toggle', data-target='.guide-card--wrapper') Hide Day Children Cards
 
+							div(duck-field='days', duck-type='array')
+								.duck-view-hidden
+									small To add a new day, go to the bottom.
+								for day, i in guide.days ? guide.days : [{}]
+									.mtb-XXl(data-position=i+1, duck-type='object')
+										h2.fs-32.fw-B.m-0.ta-C.duck-edit-hidden= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title || '(new)'}`
 
-							if user && user.isAdmin
-								+guideEditForm(guide)
-									.lead.p-Md.ta-C(duck-current-value)!= day.description
+										.lead.p-Md.ta-C.duck-edit-hidden!= day.description
 
-									div(duck-field='days', duck-type='array', duck-only-edit)
-										div(duck-type='object', duck-key='title', duck-key-value= day.title)
-											div(duck-field='description', duck-type='wysiwyg')
-												.summernote!= day.description
-							else
+										.form-group.duck-view-hidden(duck-field='title', duck-type='string')
+											label Title
+												input.form-control(type='text', duck-value, value= day.title)
+
+										.form-group.duck-view-hidden(duck-field='description', duck-type='wysiwyg')
+											label Day Description
+											.summernote!= day.description
+
+										.guide-card--wrapper(duck-field='cards', duck-type='array', data-toggle='hidden')
+											for card, j in day.cards ? day.cards : [{}]
+												include ./cards/guideEditCard.pug
+								button.btn.btn-primary(duck-button='add') Add New Day
+							
+							button.btn.btn-primary(duck-button='submit') Save
+							button.btn.btn-warning(duck-button='cancel') Cancel
+					else
+						for day, i in guide.days ? guide.days : []
+							.mtb-XXl(data-position=i+1)
+								h2.fs-32.fw-B.m-0.ta-C= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
+
 								.lead.p-Md.ta-C!= day.description
-						.guide-card--wrapper
-							for card, j in day.cards ? day.cards.sort(sortByOrder) : []
-								include guideCard.pug
+							.guide-card--wrapper
+								for card, j in day.cards ? day.cards : []
+									include ./cards/guideCard.pug

@@ -2,9 +2,9 @@ if user && user.isAdmin
 	.content-card(data-position=`0.${visibleGuideSecions++}`, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 		h2.content-card--header Travel Hacks
 			button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-		+accordion(guide.travelHacks)(data-allow-multiple='true', duck-current-value)
+		+accordion(guide.travelHacks)(data-allow-multiple='true', class="duck-edit-hidden")
 
-		div(duck-field='travelHacks', duck-type='array')
+		.duck-view-hidden(duck-field='travelHacks', duck-type='array')
 			button.btn-primary(duck-button='add') Add New Travel Hack
 			for hack in guide.travelHacks && guide.travelHacks[0] && guide.travelHacks[0].title ? guide.travelHacks : [{}]
 				div(duck-type='object')
@@ -24,9 +24,9 @@ if user && user.isAdmin
 							.summernote!= hack.description
 
 						button.btn.btn-danger(duck-button='delete') Delete Travel Hack
-
-		button.btn.btn-primary(duck-button='submit') Save
-		button.btn.btn-warning(duck-button='cancel') Cancel
+		.duck-view-hidden
+			button.btn.btn-primary(duck-button='submit') Save
+			button.btn.btn-warning(duck-button='cancel') Cancel
 
 
 

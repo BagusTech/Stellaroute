@@ -46,16 +46,17 @@ void function initializeIcon($) {
 		const top = e.data.itemStartTop + offset + e.data.scrollOffset;
 		const currentTop = parseInt($item.css('top'), 10);
 		const movingDown = top - currentTop > 0
+		const scrollSpeed = 10;
 
 		$item.css('top', `${top}px`);
 
 		// if mouse top is near top of window in view while moving up
 		if(!movingDown && mouseTop < 100) {
-			$windowToScroll.scrollTop(scrollTop - 5);
-			e.data.scrollOffset -= 5;
+			$windowToScroll.scrollTop(scrollTop - scrollSpeed);
+			e.data.scrollOffset -= scrollSpeed;
 		} else if(movingDown && e.data.windowHeight - mouseTop < 100) {
-			$windowToScroll.scrollTop(scrollTop + 5);
-			e.data.scrollOffset += 5;
+			$windowToScroll.scrollTop(scrollTop + scrollSpeed);
+			e.data.scrollOffset += scrollSpeed;
 		}
 
 		checkPosition(e.data.itemToSort, movingDown, e.data.sortItemQuery)
@@ -99,7 +100,8 @@ void function initializeIcon($) {
 		const $sorting = $('.sorting');
 
 		if($sorting.length) {
-			$('[data-function*="sort"]').height('')
+			$('[data-function*="sort"]').height('');
+			$('[data-sort="item"]').css({'top': '', 'left': '', 'right': ''});
 			$sorting.removeClass('sorting');
 			$(document).off('mousemove', sort);
 		}

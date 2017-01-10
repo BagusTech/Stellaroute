@@ -3566,6 +3566,8 @@ fieldset[disabled] .btn-secondary.focus {
   color: #4a4d50;
   background-color: transparent;
   border-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 .btn-edit:focus,
 .btn-edit:active:focus,
@@ -7622,15 +7624,9 @@ button.close {
   -webkit-transition: opacity 0.2s ease-out;
   transition: opacity 0.2s ease-out;
 }
-[duck-edit-form='view'] [duck-field],
-[duck-edit-form='view'] [duck-type],
-[duck-edit-form='view'] [duck-button="submit"],
-[duck-edit-form='view'] [duck-button="cancel"],
 [duck-edit-form='view'] .duck-view-hidden {
   display: none !important;
 }
-[duck-edit-form='edit'] [duck-current-value],
-[duck-edit-form='edit'] [duck-button='edit'],
 [duck-edit-form='edit'] .duck-edit-hidden {
   display: none;
 }
@@ -7649,9 +7645,9 @@ button.close {
 [duck-type='array'] > [duck-type='select'] .form-control {
   border-radius: 2px 0 0 2px;
 }
-[duck-type='array'] > [duck-type='string'] .btn-danger,
-[duck-type='array'] > [duck-type='number'] .btn-danger,
-[duck-type='array'] > [duck-type='select'] .btn-danger {
+[duck-type='array'] > [duck-type='string'] [duck-button="delete"],
+[duck-type='array'] > [duck-type='number'] [duck-button="delete"],
+[duck-type='array'] > [duck-type='select'] [duck-button="delete"] {
   border-radius: 0 2px 2px 0;
 }
 [duck-type='array'] > [duck-type='string']:first-of-type .form-control,
@@ -7659,9 +7655,9 @@ button.close {
 [duck-type='array'] > [duck-type='select']:first-of-type .form-control {
   border-radius: 2px;
 }
-[duck-type='array'] > [duck-type='string']:first-of-type .btn-danger,
-[duck-type='array'] > [duck-type='number']:first-of-type .btn-danger,
-[duck-type='array'] > [duck-type='select']:first-of-type .btn-danger {
+[duck-type='array'] > [duck-type='string']:first-of-type [duck-button="delete"],
+[duck-type='array'] > [duck-type='number']:first-of-type [duck-button="delete"],
+[duck-type='array'] > [duck-type='select']:first-of-type [duck-button="delete"] {
   display: none;
 }
 [duck-type='array'] > [duck-type='object'] {
@@ -8177,13 +8173,16 @@ button.close {
 [data-function*='sort'].sorting > [data-sort='item'] {
   position: absolute;
   width: auto;
+  opacity: .5;
 }
 [data-function*='sort'].sorting [data-sort-buttons] {
   display: none;
 }
 [data-function*='sort'] [data-sort='item'] {
   cursor: pointer;
-  position: static;
+  top: auto;
+  left: auto;
+  right: auto;
 }
 [data-function*='sort'] [data-sort='item'].sorting {
   border: 1px dashed grey;

@@ -1,15 +1,9 @@
 [duck-edit-form='view'] {
-		[duck-field],
-		[duck-type],
-		[duck-button="submit"],
-		[duck-button="cancel"],
 		.duck-view-hidden {
 			display: none !important;
 		}
 	}
 		[duck-edit-form='edit'] {
-			[duck-current-value],
-			[duck-button='edit'],
 			.duck-edit-hidden {
 				display: none;
 			}
@@ -29,7 +23,7 @@
 			border-radius: @br-Md 0 0 @br-Md;
 		}
 
-		.btn-danger {
+		[duck-button="delete"] {
 			border-radius: 0 @br-Md @br-Md 0;
 		}
 
@@ -38,7 +32,7 @@
 				border-radius: @br-Md;
 			}
 
-			.btn-danger {
+			[duck-button="delete"] {
 				display: none;
 			}
 		}

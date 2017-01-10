@@ -13,6 +13,7 @@
 	    > [data-sort='item'] {
 			position: absolute;
 			width: auto;
+			opacity: .5;
 		}
 
 		[data-sort-buttons] {
@@ -22,7 +23,9 @@
 
 	[data-sort='item'] {
 		cursor: pointer;
-		position: static;
+		top: auto;
+		left: auto;
+		right: auto;
 
 		&.sorting{
 			border: 1px dashed grey;

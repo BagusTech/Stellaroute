@@ -12,10 +12,11 @@ void function initDuckForm($, duck, window) {
 		const $this = $(this);
 		const $wrapper = $this.closest('[duck-type="array"]');
 		const $item = $wrapper.find('[duck-type]').first();
+		const $lastItem = $item.parent().find('> [duck-type]').last();
 		const $clone = $item.clone();
 
 		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null).on('mousedown', duck.stopProp);
-		$clone.find('.btn-danger').click(deleteArrayItem).on('mousedown', duck.stopProp);
+		$clone.find('[duck-button="delete"]').click(deleteArrayItem).on('mousedown', duck.stopProp);
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
@@ -24,7 +25,7 @@ void function initDuckForm($, duck, window) {
 			$clone.find('[duck-button="add"]').click(addArrayItem);
 		}
 		
-		$item.parent().append($clone);
+		$lastItem.after($clone);
 		$item.parent().sortable('[duck-type]');
 	}
 
@@ -316,37 +317,14 @@ void function initDuckForm($, duck, window) {
 					const $item = $(item);
 					const $addItems = $item.find('[duck-button="add"]');
 
-					if($addItems.length === 0) {
-						const $addItem = $('<button>', {
-							'class': 'btn-small',
-							'duck-button': 'add',
-							type: 'button',
-							click: addArrayItem,
-							mousedown: duck.stopProp,
-						});
-
-						$item.prepend($addItem);
-					} else {
-						$addItems.off('click', addArrayItem).click(addArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp)
-					}
+					$addItems.off('click', addArrayItem).click(addArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp)
 
 					$item.find('> [duck-type]').each((j, subItem) => {
 						const $subItem = $(subItem);
 						const $deleteItems = $subItem.find('[duck-button="delete"]');
 
-						if($deleteItems.length === 0) {
-							const $deleteItem = $('<button>', {
-								'class': 'btn-danger btn-small',
-								'duck-button': 'delete',
-								'type': 'button',
-								click: deleteArrayItem,
-								mousedown: duck.stopProp,
-							});
+						$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp);
 
-							$subItem.append($deleteItem);
-						} else {
-							$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp);
-						}
 					});
 				})
 				.sortable('[duck-type]')

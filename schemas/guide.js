@@ -50,19 +50,18 @@ var Guide = Duck({
 			description: String,
 			cards: [{
 				cardId: String, // the card's unique id
-				title: String,
-				order: Number,
-				image: String,
-				description: String,
-				Id: String, // id of what the card is i.e. the Id of an attraction or City
-				table: String, // the table the id corresponds to i.e. Attractions, Cities
-				type: String, // food/attraction/area attraction/sub attraction/city
-				tagTitle: String,
 				directionsTo: [{
 					method: String,
 					time: String,
 					distance: String,
 				}],
+				type: String, // food/attraction/area attraction/sub attraction/city
+				tagTitle: String,
+				image: String,
+				table: String, // the table the id corresponds to i.e. Attractions, Cities
+				Id: String, // id of what the card is i.e. the Id of an attraction or City
+				title: String,
+				description: String,
 				suggestedTime: String,
 			}]
 		}],

@@ -1,4 +1,4 @@
-/*global jQuery */
+/*global jQuery, duck */
 void function initializeTabs($) {
     'use strict';
 
@@ -47,7 +47,7 @@ void function initializeTabs($) {
 
             $panel.on('tab-change', changeTabs);
 
-            $(`a[href="#${id}"]`).click((e) => {
+            $(`a[href="#${id}"]`).on('mousedown', duck.stopProp).click((e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -101,4 +101,4 @@ void function initializeTabs($) {
     $(() => {
         $('[data-function*="tabs"]').makeTabs();
     });
-}(jQuery.noConflict());
+}(jQuery.noConflict(), duck);

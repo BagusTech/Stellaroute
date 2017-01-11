@@ -45,7 +45,6 @@ var Guide = Duck({
 		whereToEat: String,
 		whereToExplore: String,
 		days: [{
-			order: Number,
 			title: String,
 			description: String,
 			cards: [{

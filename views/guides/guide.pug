@@ -57,7 +57,12 @@ block content
 
 					if user && user.isAdmin
 						div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
-							button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							div(data-function='stickey')
+								.ta-R(data-stickey='content')
+									button.btn.btn-primary(duck-button='submit') Save
+									button.btn.btn-secondary.duck-edit-hidden(duck-button='edit') Start Editing
+									button.btn.btn-warning.duck-view-hidden(duck-button='cancel') Stop Editing
+									
 							button.btn.btn-primary.duck-view-hidden(data-function='toggle', data-target='.guide-card--wrapper') Hide Day Children Cards
 
 							div(duck-field='days', duck-type='array')
@@ -80,10 +85,8 @@ block content
 										.guide-card--wrapper(duck-field='cards', duck-type='array', data-toggle='hidden')
 											for card, j in day.cards ? day.cards : [{}]
 												include ./cards/guideEditCard.pug
-								button.btn.btn-primary(duck-button='add') Add New Day
-							
-							button.btn.btn-primary(duck-button='submit') Save
-							button.btn.btn-warning(duck-button='cancel') Cancel
+									.ta-C.duck-view-hidden
+										button.btn.btn-primary(duck-button='add') Add New Day
 					else
 						for day, i in guide.days ? guide.days : []
 							.mtb-XXl(data-position=i+1)

@@ -25,9 +25,9 @@ void function initScripts($){
 			$('.summernote:visible').summernote({height: 150});
 		});
 
-		$('[duck-button="edit"]').on('click', () => {
+		$('[duck-button="edit"], [duck-table] .btn').on('click', () => {
 			setTimeout(() => {
-				$('.summernote:visible').summernote({height: 150});
+				$('.summernote').summernote({height: 150});
 			}, 10)
 		});
 	});

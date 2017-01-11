@@ -18,13 +18,6 @@ block content
 			return types[type];
 		}
 
-	mixin editCard(day, card)
-		.m-0(duck-field='days', duck-type='array', duck-only-edit)
-			.m-0(duck-type='object', duck-key='title', duck-key-value= day.title)
-				.m-0(duck-field='cards', duck-type='array', duck-only-edit)
-					.m-0(duck-type='object', duck-key='cardId', duck-key-value= card.cardId)
-						block
-
 	if !guide
 		include error.pug
 	else
@@ -36,12 +29,6 @@ block content
 			button.btn.btn-default.btn-lg.mt-XXs(type='button', data-dismiss='modal', aria-label='Close') Close
 
 		.container.p-R
-			if user && user.isAdmin
-				.ta-R.d-N.d-B--sm
-					button.btn.btn-primary(data-toggle='modal', data-target='#AddGuideModal') Edit Guide
-				+modal('AddGuideModal')(class='modal-lg')
-					+guideForm('update', guide)
-
 			.row
 				.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--sm.mlr-NegMd.mlr-0--sm
 					div(data-function='stickey')

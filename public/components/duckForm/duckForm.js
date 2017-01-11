@@ -10,6 +10,7 @@ void function initDuckForm($, duck, window) {
 
 	function addArrayItem() {
 		const $this = $(this);
+		const addDirection = $this.attr('duck-add');
 		const $wrapper = $this.closest('[duck-type="array"]');
 		const $item = $wrapper.find('[duck-type]').first();
 		const $lastItem = $item.parent().find('> [duck-type]').last();
@@ -24,8 +25,22 @@ void function initDuckForm($, duck, window) {
 			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
 			$clone.find('[duck-button="add"]').click(addArrayItem);
 		}
-		
-		$lastItem.after($clone);
+
+		switch(addDirection) {
+			case 'after' : {
+				$this.closest('[duck-type]').after($clone)
+				break;
+			}
+			case 'before' : {
+				$this.closest('[duck-type]').before($clone)
+				break;
+			}
+			default : {
+				$lastItem.after($clone);
+				break;		
+			}
+		}
+
 		$item.parent().sortable('[duck-type]');
 	}
 

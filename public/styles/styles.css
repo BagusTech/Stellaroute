@@ -7673,15 +7673,6 @@ button.close {
 [duck-type='array'] .form-control {
   border: 1px solid #959ca2;
 }
-[duck-type='array'][duck-only-edit] {
-  padding: 0;
-  border: none;
-  background: none;
-  margin: none;
-}
-[duck-type='array'][duck-only-edit] > [duck-button='add'] {
-  display: none;
-}
 [duck-type='array'] > [duck-type]:before {
   content: '\f07d ';
   font-family: FontAwesome;

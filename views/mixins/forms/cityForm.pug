@@ -1,7 +1,7 @@
 - var cityhoodFormId = 0
 
 mixin cityForm(crud, city, locations, cancel)
-	form(id=`CityForm${cityFormId}`, duck-table='Cities', duck-function= crud, duck-key='Id', duck-key-value= city && city.Id)
+	.p-Sm(id=`CityForm${cityFormId}`, duck-table='Cities', duck-function= crud, duck-key='Id', duck-key-value= city && city.Id)
 		div(duck-field='names', duck-type='object')
 			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
 				.form-group
@@ -13,9 +13,13 @@ mixin cityForm(crud, city, locations, cancel)
 						input.form-control(type='text', required, duck-value, value= city && city.names.official)
 			.c-B(duck-field='alias', duck-type='array')
 				label Alias'
-				for alias in city && city.names && city.names.alias ? city.names.alias : [null]
-					.form-group(duck-type='string')
-						input.form-control(type='text', required, duck-value, value= alias)
+				div
+					for alias in city && city.names && city.names.alias ? city.names.alias : [null]
+						.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+							input.ml-Sm.form-control(type='text', required, duck-value, value= alias)
+							button.btn.btn-danger(duck-button='delete')
+				.ta-R
+					button.btn.btn-primary Add Alias
 
 		if (!city)
 			.form-group(duck-field='url', duck-type='string')
@@ -40,9 +44,13 @@ mixin cityForm(crud, city, locations, cancel)
 
 		div(duck-field='images', duck-type='array')
 			h3 Images
-			for image in city && city.images ? city.images : [null]
-				.form-group(duck-type='string')
-					input.form-control(type='string', duck-value, value= image)
+			div
+				for image in city && city.images ? city.images : [null]
+					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+						input.ml-Sm.form-control(type='string', duck-value, value= image)
+						button.btn.btn-danger(duck-button='delete')
+			.ta-R
+				button.btn.btn-primary Add Image
 
 		.form-group(duck-field='averageStay', duck-type='string')
 			label Suggested / Average Length of Stay
@@ -50,15 +58,23 @@ mixin cityForm(crud, city, locations, cancel)
 
 		.form-group(duck-field='bestTimeToVisit', duck-type='array')
 			label Best Time(s) to Visit
-			for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
-				.form-group(duck-type='string')
-					input.form-control(type='text', duck-value, value= time)
+			div
+				for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
+					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+						input.ml-Sm.form-control(type='text', duck-value, value= time)
+						button.btn.btn-danger(duck-button='delete')
+			.ta-R
+				button.btn.btn-primary Add
 
 		.form-group(duck-field='topPlaces', duck-type='array')
-			label Top Places (Neighborhoods) to Stay
-			for place in city && city.topPlaces ? city.topPlaces : [null]
-				.form-group(duck-type='string')
-					input.form-control(type='text', duck-value, value= place)
+			label Top Places
+			div (Neighborhoods) to Stay
+				for place in city && city.topPlaces ? city.topPlaces : [null]
+					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+						input.ml-Sm.form-control(type='text', duck-value, value= place)
+						button.btn.btn-danger(duck-button='delete')
+			.ta-R
+				button.btn.btn-primary Add Place
 
 		div(duck-field='orientation', duck-type='object')
 			h3 Orientation
@@ -68,18 +84,23 @@ mixin cityForm(crud, city, locations, cancel)
 
 		div(duck-field='needToKnow', duck-type='array')
 			h3 Need To Know
-			for advice in city && city.needToKnow ? city.needToKnow : [{}]
-				.row(duck-type='object')
-					h4 Advice
-					.form-group.col-xs-10(duck-field='title', duck-type='string')
-						label Title
-							input.form-control(type='text', duck-value, value= advice.title)
-					.form-group.col-xs-2(duck-field='order', duck-type='number')
-						label Order
-							input.form-control(type='number', duck-value, value= advice.order)
-					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-						label Advice
-						.summernote!= advice.description
+			div
+				for advice in city && city.needToKnow ? city.needToKnow : [{}]
+					.row(duck-type='object')
+						h4 Advice
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Advice
+							.summernote!= advice.description
+						.ta-C
+							button.mt-NegLg.btn.btn-danger(duck-button='delete') Delete Advice
+			.ta-R
+				button.btn.btn-primary(duck-button='add') Add Advice
 
 		div(duck-field='transit', duck-type='object')
 			h3 Transit
@@ -88,29 +109,39 @@ mixin cityForm(crud, city, locations, cancel)
 					input.form-control(type='text', duck-value, value= city && city.transit && city.transit.tagline)
 			div(duck-field='transitFacts', duck-type='array')
 				h4 Transit Facts
-				for fact in city && city.transit && city.transit.transitFacts ? city.transit.transitFacts : [{}]
-					div(duck-type='object')
-						.form-group(duck-field='title', duck-type='string')
-							label Title
-								input.form-control(type='text', duck-value, value= fact.title)
-						.form-group(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= fact.description
+				div
+					for fact in city && city.transit && city.transit.transitFacts ? city.transit.transitFacts : [{}]
+						div(duck-type='object')
+							.form-group(duck-field='title', duck-type='string')
+								label Title
+									input.form-control(type='text', duck-value, value= fact.title)
+							.form-group(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote!= fact.description
+							.ta-C
+								button.mt-NegSm.btn.btn-danger(duck-button='delete') Delete Transit Info
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Transit Info
 
 		div(duck-field='quickFacts', duck-type='array')
 			h3 Quick Facts
-			for advice in city && city.quickFacts ? city.quickFacts : [{}]
-				.row(duck-type='object')
-					h4 Fact
-					.form-group.col-xs-10(duck-field='title', duck-type='string')
-						label Title
-							input.form-control(type='text', duck-value, value= advice.title)
-					.form-group.col-xs-2(duck-field='order', duck-type='number')
-						label Order
-							input.form-control(type='number', duck-value, value= advice.order)
-					.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-						label Fact
-						.summernote!= advice.description
+			div
+				for advice in city && city.quickFacts ? city.quickFacts : [{}]
+					.row(duck-type='object')
+						h4 Fact
+						.form-group.col-xs-10(duck-field='title', duck-type='string')
+							label Title
+								input.form-control(type='text', duck-value, value= advice.title)
+						.form-group.col-xs-2(duck-field='order', duck-type='number')
+							label Order
+								input.form-control(type='number', duck-value, value= advice.order)
+						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+							label Fact
+							.summernote!= advice.description
+						.ta-C
+							button.mt-NegLg.btn.btn-danger(duck-button='delete') Delete Fact
+			.ta-R
+				button.btn.btn-primary(duck-button='add') Add Fact
 
 		if locations && locations.continent
 			.form-group.hidden(duck-field='continent', duck-type='array')
@@ -164,9 +195,9 @@ mixin cityForm(crud, city, locations, cancel)
 				for provinceRegions in city.provinceRegions
 					input(type='text', required, duck-value, value=provinceRegions, disabled)
 
-		.ta-R
+		.ta-R.mt-Md
 			if city
-				+deleteForm('Attractions', city.Id)(class='mr-Xs')
+				+deleteForm('Cities', city.Id)(class='mr-Xs')
 
 			button.btn.btn-primary(type='button', duck-button='submit')= city ? 'Update' : 'Add'
 			!= cancel

@@ -47,40 +47,40 @@ block content
 			include neighborhoods.pug
 
 	// food modals
-	for item, i in city.food.foods.filter((i) => i.name)
+	for item, i in city.food && city.food.foods ? city.food.foods.filter((i) => i.name) : []
 		+modal(createValidAttributeFromTitle(item.name))
-			div(id=`FoodItem${i}`, data-toggle='hidden')
-				h2.content-card--header.fw-B.fc-B= item.name
-				.lead!= item.description
-				img.w-100(src= item.image, alt= item.name)
-				if (item.suggestedRestaurant)
-					h3 Best Place to Get it:
-					p!= item.suggestedRestaurant
-
-				if (item.dishes)
-					h3 Dishes
-					ul
-						for dish in item.dishes
-							li= dish
-
-				if (item.whatToOrder)
-					h3 What to Have
-					p= item.whatToOrder
-
-				if (item.address)
-					h3 Where is It?
-					address
-						span= item.address
-						span= item.area
-
-				.ta-R
-					a.btn.btn-default(data-dismiss='modal') Close
-					if (item.blog)
-						a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
-
 			if user && user.isAdmin
-				.hidden(id=`FoodItemUpdate${i}`, data-toggle='hidden')
-					div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id)
+				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
+					h2.content-card--header.fw-B.fc-B= item.name
+						button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+					.duck-edit-hidden
+						.lead!= item.description
+						img.w-100(src= item.image, alt= item.name)
+						if (item.suggestedRestaurant)
+							h3 Best Place to Get it:
+							p!= item.suggestedRestaurant
+
+						if (item.dishes)
+							h3 Dishes
+							ul
+								for dish in item.dishes
+									li= dish
+
+						if (item.whatToOrder)
+							h3 What to Have
+							p= item.whatToOrder
+
+						if (item.address)
+							h3 Where is It?
+							address
+								span= item.address
+								span= item.area
+
+						.ta-R
+							a.btn.btn-default(data-dismiss='modal') Close
+							if (item.blog)
+								a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+					.duck-view-hidden
 						div(duck-field='food', duck-type='object')
 							div(duck-field='foods', duck-type='array')
 								div(duck-type='object', duck-key='Id', duck-key-value=item.Id)
@@ -139,13 +139,13 @@ block content
 
 									.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
 										label Dishes
-										if (item.dishes)
-											for dish in item.dishes
-												div(duck-type='string')
-													input.form-control(type='text', duck-value, value=dish)
-										else
-											div(duck-type='string')
-												input.form-control(type='text', duck-value)
+										div
+											for dish in item.dishes ? item.dishes : [null]
+												.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+													.ml-Sm.input.form-control(type='text', duck-value, value=dish)
+													button.btn.btn-danger(duck-button='delete')
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Dish
 
 									.form-group(duck-field='area', duck-type='string') <!-- area -->
 										label(for=`FoodArea${i}`) Area
@@ -168,16 +168,36 @@ block content
 										input#FoodReadMore.form-control(type='text', duck-value, value=item.readMore)
 						
 						button.btn.btn-primary(duck-button='submit') Save
-				hr
 
-				.row.d-N.d-B--sm
-					.col-xs-6
-						button.btn.btn-primary(id=`FoodItemEdit${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemCancelSave${i}`, data-toggle='hidden') Edit
-						button.btn.btn-warning.hidden(id=`FoodItemCancelSave${i}`, data-function='toggle', data-target=`this, #FoodItem${i}, #FoodItemUpdate${i}, #FoodItemEdit${i}`, data-toggle='hidden') Cancel
-						
-					.col-xs-6.ta-R
-						button.btn.btn-danger(id=`FoodDelete${i}`, data-function='toggle', data-target=`this, #FoodDeleteForm${i}`, data-toggle='hidden') Delete
+			else
+				h2.content-card--header.fw-B.fc-B= item.name
+				.lead!= item.description
+				img.w-100(src= item.image, alt= item.name)
+				if (item.suggestedRestaurant)
+					h3 Best Place to Get it:
+					p!= item.suggestedRestaurant
 
-						div.d-Ib.ml-Sm.hidden(id=`FoodDeleteForm${i}`, data-toggle='hidden', duck-table='Cities', duck-function='deleteField', duck-key='Id', duck-key-value= city.Id, duck-delete-path='food.foods.Id', duck-delete-value= item.Id)
-							button.btn.btn-danger(duck-button='submit') Delete
-							button.btn.btn-warning.ml-Sm(data-function='toggle', data-target=`#FoodDelete${i}, #FoodDeleteForm${i}`) Cancel
+				if (item.dishes)
+					h3 Dishes
+					ul
+						for dish in item.dishes
+							li= dish
+
+				if (item.whatToOrder)
+					h3 What to Have
+					p= item.whatToOrder
+
+				if (item.address)
+					h3 Where is It?
+					address
+						span= item.address
+						span= item.area
+
+				.ta-R
+					a.btn.btn-default(data-dismiss='modal') Close
+					if (item.blog)
+						a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+
+			if user && user.isAdmin
+				.hidden(id=`FoodItemUpdate${i}`, data-toggle='hidden')
+					

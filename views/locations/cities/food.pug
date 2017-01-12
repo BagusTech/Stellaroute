@@ -60,8 +60,12 @@ if (user && user.isAdmin)
 
 								.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
 									label Dishes
-									div(duck-type='string')
-										input.form-control(type='text', duck-value)
+									div
+										.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+											.ml-Sm.input.form-control(type='text', duck-value, value=dish)
+											button.btn.btn-danger(duck-button='delete')
+									.ta-R
+										button.btn.btn-primary(duck-button='add') Add Dish
 
 								.form-group(duck-field='area', duck-type='string') <!-- area -->
 									label(for='FoodArea') Area

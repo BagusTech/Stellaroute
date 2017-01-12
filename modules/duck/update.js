@@ -109,6 +109,8 @@ const readJSON      = require('../readJSON');
 		db.lite.update(params, (err, data) => {
 			if (err){
 				console.error(err);
+				console.error('~~~ tried updating ~~~')
+				console.error(JSON.stringify(params, null, 2));
 				reject();
 			} else {
 				resolve();

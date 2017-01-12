@@ -1,5 +1,32 @@
 .row
-	.col-xs-12.col-sm-4.col-lg-3
+	.col-xs-12.col-sm-8.f-R
+		if guides && guides.length > 0
+			.list-group
+				for guide, i in guides
+					if i === 0
+						a.clear.list-group-item.mtb-Sm.p-0.p-R.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+							.p-A.t-0.r-0.bg-Gr.fc-W.p-Xs.fw-N Featured Guide
+							div(style=`padding-top: 30px; padding-bottom: 40%; background: url('${guide.cardImage || guide.map}') no-repeat scroll center center / cover;`)
+							.p-Sm
+								h3.fc-Purp.mt-0= guide.names.display
+								.fc-B.fw-N!= guide.description
+					else if i < 4
+						
+						a.list-group-item.clear.mtb-Sm.p-0.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+							.w-25--sm.f-L--sm
+								img.w-100(src= guide.cardImage || guide.map, alt= guide.names.display)
+							.w-75--sm.f-L--sm.p-Sm.pb-Lg--sm
+								h3.fc-Purp.mt-0= guide.names.display
+								.fc-B.fw-N!= guide.description
+
+		if neighborhoods && neighborhoods.length > 0
+			h2.fc-G Neighborhoods
+			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md
+				for neighborhood in neighborhoods
+					a.masonry--item(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)
+						+card(neighborhood.cardImage, neighborhood.names.display)
+
+	.col-xs-12.col-sm-4
 		+contentCard('At a Glance')
 			dl.m-0
 				if city.averageStay
@@ -11,78 +38,15 @@
 				if city.topPlacesDisplay
 					dt Top places to stay
 					dd= city.topPlacesDisplay.join('; ')
-
-	.col-xs-12.col-sm-8.col-lg-9.f-R
-		.content-card.card.p-0
-			if city.images && city.images.length > 2
-				div(data-function='banner')
-					for img, i in city.images
-						img(src=img, alt=`${city.names.display} Banner ${i+1}`, data-banner-item)
-			else 
-				img.w-100(src= city.cardImage ? city.cardImage : 'http://placebear.com/300/300', alt= city.names.display)
-			.lead.fc-W--sm.m-0--sm.p-Sm.bg-Dkst--sm.p-A--sm.b-0--sm.l-0--sm.r-0--sm!= city.description
+			div(data-function='accordion')
+				button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
+				.d-B(role='tabpanel', aria-hidden='true')!= city.description
 
 		if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
 			.content-card
 				h2.content-card--header Travel Hacks
 
-				+accordion(city.needToKnow.sort(sortByOrder))(class='row', data-allow-multiple='true')
-
-		if guides && guides.filter((g) => g.map).length > 2
-			.content-card.p-0
-				h2.content-card--header.m-0.mt-Sm Guides
-				div(data-function='banner', data-banner-auto-rotate='false')
-					button.p-A.t-Md.l-Md.fc-W.bg-N.bw-0.fs-Lg(data-banner='back', data-icon='fa fa-chevron-left')
-					button.p-A.t-Md.r-Md.fc-W.bg-N.bw-0.fs-Lg(data-banner='forward', data-icon='fa fa-chevron-right')
-					for guide in guides.filter((g) => g.map)
-						div(data-banner='item')
-							h3.ta-C.bg-Purp.fc-W.p-Md.m-0= guide.names.display
-							.o-H.p-R(style='padding-left: 25%')
-								img.w-100(src=guide.map, alt= guide.names.display)
-								.p-A.t-0.l-0.b-0.w-25(data-function='scroll')
-									div#Body(data-scroll='content-wrapper')
-										div(data-scroll='content')
-											for day, i in guide.days && guide.days[0] && guide.days[0].title ? guide.days : [{}]
-												h4.bg-W.ta-C.p-Xs= `Day ${i+1}`
-												for card in day.cards && day.cards[0] && day.cards[0].title ? day.cards : [{}]
-													if card.image
-														.p-R
-															img.w-100(src= card.image, alt= card.title)
-															h5.p-A.d-F.fj-C.fai-C.bg-Dkr.t-0.b-0.l-0.r-0.fc-W.m-0= card.title
-									div(data-scroll='scrollbar')
-										button
-		else if guides && guides.length > 0
-			.content-card.p-0
-				h2.content-card--header.m-0.p-Sm Guides
-				for guide, i in guides
-					.clear.p-R(class= i % 2 === 0 ? '' : 'bg-G__ltr')
-						.w-25--sm.f-L--sm
-							img.w-100(src= guide.cardImage || guide.map, alt= guide.names.display)
-						.w-75--sm.f-L--sm.p-Sm.pb-Lg--sm
-							h3.mt-0= guide.names.display
-							!= guide.description
-
-							.ta-R.p-A--sm.b-Sm--sm.r-Sm--sm
-								a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
-
-
-
-		if neighborhoods && neighborhoods.length > 0
-			h2.fc-G Neighborhoods
-			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md
-				for neighborhood in neighborhoods
-					a.masonry--item(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)
-						+card(neighborhood.cardImage, neighborhood.names.display)
-
-	.col-xs-12.col-sm-4.col-lg-3
-		if city.orientation && city.orientation.map
-			+contentCard('Orientation')
-				button.d-B.bg-N.bw-N.p-0(data-toggle='modal' data-target=`#${city.names.display}OrientationMap`)
-					img.w-100(src= city.orientation.map, alt=`Map of ${city.names.display}`)
-				+modal(`${city.names.display}OrientationMap`)(class='modal-lg')
-					.ta-C(style='overflow-x: scroll;')
-						img(src= city.orientation.map, alt=`Map of ${city.names.display}`)
-					a.btn.btn-default(data-dismiss='modal') Close
+				+accordion(city.needToKnow.sort(sortByOrder), 3)(class='row', data-allow-multiple='true')
 
 		if city.food && city.food.foods
 			.content-card.p-0
@@ -98,7 +62,7 @@
 							//+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 				a.fc-B.w-100.ta-C.p-Xs.d-B(href='#Food') More Food
 
-		if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
+		//if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
 			+contentCard('Getting Around')
 				if city.transit.tagline
 					//.d-F.fai-C.fj-C

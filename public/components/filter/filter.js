@@ -44,9 +44,7 @@ void function initCookbookFilter($){
 					$(`[data-filter-section='${key}'] input:checked`).each((i, val) => {values.push($(val).val())});
 
 					if (values.length) {
-						$itemsToFilter.filter((i, item) => {
-							return checkItemAgainstFilter(key, values, $(item));
-						}).addClass('hidden')
+						$itemsToFilter.filter((i, item) => checkItemAgainstFilter(key, values, $(item))).addClass('hidden')
 					}
 				}
 			}

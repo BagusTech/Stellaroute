@@ -36,8 +36,8 @@ void function initializeTabs($) {
 
     function makeTabPanels(wrapper){
         const $wrapper = $(wrapper);
-        const $tabs = $wrapper.find('[role="tab"]');
-        const $panels = $wrapper.find('[role="tabpanel"]');
+        const $tabs = $wrapper.find('> [role="tab"]');
+        const $panels = $wrapper.find('> [role="tabpanel"]');
         const $controls = $('[data-tabs="controls"]');
         const pageAnchor = window.location.hash;
 

@@ -11,7 +11,7 @@ mixin whereTo(guide, user, option, title, dataPosition)
 					.summernote!= guide[option]
 				button.btn.btn-primary(duck-button='submit') Save
 				button.btn.btn-warning(duck-button='cancel') Cancel
-	else if wysiwygHasData(guide.whereToEat)
+	else if wysiwygHasData(guide[option])
 		+contentCard(title)(data-position=dataPosition)
 			!= guide[option]
 

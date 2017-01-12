@@ -140,7 +140,7 @@ void function initializeIcon($) {
 		const $downButtons = $sortButtons.find('[data-sort="down"]');
 
 		if($wrapper.prop('sortInitaited')) {
-			$wrapper.find('a, button, input, select, textarea').off('mousedown', duck.stopProp);
+			$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"]').off('mousedown', duck.stopProp);
 
 			$upButtons.off('click', moveUp);
 			$downButtons.off('click', moveDown);
@@ -152,7 +152,7 @@ void function initializeIcon($) {
 		}
 
 		// stop propagation on anything the user might actually be interacting with
-		$wrapper.find('a, button, input, select, textarea').on('mousedown', duck.stopProp);
+		$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"]').on('mousedown', duck.stopProp);
 
 		$upButtons.on('click', {sortItemQuery}, moveUp);
 		$downButtons.on('click', {sortItemQuery}, moveDown);

@@ -64,6 +64,7 @@ void function initializeIcon($) {
 
 	function startSort(e) {
 		e.stopPropagation();
+		e.preventDefault();
 
 		const $this = $(e.currentTarget);
 		const $wrapper = e.data.wrapper;
@@ -139,10 +140,9 @@ void function initializeIcon($) {
 		const $downButtons = $sortButtons.find('[data-sort="down"]');
 
 		if($wrapper.prop('sortInitaited')) {
-			$upButtons.off('mousedown', duck.stopProp);
-			$upButtons.off('click', moveUp);
+			$wrapper.find('a, button, input, select, textarea').off('mousedown', duck.stopProp);
 
-			$downButtons.off('mousedown', duck.stopProp);
+			$upButtons.off('click', moveUp);
 			$downButtons.off('click', moveDown);
 
 			$items.off('mousedown', startSort);
@@ -151,10 +151,10 @@ void function initializeIcon($) {
 			$(document).off('mouseup', stopSort);
 		}
 
-		$upButtons.on('mousedown', duck.stopProp);
-		$upButtons.on('click', {sortItemQuery}, moveUp);
+		// stop propagation on anything the user might actually be interacting with
+		$wrapper.find('a, button, input, select, textarea').on('mousedown', duck.stopProp);
 
-		$downButtons.on('mousedown', duck.stopProp);
+		$upButtons.on('click', {sortItemQuery}, moveUp);
 		$downButtons.on('click', {sortItemQuery}, moveDown);
 
 		$items.on('mousedown', {wrapper: $wrapper, items: $items, windowToScroll: $windowToScroll, sortItemQuery}, startSort);

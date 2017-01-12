@@ -16,8 +16,9 @@ void function initDuckForm($, duck, window) {
 		const $lastItem = $item.parent().find('> [duck-type]').last();
 		const $clone = $item.clone();
 
-		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null).on('mousedown', duck.stopProp);
-		$clone.find('[duck-button="delete"]').click(deleteArrayItem).on('mousedown', duck.stopProp);
+		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null);
+		$clone.find('[duck-button="delete"]').click(deleteArrayItem);
+		$clone.find('[data-function="tabs"]').makeTabs();
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
@@ -89,7 +90,7 @@ void function initDuckForm($, duck, window) {
 	}
 
 	function parseArray(obj, $item, fieldName, buildObjectFunction) {
-		const $objectToUpdate = $item.find('> [duck-type="object"]');
+		const $objectToUpdate = duck.findRelevantChildren($item, '[duck-type="object"]');
 		const value = $objectToUpdate.first().attr('duck-key') ? obj[fieldName] : [];
 
 		if($objectToUpdate.length) {
@@ -332,19 +333,17 @@ void function initDuckForm($, duck, window) {
 					const $item = $(item);
 					const $addItems = $item.find('[duck-button="add"]');
 
-					$addItems.off('click', addArrayItem).click(addArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp)
+					$addItems.off('click', addArrayItem).click(addArrayItem)
 
 					$item.find('> [duck-type]').each((j, subItem) => {
 						const $subItem = $(subItem);
 						const $deleteItems = $subItem.find('[duck-button="delete"]');
 
-						$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem).off('mousedown', duck.stopProp).on('mousedown', duck.stopProp);
+						$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem);
 
 					});
 				})
-				.sortable('[duck-type]')
-				.find('[duck-value], [duck-type="wysiwyg"]')
-				.on('mousedown', duck.stopProp);
+				.sortable('[duck-type]');
 	}
 
 	$.fn.duckForm = function init(options) {

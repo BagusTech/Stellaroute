@@ -36,7 +36,6 @@ block content
 							include guideNav.pug
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-					
 					include ./cards/overview.pug
 					include ./cards/travelHacks.pug
 					include ./cards/highlights.pug
@@ -56,7 +55,9 @@ block content
 								.duck-view-hidden
 									small To add a new day, go to the bottom.
 								for day, i in guide.days ? guide.days : [{}]
-									.mtb-XXl(data-position=i+1, duck-type='object')
+									//- console.log(JSON.stringify(day.cards, null, 2))
+									.mtb-XXl.p-Sm(data-position=i+1, duck-type='object')
+										h2.duck-view-hidden Day
 										h2.fs-32.fw-B.m-0.ta-C.duck-edit-hidden= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title || '(new)'}`
 
 										.lead.p-Md.ta-C.duck-edit-hidden!= day.description
@@ -72,8 +73,8 @@ block content
 										.guide-card--wrapper(duck-field='cards', duck-type='array', data-toggle='hidden')
 											for card, j in day.cards ? day.cards : [{}]
 												include ./cards/guideEditCard.pug
-									.ta-C.duck-view-hidden
-										button.btn.btn-primary(duck-button='add') Add New Day
+										.ta-C.duck-view-hidden
+											button.btn.btn-primary(duck-button='add') Add New Day
 					else
 						for day, i in guide.days ? guide.days : []
 							.mtb-XXl(data-position=i+1)

@@ -1,20 +1,22 @@
-/*global jQuery, duck */
+/*global jQuery */
 void function initializeTabs($) {
     'use strict';
 
     function togglePanels($newPanel, $oldPanel) {
         const currentId = $newPanel.attr('id');
 
-        $oldPanel.toggleClass('hidden active');
-        $newPanel.toggleClass('hidden');
+        $oldPanel.attr('aria-hidden', 'true');
+        $newPanel.attr('aria-hidden', ''); // for animation purposes
 
         setTimeout(() => {
-            $newPanel.toggleClass('active');            
+            $newPanel.attr('aria-hidden', 'false');            
         }, 10);
 
-        $newPanel.attr('id', '');
-        window.location.hash = currentId;
-        $newPanel.attr('id', currentId);
+        if($newPanel.attr('id')) {
+            $newPanel.attr('id', '');
+            window.location.hash = currentId;
+            $newPanel.attr('id', currentId);
+        }
 
         $newPanel.trigger('tab-changed');
     }
@@ -22,36 +24,56 @@ void function initializeTabs($) {
     function changeTabs(){
         const $this = $(this);
 
-        if($this.hasClass('active')){
+        if($this.is('[aria-hidden="false"]')){
             $this.trigger('tab-changed');
             return;
         }
 
-        const $activePanel = $this.siblings('.active');
+        const $activePanel = $this.siblings('[aria-hidden="false"]');
 
         togglePanels($this, $activePanel);
     }
 
     function makeTabPanels(wrapper){
         const $wrapper = $(wrapper);
-        const $panels = $wrapper.find('[data-tabs="panel"]');
+        const $tabs = $wrapper.find('[role="tab"]');
+        const $panels = $wrapper.find('[role="tabpanel"]');
+        const $controls = $('[data-tabs="controls"]');
         const pageAnchor = window.location.hash;
+
+        if ($tabs.length) {
+            $tabs.each((i, tab) => {
+                $(tab).click((e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const $this = $(e.currentTarget);
+
+                    if ($this.attr('aria-expanded') === 'true') {
+                        return;
+                    }
+
+                    $this.siblings('[aria-expanded="true"]').attr('aria-expanded', 'false');
+                    $this.attr('aria-expanded', 'true');
+
+                    $panels.eq(i).trigger('tab-change');
+                });
+            });
+        }
 
         $panels.each((i, panel) => {
             const $panel = $(panel);
             const id = $panel.attr('id');
 
+            $panel.on('tab-change', changeTabs);
+
             if(!id){
                 return;
             }
 
-            $panel.on('tab-change', changeTabs);
-
-            $(`a[href="#${id}"]`).on('mousedown', duck.stopProp).click((e) => {
+            $(`a[href="#${id}"]`).click((e) => {
                 e.preventDefault();
                 e.stopPropagation();
-
-                const $controls = $('[data-tabs="controls"]');
 
                 $controls.each((j, tabControls) => {
                     const $tabControls = $(tabControls);
@@ -59,8 +81,8 @@ void function initializeTabs($) {
                     const isActiveControl = $activeTab.length > 0;
 
                     if(isActiveControl) {
-                        $tabControls.find('[data-tabs]').removeClass('active');
-                        $activeTab.addClass('active');
+                        $tabControls.find('[role="tab"]').attr('aria-expanded', 'false');
+                        $activeTab.attr('aria-expanded', 'true');
                     }
                 });
 
@@ -74,9 +96,9 @@ void function initializeTabs($) {
             return;
         }
 
-        const $anchorToClick = $(`a[href="${pageAnchor}"][data-tabs='control']`);
+        const $anchorToClick = $(`[data-tabs="controls"] a[href="${pageAnchor}"]`);
 
-        if($anchorToClick.length === 1){
+        if($anchorToClick.length){
             $anchorToClick.click();
 
             $(window).on('load', () => {
@@ -101,4 +123,4 @@ void function initializeTabs($) {
     $(() => {
         $('[data-function*="tabs"]').makeTabs();
     });
-}(jQuery.noConflict(), duck);
+}(jQuery.noConflict());

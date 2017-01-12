@@ -10,10 +10,6 @@
 		}
 
 [duck-type='array']{
-	> label {
-		margin-bottom: @gw-Xs;
-	}
-
 	> [duck-type='string'],
 	> [duck-type='number'],
 	> [duck-type='select'] {
@@ -35,36 +31,6 @@
 			[duck-button="delete"] {
 				display: none;
 			}
-		}
-	}
-
-	> [duck-type='object']{
-		margin: @gw-Md 0;
-
-		&:not(:first-of-type) .form-group:last-of-type{
-			&, & .panel{
-				margin-bottom: @gw-Xs;
-			}
-		}
-
-		&:before {
-			display: none !important;
-		}
-	}
-
-	.form-control{
-		border: 1px solid @grey;
-	}
-
-	> [duck-type] {
-		&:before {
-			content: '\f07d ';
-			font-family: FontAwesome;
-			padding: @gw-Xs;
-			position: relative;
-			top: 5px;
-			left: -5px;
-			display: inline-block;
 		}
 	}
 }

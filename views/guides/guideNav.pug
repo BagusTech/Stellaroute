@@ -22,12 +22,12 @@ nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true
 		if (user && user.isAdmin) || wysiwygHasData(guide.whereToExplore)
 			li: a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
 
-	for day, i in guide.days ? guide.days.sort(sortByOrder) : []
+	for day, i in guide.days ? guide.days : []
 		a(href='#', role='tab', aria-expanded='false', data-position= i+1)
 			h3= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
 
 		if day.cards
 			ul(role='tabpanel', aria-hidden='true')
-				for card, j in day.cards.sort(sortByOrder)
+				for card, j in day.cards
 					if card.title || card.tagTitle
 						li: a(href='#', data-position= `${i+1}.${j}`)= card.title || card.tagTitle

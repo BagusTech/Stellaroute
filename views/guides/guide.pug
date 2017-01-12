@@ -55,7 +55,6 @@ block content
 								.duck-view-hidden
 									small To add a new day, go to the bottom.
 								for day, i in guide.days ? guide.days : [{}]
-									//- console.log(JSON.stringify(day.cards, null, 2))
 									.mtb-XXl.p-Sm(data-position=i+1, duck-type='object')
 										h2.duck-view-hidden Day
 										h2.fs-32.fw-B.m-0.ta-C.duck-edit-hidden= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title || '(new)'}`

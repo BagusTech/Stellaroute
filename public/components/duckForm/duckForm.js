@@ -5,10 +5,15 @@ void function initDuckForm($, duck, window) {
 
 	function deleteArrayItem(e) {
 		e.stopPropagation();
+		e.preventDefault();
+		
 		$(this).closest('[duck-type]').remove();
 	}
 
-	function addArrayItem() {
+	function addArrayItem(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
 		const $this = $(this);
 		const addDirection = $this.attr('duck-add');
 		const $wrapper = $this.closest('[duck-type="array"]');
@@ -91,14 +96,14 @@ void function initDuckForm($, duck, window) {
 
 	function parseArray(obj, $item, fieldName, buildObjectFunction) {
 		const $objectToUpdate = duck.findRelevantChildren($item, '[duck-type="object"]');
-		const value = $objectToUpdate.first().attr('duck-key') ? obj[fieldName] : [];
+		const value = $objectToUpdate.first().attr('duck-key') ? obj[fieldName] || [] : [];
 
 		if($objectToUpdate.length) {
 			$objectToUpdate.each((i, objec) => {
 				const $objec = $(objec);
 				const key = $objec.attr('duck-key');
 				const keyValue = $objec.attr('duck-key-value') || duck.uuid();
-				const newObj = key ? value.filter((o) => o[key] === keyValue)[0] : {}
+				const newObj = key ? value.filter((o) => o[key] === keyValue)[0] || {} : {}
 
 				// if the key is defined, the object is being altered/added without the context of the other items
 				if(key){

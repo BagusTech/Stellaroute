@@ -38,8 +38,6 @@ head
 
 	// hosted local
 	script(type='text/javascript', src='/components/duck/duck.min.js')
-	if (user && user.isAdmin)
-		script(type='text/javascript', src='/components/duckForm/duckForm.min.js')
 	script(type='text/javascript', src='/components/toggle/toggle.min.js')
 	script(type='text/javascript', src='/components/accordionsTabs/accordions-tabs.min.js')
 	script(type='text/javascript', src='/components/banner/banner.min.js')
@@ -51,6 +49,8 @@ head
 	script(type='text/javascript', src='/components/sortable/sortable.min.js')
 	script(type='text/javascript', src='/components/stopProp/stopProp.min.js')
 	script(type='text/javascript', src='/components/tabs/tabs.min.js')
+	if (user && user.isAdmin)
+		script(type='text/javascript', src='/components/duckForm/duckForm.min.js')
 	
 	script(type='text/javascript', src='/js/scripts.min.js')
 	

@@ -252,6 +252,7 @@ void function initDuckForm($, duck, window) {
 
 		$editButton.click(() => {
 			$wrapper.attr('duck-edit-form', $wrapper.attr('duck-edit-form') === 'view' ? 'edit' : 'view');
+			$('[data-function*="scroll"]').trigger('initScroll');
 		})
 
 		$cancelButton.click(() => {

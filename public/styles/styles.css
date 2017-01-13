@@ -8097,71 +8097,69 @@ button.close {
     column-count: 12;
   }
 }
+[data-function='scroll'] {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+[data-function='scroll'].no-scrollbar [data-scroll='content-wrapper'] {
+  right: 0;
+  overflow: hidden;
+}
+[data-function='scroll'].no-scrollbar [data-scroll='content'] {
+  padding-right: 0;
+}
+[data-function='scroll'].no-scrollbar [data-scroll='scrollbar'] {
+  display: none;
+}
+[data-scroll='content-wrapper'] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: -17px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+[data-scroll='content'] {
+  padding-right: 17px;
+}
 @media (min-width: 767px) {
-  [data-function='scroll'] {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-  }
-  [data-function='scroll'].no-scrollbar [data-scroll='content-wrapper'] {
-    right: 0;
-    overflow: hidden;
-  }
-  [data-function='scroll'].no-scrollbar [data-scroll='content'] {
-    padding-right: 0;
-  }
-  [data-function='scroll'].no-scrollbar [data-scroll='scrollbar'] {
-    display: none;
-  }
-  [data-scroll='content-wrapper'] {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: -17px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
   [data-scroll='content'] {
-    padding-right: 17px;
-  }
-  [data-scroll='scrollbar'] {
-    width: 12px;
-    border-width: 0 3px;
-    border-style: solid;
-    border-color: transparent;
-    position: absolute;
-    top: 3px;
-    bottom: 3px;
-    right: 0;
-    cursor: pointer;
-    z-index: 1;
-  }
-  [data-scroll='scrollbar'] button {
-    background: rgba(50, 50, 50, 0.25);
-    min-height: 30px;
-    max-height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    display: block;
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    -webkit-transition: height 0.3s ease-out;
-    transition: height 0.3s ease-out;
-    border-radius: 15px;
-  }
-  [data-scroll='scrollbar'] button:focus {
-    outline: none;
+    padding-right: 0;
   }
 }
-@media (min-width: 767px) and (min-width: 767px) {
-  [data-scroll='content'] {
-    padding-right: 0;
-  }
+[data-scroll='scrollbar'] {
+  width: 12px;
+  border-width: 0 3px;
+  border-style: solid;
+  border-color: transparent;
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+[data-scroll='scrollbar'] button {
+  background: rgba(50, 50, 50, 0.25);
+  min-height: 30px;
+  max-height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: block;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  -webkit-transition: height 0.3s ease-out;
+  transition: height 0.3s ease-out;
+  border-radius: 15px;
+}
+[data-scroll='scrollbar'] button:focus {
+  outline: none;
 }
 [data-function*='sort'] {
   position: relative;

@@ -10,19 +10,9 @@ block content
 	if (attractions.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for attraction in attractions
-				.masonry--item(data-toggle='modal', data-target= `#${attraction.url}-attraction`)
-					+card(attraction.cardImage, attraction.names.display)
-					
-		for attraction, i in attractions
-			+modal(`${attraction.url}-attraction`)
-				div(id=`AttractionOverview${i}`, data-toggle='hidden')
-					h2.content-card--header.fw-B.fc-B= attraction.names.display
-					.lead!= attraction.description
-					img.w-100(src= attraction.cardImage || 'http://placebear.com/600/400', alt= attraction.names.display)
-
-					.ta-R.mt-Md
-						a.btn.btn-default(data-dismiss='modal') Close
-						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`) Read More
+				.masonry--item
+					a(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`)
+						+card(attraction.cardImage, attraction.names.display)
 		
 	else
 		.content-card

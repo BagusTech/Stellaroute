@@ -24,6 +24,7 @@ var Attraction = Duck({
 			}],
 			alias: Array, 
 		},
+		category: Array,
 		address: String,
 		description: String,
 		tagline: String,

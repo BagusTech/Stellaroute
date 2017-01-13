@@ -21,6 +21,33 @@ mixin attractionForm(crud, attraction, locations, cancel)
 			.form-group(duck-field='url', duck-type='string')
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
+
+		-
+			var categories = [
+								'Other',
+								'Buildings & Scyscrapers',
+								'Parks & Public Spaces',
+								'Monuments & Sculptures',
+								'Piers & Boardwalks',
+								'Amusement Parks',
+								'Music Venues & Theatres',
+								'Local Experience & Culture',
+								'Museums',
+								'Tours',
+								'Food and Drinks',
+								'Outdoor Activities',
+								'Top Attraction',
+							];
+
+		.form-group.p-md.bg-G__ltr(duck-field='category', duck-type='checkbox')
+			h3.mt-0 Category
+			.row
+				for category in categories
+					.col-xs-12.col-sm-6.col-md-4.col-sm-3
+						.checkbox
+							label
+								input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)
+								= category
 		
 		.form-group(duck-field='price', duck-type='wysiwyg')
 			label Price
@@ -125,7 +152,6 @@ mixin attractionForm(crud, attraction, locations, cancel)
 						button.btn.btn-danger(duck-button='delete')
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Sub Attraction
-
 
 		.form-group(duck-field='parentAttraction', duck-type='string')
 			label Parent Attraction

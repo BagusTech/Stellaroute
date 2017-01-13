@@ -12,19 +12,9 @@ block content
 	if (guides.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for guide in guides
-				.masonry--item(data-toggle='modal', data-target= `#${guide.url}-guide`)
-					+card(guide.cardImage, guide.names.display)
-					
-		for guide, i in guides
-			+modal(`${guide.url}-guide`)
-				div(id=`GuideOverview${i}`, data-toggle='hidden')
-					h2.content-card--header.fw-B.fc-B= guide.names.display
-					.lead!= guide.description
-					img.w-100(src= guide.cardImage || 'http://placebear.com/600/400', alt= guide.names.display)
-
-					.ta-R.mt-Md
-						a.btn.btn-default(data-dismiss='modal') Close
-						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${guide.url}`) Read More
+				.masonry--item
+					a(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+						+card(guide.cardImage, guide.names.display)
 		
 	else
 		.content-card

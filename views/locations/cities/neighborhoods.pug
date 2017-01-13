@@ -9,10 +9,11 @@ block content
 	if (neighborhoods.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for neighborhood in neighborhoods
-				.masonry--item(data-toggle='modal', data-target= `#${neighborhood.url}-neighborhood`)
-					+card(neighborhood.cardImage, neighborhood.names.display)
+				.masonry--item
+					a(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)
+						+card(neighborhood.cardImage, neighborhood.names.display)
 					
-		for neighborhood in neighborhoods
+		//for neighborhood in neighborhoods
 			+modal(`${neighborhood.url}-neighborhood`)
 				div(data-toggle='hidden')
 					h2.content-card--header.fw-B.fc-B= neighborhood.names.display

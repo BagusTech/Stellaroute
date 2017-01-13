@@ -1,3 +1,13 @@
+-
+	var foodCategories = [
+							'Only In',
+							'Local Cuisine',
+							'Best Dishes',
+							'Drinks',
+							'Restaurant',
+							'Bar'
+						]
+
 if (user && user.isAdmin)
 	.ta-r.d-N.d-B--sm
 		button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
@@ -92,17 +102,29 @@ if (user && user.isAdmin)
 						button.btn.btn-default.ml-Sm(type='button', data-toggle='modal', data-target='#AddFood') Cancel
 
 if (city.food && city.food.foods)
-	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
-		for food in city.food.foods.filter((i) => (i.category !== 'Restaurant' && i.category !== 'Bar') && i.name).sort(sortByOrder)
-			.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(food.name)}`)
-				+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+	.row
+		.hidden-xs.col-sm-4.col-md-3.col-lg-2(data-function='filter')
+			div(data-function='stickey')
+				div(data-stickey='content')
+					h2.mt-0.pt-Sm.ta-R Category
+					div(data-filter-section='category')
+						for category in foodCategories
+							.checkbox.checkbox-right
+								label
+									= category
+									input(type='checkbox', value= category)
 
-	h2 Restaurants &amp; Bars
-	//+masonry(city.food.foods.filter((i) => i.category === 'Restaurant'), 'masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg')
-	.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-		for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)
-			.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(restaurant.name)}`)
-				+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
+		.col-xs-12.col-sm-8.col-md-9.col-lg-10
+			.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+				for food in city.food.foods.filter((i) => (i.category !== 'Restaurant' && i.category !== 'Bar') && i.name).sort(sortByOrder)
+					.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(food.name)}`, data-filter-category= food.category || 'Unknown')
+						+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
+
+			h2 Restaurants &amp; Bars
+			.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+				for restaurant in city.food.foods.filter((i) => (i.category === 'Restaurant' || i.category === 'Bar') && i.name)
+					.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(restaurant.name)}`)
+						+card(restaurant.image, restaurant.name, restaurant.category, 'blue')
 		
 else
 	.content-card

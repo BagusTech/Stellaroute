@@ -364,23 +364,20 @@ void function initDuckForm($, duck, window) {
 		$wrapper.off('click', submitForm)
 				.on('click', '[duck-button="submit"]', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, failureCallBack}, submitForm);
 
-		// set arrays to add and remove items
+		// set arrays to be sortable
 		$wrapper.find('[duck-type="array"]')
 				.each((i, item) => {
 					const $item = $(item);
-					const $addItems = $item.find('[duck-button="add"]');
+					const $itemChildren = duck.findRelevantChildren($item, '[duck-type]');
 
-					$addItems.off('click', addArrayItem).click(addArrayItem)
+					$itemChildren.first().parent().sortable('[duck-type]');
+				});
 
-					$item.find('> [duck-type]').each((j, subItem) => {
-						const $subItem = $(subItem);
-						const $deleteItems = $subItem.find('[duck-button="delete"]');
+		// make add and delete item from array work
+		$wrapper.find('[duck-button="add"]').off('click', addArrayItem).click(addArrayItem)
+		$wrapper.find('[duck-button="delete"]').off('click', deleteArrayItem).click(deleteArrayItem)
 
-						$deleteItems.off('click', deleteArrayItem).click(deleteArrayItem);
 
-					});
-				})
-				.sortable('[duck-type]');
 	}
 
 	$.fn.duckForm = function init(options) {

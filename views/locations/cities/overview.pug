@@ -18,6 +18,8 @@
 							.w-75--sm.f-L--sm.p-Sm.pb-Lg--sm
 								h3.fc-Purp.mt-0= guide.names.display
 								.fc-B.fw-N!= guide.description
+			.ta-C
+				a(href='#Guides') All Guides
 
 		if neighborhoods && neighborhoods.length > 0
 			h2.fc-G Neighborhoods
@@ -46,7 +48,7 @@
 			.content-card
 				h2.content-card--header Travel Hacks
 
-				+accordion(city.needToKnow.sort(sortByOrder), 3)(class='row', data-allow-multiple='true')
+				+accordion(city.needToKnow, 3)(class='row', data-allow-multiple='true')
 
 		if city.food && city.food.foods
 			.content-card.p-0
@@ -76,4 +78,4 @@
 
 		if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
 			+contentCard('Quick Facts')
-				+accordion(city.quickFacts.sort(sortByOrder))(class='row', data-allow-multiple='true')
+				+accordion(city.quickFacts)(class='row', data-allow-multiple='true')

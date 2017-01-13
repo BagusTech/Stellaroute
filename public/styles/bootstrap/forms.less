@@ -246,14 +246,35 @@ input[type="search"] {
     font-weight: normal;
     cursor: pointer;
   }
+
+  &.radio-right,
+  &.checkbox-right {
+    text-align: right;
+
+    label {
+      padding-left: 0;
+      padding-right: 20px;
+    }
+  }
 }
-.radio input[type="radio"],
-.radio-inline input[type="radio"],
-.checkbox input[type="checkbox"],
-.checkbox-inline input[type="checkbox"] {
-  position: absolute;
-  margin-left: -20px;
-  margin-top: 4px \9;
+.radio,
+.radio-inline,
+.checkbox,
+.checkbox-inline{
+  input[type="radio"],
+  input[type="checkbox"] {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 4px \9;  
+  }
+}
+
+.radio-right,
+.checkbox-right {
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-left: 7px;
+  }
 }
 
 .radio + .radio,

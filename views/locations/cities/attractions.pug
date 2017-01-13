@@ -8,11 +8,24 @@ block content
 			+attractionForm('add', null, {city: [city.Id]})
 
 	if (attractions.length)
-		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
-			for attraction in attractions
-				.masonry--item
-					a(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`)
-						+card(attraction.cardImage, attraction.names.display)
+		.row
+			.hidden-xs.col-sm-4.col-md-3.col-lg-2(data-function='filter')
+				div(data-function='stickey')
+					div(data-stickey='content')
+						h2.mt-0.pt-Sm.ta-R Category
+						div(data-filter-section='category')
+							for category in attractionCategories
+								.checkbox.checkbox-right
+									label
+										= category
+										input(type='checkbox', value= category)
+
+			.col-xs-12.col-sm-8.col-md-9.col-lg-10
+				.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+					for attraction in attractions
+						.masonry--item(data-filter-category= attraction.category && attraction.category.join('|') || 'Unknown')
+							a(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`)
+								+card(attraction.cardImage, attraction.names.display)
 		
 	else
 		.content-card

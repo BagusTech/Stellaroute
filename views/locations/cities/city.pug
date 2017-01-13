@@ -25,10 +25,10 @@ block content
 
 				nav.tabbed-nav(data-tabs='controls')
 					a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview
-					a.tabbed-nav--tab(href='#Attractions', role='tab', aria-expanded='false') Attractions
-					a.tabbed-nav--tab(href='#Food', role='tab', aria-expanded='false') Food
 					a.tabbed-nav--tab(href='#Guides', role='tab', aria-expanded='false') Guides
 					a.tabbed-nav--tab(href='#Neighborhoods', role='tab', aria-expanded='false') Neighborhoods
+					a.tabbed-nav--tab(href='#Food', role='tab', aria-expanded='false') Food
+					a.tabbed-nav--tab(href='#Attractions', role='tab', aria-expanded='false') Attractions
 	
 	if user && user.isAdmin
 		+modal('EditCityForm')(class='modal-lg')

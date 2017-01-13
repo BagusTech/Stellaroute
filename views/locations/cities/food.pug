@@ -103,21 +103,24 @@ if (user && user.isAdmin)
 
 if (city.food && city.food.foods)
 	.row
-		.hidden-xs.col-sm-4.col-md-3.col-lg-2(data-function='filter')
+		.col-xs-12.col-sm-4.col-md-3.col-lg-2(data-function='filter')
 			div(data-function='stickey')
 				div(data-stickey='content')
-					h2.mt-0.pt-Sm.ta-R Category
-					div(data-filter-section='category')
+					.visible-xs
+						button.btn.btn-default.w-100(data-function='toggle', data-target='[data-filter-section="food-category"]') Filter
+					.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-filter-section='food-category', data-toggle='hidden-xs')
+						h2.mt-0.pt-Sm.ta-R--sm Category
 						for category in foodCategories
 							.checkbox.checkbox-right
 								label
-									= category
+									span.hidden-xs= category
 									input(type='checkbox', value= category)
+									span.visible-xs= category
 
 		.col-xs-12.col-sm-8.col-md-9.col-lg-10
 			.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 				for food in city.food.foods.filter((i) => i.name).sort(sortByOrder)
-					.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(food.name)}`, data-filter-category= food.category || 'Unknown')
+					.masonry--item(data-toggle='modal', data-target= `#${createValidAttributeFromTitle(food.name)}`, data-filter-food-category= food.category || 'Unknown')
 						+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 else
 	.content-card

@@ -246,16 +246,6 @@ input[type="search"] {
     font-weight: normal;
     cursor: pointer;
   }
-
-  &.radio-right,
-  &.checkbox-right {
-    text-align: right;
-
-    label {
-      padding-left: 0;
-      padding-right: 20px;
-    }
-  }
 }
 .radio,
 .radio-inline,
@@ -269,18 +259,39 @@ input[type="search"] {
   }
 }
 
-.radio-right,
-.checkbox-right {
-  input[type="radio"],
-  input[type="checkbox"] {
-    margin-left: 7px;
-  }
-}
-
 .radio + .radio,
 .checkbox + .checkbox {
   margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
 }
+
+@media(min-width: @screen-sm) {
+  .radio,
+  .checkbox {
+    &.radio-right,
+    &.checkbox-right {
+      text-align: right;
+
+      label {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+    }
+  }
+
+  .radio-right,
+  .checkbox-right {
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-left: 7px;
+    }
+  }
+
+  .radio + .radio,
+  .checkbox + .checkbox {
+    margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
+  }
+}
+
 
 // Radios and checkboxes on same line
 .radio-inline,

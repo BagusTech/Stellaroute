@@ -2800,19 +2800,6 @@ input[type="search"] {
   font-weight: normal;
   cursor: pointer;
 }
-.radio.radio-right,
-.checkbox.radio-right,
-.radio.checkbox-right,
-.checkbox.checkbox-right {
-  text-align: right;
-}
-.radio.radio-right label,
-.checkbox.radio-right label,
-.radio.checkbox-right label,
-.checkbox.checkbox-right label {
-  padding-left: 0;
-  padding-right: 20px;
-}
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="radio"],
@@ -2825,15 +2812,34 @@ input[type="search"] {
   margin-left: -20px;
   margin-top: 4px \9;
 }
-.radio-right input[type="radio"],
-.checkbox-right input[type="radio"],
-.radio-right input[type="checkbox"],
-.checkbox-right input[type="checkbox"] {
-  margin-left: 7px;
-}
 .radio + .radio,
 .checkbox + .checkbox {
   margin-top: -5px;
+}
+@media (min-width: 767px) {
+  .radio.radio-right,
+  .checkbox.radio-right,
+  .radio.checkbox-right,
+  .checkbox.checkbox-right {
+    text-align: right;
+  }
+  .radio.radio-right label,
+  .checkbox.radio-right label,
+  .radio.checkbox-right label,
+  .checkbox.checkbox-right label {
+    padding-left: 0;
+    padding-right: 20px;
+  }
+  .radio-right input[type="radio"],
+  .checkbox-right input[type="radio"],
+  .radio-right input[type="checkbox"],
+  .checkbox-right input[type="checkbox"] {
+    margin-left: 7px;
+  }
+  .radio + .radio,
+  .checkbox + .checkbox {
+    margin-top: -5px;
+  }
 }
 .radio-inline,
 .checkbox-inline {

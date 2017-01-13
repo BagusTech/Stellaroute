@@ -233,7 +233,107 @@ void function initDuckForm($, duck, window) {
 		});
 	}
 
-	function duckForm(wrapper, options){
+	function addItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack) {
+		const item = {};
+		item[key] = keyValue || duck.uuid();
+
+		duck(table).add(buildObject(item, $startOfFields), successCallback, failureCallBack);
+	}
+
+	function updateItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack) {
+		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
+			const item = buildObject(data, $startOfFields);
+			duck(table).update(item, successCallback, failureCallBack);
+		});
+	}
+
+	function deleteItem(table, key, keyValue, $wrapper) {
+		duck(table).delete(keyValue, () => {
+			const currentLocation = window.location.href.split('/');
+			const goTo = $wrapper.attr('duck-goTo');
+
+			if(currentLocation[currentLocation.length - 1]){
+				currentLocation.pop();
+			} else {
+				currentLocation.pop();
+				currentLocation.pop();
+			}
+
+			const newLocation = goTo ? goTo : currentLocation.join('/');
+			if(window.location.href === newLocation) {
+				window.location.reload(true);
+			} else{
+				window.location.href = newLocation;
+			}
+		});
+	}
+
+	function deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, failureCallBack) {
+		const path = $wrapper.attr('duck-delete-path');
+		const value = $wrapper.attr('duck-delete-value');
+
+		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
+			const item = removeFromObject(data, path, value);
+
+			duck(table).update(item, successCallback, failureCallBack);
+		});
+	}
+
+	function editForm(e) {
+		const $wrapper = e.data.wrapper;
+
+		$wrapper.attr('duck-edit-form', $wrapper.attr('duck-edit-form') === 'view' ? 'edit' : 'view');
+		$('[data-function*="scroll"]').trigger('initScroll');
+	}
+
+	function submitForm(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		const crud = e.data.crud;
+		const table = e.data.table;
+		const key = e.data.key;
+		const keyValue = e.data.keyValue;
+		const $startOfFields = e.data.startOfFields;
+		const $wrapper = e.data.wrapper;
+		const successCallback = e.data.successCallback;
+		const failureCallBack = e.data.failureCallBack;
+
+		$(e.currentTarget).prop('disabled', true);
+
+		switch(crud){
+			// adds an item to the table
+			case 'add':{
+				addItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack);
+
+				break;
+			}
+
+			// updates an item from the table
+			case 'update':{
+				updateItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack);
+
+				break;
+			}
+
+			// deletes an item from the table
+			case 'delete':{
+				deleteItem(table, key, keyValue, $wrapper);
+
+				break;
+			}
+
+			// deletes a field or value from an item in the table
+			case 'deleteField':{
+				deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, failureCallBack)
+
+				break;
+			}
+			default:
+		}
+	}
+
+	function duckForm(wrapper, options) {
 		const $wrapper = $(wrapper);
 		const $startOfFields = duck.findRelevantChildren($wrapper, '[duck-field]');
 		//const $submit = $wrapper.find('[duck-button="submit"]');
@@ -255,83 +355,14 @@ void function initDuckForm($, duck, window) {
 			return; // need to have a table, key, and it's function set, and must have key value if it's for an update or delete
 		}
 
-		$editButton.click(() => {
-			$wrapper.attr('duck-edit-form', $wrapper.attr('duck-edit-form') === 'view' ? 'edit' : 'view');
-			$('[data-function*="scroll"]').trigger('initScroll');
-		})
-
-		$cancelButton.click(() => {
-			$wrapper.attr('duck-edit-form', $wrapper.attr('duck-edit-form') === 'view' ? 'edit' : 'view');
-		})
+		$editButton.off('click', editForm)
+				.on('click', {wrapper: $wrapper}, editForm);
+		$cancelButton.off('click', editForm)
+					.on('click', {wrapper: $wrapper}, editForm);
 
 		// set what happens when the submit button is clicked
-		$wrapper.on('click', '[duck-button="submit"]', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-
-			$(e.currentTarget).prop('disabled', true);
-
-			switch(crud){
-				// adds an item to the table
-				case 'add':{
-					const item = {};
-					item[key] = keyValue || duck.uuid();
-
-					duck(table).add(buildObject(item, $startOfFields), successCallback, failureCallBack);
-
-					break;
-				}
-
-				// updates an item from the table
-				case 'update':{
-					duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
-						const item = buildObject(data, $startOfFields);
-						duck(table).update(item, successCallback, failureCallBack);
-					});
-
-					break;
-				}
-
-				// deletes an item from the table
-				case 'delete':{
-					duck(table).delete(keyValue, () => {
-						const currentLocation = window.location.href.split('/');
-						const goTo = $wrapper.attr('duck-goTo');
-
-						if(currentLocation[currentLocation.length - 1]){
-							currentLocation.pop();
-						} else {
-							currentLocation.pop();
-							currentLocation.pop();
-						}
-
-						const newLocation = goTo ? goTo : currentLocation.join('/');
-						if(window.location.href === newLocation) {
-							window.location.reload(true);
-						} else{
-							window.location.href = newLocation;
-						}
-					});
-
-					break;
-				}
-
-				// deletes a field or value from an item in the table
-				case 'deleteField':{
-					const path = $wrapper.attr('duck-delete-path');
-					const value = $wrapper.attr('duck-delete-value');
-
-					duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
-						const item = removeFromObject(data, path, value);
-
-						duck(table).update(item, successCallback, failureCallBack);
-					});
-
-					break;
-				}
-				default:
-			}
-		});
+		$wrapper.off('click', submitForm)
+				.on('click', '[duck-button="submit"]', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, failureCallBack}, submitForm);
 
 		// set arrays to add and remove items
 		$wrapper.find('[duck-type="array"]')

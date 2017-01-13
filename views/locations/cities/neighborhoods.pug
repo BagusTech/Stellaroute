@@ -12,18 +12,6 @@ block content
 				.masonry--item
 					a(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`)
 						+card(neighborhood.cardImage, neighborhood.names.display)
-					
-		//for neighborhood in neighborhoods
-			+modal(`${neighborhood.url}-neighborhood`)
-				div(data-toggle='hidden')
-					h2.content-card--header.fw-B.fc-B= neighborhood.names.display
-
-					.lead!= neighborhood.description
-					img.w-100(src= neighborhood.cardImage || 'http://placebear.com/300/100', alt= neighborhood.names.display)
-
-					.ta-R.mt-Md
-						a.btn.btn-default(data-dismiss='modal') Close
-						a.btn.btn-secondary(href=`/${city.countryUrl}/${city.url}/${neighborhood.url}`) Read More
 		
 	else
 		.content-card

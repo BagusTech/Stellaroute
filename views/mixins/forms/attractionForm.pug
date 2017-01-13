@@ -22,27 +22,10 @@ mixin attractionForm(crud, attraction, locations, cancel)
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
 
-		-
-			var categories = [
-								'Other',
-								'Buildings & Scyscrapers',
-								'Parks & Public Spaces',
-								'Monuments & Sculptures',
-								'Piers & Boardwalks',
-								'Amusement Parks',
-								'Music Venues & Theatres',
-								'Local Experience & Culture',
-								'Museums',
-								'Tours',
-								'Food and Drinks',
-								'Outdoor Activities',
-								'Top Attraction',
-							];
-
 		.form-group.p-md.bg-G__ltr(duck-field='category', duck-type='checkbox')
 			h3.mt-0 Category
 			.row
-				for category in categories
+				for category in attractionCategories
 					.col-xs-12.col-sm-6.col-md-4.col-sm-3
 						.checkbox
 							label

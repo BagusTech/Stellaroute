@@ -9,28 +9,61 @@ block content
 			.col-xs-12.col-sm-6
 				+contentCard('Tools')
 					button#ClearCache.btn-primary Clear Cache
-		h2.fc-G Update Users
-		.row
-			ul#UserList.p-0
-				for user, i in users.sort((a, b) => {if(a.isAdmin){return -1;} return 1;})
-					-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
+		div(data-function='accordion')
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
+				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
+				| Update Users
+			.row(role='tabpanel', aria-hidden='true')
+				ul#UserList.p-0
+					for user, i in users.sort((a, b) => {if(a.isAdmin){return -1;} return 1;})
+						-var isAlt = i % 2 == 0 ? '' : 'bg-G__ltr'
 
-					li.col-xs-12.col-sm-6.col-md-4.col-lg-3.ls-N
-						+contentCard()
-							h3.content-card--header= user.name ? `${user.name.first} ${user.name.last}` : 'N/A'
-								button.btn-warning.f-R.mt-NegSm.mr-NegSm.js-password-reset(type='button') Reset Password
-							strong Email:&nbsp;
-							span.js-user-email= user.local ? user.local.email : 'N/A'
+						li.col-xs-12.col-sm-6.col-md-4.col-lg-3.ls-N
+							+contentCard()
+								h3.content-card--header= user.name ? `${user.name.first} ${user.name.last}` : 'N/A'
+									button.btn-warning.f-R.mt-NegSm.mr-NegSm.js-password-reset(type='button') Reset Password
+								strong Email:&nbsp;
+								span.js-user-email= user.local ? user.local.email : 'N/A'
 
 
-							.mt-Md(duck-function='update', duck-key-value= user['Id'])
-								.checkbox.d-Ib(duck-field='isAdmin', duck-type='bool')
-									label
-										input(type='checkbox', duck-value, checked= user.isAdmin, value='true')
-										| Administrator
+								.mt-Md(duck-function='update', duck-key-value= user['Id'])
+									.checkbox.d-Ib(duck-field='isAdmin', duck-type='bool')
+										label
+											input(type='checkbox', duck-value, checked= user.isAdmin, value='true')
+											| Administrator
 
-								button.btn-primary.f-R(type='button', duck-button='submit') Save
-									i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')
+									button.btn-primary.f-R(type='button', duck-button='submit') Save
+										i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
+				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
+				| Add City
+			.row(role='tabpanel', aria-hidden='true')
+				.content-card(duck-table='Cities', duck-function='add', duck-key='Id', duck-key-value= uuid())
+					h3.content-card--header Add City
+					.row
+						.col-xs-12.col-sm-6
+							.form-group(duck-field='country', duck-type='select')
+								label Country
+									select.form-control(duck-value)
+										for country in countries.sort((a, b) => {if(a.names.display < b.names.display){return -1}if(a.names.display > b.names.display){return 1} return 0})
+											option(value= country.Id)= country.names.display
+
+					.row
+						.col-xs-12.col-sm-6
+							div(duck-field='names', duck-type='object')
+								.form-group(duck-field='display', duck-type='string')
+									label City Name
+										input.form-control(type='text', duck-value)
+						.col-xs-12.col-sm-6
+							.form-group(duck-field='url', duck-type='string')
+								label Url
+									input.form-control(type='text', duck-value, disabled)
+					.ta-R
+						button.btn.btn-primary(duck-button='submit') Add City
+	.hidden
+		for country in countries
+			input.hidden(type='hidden', data-country-url= country.Id, value= country.url)
+
 	//
 		reset password []
 		make user a member []

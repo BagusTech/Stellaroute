@@ -60,4 +60,17 @@ void function initAdminControls($, duck) {
 			$reset.click(duck.sendResetEmail(userEmail));
 		})
 	}();
+
+	void function initAddCity() {
+		$(window).on('load', () => {
+			const $form = $('[duck-table="Cities"][duck-function="add"]');
+
+			$form.duckForm({
+				successCallback: () => {
+					const country = $form.find('[duck-field="country"] select').val()
+					window.location = `/${$(`[data-country-url="${country}"]`).val()}/${$form.find('[duck-field="url"] input').val()}`;
+				}
+			});
+		});
+	}();
 }(jQuery.noConflict(), duck);

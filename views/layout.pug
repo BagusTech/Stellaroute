@@ -1,18 +1,21 @@
-// include all mixins
-include mixins/_mixins.pug
-
-block options
-	- var logoColor = 'purple';
-	- var headerBackground = 'white'
-	- var showHeaderSearch = true;
-
+doctype html
 html(lang='en', style='height: 100%')
-	include controls/common-resources.pug
+	head
+		include controls/common-resources.pug
+		block head
 
 	body.loading#Stellaroute(data-function='scroll')
+		// include all mixins
+		include mixins/_mixins.pug
+
+		block options
+			- var logoColor = 'purple';
+			- var headerBackground = 'white'
+			- var showHeaderSearch = true;
+
 		noscript
 			iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NG3DCTG", height="0", width="0", style="display:none;visibility:hidden")
-<!-- End Google Tag Manager (noscript) -->
+
 		div#Body(data-scroll='content-wrapper')
 			div(data-scroll='content')
 				block header

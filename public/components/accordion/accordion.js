@@ -73,6 +73,9 @@ void function initializeAccordions($) {
             .next('[role="tabpanel"]') // find the tabpanel that it is associated with
             .attr('aria-hidden', tabState)
             .slideToggle(animationSpeed);
+
+        // trigger tab-changed event when done
+        $tabToToggle.trigger('tab-changed', [ true ]);
     }
 
     function changeTab(e, isOnLoad) {
@@ -108,9 +111,6 @@ void function initializeAccordions($) {
                 $tab.attr('id', currentId);
             }
         }
-
-        // trigger tab-changed event when done
-        $tab.trigger('tab-changed', [ true ]);
     }
 
     function initTabChange(e) {

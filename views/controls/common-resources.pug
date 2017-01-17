@@ -40,6 +40,7 @@ head
 	script(type='text/javascript', src='/components/accordion/accordion.min.js')
 	script(type='text/javascript', src='/components/banner/banner.min.js')
 	script(type='text/javascript', src='/components/copy/copy.min.js')
+	script(type='text/javascript', src='/components/filepicker/filepicker.min.js')
 	script(type='text/javascript', src='/components/filter/filter.min.js')
 	script(type='text/javascript', src='/components/icon/icon.min.js')
 	script(type='text/javascript', src='/components/interiorNav/interiorNav.min.js')
@@ -49,7 +50,8 @@ head
 	script(type='text/javascript', src='/components/stopProp/stopProp.min.js')
 	script(type='text/javascript', src='/components/tabs/tabs.min.js')
 	if (user && user.isAdmin)
-		script(type='text/javascript', src='/components/duckForm/duckForm.min.js')
+		script(type='text/javascript', src='/components/duck/filepicker/filepicker.min.js')
+		script(type='text/javascript', src='/components/duck/form/form.min.js')
 	
 	script(type='text/javascript', src='/js/scripts.min.js')
 	
@@ -108,6 +110,17 @@ head
 				.replace(findMultipleSpaces, ' ')
 				.trim()
 				.replace(findAllSpaces, '-');
+		}
+		function getImagePath(img, size) {
+			if (!img) {
+				return null;
+			}
+
+			const imgPath = img.split('.');
+			const imgExtention = imgPath.pop();
+			const s3Path = 'https://s3-us-west-2.amazonaws.com/stellaroute.com/images/';
+
+			return img.indexOf('http') === 0 ? null : `${s3Path}${imgPath.join('')}-${size}.${imgExtention}`
 		}
 
 		var attractionCategories = [

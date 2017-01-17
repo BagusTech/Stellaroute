@@ -19,7 +19,7 @@ mixin cityForm(crud, city, locations, cancel)
 							input.ml-Sm.form-control(type='text', required, duck-value, value= alias)
 							button.btn.btn-danger(duck-button='delete')
 				.ta-R
-					button.btn.btn-primary Add Alias
+					button.btn.btn-primary(duck-button='add') Add Alias
 
 		if (!city)
 			.form-group(duck-field='url', duck-type='string')
@@ -50,7 +50,7 @@ mixin cityForm(crud, city, locations, cancel)
 						input.ml-Sm.form-control(type='string', duck-value, value= image)
 						button.btn.btn-danger(duck-button='delete')
 			.ta-R
-				button.btn.btn-primary Add Image
+				button.btn.btn-primary(duck-button='add') Add Image
 
 		.form-group(duck-field='averageStay', duck-type='string')
 			label Suggested / Average Length of Stay
@@ -64,7 +64,7 @@ mixin cityForm(crud, city, locations, cancel)
 						input.ml-Sm.form-control(type='text', duck-value, value= time)
 						button.btn.btn-danger(duck-button='delete')
 			.ta-R
-				button.btn.btn-primary Add
+				button.btn.btn-primary(duck-button='add') Add
 
 		.form-group(duck-field='topPlaces', duck-type='array')
 			label Top Places
@@ -74,7 +74,7 @@ mixin cityForm(crud, city, locations, cancel)
 						input.ml-Sm.form-control(type='text', duck-value, value= place)
 						button.btn.btn-danger(duck-button='delete')
 			.ta-R
-				button.btn.btn-primary Add Place
+				button.btn.btn-primary(duck-button='add') Add Place
 
 		div(duck-field='orientation', duck-type='object')
 			h3 Orientation

@@ -8,6 +8,7 @@ void function initDuckForm($, duck, window) {
 		e.preventDefault();
 		
 		$(this).closest('[duck-type]').remove();
+		$(this).closest('[duck-type="array"]').trigger('duckArrayItemDeleted');
 	}
 
 	function addArrayItem(e) {
@@ -32,6 +33,12 @@ void function initDuckForm($, duck, window) {
 			$clone.find('[duck-button="add"]').click(addArrayItem);
 		}
 
+		if($item.attr('duck-type') === 'image') {
+			$clone.attr('duck-image-picker', $('[duck-image-picker]').length)
+			$clone.prop('filePickerInitiated', false);
+			$clone.find('[duck-image-value]').text('');
+		}
+
 		switch(addDirection) {
 			case 'after' : {
 				$this.closest('[duck-type]').after($clone)
@@ -48,6 +55,8 @@ void function initDuckForm($, duck, window) {
 		}
 
 		$item.parent().sortable('[duck-type]');
+
+		$wrapper.trigger('duckArrayItemAdded');
 	}
 
 	function removeFromObject(obj, path, value) {
@@ -374,10 +383,8 @@ void function initDuckForm($, duck, window) {
 				});
 
 		// make add and delete item from array work
-		$wrapper.find('[duck-button="add"]').off('click', addArrayItem).click(addArrayItem)
-		$wrapper.find('[duck-button="delete"]').off('click', deleteArrayItem).click(deleteArrayItem)
-
-
+		$wrapper.find('[duck-button="add"]').off('click', addArrayItem).click(addArrayItem);
+		$wrapper.find('[duck-button="delete"]').off('click', deleteArrayItem).click(deleteArrayItem);
 	}
 
 	$.fn.duckForm = function init(options) {

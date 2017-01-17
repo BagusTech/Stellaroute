@@ -1,14 +1,12 @@
-const AWS = require('aws-sdk');
+const AWS = require('./aws');
 
-//Connect to database
-AWS.config.update({
-  accessKeyId: process.env.AWS_DYNAMO_ID,
-  secretAccessKey: process.env.AWS_DYNAMO_KEY,
-  region: 'us-west-2',
-  endpoint: "https://dynamodb.us-west-2.amazonaws.com"
-});
+const params = {
+	accessKeyId: process.env.AWS_DYNAMO_ID,
+	secretAccessKey: process.env.AWS_DYNAMO_KEY,
+	endpoint: "https://dynamodb.us-west-2.amazonaws.com",
+}
 
-const db = new AWS.DynamoDB();
-db.lite = new AWS.DynamoDB.DocumentClient()
+const db = new AWS.DynamoDB(params);
+db.lite = new AWS.DynamoDB.DocumentClient(params);
 
 module.exports = db;

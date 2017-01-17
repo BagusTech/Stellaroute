@@ -1,6 +1,8 @@
 const express        = require('express');
 const isLoggedIn     = require('../middleware/isLoggedIn');
+const formidable     = require('../middleware/formidable');
 const pickTable      = require('../modules/pickTable');
+const s3             = require('../modules/s3');
 const sendEmail      = require('../modules/sendEmail');
 const router         = express.Router();
 
@@ -23,6 +25,17 @@ router.get('/get/:table', isLoggedIn(true), (req, res) => {
 		res.send('Nothing Found');
 	}
 });
+
+router.get('/getFiles', isLoggedIn(), (req, res) => {
+	s3.getFiles((data) => {
+		if(!data) {
+			res.status(500).send('No Data To Return')
+		}
+
+		res.send(data);
+	})
+});
+
 
 router.post('/add/:table', isLoggedIn(true), (req, res) => {
 	const item = req.body;
@@ -82,6 +95,23 @@ router.post('/delete/:table', isLoggedIn(true), (req, res) => {
 		console.error(err);
 		res.status(500).send(err);
 	});
+});
+
+router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
+	const files = req.files || [];
+	const length = files.length;
+
+	for (let i = 0; i < length; i++) {
+		const file = files[i];
+		const fileName = file.name.split('.');
+		fileName.pop();
+
+		s3.uploadImage(file.path, {path: fileName.join('')}, function(err, versions, meta) {
+			if (err) {console.error(err); res.status(500).send(err); return;}
+
+			res.send('success');
+		});
+	}	
 });
 
 module.exports = router;

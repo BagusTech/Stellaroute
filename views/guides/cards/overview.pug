@@ -13,9 +13,8 @@
 					button.btn.btn-warning(duck-button='cancel') Cancel
 
 			.col-xs-12.col-sm-4
-				.form-group.p-A.l-Sm.r-Sm.t-0.p-Sm.bg-Ltst.duck-view-hidden(duck-field='map', duck-type='image')
-					label Map Link
-						input.form-control(type='text', duck-value, value= guide.map)
+				.duck-view-hidden
+					+imagePicker(guide, 'map')(class='p-A l-Sm r-Sm t-0 p-Sm bg-Ltst')
 				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
 					img.w-100(src= guide.map, alt= guide.names.display)
 

@@ -1,0 +1,18 @@
+-var imagePicker = 0;
+
++modal(`ImagePickerModal`)(class='modal-lg')
+	h2.content-card--header Pick an Image
+	.mb-Md(duck-images='false')
+	.row(duck-image-uploader)
+		.col-xs-6
+			button.btn.btn-secondary(duck-button='upload') Upload New Image
+			button.btn.btn-primary(duck-button='save-image') Save
+		.col-xs-6.ta-R
+			button.btn.btn-default(data-dismiss='modal') Cancel
+
+mixin imagePicker(item, field)
+	.form-group.m-0.duck-view-hidden.p-Sm.bw-Sm.bs-S(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
+		input.hidden(type='file')
+		input.hidden(type='hidden', duck-value, value= item[field])
+		button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')
+		span.pl-Sm(duck-image-value)= item[field]

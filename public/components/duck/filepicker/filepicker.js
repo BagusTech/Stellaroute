@@ -5,7 +5,7 @@ void function initDuckFilepicker($) {
 
 	function buildImage(key) {
 		const img = $('<img/>', {
-			src: `https://s3-us-west-2.amazonaws.com/lissnerlistner.com/${key}`,
+			src: `https://s3-us-west-2.amazonaws.com/stellaroute.com/${key}`,
 			alt: key,
 			'class': 'm-Sm', 
 			'duck-image-value': key.replace('-thumb2', '').replace('images/', ''),

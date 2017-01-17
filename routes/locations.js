@@ -114,7 +114,7 @@ router.get('/:country/food', (req, res, next) => {
 	});
 });
 
-router.get('/:country/transit', (req, res, next) => {
+/* router.get('/:country/transit', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country)
 						   .join('continent', Continent.cached(), 'Id', 'names.display')
 						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -166,7 +166,7 @@ router.get('/:country/transportation', (req, res, next) => {
 		provinces: provinces,
 		attractions: attractions,
 	});
-});
+}); */
 
 router.get('/:country/:attraction', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
@@ -220,6 +220,12 @@ router.get('/:country/:countryRegion', (req, res, next) => {
 
 router.get('/:country/:province', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		next();
+		return;
+	}
+
 	const province = Province.findOne(['url', 'country'], [req.params.province, country.Id])
 							 .join('continent', Continent.cached(), 'Id', 'names.display')
 							 .join('continent', Continent.cached(), 'Id', 'url')
@@ -253,6 +259,13 @@ router.get('/:country/:province', (req, res, next) => {
 });
 
 router.get('/:country/:province/:provinceRegion', (req, res, next) => {
+	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		next();
+		return;
+	}
+
 	const province = Province.findOne('url', req.params.province).items;
 	
 	if(!province){
@@ -271,7 +284,6 @@ router.get('/:country/:province/:provinceRegion', (req, res, next) => {
 		return;
 	}
 
-	const country = Country.findOne('url', req.params.country).items;
 	const countryRegions = CountryRegion.find('country', country.Id).items;
 	const cities = City.find('provinceRegions', provinceRegion.Id).items;
 
@@ -288,6 +300,12 @@ router.get('/:country/:province/:provinceRegion', (req, res, next) => {
 
 router.get('/:country/:city', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		next();
+		return;
+	}
+
 	const city = City.find('url', req.params.city)
 					 .findOne('country', country.Id)
 					 .join('country', Country.cached(), 'Id', 'names.display')
@@ -404,6 +422,13 @@ router.get('/:country/:city', (req, res, next) => {
 }); */
 
 router.get('/:country/:city/:guide', (req, res, next) => {
+	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		next();
+		return;
+	}
+
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -500,6 +525,13 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 });
 
 router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
+	const country = Country.findOne('url', req.params.country).items;
+
+	if(!country){
+		next();
+		return;
+	}
+
 	const city = City.findOne('url', req.params.city)
 					 .join('country', Country.cached(), 'Id', 'names.display')
 					 .join('country', Country.cached(), 'Id', 'url')
@@ -552,9 +584,7 @@ router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 });
 
 router.get('/:country/:city/:cityRegion', (req, res, next) => {
-
-	const country = Country.findOne('url', req.params.country)
-						   .items;
+	const country = Country.findOne('url', req.params.country).items;
 
 	if(!country){
 		next();
@@ -591,17 +621,18 @@ router.get('/:country/:city/:cityRegion', (req, res, next) => {
 });
 
 router.get('/:country/:city/:neighborhood', (req, res, next) => {
+	const country = Country.findOne('url', req.params.country).items;
+	const city = City.findOne('url', req.params.city).items;
 	const neighborhood = Neighborhood.findOne('url', req.params.neighborhood)
 									 .join('city', City.cached(), 'Id', 'names.display')
 									 .join('city', City.cached(), 'Id', 'url')
 									 .join('cityRegions', CityRegion.cached(), 'Id', 'names.display')
 									 .items[0];
-	if(!neighborhood){
+	if(!country || !city || !neighborhood){
 		next();
 		return;
 	}
 
-	const country = Country.findOne('url', req.params.country).items;
 	const cityRegions = CityRegion.find('city', neighborhood.city).items.sort(sortBy('url'))
 	const nearbyNeighborhoods = neighborhood.nearbyNeighborhoods ? Neighborhood.find().items.filter((i) => neighborhood.nearbyNeighborhoods.indexOf(i.Id) > -1) : []
 

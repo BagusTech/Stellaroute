@@ -3,10 +3,15 @@
 void function initFilepicker($){
 	'use strict';
 
-	function getFiles(e) {
+	function getFiles(e, isLoaded) {
 		const $wrapper = e.data.wrapper;
 
 		$wrapper.trigger('gettingFiles');
+
+		if(isLoaded) {
+			$wrapper.trigger('gotFiles', [null, null, true])
+			return;
+		}
 
 		$.ajax({
 			url: '/getFiles',

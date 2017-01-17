@@ -49,13 +49,13 @@ void function initDuckFilepicker($) {
 	}
 
 	function gotFiles($item, $imagePickerImages) {
-		return (e, err, data) => {
-			if (err || !data || !data.length) {
+		return (e, err, data, isLoaded) => {
+			if (!isLoaded && (err || !data || !data.length)) {
 				$imagePickerImages.text('Sorry, something went wrong getting the images.');
 				return;
 			}
 
-			if($imagePickerImages.attr('duck-images') === 'false'){
+			if(!isLoaded){
 				const images = data.filter((img) => img.Key.indexOf('-thumb2.') > -1).sort((a, b) => {
 					if(a.LastModified > b.LastModified) {return -1}
 					if(a.LastModified < b.LastModified) {return 1}
@@ -90,7 +90,7 @@ void function initDuckFilepicker($) {
 			gotFiles: gotFiles($item, $imagePickerImages),
 		};
 
-		$item.find('[duck-button="image-select"]').on('click', () => {$item.trigger('getFiles')});
+		$item.find('[duck-button="image-select"]').on('click', () => {$item.trigger('getFiles', [$imagePickerImages.attr('duck-images') === 'true'])});
 		$fileInput.on('change', () => {$item.trigger('uploadFiles')});
 		
 		$item.filePicker(filePickerOptions);

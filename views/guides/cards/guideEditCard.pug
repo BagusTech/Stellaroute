@@ -16,9 +16,9 @@
 				.guide-card--tag(class= tagBackgroundColor)= card.tagTitle
 
 			if card.image
-				.guide-card--img-wrapper(style= card.type === 'sub' && `background-image: url('${card.image}');`)
+				.guide-card--img-wrapper(style= card.type === 'sub' && `background-image: url('${getImagePath(card.image, "thumb2")}');`)
 					if card.type !== 'sub'
-							img.guide-card--img(src= card.image, title= card.title || card.type)
+							img.guide-card--img(src= getImagePath(card.image, 'large'), title= card.title || card.type)
 			
 			if card.title || wysiwygHasData(card.description)
 				.guide-card--info
@@ -49,8 +49,7 @@
 			button.btn-default(data-tabs='control', role='tab', aria-expanded='false') Extra Info
 			button.btn-default(data-tabs='control', role='tab', aria-expanded='false') Directions To Card
 
-			.ta-L.bg-W.p-Sm
-				div(role='tabpanel', aria-hidden='false')
+			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='false')
 					.form-group.fs-Xl(duck-field='title', duck-type='string')
 						label Card Title (if linking to existing Item, this is optional)
 							input.form-control(type='text', duck-value, value= card.title)
@@ -72,7 +71,7 @@
 							.form-group.bg-N.m-0(duck-field='tagTitle', duck-type='string')
 								label Tag Title (if card Type shows tags)
 								input.form-control(type='text', duck-value, value= card.tagTitle)
-				div(role='tabpanel', aria-hidden='true')
+			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')
 					h3 Link Card to Existing Attraction/Location
 					.form-group(duck-field='table', duck-type='select')
 						label Existing Item Type (only use if you are linking to another, existing location/attraction)
@@ -91,24 +90,23 @@
 					.form-group(duck-field='Id', duck-type='string')
 						label Id of linked Existing Item (only use if Existing Item Type is being used)
 							input.form-control(type='text', duck-value, value= card.Id)
-				div(role='tabpanel', aria-hidden='true')
+			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')
 					.form-group(duck-field='image', duck-type='image')
-						label Card Image Url (if linking to existing Item, this is optional)
-							input.form-control(type='text', duck-value, value= card.image)
+						label Card Image
+							+imagePicker(card, 'image')
 					if card.image
-						img.guide-card--img(src= card.image, title= card.title || card.type)
-				div(role='tabpanel', aria-hidden='true')
+						img.guide-card--img(src= getImagePath(card.image, 'large'), title= card.title || card.type)
+			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')
 					label Card Description (if linking to existing Item, this is optional)
 					.form-group(duck-field='description', duck-type='wysiwyg')
 						.summernote!= card.description
-						
-					
+			
 					.row
 						.col-xs-12.col-sm-6
 							.form-group(duck-field='suggestedTime', duck-type='string')
 								label Suggest Time
 									input.form-control(type='text', duck-value, value= card.suggestedTime)
-				div(role='tabpanel', aria-hidden='true')
+			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')
 					div(duck-field='directionsTo', duck-type='array')
 						h3 Directions to Card
 						.col-xs-3: label Method

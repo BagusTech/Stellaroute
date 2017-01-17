@@ -4,20 +4,13 @@ void function initDuckFilepicker($) {
 	'use strict';
 
 	function buildImage(key) {
-		const img = $('<img/>', {
-			src: `https://s3-us-west-2.amazonaws.com/stellaroute.com/${key}`,
-			alt: key,
-			'class': 'm-Sm', 
-			'duck-image-value': key.replace('-thumb2', '').replace('images/', ''),
-			click: (e) => {
-				e.stopPropagation();
+		const img = `
+			<div class="p-Sm d-Ib ta-C" style='max-width: 275px;'>
+				<span class="d-B bw-0 bbw-Sm bs-S mb-Sm">${key.replace('images/', '').replace('-thumb2', '')}</span>
+				<img src="https://s3-us-west-2.amazonaws.com/stellaroute.com/${key}" alt="${key}" duck-image-value="${key.replace('-thumb2', '').replace('images/', '')}"/>
+			</div>
+		`;
 
-				const $this = $(e.currentTarget);
-
-				$this.parent().find('img').attr('image-selected', 'false').removeClass('bw-Lg bc-Purp bs-S');
-				$this.attr('image-selected', 'true').addClass('bw-Lg bc-Purp bs-S');
-			},
-		});
 		return img;
 	}
 
@@ -55,7 +48,7 @@ void function initDuckFilepicker($) {
 		}
 	}
 
-	function gotFiles($imagePickerImages) {
+	function gotFiles($item, $imagePickerImages) {
 		return (e, err, data) => {
 			if (err || !data || !data.length) {
 				$imagePickerImages.text('Sorry, something went wrong getting the images.');
@@ -78,6 +71,13 @@ void function initDuckFilepicker($) {
 
 				$imagePickerImages.attr('duck-images', true);
 			}
+
+			// select the image that is currently being used
+			$imagePickerImages
+				.find('img')
+				.attr('image-selected', false).removeClass('bw-Lg bc-Purp bs-S')
+				.filter((i, img) => $(img).attr('duck-image-value') === $item.find('[duck-value]').val())
+				.attr('image-selected', true).addClass('bw-Lg bc-Purp bs-S');
 		}
 	}
 
@@ -87,7 +87,7 @@ void function initDuckFilepicker($) {
 			fileUploading: fileUploading($uploadButton),
 			filesUploaded: filesUploaded($uploadButton, $imagePickerImages, $item),
 			gettingFiles: gettingFiles($item, $imagePicker, $saveImageButton, $imagePickerImages),
-			gotFiles: gotFiles($imagePickerImages),
+			gotFiles: gotFiles($item, $imagePickerImages),
 		};
 
 		$item.find('[duck-button="image-select"]').on('click', () => {$item.trigger('getFiles')});
@@ -112,6 +112,15 @@ void function initDuckFilepicker($) {
 
 			$fileInput.click()
 		});
+
+		$imagePickerImages.on('click', 'img', (e) => {
+			e.stopPropagation();
+
+			const $this = $(e.currentTarget);
+
+			$imagePickerImages.find('img').attr('image-selected', 'false').removeClass('bw-Lg bc-Purp bs-S');
+			$this.attr('image-selected', 'true').addClass('bw-Lg bc-Purp bs-S');
+		})
 
 		$saveImageButton.on('click', (e) => {
 			e.stopPropagation();

@@ -16,7 +16,7 @@
 				.duck-view-hidden
 					+imagePicker(guide, 'map')(class='p-A l-Sm r-Sm t-0 p-Sm bg-Ltst')
 				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
-					img.w-100(src= guide.map, alt= guide.names.display)
+					img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
 
 	else
 		.row
@@ -27,4 +27,4 @@
 			if guide.map
 				.col-xs-12.col-sm-4
 					button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
-						img.w-100(src= guide.map, alt= guide.names.display)
+						img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)

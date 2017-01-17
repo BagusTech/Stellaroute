@@ -17,7 +17,7 @@
 			if card.image
 				.guide-card--img-wrapper(style= card.type === 'sub' && `background-image: url('${card.image}');`)
 					if card.type !== 'sub'
-							img.guide-card--img(src= card.image, title= card.title || card.type)
+							img.guide-card--img(src= getImagePath(card.image, 'large'), title= card.title || card.type)
 			
 			if card.title || wysiwygHasData(card.description)
 				.guide-card--info

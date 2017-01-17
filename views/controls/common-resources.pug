@@ -18,7 +18,7 @@ head
 	//// Styles & Fonts ///////////////////////////////////////////////////////
 	// not hosted local
 	link(href='https://fonts.googleapis.com/css?family=Work+Sans:400,600,700,300', rel='stylesheet', type='text/css')
-	// link(rel="stylesheet", href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css")
+	link(href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css", rel="stylesheet")
 
 	// hosted local
 	link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
@@ -32,7 +32,7 @@ head
 	script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
 	script(type='text/javascript', src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
 	script(type='text/javascript', src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-	script(src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js")
 
 	// hosted local
 	script(type='text/javascript', src='/components/duck/duck.min.js')
@@ -54,18 +54,6 @@ head
 		script(type='text/javascript', src='/components/duck/form/form.min.js')
 	
 	script(type='text/javascript', src='/js/scripts.min.js')
-	
-
-	// include summernote css/js
-	link(href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css", rel="stylesheet")
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js")
-
-	// Google maps api
-		script(type='text/javascript', src='https://maps.google.com/maps/api/js??key=AIzaSyAqi8KpEFUzbQ-MiDK21GojT2cphVhk0Ms &libraries=places&sensor=false')
-		script(type='text/javascript', src='/scripts/google.js')
-
-	// api calls
-		script(type='text/javascript', src='/scripts/calls.js')
 
 	// scripts
 	-

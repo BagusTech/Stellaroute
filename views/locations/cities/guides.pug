@@ -12,19 +12,9 @@ block content
 	if (guides.length)
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for guide in guides
-				if user && user.isAdmin
-					.masonry--item(duck-table='Guides', duck-key='Id', duck-key-value= guide.Id, duck-function='update', duck-edit-form='view')
-						button.btn(duck-button='edit') Edit Image
-						.duck-view-hidden
-							.form-group(duck-field='cardImage', duck-type='image')
-								input.form-control(type='text', duck-value, value= guide.cardImage)
-							button.btn.btn-primary(duck-button='submit') Save
-						a(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
-							+card(guide.cardImage, guide.names.display)
-				else
-					.masonry--item
-						a(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
-							+card(guide.cardImage, guide.names.display)
+				.masonry--item
+					a(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+						+card(guide.cardImage, guide.names.display)
 		
 	else
 		.content-card

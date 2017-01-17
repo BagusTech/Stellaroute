@@ -96,12 +96,10 @@ else
 				i.fa.fa-user(aria-hidden="true")
 
 		ul.dropdown-menu.l-A.r-0(aria-labelledby="UserMenu")
-			li
-				a(href='/profile') My Account
-			li
-				a(href='/request') Make A Request
-			li
-				a(href='/feedback') Give Us Feedback
+			li: a(href='/profile') My Account
+			li: a(href='/request') Make A Request
+			li: a(href='/feedback') Give Us Feedback
+			if user.isAdmin
+			li: a(href='/admin') Admin Panel
 			li.divider(role="separator")
-			li
-				a(href='/logout') Log Out
+			li: a(href='/logout') Log Out

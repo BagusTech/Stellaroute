@@ -10,7 +10,15 @@ block content
 				+contentCard('Tools')
 					button#ClearCache.btn-primary Clear Cache
 		div(data-function='accordion')
-			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-changed', data-target='this i')
+				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
+				| All Cities
+			.row(role='tabpanel', aria-hidden='true')
+				ul
+					for city in cities ? cities : []
+						li: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
+			
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-changed', data-target='this i')
 				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
 				| Update Users
 			.row(role='tabpanel', aria-hidden='true')
@@ -34,7 +42,8 @@ block content
 
 									button.btn-primary.f-R(type='button', duck-button='submit') Save
 										i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')
-			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i')
+			
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-changed', data-target='this i')
 				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
 				| Add City
 			.row(role='tabpanel', aria-hidden='true')
@@ -60,6 +69,7 @@ block content
 									input.form-control(type='text', duck-value, disabled)
 					.ta-R
 						button.btn.btn-primary(duck-button='submit') Add City
+	
 	.hidden
 		for country in countries
 			input.hidden(type='hidden', data-country-url= country.Id, value= country.url)

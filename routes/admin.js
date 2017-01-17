@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 		users: pickTable('Users').cached(),
 		countries: pickTable('Countries').cached(),
 		provinces: pickTable('Provinces').cached(),
+		cities: pickTable('Cities').join('country', pickTable('Countries').cached(), 'Id', 'url').items,
 	});
 });
 

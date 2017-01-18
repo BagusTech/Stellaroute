@@ -22,7 +22,7 @@ mixin attractionForm(crud, attraction, locations, cancel)
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
 
-		.form-group.p-md.bg-G__ltr(duck-field='category', duck-type='checkbox')
+		.form-group.p-Md.bg-G__ltr(duck-field='category', duck-type='checkbox')
 			h3.mt-0 Category
 			.row
 				for category in attractionCategories
@@ -52,16 +52,15 @@ mixin attractionForm(crud, attraction, locations, cancel)
 			label Description
 			.summernote!= attraction && attraction.description
 
-		.form-group(duck-field='cardImage', duck-type='string')
+		.form-group(duck-field='cardImage', duck-type='image')
 			label Card Image
-				input.form-control(type='text', required, duck-value, value= attraction && attraction.cardImage)
+				+imagePicker(guide, 'cardImage')
 
 		div(duck-field='images', duck-type='array')
 			h3 Images
 			div
 				for image in attraction && attraction.images ? attraction.images : [null]
-					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-						input.ml-Sm.form-control(type='string', duck-value, value= image)
+					+imagePicker(guide)
 						button.btn.btn-danger(duck-button='delete') Delete Image
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Image

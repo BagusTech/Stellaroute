@@ -14,19 +14,26 @@ block content
 					div(data-stickey='content')
 						.visible-xs
 							button.btn.btn-default.w-100(data-function='toggle', data-target='[data-filter-section="attraction-category"]') Filter
-						.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-filter-section='attraction-category', data-toggle='hidden-xs')
-							h2.mt-0.pt-Sm.ta-R--sm Category
-							for category in attractionCategories
+						.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
+							div(data-filter-section='top-attraction')
 								.checkbox.checkbox-right
 									label
-										span.hidden-xs= category
-										input(type='checkbox', value= category)
-										span.visible-xs= category
+										span.hidden-xs Only Top Attractions
+										input(type='checkbox', value='true')
+										span.visible-xs Only Top Attractions
+							div(data-filter-section='attraction-category')
+								h2.mt-0.pt-Sm.ta-R--sm Category
+								for category in attractionCategories
+									.checkbox.checkbox-right
+										label
+											span.hidden-xs= category
+											input(type='checkbox', value= category)
+											span.visible-xs= category
 
 			.col-xs-12.col-sm-8.col-md-9.col-lg-10
 				.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 					for attraction in attractions
-						.masonry--item(data-filter-attraction-category= attraction.category && attraction.category.join('|') || 'Unknown')
+						.masonry--item(data-filter-attraction-category= attraction.category && attraction.category.join('|') || 'Unknown', data-filter-top-attraction= attraction.isTopAttraction && 'true')
 							a(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`)
 								+card(attraction.cardImage, attraction.names.display)
 		

@@ -1,6 +1,6 @@
 if userIsAuthorized()
-	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-		.content-card
+	.content-card
+		div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
 			h2.content-card--header Quick Info
 				button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 
@@ -17,8 +17,6 @@ if userIsAuthorized()
 					span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
 					.ml-Md!= wysiwygHasData(attraction.address) ? attraction.address : 'No Data'
 
-				button.btn.btn-default(duck-button='edit') Edit Category
-
 			.duck-view-hidden
 				.form-group(duck-field='price', duck-type='wysiwyg')
 					label Price
@@ -32,11 +30,23 @@ if userIsAuthorized()
 					label Address
 					.summernote!= attraction && attraction.address
 
-				.form-group.p-Md.bg-G__ltr(duck-field='category', duck-type='checkbox')
+				button.btn.btn-primary(duck-button='submit') Save
+				button.btn.btn-warning(duck-button='cancel') Cancel
+
+		div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+			.duck-edit-hidden
+				button.btn.btn-default(duck-button='edit') Edit Category
+			.duck-view-hidden.p-Md.bg-G__ltr
+				.form-group(duck-field='isTopAttraction', duck-type='bool')
+					.checkbox
+						label
+							input(type='checkbox', duck-value, checked= attraction && attraction.isTopAttraction)
+							| Top Attraction
+				.form-group(duck-field='category', duck-type='checkbox')
 					h3.mt-0 Category
 					.row
 						for category in attractionCategories
-							.col-xs-12.col-sm-6.col-md-4.col-sm-3
+							.col-xs-12.col-md-6
 								.checkbox
 									label
 										input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)

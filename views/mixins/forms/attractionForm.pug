@@ -13,9 +13,14 @@ mixin attractionForm(crud, attraction, locations, cancel)
 						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.official)
 			.c-B(duck-field='alias', duck-type='array')
 				label Alias'
-				for alias in attraction && attraction.names && attraction.names.alias ? attraction.names.alias : [null]
-					.form-group(duck-type='string')
-						input.form-control(type='text', required, duck-value, value= alias)
+
+				div
+					for alias in attraction && attraction.names && attraction.names.alias ? attraction.names.alias : [null]
+						.form-group.d-F(duck-type='string')
+							input.form-control(type='text', required, duck-value, value= alias)
+							button.btn.btn-danger(duck-button='delete') delete Alias
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Alias
 
 		if (!attraction)
 			.form-group(duck-field='url', duck-type='string')
@@ -26,118 +31,120 @@ mixin attractionForm(crud, attraction, locations, cancel)
 			h3.mt-0 Category
 			.row
 				for category in attractionCategories
-					.col-xs-12.col-sm-6.col-md-4.col-sm-3
+					.col-xs-12.col-md-6
 						.checkbox
 							label
 								input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)
 								= category
-		
-		.form-group(duck-field='price', duck-type='wysiwyg')
-			label Price
-			.summernote!= attraction && attraction.price
-
-		.form-group(duck-field='hours', duck-type='wysiwyg')
-			label Hours
-			.summernote!= attraction && attraction.hours
-
-		.form-group(duck-field='address', duck-type='wysiwyg')
-			label Address
-			.summernote!= attraction && attraction.address
-		
-		.form-group(duck-field='tagline', duck-type='string')
-			label Tagline
-				input.form-control(type='text', duck-value, value= attraction && attraction.tagline)
-
-		div(duck-field='description', duck-type='wysiwyg')
-			label Description
-			.summernote!= attraction && attraction.description
 
 		.form-group(duck-field='cardImage', duck-type='image')
 			label Card Image
 				+imagePicker(attraction, 'cardImage')
+		//	
+			.form-group(duck-field='price', duck-type='wysiwyg')
+				label Price
+				.summernote!= attraction && attraction.price
 
-		div(duck-field='images', duck-type='array')
-			h3 Images
-			div
-				for image in attraction && attraction.images ? attraction.images : [null]
-					+imagePicker(attraction)
-						button.btn.btn-danger(duck-button='delete') Delete Image
-			.ta-R
-				button.btn.btn-primary(duck-button='add') Add Image
+			.form-group(duck-field='hours', duck-type='wysiwyg')
+				label Hours
+				.summernote!= attraction && attraction.hours
 
-		div(duck-field='needToKnow', duck-type='array')
-			h3 Need To Know
-			for advice in attraction && attraction.needToKnow ? attraction.needToKnow : [{}]
-				.row(duck-type='object')
-					h4 Advice
-					div
-						.form-group.col-xs-10(duck-field='title', duck-type='string')
-							label Title
-								input.form-control(type='text', duck-value, value= advice.title)
-						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= advice.description
-						.ta-C
-							button.btn.btn-danger.mt-NegLg(duck-button='delete') Delete Advice
-			.ta-R
-				button.btn.btn-primary(duck-button='add') Add Advice
+			.form-group(duck-field='address', duck-type='wysiwyg')
+				label Address
+				.summernote!= attraction && attraction.address
+			
+			.form-group(duck-field='tagline', duck-type='string')
+				label Tagline
+					input.form-control(type='text', duck-value, value= attraction && attraction.tagline)
 
-		div(duck-field='quickFacts', duck-type='array')
-			h3 Quick Facts
-			for advice in attraction && attraction.quickFacts ? attraction.quickFacts : [{}]
-				.row(duck-type='object')
-					h4 Fact
-					div
-						.form-group.col-xs-10(duck-field='title', duck-type='string')
-							label Title
-								input.form-control(type='text', duck-value, value= advice.title)
-						.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-							label Description
-							.summernote!= advice.description
-						.ta-C
-							button.btn.btn-danger.mt-NegLg(duck-button='delete') Delete Fact
-			.ta-R
-				button.btn.btn-primary(duck-button='add') Add Fact
-
-		div(duck-field='orientation', duck-type='object')
-			h3 Orientation
-			.form-group(duck-field='description', duck-type='wysiwyg')
+			div(duck-field='description', duck-type='wysiwyg')
 				label Description
-				.summernote!= attraction && attraction.orientation && attraction.orientation.description
-			.form-group(duck-field='map', duck-type='string')
-				label Map
-					input.form-control(type='text', duck-value, value= attraction && attraction.orientation && attraction.orientation.map)
-			.form-group(duck-field='gettingThere', duck-type='wysiwyg')
-				label Getting There
-				.summernote!= attraction && attraction.orientation && attraction.orientation.gettingThere
+				.summernote!= attraction && attraction.description
 
-		div(duck-field='nearbyAttractions', duck-type='array')
-			label Nearby Attractions
-			div
-				for nearbyAttraction in attraction && attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
-					if (nearbyAttractions)
-						div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
-					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-						input.ml-Sm.form-control(type='text', duck-value, value= nearbyAttraction)
-						button.btn.btn-danger(duck-button='delete')
-			.ta-R
-				button.btn.btn-primary(duck-button='add') Add Nearby Attraction
+			
 
-		div(duck-field='subAttractions', duck-type='array')
-			label Sub Attractions
-			div
-				for subAttraction in attraction && attraction.subAttractions ? attraction.subAttractions : [null]
-					if (subAttractions)
-						div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
-					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-						input.ml-Sm.form-control(type='text', duck-value, value= subAttraction)
-						button.btn.btn-danger(duck-button='delete')
-			.ta-R
-				button.btn.btn-primary(duck-button='add') Add Sub Attraction
+			div(duck-field='images', duck-type='array')
+				h3 Images
+				div
+					for image in attraction && attraction.images ? attraction.images : [null]
+						+imagePicker(attraction)
+							button.btn.btn-danger(duck-button='delete') Delete Image
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Image
+		
+			div(duck-field='needToKnow', duck-type='array')
+				h3 Need To Know
+				for advice in attraction && attraction.needToKnow ? attraction.needToKnow : [{}]
+					.row(duck-type='object')
+						h4 Advice
+						div
+							.form-group.col-xs-10(duck-field='title', duck-type='string')
+								label Title
+									input.form-control(type='text', duck-value, value= advice.title)
+							.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote!= advice.description
+							.ta-C
+								button.btn.btn-danger.mt-NegLg(duck-button='delete') Delete Advice
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Advice
 
-		.form-group(duck-field='parentAttraction', duck-type='string')
-			label Parent Attraction
-				input.form-control(type='text', duck-value, value= attraction && attraction.parentAttraction)
+			div(duck-field='quickFacts', duck-type='array')
+				h3 Quick Facts
+				for advice in attraction && attraction.quickFacts ? attraction.quickFacts : [{}]
+					.row(duck-type='object')
+						h4 Fact
+						div
+							.form-group.col-xs-10(duck-field='title', duck-type='string')
+								label Title
+									input.form-control(type='text', duck-value, value= advice.title)
+							.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+								label Description
+								.summernote!= advice.description
+							.ta-C
+								button.btn.btn-danger.mt-NegLg(duck-button='delete') Delete Fact
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Fact
+
+			div(duck-field='orientation', duck-type='object')
+				h3 Orientation
+				.form-group(duck-field='description', duck-type='wysiwyg')
+					label Description
+					.summernote!= attraction && attraction.orientation && attraction.orientation.description
+				.form-group(duck-field='map', duck-type='string')
+					label Map
+						input.form-control(type='text', duck-value, value= attraction && attraction.orientation && attraction.orientation.map)
+				.form-group(duck-field='gettingThere', duck-type='wysiwyg')
+					label Getting There
+					.summernote!= attraction && attraction.orientation && attraction.orientation.gettingThere
+
+			div(duck-field='nearbyAttractions', duck-type='array')
+				label Nearby Attractions
+				div
+					for nearbyAttraction in attraction && attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
+						if (nearbyAttractions)
+							div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
+						.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+							input.ml-Sm.form-control(type='text', duck-value, value= nearbyAttraction)
+							button.btn.btn-danger(duck-button='delete')
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Nearby Attraction
+
+			div(duck-field='subAttractions', duck-type='array')
+				label Sub Attractions
+				div
+					for subAttraction in attraction && attraction.subAttractions ? attraction.subAttractions : [null]
+						if (subAttractions)
+							div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
+						.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+							input.ml-Sm.form-control(type='text', duck-value, value= subAttraction)
+							button.btn.btn-danger(duck-button='delete')
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Sub Attraction
+
+			.form-group(duck-field='parentAttraction', duck-type='string')
+				label Parent Attraction
+					input.form-control(type='text', duck-value, value= attraction && attraction.parentAttraction)
 
 		if locations && locations.continent
 			.form-group.hidden(duck-field='continent', duck-type='array')

@@ -1,0 +1,43 @@
+if userIsAuthorized()
+	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+
+		.duck-edit-hidden.p-R
+			button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+			if attraction.images && attraction.images.length > 2
+				div(data-function='banner')
+					for img, i in attraction.images
+						div(data-banner='item')
+							img.w-100(src=getImagePath(img, 'large'), alt=`${attraction.names.display} Banner ${i+1}`)
+			else 
+				img.w-100(src= attraction.cardImage ? getImagePath(attraction.cardImage, 'large') : 'http://placebear.com/300/300', alt= attraction.names.display)
+			.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0(style='z-index: 2;')!= attraction.description
+		.duck-view-hidden.mb-Md
+			div(duck-field='description', duck-type='wysiwyg')
+				label Description
+				.summernote!= attraction && attraction.description
+
+			.form-group
+				label Card Image
+					+imagePicker(attraction, 'cardImage')
+
+			div(duck-field='images', duck-type='array')
+				h3 Images
+				div
+					for image in attraction && attraction.images ? attraction.images : [null]
+						+imagePicker()
+							button.btn.btn-danger.f-R.mt-NegXXs.mr-NegXXs(duck-button='delete') Delete Image
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Image
+
+			button.btn.btn-primary(duck-button='submit') Save
+			button.btn.btn-warning(duck-button='cancel') Cancel
+else
+	.content-card.p-0
+		if attraction.images && attraction.images.length > 2
+			div(data-function='banner')
+				for img, i in attraction.images
+					div(data-banner='item')
+						img.w-100(src=img, alt=`${attraction.names.display} Banner ${i+1}`)
+		else 
+			img.w-100(src= attraction.cardImage ? attraction.cardImage : 'http://placebear.com/300/300', alt= attraction.names.display)
+		.lead.fc-W.m-0.p-Sm.bg-Dkst.p-A.b-0.l-0.r-0(style='z-index: 2;')!= attraction.description

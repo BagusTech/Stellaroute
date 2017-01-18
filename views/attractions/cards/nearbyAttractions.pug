@@ -1,0 +1,34 @@
+if userIsAuthorized()
+	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+		h2.fc-G Nearby Attractions
+			button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+
+		.duck-edit-hidden
+			if attraction.nearbyAttractions
+				.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
+					for nearbyAttraction in nearbyAttractions
+						a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
+							+card(getImagePath(nearbyAttraction.cardImage, 'medium'), nearbyAttraction.names.display, null, null, nearbyAttraction.description)
+		.duck-view-hidden
+			div(duck-field='nearbyAttractions', duck-type='array')
+				label Nearby Attractions
+				div
+					for nearbyAttraction in attraction && attraction.nearbyAttractions ? attraction.nearbyAttractions : [null]
+						if (nearbyAttractions)
+							div= nearbyAttractions.filter((i) => i.Id === nearbyAttraction)[0].names.display
+						.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+							input.ml-Sm.form-control(type='text', duck-value, value= nearbyAttraction)
+							button.btn.btn-danger(duck-button='delete')
+				.ta-R
+					button.btn.btn-primary(duck-button='add') Add Nearby Attraction
+			
+			button.btn.btn-primary(duck-button='submit') Save
+			button.btn.btn-warning(duck-button='cancel') Cancel
+
+else if attraction.nearbyAttractions
+	h2.fc-G Nearby Attractions
+
+	.masonry.masonry-grid-1(class= nearbyAttractions.length > 1 ? '.masonry-grid-2--sm' : '')
+		for nearbyAttraction in nearbyAttractions
+			a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
+				+card(getImagePath(nearbyAttraction.cardImage, 'medium'), nearbyAttraction.names.display, null, null, nearbyAttraction.description)

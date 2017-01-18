@@ -1,0 +1,66 @@
+if userIsAuthorized()
+	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+		.content-card
+			h2.content-card--header Orientation
+				button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+
+			.duck-edit-hidden
+					if wysiwygHasData(attraction.orientation.description)
+						div!= attraction.orientation.description
+					
+					if attraction.orientation.map
+						button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+							img.w-100(src= getImagePath(attraction.orientation.map, 'medium'))
+
+					if wysiwygHasData(attraction.orientation.gettingThere)
+						.clear
+							h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
+								span.sr-only Getting There
+
+							.ml-Lg.mt-Md!= attraction.orientation.gettingThere
+
+			.duck-view-hidden
+				div(duck-field='orientation', duck-type='object')
+					h3 Orientation
+					.form-group(duck-field='description', duck-type='wysiwyg')
+						label Description
+						.summernote!= attraction && attraction.orientation && attraction.orientation.description
+					
+					.form-group
+						label Map
+							+imagePicker(attraction, 'map')
+
+					.form-group(duck-field='gettingThere', duck-type='wysiwyg')
+						label Getting There
+						.summernote!= attraction && attraction.orientation && attraction.orientation.gettingThere
+
+				.ta-R
+					button.btn.btn-primary(duck-button='submit') Save
+					button.btn.btn-warning(duck-button='cancel') Cancel
+
+		if attraction.orientation.map
+			+modal('MapModal')
+				.ta-C(style='overflow-x: scroll;')
+					img(src=getImagePath(attraction.orientation.map, 'large'))
+				a.btn.btn-default(data-dismiss='modal') Close
+
+else if attraction.orientation && (wysiwygHasData(attraction.orientation.description) || attraction.orientation.map ||wysiwygHasData(attraction.orientation.gettingThere))
+	+contentCard('Orientation')
+		if wysiwygHasData(attraction.orientation.description)
+			div!= attraction.orientation.description
+		
+		if attraction.orientation.map
+			button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+				img.w-100(src= getImagePath(attraction.orientation.map, 'medium'))
+
+		if wysiwygHasData(attraction.orientation.gettingThere)
+			.clear
+				h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
+					span.sr-only Getting There
+
+				.ml-Lg.mt-Md!= attraction.orientation.gettingThere
+	if attraction.orientation.map
+		+modal('MapModal')
+			.ta-C(style='overflow-x: scroll;')
+				img(src=getImagePath(attraction.orientation.map, 'large'))
+			a.btn.btn-default(data-dismiss='modal') Close

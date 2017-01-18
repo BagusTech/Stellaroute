@@ -565,7 +565,7 @@ router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
 	});
 
-	res.render('locations/cities/attraction', {
+	res.render('attractions/attraction', {
 		title: `Stellaroute: ${attraction.names.display}`,
 		description: `Stellaroute: ${attraction.names.display} Overview`,
 		key: City.hash,

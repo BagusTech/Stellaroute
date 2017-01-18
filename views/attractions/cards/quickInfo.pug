@@ -1,0 +1,60 @@
+if userIsAuthorized()
+	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+		.content-card
+			h2.content-card--header Quick Info
+				button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+
+			.duck-edit-hidden
+				.mb-Sm
+					span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
+					.ml-Md!= wysiwygHasData(attraction.price) ? attraction.price : 'No Data'
+
+				.mb-Sm
+					span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
+					.ml-Md!= wysiwygHasData(attraction.hours) ? attraction.hours : 'No Data'
+
+				.mb-Sm
+					span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
+					.ml-Md!= wysiwygHasData(attraction.address) ? attraction.address : 'No Data'
+
+				button.btn.btn-default(duck-button='edit') Edit Category
+
+			.duck-view-hidden
+				.form-group(duck-field='price', duck-type='wysiwyg')
+					label Price
+					.summernote!= attraction && attraction.price
+
+				.form-group(duck-field='hours', duck-type='wysiwyg')
+					label Hours
+					.summernote!= attraction && attraction.hours
+
+				.form-group(duck-field='address', duck-type='wysiwyg')
+					label Address
+					.summernote!= attraction && attraction.address
+
+				.form-group.p-Md.bg-G__ltr(duck-field='category', duck-type='checkbox')
+					h3.mt-0 Category
+					.row
+						for category in attractionCategories
+							.col-xs-12.col-sm-6.col-md-4.col-sm-3
+								.checkbox
+									label
+										input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)
+										= category
+				button.btn.btn-primary(duck-button='submit') Save
+				button.btn.btn-warning(duck-button='cancel') Cancel
+
+else if wysiwygHasData(attraction.price) || wysiwygHasData(attraction.hours) || wysiwygHasData(attraction.address)
+	+contentCard('Quick Info')
+		if wysiwygHasData(attraction.price)
+			.mb-Sm
+				span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
+				.ml-Md!= attraction.price
+		if wysiwygHasData(attraction.hours)
+			.mb-Sm
+				span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
+				.ml-Md!= attraction.hours
+		if wysiwygHasData(attraction.address)
+			.mb-Sm
+				span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
+				.ml-Md!= attraction.address

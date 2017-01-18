@@ -1,0 +1,38 @@
+div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage}") no-repeat scroll center 57% / cover;`)
+	.bg-Dkr.p-R
+		if user && user.isAdmin
+			//button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditAttractionForm') Edit
+			.bg-W.p-A.p-Xs.r-Sm.t-0.z-1.d-N.d-B--sm= attraction.Id
+		.container.ptb-0
+			ol.breadcrumb
+				li.active: a(href= '/') Home
+				li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
+				li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
+			if user && user.isAdmin
+				div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
+					.duck-edit-hidden
+						h1= attraction.names.display
+							button.btn.btn-edit.f-R.mt-NegSm.fc-W(duck-button='edit', data-icon='fa fa-pencil')
+							small.ml-Md= attraction.tagline
+					.duck-view-hidden.bg-W.p-Sm.mb-Sm
+						.row
+							.col-xs-12.col-sm-6
+								div(duck-field='names', duck-type='object')
+									.form-group(duck-field='display', duck-type='string')
+										label Guide Name
+											input.form-control(type='text', duck-value, value= attraction.names.display)
+							.col-xs-12.col-sm-6
+								.form-group(duck-field='tagline', duck-type='string')
+									label Tagline
+										input.form-control(type='text', duck-value, value= attraction.tagline)
+
+							.col-xs-12.ta-R
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+			else
+				ol.breadcrumb
+					li.active: a(href= '/') Home
+					li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
+					li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
+				h1= attraction.names.display
+					small.ml-Md= attraction.tagline

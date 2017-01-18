@@ -13,6 +13,8 @@
 mixin imagePicker(item, field)
 	.form-group.m-0.duck-view-hidden.p-Sm.bw-Sm.bs-S(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
 		input.hidden(type='file')
-		input.hidden(type='hidden', duck-value, value= item[field])
+		input.hidden(type='hidden', duck-value, value= item && item[field])
 		button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')
-		span.pl-Sm(duck-image-value)= item[field]
+		span.pl-Sm(duck-image-value)= item && item[field]
+
+		block 

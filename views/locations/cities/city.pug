@@ -15,7 +15,7 @@ block content
 	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
 				.container.ptb-0.p-R
-					if user && user.isAdmin
+					if user && userIsAuthorized()
 						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditCityForm') Edit
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= city.Id
 					ol.breadcrumb
@@ -33,7 +33,7 @@ block content
 					a.tabbed-nav--tab(href='#Food', role='tab', aria-expanded='false') Food
 					a.tabbed-nav--tab(href='#Attractions', role='tab', aria-expanded='false') Attractions
 	
-	if user && user.isAdmin
+	if user && userIsAuthorized()
 		+modal('EditCityForm')(class='modal-lg')
 			+cityForm('update', city)
 	
@@ -52,7 +52,7 @@ block content
 	// food modals
 	for item, i in city.food && city.food.foods ? city.food.foods.filter((i) => i.name) : []
 		+modal(createValidAttributeFromTitle(item.name))
-			if user && user.isAdmin
+			if userIsAuthorized()
 				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
 					h2.content-card--header.fw-B.fc-B= item.name
 						button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
@@ -201,6 +201,6 @@ block content
 					if (item.blog)
 						a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
 
-			if user && user.isAdmin
+			if user && userIsAuthorized()
 				.hidden(id=`FoodItemUpdate${i}`, data-toggle='hidden')
 					

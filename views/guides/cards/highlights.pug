@@ -1,4 +1,4 @@
-if user && user.isAdmin
+if userIsAuthorized()
 	div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 		h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
 			button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')

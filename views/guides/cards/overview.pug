@@ -1,5 +1,5 @@
 .content-card.p-0(data-position='0')
-	if user && user.isAdmin
+	if userIsAuthorized()
 		.row(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 			.col-xs-12.col-sm-8.f-R
 				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W.ml-NegMd--sm Overview

@@ -1,4 +1,4 @@
-head
+block head
 	title= title || 'Stellaroute'
 	meta(charset='utf-8')
 	meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -12,7 +12,7 @@ head
 	script(type='text/javascript').
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-82106221-1', 'auto');ga('send', 'pageview');
 
-	script.
+	script(type='text/javascript').
 		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NG3DCTG');
 
 	//// Styles & Fonts ///////////////////////////////////////////////////////
@@ -21,39 +21,39 @@ head
 	link(href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css", rel="stylesheet")
 
 	// hosted local
-	link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
-	link(rel='stylesheet', href='/styles/font-awesome/css/font-awesome.min.css', type='text/css')
-	link(rel='stylesheet', href='/styles/styles.css', type='text/css')
+	link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300' type='text/css')
+	link(rel='stylesheet' href='/styles/font-awesome/css/font-awesome.min.css' type='text/css')
+	link(rel='stylesheet' href='/styles/styles.css' type='text/css')
 
 	//// Scripts //////////////////////////////////////////////////////////////
 	// not hosted local
-	script(src="https://code.jquery.com/jquery-3.1.1.min.js", integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=", crossorigin="anonymous")
-	//script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-	script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
-	script(type='text/javascript', src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-	script(type='text/javascript', src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+	script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+	//script(type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+	script(type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+	script(type='text/javascript' src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+	script(type='text/javascript' src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js")
 
 	// hosted local
-	script(type='text/javascript', src='/components/duck/duck.min.js')
-	script(type='text/javascript', src='/components/toggle/toggle.min.js')
-	script(type='text/javascript', src='/components/accordion/accordion.min.js')
-	script(type='text/javascript', src='/components/banner/banner.min.js')
-	script(type='text/javascript', src='/components/copy/copy.min.js')
-	script(type='text/javascript', src='/components/filepicker/filepicker.min.js')
-	script(type='text/javascript', src='/components/filter/filter.min.js')
-	script(type='text/javascript', src='/components/icon/icon.min.js')
-	script(type='text/javascript', src='/components/interiorNav/interiorNav.min.js')
-	script(type='text/javascript', src='/components/scroll/scroll.min.js')
-	script(type='text/javascript', src='/components/stickey/stickey.min.js')
-	script(type='text/javascript', src='/components/sortable/sortable.min.js')
-	script(type='text/javascript', src='/components/stopProp/stopProp.min.js')
-	script(type='text/javascript', src='/components/tabs/tabs.min.js')
+	script(type='text/javascript' src='/components/duck/duck.min.js')
+	script(type='text/javascript' src='/components/toggle/toggle.min.js')
+	script(type='text/javascript' src='/components/accordion/accordion.min.js')
+	script(type='text/javascript' src='/components/banner/banner.min.js')
+	script(type='text/javascript' src='/components/copy/copy.min.js')
+	script(type='text/javascript' src='/components/filepicker/filepicker.min.js')
+	script(type='text/javascript' src='/components/filter/filter.min.js')
+	script(type='text/javascript' src='/components/icon/icon.min.js')
+	script(type='text/javascript' src='/components/interiorNav/interiorNav.min.js')
+	script(type='text/javascript' src='/components/scroll/scroll.min.js')
+	script(type='text/javascript' src='/components/stickey/stickey.min.js')
+	script(type='text/javascript' src='/components/sortable/sortable.min.js')
+	script(type='text/javascript' src='/components/stopProp/stopProp.min.js')
+	script(type='text/javascript' src='/components/tabs/tabs.min.js')
 	if (user && user.isAdmin)
-		script(type='text/javascript', src='/components/duck/filepicker/filepicker.min.js')
-		script(type='text/javascript', src='/components/duck/form/form.min.js')
-	
-	script(type='text/javascript', src='/js/scripts.min.js')
+		script(type='text/javascript' src='/components/duck/filepicker/filepicker.min.js')
+		script(type='text/javascript' src='/components/duck/form/form.min.js')
+
+	script(type='text/javascript' src='/js/scripts.min.js')
 
 	// scripts
 	-
@@ -76,6 +76,13 @@ head
 			};
 
 			return icons[icon];
+		}
+		function userIsAuthorized() {
+			if (!user) {
+				return false;
+			}
+
+			return user.isAdmin
 		}
 		function wysiwygHasData(data) {
 			const empytValues = [
@@ -126,4 +133,3 @@ head
 			'Outdoor Activities',
 			'Top Attraction',
 		];
-	block head

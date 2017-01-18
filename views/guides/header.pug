@@ -5,7 +5,7 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage
 				li.active: a(href= '/') Home
 				li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
 				li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides
-			if user && user.isAdmin
+			if userIsAuthorized()
 				div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 					.duck-edit-hidden
 						h1 #{guide.names.display}

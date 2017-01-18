@@ -8,7 +8,7 @@
 							'Bar'
 						]
 
-if (user && user.isAdmin)
+if userIsAuthorized()
 	.ta-r.d-N.d-B--sm
 		button.btn.btn-primary(data-target='#AddFood', data-toggle='modal') Add Food
 

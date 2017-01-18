@@ -1,5 +1,5 @@
 block content
-	if (user && user.isAdmin)
+	if userIsAuthorized()
 		.ta-r
 			button.btn.btn-primary(data-target='#AddAttraction', data-toggle='modal') Add Attraction
 

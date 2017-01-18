@@ -1,5 +1,5 @@
 block content
-	if (user && user.isAdmin)
+	if userIsAuthorized()
 		.ta-r
 			button.btn.btn-primary(data-target='#AddGuide', data-toggle='modal') Add Guide
 
@@ -9,7 +9,7 @@ block content
 					h2.content-card--header Add New Guide Item
 					+guideForm('add', null, {cities: [city.Id]})
 
-	if (guides.length)
+	if guides.length
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for guide in guides
 				.masonry--item

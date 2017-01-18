@@ -42,7 +42,7 @@ block content
 					include ./cards/highlights.pug
 					include ./cards/whereTo.pug
 
-					if user && user.isAdmin
+					if userIsAuthorized()
 						div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
 							div(data-function='stickey')
 								.ta-R(data-stickey='content')

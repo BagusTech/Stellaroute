@@ -1,12 +1,12 @@
 block content
-	if (user && user.isAdmin)
+	if userIsAuthorized()
 		.ta-r
 			button.btn.btn-primary(data-target='#AddNeighborhood', data-toggle='modal') Add Neighborhood
 
 		+modal('AddNeighborhood')(class='modal-lg')
 			+neighborhoodForm('add', null, {city: city.Id})
 
-	if (neighborhoods.length)
+	if neighborhoods.length
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
 			for neighborhood in neighborhoods
 				.masonry--item

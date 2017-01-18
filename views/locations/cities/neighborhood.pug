@@ -15,7 +15,7 @@ block content
 	else
 		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
 				.bg-Dkr.p-R
-					if user && user.isAdmin
+					if userIsAuthorized()
 						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditNeighborhoodForm') Edit
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= neighborhood.Id
 					.container.ptb-0
@@ -27,7 +27,7 @@ block content
 							small.ml-Md= neighborhood.tagline
 
 
-		if user && user.isAdmin
+		if userIsAuthorized()
 			+modal('EditNeighborhoodForm')(class='modal-lg')
 				+neighborhoodForm('update', neighborhood)
 

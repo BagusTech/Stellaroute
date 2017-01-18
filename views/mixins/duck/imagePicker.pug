@@ -11,7 +11,7 @@
 			button.btn.btn-default(data-dismiss='modal') Cancel
 
 mixin imagePicker(item, field)
-	.form-group.m-0.duck-view-hidden.p-Sm.bw-Sm.bs-S(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
+	.form-group.p-Sm.bw-Sm.bs-S(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
 		input.hidden(type='file')
 		input.hidden(type='hidden', duck-value, value= item && item[field])
 		button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')

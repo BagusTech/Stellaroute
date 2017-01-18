@@ -54,13 +54,13 @@ mixin attractionForm(crud, attraction, locations, cancel)
 
 		.form-group(duck-field='cardImage', duck-type='image')
 			label Card Image
-				+imagePicker(guide, 'cardImage')
+				+imagePicker(attraction, 'cardImage')
 
 		div(duck-field='images', duck-type='array')
 			h3 Images
 			div
 				for image in attraction && attraction.images ? attraction.images : [null]
-					+imagePicker(guide)
+					+imagePicker(attraction)
 						button.btn.btn-danger(duck-button='delete') Delete Image
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Image

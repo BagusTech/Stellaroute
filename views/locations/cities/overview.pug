@@ -131,7 +131,7 @@
 				// this is being double sorted due to a bug I can't find yet
 				for food, i in city.food.foods.sort().sort(sortByOrder)
 					if i < 3
-						button.bg-N.bw-0.p-R.p-0.w-100(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`, type='button', style=`background: url('${food.image}') no-repeat scroll center center / cover;padding-top: 25%;`)
+						button.bg-N.bw-0.p-R.p-0.w-100.d-B(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`, type='button', style=`background: url('${food.image}') no-repeat scroll center center / cover;padding-top: 25%;`)
 							h3.bg-Dk.p-A.t-0.b-0.l-0.r-0.m-0.d-F.fai-C.fj-C.fc-W= food.name
 							.p-A.t-Xs.r-Xs.p-XXs.fs-Sm.fc-W.br-Md(class= colorClasses[foodTagColors[food.category]])= food.category
 							//+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
@@ -152,23 +152,20 @@
 		if userIsAuthorized()
 			.content-card
 				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-					h2 Quick Facts
+					h2.content-card--header Quick Facts
+						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
 					.duck-edit-hidden
 						if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
 							+accordion(city.quickFacts)(class='row', data-allow-multiple='true')
 					.duck-view-hidden
 						div(duck-field='quickFacts', duck-type='array')
-							h3 Quick Facts
 							div
 								for advice in city && city.quickFacts ? city.quickFacts : [{}]
 									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
-										h4 Fact
-										.form-group.col-xs-10(duck-field='title', duck-type='string')
+										h3.mt-0 Fact
+										.form-group.col-xs-12(duck-field='title', duck-type='string')
 											label Title
 												input.form-control(type='text', duck-value, value= advice.title)
-										.form-group.col-xs-2(duck-field='order', duck-type='number')
-											label Order
-												input.form-control(type='number', duck-value, value= advice.order)
 										.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 											label Fact
 											.summernote!= advice.description

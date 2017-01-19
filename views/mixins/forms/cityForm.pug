@@ -34,15 +34,15 @@ mixin cityForm(crud, city, locations, cancel)
 			label City Description
 			.summernote!= city && city.description
 
-		.form-group(duck-field='cardImage', duck-type='string')
+		.form-group
 			label Card Image
-				input.form-control(type='text', required, duck-value, value= city && city.cardImage)
+				+imagePicker(city, 'cardImage')
 
-		.form-group(duck-field='backgroundImage', duck-type='string')
+		//.form-group(duck-field='backgroundImage', duck-type='string')
 			label Background Image
 				input.form-control(type='text', required, duck-value, value= city && city.backgroundImage)
 
-		div(duck-field='images', duck-type='array')
+		//div(duck-field='images', duck-type='array')
 			h3 Images
 			div
 				for image in city && city.images ? city.images : [null]
@@ -52,11 +52,11 @@ mixin cityForm(crud, city, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Image
 
-		.form-group(duck-field='averageStay', duck-type='string')
+		//.form-group(duck-field='averageStay', duck-type='string')
 			label Suggested / Average Length of Stay
 				input.form-control(type='text', duck-value, value= city && city.averageStay)
 
-		.form-group(duck-field='bestTimeToVisit', duck-type='array')
+		//.form-group(duck-field='bestTimeToVisit', duck-type='array')
 			label Best Time(s) to Visit
 			div
 				for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
@@ -66,7 +66,7 @@ mixin cityForm(crud, city, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add
 
-		.form-group(duck-field='topPlaces', duck-type='array')
+		//.form-group(duck-field='topPlaces', duck-type='array')
 			label Top Places
 			div (Neighborhoods) to Stay
 				for place in city && city.topPlaces ? city.topPlaces : [null]
@@ -76,13 +76,13 @@ mixin cityForm(crud, city, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Place
 
-		div(duck-field='orientation', duck-type='object')
+		//div(duck-field='orientation', duck-type='object')
 			h3 Orientation
 			.form-group(duck-field='map', duck-type='string')
 				label Map
 					input.form-control(type='text', duck-value, value= city && city.orientation && city.orientation.map)
 
-		div(duck-field='needToKnow', duck-type='array')
+		//div(duck-field='needToKnow', duck-type='array')
 			h3 Need To Know
 			div
 				for advice in city && city.needToKnow ? city.needToKnow : [{}]
@@ -102,7 +102,7 @@ mixin cityForm(crud, city, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Advice
 
-		div(duck-field='transit', duck-type='object')
+		//div(duck-field='transit', duck-type='object')
 			h3 Transit
 			.form-group(duck-field='tagline', duck-type='string')
 				label Transity Tagline
@@ -123,7 +123,7 @@ mixin cityForm(crud, city, locations, cancel)
 				.ta-R
 					button.btn.btn-primary(duck-button='add') Add Transit Info
 
-		div(duck-field='quickFacts', duck-type='array')
+		//div(duck-field='quickFacts', duck-type='array')
 			h3 Quick Facts
 			div
 				for advice in city && city.quickFacts ? city.quickFacts : [{}]

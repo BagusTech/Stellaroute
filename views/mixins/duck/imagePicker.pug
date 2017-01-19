@@ -2,8 +2,13 @@
 
 +modal(`ImagePickerModal`)(class='modal-lg')
 	h2.content-card--header Pick an Image
-	.mb-Md.ta-C(duck-images='false')
-	.row(duck-image-uploader)
+	div(data-function='scroll' style='min-height: 80vh;')
+		div(data-scroll='content-wrapper')
+			div(data-scroll='content')
+				.mb-Md.ta-C(duck-images='false')
+		div(data-scroll='scrollbar')
+			button
+	.row.pt-Sm(duck-image-uploader)
 		.col-xs-6
 			button.btn.btn-secondary(duck-button='upload') Upload New Image
 			button.btn.btn-primary(duck-button='save-image') Save

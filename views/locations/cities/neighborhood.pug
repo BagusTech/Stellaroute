@@ -1,10 +1,5 @@
 extends ../../layout.pug
-// 
-	+imagePicker(neighborhood, 'map')
-	div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
-	button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-	button.btn.btn-primary(duck-button='submit') Save
-	button.btn.btn-warning(duck-button='cancel') Cancel
+
 block content
 	if !neighborhood
 		.media-bg-img.request-page-header
@@ -76,7 +71,7 @@ block content
 												img(src=getImagePath(img, 'large'), alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
 									else 
 										img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
-									.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description
+									.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm!= neighborhood.description
 
 								.duck-view-hidden
 									.form-group
@@ -107,6 +102,7 @@ block content
 					if userIsAuthorized()
 							.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 								h2.content-card--header Travel Hacks
+									button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 								if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
 									.duck-edit-hidden
 										+accordion(neighborhood.needToKnow)
@@ -374,7 +370,7 @@ block content
 
 				.col-xs-12.col-sm-6.col-md-8.f-R
 					if userIsAuthorized()
-						.content-card
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 							h2.content-card--header Eating &amp; Drinking
 								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 							.duck-edit-hidden
@@ -398,7 +394,7 @@ block content
 							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 
 					if userIsAuthorized()
-						.content-card
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 							h2.content-card--header Shopping
 								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 							.duck-edit-hidden
@@ -423,7 +419,7 @@ block content
 				
 				if userIsAuthorized()
 					.col-xs-12.col-sm-6.col-md-8.f-R
-						.content-card
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 							h2.content-card--header.mb-0 Where to Explore
 								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 							.duck-edit-hidden
@@ -574,6 +570,7 @@ block content
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 							h2.content-card--header Fun Facts
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 							if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
 								.duck-edit-hidden
 									+accordion(neighborhood.quickFacts)

@@ -24,14 +24,7 @@
 						a(href='#Guides') All Guides
 
 				.duck-view-hidden
-					div(duck-field='guides', duck-type='array')
-						div
-							for guide in city.guides ? city.guides : [null]
-								.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-									input.ml-Sm.form-control(type='text', duck-value, value= guide)
-									button.btn.btn-danger(duck-button='delete')
-						.ta-R
-							button.btn.btn-primary(duck-button='add') Add Guide
+					+simpleArray(city, 'guides', 'Guides', 'Add Guide')
 
 					button.btn.btn-primary(duck-button='submit') Save
 					button.btn.btn-warning(duck-button='cancel') Cancel
@@ -86,31 +79,10 @@
 							button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
 							.d-B(role='tabpanel', aria-hidden='true')!= city.description
 					.duck-view-hidden
-						.form-group(duck-field='averageStay', duck-type='string')
-							label Suggested / Average Length of Stay
-								input.form-control(type='text', duck-value, value= city && city.averageStay)
-
-						.form-group(duck-field='bestTimeToVisit', duck-type='array')
-							label Best Time(s) to Visit
-							div
-								for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
-									.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-										input.ml-Sm.form-control(type='text', duck-value, value= time)
-										button.btn.btn-danger(duck-button='delete')
-							.ta-R
-								button.btn.btn-primary(duck-button='add') Add
-
-						.form-group(duck-field='topPlaces', duck-type='array')
-							label Top Places
-							div (Neighborhoods) to Stay
-								for place in city && city.topPlaces ? city.topPlaces : [null]
-									.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-										input.ml-Sm.form-control(type='text', duck-value, value= place)
-										button.btn.btn-danger(duck-button='delete')
-
-						div(duck-field='description', duck-type='wysiwyg')
-							label City Description
-							.summernote!= city && city.description
+						+string(city, 'averageStay', 'Suggested / Average Length of Stay')
+						+simpleArray(city, 'bestTimeToVisit', 'Time(s) to Visit', 'Add Time to Visit')
+						+simpleArray(city, 'topPlaces', 'Top Place(s)', 'Add Top Place')
+						+wysiwyg(city, description, 'City Description')
 						
 						button.btn.btn-primary(duck-button='submit') Save
 						button.btn.btn-warning(duck-button='cancel') Cancel
@@ -130,35 +102,7 @@
 					button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
 					.d-B(role='tabpanel', aria-hidden='true')!= city.description
 
-		if userIsAuthorized()
-			.content-card
-				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-					h2.content-card--header Travel Hacks
-						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
-					.duck-edit-hidden
-						if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
-							+accordion(city.needToKnow, 1)(class='row', data-allow-multiple='true')
-					.duck-view-hidden
-						div(duck-field='needToKnow', duck-type='array')
-							h3 Travel Hacks
-							div
-								for advice in city && city.needToKnow ? city.needToKnow : [{}]
-									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
-										h4.mt-0 Advice
-										.form-group(duck-field='title', duck-type='string')
-											label Title
-												input.form-control(type='text', duck-value, value= advice.title)
-										.form-group(duck-field='description', duck-type='wysiwyg')
-											label Advice
-											.summernote!= advice.description
-										.ta-C
-											button.btn.btn-danger(duck-button='delete') Delete Advice
-							.ta-R
-								button.btn.btn-primary(duck-button='add') Add Advice
-
-		else if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
-			+contentCard('Travel Hacks')
-				+accordion(city.needToKnow, 1)(class='row', data-allow-multiple='true')
+		+factsHacks(false, city, 'Cities')
 
 		if city.food && city.food.foods
 			.content-card.p-0
@@ -185,32 +129,4 @@
 
 				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 
-		if userIsAuthorized()
-			.content-card
-				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-					h2.content-card--header Quick Facts
-						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
-					.duck-edit-hidden
-						if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
-							+accordion(city.quickFacts)(class='row', data-allow-multiple='true')
-					.duck-view-hidden
-						div(duck-field='quickFacts', duck-type='array')
-							div
-								for fact in city && city.quickFacts ? city.quickFacts : [{}]
-									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
-										h3.mt-0 Fact
-										.form-group.col-xs-12(duck-field='title', duck-type='string')
-											label Title
-												input.form-control(type='text', duck-value, value= fact.title)
-										.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-											label Fact
-											.summernote!= fact.description
-										.ta-C
-											button.btn.btn-danger(duck-button='delete') Delete Fact
-							.ta-R
-								button.btn.btn-primary(duck-button='add') Add Fact
-						button.btn.btn-primary(duck-button='submit') Save
-						button.btn.btn-warning(duck-button='cancel') Cancel
-		else if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
-			+contentCard('Quick Facts')
-				+accordion(city.quickFacts)(class='row', data-allow-multiple='true')
+		+factsHacks(true, city, 'Cities')

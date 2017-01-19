@@ -38,7 +38,7 @@ block content
 
 				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
 					include ./cards/overview.pug
-					include ./cards/travelHacks.pug
+					+factsHacks(false, guide, 'Guides')
 					include ./cards/highlights.pug
 					include ./cards/whereTo.pug
 
@@ -66,9 +66,7 @@ block content
 											label Title
 												input.form-control(type='text', duck-value, value= day.title)
 
-										.form-group.duck-view-hidden(duck-field='description', duck-type='wysiwyg')
-											label Day Description
-											.summernote!= day.description
+										+wysiwyg(guide, 'description', 'Day Description')
 
 										.guide-card--wrapper(duck-field='cards', duck-type='array', data-toggle='hidden')
 											for card, j in day.cards ? day.cards : [{}]

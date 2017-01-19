@@ -27,8 +27,7 @@ var Guide = Duck({
 		map: String,
 		tagline: String,
 		description: String,
-		travelHacks: [{
-			order: Number,
+		needToKnow: [{
 			title: String,
 			description: String,
 		}],

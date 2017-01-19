@@ -42,9 +42,7 @@ block content
 													input.form-control(type='text', duck-value, value= neighborhood.tagline)
 
 										.col-xs-12.col-sm-6
-											.form-group
-												label Background Image
-													+imagePicker(neighborhood, 'backgroundImage')
+											+imagePicker(neighborhood, 'backgroundImage', 'Background Image')
 
 										.col-xs-12.ta-R
 											button.btn.btn-primary(duck-button='submit') Save
@@ -64,6 +62,7 @@ block content
 					.content-card.p-0
 						if userIsAuthorized()
 							div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+								button(duck-button='edit') Edit
 								.duck-edit-hidden
 									if neighborhood.images && neighborhood.images.length > 2
 										div(data-function='banner')
@@ -74,19 +73,8 @@ block content
 									.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm!= neighborhood.description
 
 								.duck-view-hidden
-									.form-group
-										label Card Image
-											+imagePicker(neighborhood, 'cardImage')
-									div(duck-field='images', duck-type='array')
-										h3 Images
-										div
-											for image, i in neighborhood && neighborhood.images ? neighborhood.images : [null]
-												+imagePicker(neighborhood.images, i)
-												.form-group.d-F.fai-C
-													input.ml-Sm.form-control(type='string', duck-value, value= image)
-													button.btn.btn-danger.f-R.mt-NegXXs.mr-NegXs(duck-button='delete')
-										.ta-R
-											button.btn.btn-primary(duck-button='add') Add Image
+									+imagePicker(neighborhood, 'cardImage', 'Card Image')
+									+imageArray(neighborhood, 'images', 'Images', 'Add Image')
 
 									button.btn.btn-primary(duck-button='submit') Save
 									button.btn.btn-warning(duck-button='cancel') Cancel
@@ -99,34 +87,7 @@ block content
 								img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
 							.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description
 
-					if userIsAuthorized()
-							.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
-								h2.content-card--header Travel Hacks
-									button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-								if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
-									.duck-edit-hidden
-										+accordion(neighborhood.needToKnow)
-								.duck-view-hidden
-									div(duck-field='needToKnow', duck-type='array')
-										div
-											for fact in neighborhood && neighborhood.needToKnow ? neighborhood.needToKnow : [{}]
-												.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
-													h3.mt-0 Fact
-													.form-group.col-xs-12(duck-field='title', duck-type='string')
-														label Title
-															input.form-control(type='text', duck-value, value= fact.title)
-													.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-														label Fact
-														.summernote!= fact.description
-													.ta-C
-														button.btn.btn-danger(duck-button='delete') Delete Fact
-										.ta-R
-											button.btn.btn-primary(duck-button='add') Add Fact
-									button.btn.btn-primary(duck-button='submit') Save
-									button.btn.btn-warning(duck-button='cancel') Cancel
-					else if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
-							+contentCard('Fun Facts')
-								+accordion(neighborhood.needToKnow)
+					+factsHacks(false, neighborhood, 'Neighborhoods')
 
 				.col-xs-12.col-sm-6.col-md-4
 					if userIsAuthorized()
@@ -188,9 +149,7 @@ block content
 										label Overview
 										.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.description
 
-									.form-group
-										label Map
-											+imagePicker(neighborhood.orientation, 'map')
+									+imagePicker(neighborhood.orientation, 'map', 'Map')
 
 									.form-group(duck-field='waysToGetThere', duck-type='array')
 										h4 Ways to Get There
@@ -379,9 +338,7 @@ block content
 									.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 							.duck-view-hidden
 								div(duck-field='eatingDrinking', duck-type='object')
-									.form-group
-										label Image
-											+imagePicker(neighborhood.eatingDrinking, 'image')
+									+imagePicker(neighborhood.eatingDrinking, 'image', 'Image')
 									.form-group(duck-field='description', duck-type='wysiwyg')
 										label What to Know About Eating and Drinking
 										.summernote!= neighborhood && neighborhood.eatingDrinking && neighborhood.eatingDrinking.description
@@ -403,9 +360,7 @@ block content
 									.w-75.f-L.pl-Sm!= neighborhood.shopping.description
 							.duck-view-hidden
 								div(duck-field='shopping', duck-type='object')
-									.form-group
-										label Image
-											+imagePicker(neighborhood.shopping, 'image')
+									+imagePicker(neighborhood.shopping, 'image', 'Image')
 									.form-group(duck-field='description', duck-type='wysiwyg')
 										label What to Know About Shopping
 										.summernote!= neighborhood && neighborhood.shopping && neighborhood.shopping.description
@@ -440,9 +395,7 @@ block content
 													= spot.name
 							.duck-view-hidden
 								div(duck-field='explore', duck-type='object')
-									.form-group
-										label Map
-											+imagePicker(neighborhood.explore, 'map')
+									+imagePicker(neighborhood.explore, 'map', 'Map')
 
 									div(duck-field='areas', duck-type='array')
 										label Areas
@@ -566,33 +519,4 @@ block content
 													i.fa.fa-map-pin.lh-B(aria-hidden='true')
 												div.ml-Md!= place.address
 
-				if userIsAuthorized()
-					.col-xs-12.col-sm-6.col-md-8.f-R
-						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
-							h2.content-card--header Fun Facts
-								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-							if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
-								.duck-edit-hidden
-									+accordion(neighborhood.quickFacts)
-							.duck-view-hidden
-								div(duck-field='quickFacts', duck-type='array')
-									div
-										for fact in neighborhood && neighborhood.quickFacts ? neighborhood.quickFacts : [{}]
-											.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
-												h3.mt-0 Fact
-												.form-group.col-xs-12(duck-field='title', duck-type='string')
-													label Title
-														input.form-control(type='text', duck-value, value= fact.title)
-												.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
-													label Fact
-													.summernote!= fact.description
-												.ta-C
-													button.btn.btn-danger(duck-button='delete') Delete Fact
-									.ta-R
-										button.btn.btn-primary(duck-button='add') Add Fact
-								button.btn.btn-primary(duck-button='submit') Save
-								button.btn.btn-warning(duck-button='cancel') Cancel
-				else if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
-					.col-xs-12.col-sm-6.col-md-8.f-R
-						+contentCard('Fun Facts')
-							+accordion(neighborhood.quickFacts)
+				+factsHacks(true, neighborhood, 'Neighborhoods')

@@ -1,0 +1,33 @@
+mixin factsHacks(isFact, location, locationTable)
+	- const factOrHack = isFact ? 'quickFacts' : 'needToKnow';
+
+	if userIsAuthorized()
+		.content-card
+			div(duck-table=locationTable, duck-function='update', duck-key='Id', duck-key-value= location.Id, duck-edit-form='view')
+				h2.content-card--header= isFact ? 'Quick Facts' : 'Travel Hacks'
+					button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
+				.duck-edit-hidden
+					if location[factOrHack] && location[factOrHack][0] && wysiwygHasData(location[factOrHack][0].description)
+						+accordion(location[factOrHack])(class='row', data-allow-multiple='true')
+
+				.duck-view-hidden
+					div(duck-field=factOrHack, duck-type='array')
+						div
+							for fact in location && location[factOrHack] ? location[factOrHack] : [{}]
+								.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
+									h3.mt-0= isFact ? 'Fact' : 'Hack'
+									.form-group.col-xs-12(duck-field='title', duck-type='string')
+										label Title
+											input.form-control(type='text', duck-value, value= fact.title)
+									.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+										label Fact
+										.summernote!= fact.description
+									.ta-C
+										button.btn.btn-danger(duck-button='delete')= `Delete ${isFact ? 'Fact' : 'Hack'}`
+						.ta-R
+							button.btn.btn-primary(duck-button='add')= `Add ${isFact ? 'Fact' : 'Hack'}`
+					button.btn.btn-primary(duck-button='submit') Save
+					button.btn.btn-warning(duck-button='cancel') Cancel
+	else if location[factOrHack] && location[factOrHack][0] && wysiwygHasData(location[factOrHack][0].description)
+		+contentCard(isFact ? 'Quick Facts' : 'Travel Hacks')
+			+accordion(location[factOrHack])(class='row', data-allow-multiple='true')

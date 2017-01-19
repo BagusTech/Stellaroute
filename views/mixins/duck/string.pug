@@ -1,0 +1,4 @@
+mixin string(obj, field, title)
+	.form-group(duck-field=field, duck-type='string')&attributes()
+		label= title
+			input.form-control(type='text', duck-value, value= obj && obj[field])

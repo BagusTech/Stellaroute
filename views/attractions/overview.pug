@@ -1,7 +1,7 @@
 if userIsAuthorized()
 	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
 
-		.duck-edit-hidden.p-R(style=`background: url('${getImagePath(attraction.cardImage, "large")}' no-repeat scroll center center / cover)`)
+		.duck-edit-hidden.p-R(style=`background: url('${getImagePath(attraction.cardImage, "large")}') no-repeat scroll center center / cover;`)
 			button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
 			.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= attraction.description
 		.duck-view-hidden.mb-Md

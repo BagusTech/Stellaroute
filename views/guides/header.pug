@@ -1,4 +1,4 @@
-div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage || city.backgroundImage}") no-repeat scroll center 57% / cover;`)
+div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.backgroundImage, 'large') || getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
 			ol.breadcrumb

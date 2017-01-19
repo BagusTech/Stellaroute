@@ -12,12 +12,9 @@ append header
 		};
 
 block content
-	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
+	div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
 				.container.ptb-0.p-R
-					//if userIsAuthorized()
-						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditCityForm') Edit
-						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= city.Id
 					ol.breadcrumb
 						li.active: a(href= '/') Home
 					if userIsAuthorized()

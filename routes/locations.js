@@ -624,8 +624,6 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 	const city = City.findOne('url', req.params.city).items;
 	const neighborhood = Neighborhood.findOne('url', req.params.neighborhood)
-									 .join('city', City.cached(), 'Id', 'names.display')
-									 .join('city', City.cached(), 'Id', 'url')
 									 .join('cityRegions', CityRegion.cached(), 'Id', 'names.display')
 									 .items[0];
 	if(!country || !city || !neighborhood){
@@ -641,6 +639,7 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 		description: `Stellaroute: ${neighborhood.names.display} Overview`,
 		key: Neighborhood.hash,
 		country: country,
+		city: city,
 		cityRegions: cityRegions,
 		neighborhood: neighborhood,
 		nearbyNeighborhoods: nearbyNeighborhoods,

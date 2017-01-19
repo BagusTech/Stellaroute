@@ -13,7 +13,7 @@ block content
 			+contentCard('Coming soon!')
 				p.lead.m-0!= `More information about ${neighborhood && neighborhood.names && neighborhood.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
 	else
-		div(style='background: rgba(0, 0, 0, 0) url("https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/XPABV05EQ9.jpg") no-repeat scroll center 57% / cover;')
+		div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(neighborhood.backgroundImage, large) || getImagePath(city.backgroundImage, large)}") no-repeat scroll center 57% / cover;`)
 				.bg-Dkr.p-R
 					if userIsAuthorized()
 						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditNeighborhoodForm') Edit
@@ -38,9 +38,9 @@ block content
 						if neighborhood.images && neighborhood.images.length > 2
 							div(data-function='banner')
 								for img, i in neighborhood.images
-									img(src=img, alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
+									img(src=getImagePath(img, 'large'), alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
 						else 
-							img.w-100(src= neighborhood.cardImage ? neighborhood.cardImage : 'http://placebear.com/300/300', alt= neighborhood.names.display)
+							img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
 						.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description						
 
 					if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
@@ -62,7 +62,7 @@ block content
 							
 							if neighborhood.orientation.map
 								button.bg-N.bw-0.p-0.w-100(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
-									img.w-100(src= neighborhood.orientation.map)
+									img.w-100(src= getImagePath(neighborhood.orientation.map, 'large'))
 
 							if wysiwygHasData(neighborhood.orientation.mainIntersection)
 								h3 Main Intersection
@@ -103,7 +103,7 @@ block content
 						if neighborhood.orientation.map
 							+modal('MapModal')
 								.ta-C(style='overflow-x: scroll;')
-									img(src= neighborhood.orientation.map, alt=`Map of ${neighborhood.names.display}`)
+									img(src= getImagePath(neighborhood.orientation.map, 'large'), alt=`Map of ${neighborhood.names.display}`)
 								a.btn.btn-default(data-dismiss='modal') Close
 
 					if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
@@ -117,12 +117,12 @@ block content
 				.col-xs-12.col-sm-6.col-md-8.f-R
 					if  neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
 						+contentCard('Eating & Drinking')
-							img.f-L.w-25(src=neighborhood.eatingDrinking.image, alt='Eating and Drinking')
+							img.f-L.w-25(src=getImagePath(neighborhood.eatingDrinking.image, 'medium'), alt='Eating and Drinking')
 							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 
 					if  neighborhood.shopping && wysiwygHasData(neighborhood.shopping.description)
 						+contentCard('Shopping')
-							img.f-L.w-25(src=neighborhood.shopping.image, alt='Shopping')
+							img.f-L.w-25(src=getImagePath(neighborhood.shopping.image, 'medium'), alt='Shopping')
 							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
 
 				if neighborhood.explore && (neighborhood.explore.map || (neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name))
@@ -130,7 +130,7 @@ block content
 						.content-card
 							h2.content-card--header.mb-0 Where to Explore
 							if neighborhood.explore.map
-								img.w-100(src=neighborhood.explore.map, alt='Where to Explore')
+								img.w-100(src=getImagePath(neighborhood.explore.map, 'large'), alt='Where to Explore')
 							for area in neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name ? neighborhood.explore.areas : []
 								h3= area.name
 								!= area.description
@@ -153,7 +153,7 @@ block content
 									li.clear
 										if place.image
 											.w-25.f-L
-												img.w-100(src=place.image, alt= place.name)
+												img.w-100(src=getImagePath(place.image, 'medium'), alt= place.name)
 										div.pl-Sm(class= place.image ? 'w-75 f-L' : '')
 											h3.mt-N= place.name
 											!= place.description

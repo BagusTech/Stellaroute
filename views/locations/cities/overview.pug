@@ -6,7 +6,7 @@
 					if i === 0
 						a.clear.list-group-item.mtb-Sm.p-0.p-R.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
 							.p-A.t-0.r-0.bg-Gr.fc-W.p-Xs.fw-N Featured Guide
-							div(style=`padding-top: 30px; padding-bottom: 40%; background: url('${guide.cardImage || guide.map}') no-repeat scroll center center / cover;`)
+							div(style=`padding-top: 30px; padding-bottom: 40%; background: url('${getImagePath(guide.cardImage, "large") || getImagePath(guide.map, "large")}') no-repeat scroll center center / cover;`)
 							.p-Sm
 								h3.fc-Purp.mt-0= guide.names.display
 								.fc-B.fw-N!= guide.description

@@ -43,7 +43,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			label Background Image
 				input.form-control(type='text', required, duck-value, value= neighborhood && neighborhood.backgroundImage)
 
-		div(duck-field='images', duck-type='array')
+		//div(duck-field='images', duck-type='array')
 			h3 Images
 			div
 				for image in neighborhood && neighborhood.images ? neighborhood.images : [null]
@@ -53,7 +53,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Image
 
-		div(duck-field='orientation', duck-type='object')
+		//div(duck-field='orientation', duck-type='object')
 			h3 Orientation
 			.form-group(duck-field='description', duck-type='wysiwyg')
 				label Overview
@@ -155,8 +155,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 				.ta-R
 					button.btn.btn-primary(duck-button='add') Add Location
 
-
-		div(duck-field='needToKnow', duck-type='array')
+		//div(duck-field='needToKnow', duck-type='array')
 			h3 Need To Know
 			div
 				for advice in neighborhood && neighborhood.needToKnow ? neighborhood.needToKnow : [{}]
@@ -176,7 +175,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Advice
 
-		div(duck-field='eatingDrinking', duck-type='object')
+		//div(duck-field='eatingDrinking', duck-type='object')
 			h4 Eating and Drinking
 			.form-group(duck-field='image', duck-type='string')
 				label Image
@@ -185,7 +184,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 				label What to Know About Eating and Drinking
 				.summernote!= neighborhood && neighborhood.eatingDrinking && neighborhood.eatingDrinking.description
 
-		div(duck-field='shopping', duck-type='object')
+		//div(duck-field='shopping', duck-type='object')
 			h4 Shopping
 			.form-group(duck-field='image', duck-type='string')
 				label Image
@@ -194,7 +193,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 				label What to Know About Shopping
 				.summernote!= neighborhood && neighborhood.shopping && neighborhood.shopping.description
 
-		div(duck-field='quickFacts', duck-type='array')
+		//div(duck-field='quickFacts', duck-type='array')
 			h3 Quick Facts
 			div
 				for advice in neighborhood && neighborhood.quickFacts ? neighborhood.quickFacts : [{}]
@@ -214,7 +213,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Way to Get There
 
-		div(duck-field='explore', duck-type='object')
+		//div(duck-field='explore', duck-type='object')
 			h3 Where to Explore
 			.form-group(duck-field='map', duck-type='string')
 				label Map
@@ -258,7 +257,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Area
 
-		div(duck-field='nearbyNeighborhoods', duck-type='array')
+		//div(duck-field='nearbyNeighborhoods', duck-type='array')
 			h3 Nearby Neighborhoods
 			div
 				for nearbyNeighborhood in neighborhood && neighborhood.nearbyNeighborhoods ? neighborhood.nearbyNeighborhoods : [null]
@@ -268,7 +267,7 @@ mixin neighborhoodForm(crud, neighborhood, locations, cancel)
 			.ta-R
 				button.btn.btn-primary(duck-button='add') Add Nearby Neighborhood
 
-		div(duck-field='notiblePlaces', duck-type='array')
+		//div(duck-field='notiblePlaces', duck-type='array')
 			h3 Notible Places
 			div
 				for place in neighborhood && neighborhood.notiblePlaces ? neighborhood.notiblePlaces : [{}]

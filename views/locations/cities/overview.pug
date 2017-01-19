@@ -160,15 +160,15 @@
 					.duck-view-hidden
 						div(duck-field='quickFacts', duck-type='array')
 							div
-								for advice in city && city.quickFacts ? city.quickFacts : [{}]
+								for fact in city && city.quickFacts ? city.quickFacts : [{}]
 									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
 										h3.mt-0 Fact
 										.form-group.col-xs-12(duck-field='title', duck-type='string')
 											label Title
-												input.form-control(type='text', duck-value, value= advice.title)
+												input.form-control(type='text', duck-value, value= fact.title)
 										.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
 											label Fact
-											.summernote!= advice.description
+											.summernote!= fact.description
 										.ta-C
 											button.btn.btn-danger(duck-button='delete') Delete Fact
 							.ta-R

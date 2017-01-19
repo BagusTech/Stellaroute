@@ -1,5 +1,10 @@
 extends ../../layout.pug
-
+// 
+	+imagePicker(neighborhood, 'map')
+	div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+	button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+	button.btn.btn-primary(duck-button='submit') Save
+	button.btn.btn-warning(duck-button='cancel') Cancel
 block content
 	if !neighborhood
 		.media-bg-img.request-page-header
@@ -23,11 +28,38 @@ block content
 							li.active: a(href= '/') Home
 							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}`)= neighborhood.cityDisplay
 							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}/#Neighborhoods`) Neighborhoods
-						h1= neighborhood.names.display
-							small.ml-Md= neighborhood.tagline
+						if userIsAuthorized()
+							div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+								.duck-edit-hidden
+									h1= neighborhood.names.display
+										small.ml-Md= neighborhood.tagline
+										button.btn.btn-edit.f-R.bg-W.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+								.duck-view-hidden.bg-W.p-Sm.mb-Sm
+									.row
+										.col-xs-12.col-sm-6
+											div(duck-field='names', duck-type='object')
+												.form-group(duck-field='display', duck-type='string')
+													label Neighborhood Name
+														input.form-control(type='text', duck-value, value= neighborhood.names.display)
+										.col-xs-12.col-sm-6
+											.form-group(duck-field='tagline', duck-type='string')
+												label Tagline
+													input.form-control(type='text', duck-value, value= neighborhood.tagline)
+
+										.col-xs-12.col-sm-6
+											.form-group
+												label Background Image
+													+imagePicker(neighborhood, 'backgroundImage')
+
+										.col-xs-12.ta-R
+											button.btn.btn-primary(duck-button='submit') Save
+											button.btn.btn-warning(duck-button='cancel') Cancel
+						else
+							h1= neighborhood.names.display
+								small.ml-Md= neighborhood.tagline
 
 
-		if userIsAuthorized()
+		//if userIsAuthorized()
 			+modal('EditNeighborhoodForm')(class='modal-lg')
 				+neighborhoodForm('update', neighborhood)
 
@@ -35,27 +67,230 @@ block content
 			.row
 				.col-xs-12.col-sm-6.col-md-8.f-R
 					.content-card.p-0
-						if neighborhood.images && neighborhood.images.length > 2
-							div(data-function='banner')
-								for img, i in neighborhood.images
-									img(src=getImagePath(img, 'large'), alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
-						else 
-							img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
-						.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description						
+						if userIsAuthorized()
+							div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+								.duck-edit-hidden
+									if neighborhood.images && neighborhood.images.length > 2
+										div(data-function='banner')
+											for img, i in neighborhood.images
+												img(src=getImagePath(img, 'large'), alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
+									else 
+										img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
+									.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description
 
-					if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
-						.content-card
-							h2.content-card--header Advice
+								.duck-view-hidden
+									.form-group
+										label Card Image
+											+imagePicker(neighborhood, 'cardImage')
+									div(duck-field='images', duck-type='array')
+										h3 Images
+										div
+											for image, i in neighborhood && neighborhood.images ? neighborhood.images : [null]
+												+imagePicker(neighborhood.images, i)
+												.form-group.d-F.fai-C
+													input.ml-Sm.form-control(type='string', duck-value, value= image)
+													button.btn.btn-danger.f-R.mt-NegXXs.mr-NegXs(duck-button='delete')
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Image
 
-							.row(data-function='accordion', data-allow-multiple='true')
-								for advice, i in neighborhood.needToKnow.sort(sortByOrder)
-									h3.m-0.p-Sm(role='tab',aria-expanded= i === 0 ? 'true' : 'false', data-function='toggle', data-event='tab-change', data-target='this i')
-										i.fa.fa-chevron-down.an-F.mr-Sm(aria-hidden='true', data-toggle='rotate-Neg180', class= i === 0 ? 'rotate-Neg180' : '')
-										= advice.title
-									div.p-Sm.pt-0(role='tabpanel', aria-hidden= i === 0 ? 'false' : 'true')!= advice.description
+									button.btn.btn-primary(duck-button='submit') Save
+									button.btn.btn-warning(duck-button='cancel') Cancel
+						else
+							if neighborhood.images && neighborhood.images.length > 2
+								div(data-function='banner')
+									for img, i in neighborhood.images
+										img(src=getImagePath(img, 'large'), alt=`${neighborhood.names.display} Banner ${i+1}`, data-banner-item)
+							else 
+								img.w-100(src= getImagePath(neighborhood.cardImage, 'large'), alt= neighborhood.names.display)
+							.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm.p-A--sm.b-0.l-0.r-0!= neighborhood.description
+
+					if userIsAuthorized()
+							.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+								h2.content-card--header Travel Hacks
+								if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
+									.duck-edit-hidden
+										+accordion(neighborhood.needToKnow)
+								.duck-view-hidden
+									div(duck-field='needToKnow', duck-type='array')
+										div
+											for fact in neighborhood && neighborhood.needToKnow ? neighborhood.needToKnow : [{}]
+												.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
+													h3.mt-0 Fact
+													.form-group.col-xs-12(duck-field='title', duck-type='string')
+														label Title
+															input.form-control(type='text', duck-value, value= fact.title)
+													.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+														label Fact
+														.summernote!= fact.description
+													.ta-C
+														button.btn.btn-danger(duck-button='delete') Delete Fact
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Fact
+									button.btn.btn-primary(duck-button='submit') Save
+									button.btn.btn-warning(duck-button='cancel') Cancel
+					else if neighborhood.needToKnow && neighborhood.needToKnow[0] && wysiwygHasData(neighborhood.needToKnow[0].description)
+							+contentCard('Fun Facts')
+								+accordion(neighborhood.needToKnow)
 
 				.col-xs-12.col-sm-6.col-md-4
-					if neighborhood.orientation && (wysiwygHasData(neighborhood.orientation.description) || neighborhood.orientation.map || neighborhood.orientation.mainIntersection || neighborhood.orientation.mainStrip || (neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name) || (neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name))
+					if userIsAuthorized()
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+							h2.content-card--header Orientation
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								if neighborhood.orientation && (wysiwygHasData(neighborhood.orientation.description) || neighborhood.orientation.map || neighborhood.orientation.mainIntersection || neighborhood.orientation.mainStrip || (neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name) || (neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name))
+									if wysiwygHasData(neighborhood.orientation.description)
+										div!= neighborhood.orientation.description
+									
+									if neighborhood.orientation.map
+										button.bg-N.bw-0.p-0.w-100(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
+											img.w-100(src= getImagePath(neighborhood.orientation.map, 'large'))
+
+									if wysiwygHasData(neighborhood.orientation.mainIntersection)
+										h3 Main Intersection
+										!= neighborhood.orientation.mainIntersection
+
+									if wysiwygHasData(neighborhood.orientation.mainStrip)
+										h3 Main Strip
+										!= neighborhood.orientation.mainStrip
+
+									if neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name
+										h3 Main Transit Stops
+										for wayToGetThere in neighborhood.orientation.waysToGetThere
+											h4.row
+												.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(wayToGetThere.method))
+												.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= wayToGetThere.name
+											.row
+												.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-push-2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
+													ul.list-unstyled
+														for stop in wayToGetThere.stops
+															li= stop
+
+									if neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name
+										h3 Distance To...
+										for location in neighborhood.orientation.distanceFrom.sort(sortByOrder)
+											h4.row
+												.col-xs-2.col-sm-1.col-md-2.col-lg-1.ta-C(data-icon= getIcon(location.type))
+												.col-xs-10.col-sm-11.col-md-10.col-lg-11.pl-0= location.name
+											.row
+												.col-xs-10.col-sm-11.col-md-10.col-lg-11.col-xs-push-2.col-sm-push-1.col-md-push-2.col-lg-push-1.pl-0
+													ul.list-unstyled.fc-G
+														for wayToGetThere in location.waysToGetThere
+															li.clear
+																h5.d-Ib.m-0.f-L.lh-B(data-icon= getIcon(wayToGetThere.method))
+																.ml-Md= `${wayToGetThere.time ? wayToGetThere.time : ''} ${wayToGetThere.description ? '- ' + wayToGetThere.description : ''} ${wayToGetThere.distance ? '- ' + wayToGetThere.distance : ''}`
+
+							if neighborhood.orientation.map
+										+modal('MapModal')
+											.ta-C(style='overflow-x: scroll;')
+												img(src= getImagePath(neighborhood.orientation.map, 'large'), alt=`Map of ${neighborhood.names.display}`)
+											a.btn.btn-default(data-dismiss='modal') Close
+
+							.duck-view-hidden
+								div(duck-field='orientation', duck-type='object')
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label Overview
+										.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.description
+
+									.form-group
+										label Map
+											+imagePicker(neighborhood.orientation, 'map')
+
+									.form-group(duck-field='waysToGetThere', duck-type='array')
+										h4 Ways to Get There
+										div
+											for wayToGetThere in neighborhood && neighborhood.orientation && neighborhood.orientation.waysToGetThere ? neighborhood.orientation.waysToGetThere : [{}]
+												div(duck-type='object')
+													.form-group(duck-field='name', duck-type='string')
+														label Name
+															input.form-control(type='text', duck-value, value= wayToGetThere.name)
+													.form-group(duck-field='method', duck-type='select')
+														label Method of Transportation
+															select.form-control(duck-value)
+																option(value='walk', selected= wayToGetThere.method === 'walk') Walking
+																option(value='car', selected= wayToGetThere.method === 'car') Car or Taxi
+																option(value='bicycle', selected= wayToGetThere.method === 'bicycle') Bicycle
+																option(value='subway', selected= wayToGetThere.method === 'subway') Subway
+																option(value='train', selected= wayToGetThere.method === 'train') Train
+																option(value='plane', selected= wayToGetThere.method === 'plane') Plane
+																option(value='bus', selected= wayToGetThere.method === 'bus') Bus
+																option(value='boat', selected= wayToGetThere.method === 'boat') Boat
+													div(duck-field='stops', duck-type='array')
+														label Stops
+														div
+															for stop in wayToGetThere.stops ? wayToGetThere.stops : [null]
+																.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+																	input.ml-Sm.form-control(type='text', duck-value, value= stop)
+																	button.btn.btn-danger(duck-button='delete')
+														.ta-R
+															button.btn.btn-primary(duck-button='add') Add Stop
+													.ta-C
+														button.btn.btn-danger(duck-button='delete') Delete Way to Get There
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Way to Get There
+
+									.form-group(duck-field='mainIntersection', duck-type='wysiwyg')
+										label Main Intersection
+										.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.mainIntersection
+
+									.form-group(duck-field='mainStrip', duck-type='wysiwyg')
+										label Main Strip
+										.summernote!= neighborhood && neighborhood.orientation && neighborhood.orientation.mainStrip
+
+									div(duck-field='distanceFrom', duck-type='array')
+										h4 Distance From
+										div
+											for distanceFrom in neighborhood && neighborhood.orientation && neighborhood.orientation.distanceFrom ? neighborhood.orientation.distanceFrom.sort(sortByOrder) : [{}]
+												.row(duck-type='object')
+													.col-xs-2.form-group(duck-field='order', duck-type='number')
+														label Order
+															input.form-control(type='number', duck-value, value= distanceFrom.order)
+													.col-xs-10.form-group(duck-field='name', duck-type='string')
+														label Name of Location
+															input.form-control(type='text', duck-value, value= distanceFrom.name)
+													.col-xs-12.form-group(duck-field='type', duck-type='select')
+														label Type of Location
+															select.form-control(duck-value)
+																option(value='airport', selected= distanceFrom.type === 'airport') Airport
+																option(value='attraction', selected= distanceFrom.type === 'attraction') Attraction
+																option(value='station', selected= distanceFrom.type === 'station') Station
+													.col-xs-12(duck-field='waysToGetThere', duck-type='array')
+														h5 Ways to Get There
+														div
+															for wayToGetThere in distanceFrom.waysToGetThere ? distanceFrom.waysToGetThere : [{}]
+																div(duck-type='object')
+																	.form-group(duck-field='method', duck-type='string')
+																		label Method of Transportation
+																			select.form-control(duck-value)
+																				option(value='walk', selected= wayToGetThere.method === 'walk') Walking
+																				option(value='car', selected= wayToGetThere.method === 'car') Car or Taxi
+																				option(value='bicycle', selected= wayToGetThere.method === 'bicycle') Bicycle
+																				option(value='subway', selected= wayToGetThere.method === 'subway') Subway
+																				option(value='train', selected= wayToGetThere.method === 'train') Train
+																				option(value='plane', selected= wayToGetThere.method === 'plane') Plane
+																				option(value='bus', selected= wayToGetThere.method === 'bus') Bus
+																				option(value='boat', selected= wayToGetThere.method === 'boat') Boat
+																	.form-group(duck-field='distance', duck-type='string')
+																		label Distance from Location
+																			input.form-control(type='text', duck-value, value= wayToGetThere.distance)
+																	.form-group(duck-field='time', duck-type='string')
+																		label Time
+																			input.form-control(type='text', duck-value, value= wayToGetThere.time)
+																	.form-group(duck-field='description', duck-type='string')
+																		label Description
+																			input.form-control(type='text', duck-value, value= wayToGetThere.description)
+																	.ta-C
+																		button.btn.btn-danger(duck-button='delete') Delete Way to Get There
+														.ta-R
+															button.btn.btn-primary(duck-button='add') Add Way to Get There
+													.ta-C
+														button.btn.btn-danger(duck-button='delete') Delete Location
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Location
+								
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+					else if neighborhood.orientation && (wysiwygHasData(neighborhood.orientation.description) || neighborhood.orientation.map || neighborhood.orientation.mainIntersection || neighborhood.orientation.mainStrip || (neighborhood.orientation.waysToGetThere && neighborhood.orientation.waysToGetThere[0] && neighborhood.orientation.waysToGetThere[0].name) || (neighborhood.orientation.distanceFrom && neighborhood.orientation.distanceFrom[0] && neighborhood.orientation.distanceFrom[0].name))
 						+contentCard('Orientation')
 							if wysiwygHasData(neighborhood.orientation.description)
 								div!= neighborhood.orientation.description
@@ -106,7 +341,30 @@ block content
 									img(src= getImagePath(neighborhood.orientation.map, 'large'), alt=`Map of ${neighborhood.names.display}`)
 								a.btn.btn-default(data-dismiss='modal') Close
 
-					if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
+					
+					if userIsAuthorized()
+						div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+							h2.fc-G Nearby Neighborhoods
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
+									.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
+										for nearbyNeighborhood in nearbyNeighborhoods
+											a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`)
+												+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
+							.duck-view-hidden
+								div(duck-field='nearbyNeighborhoods', duck-type='array')
+									div
+										for nearbyNeighborhood in neighborhood && neighborhood.nearbyNeighborhoods ? neighborhood.nearbyNeighborhoods : [null]
+											.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+												input.ml-Sm.form-control(type='text', duck-value, value= nearbyNeighborhood)
+												button.btn.btn-danger(duck-button='delete')
+									.ta-R
+										button.btn.btn-primary(duck-button='add') Add Nearby Neighborhood
+
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+					else if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
 						h2.fc-G Nearby Neighborhoods
 
 						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
@@ -115,16 +373,122 @@ block content
 									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 
 				.col-xs-12.col-sm-6.col-md-8.f-R
-					if  neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
+					if userIsAuthorized()
+						.content-card
+							h2.content-card--header Eating &amp; Drinking
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								if neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
+									img.f-L.w-25(src=getImagePath(neighborhood.eatingDrinking.image, 'medium'), alt='Eating and Drinking')
+									.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
+							.duck-view-hidden
+								div(duck-field='eatingDrinking', duck-type='object')
+									.form-group
+										label Image
+											+imagePicker(neighborhood.eatingDrinking, 'image')
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label What to Know About Eating and Drinking
+										.summernote!= neighborhood && neighborhood.eatingDrinking && neighborhood.eatingDrinking.description
+
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+					else if neighborhood.eatingDrinking && wysiwygHasData(neighborhood.eatingDrinking.description)
 						+contentCard('Eating & Drinking')
 							img.f-L.w-25(src=getImagePath(neighborhood.eatingDrinking.image, 'medium'), alt='Eating and Drinking')
 							.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
 
-					if  neighborhood.shopping && wysiwygHasData(neighborhood.shopping.description)
+					if userIsAuthorized()
+						.content-card
+							h2.content-card--header Shopping
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								if neighborhood.shopping && wysiwygHasData(neighborhood.shopping.description)
+									img.f-L.w-25(src=getImagePath(neighborhood.shopping.image, 'medium'), alt='Shopping')
+									.w-75.f-L.pl-Sm!= neighborhood.shopping.description
+							.duck-view-hidden
+								div(duck-field='shopping', duck-type='object')
+									.form-group
+										label Image
+											+imagePicker(neighborhood.shopping, 'image')
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label What to Know About Shopping
+										.summernote!= neighborhood && neighborhood.shopping && neighborhood.shopping.description
+
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+					else if neighborhood.shopping && wysiwygHasData(neighborhood.shopping.description)
 						+contentCard('Shopping')
 							img.f-L.w-25(src=getImagePath(neighborhood.shopping.image, 'medium'), alt='Shopping')
 							.w-75.f-L.pl-Sm!= neighborhood.shopping.description
+				
+				if userIsAuthorized()
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card
+							h2.content-card--header.mb-0 Where to Explore
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								if neighborhood.explore.map
+									img.w-100(src=getImagePath(neighborhood.explore.map, 'large'), alt='Where to Explore')
+								for area in neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name ? neighborhood.explore.areas : []
+									h3= area.name
+									!= area.description
 
+									if area.suggestedSpots && area.suggestedSpots[0] && area.suggestedSpots[0].name
+										h4 Suggested Spots
+										ul
+										for spot in area.suggestedSpots
+											li
+												if spot.link
+													a(href= spot.link, target='blank')= spot.name
+												else
+													= spot.name
+							.duck-view-hidden
+								div(duck-field='explore', duck-type='object')
+									.form-group
+										label Map
+											+imagePicker(neighborhood.explore, 'map')
+
+									div(duck-field='areas', duck-type='array')
+										label Areas
+										div
+											for area in neighborhood && neighborhood.explore && neighborhood.explore.areas ? neighborhood.explore.areas : [{}]
+												div(duck-type='object')
+													h5 Area
+													.form-group(duck-field='name', duck-type='string')
+														label Name / Location / Cross Street
+															input.form-control(type='text', duck-value, value= area.name)
+													.form-group(duck-field='description', duck-type='wysiwyg')
+														label Description
+														.summernote!= area.description
+													div(duck-field='suggestedSpots', duck-type='array')
+														h5 Suggested Spots
+														div
+															for spot in area.suggestedSpots ? area.suggestedSpots : [{}]
+																div(duck-type='object')
+																	.form-group(duck-field='name', duck-type='string')
+																		label Name
+																			input.form-control(type='text', duck-value, value= spot.name)
+																	.form-group(duck-field='link', duck-type='string')
+																		label Link
+																			input.form-control(type='text', duck-value, value= spot.link)
+																	.form-group(duck-field='type', duck-type='select')
+																		label Type
+																			select.form-control(duck-value)
+																				option(value='restaurant', selected= spot.type === 'restaurant') Restaurant
+																				option(value='bar', selected= spot.type === 'bar') Bar
+																				option(value='store', selected= spot.type === 'store') Store
+																				option(value='other', selected= spot.type === 'other') Other
+																	.ta-C
+																		button.btn.btn-danger(duck-button='delete') Delete Suggested Spot
+														.ta-R
+															button.btn.btn-primary(duck-button='add') Add Suggested Spot
+												.ta-C
+													button.btn.btn-danger(duck-button='delete') Delete Area
+									.ta-R
+										button.btn.btn-primary(duck-button='add') Add Area
+
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
 				if neighborhood.explore && (neighborhood.explore.map || (neighborhood.explore.areas && neighborhood.explore.areas[0] && neighborhood.explore.areas[0].name))
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						.content-card
@@ -145,7 +509,51 @@ block content
 											else
 												= spot.name
 
-				if neighborhood.notiblePlaces && neighborhood.notiblePlaces[0] && neighborhood.notiblePlaces[0].name
+				
+				if userIsAuthorized()
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+							h2.content-card--header Other Notable Places
+								button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-edit-hidden
+								ul.list-unstyled
+									for place in neighborhood.notiblePlaces
+										li.clear
+											if place.image
+												.w-25.f-L
+													img.w-100(src=getImagePath(place.image, 'medium'), alt= place.name)
+											div.pl-Sm(class= place.image ? 'w-75 f-L' : '')
+												h3.mt-N= place.name
+												!= place.description
+												.clear
+													div.d-B.f-L
+														i.fa.fa-map-pin.lh-B(aria-hidden='true')
+													div.ml-Md!= place.address
+							.duck-view-hidden
+								div(duck-field='notiblePlaces', duck-type='array')
+									div
+										for place in neighborhood && neighborhood.notiblePlaces ? neighborhood.notiblePlaces : [{}]
+											.p-Sm.bg-G__ltr(duck-type='object')
+												.form-group(duck-field='name', duck-type='string')
+													label Name
+														input.form-control(type='text', duck-value, value= place.name)
+												.form-group(duck-field='image', duck-type='string')
+													label Image
+														input.form-control(type='text', duck-value, value= place.image)
+												.form-group(duck-field='address', duck-type='wysiwyg')
+													label Address
+													.summernote!= place.address
+												.form-group(duck-field='description', duck-type='wysiwyg')
+													label description
+													.summernote!= place.description
+												.ta-C
+													button.btn.btn-danger(duck-button='delete') Delete Place
+									.ta-R
+										button.btn.btn-primary(duck-button='add') Add Place
+								
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+				else if neighborhood.notiblePlaces && neighborhood.notiblePlaces[0] && neighborhood.notiblePlaces[0].name
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						+contentCard('Other Notable Places')
 							ul.list-unstyled
@@ -162,10 +570,32 @@ block content
 													i.fa.fa-map-pin.lh-B(aria-hidden='true')
 												div.ml-Md!= place.address
 
-
-
-
-				if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
+				if userIsAuthorized()
+					.col-xs-12.col-sm-6.col-md-8.f-R
+						.content-card(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
+							h2.content-card--header Fun Facts
+							if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
+								.duck-edit-hidden
+									+accordion(neighborhood.quickFacts)
+							.duck-view-hidden
+								div(duck-field='quickFacts', duck-type='array')
+									div
+										for fact in neighborhood && neighborhood.quickFacts ? neighborhood.quickFacts : [{}]
+											.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
+												h3.mt-0 Fact
+												.form-group.col-xs-12(duck-field='title', duck-type='string')
+													label Title
+														input.form-control(type='text', duck-value, value= fact.title)
+												.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+													label Fact
+													.summernote!= fact.description
+												.ta-C
+													button.btn.btn-danger(duck-button='delete') Delete Fact
+									.ta-R
+										button.btn.btn-primary(duck-button='add') Add Fact
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+				else if neighborhood.quickFacts && neighborhood.quickFacts[0] && wysiwygHasData(neighborhood.quickFacts[0].description)
 					.col-xs-12.col-sm-6.col-md-8.f-R
 						+contentCard('Fun Facts')
 							+accordion(neighborhood.quickFacts)

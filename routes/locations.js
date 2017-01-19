@@ -226,7 +226,8 @@ router.get('/:country/:province', (req, res, next) => {
 		return;
 	}
 
-	const province = Province.findOne(['url', 'country'], [req.params.province, country.Id])
+	const province = Province.find('url', req.params.province)
+							 .findOne('country', country.Id)
 							 .join('continent', Continent.cached(), 'Id', 'names.display')
 							 .join('continent', Continent.cached(), 'Id', 'url')
 							 .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
@@ -325,7 +326,7 @@ router.get('/:country/:city', (req, res, next) => {
 	}
 
 	const attractions = Attraction.find('city', city.Id).items;
-	const guides = Guide.find('cities', city.Id).items;
+	const guides = Guide.find('Id', city.guides).items;
 	const countryRegions = CountryRegion.find('country', city.country).items;
 	const provinces = Province.find('country', city.country).items;
 	let provinceRegions = [];

@@ -2,6 +2,27 @@ const bcrypt = require('bcrypt-nodejs');
 const cache  = require('../cache');
 const joinObject  = require('../joinObject');
 
+function returnItem(obj, field, value, contains) {
+	if (!obj || !field) { return null; }
+	if (!(field instanceof Array)) { field = field.split('.'); }
+
+	const currentField = field.shift();
+	if (field.length) {
+		return returnItem(obj[currentField], field, value, contains);
+	}
+
+	const objValue = obj[currentField];
+	if(objValue instanceof Array) {
+		return objValue.indexOf(value) > -1;
+	}
+
+	if(value instanceof Array) {
+		return value.indexOf(objValue) > -1;
+	}
+
+	return contains ? objValue.indexOf(value) > -1 : objValue === value;
+}
+
 module.exports = function(_duck){
 	_duck.prototype.generateHash  = (password) => { return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); }; // generateing a hash
 	_duck.prototype.validPassword = (password, encodedPassword) => { return bcrypt.compareSync(password, encodedPassword); }; // checking if password is valid
@@ -47,63 +68,34 @@ module.exports = function(_duck){
 			return new _duck(this.schema, this.items || this.cached());
 		}
 
-		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
-		const values = value instanceof Array ? value : Array(value);
 		const items = this.items || this.cached();
+		const foundItems = items.filter((item) => returnItem(item, field, value, contains));
+		const sortedItems = (foundItems && value instanceof Array) ? value.map((val, i) => {
+			const length = foundItems.length;
 
-		const foundItems = items.map(function(item){
-							for (var i in fieldPaths){
-								var res = item;
+			for(let j = 0; j < length; j++) {
+				const item = foundItems[j];
 
-								// for each item in the array
-								for (var j in fieldPaths[i]){
-									if(res[fieldPaths[i][j]]){
-										res = res[fieldPaths[i][j]]
-									}
-								}
+				if(returnItem(item, field, value[i])){
+					return item;
+				}
+			}
+		}) : foundItems;
 
-								if(contains && (typeof contains == 'string' || contains instanceof Array)){
-									return res.indexOf(values[i]) == -1 ? null : item
-								}
-
-								if (res != values[i]){
-									return null;
-								}
-							}
-
-							return item;
-						  })
-						  .filter(nullCheck => nullCheck);
-
-		return new _duck(this.schema, foundItems);
+		return new _duck(this.schema, sortedItems);
 	}
 
 	// same as find, but only returns one result, does not allow contains
 	_duck.prototype.findOne = function(field, value){
-		const fieldPaths = typeof field === 'string' ? Array(field.split('.')) : field.map(f => f.split('.')); // make the accepted arguments into an aray			
-		const values = value instanceof Array ? value : Array(value);
 		const items = this.items || this.cached();
+		const length = items.length;
 
-		for (var item in items){
-			var addItem = true;
+		for (let i = 0;  i < length; i++){
+			const item = items[i];
 
-			for (var i in fieldPaths){
-				var res = items[item];
-
-				// for each item in the array
-				for (var j in fieldPaths[i]){
-					if(res[fieldPaths[i][j]]){
-						res = res[fieldPaths[i][j]]
-					}
-				}
-
-				if (res != values[i]){
-					addItem = false;
-				}
-			}
-
-			if(addItem){
-				return new _duck(this.schema, items[item]);
+			if(returnItem(item, field, value)){
+				//console.log(field, value);
+				return new _duck(this.schema, item);
 			}
 		}
 		

@@ -26,6 +26,7 @@ const City = Duck({
 		countryRegions: Array,
 		province: Array,
 		provinceRegions: Array,
+		guides: Array,
 	// At a Glance Card
 		averageStay: String,
 		bestTimeToVisit: Array,

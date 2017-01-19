@@ -8,7 +8,7 @@ block content
 
 		.container.ptb-Sm
 			small
-				a.fc-G(href= `/${country.url}/${neighborhood.cityUrl}`)= `< Back to ${neighborhood.cityDisplay}`
+				a.fc-G(href= `/${country.url}/${city.url}`)= `< Back to ${city.names.display}`
 
 			+contentCard('Coming soon!')
 				p.lead.m-0!= `More information about ${neighborhood && neighborhood.names && neighborhood.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
@@ -21,8 +21,8 @@ block content
 					.container.ptb-0
 						ol.breadcrumb
 							li.active: a(href= '/') Home
-							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}`)= neighborhood.cityDisplay
-							li.active: a(href=`/${country.url}/${neighborhood.cityUrl}/#Neighborhoods`) Neighborhoods
+							li.active: a(href=`/${country.url}/${city.url}`)= city.names.display
+							li.active: a(href=`/${country.url}/${city.url}/#Neighborhoods`) Neighborhoods
 						if userIsAuthorized()
 							div(duck-table='Neighborhoods', duck-function='update', duck-key='Id', duck-key-value= neighborhood.Id, duck-edit-form='view')
 								.duck-edit-hidden
@@ -346,7 +346,7 @@ block content
 								if neighborhood.nearbyNeighborhoods && nearbyNeighborhoods.length > 0
 									.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
 										for nearbyNeighborhood in nearbyNeighborhoods
-											a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`)
+											a.masonry--item(href=`/${country.url}/${city.url}/${nearbyNeighborhood.url}`)
 												+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 							.duck-view-hidden
 								div(duck-field='nearbyNeighborhoods', duck-type='array')
@@ -365,7 +365,7 @@ block content
 
 						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
 							for nearbyNeighborhood in nearbyNeighborhoods
-								a.masonry--item(href=`/${country.url}/${neighborhood.cityUrl}/${nearbyNeighborhood.url}`)
+								a.masonry--item(href=`/${country.url}/${city.url}/${nearbyNeighborhood.url}`)
 									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 
 				.col-xs-12.col-sm-6.col-md-8.f-R

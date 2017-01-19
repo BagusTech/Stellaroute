@@ -1,6 +1,42 @@
 .row
 	.col-xs-12.col-sm-8.f-R
-		if guides && guides.length > 0
+		if userIsAuthorized()
+			.list-group(duck-table='Cities' duck-function='update' duck-key='Id' duck-key-value=city.Id, duck-edit-form='view')
+				.duck-edit-hidden
+					button.btn.btn-default(duck-button='edit') Edit Guides
+					for guide, i in guides
+						if i === 0
+							a.clear.list-group-item.mtb-Sm.p-0.p-R.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+								.p-A.t-0.r-0.bg-Gr.fc-W.p-Xs.fw-N Featured Guide
+								div(style=`padding-top: 30px; padding-bottom: 40%; background: url('${getImagePath(guide.cardImage, "large") || getImagePath(guide.map, "large")}') no-repeat scroll center center / cover;`)
+								.p-Sm
+									h3.fc-Purp.mt-0= guide.names.display
+									.fc-B.fw-N!= guide.description
+						else if i < 4
+							
+							a.list-group-item.clear.mtb-Sm.p-0.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
+								.w-25--sm.f-L--sm
+									img.w-100(src= getImagePath(guide.cardImage, 'medium') || getImagePath(guide.map, 'medium'), alt= guide.names.display)
+								.w-75--sm.f-L--sm.p-Sm
+									h3.fc-Purp.mt-0= guide.names.display
+									.fc-B.fw-N!= guide.description
+					.ta-C
+						a(href='#Guides') All Guides
+
+				.duck-view-hidden
+					div(duck-field='guides', duck-type='array')
+						div
+							for guide in city.guides ? city.guides : [null]
+								.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+									input.ml-Sm.form-control(type='text', duck-value, value= guide)
+									button.btn.btn-danger(duck-button='delete')
+						.ta-R
+							button.btn.btn-primary(duck-button='add') Add Guide
+
+					button.btn.btn-primary(duck-button='submit') Save
+					button.btn.btn-warning(duck-button='cancel') Cancel
+
+		else if guides && guides.length > 0
 			.list-group
 				for guide, i in guides
 					if i === 0
@@ -14,8 +50,8 @@
 						
 						a.list-group-item.clear.mtb-Sm.p-0.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)
 							.w-25--sm.f-L--sm
-								img.w-100(src= guide.cardImage || guide.map, alt= guide.names.display)
-							.w-75--sm.f-L--sm.p-Sm.pb-Lg--sm
+								img.w-100(src= getImagePath(guide.cardImage, 'medium') || getImagePath(guide.map, 'medium'), alt= guide.names.display)
+							.w-75--sm.f-L--sm.p-Sm
 								h3.fc-Purp.mt-0= guide.names.display
 								.fc-B.fw-N!= guide.description
 			.ta-C

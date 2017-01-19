@@ -67,6 +67,8 @@ void function initializeStickeyAddon($) {
 		}
 
 		$scrollWrapper.on('scroll', makeStickey);
+		$wrapper.on('reInitStickey', reInitStickey);
+		$wrapper.closest('[role="tabpanel"]').on('tab-changed', reInitStickey);
 
 		$(window).on('resize', reInitStickey);
 	}

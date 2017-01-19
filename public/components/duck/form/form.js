@@ -57,6 +57,7 @@ void function initDuckForm($, duck, window) {
 		$item.parent().sortable('[duck-type]');
 
 		$wrapper.trigger('duckArrayItemAdded');
+		$wrapper.closest('[data-function*="scroll"]').trigger('initScroll')
 	}
 
 	function removeFromObject(obj, path, value) {

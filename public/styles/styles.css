@@ -8169,6 +8169,11 @@ button.close {
     width: 1607px;
   }
 }
+@media (min-width: 767px) {
+  [data-scroll='content'] {
+    padding-right: 0;
+  }
+}
 [data-scroll='scrollbar'] {
   width: 12px;
   border-width: 0 3px;
@@ -8444,7 +8449,8 @@ button.close {
 @media (min-width: 767px) {
   .tabbed-nav {
     margin-top: 24px;
-    max-width: 791px;
+    max-width: 774px;
+    padding: 0 24px;
   }
   .tabbed-nav--tab {
     font-size: 1em;
@@ -8454,12 +8460,12 @@ button.close {
 }
 @media (min-width: 1023px) {
   .tabbed-nav {
-    max-width: 1047px;
+    max-width: 1030px;
   }
 }
 @media (min-width: 1600px) {
   .tabbed-nav {
-    max-width: 1624px;
+    max-width: 1607px;
   }
 }
 #Stellaroute {

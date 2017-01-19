@@ -21,18 +21,28 @@ block content
 		.container
 
 			h2.fc-G Locations
-			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
+			.row
 				for location in approvedLocations
-					a.masonry--item(href=`/${location.countryUrl}/${location.url}`)
-						+card(location.cardImage, location.names.display)
+					.col-xs-12.col-sm-6.col-md-3.mb-Md
+						a(href=`/${location.countryUrl}/${location.url}`)
+							+card(location.cardImage, location.names.display)
 
-				.masonry--item(data-toggle='modal', data-target='#RequestLocation')
-					.card
-						.ta-C.fc-Purp.bg-G__ltr(style='padding: 30% 0 ; font-size: 60px;')
-							i.fa.fa-plus(aria-hidden='true')
-							.sr-only Request
+					.col-xs-12.col-sm-6.col-md-3.mb-Md
+						.card(data-toggle='modal', data-target='#RequestLocation')
+							.ta-C.fc-Purp.bg-G__ltr(style='padding: 28% 0 ; font-size: 60px;')
+								i.fa.fa-plus(aria-hidden='true')
+								.sr-only Request
 
-						h3.card--title Request a Location
+							h3.card--title Request a Location
+
+					.col-xs-12.col-md-6
+						.card.p-Md.p-Lg--sm.pb-0.pb-Md--sm
+							h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
+							hr
+							small.d-N.d-B--sm.fc-G.pt-Xs Stay updated on new features and locations!
+
+							include controls/beta-signup.pug
+					
 
 			include controls/requestLocation.pug
 
@@ -43,16 +53,16 @@ block content
 			h2.fc-G Coming Soon
 			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
 				.masonry--item
-					+card('http://i1.trekearth.com/photos/1577/st._louis_riverfront-1.jpg', 'St. Louis')
+					+card('budweiser.jpg', 'St. Louis')
 				.masonry--item
-					+card('http://az616578.vo.msecnd.net/files/2016/04/27/635973353399336445-1421152854_NYC-1.jpg', 'New York')
+					+card('635973353399336445-1421152854_NYC-1.jpg', 'New York')
 				// REMOVED AS SUPERFLOUS, MIGHT PUT BACK IN LATER
 					.masonry--item
-						+card('http://cdn.ek.aero/english/images/London-1_tcm233-2111842.jpg', 'London')
+						+card('London-1_tcm233-2111842.jpg', 'London')
 				.masonry--item
-					+card('http://www.accessmba.com/uploads/tx_templavoila/Amsterdam.jpg', 'Amsterdam')
+					+card('Amsterdam.jpg', 'Amsterdam')
 				.masonry--item
-					+card('http://cdn.boulevards.com/imgs/efm-hotel-billboard-washingtondc.com.jpg', 'Washington, D.C.')
+					+card('efm-hotel-billboard-washingtondccom.jpg', 'Washington, D.C.')
 
 			hr.mb-Lg
 

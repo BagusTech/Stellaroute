@@ -136,9 +136,9 @@ block content
 										label(for=`FoodOrder${i}`) Order
 										input#FoodName.form-control(type='number', required, duck-value, value=item.order)
 
-									.form-group(duck-field='image', duck-type='string') <!-- image -->
-										label(for=`FoodImage${i}`) Image
-										input#FoodImage.form-control(type='text', required, duck-value, value=item.image)
+									.form-group <!-- image -->
+										label(for='FoodImage') Image
+											+imagePicker(null, 'image')
 
 									.form-group(duck-field='category', duck-type='select') <!-- category -->
 										label(for=`FoodCategory${i}`) Category

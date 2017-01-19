@@ -8155,8 +8155,18 @@ button.close {
   padding-right: 17px;
 }
 @media (min-width: 767px) {
-  [data-scroll='content'] {
-    padding-right: 0;
+  [data-scroll='content'] .container {
+    width: 774px;
+  }
+}
+@media (min-width: 1023px) {
+  [data-scroll='content'] .container {
+    width: 1030px;
+  }
+}
+@media (min-width: 1600px) {
+  [data-scroll='content'] .container {
+    width: 1607px;
   }
 }
 [data-scroll='scrollbar'] {

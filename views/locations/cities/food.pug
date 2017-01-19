@@ -23,9 +23,9 @@ if userIsAuthorized()
 									label(for='FoodName') Name
 									input#FoodName.form-control(type='text', required, duck-value)
 
-								.form-group(duck-field='image', duck-type='string') <!-- image -->
+								.form-group <!-- image -->
 									label(for='FoodImage') Image
-									input#FoodImage.form-control(type='text', required, duck-value)
+										+imagePicker(null, 'image')
 
 								.form-group(duck-field='category', duck-type='select') <!-- category -->
 									label(for='FoodCategory') Category

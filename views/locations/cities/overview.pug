@@ -29,25 +29,99 @@
 						+card(neighborhood.cardImage, neighborhood.names.display)
 
 	.col-xs-12.col-sm-4
-		+contentCard('At a Glance')
-			dl.m-0
-				if city.averageStay
-					dt Length of Stay
-					dd= city.averageStay
-				if city.bestTimeToVisit
-					dt Best Time to Visit
-					dd= city.bestTimeToVisit.join('; ')
-				if city.topPlacesDisplay
-					dt Top places to stay
-					dd= city.topPlacesDisplay.join('; ')
-			div(data-function='accordion')
-				button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
-				.d-B(role='tabpanel', aria-hidden='true')!= city.description
-
-		if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
+		
+		if userIsAuthorized()
 			.content-card
-				h2.content-card--header Travel Hacks
+				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
+					h2.content-card--header At a Glance
+						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
+					.duck-edit-hidden
+						dl.m-0
+							if city.averageStay
+								dt Length of Stay
+								dd= city.averageStay
+							if city.bestTimeToVisit
+								dt Best Time to Visit
+								dd= city.bestTimeToVisit.join('; ')
+							if city.topPlacesDisplay
+								dt Top places to stay
+								dd= city.topPlacesDisplay.join('; ')
+						div(data-function='accordion')
+							button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
+							.d-B(role='tabpanel', aria-hidden='true')!= city.description
+					.duck-view-hidden
+						.form-group(duck-field='averageStay', duck-type='string')
+							label Suggested / Average Length of Stay
+								input.form-control(type='text', duck-value, value= city && city.averageStay)
 
+						.form-group(duck-field='bestTimeToVisit', duck-type='array')
+							label Best Time(s) to Visit
+							div
+								for time in city && city.bestTimeToVisit ? city.bestTimeToVisit : [null]
+									.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+										input.ml-Sm.form-control(type='text', duck-value, value= time)
+										button.btn.btn-danger(duck-button='delete')
+							.ta-R
+								button.btn.btn-primary(duck-button='add') Add
+
+						.form-group(duck-field='topPlaces', duck-type='array')
+							label Top Places
+							div (Neighborhoods) to Stay
+								for place in city && city.topPlaces ? city.topPlaces : [null]
+									.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+										input.ml-Sm.form-control(type='text', duck-value, value= place)
+										button.btn.btn-danger(duck-button='delete')
+
+						div(duck-field='description', duck-type='wysiwyg')
+							label City Description
+							.summernote!= city && city.description
+						
+						button.btn.btn-primary(duck-button='submit') Save
+						button.btn.btn-warning(duck-button='cancel') Cancel
+		else
+			+contentCard('At a Glance')
+				dl.m-0
+					if city.averageStay
+						dt Length of Stay
+						dd= city.averageStay
+					if city.bestTimeToVisit
+						dt Best Time to Visit
+						dd= city.bestTimeToVisit.join('; ')
+					if city.topPlacesDisplay
+						dt Top places to stay
+						dd= city.topPlacesDisplay.join('; ')
+				div(data-function='accordion')
+					button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
+					.d-B(role='tabpanel', aria-hidden='true')!= city.description
+
+		if userIsAuthorized()
+			.content-card
+				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
+					h2.content-card--header Travel Hacks
+						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
+					.duck-edit-hidden
+						if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
+							+accordion(city.needToKnow, 1)(class='row', data-allow-multiple='true')
+					.duck-view-hidden
+						div(duck-field='needToKnow', duck-type='array')
+							h3 Travel Hacks
+							div
+								for advice in city && city.needToKnow ? city.needToKnow : [{}]
+									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
+										h4.mt-0 Advice
+										.form-group(duck-field='title', duck-type='string')
+											label Title
+												input.form-control(type='text', duck-value, value= advice.title)
+										.form-group(duck-field='description', duck-type='wysiwyg')
+											label Advice
+											.summernote!= advice.description
+										.ta-C
+											button.btn.btn-danger(duck-button='delete') Delete Advice
+							.ta-R
+								button.btn.btn-primary(duck-button='add') Add Advice
+
+		else if city.needToKnow && city.needToKnow[0] && wysiwygHasData(city.needToKnow[0].description)
+			+contentCard('Travel Hacks')
 				+accordion(city.needToKnow, 1)(class='row', data-allow-multiple='true')
 
 		if city.food && city.food.foods
@@ -66,7 +140,7 @@
 		//if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
 			+contentCard('Getting Around')
 				if city.transit.tagline
-					//.d-F.fai-C.fj-C
+					.d-F.fai-C.fj-C
 						.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs.fw-N.fs-18(style='width: 50px; height: 50px; flex-grow: 2;')
 							i.fa.fa-train.p-A(style='top: 5px; left: -5px')
 							i.fa.fa-plane.p-A(style='top: 5px; right: -5px')
@@ -75,6 +149,35 @@
 
 				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 
-		if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
+		if userIsAuthorized()
+			.content-card
+				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
+					h2 Quick Facts
+					.duck-edit-hidden
+						if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
+							+accordion(city.quickFacts)(class='row', data-allow-multiple='true')
+					.duck-view-hidden
+						div(duck-field='quickFacts', duck-type='array')
+							h3 Quick Facts
+							div
+								for advice in city && city.quickFacts ? city.quickFacts : [{}]
+									.p-Md.bg-G__ltr.mb-Sm(duck-type='object')
+										h4 Fact
+										.form-group.col-xs-10(duck-field='title', duck-type='string')
+											label Title
+												input.form-control(type='text', duck-value, value= advice.title)
+										.form-group.col-xs-2(duck-field='order', duck-type='number')
+											label Order
+												input.form-control(type='number', duck-value, value= advice.order)
+										.form-group.col-xs-12(duck-field='description', duck-type='wysiwyg')
+											label Fact
+											.summernote!= advice.description
+										.ta-C
+											button.btn.btn-danger(duck-button='delete') Delete Fact
+							.ta-R
+								button.btn.btn-primary(duck-button='add') Add Fact
+						button.btn.btn-primary(duck-button='submit') Save
+						button.btn.btn-warning(duck-button='cancel') Cancel
+		else if city.quickFacts && city.quickFacts[0] && wysiwygHasData(city.quickFacts[0].description)
 			+contentCard('Quick Facts')
 				+accordion(city.quickFacts)(class='row', data-allow-multiple='true')

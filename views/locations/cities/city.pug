@@ -15,13 +15,57 @@ block content
 	div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage ? city.backgroundImage : 'http://placebear.com/600/150'}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr
 				.container.ptb-0.p-R
-					if user && userIsAuthorized()
+					//if userIsAuthorized()
 						button.btn.btn-primary.p-A.r-Sm.t-Sm.d-N.d-B--sm(data-toggle='modal', data-target='#EditCityForm') Edit
 						.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= city.Id
 					ol.breadcrumb
 						li.active: a(href= '/') Home
-					h1= city.names.display
-						small.ml-Md= city.tagline
+					if userIsAuthorized()
+						div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
+							.duck-edit-hidden
+								h1= city.names.display
+									small.ml-Md= city.tagline
+									button.btn.btn-edit.f-R.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+							.duck-view-hidden.p-Sm.bg-W
+								div(duck-field='names', duck-type='object')
+									.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
+										.form-group
+											label Display Name
+												input.form-control(type='text', required, duck-value, value= city && city.names.display)
+									.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
+										.form-group
+											label Official Name
+												input.form-control(type='text', required, duck-value, value= city && city.names.official)
+									.c-B.w-50(duck-field='alias', duck-type='array')
+										label Alias'
+										div
+											for alias in city && city.names && city.names.alias ? city.names.alias : [null]
+												.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+													input.ml-Sm.form-control(type='text', required, duck-value, value= alias)
+													button.btn.btn-danger(duck-button='delete')
+										.ta-R
+											button.btn.btn-primary(duck-button='add') Add Alias
+
+								.row
+									.col-xs-12.col-sm-6
+										.form-group(duck-field='tagline', duck-type='string')
+											label Tagline
+												input.form-control(type='text', duck-value, value= city && city.tagline)
+									.col-xs-12.col-sm-6
+										.form-group
+											label Background Image
+												+imagePicker(city, 'backgroundImage')
+								.row
+									.col-xs-12.col-sm-6
+									.col-xs-12.col-sm-6
+										label Card Image
+											+imagePicker(city, 'cardImage')
+								
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-warning(duck-button='cancel') Cancel
+					else 
+						h1= city.names.display
+							small.ml-Md= city.tagline
 
 				nav.tabbed-nav(data-tabs='controls')
 					a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview

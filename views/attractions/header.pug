@@ -30,9 +30,5 @@ div(style=`background: rgba(0, 0, 0, 0) url("${city.backgroundImage}") no-repeat
 								button.btn.btn-primary(duck-button='submit') Save
 								button.btn.btn-warning(duck-button='cancel') Cancel
 			else
-				ol.breadcrumb
-					li.active: a(href= '/') Home
-					li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
-					li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
 				h1= attraction.names.display
 					small.ml-Md= attraction.tagline

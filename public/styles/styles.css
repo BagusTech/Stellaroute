@@ -8435,7 +8435,6 @@ button.close {
   .tabbed-nav {
     margin-top: 24px;
     max-width: 791px;
-    display: block;
   }
   .tabbed-nav--tab {
     font-size: 1em;
@@ -8446,13 +8445,11 @@ button.close {
 @media (min-width: 1023px) {
   .tabbed-nav {
     max-width: 1047px;
-    display: block;
   }
 }
 @media (min-width: 1600px) {
   .tabbed-nav {
     max-width: 1624px;
-    display: block;
   }
 }
 #Stellaroute {

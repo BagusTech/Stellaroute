@@ -89,16 +89,14 @@ const Neighborhood = Duck({
 		}],
 	// Need to Know
 		needToKnow: [{
-			order: Number,
-			endorse: Boolean,
+			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
 			description: String,
 		}],
 	// Quick Facts (or Fun Facts)
 		quickFacts: [{
-			order: Number,
-			endorse: Boolean,
+			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
 			description: String,

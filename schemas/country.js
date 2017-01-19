@@ -29,16 +29,14 @@ const Country = Duck({
 		},
 	// Need to Know
 		needToKnow: [{
-			order: Number,
-			endorse: Boolean,
+			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
 			explanation: String,
 		}],
 	//Quick Facts (or Fun Facts)
 		quickFact: [{
-			order: Number,
-			endorse: Boolean,
+			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
 			explanation: String,

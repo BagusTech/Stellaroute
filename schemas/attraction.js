@@ -33,13 +33,11 @@ var Attraction = Duck({
 		images: Array,
 		needToKnow: [{
 			title: String,
-			order: Number,
 			idEndorsed: Boolean,
 			description: String,
 		}],
 		quickFacts: [{
 			title: String,
-			order: Number,
 			idEndorsed: Boolean,
 			description: String,
 		}],

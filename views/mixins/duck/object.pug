@@ -1,0 +1,7 @@
+mixin object(field, deleteText)
+	div(duck-field=field, duck-type='object')&attributes(attributes)
+		block
+
+		if deleteText
+			.ta-C
+				button.btn.btn-danger(duck-button='delete')= deleteText

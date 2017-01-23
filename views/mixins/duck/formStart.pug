@@ -1,0 +1,7 @@
+mixin formStart(item, tableName, show= true, duckFunction= 'update', key= 'Id')
+	if userIsAuthorized()
+		div(duck-table='Neighborhoods', duck-function=duckFunction, duck-key=key, duck-key-value= item[key], duck-edit-form='view')&attributes(attributes)
+			block
+	else if show
+		div&attributes(attributes)
+			block

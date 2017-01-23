@@ -1,4 +1,4 @@
--var imagePicker = 0;
+- var imagePicker = 0;
 
 +modal(`ImagePickerModal`)(class='modal-lg')
 	h2.content-card--header Pick an Image
@@ -15,19 +15,21 @@
 		.col-xs-6.ta-R
 			button.btn.btn-default(data-dismiss='modal') Cancel
 
-mixin imagePicker(item, field, title)
-	.form-group.p-Sm.bw-Sm.bs-S(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
+mixin image(item, field, title)
+	.form-group(duck-field=field, duck-type='image', duck-image-picker= imagePicker++)&attributes(attributes)
 		if title
 			label= title
+				.p-Sm.bw-Sm.bs-S
+					input.hidden(type='file')
+					input.hidden(type='hidden', duck-value, value= item && item[field])
+					button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')
+					span.pl-Sm(duck-image-value)= item && item[field]
+					block 
+		else
+			.p-Sm.bw-Sm.bs-S
 				input.hidden(type='file')
 				input.hidden(type='hidden', duck-value, value= item && item[field])
 				button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')
 				span.pl-Sm(duck-image-value)= item && item[field]
-				block 
-		else
-			input.hidden(type='file')
-			input.hidden(type='hidden', duck-value, value= item && item[field])
-			button.btn.btn-secondary.p-Xs(data-icon='fa fa-image', duck-button='image-select')
-			span.pl-Sm(duck-image-value)= item && item[field]
 
-			block 
+				block 

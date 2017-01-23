@@ -1,0 +1,19 @@
+mixin parseSelectItems(obj, field, items)
+	if items
+		if typeof items[0] === 'object'
+			for item in items
+				option(value=item.value, selected= (obj[field] === item.value))= item.title
+		else
+			for item in items
+				option(value=item, selected= (obj[field] === item))= item
+
+mixin select(obj, field, title, items)
+	.form-group(duck-field=field, duck-type='select')&attributes(attributes)
+		if (title)
+			label= title
+				select.form-control(duck-value)
+					+parseSelectItems(obj, field, items)
+		else
+			select.form-control(duck-value)
+				+parseSelectItems(obj, field, items)
+			

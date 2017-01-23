@@ -1,0 +1,7 @@
+mixin bool(item, field, title)
+	.form-group(duck-field=field, duck-type='bool')
+		h3= title
+		.checkbox
+			label
+				input(type='checkbox', checked= item && item[field])
+				= title

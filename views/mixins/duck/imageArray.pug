@@ -3,7 +3,7 @@ mixin imageArray(obj, field, title, addText)
 		h3= title
 		div
 			for image, i in obj && obj[field] ? obj[field] : [null]
-				+imagePicker(obj[field], i)
+				+image(obj[field], i)
 					button.btn.btn-danger.f-R.mt-NegXXs.mr-NegXs(duck-button='delete')
 		.ta-R
 			button.btn.btn-primary(duck-button='add')= addText || 'Add Image'

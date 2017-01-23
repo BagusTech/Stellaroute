@@ -1,0 +1,8 @@
+mixin edit(classes, showEdit = true)
+	if userIsAuthorized()
+		.duck-view-hidden(class=classes)&attributes(attributes)
+			block
+
+			if showEdit
+				button.btn.btn-primary(duck-button='submit') Save
+				button.btn.btn-warning(duck-button='cancel') Cancel

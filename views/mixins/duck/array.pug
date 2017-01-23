@@ -1,0 +1,13 @@
+mixin array(obj, field, title, addText)
+	div(duck-field=field, duck-type='array')&attributes(attributes)
+		h3= title
+		if !obj
+			block
+		else 
+			div
+				for item in obj && obj[field] ? obj[field] : [null]
+					.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
+						input.ml-Sm.form-control(type='text', duck-value, value= item)
+						button.btn.btn-danger(duck-button='delete')
+		.ta-R
+			button.btn.btn-primary(duck-button='add')= addText || `Add ${title}`

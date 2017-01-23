@@ -118,8 +118,8 @@ void function initDuckFilepicker($) {
 
 			const $this = $(e.currentTarget);
 
-			$imagePickerImages.find('img').attr('image-selected', 'false').removeClass('bw-Lg bc-Purp bs-S');
-			$this.attr('image-selected', 'true').addClass('bw-Lg bc-Purp bs-S');
+			$imagePickerImages.find('img').filter((i, obj) => obj !== e.currentTarget).attr('image-selected', 'false').removeClass('bw-Lg bc-Purp bs-S');
+			$this.attr('image-selected', $this.attr('image-selected') === 'true' ? 'false' : 'true').toggleClass('bw-Lg bc-Purp bs-S');
 		})
 
 		$saveImageButton.on('click', (e) => {

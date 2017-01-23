@@ -53,7 +53,7 @@ void function initializeAccordions($) {
                 return;
             }
 
-            const tabTitle = $element.text();
+            const tabTitle = $element.text() || 'Empty';
             const originalTabId = createValidAttributeFromTitle(tabTitle);
             let tabId = `#${originalTabId}`;
             let index = 0;

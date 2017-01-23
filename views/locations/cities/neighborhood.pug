@@ -63,20 +63,8 @@ block content
 				+factsHacks(false, neighborhood, 'Neighborhoods')
 
 			.col-xs-12.col-sm-6.col-md-4
-				include ./cards/orientation.pug
-						
-
-				// Nearby Neighborhoods
-				+formStart(neighborhood, 'Neighborhoods', getNested(neighborhood, 'nearbyNeighborhoods').length)
-					h2.fc-G Nearby Neighborhoods
-						+editButton('f-R mt-NegSm')
-					+view
-						.masonry.masonry-grid-1(class= nearbyNeighborhoods.length > 1 ? '.masonry-grid-2--sm' : '')
-							for nearbyNeighborhood in nearbyNeighborhoods
-								a.masonry--item(href=`/${country.url}/${city.url}/${nearbyNeighborhood.url}`)
-									+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
-					+edit
-						+array(neighborhood, 'nearbyNeighborhoods', null, 'Add Nearby Neighborhood')
+				include ../cards/orientation.pug
+				include ../cards/nearby.pug
 
 			.col-xs-12.col-sm-6.col-md-8.f-R
 				// Eating & Drinking

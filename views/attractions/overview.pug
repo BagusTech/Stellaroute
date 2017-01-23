@@ -1,8 +1,0 @@
-+formStart(attraction, 'Attractions')
-	+view('p-R o-H')(style=`background: url('${getImagePath(attraction.cardImage, "large")}') no-repeat scroll center center / cover;`)
-		button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
-		.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= attraction.description
-	+edit('mb-Md')
-		+wysiwyg(attraction, 'description', 'Description')
-		+image(attraction, 'cardImage', 'Card Image')
-		+imageArray(attraction, 'images', 'Images', 'Add Image')

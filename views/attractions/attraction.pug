@@ -11,7 +11,7 @@ block content
 	.container
 		.row
 			.col-xs-12.col-sm-6.col-md-8.f-R
-				include overview.pug
+				+locationBanner(attraction, 'Attractions')
 				+factsHacks(false, attraction, 'Attractions')
 				include ./cards/subAttractions.pug
 

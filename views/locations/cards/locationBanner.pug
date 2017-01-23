@@ -1,17 +1,23 @@
-mixin locationViewBanner(location)
-	if location.images && location.images.length > 2
-		div(data-function='banner')
-			for img, i in location.images
-				img(src=getImagePath(img, 'large'), alt=`${location.names.display} Banner ${i+1}`, data-banner-item)
-	else 
-		img.w-100(src= getImagePath(location.cardImage, 'large'), alt= location.names.display)
-	.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm!= location.description
-
 mixin locationBanner(location, locationTable)
-	+formStart(location, locationTable)(clasa='content-card p-0')
-		button(duck-button='edit') Edit
-		+view
-			+locationViewBanner(location)
+	//+formStart(location, locationTable)(clasa='content-card p-0')
+		+view('pt-Sm')
+			+editButton('p-A r-Md t-Md bg-W')
+			if location.images && location.images.length > 2
+				div(data-function='banner')
+					for img, i in location.images
+						img(src=getImagePath(img, 'large'), alt=`${location.names.display} Banner ${i+1}`, data-banner-item)
+			else 
+				img.w-100(src= getImagePath(location.cardImage, 'large'), alt= location.names.display)
+			.fc-W--sm.m-0.p-Sm.bg-Dkst--sm!= location.description
 		+edit
+			+image(location, 'cardImage', 'Card Image')
+			+imageArray(location, 'images', 'Images', 'Add Image')
+
+	+formStart(location, 'locationTable')(class='p-R')
+		button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+		+view('p-R o-H')(style=`background: url('${getImagePath(location.cardImage, "large")}') no-repeat scroll center center / cover;`)
+			.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= location.description
+		+edit('mb-Md bg-W p-Md')
+			+wysiwyg(location, 'description', 'Description')
 			+image(location, 'cardImage', 'Card Image')
 			+imageArray(location, 'images', 'Images', 'Add Image')

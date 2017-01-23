@@ -1,16 +1,16 @@
-+formStart(attraction, 'Attractions', (attraction.orientation.map || wysiwygHasData(getNested(attraction, 'orientation', 'gettingThere')) || wysiwygHasData(getNested(attraction, 'orientation', 'gettingThere'))))(class='content-card')
++formStart(attraction, 'Attractions', (getNested(attraction, 'orientation', 'map') || wysiwygHasData(getNested(attraction, 'orientation', 'gettingThere')) || wysiwygHasData(getNested(attraction, 'orientation', 'gettingThere'))))(class='content-card')
 	h2.content-card--header Orientation
 		+editButton()(class='f-R mt-NegSm')
 
 	+view
-		if wysiwygHasData(attraction.orientation.description)
+		if wysiwygHasData(getNested(attraction, 'orientation', 'description'))
 			div!= attraction.orientation.description
 		
-		if attraction.orientation.map
+		if getNested(attraction, 'orientation', 'map')
 			button.bg-N.bw-0.p-0(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 				img.w-100(src= getImagePath(attraction.orientation.map, 'medium'))
 
-		if wysiwygHasData(attraction.orientation.gettingThere)
+		if wysiwygHasData(getNested(attraction, 'orientation', 'gettingThere'))
 			.clear
 				h3.mt-Md.pl-XXs.f-L.fs-16.lh-B(data-icon='fa fa-subway')
 					span.sr-only Getting There

@@ -1,5 +1,8 @@
-mixin object(field, deleteText)
+mixin object(field, title, deleteText)
 	div(duck-field=field, duck-type='object')&attributes(attributes)
+		if title
+			h3= title
+
 		block
 
 		if deleteText

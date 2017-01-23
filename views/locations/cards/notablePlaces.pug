@@ -1,0 +1,29 @@
++formStart(neighborhood, 'Neighborhoods', getNested('neighborhood', 'notiblePlaces', 0, 'name'))(class='content-card')
+	h2.content-card--header Other Notable Places
+		+editButton('f-R mt-NegSm')
+
+	+view
+		ul.list-unstyled
+			for place in neighborhood.notiblePlaces
+				li.clear
+					if place.image
+						.w-25.f-L
+							img.w-100(src=getImagePath(place.image, 'medium'), alt= place.name)
+					div.pl-Sm(class= place.image ? 'w-75 f-L' : '')
+						h3.mt-N= place.name
+						!= place.description
+						.clear
+							div.d-B.f-L
+								i.fa.fa-map-pin.lh-B(aria-hidden='true')
+							div.ml-Md!= place.address
+	
+	+edit('content-card')
+		h2.content-card--header Other Notable Places
+		+array(null, 'notiblePlaces', 'Notible Places', 'Add Place')
+			+object(null, 'Delete Place')
+				for place in neighborhood.notiblePlaces ? neighborhood.notiblePlaces : [{}]
+					+object(null, 'Delete Place')(class='p-Sm bg-G__ltr')
+						+string(place, 'name', 'Name')
+						+image(place, 'image', 'Image')
+						+wysiwyg(place, 'address', 'Address')
+						+wysiwyg(place, 'description', 'Description')

@@ -54,7 +54,7 @@
 			+image(neighborhood.orientation, 'map', 'Map')
 			+array(null, 'waysToGetThere', 'Ways to Get There', 'Add Way to Get There')
 				for wayToGetThere in getNested(neighborhood, 'orientation', 'waysToGetThere') ? neighborhood.orientation.waysToGetThere : [{}]
-					+object(null, 'Delete Way to Get There')
+					+object(null, null, 'Delete Way to Get There')
 						+string(wayToGetThere, 'name', 'Name')
 						+select(wayToGetThere, 'method', 'Method of Transportation', methodsOfTransportation)
 						+array(wayToGetThere, 'stops', 'Stops', 'Add Stop')
@@ -64,12 +64,12 @@
 
 			+array(null, 'distanceFrom', 'Distance From', 'Add Location')
 				for distanceFrom in getNested(neighborhood, 'orientation', 'distanceFrom') ? neighborhood.orientation.distanceFrom : [{}]
-					+object(null, 'Delete Location')
+					+object(null, null, 'Delete Location')
 						+string(distanceFrom, 'name', 'Name of Location')
 						+select(distanceFrom, 'type', 'Type of Location', locationTypes)
 						+array(null, 'waysToGetThere', 'Ways to Get There', 'Add Way to Get There')
 							for wayToGetThere in distanceFrom.waysToGetThere ? distanceFrom.waysToGetThere : [{}]
-								+object(null, 'Delete Way to Get There')
+								+object(null, null, 'Delete Way to Get There')
 									+select(wayToGetThere, 'method', 'Method of Transportation', methodsOfTransportation)
 									+string(wayToGetThere, 'distance', 'Distance from Location')
 									+string(wayToGetThere, 'time', 'Time')

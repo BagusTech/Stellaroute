@@ -47,19 +47,15 @@ block content
 									+object('names')
 										+string(neighborhood.names, 'display', 'Neighborhood Name')
 								.col-xs-12.col-sm-6
-									+string(neighborhood, 'tagling', 'Tagline')
+									+string(neighborhood, 'tagline', 'Tagline')
 
 								.col-xs-12.col-sm-6
 									+image(neighborhood, 'backgroundImage', 'Background Image')
-
-								.col-xs-12.ta-
 
 	.container
 		.row
 			.col-xs-12.col-sm-6.col-md-8.f-R
 				+locationBanner(neighborhood, 'Neighborhoods')
-
-				// Tavel Hacks
 				+factsHacks(false, neighborhood, 'Neighborhoods')
 
 			.col-xs-12.col-sm-6.col-md-4
@@ -67,98 +63,8 @@ block content
 				include ../cards/nearby.pug
 
 			.col-xs-12.col-sm-6.col-md-8.f-R
-				// Eating & Drinking
-				+formStart(neighborhood, 'Neighborhoods', wysiwygHasData(getNested(neighborhood, 'eatingDrinking').description))(class='content-card')
-					h2.content-card--header Eating &amp; Drinking
-						+editButton('f-R mt-NegSm')
-
-					+view
-						img.f-L.w-25(src=getImagePath(neighborhood.eatingDrinking.image, 'medium'), alt='Eating and Drinking')
-						.w-75.f-L.pl-Sm!= neighborhood.eatingDrinking.description
-					+edit
-						+object('eatingDrinking')
-							+image(neighborhood.eatingDrinking, 'image', 'Image')
-							+wysiwyg(neighborhood.eatingDrinking, 'description', 'What to Know About Eating and Drinking')
-
-				// Shopping
-				+formStart(neighborhood, 'Neighborhoods', wysiwygHasData(getNested(neighborhood, 'shopping').description))(class='content-card')
-					h2.content-card--header Shopping
-						+editButton('f-R mt-NegSm')
-
-					+view
-						img.f-L.w-25(src=getImagePath(neighborhood.shopping.image, 'medium'), alt='Eating and Drinking')
-						.w-75.f-L.pl-Sm!= neighborhood.shopping.description
-					+edit
-						+object('shopping')
-							+image(neighborhood.shopping, 'image', 'Image')
-							+wysiwyg(neighborhood.shopping, 'description', 'What to Know About Shopping')
-
-				// Where to Explore
-				+formStart(neighborhood, 'Neighborhoods', (getNested(neighborhood, 'explore', 'map') || getNested(neighborhood, 'explore', 'areas', 0, 'name')))(class='content-card')
-					h2.content-card--header.mb-0 Where to Explore
-						+editButton('f-R mt-NegSm')
-					+view
-						if neighborhood.explore.map
-							img.w-100(src=getImagePath(neighborhood.explore.map, 'large'), alt='Where to Explore')
-						for area in getNested(neighborhood, 'explore', 'areas', 0, 'name') ? neighborhood.explore.areas : []
-							h3= area.name
-							!= area.description
-
-							if area.suggestedSpots && area.suggestedSpots[0] && area.suggestedSpots[0].name
-								h4 Suggested Spots
-								ul
-									for spot in area.suggestedSpots
-										li
-											if spot.link
-												a(href= spot.link, target='blank')= spot.name
-											else
-												= spot.name
-					+edit
-						+object('explore')
-							+image(neighborhood.explore, 'map', 'Map')
-							+array(neighborhood.explore, 'area', 'Areas', 'Add Area', true)
-								for area in getNested(neighborhood, 'explore', 'areas') ? neighborhood.explore.areas : [{}]
-									+arrayObject('Area', 'Delete Area')
-										+string(area, 'name', 'Name / Location / Cross Street')
-										+wysiwyg(area, 'description', 'Description')
-										+array(area, 'suggestedSpots', 'Suggested Spots', 'Add Suggested Spot', true)
-											for spot in area.suggestedSpots ? area.suggestedSpots : [{}]
-												+arrayObject('Suggested Spot', 'Delete Suggested Spot')
-													+string(spot, 'name', 'Name')
-													+string(spot, 'link', 'Link')
-													+select(spot, 'type', 'Type', suggestedSpotTypes)
-
-				// Notable Places
-				+formStart(neighborhood, 'Neighborhoods', getNested('neighborhood', 'notiblePlaces', 0, 'name'))(class='content-card')
-					h2.content-card--header Other Notable Places
-						+editButton('f-R mt-NegSm')
-
-					+view
-						ul.list-unstyled
-							for place in neighborhood.notiblePlaces
-								li.clear
-									if place.image
-										.w-25.f-L
-											img.w-100(src=getImagePath(place.image, 'medium'), alt= place.name)
-									div.pl-Sm(class= place.image ? 'w-75 f-L' : '')
-										h3.mt-N= place.name
-										!= place.description
-										.clear
-											div.d-B.f-L
-												i.fa.fa-map-pin.lh-B(aria-hidden='true')
-											div.ml-Md!= place.address
-					
-					+edit('content-card')
-						h2.content-card--header Other Notable Places
-						+array(null, 'notiblePlaces', 'Notible Places', 'Add Place')
-							+object(null, 'Delete Place')
-								for place in neighborhood.notiblePlaces ? neighborhood.notiblePlaces : [{}]
-									+object(null, 'Delete Place')(class='p-Sm bg-G__ltr')
-										+string(place, 'name', 'Name')
-										+image(place, 'image', 'Image')
-										+wysiwyg(place, 'address', 'Address')
-										+wysiwyg(place, 'description', 'Description')
-					
-
-				// Quick Facts
+				+infoCard(neighborhood, 'Neighborhoods', 'eatingDrinking', 'Eating & Drinking')
+				+infoCard(neighborhood, 'Neighborhoods', 'shopping', 'Shopping')
+				include ../cards/explore.pug
+				include ../cards/notablePlaces.pug
 				+factsHacks(true, neighborhood, 'Neighborhoods')

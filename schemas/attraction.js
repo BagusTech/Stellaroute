@@ -29,6 +29,7 @@ var Attraction = Duck({
 		address: String,
 		description: String,
 		tagline: String,
+		backgroundImage: String,
 		cardImage: String,
 		images: Array,
 		needToKnow: [{

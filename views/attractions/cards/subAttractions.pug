@@ -1,34 +1,13 @@
-if userIsAuthorized()
-	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-		h2.fc-G Attractions in #{attraction.names.display}
-			button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')= ' (Edit Sub Attractions)'
-		.duck-edit-hidden
-			if subAttractions
-				.masonry.masonry-grid-1.masonry-grid-2--md
-					for subAttraction in subAttractions
-						a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${subAttraction.url}`)
-							+card(getImagePath(subAttraction.cardImage, 'medium'), subAttraction.names.display, null, null, subAttraction.description)
-
-		.duck-view-hidden.mb-Md
-			div(duck-field='subAttractions', duck-type='array')
-				label Sub Attractions
-				div
-					for subAttraction in attraction && attraction.subAttractions ? attraction.subAttractions : [null]
-						if (subAttractions)
-							div= subAttractions.filter((i) => i.Id === subAttraction)[0].names.display
-						.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-							input.ml-Sm.form-control(type='text', duck-value, value= subAttraction)
-							button.btn.btn-danger(duck-button='delete')
-				.ta-R
-					button.btn.btn-primary(duck-button='add') Add Sub Attraction
-			
-			button.btn.btn-primary(duck-button='submit') Save
-			button.btn.btn-warning(duck-button='cancel') Cancel
-
-
-else if subAttractions
++formStart(attraction, 'Attractions')
 	h2.fc-G Attractions in #{attraction.names.display}
-	.masonry.masonry-grid-1.masonry-grid-2--md
-		for subAttraction in subAttractions
-			a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${subAttraction.url}`)
-				+card(getImagePath(subAttraction.cardImage, 'medium'), subAttraction.names.display, null, null, subAttraction.description)
+		+editButton('f-R mt-NegSm')
+
+	if subAttractions
+		+view
+			.masonry.masonry-grid-1.masonry-grid-2--md
+				for subAttraction in subAttractions
+					a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${subAttraction.url}`)
+						+card(getImagePath(subAttraction.cardImage, 'medium'), subAttraction.names.display, null, null, subAttraction.description)
+
+	+edit
+		+array(attraction, 'subAttractions', 'Sub Attractions')

@@ -57,7 +57,7 @@ block content
 							.guide-card--wrapper
 								for card, j in day.cards ? day.cards : []
 									include ./cards/guideCard.pug
-					//+edit
+					+edit
 						+array(null, 'days', 'Add New Day')
 							for day, i in guide.days ? guide.days : [{}]
 								+object(null, 'Day')(data-position= i+1, class='mtb-XXl p-Sm')

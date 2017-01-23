@@ -58,49 +58,27 @@
 						+card(neighborhood.cardImage, neighborhood.names.display)
 
 	.col-xs-12.col-sm-4
-		
-		if userIsAuthorized()
-			.content-card
-				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-					h2.content-card--header At a Glance
-						button.btn.btn-edit.f-R.mt-NegXs(duck-button='edit', data-icon='fa fa-pencil')
-					.duck-edit-hidden
-						dl.m-0
-							if city.averageStay
-								dt Length of Stay
-								dd= city.averageStay
-							if city.bestTimeToVisit
-								dt Best Time to Visit
-								dd= city.bestTimeToVisit.join('; ')
-							if city.topPlacesDisplay
-								dt Top places to stay
-								dd= city.topPlacesDisplay.join('; ')
-						div(data-function='accordion')
-							button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
-							.d-B(role='tabpanel', aria-hidden='true')!= city.description
-					.duck-view-hidden
-						+string(city, 'averageStay', 'Suggested / Average Length of Stay')
-						+array(city, 'bestTimeToVisit', 'Time(s) to Visit', 'Add Time to Visit')
-						+array(city, 'topPlaces', 'Top Place(s)', 'Add Top Place')
-						+wysiwyg(city, description, 'City Description')
-						
-						button.btn.btn-primary(duck-button='submit') Save
-						button.btn.btn-warning(duck-button='cancel') Cancel
-		else
-			+contentCard('At a Glance')
-				dl.m-0
-					if city.averageStay
-						dt Length of Stay
-						dd= city.averageStay
-					if city.bestTimeToVisit
-						dt Best Time to Visit
-						dd= city.bestTimeToVisit.join('; ')
-					if city.topPlacesDisplay
-						dt Top places to stay
-						dd= city.topPlacesDisplay.join('; ')
+		+formStart(city, 'Cities')(class='content-card')
+			h2.content-card--header At a Glance
+				+editButton('f-R mt-NegXs')
+			+view
+				if city.averageStay
+					h3 Length of Stay
+					= city.averageStay
+				if city.bestTimeToVisit
+					h3 Best Time to Visit
+					= city.bestTimeToVisit.join('; ')
+				if city.topPlacesDisplay
+					h3 Top places to stay
+					= city.topPlacesDisplay.join('; ')
 				div(data-function='accordion')
 					button.d-B.w-100.p-Sm.bg-N.bw-0.ta-C.fw-B(role='tab', aria-expanded='false') Read More
 					.d-B(role='tabpanel', aria-hidden='true')!= city.description
+			+edit
+				+string(city, 'averageStay', 'Suggested / Average Length of Stay')
+				+array(city, 'bestTimeToVisit', 'Time(s) to Visit', 'Add Time to Visit')
+				+array(city, 'topPlaces', 'Top Place(s)', 'Add Top Place')
+				+wysiwyg(city, description, 'City Description')
 
 		+factsHacks(false, city, 'Cities')
 

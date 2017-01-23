@@ -7,11 +7,11 @@ mixin checkbox(obj, field, title, items)
 				for item in items
 					.checkbox
 						label
-							input(type='checkbox', value= item.value, checked= item.contains && item.contains.indexOf(item.value) > -1)
+							input(type='checkbox', value= item.value, checked= item && obj[field].indexOf(item.value) > -1)
 							= item.title
 			else
 				for item in items
 					.checkbox
 						label
-							input(type='checkbox', value= item, checked= item.contains && item.contains.indexOf(item) > -1)
+							input(type='checkbox', value= item, checked= item && obj[field].indexOf(item) > -1)
 							= item

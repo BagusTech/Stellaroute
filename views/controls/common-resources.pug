@@ -120,6 +120,8 @@ block head
 		function getImagePath(img, size) {
 			if (!img) {
 				return null;
+			} else if (img.indexOf('https') === 0) {
+				return img
 			}
 
 			const imgPath = img.split('.');

@@ -18,7 +18,7 @@
 
 	+edit
 		+wysiwyg(attraction, 'price', 'Price')
-		+wysiwyg(attraction, 'house', 'Hours')
+		+wysiwyg(attraction, 'hours', 'Hours')
 		+wysiwyg(attraction, 'address', 'Address')
 
 +formStart(attraction, 'Attractions', userIsAuthorized())(class='content-card')
@@ -29,8 +29,8 @@
 		h3 (only visible to admins)
 		if attraction.category
 			ul
-				for category in attraction.category
-					li= cateogry
+				for category, i in attraction.category
+					li= category
 
 	+edit
 		+bool(attraction, 'isTopAttraction', 'Top Attraction')

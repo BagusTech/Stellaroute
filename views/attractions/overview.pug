@@ -1,29 +1,11 @@
-if userIsAuthorized()
-	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-
-		.duck-edit-hidden.p-R.o-H(style=`background: url('${getImagePath(attraction.cardImage, "large")}') no-repeat scroll center center / cover;`)
-			button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
-			.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= attraction.description
-		.duck-view-hidden.mb-Md
-			div(duck-field='description', duck-type='wysiwyg')
-				label Description
-				.summernote!= attraction && attraction.description
-
-			.form-group
-				label Card Image
-					+imagePicker(attraction, 'cardImage')
-
-			div(duck-field='images', duck-type='array')
-				h3 Images
-				div
-					for image, i in attraction && attraction.images ? attraction.images : [null]
-						+imagePicker(attraction.images, i)
-							button.btn.btn-danger.f-R.mt-NegXXs.mr-NegXXs(duck-button='delete') Delete Image
-				.ta-R
-					button.btn.btn-primary(duck-button='add') Add Image
-
-			button.btn.btn-primary(duck-button='submit') Save
-			button.btn.btn-warning(duck-button='cancel') Cancel
-else if attraction.cardImage
-	.content-card.p-0(style=`background: url('${getImagePath(attraction.cardImage, "large")}') no-repeat scroll center center / cover`)
++formStart(attraction, 'Attractions')
+	+view('p-R o-H')(style=`background: url('${getImagePath(attraction.cardImage, "large")}') no-repeat scroll center center / cover;`)
+		button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
 		.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= attraction.description
+	+edit('mb-Md')
+		+wysiwyg(attraction, 'description', 'Description')
+		+image(attraction, 'cardImage', 'Card Image')
+		+imageArray(attraction, 'images', 'Images', 'Add Image')
+
+		button.btn.btn-primary(duck-button='submit') Save
+		button.btn.btn-warning(duck-button='cancel') Cancel

@@ -1,30 +1,15 @@
-.content-card.p-0(data-position='0')
-	if userIsAuthorized()
-		.row(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
-			.col-xs-12.col-sm-8.f-R
-				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W.ml-NegMd--sm Overview
-					button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-				.lead.plr-Sm.p-0--sm.duck-edit-hidden!= guide.description
-				.duck-view-hidden(duck-field='description', duck-type='wysiwyg')
-					.summernote!= guide.description
++formStart(guide, 'Guides')(class='content-card p-0', data-position='0')
+	.row
+		.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
+			h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
+				+editButton('f-R mt-NegSm mr-NegSm')
+			.plr-Sm.duck-edit-hidden(class= guide.map ? 'p-0--sm' : '')!= guide.description
+			.duck-view-hidden
+				+wysiwyg(guide, 'description', 'Description')
 
-				.duck-view-hidden
-					button.btn.btn-primary(duck-button='submit') Save
-					button.btn.btn-warning(duck-button='cancel') Cancel
-
+		if guide.map || userIsAuthorized()
 			.col-xs-12.col-sm-4
 				.duck-view-hidden
-					+imagePicker(guide, 'map')(class='p-A l-Sm r-Sm t-0 p-Sm bg-Ltst')
+					+image(gudie, 'map', 'Guide Map')
 				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
 					img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
-
-	else
-		.row
-			.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
-				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
-				.lead.plr-Sm(class= guide.map ? 'p-0--sm' : '')!= guide.description
-
-			if guide.map
-				.col-xs-12.col-sm-4
-					button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
-						img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)

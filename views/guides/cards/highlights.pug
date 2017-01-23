@@ -1,57 +1,18 @@
-if userIsAuthorized()
-	div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
-		h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
-			button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-		.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg.duck-edit-hidden
++formStart(guide, 'Guides', wysiwygHasData(getNested(guide, 'highlights', 0, 'description')))
+	h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
+		+editButton()(class='f-R mt-NegSm mr-NegSm bg-W')
+
+	+view
+		.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
 			for highlight in guide.highlights ? guide.highlights : []
 				.masonry--item
 					+card(highlight.cardImage, highlight.title, null, null, highlight.description)
-
-		.duck-view-hidden(duck-field='highlights', duck-type='array')
-			h3 Highlights
-				button.btn.btn-primary.f-R(duck-button='add') Add Highlight
-
+	+edit
+		+array(null, 'highlights', 'Highligts', 'Add Highlight')
 			for highlight in guide.highlights ? guide.highlights : [{}]
-				.mb-Sm(duck-type='object')
-					.bg-W.p-Sm.bw-Sm.bs-S.bc-G__lt
-						h4 Link Highlight to Existing Item
-						.form-group(duck-field='table', duck-type='select')
-							label Highlight Type (only use if you are linking to another, existing location/attraction)
-								select.form-control(duck-value)
-									option(selected= highlight.table === 'Attractions', value='Attractions') Attractions
-									option(selected= highlight.table === 'Neighborhoods', value='Neighborhoods') Neighborhoods
-									option(selected= highlight.table === 'CityRegions', value='CityRegions') City Regions
-									option(selected= highlight.table === 'Cities', value='Cities') Cities
-									option(selected= highlight.table === 'ProvinceRegions', value='ProvinceRegions') Province Regions
-									option(selected= highlight.table === 'Provinces', value='Provinces') Provinces
-									option(selected= highlight.table === 'CountryRegions', value='CountryRegions') Country Regions
-									option(selected= highlight.table === 'Countries', value='Countries') Countries
-									option(selected= highlight.table === 'WorldRegions', value='WorldRegions') World Regions
-									option(selected= highlight.table === 'Continents', value='Continents') Continents
-
-						.form-group(duck-field='Id', duck-type='string')
-							label Id of linked Highlight (only use if Highlight Type is being used)
-								input.form-control(type='text', duck-value, value= highlight.Id)
-
-						h4 Edit Linked Highlight info -- OR -- Create non-linked Highlight
-						.form-group(duck-field='title', duck-type='string')
-							label Title (optional if linked above)
-								input.form-control(type='text', duck-value, value= highlight.title)
-						.form-group(duck-field='cardImage', duck-type='image')
-							label Image (optional if linked above)
-								input.form-control(type='text', duck-value, value= highlight.image)
-						label Description (optional if linked above)
-						.form-group(duck-field='description', duck-type='wysiwyg')
-							.summernote!= highlight.description
-						button.btn.btn-danger(duck-button='delete') Delete Highlight
-
-		.duck-view-hidden
-			button.btn.btn-primary(duck-button='submit') Save
-			button.btn.btn-warning(duck-button='cancel') Cancel
-
-else if guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
-	h2.fc-G(data-position=`0.${visibleGuideSecions++}`) Highlights
-	.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-3--md.masonry-grid-4--lg
-		for highlight in guide.highlights
-			.masonry--item
-				+card(highlight.cardImage, highlight.title, null, null, highlight.description)
+				+object(null, 'Link Highlight to Existing Item')
+					+select(highlight, 'table', 'Highlight Type (only use if you are linking to another, existing location/attraction)', tablesList)
+					+string(highlight, 'Id', 'Id of Linked Highlight (only use if you are linking to another, existing location/attraction)')
+					+string(highlight, 'title', 'Title (optional if linked above)')
+					+image(highlight, 'cardImge', 'Image (optional if linked above)')
+					+wysiwyg(highlight, 'description', 'Description (optional if linked above)')

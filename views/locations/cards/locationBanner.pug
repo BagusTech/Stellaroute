@@ -1,0 +1,17 @@
+mixin locationViewBanner(location)
+	if location.images && location.images.length > 2
+		div(data-function='banner')
+			for img, i in location.images
+				img(src=getImagePath(img, 'large'), alt=`${location.names.display} Banner ${i+1}`, data-banner-item)
+	else 
+		img.w-100(src= getImagePath(location.cardImage, 'large'), alt= location.names.display)
+	.lead.fc-W--sm.m-0.p-Sm.bg-Dkst--sm!= location.description
+
+mixin locationBanner(location, locationTable)
+	+formStart(location, locationTable)(clasa='content-card p-0')
+		button(duck-button='edit') Edit
+		+view
+			+locationViewBanner(location)
+		+edit
+			+image(location, 'cardImage', 'Card Image')
+			+imageArray(location, 'images', 'Images', 'Add Image')

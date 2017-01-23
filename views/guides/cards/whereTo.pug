@@ -1,19 +1,12 @@
 mixin whereTo(guide, user, option, title, dataPosition)
-	if userIsAuthorized()
-		.content-card(data-position=dataPosition, duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
-			h2.content-card--header= title
-				button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+	+formStart(guide, 'Guides', wysiwygHasData(guide[option]))(class='content-card', data-position= dataPosition)
+		h2.content-card--header= title
+			+editButton()(class='f-R mt-NegSm mr-NegSm')
 
-			.duck-edit-hidden!= guide[option]
-
-			.duck-view-hidden
-				.form-group(duck-field=option, duck-type='wysiwyg')
-					.summernote!= guide[option]
-				button.btn.btn-primary(duck-button='submit') Save
-				button.btn.btn-warning(duck-button='cancel') Cancel
-	else if wysiwygHasData(guide[option])
-		+contentCard(title)(data-position=dataPosition)
+		+view
 			!= guide[option]
+		+edit
+			+wysiwyg(guide, option, title)
 
 +whereTo(guide, user, 'whereToStay', 'Where to Stay', `0.${visibleGuideSecions++}`)
 +whereTo(guide, user, 'whereToGoOut', 'Where to Go Out', `0.${visibleGuideSecions++}`)

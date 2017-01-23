@@ -1,45 +1,17 @@
--var attractionFormId = 0
-
 mixin attractionForm(crud, attraction, locations, cancel)
-	.p-Sm(id=`AttractionForm${attractionFormId}`, duck-table='Attractions', duck-function= crud, duck-key='Id', duck-key-value= attraction && attraction.Id)
-		div(duck-field='names', duck-type='object')
-			.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
-				.form-group
-					label Display Name
-						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.display)
-			.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
-				.form-group
-					label Official Name
-						input.form-control(type='text', required, duck-value, value= attraction && attraction.names.official)
-			.c-B(duck-field='alias', duck-type='array')
-				label Alias'
-
-				div
-					for alias in attraction && attraction.names && attraction.names.alias ? attraction.names.alias : [null]
-						.form-group.d-F(duck-type='string')
-							input.form-control(type='text', required, duck-value, value= alias)
-							button.btn.btn-danger(duck-button='delete') delete Alias
-				.ta-R
-					button.btn.btn-primary(duck-button='add') Add Alias
+	+formStart(attraction ? attraction : {}, 'Attractions', true, crud)(class='p-Sm')
+		+object('names')
+			+string(attraction ? attraction.names : {}, 'display', 'Display Name')
+			+string(attraction ? attraction.names : {}, 'official', 'Official Name')
+			+array(attraction ? attraction.names : {}, 'alias', 'Alias\'', 'Add Alias')
 
 		if (!attraction)
 			.form-group(duck-field='url', duck-type='string')
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
 
-		.form-group.p-Md.bg-G__ltr(duck-field='category', duck-type='checkbox')
-			h3.mt-0 Category
-			.row
-				for category in attractionCategories
-					.col-xs-12.col-md-6
-						.checkbox
-							label
-								input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)
-								= category
-
-		.form-group(duck-field='cardImage', duck-type='image')
-			label Card Image
-				+imagePicker(attraction, 'cardImage')
+		+checkbox(attraction, 'category', 'Category', attractionCategories)
+		+image(attraction, 'cardImage', 'Card Image')
 		//	
 			.form-group(duck-field='price', duck-type='wysiwyg')
 				label Price
@@ -67,7 +39,7 @@ mixin attractionForm(crud, attraction, locations, cancel)
 				h3 Images
 				div
 					for image in attraction && attraction.images ? attraction.images : [null]
-						+imagePicker(attraction)
+						+image(attraction)
 							button.btn.btn-danger(duck-button='delete') Delete Image
 				.ta-R
 					button.btn.btn-primary(duck-button='add') Add Image
@@ -233,5 +205,3 @@ mixin attractionForm(crud, attraction, locations, cancel)
 
 			button.btn.btn-primary(type='button', duck-button='submit')= attraction ? 'Update' : 'Add'
 			!= cancel
-
-	- attractionFormId++

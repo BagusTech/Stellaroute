@@ -3,9 +3,7 @@
 mixin guideForm(crud, guide, locations, cancel)
 	form(id=`GuideForm${guideFormId}`, duck-table='Guides', duck-function= crud, duck-key='Id', duck-key-value= guide && guide.Id)
 		.w-50.f-L.pr-Sm(duck-field='names', duck-type='object')
-			.form-group(duck-field='display', duck-type='string')
-				label Display Name
-					input.form-control(type='text', required, duck-value, value= guide && guide.names.display)
+			+string(guide && guide.names, 'display', 'Display Name')
 
 			//div(duck-field='alias', duck-type='array')
 				label Alias'
@@ -22,28 +20,14 @@ mixin guideForm(crud, guide, locations, cancel)
 					label Url
 						input.form-control(type='text', required, duck-value, disabled)
 		
-		.form-group(duck-field='tagline', duck-type='string')
-			label Tagline
-				input.form-control(type='text', duck-value, value= guide && guide.tagline)
-
-		div(duck-field='description', duck-type='wysiwyg')
-			label Description
-			.summernote!= guide && guide.description
-
-		.form-group.w-50.f-L.pr-Sm(duck-field='backgroundImage', duck-type='string')
-			label Background Image
-				input.form-control(type='text', required, duck-value, value= guide && guide.backgroundImage)
-
-		.form-group.w-50.f-L.pl-Sm(duck-field='cardImage', duck-type='string')
-			label Card Image
-				input.form-control(type='text', required, duck-value, value= guide && guide.cardImage)
-
-		.form-group(duck-field='map', duck-type='string')
-			label Map
-				input.form-control(type='text', required, duck-value, value= guide && guide.map)
+		+string(guide, 'tagline', 'Tagline')
+		+wysiwyg(guide, 'description', 'Description')
+		+image(guide, 'backgroundImage', 'Background Image')
+		+image(guide, 'cardImage', 'Card Image')
+		+image(guide, 'map', 'Map')
 
 
-		div(duck-field='travelHacks', duck-type='array')
+		//div(duck-field='travelHacks', duck-type='array')
 			h3 Travel Hacks
 
 			for hack in guide && guide.travelHacks ? guide.travelHacks.sort(sortByOrder) : [{}]
@@ -57,23 +41,23 @@ mixin guideForm(crud, guide, locations, cancel)
 							label Description
 							.summernote!= hack.description
 
-		.form-group(duck-field='whereToStay', duck-type='wysiwyg')
+		//.form-group(duck-field='whereToStay', duck-type='wysiwyg')
 			label Where to Stay
 			.summernote!= guide && guide.whereToStay
 
-		.form-group(duck-field='whereToGoOut', duck-type='wysiwyg')
+		//.form-group(duck-field='whereToGoOut', duck-type='wysiwyg')
 			label Where to Go Out
 			.summernote!= guide && guide.whereToGoOut
 
-		.form-group(duck-field='whereToEat', duck-type='wysiwyg')
+		//.form-group(duck-field='whereToEat', duck-type='wysiwyg')
 			label Where to Eat
 			.summernote!= guide && guide.whereToEat
 
-		.form-group(duck-field='whereToExplore', duck-type='wysiwyg')
+		//.form-group(duck-field='whereToExplore', duck-type='wysiwyg')
 			label Where to Explore
 			.summernote!= guide && guide.whereToExplore
 
-		div(duck-field='highlights', duck-type='array')
+		//div(duck-field='highlights', duck-type='array')
 			h3 Highlights
 
 			for highlight in guide && guide.highlights ? guide.highlights.sort(sortByOrder) : [{}]
@@ -114,7 +98,7 @@ mixin guideForm(crud, guide, locations, cancel)
 						label Description
 						.summernote!= highlight.description
 
-		div(duck-field='days', duck-type='array')
+		//div(duck-field='days', duck-type='array')
 			h3 Days
 
 			for day in guide && guide.days ? guide.days.sort(sortByOrder) : [{}]

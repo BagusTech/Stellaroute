@@ -1,36 +1,23 @@
 extends ../layout.pug
 
 block content
-	if !attraction
-		.media-bg-img.request-page-header
-			.container
-				h1= attraction && attraction.names && attraction.names.display || 'Unknown Attraction'
-
-		.container.ptb-Sm
-			small
-				a.fc-G(href= `/${city.countryUrl}/${city.url}`)= `< Back to ${city.names.display}`
-
-			.content-card
-				h2.content-card--header Coming soon!
-				p.lead.m-0!= `More information about ${attraction && attraction.names && attraction.names.display || 'this'} is currently being developed. Please check back soon for more information. If you would like to help contribute content, please shoot us an email at <a href='mailto:info@stellaroute.com'>info@stellaroute.com</a>`
-	else
-		include header.pug
+	include header.pug
 
 
-		if user && user.isAdmin
-			+modal('EditAttractionForm')(class='modal-lg')
-				+attractionForm('update', attraction)
+	if user && user.isAdmin
+		+modal('EditAttractionForm')(class='modal-lg')
+			+attractionForm('update', attraction)
 
-		.container
-			.row
-				.col-xs-12.col-sm-6.col-md-8.f-R
-					include overview.pug
-					include ./cards/travelHacks.pug
-					include ./cards/subAttractions.pug
+	.container
+		.row
+			.col-xs-12.col-sm-6.col-md-8.f-R
+				include overview.pug
+				+factsHacks(false, attraction, 'Attractions')
+				include ./cards/subAttractions.pug
 
-				.col-xs-12.col-sm-6.col-md-4
-					include ./cards/quickInfo.pug
-					include ./cards/orientation.pug
-					include ./cards/siblingAttractions.pug
-					include ./cards/nearbyAttractions.pug
-					include ./cards/funFacts.pug
+			.col-xs-12.col-sm-6.col-md-4
+				include ./cards/quickInfo.pug
+				include ./cards/orientation.pug
+				include ./cards/siblingAttractions.pug
+				include ./cards/nearbyAttractions.pug
+				+factsHacks(true, attraction, 'Attractions')

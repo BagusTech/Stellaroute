@@ -17,52 +17,33 @@ block content
 				.container.ptb-0.p-R
 					ol.breadcrumb
 						li.active: a(href= '/') Home
-					if userIsAuthorized()
-						div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-							.duck-edit-hidden
-								h1= city.names.display
-									small.ml-Md= city.tagline
-									button.btn.btn-edit.f-R.bg-W(duck-button='edit', data-icon='fa fa-pencil')
-							.duck-view-hidden.p-Sm.bg-W
-								div(duck-field='names', duck-type='object')
-									.w-50--sm.pr-Sm.f-L--sm(duck-field='display', duck-type='string')
-										.form-group
-											label Display Name
-												input.form-control(type='text', required, duck-value, value= city && city.names.display)
-									.w-50--sm.pl-Sm.f-L--sm(duck-field='official', duck-type='string')
-										.form-group
-											label Official Name
-												input.form-control(type='text', required, duck-value, value= city && city.names.official)
-									.c-B.w-50(duck-field='alias', duck-type='array')
-										label Alias'
-										div
-											for alias in city && city.names && city.names.alias ? city.names.alias : [null]
-												.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-													input.ml-Sm.form-control(type='text', required, duck-value, value= alias)
-													button.btn.btn-danger(duck-button='delete')
-										.ta-R
-											button.btn.btn-primary(duck-button='add') Add Alias
 
+					+formStart(city, 'Cities')
+						+view
+							h1= city.names.display
+								small.ml-Md= city.tagline
+								button.btn.btn-edit.f-R.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+						+edit('p-Sm bg-W')
+							+object('names')
 								.row
 									.col-xs-12.col-sm-6
-										.form-group(duck-field='tagline', duck-type='string')
-											label Tagline
-												input.form-control(type='text', duck-value, value= city && city.tagline)
+										+string(city.names, 'display', 'Display Name')
 									.col-xs-12.col-sm-6
-										.form-group
-											label Background Image
-												+imagePicker(city, 'backgroundImage')
-								.row
+										+string(city.names, 'official', 'Official Name')
 									.col-xs-12.col-sm-6
-									.col-xs-12.col-sm-6
-										label Card Image
-											+imagePicker(city, 'cardImage')
-								
-								button.btn.btn-primary(duck-button='submit') Save
-								button.btn.btn-warning(duck-button='cancel') Cancel
-					else 
-						h1= city.names.display
-							small.ml-Md= city.tagline
+										+array(city.names, 'alias', 'Alias\'', 'Add Alias')
+
+							.row
+								.col-xs-12.col-sm-6
+									+string(city, 'tagline', 'Tagline')
+
+								.col-xs-12.col-sm-6
+									+image(city, 'backgroundImage', 'Background Image')
+											
+							.row
+								.col-xs-12.col-sm-6
+								.col-xs-12.col-sm-6
+									+image(city, 'cardImage', 'Card Image')
 
 				nav.tabbed-nav(data-tabs='controls')
 					a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview
@@ -93,152 +74,54 @@ block content
 	// food modals
 	for item, i in city.food && city.food.foods ? city.food.foods.filter((i) => i.name) : []
 		+modal(createValidAttributeFromTitle(item.name))
-			if userIsAuthorized()
-				div(duck-table='Cities', duck-function='update', duck-key='Id', duck-key-value= city.Id, duck-edit-form='view')
-					h2.content-card--header.fw-B.fc-B= item.name
-						button.btn.btn-edit.f-R.mt-NegSm.mr-NegSm(duck-button='edit', data-icon='fa fa-pencil')
-					.duck-edit-hidden
-						.lead!= item.description
-						img.w-100(src= item.image, alt= item.name)
-						if (item.suggestedRestaurant)
-							h3 Best Place to Get it:
-							p!= item.suggestedRestaurant
-
-						if (item.dishes)
-							h3 Dishes
-							ul
-								for dish in item.dishes
-									li= dish
-
-						if (item.whatToOrder)
-							h3 What to Have
-							p= item.whatToOrder
-
-						if (item.address)
-							h3 Where is It?
-							address
-								span= item.address
-								span= item.area
-
-						.ta-R
-							a.btn.btn-default(data-dismiss='modal') Close
-							if (item.blog)
-								a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
-					.duck-view-hidden
-						div(duck-field='food', duck-type='object')
-							div(duck-field='foods', duck-type='array')
-								div(duck-type='object', duck-key='Id', duck-key-value=item.Id)
-									.form-group(duck-field='name', duck-type='string') <!-- name -->
-										label(for=`FoodName${i}`) Name
-										input#FoodName.form-control(type='text', required, duck-value, value=item.name)
-
-									.form-group(duck-field='order', duck-type='number') <!-- order -->
-										label(for=`FoodOrder${i}`) Order
-										input#FoodName.form-control(type='number', required, duck-value, value=item.order)
-
-									.form-group <!-- image -->
-										label(for='FoodImage') Image
-											+imagePicker(null, 'image')
-
-									.form-group(duck-field='category', duck-type='select') <!-- category -->
-										label(for=`FoodCategory${i}`) Category
-										select#FoodCategory.form-control(duck-value)
-											option(selected= item.category === 'Only In') Only In
-											option(selected= item.category === 'Local Cuisine') Local Cuisine
-											option(selected= item.category === 'Best Dishes') Best Dishes
-											option(selected= item.category === 'Drinks') Drinks
-											option(selected= item.category === 'Restaurant') Restaurant
-											option(selected= item.category === 'Bar') Bar
-
-									.form-group(duck-field='tagline', duck-type='string') <!-- tagline -->
-										label(for=`FoodTagline${i}`) Tagline
-										input#FoodTagline.form-control(type='text', maxlength='130', duck-value, value=item.tagline)
-
-									.form-group(duck-field='description', duck-type='wysiwyg')  <!-- description -->
-										label(for=`FoodDescription${i}`) Description
-										.summernote!= item.description
-
-									.form-group(duck-field='contains', duck-type='checkbox') <!-- contains -->
-										h3 Contains
-										.checkbox
-											label
-												input(type='checkbox', value='Shellfish', checked= item.contains && item.contains.indexOf('Shellfish') > -1)
-												| Shellfish
-										.checkbox
-											label
-												input(type='checkbox', value='Gluten', checked= item.contains && item.contains.indexOf('Gluten') > -1)
-												| Gluten
-										.checkbox
-											label
-												input(type='checkbox', value='Nuts', checked= item.contains && item.contains.indexOf('Nuts') > -1)
-												| Nuts
-										.checkbox
-											label
-												input(type='checkbox', value='Meat', checked= item.contains && item.contains.indexOf('Meat') > -1)
-												| Meat
-										.checkbox
-											label
-												input(type='checkbox', value='Dairy', checked= item.contains && item.contains.indexOf('Dairy') > -1)
-												| Dairy
-
-									.form-group(duck-field='dishes', duck-type='array') <!-- dishes -->
-										label Dishes
-										div
-											for dish in item.dishes ? item.dishes : [null]
-												.form-group.d-F.fai-C(duck-type='string', data-icon='fa fa-arrows-v')
-													.ml-Sm.input.form-control(type='text', duck-value, value=dish)
-													button.btn.btn-danger(duck-button='delete')
-										.ta-R
-											button.btn.btn-primary(duck-button='add') Add Dish
-
-									.form-group(duck-field='area', duck-type='string') <!-- area -->
-										label(for=`FoodArea${i}`) Area
-										input#FoodArea.form-control(type='text', duck-value, value= item.area)
-
-									.form-group(duck-field='address', duck-type='string') <!-- address -->
-										label(for=`FoodAddress${i}`) Address
-										input#FoodAddress.form-control(type='text', duck-value, value= item.address)
-
-									.form-group(duck-field='whatToOrder', duck-type='string') <!-- what to order -->
-										label(for=`FoodWhatToOrder${i}`) What to Order
-										input#FoodWhatToOrder.form-control(type='text', duck-value, value= item.whatToOrder)
-
-									.form-group(duck-field='suggestedRestaurant', duck-type='string') <!-- suggested restaurant -->
-										label(for=`FoodSuggestedRestaurant${i}`) Suggested Restaurant
-										input#FoodSuggestedRestaurant.form-control(type='text', duck-value, value=item.suggestedRestaurant)
-
-									.form-group(duck-field='readMore', duck-type='string') <!-- read more -->
-										label(for=`FoodReadMore${i}`) Read More
-										input#FoodReadMore.form-control(type='text', duck-value, value=item.readMore)
-						
-						button.btn.btn-primary(duck-button='submit') Save
-
-			else
+			+formStart(city, 'Cities')
 				h2.content-card--header.fw-B.fc-B= item.name
-				.lead!= item.description
-				img.w-100(src= item.image, alt= item.name)
-				if (item.suggestedRestaurant)
-					h3 Best Place to Get it:
-					p!= item.suggestedRestaurant
+					+editButton()(class='f-R mt-NegSm mr-NegSm')
 
-				if (item.dishes)
-					h3 Dishes
-					ul
-						for dish in item.dishes
-							li= dish
+				+view
+					.lead!= item.description
+					img.w-100(src= item.image, alt= item.name)
+					if (item.suggestedRestaurant)
+						h3 Best Place to Get it:
+						p!= item.suggestedRestaurant
 
-				if (item.whatToOrder)
-					h3 What to Have
-					p= item.whatToOrder
+					if (item.dishes)
+						h3 Dishes
+						ul
+							for dish in item.dishes
+								li= dish
 
-				if (item.address)
-					h3 Where is It?
-					address
-						span= item.address
-						span= item.area
+					if (item.whatToOrder)
+						h3 What to Have
+						p= item.whatToOrder
 
-				.ta-R
-					a.btn.btn-default(data-dismiss='modal') Close
-					if (item.blog)
-						a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+					if (item.address)
+						h3 Where is It?
+						address
+							span= item.address
+							span= item.area
+
+					.ta-R
+						a.btn.btn-default(data-dismiss='modal') Close
+						if (item.blog)
+							a.btn.btn-secondary.btn-lg.mt-Sm(href=item.blog) Read More
+				+edit(null, false)
+					+object('food')
+						+array(null, 'foods')
+							+object()(duck-key='Id', duck-key-value=item.Id)
+								+string(item, 'name', 'Name')
+								+number(item, 'order', 'Order')
+								+image(item, 'image', 'Image')
+								+select(item, 'category', 'Category', ['Only In', 'Local Cuisine', 'Best Dishes', 'Drinks', 'Restaurant', 'Bar',])
+								+string(item, 'tagline', 'Tagline')
+								+wysiwyg(item, 'description', 'Description')
+								+checkbox(item, 'contains', 'Contains', ['Shellfish', 'Gluten', 'Nuts', 'Meat', 'Dairy',])
+								+array(item, 'dishes', 'Dishes', 'Add Dish')
+								+string(item, 'area', 'Area')
+								+string(item, 'address', 'Address')
+								+string(item, 'whatToOrder', 'What to Order')
+								+string(item, 'suggestedRestaurant', 'Suggested Restaurant')
+								+string(item, 'readMore', 'Read More Link')
+						
+					button.btn.btn-primary(duck-button='submit') Save
 					

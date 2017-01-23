@@ -1,61 +1,8 @@
-if userIsAuthorized()
-	.content-card
-		div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-			h2.content-card--header Quick Info
-				button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
++formStart(attraction, 'Attractions', (wysiwygHasData(attraction.price) || wysiwygHasData(attraction.hours) || wysiwygHasData(attraction.address)))(class='content-card')
+	h2.content-card--header Quick Info
+		button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
 
-			.duck-edit-hidden
-				.mb-Sm
-					span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
-					.ml-Md!= wysiwygHasData(attraction.price) ? attraction.price : 'No Data'
-
-				.mb-Sm
-					span.d-B.f-L.mt-XXs(data-icon='fa fa-clock-o')
-					.ml-Md!= wysiwygHasData(attraction.hours) ? attraction.hours : 'No Data'
-
-				.mb-Sm
-					span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
-					.ml-Md!= wysiwygHasData(attraction.address) ? attraction.address : 'No Data'
-
-			.duck-view-hidden
-				.form-group(duck-field='price', duck-type='wysiwyg')
-					label Price
-					.summernote!= attraction && attraction.price
-
-				.form-group(duck-field='hours', duck-type='wysiwyg')
-					label Hours
-					.summernote!= attraction && attraction.hours
-
-				.form-group(duck-field='address', duck-type='wysiwyg')
-					label Address
-					.summernote!= attraction && attraction.address
-
-				button.btn.btn-primary(duck-button='submit') Save
-				button.btn.btn-warning(duck-button='cancel') Cancel
-
-		div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-			.duck-edit-hidden
-				button.btn.btn-default(duck-button='edit') Edit Category
-			.duck-view-hidden.p-Md.bg-G__ltr
-				.form-group(duck-field='isTopAttraction', duck-type='bool')
-					.checkbox
-						label
-							input(type='checkbox', duck-value, checked= attraction && attraction.isTopAttraction)
-							| Top Attraction
-				.form-group(duck-field='category', duck-type='checkbox')
-					h3.mt-0 Category
-					.row
-						for category in attractionCategories
-							.col-xs-12.col-md-6
-								.checkbox
-									label
-										input(type='checkbox', value= category, checked= attraction && attraction.category && attraction.category.indexOf(category) > -1)
-										= category
-				button.btn.btn-primary(duck-button='submit') Save
-				button.btn.btn-warning(duck-button='cancel') Cancel
-
-else if wysiwygHasData(attraction.price) || wysiwygHasData(attraction.hours) || wysiwygHasData(attraction.address)
-	+contentCard('Quick Info')
+	+view
 		if wysiwygHasData(attraction.price)
 			.mb-Sm
 				span.d-B.f-L.mt-XXs(data-icon='fa fa-tag')
@@ -68,3 +15,23 @@ else if wysiwygHasData(attraction.price) || wysiwygHasData(attraction.hours) || 
 			.mb-Sm
 				span.d-B.f-L.mt-XXs(data-icon='fa fa-map-marker')
 				.ml-Md!= attraction.address
+
+	+edit
+		+wysiwyg(attraction, 'price', 'Price')
+		+wysiwyg(attraction, 'house', 'Hours')
+		+wysiwyg(attraction, 'address', 'Address')
+
++formStart(attraction, 'Attractions', userIsAuthorized())(class='content-card')
+	h2.content-card--header Attraction Category
+		+editButton()(class='f-R mt-NegSm')
+
+	+view
+		h3 (only visible to admins)
+		if attraction.category
+			ul
+				for category in attraction.category
+					li= cateogry
+
+	+edit
+		+bool(attraction, 'isTopAttraction', Top Attraction)
+		+checkbox(attraction, 'category', 'Attraction Category', attractionCategories)

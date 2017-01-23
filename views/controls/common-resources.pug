@@ -84,10 +84,21 @@ block head
 
 			return user.isAdmin
 		}
+		function getNested(obj /*, level1, level2, ... levelN*/) {
+			var args = Array.prototype.slice.call(arguments, 1);
+
+			for (var i = 0; i < args.length; i++) {
+				if (!obj || !obj.hasOwnProperty(args[i])) {
+					return false;
+				}
+				obj = obj[args[i]];
+			}
+			return obj;
+		}
 		function wysiwygHasData(data) {
+			if (!data) {return false;}
+
 			const empytValues = [
-				undefined,
-				null,
 				'<p><br></p>',
 				'<div><br></div>',
 				'<div><p><br></p></div>',
@@ -136,4 +147,17 @@ block head
 			'Area of Significance',
 			'Trails & Walkways',
 			'Historic Landmark'
+		];
+
+		const tablesList = [
+			{title: 'Attractions', value: 'Attractions'},
+			{title: 'Neighborhoods', value: 'Neighborhoods'},
+			{title: 'City Regions', value: 'CityRegions'},
+			{title: 'Cities', value: 'Cities'},
+			{title: 'Province Regions', value: 'ProvinceRegions'},
+			{title: 'Provinces', value: 'Provinces'},
+			{title: 'Country Regions', value: 'CountryRegions'},
+			{title: 'Countries', value: 'Countries'},
+			{title: 'World Regions', value: 'WorldRegions'},
+			{title: 'Continents', value: 'Continents'},
 		];

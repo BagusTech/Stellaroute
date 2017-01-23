@@ -18,62 +18,37 @@ block content
 			return types[type];
 		}
 
-	if !guide
-		include error.pug
-	else
-		include header.pug
+	include header.pug
 
-		if guide.map
-			+modal('OverviewMap')(class='modal-lg')
-				.ta-C(style='overflow-x: scroll')
-					img(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
-				button.btn.btn-default.btn-lg.mt-XXs(type='button', data-dismiss='modal', aria-label='Close') Close
+	if guide.map
+		+modal('OverviewMap')(class='modal-lg')
+			.ta-C(style='overflow-x: scroll')
+				img(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
+			button.btn.btn-default.btn-lg.mt-XXs(type='button', data-dismiss='modal', aria-label='Close') Close
 
-		.container.p-R
-			.row
-				.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--sm.mlr-NegMd.mlr-0--sm
-					div(data-function='stickey')
-						div(data-stickey='content')
-							include guideNav.pug
+	.container.p-R
+		.row
+			.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--sm.mlr-NegMd.mlr-0--sm
+				div(data-function='stickey')
+					div(data-stickey='content')
+						include guideNav.pug
 
-				.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-					include ./cards/overview.pug
-					+factsHacks(false, guide, 'Guides')
-					include ./cards/highlights.pug
-					include ./cards/whereTo.pug
+			.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
+				include ./cards/overview.pug
+				+factsHacks(false, guide, 'Guides')
+				include ./cards/highlights.pug
+				include ./cards/whereTo.pug
 
+				
+				+formStart(guide, 'Guides')
 					if userIsAuthorized()
-						div(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id, duck-edit-form='view')
-							div(data-function='stickey')
-								.ta-R(data-stickey='content')
-									button.btn.btn-primary(duck-button='submit') Save
-									button.btn.btn-secondary.duck-edit-hidden(duck-button='edit') Start Editing
-									button.btn.btn-warning.duck-view-hidden(duck-button='cancel') Stop Editing
-									
-							button.btn.btn-primary.duck-view-hidden(data-function='toggle', data-target='.guide-card--wrapper') Hide Day Children Cards
+						div(data-function='stickey')
+							.ta-R(data-stickey='content')
+								button.btn.btn-primary(duck-button='submit') Save
+								button.btn.btn-secondary.duck-edit-hidden(duck-button='edit') Start Editing
+								button.btn.btn-warning.duck-view-hidden(duck-button='cancel') Stop Editing
 
-							div(duck-field='days', duck-type='array')
-								.duck-view-hidden
-									small To add a new day, go to the bottom.
-								for day, i in guide.days ? guide.days : [{}]
-									.mtb-XXl.p-Sm(data-position=i+1, duck-type='object')
-										h2.duck-view-hidden Day
-										h2.fs-32.fw-B.m-0.ta-C.duck-edit-hidden= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title || '(new)'}`
-
-										.lead.p-Md.ta-C.duck-edit-hidden!= day.description
-
-										.form-group.duck-view-hidden(duck-field='title', duck-type='string')
-											label Title
-												input.form-control(type='text', duck-value, value= day.title)
-
-										+wysiwyg(guide, 'description', 'Day Description')
-
-										.guide-card--wrapper(duck-field='cards', duck-type='array', data-toggle='hidden')
-											for card, j in day.cards ? day.cards : [{}]
-												include ./cards/guideEditCard.pug
-										.ta-C.duck-view-hidden
-											button.btn.btn-primary(duck-button='add') Add New Day
-					else
+					+view
 						for day, i in guide.days ? guide.days : []
 							.mtb-XXl(data-position=i+1)
 								h2.fs-32.fw-B.m-0.ta-C= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
@@ -82,3 +57,14 @@ block content
 							.guide-card--wrapper
 								for card, j in day.cards ? day.cards : []
 									include ./cards/guideCard.pug
+					+edit
+						+array(null, 'days', 'Add New Day')
+							for day, i in guide.days ? guide.days : [{}]
+								+object(null, 'Day')(data-position= i+1, class='mtb-XXl p-Sm')
+									+string(day, 'title', 'Title')
+									+wysiwyg(guide, 'description', 'Day Description')
+
+									.guide-card--wrapper(data-toggle='hidden')
+										+array(null, 'cards')
+											for card, j in day.cards ? day.cards : [{}]
+												include ./cards/guideEditCard.pug

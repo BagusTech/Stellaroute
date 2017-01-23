@@ -91,9 +91,7 @@
 						label Id of linked Existing Item (only use if Existing Item Type is being used)
 							input.form-control(type='text', duck-value, value= card.Id)
 			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')
-					.form-group(duck-field='image', duck-type='image')
-						label Card Image
-							+imagePicker(card, 'image')
+					+image(card, 'image', 'Card Image')
 					if card.image
 						img.guide-card--img(src= getImagePath(card.image, 'large'), title= card.title || card.type)
 			.ta-L.bg-W.p-Sm(role='tabpanel', aria-hidden='true')

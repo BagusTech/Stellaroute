@@ -24,7 +24,7 @@
 						a(href='#Guides') All Guides
 
 				.duck-view-hidden
-					+simpleArray(city, 'guides', 'Guides', 'Add Guide')
+					+array(city, 'guides', 'Guides', 'Add Guide')
 
 					button.btn.btn-primary(duck-button='submit') Save
 					button.btn.btn-warning(duck-button='cancel') Cancel
@@ -80,8 +80,8 @@
 							.d-B(role='tabpanel', aria-hidden='true')!= city.description
 					.duck-view-hidden
 						+string(city, 'averageStay', 'Suggested / Average Length of Stay')
-						+simpleArray(city, 'bestTimeToVisit', 'Time(s) to Visit', 'Add Time to Visit')
-						+simpleArray(city, 'topPlaces', 'Top Place(s)', 'Add Top Place')
+						+array(city, 'bestTimeToVisit', 'Time(s) to Visit', 'Add Time to Visit')
+						+array(city, 'topPlaces', 'Top Place(s)', 'Add Top Place')
 						+wysiwyg(city, description, 'City Description')
 						
 						button.btn.btn-primary(duck-button='submit') Save

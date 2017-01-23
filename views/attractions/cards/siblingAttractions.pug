@@ -1,45 +1,22 @@
-if userIsAuthorized()
-	div(duck-table='Attractions', duck-function='update', duck-key='Id', duck-key-value= attraction.Id, duck-edit-form='view')
-		h2.fc-G Other Attractions in #{parentAttraction ? parentAttraction.names.display : '(Pick Parent Attraction)'}
-			button.btn.btn-edit.f-R.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')= ' Edit Parent Attraction'
++formStart(attraction, 'Attractions', siblingAttractions)
+	h2.fc-G Other Attractions in #{parentAttraction ? parentAttraction.names.display : '(Pick Parent Attraction)'}
+		+editButton('f-R mt-NegSm', 'Edit Parent Attraction')
 
-		.duck-edit-hidden
-			if siblingAttractions
-				h2.fc-G Other Attractions in #{parentAttraction.names.display}
-				a.d-B(href=`/${city.countryUrl}/${city.url}/attraction/${parentAttraction.url}`)
-					img.w-100(src=getImagePath(parentAttraction.cardImage, 'medium'), alt= parentAttraction.names.display)
-					.p-Sm.bg-Purp
-						h3.fc-W.mt-0= parentAttraction.names.display
-						.fc-W.fw-N!= parentAttraction.description
+	if parentAttraction
+		+view
+			a.d-B(href=`/${city.countryUrl}/${city.url}/attraction/${parentAttraction.url}`)
+				img.w-100(src=getImagePath(parentAttraction.cardImage, 'medium'), alt= parentAttraction.names.display)
+				.p-Sm.bg-Purp
+					h3.fc-W.mt-0= parentAttraction.names.display
+					.fc-W.fw-N!= parentAttraction.description
 
-				for siblingAttraction, i in siblingAttractions
-					a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/attraction/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
-							.w-25(style= `background: url('${getImagePath(siblingAttraction.cardImage, 'thumb2')}') no-repeat scroll center center / cover`)
-							.w-75.p-Sm
-								h4.mt-0= siblingAttraction.names.display 
-								!= siblingAttraction.description
-				.bw-0.bbw-Sm.bs-S.bc-G
-		.duck-view-hidden
-			.form-group(duck-field='parentAttraction', duck-type='string')
-				label Parent Attraction
-					input.form-control(type='text', duck-value, value= attraction && attraction.parentAttraction)
+			for siblingAttraction, i in siblingAttractions ? siblingAttractions : []
+				a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/attraction/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
+						.w-25(style= `background: url('${getImagePath(siblingAttraction.cardImage, 'thumb2')}') no-repeat scroll center center / cover`)
+						.w-75.p-Sm
+							h4.mt-0= siblingAttraction.names.display 
+							!= siblingAttraction.description
+			.bw-0.bbw-Sm.bs-S.bc-G
 
-			.ta-R
-				button.btn.btn-primary(duck-button='submit') Save
-				button.btn.btn-warning(duck-button='cancel') Cancel
-
-else if siblingAttractions
-	h2.fc-G Other Attractions in #{parentAttraction.names.display}
-	a.d-B(href=`/${city.countryUrl}/${city.url}/attraction/${parentAttraction.url}`)
-		img.w-100(src=getImagePath(parentAttraction.cardImage, 'medium'), alt= parentAttraction.names.display)
-		.p-Sm.bg-Purp
-			h3.fc-W.mt-0= parentAttraction.names.display
-			.fc-W.fw-N!= parentAttraction.description
-
-	for siblingAttraction, i in siblingAttractions
-		a.d-F.fai-Str.fc-I.fw-N.bw-0.brw-Sm.bs-S.bc-G(href=`/${city.countryUrl}/${city.url}/attraction/${siblingAttraction.url}`, class= i % 2 !== 0 ? 'bg-W' : '')
-				.w-25(style= `background: url('${getImagePath(siblingAttraction.cardImage, 'thumb2')}') no-repeat scroll center center / cover`)
-				.w-75.p-Sm
-					h4.mt-0= siblingAttraction.names.display 
-					!= siblingAttraction.description
-	.bw-0.bbw-Sm.bs-S.bc-G
+	+edit
+		+string(attraction, 'parentAttraction', 'Parent Attraction')

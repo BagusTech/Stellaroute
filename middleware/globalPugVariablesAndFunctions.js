@@ -57,9 +57,10 @@ function globalPugVariablesAndFunctions(req, res, next){
 	}
 	res.locals.userIsAuthorized = function userIsAuthorized() {if(!res.locals.user){return false;}return res.locals.user.isAdmin;}
 	res.locals.getNested = function getNested(obj /*, level1, level2, ... levelN*/) {
-		var args = Array.prototype.slice.call(arguments, 1);
+		const args = Array.prototype.slice.call(arguments, 1);
+		const length = args.length;
 
-		for (var i = 0; i < args.length; i++) {
+		for (var i = 0; i < length; i++) {
 			if (!obj || !obj.hasOwnProperty(args[i])) {
 				return false;
 			}

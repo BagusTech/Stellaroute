@@ -6,15 +6,33 @@
 		red: 'bg-Red',
 		orange: 'bg-Orange',
 		blue: 'bg-Bl',
-	}	
+	}
 
-mixin card(image, title, tagName, tagColor, description)
+	function cardSize(size) {
+		const rand = Math.random();
+
+		if(size){
+			return size;
+		}
+
+		if(rand < 0.33) {
+			return 'thumb2';
+		}
+
+		if(rand > .66) {
+			return 'medium';
+		}
+
+		return 'small';
+	}
+
+mixin card(image, title, tagName, tagColor, description, imageSize)
 	if title
 		if tagName
 			.card--tag(class=tagColor ? colorClasses[tagColor] : 'bg-Purp')= tagName
 		.card(class=description ? 'card__description' : '')
 			.card--img-wrapper
-				img.card--img(src= getImagePath(image, "medium") || 'http://placebear.com/400/600', alt= title)
+				img.card--img(src= getImagePath(image, cardSize(imageSize)) || 'http://placebear.com/400/600', alt= title)
 			h3.card--title= title
 			if description
 				.card--description!= description

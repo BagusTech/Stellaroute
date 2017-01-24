@@ -32,7 +32,7 @@ block content
 
 			.col-xs-12.col-sm-8.col-md-9.col-lg-10
 				.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
-					for attraction in attractions
+					for attraction in attractions.sort((a, b) => a.isTopAttraction ? -1 : 1)
 						.masonry--item(data-filter-attraction-category= attraction.category && attraction.category.join('|') || 'Unknown', data-filter-top-attraction= attraction.isTopAttraction && 'true')
 							a(href=`/${city.countryUrl}/${city.url}/attraction/${attraction.url}`)
 								+card(attraction.cardImage, attraction.names.display)

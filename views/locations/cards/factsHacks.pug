@@ -9,7 +9,7 @@ mixin factsHacks(isFact, location, locationTable)
 		+edit
 			+array(null, factOrHack, `Add ${isFact ? 'Fact' : 'Hack'}`)
 				for fact in getNested(location, factOrHack) ? location[factOrHack] : [{}]
-					+object(null, `Delete ${isFact ? 'Fact' : 'Hack'}`)(class='p-Md bg-G__ltr mb-Sm')
+					+object(null, null, `Delete ${isFact ? 'Fact' : 'Hack'}`)(class='p-Md bg-G__ltr mb-Sm')
 						h3.mt-0= isFact ? 'Fact' : 'Hack'
 
 						+string(fact, 'title', 'Title')

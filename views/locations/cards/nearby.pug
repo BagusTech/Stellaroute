@@ -1,4 +1,6 @@
-+formStart(neighborhood, 'Neighborhoods', getNested(neighborhood, 'nearbyNeighborhoods').length)
+- let nearbyScriptLoaded = false;
+
++formStart(neighborhood, 'Neighborhoods', getNested(neighborhood, 'nearbyNeighborhoods').length)(class='js-nearby')
 	h2.fc-G Nearby Neighborhoods
 		+editButton('f-R mt-NegSm')
 	+view
@@ -8,3 +10,7 @@
 					+card(nearbyNeighborhood.cardImage, nearbyNeighborhood.names.display, null, null, nearbyNeighborhood.description)
 	+edit
 		+array(neighborhood, 'nearbyNeighborhoods', null, 'Add Nearby Neighborhood')
+
+if !nearbyScriptLoaded
+	script(src='/js/controls/nearby.min.js', type='text/javascript')
+	- nearbyScriptLoaded = true;

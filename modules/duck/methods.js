@@ -3,7 +3,7 @@ const cache  = require('../cache');
 const joinObject  = require('../joinObject');
 
 function returnItem(obj, field, value, contains) {
-	if (!obj || !field) { return null; }
+	if (!obj || !field) { return false; }
 	if (!(field instanceof Array)) { field = field.split('.'); }
 
 	const currentField = field.shift();

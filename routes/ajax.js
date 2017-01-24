@@ -58,7 +58,7 @@ router.post('/add/:table', isLoggedIn(true), (req, res) => {
 });
 
 router.post('/update/:table', isLoggedIn(true), (req, res) => {
-	const item = req.body;
+	const item = req.body.item;
 	const table = pickTable(req.params.table);
 
 	if(!table){

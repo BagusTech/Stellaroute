@@ -117,7 +117,7 @@ void function initDuck($){
 				url: `/update/${table}`,
 				contentType: 'application/json',
 				method: 'POST',
-				data: JSON.stringify(item),
+				data: JSON.stringify({item}),
 				success: successCallback,
 				error: errorCallback,
 			});

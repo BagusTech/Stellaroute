@@ -181,12 +181,21 @@ const readJSON      = require('../readJSON');
 		const table = this.table;
 		const schema = this.itemSchema;
 		const key = this.hash;
-		const oldItem = this.findOne(key, data[key]).items
+		const bulkUpdate = data instanceof Array;
+		const oldItem = bulkUpdate ? [] : this.findOne(key, data[key]).items;
+		
+		if(bulkUpdate) {
+			const length = data.length;
+
+			for(let i = 0; i < length; i++) {
+				oldItem[data[i][key]] = this.findOne(key, data[i][key]).items;
+			}
+		}
 
 		return new Promise((resolve, reject) => {
-			if(data instanceof Array) {
+			if(bulkUpdate) {
 				void function updates(item) {
-					updateItem(item, reAssign, table, schema, key, oldItem).then((success) => {
+					updateItem(item, reAssign, table, schema, key, oldItem[item[key]]).then((success) => {
 						if (data.length) {
 							updates(data.shift())
 						} else {

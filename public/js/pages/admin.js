@@ -67,9 +67,9 @@ void function initAdminControls($, duck) {
 
 			$form.duckForm({
 				successCallback: () => {
-					const country = $form.find('[duck-field="country"] select').val()
+					const country = $form.find('[duck-field="country"] select').val();
 					window.location = `/${$(`[data-country-url="${country}"]`).val()}/${$form.find('[duck-field="url"] input').val()}`;
-				}
+				},
 			});
 		});
 	}();

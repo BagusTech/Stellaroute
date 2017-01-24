@@ -8,7 +8,11 @@ append head
 mixin shareThis(image)
 	.share-this
 		span.st_facebook_large(displayText='Facebook', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
-		span.st_twitter_large(displayText='Tweet', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		
+		span.st_twitter_large(displayText='Tweet', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_via="stellaroute", st_image= getImagePath(image, 'medium'), st_summary= summary)
+
 		span.st_reddit_large(displayText='Reddit', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		
 		span.st_pinterest_large(displayText='Pinterest', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		
 		span.st_sharethis_large(displayText='ShareThis')

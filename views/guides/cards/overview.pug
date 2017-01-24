@@ -4,12 +4,12 @@
 			h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
 				+editButton('f-R mt-NegSm mr-NegSm')
 			.plr-Sm.duck-edit-hidden(class= guide.map ? 'p-0--sm' : '')!= guide.description
-			.duck-view-hidden
+			+edit
 				+wysiwyg(guide, 'description', 'Description')
 
 		if guide.map || userIsAuthorized()
 			.col-xs-12.col-sm-4
-				.duck-view-hidden
+				+edit
 					+image(gudie, 'map', 'Guide Map')
 				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
 					img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)

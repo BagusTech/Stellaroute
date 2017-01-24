@@ -69,8 +69,8 @@ void function initRequestLocation($, duck) {
 				const table = duck($this.attr('duck-table'));
 				const length = oldNearby.length;
 
-				for(let i = 0; i < length; i++) {
-					const currentId = oldNearby[i];
+				for(let j = 0; j < length; j++) {
+					const currentId = oldNearby[j];
 
 					if(nearbyIds.indexOf(currentId) === -1) {
 						nearbyIds.push(currentId);

@@ -12,6 +12,7 @@ const session          = require('cookie-session');
 
 const getUser          = require('./middleware/getUser');
 const isLoggedIn       = require('./middleware/isLoggedIn');
+const globalPugVariablesAndFunctions = require('./middleware/globalPugVariablesAndFunctions');
 
 const setFlash         = require('./modules/setFlash');
 
@@ -108,6 +109,9 @@ app.use(setFlash);
 // get the user
 app.use(getUser);
 
+// assign global variables and functions for the view
+app.use(globalPugVariablesAndFunctions);
+
 // location cache
 app.use(Guide.getCached(),
         Attraction.getCached(),
@@ -121,7 +125,6 @@ app.use(Guide.getCached(),
         CityRegion.getCached(),
         Neighborhood.getCached());
 
-// Set index.js to be the main router
 app.use('/', routes);
 
 // CRUD

@@ -35,10 +35,10 @@ function globalPugVariablesAndFunctions(req, res, next){
 		{title: 'Continents', value: 'Continents'},
 	];
 
-	res.locals.uuid = () => {return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);return v.toString(16);})}
-	res.locals.randomizeArray = (a, b) => { const x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
-	res.locals.sortByOrder = (a, b) => {const aOrder = parseInt(a.order, 10), bOrder = parseInt(b.order, 10); if(aOrder > bOrder){return 1} if(aOrder < bOrder){return -1} return 0; }
-	res.locals.getIcon = (icon) => {
+	res.locals.uuid = function uuid() {return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);return v.toString(16);})}
+	res.locals.randomizeArray = function randomizeArray(a, b) { const x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
+	res.locals.sortByOrder = function sortByOrder(a, b) {const aOrder = parseInt(a.order, 10), bOrder = parseInt(b.order, 10); if(aOrder > bOrder){return 1} if(aOrder < bOrder){return -1} return 0; }
+	res.locals.getIcon = function getIcon(icon) {
 		const icons = {
 			walk: 'fa fa-blind',
 			car: 'fa fa-car',
@@ -55,9 +55,20 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		return icons[icon];
 	}
-	res.locals.userIsAuthorized = () => {if(!res.locals.user){return false;}return res.locals.user.isAdmin;}
-	res.locals.getNested = (obj /*, level1, level2, ... levelN*/) => {var args = Array.prototype.slice.call(arguments, 1);for (var i = 0; i < args.length; i++) {if (!obj || !obj.hasOwnProperty(args[i])) {return false;}obj = obj[args[i]];}return obj;}
-	res.locals.wysiwygHasData = (data) => {
+	res.locals.userIsAuthorized = function userIsAuthorized() {if(!res.locals.user){return false;}return res.locals.user.isAdmin;}
+	res.locals.getNested = function getNested(obj /*, level1, level2, ... levelN*/) {
+		var args = Array.prototype.slice.call(arguments, 1);
+
+		for (var i = 0; i < args.length; i++) {
+			if (!obj || !obj.hasOwnProperty(args[i])) {
+				return false;
+			}
+			obj = obj[args[i]];
+		}
+
+		return obj;
+	}
+	res.locals.wysiwygHasData = function wysiwygHasData(data) {
 		if (!data) {return false;}
 
 		const empytValues = [
@@ -69,7 +80,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		return !(empytValues.indexOf(data) > -1)
 	}
-	res.locals.createValidAttributeFromTitle = (title) => {
+	res.locals.createValidAttributeFromTitle = function createValidAttributeFromTitle(title) {
 		const findInvalidAttributeCharacters = /[^a-z0-9\s]|^[^a-z\s]+/gi;
 		const findMultipleSpaces = /\s\s+/g;
 		const findAllSpaces = /\s/g;
@@ -79,7 +90,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 			.trim()
 			.replace(findAllSpaces, '-');
 	}
-	res.locals.getImagePath = (img, size) => {
+	res.locals.getImagePath = function getImagePath(img, size) {
 		if (!img) {
 			return null;
 		} else if (img.indexOf('https') === 0) {

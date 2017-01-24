@@ -82,7 +82,7 @@ block content
 
 				+view
 					.lead!= item.description
-					img.w-100(src= item.image, alt= item.name)
+					img.w-100(src= getImagePath(item.image, 'medium'), alt= item.name)
 					if (item.suggestedRestaurant)
 						h3 Best Place to Get it:
 						p!= item.suggestedRestaurant

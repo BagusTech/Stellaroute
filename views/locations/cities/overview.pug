@@ -89,22 +89,11 @@
 				// this is being double sorted due to a bug I can't find yet
 				for food, i in city.food.foods.sort().sort(sortByOrder)
 					if i < 3
-						button.bg-N.bw-0.p-R.p-0.w-100.d-B(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`, type='button', style=`background: url('${food.image}') no-repeat scroll center center / cover;padding-top: 25%;`)
+						button.bg-N.bw-0.p-R.p-0.w-100.d-B(data-toggle='modal', data-target= `#${food.name.replace(/\s/g, '-')}`, type='button', style=`background: url('${getImagePath(food.image, 'medium')}') no-repeat scroll center center / cover;padding-top: 25%;`)
 							h3.bg-Dk.p-A.t-0.b-0.l-0.r-0.m-0.d-F.fai-C.fj-C.fc-W= food.name
 							.p-A.t-Xs.r-Xs.p-XXs.fs-Sm.fc-W.br-Md(class= colorClasses[foodTagColors[food.category]])= food.category
-							//+card(food.image, food.name, food.category, foodTagColors[food.category], food.description)
 				a.fc-B.w-100.ta-C.p-Xs.d-B(href='#Food') More Food
 
-		//if city.transit && city.transit.transitFacts && city.transit.transitFacts[0] && city.transit.transitFacts[0].title
-			+contentCard('Getting Around')
-				if city.transit.tagline
-					.d-F.fai-C.fj-C
-						.d-Ib.p-R.br-C.bw-Md.bs-S.bc-G.m-Xs.fw-N.fs-18(style='width: 50px; height: 50px; flex-grow: 2;')
-							i.fa.fa-train.p-A(style='top: 5px; left: -5px')
-							i.fa.fa-plane.p-A(style='top: 5px; right: -5px')
-							i.fa.fa-ship.p-A(style='bottom: -7px; left: 14px')
-					h3.mtb-Sm.ta-C= city.transit.tagline
 
-				+accordion(city.transit.transitFacts)(class='row', data-allow-multiple='true')
 
 		+factsHacks(true, city, 'Cities')

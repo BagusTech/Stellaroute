@@ -3,7 +3,7 @@
 		if userIsAuthorized()
 			.list-group(duck-table='Cities' duck-function='update' duck-key='Id' duck-key-value=city.Id, duck-edit-form='view')
 				.duck-edit-hidden
-					button.btn.btn-default(duck-button='edit') Edit Guides
+					+editButton('p-A bg-W t-Md r-Md')
 					for guide, i in guides
 						if i === 0
 							a.clear.list-group-item.mtb-Sm.p-0.p-R.w-100(href=`/${city.countryUrl}/${city.url}/${guide.url}`)

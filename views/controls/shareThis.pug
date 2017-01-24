@@ -1,0 +1,14 @@
+append head
+	script(type='text/javascript').
+		var switchTo5x=true;
+	script(type='text/javascript' src='https://ws.sharethis.com/button/buttons.js')
+	script(type='text/javascript').
+		stLight.options({publisher: "a67f0b68-772d-47a6-8ffd-5b498cfa5472", doNotHash: false, doNotCopy: false, hashAddressBar: true});
+
+mixin shareThis(image)
+	.share-this
+		span.st_facebook_large(displayText='Facebook', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		span.st_twitter_large(displayText='Tweet', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		span.st_reddit_large(displayText='Reddit', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		span.st_pinterest_large(displayText='Pinterest', st_url= `https://stellaroute.com${url}`, st_title= title || 'stellaroute', st_image= getImagePath(image, 'medium'), st_summary= summary)
+		span.st_sharethis_large(displayText='ShareThis')

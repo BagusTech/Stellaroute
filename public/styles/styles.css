@@ -8292,6 +8292,20 @@ button.close {
     top: -60px;
   }
 }
+.share-this {
+  text-align: center;
+  line-height: 0;
+}
+.share-this span {
+  line-height: 0;
+  display: inline-block;
+  font-size: 14px;
+}
+@media (min-width: 767px) {
+  .share-this {
+    text-align: right;
+  }
+}
 .site-header {
   padding: 4px 12px;
   display: -webkit-box;

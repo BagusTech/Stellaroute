@@ -59,17 +59,19 @@ block content
 		+modal('EditCityForm')(class='modal-lg')
 			+cityForm('update', city)
 	
-	.container.ptb-Sm(data-function='tabs')
-		#Overview.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
-			include overview.pug
-		#Attractions.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-			include attractions.pug
-		#Food.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-			include food.pug
-		#Guides.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-			include guides.pug
-		#Neighborhoods.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-			include neighborhoods.pug
+	.container
+		+shareThis(city.cardImage)
+		div(data-function='tabs')
+			#Overview.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
+				include overview.pug
+			#Attractions.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+				include attractions.pug
+			#Food.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+				include food.pug
+			#Guides.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+				include guides.pug
+			#Neighborhoods.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+				include neighborhoods.pug
 
 	// food modals
 	for item, i in city.food && city.food.foods ? city.food.foods.filter((i) => i.name) : []

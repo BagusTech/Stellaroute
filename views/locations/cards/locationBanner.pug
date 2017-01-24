@@ -13,8 +13,8 @@ mixin locationBanner(location, locationTable)
 			+image(location, 'cardImage', 'Card Image')
 			+imageArray(location, 'images', 'Images', 'Add Image')
 
-	+formStart(location, locationTable)(class='p-R')
-		button.btn.btn-edit.p-A.t-Xs.r-Xs.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+	+formStart(location, locationTable)(class='content-card p-0')
+		+editButton('p-A t-Xs r-Xs bg-W')
 		+view('p-R o-H')(style=`background: url('${getImagePath(location.cardImage, "large")}') no-repeat scroll center center / cover;`)
 			.lead.fc-W.m-0.p-Sm.bg-Dkst(style='z-index: 2; margin-top: 35%')!= location.description
 		+edit('mb-Md bg-W p-Md')

@@ -29,6 +29,8 @@
 		h3 (only visible to admins)
 		if attraction.category
 			ul
+				if attraction.isTopAttraction
+					li Top Attraction
 				for category, i in attraction.category
 					li= category
 

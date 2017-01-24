@@ -1,7 +1,7 @@
 block content
 	if userIsAuthorized()
-		.ta-r
-			button.btn.btn-primary(data-target='#AddNeighborhood', data-toggle='modal') Add Neighborhood
+		.p-R
+			button.btn.btn-primary.p-A.r-0.mt-NegXXl.b-XXl(data-target='#AddNeighborhood', data-toggle='modal') Add Neighborhood
 
 		+modal('AddNeighborhood')(class='modal-lg')
 			+neighborhoodForm('add', null, {city: city.Id})

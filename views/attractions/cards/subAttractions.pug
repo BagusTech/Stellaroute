@@ -7,7 +7,7 @@
 			.masonry.masonry-grid-1.masonry-grid-2--md
 				for subAttraction in subAttractions
 					a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${subAttraction.url}`)
-						+card(getImagePath(subAttraction.cardImage, 'medium'), subAttraction.names.display, null, null, subAttraction.description)
+						+card(subAttraction.cardImage, subAttraction.names.display, null, null, subAttraction.description, 'medium')
 
 	+edit
 		+array(attraction, 'subAttractions', 'Sub Attractions')

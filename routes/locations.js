@@ -114,60 +114,6 @@ router.get('/:country/food', (req, res, next) => {
 	});
 });
 
-/* router.get('/:country/transit', (req, res, next) => {
-	const country = Country.findOne('url', req.params.country)
-						   .join('continent', Continent.cached(), 'Id', 'names.display')
-						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
-						   .items[0];
-
-	if(!country){
-		next();
-		return;
-	}
-
-	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
-	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
-
-	res.render('locations/countries/transit', {
-		title: `Stellaroute: ${country.names.display}`,
-		description: `Stellaroute: ${country.names.display} Overview`,
-		continents: Continent.cached().sort(sortBy('url')),
-		country: country,
-		key: Country.hash,
-		countryRegions: CountryRegion.find('country', country.Id).items,
-		worldRegions: WorldRegion.cached().sort(sortBy('url')),
-		provinces: provinces,
-		attractions: attractions,
-	});
-});
-
-router.get('/:country/transportation', (req, res, next) => {
-	const country = Country.findOne('url', req.params.country)
-						   .join('continent', Continent.cached(), 'Id', 'names.display')
-						   .join('worldRegions', WorldRegion.cached(), 'Id', 'names.display')
-						   .items[0];
-
-	if(!country){
-		next();
-		return;
-	}
-
-	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
-	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
-
-	res.render('locations/countries/transportation', {
-		title: `Stellaroute: ${country.names.display}`,
-		description: `Stellaroute: ${country.names.display} Overview`,
-		continents: Continent.cached().sort(sortBy('url')),
-		country: country,
-		key: Country.hash,
-		countryRegions: CountryRegion.find('country', country.Id).items,
-		worldRegions: WorldRegion.cached().sort(sortBy('url')),
-		provinces: provinces,
-		attractions: attractions,
-	});
-}); */
-
 router.get('/:country/:attraction', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
@@ -352,76 +298,6 @@ router.get('/:country/:city', (req, res, next) => {
 	});
 });
 
-/* router.get('/:country/:city/transit', (req, res, next) => {
-	const city = City.findOne('url', req.params.city)
-					 .join('country', Country.cached(), 'Id', 'names.display')
-					 .join('country', Country.cached(), 'Id', 'url')
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
-					 .join('province', Province.cached(), 'Id', 'names.display' )
-					 .join('province', Province.cached(), 'Id', 'url' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
-					 .items[0];
-
-	const countryRegions = CountryRegion.find('country', city.country).items
-	const provinces = Province.find('country', city.country).items
-	let provinceRegions = [];
-	const cityRegions = CityRegion.find('city', city.Id).items;
-	const neighborhoods = Neighborhood.find('city', city.Id).items;
-
-	provinces.forEach(function(p){
-		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
-	});
-
-	res.render('locations/cities/transit', {
-		title: `Stellaroute: ${city.names.display}`,
-		description: `Stellaroute: ${city.names.display} Overview`,
-		key: City.hash,
-		countryRegions: countryRegions,
-		provinces: provinces,
-		provinceRegions: provinceRegions,
-		city: city,
-		cityRegions: cityRegions,
-		neighborhoods: neighborhoods,
-	});
-}); */
-
-/* router.get('/:country/:city/explore', (req, res, next) => {
-	const city = City.findOne('url', req.params.city)
-					 .join('country', Country.cached(), 'Id', 'names.display')
-					 .join('country', Country.cached(), 'Id', 'url')
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
-					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
-					 .join('province', Province.cached(), 'Id', 'names.display' )
-					 .join('province', Province.cached(), 'Id', 'url' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
-					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
-					 .items[0];
-
-	const countryRegions = CountryRegion.find('country', city.country).items
-	const provinces = Province.find('country', city.country).items
-	let provinceRegions = [];
-	const cityRegions = CityRegion.find('city', city.Id).items;
-	const neighborhoods = Neighborhood.find('city', city.Id).items;
-
-	provinces.forEach(function(p){
-		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
-	});
-
-	res.render('locations/cities/explore', {
-		title: `Stellaroute: ${city.names.display}`,
-		description: `Stellaroute: ${city.names.display} Overview`,
-		key: City.hash,
-		countryRegions: countryRegions,
-		provinces: provinces,
-		provinceRegions: provinceRegions,
-		city: city,
-		cityRegions: cityRegions,
-		neighborhoods: neighborhoods,
-	});
-}); */
-
 router.get('/:country/:city/:guide', (req, res, next) => {
 	const country = Country.findOne('url', req.params.country).items;
 
@@ -552,7 +428,7 @@ router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 	}
 
 	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : null;
-	const subAttractions = attraction.subAttractions ? Attraction.find().items.filter((i) => attraction.subAttractions.indexOf(i.Id) > -1) : null;
+	const subAttractions = Attraction.find('Id', attraction.subAttractions).items;
 	const parentAttraction = attraction.parentAttraction ? Attraction.findOne('Id', attraction.parentAttraction).items : null;
 	const siblingAttractions = parentAttraction ? Attraction.find('parentAttraction', attraction.parentAttraction).items.filter((i) => i.Id !== attraction.Id) : null;
 

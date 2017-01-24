@@ -75,7 +75,10 @@ void function initializeAccordions($) {
             .slideToggle(animationSpeed);
 
         // trigger tab-changed event when done
-        $tabToToggle.trigger('tab-changed', [ true ]);
+        setTimeout(() => {
+            $tabToToggle.trigger('tab-changed', [ true ]);
+            $tabToToggle.closest('[data-function*="scroll"]').trigger('initScroll')
+        }, animationSpeed)
     }
 
     function changeTab(e, isOnLoad) {

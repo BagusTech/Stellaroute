@@ -1,4 +1,6 @@
-+formStart(attraction, 'Attractions')
+- let childAttractionScriptLoaded = false;
+
++formStart(attraction, 'Attractions')(class='js-child-attractions')
 	h2.fc-G Attractions in #{attraction.names.display}
 		+editButton('f-R mt-NegSm')
 
@@ -11,3 +13,7 @@
 
 	+edit
 		+array(attraction, 'subAttractions', 'Sub Attractions')
+
+if !childAttractionScriptLoaded
+	script(src='/js/ajaxCallbacks/childAttraction.min.js', type='text/javascript')
+	- childAttractionScriptLoaded = true

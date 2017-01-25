@@ -1,4 +1,6 @@
-+formStart(attraction, 'Attractions', siblingAttractions)
+- let parentAttractionScriptLoaded = false;
+
++formStart(attraction, 'Attractions', siblingAttractions)(class='js-parent-attraction')
 	h2.fc-G Other Attractions in #{parentAttraction ? parentAttraction.names.display : '(Pick Parent Attraction)'}
 		+editButton('f-R mt-NegSm')
 
@@ -20,3 +22,7 @@
 
 	+edit
 		+string(attraction, 'parentAttraction', 'Parent Attraction')
+
+if !parentAttractionScriptLoaded
+	script(src='/js/ajaxCallbacks/parentAttraction.min.js', type='text/javascript')
+	- parentAttractionScriptLoaded = true

@@ -153,6 +153,7 @@ void function initDuck($){
 	duck.sendEmail = sendEmail;
 	duck.sendResetEmail = sendResetEmail;
 	duck.findRelevantChildren = findRelevantChildren;
+	duck.callbacks = {};
 
 	window.duck = duck;
 }(jQuery.noConflict());

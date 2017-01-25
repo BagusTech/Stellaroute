@@ -25,11 +25,11 @@ block content
 				for location in approvedLocations
 					.col-xs-12.col-sm-6.col-md-3.mb-Md
 						a(href=`/${location.countryUrl}/${location.url}`)
-							+card(location.cardImage, location.names.display)
+							+card(location.cardImage, location.names.display, null, null, null, 'medium')
 
 					.col-xs-12.col-sm-6.col-md-3.mb-Md
 						.card.c-P(data-toggle='modal', data-target='#RequestLocation')
-							.ta-C.fc-Purp.bg-G__ltr(style='padding: 28% 0 ; font-size: 60px;')
+							.ta-C.fc-Purp.bg-G__ltr(style='padding: 22% 0; font-size: 60px;')
 								i.fa.fa-plus(aria-hidden='true')
 								.sr-only Request
 
@@ -53,16 +53,16 @@ block content
 			h2.fc-G Coming Soon
 			.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
 				.masonry--item
-					+card('budweiser.jpg', 'St. Louis')
+					+card('budweiser.jpg', 'St. Louis', null, null, null, 'medium')
 				.masonry--item
-					+card('635973353399336445-1421152854_NYC-1.jpg', 'New York')
+					+card('635973353399336445-1421152854_NYC-1.jpg', 'New York', null, null, null, 'medium')
 				// REMOVED AS SUPERFLOUS, MIGHT PUT BACK IN LATER
 					.masonry--item
-						+card('London-1_tcm233-2111842.jpg', 'London')
+						+card('London-1_tcm233-2111842.jpg', 'London', null, null, null, 'medium')
 				.masonry--item
-					+card('Amsterdam.jpg', 'Amsterdam')
+					+card('Amsterdam.jpg', 'Amsterdam', null, null, null, 'medium')
 				.masonry--item
-					+card('efm-hotel-billboard-washingtondccom.jpg', 'Washington, D.C.')
+					+card('efm-hotel-billboard-washingtondccom.jpg', 'Washington, D.C.', null, null, null, 'medium')
 
 			hr.mb-Lg
 

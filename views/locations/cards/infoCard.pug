@@ -4,8 +4,8 @@ mixin infoCard(obj, table, field, title)
 			+editButton('f-R mt-NegSm')
 
 		+view
-			img.f-L.w-25(src=getImagePath(obj[field].image, 'medium'), alt= title)
-			.w-75.f-L.pl-Sm!= obj[field].description
+			img.f-L.w-25(src=getImagePath(getNested(obj, field, 'image'), 'medium'), alt= title)
+			.w-75.f-L.pl-Sm!= getNested(obj, field, 'description')
 		+edit
 			+object(field)
 				+image(obj[field], 'image', 'Image')

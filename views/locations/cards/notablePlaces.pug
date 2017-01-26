@@ -1,10 +1,10 @@
-+formStart(neighborhood, 'Neighborhoods', getNested('neighborhood', 'notiblePlaces', 0, 'name'))(class='content-card')
++formStart(neighborhood, 'Neighborhoods', getNested(neighborhood, 'notiblePlaces', 0, 'name'))(class='content-card')
 	h2.content-card--header Other Notable Places
 		+editButton('f-R mt-NegSm')
 
 	+view
 		ul.list-unstyled
-			for place in neighborhood.notiblePlaces
+			for place in getNested(neighborhood, 'notiblePlaces') ? neighborhood.notiblePlaces : []
 				li.clear
 					if place.image
 						.w-25.f-L

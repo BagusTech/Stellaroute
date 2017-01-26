@@ -2,7 +2,7 @@
 	h2.content-card--header.mb-0 Where to Explore
 		+editButton('f-R mt-NegSm')
 	+view
-		if neighborhood.explore.map
+		if getNested(neighborhood, 'explore', 'map')
 			img.w-100(src=getImagePath(neighborhood.explore.map, 'large'), alt='Where to Explore')
 		for area in getNested(neighborhood, 'explore', 'areas', 0, 'name') ? neighborhood.explore.areas : []
 			h3= area.name

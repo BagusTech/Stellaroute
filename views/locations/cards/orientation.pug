@@ -2,18 +2,18 @@
 	h2.content-card--header Orientation
 		+editButton('f-R mt-NegSm')
 	+view
-		if wysiwygHasData(neighborhood.orientation.description)
+		if wysiwygHasData(getNested(neighborhood, 'orientation', 'description'))
 			div!= neighborhood.orientation.description
 		
-		if neighborhood.orientation.map
+		if getNested(neighborhood, 'orientation', 'map')
 			button.bg-N.bw-0.p-0.w-100(type='button', data-toggle='modal', data-target='#MapModal', tab-index='1')
 				img.w-100(src= getImagePath(neighborhood.orientation.map, 'large'))
 
-		if wysiwygHasData(neighborhood.orientation.mainIntersection)
+		if wysiwygHasData(getNested(neighborhood, 'orientation', 'mainIntersection'))
 			h3 Main Intersection
 			!= neighborhood.orientation.mainIntersection
 
-		if wysiwygHasData(neighborhood.orientation.mainStrip)
+		if wysiwygHasData(getNested(neighborhood, 'orientation', 'mainStrip'))
 			h3 Main Strip
 			!= neighborhood.orientation.mainStrip
 
@@ -43,7 +43,7 @@
 									h5.d-Ib.m-0.f-L.lh-B(data-icon= getIcon(wayToGetThere.method))
 									.ml-Md= `${wayToGetThere.time ? wayToGetThere.time : ''} ${wayToGetThere.description ? '- ' + wayToGetThere.description : ''} ${wayToGetThere.distance ? '- ' + wayToGetThere.distance : ''}`
 
-		if neighborhood.orientation.map
+		if getNested(neighborhood, 'orientation', 'map')
 			+modal('MapModal')
 				.ta-C(style='overflow-x: scroll;')
 					img(src= getImagePath(neighborhood.orientation.map, 'large'), alt=`Map of ${neighborhood.names.display}`)

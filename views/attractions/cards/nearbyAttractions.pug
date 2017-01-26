@@ -3,9 +3,9 @@
 		+editButton()(class='f-R mt-NegSm')
 
 		+view
-			.masonry.masonry-grid-1(class= nearbyAttractions && nearbyAttractions.length > 1 ? 'masonry-grid-2--sm' : '')
-				for nearbyAttraction in nearbyAttractions ? nearbyAttractions : []
-					a.masonry--item(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
+			for nearbyAttraction in nearbyAttractions ? nearbyAttractions : []
+				.content-card.p-0
+					a(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
 						+card(getImagePath(nearbyAttraction.cardImage, 'medium'), nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
 		+edit

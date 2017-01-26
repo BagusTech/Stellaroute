@@ -427,7 +427,7 @@ router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 		return;
 	}
 
-	const nearbyAttractions = attraction.nearbyAttractions ? Attraction.find().items.filter((i) => attraction.nearbyAttractions.indexOf(i.Id) > -1) : null;
+	const nearbyAttractions = Attraction.find('Id', attraction.nearbyAttractions).items;
 	const subAttractions = Attraction.find('Id', attraction.subAttractions).items;
 	const parentAttraction = attraction.parentAttraction ? Attraction.findOne('Id', attraction.parentAttraction).items : null;
 	const siblingAttractions = parentAttraction ? Attraction.find('parentAttraction', attraction.parentAttraction).items.filter((i) => i.Id !== attraction.Id) : null;

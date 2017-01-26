@@ -39,7 +39,6 @@ void function initLinkedUpdate($, duck) {
 
 			const length = items.length;
 			const itemsToUpdate = [];
-
 			for(let i = 0; i < length; i++) {
 				const item = items[i];
 				let current = item[field] || (isArray ? [] : '');
@@ -50,32 +49,72 @@ void function initLinkedUpdate($, duck) {
 					} else {
 						current = Id;
 					}
-					
-					item[field] = current;
 
+					item[field] = current;
 					itemsToUpdate.push(item);
 				}
 			}
 
 			if(removeVals) {
 				if(isArray) {
-					const removeFromValsLength = removeVals.length;
-					for(let i = 0; i < removeFromValsLength; i++) {
-						const item = items.filter((itm) => itm.Id === removeVals[i])[0];
+					if (removeVals instanceof Array) {
+						const removeFromValsLength = removeVals.length;
+						for(let i = 0; i < removeFromValsLength; i++) {
+							const item = items.filter((itm) => itm.Id === removeVals[i])[0];
+							if(item) {
+								if(isArray) {
+									const index = item[field].indexOf(Id);
+									item[field].splice(index, 1);
+								} else {
+									item[field] = '';
+								}
+								
+								itemsToUpdate.push(item);
+							}
+						}
+					} else {
+						const item = items.filter((itm) => itm.Id === removeVals)[0];
 
 						if(item) {
-							const index = item[field].indexOf(Id);
-
-							item[field].splice(index, 1);
+							if(isArray) {
+								const index = item[field].indexOf(Id);
+								item[field].splice(index, 1);
+							} else {
+								item[field] = '';
+							}
+							
 							itemsToUpdate.push(item);
 						}
 					}
 				} else {
-					const item = items.filter((itm) => itm.Id === removeVals)[0];
+					if (removeVals instanceof Array) {
+						const removeFromValsLength = removeVals.length;
+						for(let i = 0; i < removeFromValsLength; i++) {
+							const item = items.filter((itm) => itm.Id === removeVals[i])[0];
+							if(item) {
+								if(isArray) {
+									const index = item[field].indexOf(Id);
+									item[field].splice(index, 1);
+								} else {
+									item[field] = '';
+								}
+								
+								itemsToUpdate.push(item);
+							}
+						}
+					} else {
+						const item = items.filter((itm) => itm.Id === removeVals)[0];
 
-					if(item) {
-						item[field] = '';
-						itemsToUpdate.push(item);
+						if(item) {
+							if(isArray) {
+								const index = item[field].indexOf(Id);
+								item[field].splice(index, 1);
+							} else {
+								item[field] = '';
+							}
+							
+							itemsToUpdate.push(item);
+						}
 					}
 				}
 			}
@@ -96,7 +135,7 @@ void function initLinkedUpdate($, duck) {
 		// runs after ajax is complete
 		return () => {
 			const vals = getVal($this, $field1); // get the acting items updated values
-			const valsToFind = vals instanceof Array ? vals : [vals];
+			const valsToFind = vals instanceof Array ? vals : (vals ? [vals] : []);
 
 			// if the old vals are the same as the old ones, don't do anything
 			if (vals === oldVals) {
@@ -120,12 +159,12 @@ void function initLinkedUpdate($, duck) {
 						removeVals.push(currentId);
 					}
 				}
-			} else {
-				removeVals = oldVals;
+			} else if(oldVals) {
+				removeVals = isArray ? [oldVals] : oldVals;
 				valsToFind.push(oldVals);
 			}
 
-			table.get({field: 'Id', value: vals}, updateItems(Id, table, field2 || field1, isArray, removeVals));
+			table.get({field: 'Id', value: valsToFind}, updateItems(Id, table, field2 || field1, isArray, removeVals));
 		}
 	}
 

@@ -9,7 +9,7 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ba
 			+formStart(guide, 'Guides')
 				+view
 					h1 #{guide.names.display}
-						button.btn.btn-edit.f-R.bg-W.mt-NegSm(duck-button='edit', data-icon='fa fa-pencil')
+						+editButton('f-R bg-W mt-NegSm')
 						if guide.author
 							small.pl-Xs= guide.author
 

@@ -100,7 +100,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		const imgPath = img.split('.');
 		const imgExtention = imgPath.pop();
-		const s3Path = 'https://s3-us-west-2.amazonaws.com/stellaroute.com/images/';
+		const s3Path = 'https://s3-us-west-2.amazonaws.com/stellaroute/images/';
 
 		return img.indexOf('http') === 0 ? null : `${s3Path}${imgPath.join('')}-${size}.${imgExtention}`
 	}

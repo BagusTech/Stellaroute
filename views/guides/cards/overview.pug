@@ -10,6 +10,6 @@
 		if guide.map || userIsAuthorized()
 			.col-xs-12.col-sm-4
 				+edit
-					+image(gudie, 'map', 'Guide Map')
+					+image(guide, 'map', 'Guide Map')
 				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
 					img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)

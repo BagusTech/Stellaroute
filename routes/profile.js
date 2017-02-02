@@ -1,7 +1,9 @@
 const express    = require('express');
 const flash      = require('connect-flash');
 const sortBy     = require('../modules/sortBy');
-const User       = require('../schemas/user');
+const pickTable  = require('../modules/pickTable');
+const User       = pickTable('Users');
+const Guide       = pickTable('Guides');
 const router     = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -9,7 +11,7 @@ router.get('/', (req, res, next) => {
 		title: 'StellaRoute: My Profile',
 		description: 'This is used to view, edit, and delete my profile',
 		key: User.hash,
-		users: User.cached().sort()
+		guides: Guide.find('author', res.locals.user.Id).items
 	});
 });
 

@@ -68,7 +68,7 @@ module.exports = function(_duck){
 			return new _duck(this.schema, this.items || this.cached());
 		}
 
-		const items = this.items || this.cached();
+		const items = this.items || this.cached() || [];
 		const foundItems = items.filter((item) => returnItem(item, field, value, contains));
 		const sortedItems = (foundItems && value instanceof Array) ? value.map((val, i) => {
 			const length = foundItems.length;
@@ -87,7 +87,7 @@ module.exports = function(_duck){
 
 	// same as find, but only returns one result, does not allow contains
 	_duck.prototype.findOne = function(field, value){
-		const items = this.items || this.cached();
+		const items = this.items || this.cached() || [];
 		const length = items.length;
 
 		for (let i = 0;  i < length; i++){

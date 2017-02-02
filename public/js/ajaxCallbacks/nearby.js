@@ -1,6 +1,6 @@
 /* global jQuery, duck */
 
-void function initRequestLocation($, duck) {
+void function initNearby($, duck) {
 	'use strict';
 
 	$(() => {

@@ -1,6 +1,6 @@
 -var guideFormId = 0
 
-mixin guideForm(crud, guide, locations, cancel)
+mixin guideForm(crud, guide, locations, user, cancel)
 	form(id=`GuideForm${guideFormId}`, duck-table='Guides', duck-function= crud, duck-key='Id', duck-key-value= guide && guide.Id)
 		.w-50.f-L.pr-Sm(duck-field='names', duck-type='object')
 			+string(guide && guide.names, 'display', 'Display Name')
@@ -294,6 +294,9 @@ mixin guideForm(crud, guide, locations, cancel)
 			.form-group.hidden(duck-field='attractions', duck-type='array')
 				for attractions in guide.attractions
 					input(type='text', required, duck-value, value=attractions, disabled)
+
+		.form-group.hidden(duck-field='author', duck-type='string')
+			input(type='hidden', duck-value, value= user.Id)
 
 		.ta-R
 			if guide

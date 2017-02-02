@@ -27,7 +27,7 @@ void function initFeedback($, duck){
 			}, 5000);
 
 			setTimeout(() => {
-				$form.find('[user="submit"]').prop('disabled', false);
+				$form.find('[type="submit"]').prop('disabled', false);
 			}, 500);
 		} else {
 			failed();

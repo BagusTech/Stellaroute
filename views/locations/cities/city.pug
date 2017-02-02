@@ -22,7 +22,7 @@ block content
 						+view
 							h1= city.names.display
 								small.ml-Md= city.tagline
-								button.btn.btn-edit.f-R.bg-W(duck-button='edit', data-icon='fa fa-pencil')
+								+editButton('f-R bg-W')
 						+edit('p-Sm bg-W')
 							+object('names')
 								.row

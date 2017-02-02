@@ -1,6 +1,6 @@
 if (!user)
 	.login-control
-		button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
+		//button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
 		button.btn.btn-default.bw-N(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
@@ -44,7 +44,7 @@ if (!user)
 					.col-xs-12.col-sm-6.col-md-8
 						p Don't have an account?
 								button.btn-default.ml-Sm(type='button', data-dismiss='modal', data-toggle='modal', data-target='#SignupModal') Sign Up
-	.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
+	//.modal.fade#SignupModal(tab-index='-1', role='dialog', aria-labelledby="SignupModal")
 		.modal-dialog(role='document')
 			form.modal-content(method='POST', action='/signup')
 				.modal-header

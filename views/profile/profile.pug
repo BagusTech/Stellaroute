@@ -19,7 +19,7 @@ block content
 					li.active
 						a(href="#") Settings
 		.container.p-Xs
-				.col-xs-12.col-sm-6.col-sm-push-3
+				.col-xs-12.col-sm-6
 					+contentCard('Info')
 						form.profile-settings-update(method='POST', action='/profile/update')
 							.row
@@ -51,3 +51,19 @@ block content
 								.col-xs-12
 									input(type='hidden', name= key, value= user[key])
 									input.btn-primary.btn-block(type='submit', name='update', value='Save')
+				.col-xs-12.col-sm-6
+					.content-card
+						h2.content-card--header My Guides
+						for guide, i in guides ? guides : []
+							if i !== 0
+								.text-wings.plr-Xl.pb-Sm.fc-G
+									hr
+									span.plr-Sm.p-R(style='top: 3px;') &deg;
+									hr
+							a.row(href=`/${guide.url}`)
+								.col-xs-12.col-sm-5.col-md-3
+									img.w-100(src= getImagePath(guide.cardImage, 'small'))
+								.col-xs-12.col-sm-7.col-md-9
+									h3.mt-0= guide.names.display
+										small.d-B.mt-XXs.fc-G= guide.tagline
+									div!= guide.description

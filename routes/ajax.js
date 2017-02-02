@@ -36,7 +36,6 @@ router.get('/getFiles', isLoggedIn(), (req, res) => {
 	})
 });
 
-
 router.post('/add/:table', isLoggedIn(true), (req, res) => {
 	const item = req.body;
 	const table = pickTable(req.params.table);
@@ -49,7 +48,7 @@ router.post('/add/:table', isLoggedIn(true), (req, res) => {
 	table.add(item)
 	.then(() => {
 		table.updateCache().then(() => {
-			res.send('success');
+			res.send(item);
 		});
 	}, (err) => {
 		console.error(err);
@@ -69,7 +68,7 @@ router.post('/update/:table', isLoggedIn(true), (req, res) => {
 	table.update(item)
 		.then(() => {
 			table.updateCache().then(() => {
-				res.send('success');
+				res.send(item);
 			});
 		}, (err) => {
 			console.error(err);
@@ -110,7 +109,7 @@ router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
 			if (err) {console.error(err); res.status(500).send(err); return;}
 
 			res.send('success');
-		});
+		}, null, null);
 	}	
 });
 

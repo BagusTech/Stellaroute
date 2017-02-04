@@ -6,8 +6,7 @@ block content
 			.container
 				.profile-info
 					img.profile-picture(src='/images/profile_placeholder_360.jpg', alt='profile picture')
-					h1= `${user.name.first || '(unkown name, very mysterious)'} ${user.name.last || ''}`
-						small Changing profile pictures coming soon!
+					h1= `${profilesUser.name.first || '(unkown name, very mysterious)'} ${profilesUser.name.last || ''}`
 					//h2 South Park, USA
 				//ul.account-pages(role="navigation")
 					li 
@@ -20,40 +19,8 @@ block content
 						a(href="#") Settings
 		.container.p-Xs
 				.col-xs-12.col-sm-6
-					+contentCard('Info')
-						form.profile-settings-update(method='POST', action='/profile/update')
-							.row
-								.col-xs-12
-									label.profile-label First Name
-									input.form-control.form-settings(name='name.first', type='text', placeholder='First Name', value= user.name ? user.name.first : '')
-								.col-xs-12
-									label.profile-label Last Name
-									input.form-control.form-settings(name='name.last', type='text', placeholder='Last Name', value= user.name ? user.name.last : '')
-							//.row
-								.col-xs-12
-									label.profile-label Hometown
-									input.form-control.form-settings(name='hometown', type='text', placeholder='Hometown')
-							.row
-								.col-xs-12
-									label.profile-label Email
-									input.form-control.form-settings(name='local.email', type='email', placeholder='Email', value= user.local ? user.local.email : '')
-
-								.col-xs-12
-									label.profile-label Passphrase
-									input.form-control.form-settings(name='local.password', type='password', placeholder='Passphrase') 
-
-								//.col-xs-6
-									.checkbox
-										label
-											input(type='checkbox', checked= user.recieveNewsletter)
-											| Send Me Newsletters
-
-								.col-xs-12
-									input(type='hidden', name= key, value= user[key])
-									input.btn-primary.btn-block(type='submit', name='update', value='Save')
-				.col-xs-12.col-sm-6
 					.content-card
-						h2.content-card--header My Guides
+						h2.content-card--header= `${profilesUser.name.first}'s Guides`
 						for guide, i in guides ? guides : []
 							if i !== 0
 								.text-wings.plr-Xl.pb-Sm.fc-G

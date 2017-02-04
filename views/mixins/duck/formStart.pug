@@ -1,5 +1,5 @@
 mixin formStart(item, tableName, show= true, duckFunction= 'update', key= 'Id')
-	if userIsAuthorized()
+	if userIsAuthorized(user)
 		div(duck-table= tableName, duck-function=duckFunction, duck-key=key, duck-key-value= item[key], duck-edit-form='view')&attributes(attributes)
 			block
 	else if show

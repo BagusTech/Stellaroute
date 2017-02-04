@@ -10,8 +10,8 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ba
 				+view
 					h1 #{guide.names.display}
 						+editButton('f-R bg-W mt-NegSm')
-						if guide.author
-							small.pl-Xs= guide.author
+						if author && author.names
+							small.pl-Xs= author.names.first
 
 						if guide.tagline
 							small.d-B.mt-Sm= guide.tagline

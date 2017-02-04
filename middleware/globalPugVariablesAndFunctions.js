@@ -1,3 +1,8 @@
+const uuid = require('uuid');
+const isAuthorized = require('../modules/isAuthorized');
+const getNested = require('../modules/getNested');
+const sortBy = require('../modules/sortBy');
+
 function globalPugVariablesAndFunctions(req, res, next){
 	res.locals.url = req.originalUrl;
 	res.locals.title = 'stellaroute';
@@ -35,9 +40,12 @@ function globalPugVariablesAndFunctions(req, res, next){
 		{title: 'Continents', value: 'Continents'},
 	];
 
-	res.locals.uuid = function uuid() {return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);return v.toString(16);})}
+	res.locals.uuid = uuid;
+	res.locals.userIsAuthorized = isAuthorized;
+	res.locals.sortBy = sortBy;
+	res.locals.getNested = getNested;
+
 	res.locals.randomizeArray = function randomizeArray(a, b) { const x = Math.random(); if(x>.5){return 1;}if(x<.5){return -1;}return 0;}
-	res.locals.sortByOrder = function sortByOrder(a, b) {const aOrder = parseInt(a.order, 10), bOrder = parseInt(b.order, 10); if(aOrder > bOrder){return 1} if(aOrder < bOrder){return -1} return 0; }
 	res.locals.getIcon = function getIcon(icon) {
 		const icons = {
 			walk: 'fa fa-blind',
@@ -55,20 +63,8 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		return icons[icon];
 	}
-	res.locals.userIsAuthorized = function userIsAuthorized() {if(!res.locals.user){return false;}return res.locals.user.isAdmin;}
-	res.locals.getNested = function getNested(obj /*, level1, level2, ... levelN*/) {
-		const args = Array.prototype.slice.call(arguments, 1);
-		const length = args.length;
-
-		for (var i = 0; i < length; i++) {
-			if (!obj || !obj.hasOwnProperty(args[i])) {
-				return false;
-			}
-			obj = obj[args[i]];
-		}
-
-		return obj;
-	}
+	
+	
 	res.locals.wysiwygHasData = function wysiwygHasData(data) {
 		if (!data) {return false;}
 
@@ -91,7 +87,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 			.trim()
 			.replace(findAllSpaces, '-');
 	}
-	res.locals.getImagePath = function getImagePath(img, size) {
+	res.locals.getImagePath = function getImagePath(img, size, folder) {
 		if (!img) {
 			return null;
 		} else if (img.indexOf('https') === 0) {
@@ -100,7 +96,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		const imgPath = img.split('.');
 		const imgExtention = imgPath.pop();
-		const s3Path = 'https://s3-us-west-2.amazonaws.com/stellaroute/images/';
+		const s3Path = `https://s3-us-west-2.amazonaws.com/stellaroute/${folder || 'images'}/`;
 
 		return img.indexOf('http') === 0 ? null : `${s3Path}${imgPath.join('')}-${size}.${imgExtention}`
 	}

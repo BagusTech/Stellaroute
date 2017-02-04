@@ -7,11 +7,28 @@ const Guide       = pickTable('Guides');
 const router     = express.Router();
 
 router.get('/', (req, res, next) => {
-	res.render('profile/profile', {
+	res.render('profile/myProfile', {
 		title: 'StellaRoute: My Profile',
 		description: 'This is used to view, edit, and delete my profile',
 		key: User.hash,
 		guides: Guide.find('author', res.locals.user.Id).items
+	});
+});
+
+router.get('/:username', (req, res, next) => {
+	const user = User.findOne('username', req.params.username).items;
+
+	if(!user) {
+		next();
+		return;
+	}
+
+	res.render('profile/profile', {
+		title: 'StellaRoute: My Profile',
+		description: 'This is used to view, edit, and delete my profile',
+		profilesUser: user,
+		key: User.hash,
+		guides: Guide.find('author', user.Id).items
 	});
 });
 

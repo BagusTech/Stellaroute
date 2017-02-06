@@ -16,22 +16,21 @@ const joinObject = function(item, field, dataJoin, joinOn, dataDisplay, display,
 		return item;
 	}
 
-//alert(JSON.stringify(field[0]))
-if(item[field[0]] instanceof Array){
-	item[joinedFieldName] = item[joinedFieldName] || [];
+	if(item[field[0]] instanceof Array){
+		item[joinedFieldName] = item[joinedFieldName] || [];
 
-	for(var i in item[field[0]]){
-		if(dataJoin[joinOn[0]] == item[field[0]][i]){
-			item[joinedFieldName].push(dataDisplay[display[0]]);
+		for(var i in item[field[0]]){
+			if(dataJoin[joinOn[0]] == item[field[0]][i]){
+				item[joinedFieldName].push(dataDisplay[display[0]]);
+			}
+		}
+	} else {
+		if(item[field[0]] == dataJoin[joinOn[0]]){
+			item[joinedFieldName] = dataDisplay[display[0]];
 		}
 	}
-} else {
-	if(item[field[0]] == dataJoin[joinOn[0]]){
-		item[joinedFieldName] = dataDisplay[display[0]];
-	}
-}
 
-return item;
+	return item;
 }
 
 module.exports = joinObject;

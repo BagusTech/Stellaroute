@@ -51,7 +51,9 @@ module.exports = function(_duck){
 			for(var j in data){
 				var item = joinObject(items[i], field.split('.'), data[j], joinOn.split('.'), data[j], display.split('.'), joinedFieldName);
 
-				joinedItems.indexOf(item) > -1 ? null : joinedItems.push(item);
+				if(joinedItems.indexOf(item) === -1) {
+					joinedItems.push(item)
+				}
 			}
 
 		}

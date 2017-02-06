@@ -28,7 +28,7 @@ block content
 
 	div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(neighborhood.backgroundImage, 'large') || getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 			.bg-Dkr.p-R
-				if userIsAuthorized()
+				if userIsAuthorized(user)
 					.bg-W.p-A.p-Xs.r-Sm.b-0.z-1.d-N.d-B--sm= neighborhood.Id
 				.container.ptb-0
 					ol.breadcrumb

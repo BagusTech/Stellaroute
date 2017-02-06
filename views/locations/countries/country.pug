@@ -20,7 +20,7 @@ block content
 					h3= province.names.display
 					ul.ls-N.p-0
 						for city in cities
-							if city.province.indexOf(province.Id) > -1
+							if city.province && city.province.indexOf(province.Id) > -1
 								li
 									a(href=`/${country.url}/${city.url}`)= city.names.display
 			.content-card.w-100.mt-Sm.ml-Sm--sm

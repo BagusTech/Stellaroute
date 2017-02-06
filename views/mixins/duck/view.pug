@@ -1,5 +1,5 @@
 mixin view(classes)
-	if userIsAuthorized()
+	if userIsAuthorized(user)
 		.duck-edit-hidden(class= classes)&attributes(attributes)
 			block
 	else

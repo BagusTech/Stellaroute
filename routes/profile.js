@@ -3,7 +3,9 @@ const flash      = require('connect-flash');
 const sortBy     = require('../modules/sortBy');
 const pickTable  = require('../modules/pickTable');
 const User       = pickTable('Users');
-const Guide       = pickTable('Guides');
+const Country    = pickTable('Countries');
+const City       = pickTable('Cities');
+const Guide      = pickTable('Guides');
 const router     = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -11,7 +13,7 @@ router.get('/', (req, res, next) => {
 		title: 'StellaRoute: My Profile',
 		description: 'This is used to view, edit, and delete my profile',
 		key: User.hash,
-		guides: Guide.find('author', res.locals.user.Id).items
+		guides: Guide.find('author', res.locals.user.Id).join('cities', City.cached(), 'Id', 'url').join('countries', Country.cached(), 'Id', 'url').items
 	});
 });
 
@@ -28,7 +30,7 @@ router.get('/:username', (req, res, next) => {
 		description: 'This is used to view, edit, and delete my profile',
 		profilesUser: user,
 		key: User.hash,
-		guides: Guide.find('author', user.Id).items
+		guides: Guide.find('author', user.Id).join('cities', City.cached(), 'Id', 'url').join('countries', Country.cached(), 'Id', 'url').items
 	});
 });
 

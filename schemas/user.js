@@ -19,6 +19,7 @@ const User = Duck({
 			password: String
 		},
 		profilePicture: String,
+		friends: Array,
 	},
 	HASH: 'Id',
 	HASHType: 'S',

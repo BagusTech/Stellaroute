@@ -1,15 +1,28 @@
-+formStart(guide, 'Guides')(class='content-card p-0', data-position='0')
-	.row
-		.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
-			h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
-				+editButton('f-R mt-NegSm mr-NegSm')
-			.plr-Sm.duck-edit-hidden(class= guide.map ? 'p-0--sm' : '')!= guide.description
-			+edit
-				+wysiwyg(guide, 'description', 'Description')
++formStart(guide, 'Guides')(data-position='0')
+	.content-card.p-0
+		.row
+			.col-xs-12.f-R(class= guide.map ? 'col-sm-8' : '')
+				h2.content-card--header.mlr-0.pt-Sm.pl-Md--sm.fw-B.p-R.bg-W(class= guide.map ? 'ml-NegMd--sm' : '') Overview
+					+editButton('f-R mt-NegSm mr-NegSm')
+				.plr-Sm.duck-edit-hidden(class= guide.map ? 'p-0--sm' : '')!= guide.description
+				+edit('p-Sm', false)
+					+wysiwyg(guide, 'description', 'Description')
 
-		if guide.map || userIsAuthorized()
-			.col-xs-12.col-sm-4
-				+edit
-					+image(guide, 'map', 'Guide Map')
-				button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
-					img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
+			if guide.map || userIsAuthorized(user)
+				.col-xs-12.col-sm-4
+					+edit('p-Sm', false)
+						+image(guide, 'map', 'Guide Map')
+					button.bw-0.bg-N.p-0(data-toggle='modal', data-target='#OverviewMap')
+						img.w-100(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
+
+	+edit('p-Sm content-card')
+		h2.content-card--header Guide Locations
+		+array(guide, 'continents', 'Continents')
+		+array(guide, 'worldRegions', 'World Regions')
+		+array(guide, 'countries', 'Countries')
+		+array(guide, 'countryRegions', 'Country Regions')
+		+array(guide, 'provinces', 'Provinces')
+		+array(guide, 'provinceRegions', 'Province Regions')
+		+array(guide, 'cities', 'Cities')
+		+array(guide, 'cityRegions', 'City Regions')
+		+array(guide, 'neighborhoods', 'Neighborhoods')

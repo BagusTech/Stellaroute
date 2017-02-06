@@ -1,10 +1,11 @@
-const express        = require('express');
-const isLoggedIn     = require('../middleware/isLoggedIn');
-const formidable     = require('../middleware/formidable');
-const pickTable      = require('../modules/pickTable');
-const s3             = require('../modules/s3');
-const sendEmail      = require('../modules/sendEmail');
-const router         = express.Router();
+const express    = require('express');
+const pug        = require('pug');
+const isLoggedIn = require('../middleware/isLoggedIn');
+const formidable = require('../middleware/formidable');
+const pickTable  = require('../modules/pickTable');
+const s3         = require('../modules/s3');
+const sendEmail  = require('../modules/sendEmail');
+const router     = express.Router();
 
 router.get('/get/:table', isLoggedIn(true), (req, res) => {
 	const field = req.query.field
@@ -17,10 +18,10 @@ router.get('/get/:table', isLoggedIn(true), (req, res) => {
 		res.status(500).send('Please choose a table.');
 	}
 
-	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items
+	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items;
 
 	if(items){
-		res.send(items)
+		res.send(items);
 	} else {
 		res.send('Nothing Found');
 	}
@@ -33,7 +34,15 @@ router.get('/getFiles', isLoggedIn(), (req, res) => {
 		}
 
 		res.send(data);
-	})
+	});
+});
+
+router.get('/renderPug', (req, res) => {
+	const params = req.query;
+	const filePath = `views/${params.file}`;
+	const locals = params.locals;
+
+	res.send(pug.compileFile(filePath)(locals));
 });
 
 router.post('/add/:table', isLoggedIn(true), (req, res) => {

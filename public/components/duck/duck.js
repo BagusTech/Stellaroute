@@ -16,11 +16,22 @@ void function initDuck($){
 		})
 	}
 
+	// renders a pug file with given locals
+	function renderPug(file, locals, success) {
+		$.ajax({
+			type: 'GET',
+			url: '/renderPug',
+			contentType: 'json',
+			data: {file, locals},
+			success,
+		});
+	}
+
 	// sends an email, needs the html OR the template
 	// request = {html: (optional)String, template: (optional)String, toEmail: (optional)String, subject: String}
 	// success = function
 	// failure = function
-	function sendEmail (request, success, failure) {
+	function sendEmail(request, success, failure) {
 		$.ajax({
 			type: 'POST',
 			data: JSON.stringify(request),
@@ -150,6 +161,7 @@ void function initDuck($){
 
 	duck.stopProp = stopProp;
 	duck.uuid = uuid;
+	duck.renderPug = renderPug;
 	duck.sendEmail = sendEmail;
 	duck.sendResetEmail = sendResetEmail;
 	duck.findRelevantChildren = findRelevantChildren;

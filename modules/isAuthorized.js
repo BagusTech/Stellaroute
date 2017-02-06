@@ -1,7 +1,7 @@
 function isAuthorized(user) {
 	const args = Array.prototype.slice.call(arguments, 1);
 
-	if(!user || !user.roles) {
+	if(!user) {
 		return false;
 	}
 
@@ -9,9 +9,11 @@ function isAuthorized(user) {
 		return true;
 	}
 
-	while (args.length) {
-		if (user.roles.indexOf(args.shift()) > -1) {
-			return true
+	if(user.roles) {
+		while (args.length) {
+			if (user.roles.indexOf(args.shift()) > -1) {
+				return true
+			}
 		}
 	}
 

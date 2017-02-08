@@ -76,7 +76,7 @@ router.get('/logout', (req, res) => {
 });
 
 // sign up for newsletter
-router.post('/newsletter-signup', User.getCached(), (req, res) => {
+router.post('/newsletter-signup', (req, res) => {
 	const email = req.body['local.email'];
 	const user = User.findOne('local.email', email).items;
 	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
@@ -167,7 +167,7 @@ router.post('/signup', passport.authenticate('local-signup', {
 	failureFlash: true
 }));
 
-router.post('/auth/local', User.getCached(), passport.authenticate('local-login', {
+router.post('/auth/local', passport.authenticate('local-login', {
 	successRedirect: '/',
 	failureRedirect: '/',
 	failureFlash: true

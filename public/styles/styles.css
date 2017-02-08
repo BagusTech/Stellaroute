@@ -2994,6 +2994,17 @@ select[multiple].input-lg {
   height: 30px;
   line-height: 30px;
 }
+.has-success {
+  position: relative;
+}
+.has-success:after {
+  position: absolute;
+  bottom: 11px;
+  right: 12px;
+  display: block;
+  font-family: 'FontAwesome';
+  color: #3c763d;
+}
 .has-success .help-block,
 .has-success .control-label,
 .has-success .radio,
@@ -3021,6 +3032,20 @@ select[multiple].input-lg {
 }
 .has-success .form-control-feedback {
   color: #3c763d;
+}
+.has-success:after {
+  content: '\f00c';
+}
+.has-warning {
+  position: relative;
+}
+.has-warning:after {
+  position: absolute;
+  bottom: 11px;
+  right: 12px;
+  display: block;
+  font-family: 'FontAwesome';
+  color: #8a6d3b;
 }
 .has-warning .help-block,
 .has-warning .control-label,
@@ -3050,6 +3075,20 @@ select[multiple].input-lg {
 .has-warning .form-control-feedback {
   color: #8a6d3b;
 }
+.has-warning:after {
+  content: '\f071';
+}
+.has-error {
+  position: relative;
+}
+.has-error:after {
+  position: absolute;
+  bottom: 11px;
+  right: 12px;
+  display: block;
+  font-family: 'FontAwesome';
+  color: #a94442;
+}
 .has-error .help-block,
 .has-error .control-label,
 .has-error .radio,
@@ -3077,6 +3116,9 @@ select[multiple].input-lg {
 }
 .has-error .form-control-feedback {
   color: #a94442;
+}
+.has-error:after {
+  content: '\f00d';
 }
 .has-feedback label ~ .form-control-feedback {
   top: 25px;

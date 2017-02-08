@@ -1,6 +1,7 @@
 console.log('~~~~ Starting Stellroute ~~~~');
 
 const express          = require('express');
+const csrf             = require('csurf');
 const path             = require('path');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -39,6 +40,7 @@ const ProvinceRegion   = require('./schemas/province-region');
 const City             = require('./schemas/city');
 const CityRegion       = require('./schemas/city-region');
 const Neighborhood     = require('./schemas/neighborhood');
+const User             = require('./schemas/user');
 
 const fs               = require('fs');
 const app              = express();
@@ -103,8 +105,16 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
+
+// for securing ajax
+app.use(csrf({ cookie: true }));
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
 // get the user
 app.use(getUser);
@@ -123,7 +133,8 @@ app.use(Guide.getCached(),
         ProvinceRegion.getCached(),
         City.getCached(),
         CityRegion.getCached(),
-        Neighborhood.getCached());
+        Neighborhood.getCached(),
+        User.getCached());
 
 app.use('/', routes);
 

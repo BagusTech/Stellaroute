@@ -473,12 +473,24 @@ input[type="checkbox"] {
 // Feedback states
 .has-success {
   .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
+
+  &:after {
+    content: '\f00c';
+  }
 }
 .has-warning {
   .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
+
+  &:after {
+    content: '\f071';
+  }
 }
 .has-error {
   .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
+
+  &:after {
+    content: '\f00d';
+  }
 }
 
 // Reposition feedback icon if input has visible label above

@@ -41,6 +41,8 @@ strategies.local = function(passport){
 		}, function(req, email, password, done){
 			if (User.findOne('local.email', email).items) {
 				return done(null, false, req.flash('error', 'That email is already taken'));
+			} else if (User.findOne('username', req.body.username).items) {
+				return done(null, false, req.flash('error', 'That email is already taken'));
 			} else if(password.length < 4) {
 				return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
 			}
@@ -54,8 +56,11 @@ strategies.local = function(passport){
 				name: {
 					first: req.body['name.first'],
 					last: req.body['name.last']
-				}
+				},
+
 			}
+
+			newUser.username = req.body.username || newUser.Id;
 
 			User.add(newUser).then(function(user){
 				User.updateCache().then(() => {done(null, newUser);});

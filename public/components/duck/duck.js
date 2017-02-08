@@ -3,6 +3,19 @@
 void function initDuck($){
 	'use strict'
 
+	// secure ajax requests
+	const CSRF_HEADER = 'X-CSRF-Token';
+
+	function setCSRFToken(securityToken) {
+		$.ajaxPrefilter((options, _, xhr) => {
+			if (!xhr.crossDomain) {
+				xhr.setRequestHeader(CSRF_HEADER, securityToken);
+			}
+		});
+	}
+
+	setCSRFToken($('meta[name="csrf-token"]').attr('content'));
+
 	// stops propagation
 	function stopProp(e) {
 		e.stopPropagation();
@@ -101,6 +114,21 @@ void function initDuck($){
 				contentType: 'application/json',
 				method: 'POST',
 				data: JSON.stringify(item),
+				success: successCallback,
+				error: errorCallback,
+			});
+		}
+
+		// (object)options
+		// -- (string)field - the field to search on
+		// -- (dynamic)value - matches the type the field represents
+		// -- (bool)findOne - if true, returns at most 1 item
+		// if no options are passed in, return how many items are in the table
+		this.exists = (options, successCallback, errorCallback) => {
+			$.ajax({
+				url: `/exists/${table}`,
+				contentType: 'json',
+				data: options,
 				success: successCallback,
 				error: errorCallback,
 			});

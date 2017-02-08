@@ -7,24 +7,35 @@ const s3         = require('../modules/s3');
 const sendEmail  = require('../modules/sendEmail');
 const router     = express.Router();
 
-router.get('/get/:table', isLoggedIn(true), (req, res) => {
-	const field = req.query.field
-	const value = req.query.value
-	const findOne = req.query.findOne
+// used to see if (an) item(s) exist without returning the data of the items
+router.get('/exists/:table', (req, res) => {
+	const field = req.query.field;
+	const value = req.query.value;
+	const findOne = req.query.findOne;
 	const table = pickTable(req.params.table);
 
 	if(!table){
-		console.error('Please choose a table.');
 		res.status(500).send('Please choose a table.');
 	}
 
 	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items;
 
-	if(items){
-		res.send(items);
-	} else {
-		res.send('Nothing Found');
+	res.send(items.length.toString());
+});
+
+router.get('/get/:table', isLoggedIn(true), (req, res) => {
+	const field = req.query.field;
+	const value = req.query.value;
+	const findOne = req.query.findOne;
+	const table = pickTable(req.params.table);
+
+	if(!table){
+		res.status(500).send('Please choose a table.');
 	}
+
+	const items = findOne ? table.findOne(field, value).items : table.find(field, value).items;
+
+	res.send(items);
 });
 
 router.get('/getFiles', isLoggedIn(), (req, res) => {

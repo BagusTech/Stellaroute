@@ -55,19 +55,19 @@ if (!user)
 						span(aria-hidden='true') &times;
 					h4.modal-title#SignupModalLabel Create an Account
 				.modal-body
-					.col-xs-12
+					.col-xs-12.col-sm-6
 						.form-group
 							label(for='First') First Name
-								input.form-control#First(name='name.first', type='text', placeholder='John', required='required')
-
+								input.form-control#First(name='name.first', type='text', placeholder='John')
+					.col-xs-12.col-sm-6
 						.form-group
 							label(for='Last') Last Name
-								input.form-control#Last(name='name.last', type='text', placeholder='Doe', required='required')
-
+								input.form-control#Last(name='name.last', type='text', placeholder='Doe')
+					.col-xs-12
 						.form-group
 							label(for='Username') Username
 								small &nbsp; (must be unique)
-								input.form-control#Username(name='username', type='text', placeholder='Doe', required='required')
+								input.form-control#Username(name='username', type='text', placeholder='XxX_1337sn1p3r_XxX')
 
 						.form-group
 							label(for='SignupEmail') Email
@@ -80,7 +80,7 @@ if (!user)
 								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required='required')
 						.form-group
 							label(for='SignupPassphraseRepeat') Repeat Passphrase
-								input.form-control#SignupPassphraseRepeat(placeholder='StellarouteIsTheBest!', required='required')
+								input.form-control#SignupPassphraseRepeat(placeholder='StellarouteIsTheBest!', required='required', type='password')
 
 				.modal-footer.plr-Md
 					.row

@@ -18,8 +18,14 @@ void function initLogin($, duck) {
 		$submit.prop('disabled', true);
 	}
 
-	function passedValidation($input) {
-		$input.closest('.form-group').removeClass('has-error').addClass('has-success');
+	function passedValidation($input, $form, $submit) {
+		$input.closest('.form-group').removeClass('has-error has-warning').addClass('has-success');
+
+		if ($form.find('.has-error').length === 0 && $form.find('.has-success input[required]').length === $form.find('input[required]').length) {
+			$submit.prop('disabled', false);
+		} else {
+			$submit.prop('disabled', true);
+		}
 	}
 
 	function setValidation($input, $form, $submit) {
@@ -27,15 +33,8 @@ void function initLogin($, duck) {
 			if (length !== "0") {
 				failedValidation($input, $submit)
 			} else {
-				passedValidation($input);
+				passedValidation($input, $form, $submit);
 			}
-
-			if ($form.find('.has-success').length === 2) {
-				$submit.prop('disabled', false);
-			} else {
-				$submit.prop('disabled', true);
-			}
-
 		}
 	}
 
@@ -68,24 +67,49 @@ void function initLogin($, duck) {
 		}
 	}
 
+	const $form = $('#SignupModal form');
+
+	$form.find('[required], [required="required"], [required="true"]')
+		.closest('.form-group')
+		.addClass('has-warning');
+
+	function checkIsValid(e) {
+		e.stopPropagation();
+
+		return true;
+	}
+
+	$form.on('checkIsValid', checkIsValid);
+
 	$(() => {
 		$('#SignupEmail').on('input', checkField('local.email'));
 		$('#Username').on('input', checkField('username'));
 		$('#SignupPassphrase, #SignupPassphraseRepeat').on('input', (() => {
 					let checkIfTaken;
 		
-					alert('make password thing work')
-		
 					return (e) => {
 						e.stopPropagation();
 		
 						const $input = $(e.currentTarget);
+						const $siblingInput = $input.closest('form').find('[type="password"]').not($input);
 						const $form = $input.closest('form');
+						const $submit = $form.find('[type="submit"]')
 		
 						clearTimeout(checkIfTaken);
 		
 						checkIfTaken = setTimeout(() => {
-							//validate(field, $input, $form);
+							const val1 = $input.val();
+							const val2 = $siblingInput.val();
+
+							if(val1 && val2) {
+								if(val1 === val2) {
+									passedValidation($input, $form, $submit);
+									passedValidation($siblingInput, $form, $submit);
+								} else {
+									failedValidation($input, $submit);
+									failedValidation($siblingInput, $submit);
+								}
+							}
 						}, 1000);
 					}
 				})());

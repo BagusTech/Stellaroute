@@ -38,7 +38,7 @@ void function initLogin($, duck) {
 		}
 	}
 
-	function validate(field, $input, $form) {
+	function validateField(field, $input, $form) {
 		const $submit = $form.find('[type="submit"]')
 		const val = $input.val();
 
@@ -62,24 +62,56 @@ void function initLogin($, duck) {
 			clearTimeout(checkIfTaken);
 
 			checkIfTaken = setTimeout(() => {
-				validate(field, $input, $form);
+				validateField(field, $input, $form);
 			}, 1000);
 		}
 	}
 
-	const $form = $('#SignupModal form');
+	function hadData($input) {
+		if($input.val()) {
+			return true;
+		}
 
-	$form.find('[required], [required="required"], [required="true"]')
+		return false;
+	}
+
+	const $wrapper = $('#SignupModal form');
+
+	$wrapper.find('[required], [required="required"], [required="true"]')
 		.closest('.form-group')
 		.addClass('has-warning');
 
 	function checkIsValid(e) {
 		e.stopPropagation();
 
-		return true;
+		const $form = e.data.form;
+		const $submit = $form.find('[type="submit"]')
+
+		if ($form.find('.has-error').length === 0 && $form.find('.has-success input[required]').length === $form.find('input[required]').length) {
+			$submit.prop('disabled', false);
+		} else {
+			$submit.prop('disabled', true);
+		}
 	}
 
-	$form.on('checkIsValid', checkIsValid);
+	function validate(e, func) {
+		e.stopPropagation();
+
+		const $form = e.data.form;
+		const $input = $(e.target);
+		const validateFunc = func || $input.prop('validateFunc') || hadData;
+
+		if(validateFunc($input)) {
+			passedValidation($input);
+		} else {
+			failedValidation($input);
+		}
+
+		$form.trigger('checkIsValid');
+	}
+
+	$wrapper.on('checkIsValid', {form: $wrapper}, checkIsValid);
+	$wrapper.on('validate', {form: $wrapper}, validate);
 
 	$(() => {
 		$('#SignupEmail').on('input', checkField('local.email'));

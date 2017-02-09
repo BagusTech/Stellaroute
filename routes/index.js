@@ -84,11 +84,12 @@ router.post('/newsletter-signup', (req, res) => {
 
 	if(user){
 		if(user.recieveNewsletter === true){
+			sendEmail(email, subject, template);
 			res.send({msg: 'success'});
 			return;
 		}
 
-		User.update({Id: user.Id, recieveNewsletter: true}).then(function added(){
+		User.update({Id: user.Id, recieveNewsletter: true}).then(() => {
 			sendEmail(email, subject, template);
 			res.send({msg: 'success'});
 		}, function(error){
@@ -97,7 +98,7 @@ router.post('/newsletter-signup', (req, res) => {
 		return;
 	}
 
-	User.add(req.body, true).then(function added(){
+	User.add(req.body, true).then(() => {
 		sendEmail(email, subject, template);
 
 		User.updateCache().then(function(){

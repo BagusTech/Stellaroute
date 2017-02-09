@@ -239,7 +239,7 @@ void function initDuckForm($, duck, window) {
 
 	function autoSetUrl($urlField, $urlFromField) {
 		$urlFromField.on('input', () => {
-			$urlField.val($urlFromField.val().replace(/'/g, '').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
+			$urlField.val($urlFromField.val().replace(/'/g, '').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()).trigger('validate');
 		});
 	}
 
@@ -346,7 +346,6 @@ void function initDuckForm($, duck, window) {
 	function duckForm(wrapper, options) {
 		const $wrapper = $(wrapper);
 		const $startOfFields = duck.findRelevantChildren($wrapper, '[duck-field]');
-		//const $submit = $wrapper.find('[duck-button="submit"]');
 		const $editButton = $wrapper.find('[duck-button="edit"]');
 		const $cancelButton = $wrapper.find('[duck-button="cancel"]');
 		const table = (options && options.table) || $wrapper.attr('duck-table');

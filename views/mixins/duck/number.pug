@@ -1,7 +1,7 @@
-mixin number(obj, field, title)
+mixin number(obj, field, title, required)
 	.form-group(duck-field=field, duck-type='number')&attributes(attributes)
 		if (title)
 			label= title
-				input.form-control(type='number', duck-value, value= obj && obj[field])
+				input.form-control(type='number', duck-value, value= obj && obj[field], required=required)
 		else
-			input.form-control(type='number', duck-value, value= obj && obj[field])
+			input.form-control(type='number', duck-value, value= obj && obj[field], required=required)

@@ -1,7 +1,7 @@
 if (!user)
 	- var loginScriptLoaded = false;
 	.login-control
-		//button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
+		button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
 		button.btn.btn-default.bw-N(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 
 	.modal.fade#LoginModal(tab-index='-1', role='dialog', aria-labelledby="LoginModalLabel")
@@ -25,12 +25,12 @@ if (!user)
 					.col-xs-12.mb-Sm
 						label.input-label.w-100.p-R
 							i.fa.fa-envelope.p-A.t-0.b-0.r-Md.d-F.fj-C.fd-C.fs-Lg(aria-hidden="true")
-							input#Email.form-control.input-lg.mt-0(name='email', type='email', placeholder='Email Address')
+							input#Email.form-control.input-lg.mt-0(name='email', type='email', placeholder='Email Address', required='required')
 
 					.col-xs-12.mb-Md
 						label.input-label.w-100.p-R
 							i.fa.fa-lock.p-A.t-0.b-0.r-Md.d-F.fj-C.fd-C.fs-Lg(aria-hidden="true")
-							input#Passphrase.form-control.input-lg.mt-0(name='password', type='password', placeholder='Password')
+							input#Passphrase.form-control.input-lg.mt-0(name='password', type='password', placeholder='Password', required)
 						p.help-block.ta-R
 							a.fs-12(href='/reset-password') Forgot Password
 
@@ -67,20 +67,20 @@ if (!user)
 						.form-group
 							label(for='Username') Username
 								small &nbsp; (must be unique)
-								input.form-control#Username(name='username', type='text', placeholder='XxX_1337sn1p3r_XxX')
+								input.form-control#Username(name='username', type='text', placeholder='gl0b3tr0773r')
 
 						.form-group
 							label(for='SignupEmail') Email
 								small &nbsp; (must be unique)
-								input.form-control#SignupEmail(name='local.email', type='email', placeholder='joe@gmail.com', required='required')
+								input.form-control#SignupEmail(name='local.email', type='email', placeholder='joe@gmail.com', required)
 
 						.form-group
 							label(for='SignupPassphrase') Passphrase
 								small &nbsp; (passphrase must be 8+ characters)
-								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required='required')
+								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required)
 						.form-group
 							label(for='SignupPassphraseRepeat') Repeat Passphrase
-								input.form-control#SignupPassphraseRepeat(placeholder='StellarouteIsTheBest!', required='required', type='password')
+								input.form-control#SignupPassphraseRepeat(placeholder='StellarouteIsTheBest!', required, type='password')
 
 				.modal-footer.plr-Md
 					.row
@@ -89,7 +89,7 @@ if (!user)
 								button.btn-default.ml-Sm(type='button', data-dismiss='modal', data-toggle='modal', data-target='#LoginModal') Log In
 						.col-xs-12.col-sm-6.ta-R--sm
 							button.btn.btn-default(type='button', data-dismiss='modal') Close
-							input.btn.btn-primary(type='submit', value='Create', disabled)
+							input.btn.btn-primary(type='submit', value='Create')
 
 	if !loginScriptLoaded
 		script(src='/js/controls/login.min.js', type='text/javascript')

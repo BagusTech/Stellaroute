@@ -1,7 +1,7 @@
-mixin string(obj, field, title)
+mixin string(obj, field, title, required)
 	.form-group(duck-field=field, duck-type='string')&attributes(attributes)
 		if (title)
 			label= title
-				input.form-control(type='text', duck-value, value= obj && obj[field])
+				input.form-control(type='text', duck-value, value= obj && obj[field], required=required)
 		else
-			input.form-control(type='text', duck-value, value= obj && obj[field])
+			input.form-control(type='text', duck-value, value= obj && obj[field], required=required)

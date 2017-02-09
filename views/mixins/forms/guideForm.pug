@@ -3,7 +3,7 @@
 mixin guideForm(crud, guide, locations, user, cancel)
 	form(id=`GuideForm${guideFormId}`, duck-table='Guides', duck-function= crud, duck-key='Id', duck-key-value= guide && guide.Id)
 		.w-50.f-L.pr-Sm(duck-field='names', duck-type='object')
-			+string(guide && guide.names, 'display', 'Display Name')
+			+string(guide && guide.names, 'display', 'Display Name', true)
 
 			//div(duck-field='alias', duck-type='array')
 				label Alias'
@@ -18,7 +18,9 @@ mixin guideForm(crud, guide, locations, user, cancel)
 		if (!guide)
 			.form-group(duck-field='url', duck-type='string')
 					label Url
-						input.form-control(type='text', required, duck-value, disabled)
+						small &nbsp;(only edit if you have to)
+						input.form-control(type='text', required, duck-value)
+			script(src='/js/controls/guideUrl.min.js')
 		
 		+string(guide, 'tagline', 'Tagline')
 		+wysiwyg(guide, 'description', 'Description')
@@ -302,7 +304,7 @@ mixin guideForm(crud, guide, locations, user, cancel)
 			if guide
 				+deleteForm('Guides', guide.Id)(class='mr-Xs')
 
-			button.btn.btn-primary(type='button', duck-button='submit')= guide ? 'Update' : 'Add'
+			button.btn.btn-primary(type='submit', duck-button='submit',)= guide ? 'Update' : 'Add'
 			!= cancel
 
 	- guideFormId++

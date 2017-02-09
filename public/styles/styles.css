@@ -2748,6 +2748,9 @@ fieldset[disabled] .form-control {
 textarea.form-control {
   height: auto;
 }
+.form-control[required] {
+  border-left: 3px solid #7770A1;
+}
 input[type="search"] {
   -webkit-appearance: none;
 }
@@ -8333,6 +8336,9 @@ button.close {
     padding: 48px;
     top: -60px;
   }
+}
+#LoginModal label:after {
+  display: none;
 }
 .share-this {
   text-align: center;

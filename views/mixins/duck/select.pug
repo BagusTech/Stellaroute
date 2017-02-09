@@ -7,13 +7,13 @@ mixin parseSelectItems(obj, field, items)
 			for item in items
 				option(value=item, selected= (obj[field] === item))= item
 
-mixin select(obj, field, title, items)
+mixin select(obj, field, title, items, required)
 	.form-group(duck-field=field, duck-type='select')&attributes(attributes)
 		if (title)
 			label= title
-				select.form-control(duck-value)
+				select.form-control(duck-value, required=required)
 					+parseSelectItems(obj, field, items)
 		else
-			select.form-control(duck-value)
+			select.form-control(duck-value, required=required)
 				+parseSelectItems(obj, field, items)
 			

@@ -42,7 +42,7 @@ block content
 
 				
 				+formStart(guide, 'Guides')
-					if userIsAuthorized()
+					if userIsAuthorized(user)
 						div(data-function='stickey')
 							.ta-R(data-stickey='content')
 								button.btn.btn-primary(duck-button='submit') Save

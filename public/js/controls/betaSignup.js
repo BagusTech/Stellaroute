@@ -32,6 +32,7 @@ jQuery(($) => {
 			const user = {
 				"local.email": email,
 				recieveNewsletter: true,
+				created: new Date(),
 			};
 
 			$.ajax({

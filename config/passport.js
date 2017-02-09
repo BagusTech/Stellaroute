@@ -57,7 +57,7 @@ strategies.local = function(passport){
 					first: req.body['name.first'],
 					last: req.body['name.last']
 				},
-
+				created: new Date(),
 			}
 
 			newUser.username = req.body.username || newUser.Id;

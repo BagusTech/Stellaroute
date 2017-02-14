@@ -75,6 +75,16 @@ router.get('/experiences', (req, res) => {
 	});
 });
 
+router.get('/weddings', (req, res) => {
+	res.render('splashPages/wedding', {
+		title: 'Stellaroute: For all your travel needs!',
+	});
+});
+
+router.get('/wedding', (req, res) => {
+	res.redirect('/weddings');
+});
+
 router.get('/logout', (req, res) => {
 	req.logout();
 	res.redirect('/');

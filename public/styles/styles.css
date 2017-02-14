@@ -8309,6 +8309,10 @@ button.close {
 [data-function='tabs'] > [role='tabpanel'][aria-hidden='false'] {
   opacity: 1;
 }
+.email-capture--header,
+.email-capture--sub-header {
+  text-shadow: 1px 1px 3px #333;
+}
 .email-capture--header {
   color: white;
   font-size: 20px;

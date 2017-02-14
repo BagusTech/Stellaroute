@@ -105,10 +105,10 @@ void function initializeCustomScroll($) {
             $wrapper.removeClass('no-scrollbar');
 
             scrollProperties.contentHeight = $content.outerHeight();
-            scrollProperties.contentWrapperHeight = $contentWrapper.outerHeight()-6; // minus 6 forsyling purposes
-            scrollProperties.scrollBarHeightRatio = scrollProperties.contentWrapperHeight / scrollProperties.contentHeight;
-            scrollProperties.scrollBarHeightTrue = scrollProperties.contentWrapperHeight * scrollProperties.scrollBarHeightRatio;
-            scrollProperties.scrollBarHeight = scrollProperties.scrollBarHeightTrue < 0 ? 0 : scrollProperties.scrollBarHeightTrue;
+            scrollProperties.contentWrapperHeight = $contentWrapper.outerHeight()-6; // minus 6 for styling purposes
+            scrollProperties.scrollBarHeightRatio = (scrollProperties.contentWrapperHeight+6) / scrollProperties.contentHeight;
+            scrollProperties.scrollBarHeightTrue = (scrollProperties.contentWrapperHeight+6) * scrollProperties.scrollBarHeightRatio;
+            scrollProperties.scrollBarHeight = scrollProperties.scrollBarHeightTrue <= 0 ? 0 : scrollProperties.scrollBarHeightTrue;
             scrollProperties.maxScroll = scrollProperties.contentHeight - scrollProperties.contentWrapperHeight;
             scrollProperties.ratio = scrollProperties.contentHeight/ (scrollProperties.contentWrapperHeight - scrollProperties.scrollBarHeight);
             scrollProperties.topOffset = scrollProperties.contentHeight - scrollProperties.maxScroll;

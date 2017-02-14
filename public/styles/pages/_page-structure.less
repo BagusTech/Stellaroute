@@ -2,20 +2,164 @@
 	padding: 0 !important;
 }
 
-.site-body{
+.body-wrapper {
+	height: 100%;
+	display: table;
+	width: 100%;
+	overflow: hidden;
 	background: @background-color;
-	min-height: 67vh;
-	z-index: 2;
+}
 
-	> .media-bg-img{
-		// should only be there if/when global nav bar is positioned absolutely
-		//padding-top: 52px; // height of global nav bar
+	.site-body{
+		display: table-row;
+		height: 100%;
+		width: 100%;
+	}
+
+.site-header {
+	&:empty { display: none; }
+	display: table-row;
+	width: 100%;
+}
+
+.global-header {
+	padding: @gw-XXs @gw-Sm;
+	display: flex;
+	flex-justify: space-around;
+	align-items: center;
+	z-index: 3;
+}
+	.btn-search {
+		padding: @gw-Sm;
+		background: none;
+		border: none;
+		color: @grey-light;
+	}
+
+	#SearchQuery {
+		display: inline-block;
+		transition: width 0.27s ease-out;
+	}
+
+	#SiteLogo {
+		display: block;
+		line-height: 1;
+		padding-top: @gw-Xs;
+		padding-bottom: @gw-Xs;
+		transition: width 0.27s ease-out;
+		width: 50%;
+	}
+
+.hamburger-menu--toggle {
+	float: right;
+	border: none;
+	border-radius: @br-Md;
+	background: none;
+	color: @purple;
+	font-size: 24px;
+	margin-left: auto;
+	margin-right: 17px + @gw-Sm;
+	padding: 0 @gw-Sm;
+	border: 1px solid #ccc;
+}
+
+.hamburger-menu {
+	position: absolute;
+	z-index: 2;
+	transition: all .5s ease-out;
+	left: 100%;
+	right: -100%;
+	top: 0;
+	bottom: 0;
+	
+
+	&.active {
+		left: 0;
+		right: 17px;
+	}
+
+	.exit-icon {
+		position: relative;
+		float: right;
+		margin: @gw-Sm @gw-Xs @gw-Md;
+		border: none;
+		color: #f7f7f7;
+		background: none;
+		font-size: 18px;
+		z-index: 10000;
+	}
+
+	.hamburger-menu--options {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100vh;
+		max-width: 320px;
+		padding-top: 40px;
+		padding-right: 30px;
+		background: #333;
+		list-style: none;
+
+		li {
+			padding-bottom: @gw-Sm;
+		}
+
+			a {
+				color: #f7f7f7;
+			}
+
+		.btn.log-out {
+			padding-left: 2px;
+			border: none;
+			background: none;
+			color: #f7f7f7;
+		}
 	}
 }
 
+
+@media(min-width: @screen-Sm) {
+	.global-header {
+		padding: @gw-Xs @gw-Lg;
+		width: 100%
+	}
+		.btn-search {
+			font-size: 24px;
+		}
+
+		#Stellaroute {
+			#SearchQuery {
+				border: none;
+				box-shadow: none;
+				width: auto;
+				opacity: 1;
+				color: @text-color;
+				font-size: 16px;
+				min-width: 250px;
+			}
+
+			#SiteLogo {
+				width: 25%;
+				max-width: 180px;
+				order: -1;
+				margin: 0 5% 0 0;
+				padding: 0;
+			}
+		}
+
+		.hamburger-menu--toggle {
+			display: none;
+		}
+}
+
+
 .site-footer{
+	display: table-row;
 	background-color: @steel-dark;
 	padding-top: @gw-Lg;
 	position: relative;
 	z-index: 1;
+	width: 100%;
+	vertical-align: bottom;
+	align-self: flex-end;
 }

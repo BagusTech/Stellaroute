@@ -20,7 +20,7 @@ mixin guideForm(crud, guide, locations, user, cancel)
 					label Url
 						small &nbsp;(only edit if you have to)
 						input.form-control(type='text', required, duck-value)
-			script(src='/js/controls/guideUrl.min.js')
+			script(src='/components/validateForm/specialValidation/guideUrl.min.js')
 		
 		+string(guide, 'tagline', 'Tagline')
 		+wysiwyg(guide, 'description', 'Description')

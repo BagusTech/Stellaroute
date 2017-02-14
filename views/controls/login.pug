@@ -11,7 +11,7 @@ if (!user)
 					h4.mt-0.mb-0.pl-Sm.fc-G Log In
 					button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-				form.modal-body(method='POST', action='/auth/local')
+				form.modal-body.login(method='POST', action='/auth/local')
 					input(type='hidden', name='_csrf', value= csrfToken)
 					//.col-xs-12
 						button.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(type='button') Log In with Facebook

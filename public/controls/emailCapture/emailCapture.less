@@ -1,0 +1,35 @@
+.email-capture {}
+	.email-capture--header {
+		color: white;
+		font-size: 20px;
+		margin-bottom: @gw-Lg;
+	}
+
+	.email-capture--sub-header {
+		color: white;
+		font-weight: 300;
+	}
+
+	.email-capture .email-capture--email {
+		input {
+			border-width: 1px;
+			border-radius: 4px;
+		}
+
+		&:after {
+			display: none;
+		}
+	}
+
+
+@media(min-width: @screen-Sm) {
+	.email-capture {}
+		.email-capture--header {
+			font-size: 32px;
+			margin-bottom: @gw-Sm;
+		}
+
+		.email-capture--sub-header {
+			font-size: 28px;
+		}
+}

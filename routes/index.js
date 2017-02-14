@@ -23,7 +23,6 @@ router.get('/', (req, res, next) => {
 
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
-		description: 'Stellaroute, founded in 2016, is the world\'s foremost innovator in travel technologies and services.',
 		approvedLocations: approvedLocations
 	});
 });
@@ -40,7 +39,6 @@ router.get('/privacy-and-terms', (req, res) => {
 router.get('/about', (req, res) => {
 	res.render('about', {
 		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
 
@@ -48,7 +46,6 @@ router.get('/about', (req, res) => {
 router.get('/request', (req, res) => {
 	res.render('request', {
 		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
 
@@ -56,16 +53,25 @@ router.get('/request', (req, res) => {
 router.get('/feedback', (req, res) => {
 	res.render('feedback', {
 		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.'
 	});
 });
 
-// explore
-router.get('/explore', (req, res) => {
-	res.render('explore', {
-		title: 'Stellaroute: Learn Everything About Us',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
-		continents: Continent.cached(),
+// splash pages
+router.get('/blogger', (req, res) => {
+	res.render('splashPages/blogger', {
+		title: 'Stellaroute: For all your blogging needs!',
+	});
+});
+
+router.get('/travel-wishlist', (req, res) => {
+	res.render('splashPages/travelWishlist', {
+		title: 'Stellaroute: For all your travel needs!',
+	});
+});
+
+router.get('/experiences', (req, res) => {
+	res.render('splashPages/experiences', {
+		title: 'Stellaroute: For all your travel needs!',
 	});
 });
 
@@ -93,7 +99,7 @@ router.post('/newsletter-signup', (req, res) => {
 			sendEmail(email, subject, template);
 			res.send({msg: 'success'});
 		}, function(error){
-			res.send({msg: 'error: ' + error});
+			res.status(500).send({msg: 'error: ' + error});
 		});
 		return;
 	}
@@ -107,7 +113,52 @@ router.post('/newsletter-signup', (req, res) => {
 			res.send({msg: 'success'});
 		});
 	}, function(error){
-		res.send({msg: 'error: ' + error});
+		res.status(500).send({msg: 'error: ' + error});
+	});
+});
+
+router.post('/email-capture', (req, res) => {
+	const user = req.body;
+	const email = user.local.email;
+	const oldUser = User.findOne('local.email', email).items;
+	const subject = 'Stellaroute: Thanks for Signing up for our Beta!';
+	const template = 'betaSignup';
+
+	if(oldUser){
+		user.Id = oldUser.Id;
+		user.recieveNewsletter = true;
+
+		if(oldUser.roles) {
+			oldUser.roles.forEach((role) => {
+				if(user.roles.indexOf(role) === -1) {
+					user.roles.push(role);
+				}
+			})
+		}
+
+
+		User.update(user).then(() => {
+			sendEmail(email, subject, template);
+			sendEmail('marketing@stellaroute.com', `New User Signed up for ${user.roles[0].replace('beta-', '')}`, null, '<h1>This email is just an alert.</h1>');
+			res.send({msg: 'success'});
+		}, (error) => {
+			res.status(500).send({msg: 'error: ' + error});
+		});
+
+		return;
+	}
+
+	User.add(user).then(() => {
+		sendEmail(email, subject, template);
+
+		User.updateCache().then(() => {
+			res.send({msg: 'success'});
+		}, (error) => {
+			res.status(500).send({msg: 'error: ' + error});
+		});
+
+	}, (error) => {
+		res.status(500).send({msg: 'error: ' + error});
 	});
 });
 
@@ -136,9 +187,8 @@ router.post('/request-location', (req, res) => {
 router.get('/reset-password', (req, res) => {
 	res.render('reset-password', {
 		title: 'Stellaroute: Password Reset',
-		description: 'Stellaroute, founded in 2015, is the world\'s foremost innovator in travel technologies and services.',
 	})
-})
+});
 
 router.post('/reset-password', (req, res) => {
 	const newPassword = 'xxxxxx'.replace(/x/g, (c) => {const r = Math.random()*16|0;return r.toString(16);});
@@ -162,6 +212,13 @@ router.post('/reset-password', (req, res) => {
 	});
 });
 
+router.get('/login', (req, res, next) => {
+	res.render('profile/login', {
+		title: 'StellaRoute: Login',
+		description: 'Log into your stellaroute account.',
+	});
+});
+
 router.post('/signup', passport.authenticate('local-signup', {
 	successRedirect: '/profile',
 	failureRedirect: '/',
@@ -169,8 +226,8 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 router.post('/auth/local', passport.authenticate('local-login', {
-	successRedirect: '/',
-	failureRedirect: '/',
+	successRedirect: '/profile',
+	failureRedirect: '/login',
 	failureFlash: true
 }));
 

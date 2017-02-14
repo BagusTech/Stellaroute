@@ -1,0 +1,18 @@
+extends ../layout.pug
+
+block header
+
+block content
+	+splashPage(null, '20%')
+		.container.ta-C
+			.row
+				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mb-Xl--sm.mt-0
+						img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
+						span.d-Ib.plr-Sm stellaroute
+			+emailCapture('blogger')(class='col-xs-12 col-sm-8 col-sm-push-2 col-lg-6 col-lg-push-3')
+				.mb-Xl--sm
+					h2.email-capture--header An easier way to share your travel experiences.
+					h3.email-capture--sub-header Subscribe to the first to sign up for our private beta.
+
+block footer

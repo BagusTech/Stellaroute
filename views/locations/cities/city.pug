@@ -11,49 +11,50 @@ append header
 			'Best Dishes': 'red',
 		};
 
-block content
 	div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
-			.bg-Dkr
-				.container.ptb-0.p-R
-					ol.breadcrumb
-						li.active: a(href= '/') Home
+		.bg-Dkr
+			.container.ptb-0.p-R
+				ol.breadcrumb
+					li.active: a(href= '/') Home
 
-					+formStart(city, 'Cities')
-						+view
-							h1= city.names.display
-								small.ml-Md= city.tagline
-								+editButton('f-R bg-W')
-						+edit('p-Sm bg-W')
-							+object('names')
-								.row
-									.col-xs-12.col-sm-6
-										+string(city.names, 'display', 'Display Name')
-									.col-xs-12.col-sm-6
-										+string(city.names, 'official', 'Official Name')
-									.col-xs-12.col-sm-6
-										+array(city.names, 'alias', 'Alias\'', 'Add Alias')
-
+				+formStart(city, 'Cities')
+					+view
+						h1= city.names.display
+							small.ml-Md= city.tagline
+							+editButton('f-R bg-W')
+					+edit('p-Sm bg-W')
+						+object('names')
 							.row
 								.col-xs-12.col-sm-6
-									+string(city, 'tagline', 'Tagline')
+									+string(city.names, 'display', 'Display Name')
+								.col-xs-12.col-sm-6
+									+string(city.names, 'official', 'Official Name')
+								.col-xs-12.col-sm-6
+									+array(city.names, 'alias', 'Alias\'', 'Add Alias')
 
-								.col-xs-12.col-sm-6
-									+image(city, 'backgroundImage', 'Background Image')
-											
-							.row
-								.col-xs-12.col-sm-6
-								.col-xs-12.col-sm-6
-									+image(city, 'cardImage', 'Card Image')
+						.row
+							.col-xs-12.col-sm-6
+								+string(city, 'tagline', 'Tagline')
 
-				nav.tabbed-nav(data-tabs='controls')
-					a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview
-					a.tabbed-nav--tab.p-0(href='#Guides', role='tab', aria-expanded='false')
-						.d-F.fai-C.p-Sm
-							img.d-Ib.pr-Xs(src='/images/plain_logo_white.svg', title='logo', style='width: 24px;')
-							| Guides
-					a.tabbed-nav--tab(href='#Neighborhoods', role='tab', aria-expanded='false') Neighborhoods
-					a.tabbed-nav--tab(href='#Food', role='tab', aria-expanded='false') Food
-					a.tabbed-nav--tab(href='#Attractions', role='tab', aria-expanded='false') Attractions
+							.col-xs-12.col-sm-6
+								+image(city, 'backgroundImage', 'Background Image')
+										
+						.row
+							.col-xs-12.col-sm-6
+							.col-xs-12.col-sm-6
+								+image(city, 'cardImage', 'Card Image')
+
+			nav.tabbed-nav(data-tabs='controls')
+				a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview
+				a.tabbed-nav--tab.p-0(href='#Guides', role='tab', aria-expanded='false')
+					.d-F.fai-C.p-Sm
+						img.d-Ib.pr-Xs(src='/images/plain_logo_white.svg', title='logo', style='width: 24px;')
+						| Guides
+				a.tabbed-nav--tab(href='#Neighborhoods', role='tab', aria-expanded='false') Neighborhoods
+				a.tabbed-nav--tab(href='#Food', role='tab', aria-expanded='false') Food
+				a.tabbed-nav--tab(href='#Attractions', role='tab', aria-expanded='false') Attractions
+
+block content
 	
 	if user && userIsAuthorized()
 		+modal('EditCityForm')(class='modal-lg')

@@ -1,0 +1,7 @@
+mixin splashPage(backgroundImage, top)
+	-
+		const background = backgroundImage && {'background-image': `url('${getImagePath(backgroundImage, 'large')}')`};
+		const contentStyles = top && {style: {top}, 'class': 'p-A--md'};
+	.splash-page(style=background)
+		.splash-page--content&attributes(contentStyles)&attributes(attributes)
+			block

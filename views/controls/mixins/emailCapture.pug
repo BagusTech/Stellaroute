@@ -1,0 +1,25 @@
+- var emailCaptureScriptLoaded = false;
+mixin emailCapture(category, header, subHeader)
+	.email-capture(data-category=category)
+		if block
+			block
+		else
+			.row
+				.col-xs-12.mb-Xl--sm
+					h2.email-capture--header= header
+					h3.email-capture--sub-header= subHeader || 'Subscribe to the first to sign up for our private beta.'
+
+		div&attributes(attributes)
+			form.row
+				.col-xs-12.col-sm-8.mb-Sm.email-capture--email
+					input.form-control.input-lg(type='email', placeholder='Enter your email address', name='email', required)
+				.col-xs-12.col-sm-4.mb-Md
+					.bg-W.br-Md
+						button.btn.btn-primary.btn-lg.fs-16(type='submit') Subscribe
+
+			.js-error-message(style='display: none;')
+				.alert.alert-danger
+					p Sorry, something went wrong, please refresh the page and try again. If this continues to be an issue please contact us as <a href='mailto:admin@stellaroute.com'>admin@stellaroute.com</a>.
+		if !emailCaptureScriptLoaded
+			script(src='/controls/emailCapture/emailCapture.min.js')
+			- emailCaptureScriptLoaded = true;

@@ -6,6 +6,10 @@ append options
 	- headerClasses = 'p-A pt-Sm';
 	- showHeaderSearch = false;
 
+block header
+	if user
+		include controls/header.pug
+
 block content
 	if user	
 		.media-bg-img.home-bg-img.pt-Xl
@@ -38,11 +42,10 @@ block content
 
 						.col-xs-12.col-md-6
 							.card.p-Md.p-Lg--sm.pb-0.pb-Md--sm
-								h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
-								hr
-								small.d-N.d-B--sm.fc-G.pt-Xs Stay updated on new features and locations!
-
-								include controls/beta-signup.pug
+								+emailCapture
+									h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
+									hr
+									small.d-N.d-B--sm.fc-G.pt-Xs.mb-Md Stay updated on new features and locations!
 						
 
 				include controls/requestLocation.pug
@@ -94,25 +97,20 @@ block content
 
 							a.btn.btn-primary.btn-lg.fs-Lg(href="/explore", data-icon='fa fa-location-arrow') &nbsp;Explore
 	else
-		#FeedbackMessage.p-A.t-Md.r-Md.d-N
-			p.alert.alert-success.d-N Email sent, feel free to send us another!
-			p.alert.alert-danger.d-N Sorry, something went wrong. If this continues please let us know and we will fix is shortly.
-		.media-bg-img.home-bg-img.pt-Xl(style='min-height: 100vh;')
-			.container.ptb-Xl.plr-Lg
+		+splashPage('https://www.stellaroute.com/images/index-bg.jpg', '30%')
+			.container.ta-C
 				.row
-					.col-xs-12
-						h1.mt-0.mb-Md.ta-C
-							span.fs-Xl--sm stellaroute
-							br
-							small.tt-U.fs-32--sm Plan Spontaneity
+					.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+						h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-0
+							img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
+							span.d-Ib.plr-Sm stellaroute
+						h2.fc-G__lt.tt-U.fs-32--sm Plan Spontaneity
 
-						p.lead.ta-C.mlr-A.fc-W.mb-Md Welcome! We are curretly accepting users for our Beta.
+						+emailCapture('general')
+							p.lead.ta-C.mlr-A.fc-W.mb-Md Welcome! We are curretly accepting users for our Beta.
 
-				.row
-					.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
-						include ./controls/beta-signup.pug
 
-				.row.mt-XXl--md
+				//.row
 					.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
 						.content-card
 							h2.content-card--header Contact Us
@@ -129,5 +127,5 @@ block content
 								.form-group.mb-0
 									button.btn-primary.btn-block(type='submit') Send
 
-					script(src='/js/pages/feedback.min.js')
+						script(src='/js/pages/feedback.min.js')
 block footer

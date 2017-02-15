@@ -39,6 +39,7 @@ const City = Duck({
 		},
 	// Need to Know
 		needToKnow: [{
+			order: String, // depricated
 			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
@@ -46,6 +47,7 @@ const City = Duck({
 		}],
 	// Quick Facts (or Fun Facts)
 		quickFacts: [{
+			order: String, // depricated
 			isEndorsed: Boolean,
 			remove: Boolean, 
 			title: String,
@@ -78,7 +80,7 @@ const City = Duck({
 			description: String,
 		},
 		visa: [{
-			order: Number,
+			order: String, // depricated
 			endorse: Boolean,
 			remove: Boolean, 
 			countries: Array,
@@ -86,7 +88,7 @@ const City = Duck({
 			description: String,
 		}],
 		vaccines: [{
-			order: Number,
+			order: String, // depricated
 			endorse: Boolean,
 			remove: Boolean, 
 			countries: Array,
@@ -106,7 +108,7 @@ const City = Duck({
 			},
 		},
 		clothing: [{
-			order: Number,
+			order: String, // depricated
 			endorse: Boolean,
 			remove: Boolean, 
 			title: String,
@@ -124,14 +126,14 @@ const City = Duck({
 				description: String,
 			}, 
 			dress: [{
-				order: Number,
+				order: String, // depricated
 				endorse: Boolean,
 				remove: Boolean, 
 				style: String,
 				description: String,
 			}],
 			traditions: [{
-				order: Number,
+				order: String, // depricated
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
@@ -152,7 +154,7 @@ const City = Duck({
 			percipitation: Number, //inches and cm???
 		}],
 		seasons: [{
-			order: Number,
+			order: String, // depricated
 			season: String,
 			months: Array,
 			description: String,
@@ -169,7 +171,7 @@ const City = Duck({
 			overview: String,
 			languages: Array, 
 			basicSayings: [{
-				order: Number,
+				order: String, // depricated
 				endorse: Boolean,
 				remove: Boolean, 
 				language: String,
@@ -178,7 +180,7 @@ const City = Duck({
 				description: String,
 			}],
 			expressions: [{
-				order: Number,
+				order: String, // depricated
 				endorse: Boolean,
 				remove: Boolean, 
 				language: String,
@@ -195,107 +197,15 @@ const City = Duck({
 				title: String,
 				description: String
 			}],
-			/* card: [{
-				image: String, 
-				title: String, 
-				arrive: String,
-				move: String,
-				description: String,
-			}],
-			rank: [{ // ranking of transit options
-				order: Number,
-				mode: String, // dropdown
-			}],
-			advice: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			car: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			taxis: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			motorcycle: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			bus: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			train: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			public: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			airports: [{
-				city: String,
-				airport: String,
-				abbreviation: String,
-				description: String,
-			}],
-			plane: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			borderCrossing: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			bicycle: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}],
-			hitchHiking: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				title: String,
-				description: String,
-			}], */
 		},
 	// Eating and Meals
 		food: {
 			overview: String,
 			foods: [{
 				Id: String,
-				order: Number,
+				order: String,
+				image: String,
+				name: String,
 				category: String,
 				tagline: String,
 				description: String,
@@ -303,80 +213,33 @@ const City = Duck({
 				dishes: Array,
 				area: String,
 				address: String,
-				whatToOrder: String,
+				whatToOrder: String, // depricated
 				contains: Array,
 				readMore: String
 			}],
-			/* habits: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String,
-				title: String,
-				description: String,
-			}],
-			dishs: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String,
-				title: String,
-				meal: String,
-				cuisinse: String,
-				description: String,
-			}],
-			drinks: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String, 
-				title: String,
-				description: String,
-				isAlcoholic: Boolean,
-			}],
-			restaurants: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String, 
-				category: String,
-				address: String,
-				title: String,
-				description: String,
-			}],
-			bars: [{
-				order: Number,
-				endorse: Boolean,
-				remove: Boolean, 
-				image: String, 
-				category: String,
-				address: String,
-				title: String,
-				description: String,
-			}], */
 		},
 	// Top Places
 		top: {
 			destinations: [{
-				order: String,
+				order: String, // depricated
 				name: String,
 				type: String,
 				id: String,
 			}],
 			attractions: [{
-				order: String,
+				order: String, // depricated
 				name: String,
 				city: String,
 				id: String,
 			}],
 			geographicalLandmarks: [{
-				order: String,
+				order: String, // depricated
 				name: String,
 				classification: String,
 			}],
 		},
 		nearby: [{
-				order: String,
+				order: String, // depricated
 				name: String,
 				type: String,
 				id: String,

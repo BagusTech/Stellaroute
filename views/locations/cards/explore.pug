@@ -25,7 +25,7 @@
 					+object(null, 'Area', 'Delete Area')
 						+string(area, 'name', 'Name / Location / Cross Street')
 						+wysiwyg(area, 'description', 'Description')
-						+array(area, 'suggestedSpots', 'Suggested Spots', 'Add Suggested Spot', true)
+						+array(null, 'suggestedSpots', 'Suggested Spots', 'Add Suggested Spot', true)
 							for spot in area.suggestedSpots ? area.suggestedSpots : [{}]
 								+object(null, 'Suggested Spot', 'Delete Suggested Spot')
 									+string(spot, 'name', 'Name')

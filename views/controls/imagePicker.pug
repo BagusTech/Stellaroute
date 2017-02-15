@@ -1,0 +1,16 @@
+.modal.fade#ImagePickerModal.file-picker(tabindex="-1", role="dialog", style='z-index: 2000;')
+	.modal-dialog.modal-lg
+		.content-card
+			h2.content-card--header Pick an Image
+			div(data-function='scroll' style='min-height: 70vh;')
+				div(data-scroll='content-wrapper')
+					div(data-scroll='content')
+						.mb-Md.ta-C(duck-images='false')
+				div(data-scroll='scrollbar')
+					button
+			.row.pt-Sm(duck-image-uploader)
+				.col-xs-6
+					button.btn.btn-secondary(duck-button='upload') Upload New Image
+					button.btn.btn-primary(duck-button='save-image') Save
+				.col-xs-6.ta-R
+					button.btn.btn-default(data-dismiss='modal') Cancel

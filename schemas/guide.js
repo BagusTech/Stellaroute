@@ -32,6 +32,7 @@ var Guide = Duck({
 			description: String,
 		}],
 		highlights: [{
+			order: String, // depricated
 			Id: String, // id of what is being highlighted i.e. the Id of an attraction or City
 			table: String, // the table the id corresponds to i.e. Attractions, Cities
 			cardImage: String,

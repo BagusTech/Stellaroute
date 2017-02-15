@@ -7,15 +7,16 @@
 	width: 100%;
 
 	&.no-scrollbar {
-		[data-scroll='content-wrapper'] {
+		> [data-scroll='content-wrapper'] {
 			right: 0;
 			overflow: hidden;
-		}
-			[data-scroll='content'] {
+
+			> [data-scroll='content'] {
 				padding-right: 0;
 			}
+		}
 
-		[data-scroll='scrollbar'] {
+		> [data-scroll='scrollbar'] {
 			display: none;
 		}
 	}

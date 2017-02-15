@@ -87,7 +87,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 			.trim()
 			.replace(findAllSpaces, '-');
 	}
-	res.locals.getImagePath = function getImagePath(img, size, folder) {
+	res.locals.getImagePath = function getImagePath(img, size) {
 		if (!img) {
 			return null;
 		} else if (img.indexOf('https') === 0) {
@@ -96,9 +96,9 @@ function globalPugVariablesAndFunctions(req, res, next){
 
 		const imgPath = img.split('.');
 		const imgExtention = imgPath.pop();
-		const s3Path = `https://s3-us-west-2.amazonaws.com/stellaroute/${folder || 'images'}/`;
+		const s3Path = `https://s3-us-west-2.amazonaws.com/stellaroute/`;
 
-		return img.indexOf('http') === 0 ? null : `${s3Path}${imgPath.join('')}-${size}.${imgExtention}`
+		return img.indexOf('http') === 0 ? null : `${s3Path}${imgPath.join('')}-${size || 'medium'}.${imgExtention}`
 	}
 
 	return next();

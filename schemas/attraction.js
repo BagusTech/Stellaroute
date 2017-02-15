@@ -33,11 +33,13 @@ var Attraction = Duck({
 		cardImage: String,
 		images: Array,
 		needToKnow: [{
+			order: String, // depricated
 			title: String,
 			idEndorsed: Boolean,
 			description: String,
 		}],
 		quickFacts: [{
+			order: String, // depricated
 			title: String,
 			idEndorsed: Boolean,
 			description: String,

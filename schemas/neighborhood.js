@@ -44,7 +44,7 @@ const Neighborhood = Duck({
 			mainIntersection: String,
 			mainStrip: String,
 			distanceFrom: [{
-				order: Number,
+				order: String,
 				name: String,
 				type: String,
 				waysToGetThere: [{
@@ -80,11 +80,11 @@ const Neighborhood = Duck({
 		topPlaces: Array,	
 		overview: String,
 		goodFor: [{ //Good For (Staying / Eating / Sightseeing / Nightlfe)
-			order: Number,
+			order: String,
 			category: String,
 		}],
 		popularWith: [{ //The types of people that like this neighborhood 
-			order: Number,
+			order: String,
 			crowd: String,
 		}],
 	// Need to Know
@@ -113,46 +113,46 @@ const Neighborhood = Duck({
 		transit: {
 			overview: String,
 			rank: [{ // ranking of transit options
-				order: Number,
+				order: String,
 				mode: String, // dropdown
 			}],
 			advice: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			car: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			taxis: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			motorcycle: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			bus: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			train: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
@@ -164,7 +164,7 @@ const Neighborhood = Duck({
 					lines: Array,
 					description: String,
 				}], 
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean,
 				image: String, 
@@ -179,21 +179,21 @@ const Neighborhood = Duck({
 				description: String,
 			}],
 			plane: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],*/
 			bicycle: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
 				description: String,
 			}],
 			/*hitchHiking: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				title: String,
@@ -204,7 +204,7 @@ const Neighborhood = Duck({
 		food: {
 			overview: String,
 			habits: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				image: String,
@@ -212,7 +212,7 @@ const Neighborhood = Duck({
 				description: String,
 			}],
 			dishs: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				image: String,
@@ -222,7 +222,7 @@ const Neighborhood = Duck({
 				description: String,
 			}],
 			drinks: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				image: String, 
@@ -231,7 +231,7 @@ const Neighborhood = Duck({
 				isAlcoholic: Boolean,
 			}],
 			restaurants: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				image: String, 
@@ -241,7 +241,7 @@ const Neighborhood = Duck({
 				description: String,
 			}],
 			bars: [{
-				order: Number,
+				order: String,
 				endorse: Boolean,
 				remove: Boolean, 
 				image: String, 

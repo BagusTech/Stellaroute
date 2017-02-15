@@ -7,7 +7,7 @@ void function initDuckFilepicker($) {
 		const img = `
 			<div class="p-Sm d-Ib ta-C" style='max-width: 275px;'>
 				<span class="d-B bw-0 bbw-Sm bs-S mb-Sm">${key.replace('images/', '').replace('-thumb2', '')}</span>
-				<img src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" alt="${key}" duck-image-value="${key.replace('-thumb2', '').replace('images/', '')}"/>
+				<img src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" alt="${key}" duck-image-value="${key.replace('-thumb2', '')}"/>
 			</div>
 		`;
 

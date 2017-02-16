@@ -1,0 +1,105 @@
+.file-picker {
+	.clear;
+
+	position: absolute;
+	background: white;
+	border-radius: @br-Lg;
+	border: 1px solid @text-color;
+	overflow: hidden;
+	display: table;
+	table-layout: fixed;
+	top: @gw-Md;
+	left: @gw-Md;
+	right: @gw-Md;
+	overflow: hidden;
+	max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+}
+	.file-picker--close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: none;
+		background: none;
+		padding: @gw-Sm;
+		line-height: 1;
+		z-index: 1;
+		border-radius: @br-Lg;
+
+
+		&:hover {
+			background: @grey-lighter;
+		}
+	}
+
+	.file-picker--directory,
+	.file-picker--main {
+		display: table-cell;
+	}
+
+	.file-picker--directory {
+		padding: @gw-Sm;
+		width: 25%;
+		background: @grey-lighter;
+	}
+
+	.file-picker--main {
+		width: 75%;
+	}
+		.file-picker--header {
+			padding: @gw-Sm @gw-Sm 0;
+			border-bottom: 1px solid @grey-lighter;
+
+			h2 {
+				margin: 0 0 @gw-Lg;
+			}
+
+			.btn-group {
+				margin: 0 0 -1px (-@gw-Sm - 1);
+			}
+		}
+
+		.file-picker--content {
+			//max-height: 75vh;
+			//overflow: hidden;
+			padding: @gw-Sm;
+		}
+			.file-picker--image {
+				width: 300px;
+				display: inline-block;
+				padding: @gw-Xs;
+				margin: @gw-Sm;
+				cursor: pointer;
+				border: 1px solid transparent;
+
+				&:hover {
+					background: @grey-lightest;
+				}
+				
+				&[image-selected="true"] {
+					background: @grey-lighter;
+					border-color: @grey-light;
+
+				}
+			}
+				.image--name {
+					margin: 0;
+					font-weight: 400;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
+				}
+				.image--size {
+					text-size: .8em;
+					color: @grey;
+					margin: 0;
+				}
+				.image--content {
+					max-width: 100%;
+				}
+
+		.file-picker--footer {
+			padding: @gw-Sm;
+			text-align: right;
+		}

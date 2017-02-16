@@ -1,6 +1,40 @@
-.modal.fade#ImagePickerModal.file-picker(tabindex="-1", role="dialog", style='z-index: 2000;')
-	.modal-dialog.modal-lg
-		.content-card
+.modal.fade#ImagePickerModal(tabindex="-1", role="dialog", style='z-index: 2000;')
+	//.modal-dialog.modal-lg
+	.file-picker
+		button.file-picker--close
+			i.fa.fa-times(aria-hidden='true')
+			.sr-only Close
+
+		aside.file-picker--directory(data-file-picker="directory")
+			ul
+				li North America
+					ul
+						li Missouri
+						li Illinois
+							ul
+								li Chicago
+						li Massachusetts
+				li South America
+				li Europe
+				li Asia
+		.file-picker--main
+			header.file-picker--header(data-file-picker="header")
+				h2 Current Folder Name
+				.btn-group
+					button.btn-default New Folder
+					button.btn-default Delete Folder
+					button.btn-default Rename Folder
+			div(data-function='scroll', style='height: 75vh')
+				div(data-scroll='content-wrapper')
+					.file-picker--content(data-file-picker="content", data-loaded='false', data-scroll='content')
+						.p-Md.fs-XXl
+							i.fa.fa-spin.fa-spinner
+				div(data-scroll='scrollbar')
+					button
+			footer.file-picker--footer(data-file-picker="footer")
+				button.btn.btn-secondary(data-file-picker="upload") Upload
+				button.btn.btn-primary(data-file-picker="select") Select
+		//.content-card
 			h2.content-card--header Pick an Image
 			div(data-function='scroll' style='min-height: 70vh;')
 				div(data-scroll='content-wrapper')

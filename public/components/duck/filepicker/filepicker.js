@@ -3,11 +3,31 @@
 void function initDuckFilepicker($) {
 	'use strict';
 
-	function buildImage(key) {
+	function getImageSize(size) {
+		if (size > 1073741824) {
+			return `${Math.ceil(size/1024/1024/1024)}gb`;
+		} else if (size > 1048576) {
+			return `${Math.ceil(size/1024/1024)}mb`;
+		} else if (size > 1024) {
+			return `${Math.ceil(size/1024)}kb`;
+		} else {
+			return `${size}b`;
+		}
+	}
+
+	function buildImage(key, size) {
+		const imageSize = getImageSize(size);
 		const img = `
-			<div class="p-Sm d-Ib ta-C" style='max-width: 275px;'>
-				<span class="d-B bw-0 bbw-Sm bs-S mb-Sm">${key.replace('images/', '').replace('-thumb2', '')}</span>
-				<img src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" alt="${key}" duck-image-value="${key.replace('-thumb2', '')}"/>
+			<div class='file-picker--image' duck-image-value="${key.replace('-thumb2', '')}">
+				<div class="row">
+					<div class="col-xs-4">
+						<img class="image--content" src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" />
+					</div>
+					<div class="col-xs-8">
+						<h3 class="image--name">${key.split('/')[key.split('/').length-1].replace('-thumb2', '')}</h3>
+						<h4 class="image--size">${imageSize || 'unknown'}</h4>
+					</div>
+				</div>
 			</div>
 		`;
 
@@ -42,7 +62,7 @@ void function initDuckFilepicker($) {
 			e.stopPropagation();
 			$imagePicker.modal('show').attr('duck-image-picker', $item.attr('duck-image-picker'))
 
-			if($imagePickerImages.attr('duck-images') === 'false'){
+			if($imagePickerImages.attr('data-loaded') === 'false'){
 				$imagePickerImages.html('<div class="p-Xl ta-C js-waiting"><i class="fa fa-spinner fa-spin"></div>');
 			}
 		}
@@ -56,28 +76,32 @@ void function initDuckFilepicker($) {
 			}
 
 			if(!isLoaded){
+				$imagePickerImages.html('');
 				const images = data.filter((img) => img.Key.indexOf('-thumb2.') > -1).sort((a, b) => {
 					if(a.LastModified > b.LastModified) {return -1}
 					if(a.LastModified < b.LastModified) {return 1}
 					return 0;
 				});
 				const length = images.length;
-				
-				$imagePickerImages.find('.js-waiting').addClass('hidden')
 
 				for (let i = 0; i < length; i++){
-					$imagePickerImages.append(buildImage(images[i].Key))
+					const image = images[i];
+
+					$imagePickerImages.append(buildImage(image.Key, image.Size))
 				}
 
-				$imagePickerImages.attr('duck-images', true);
+				$imagePickerImages
+					.attr('data-loaded', true)
+					.closest('[data-function*="scroll"]')
+					.trigger('initScroll');
 			}
 
 			// select the image that is currently being used
 			$imagePickerImages
-				.find('img')
-				.attr('image-selected', false).removeClass('bw-Lg bc-Purp bs-S')
+				.find('.file-picker--image')
+				.attr('image-selected', false)
 				.filter((i, img) => $(img).attr('duck-image-value') === $item.find('[duck-value]').val())
-				.attr('image-selected', true).addClass('bw-Lg bc-Purp bs-S');
+				.attr('image-selected', true);
 		}
 	}
 
@@ -90,7 +114,7 @@ void function initDuckFilepicker($) {
 			gotFiles: gotFiles($item, $imagePickerImages),
 		};
 
-		$item.find('[duck-button="image-select"]').on('click', () => {$item.trigger('getFiles', [$imagePickerImages.attr('duck-images') === 'true'])});
+		$item.find('[duck-button="image-select"]').on('click', () => {$item.trigger('getFiles', [$imagePickerImages.attr('data-loaded') === 'true'])});
 		$fileInput.on('change', () => {$item.trigger('uploadFiles')});
 		
 		$item.filePicker(filePickerOptions);
@@ -101,9 +125,9 @@ void function initDuckFilepicker($) {
 	// run after dom has loaded
 	$(() => {
 		const $imagePicker = $('#ImagePickerModal');
-		const $uploadButton = $imagePicker.find('[duck-button="upload"]');
-		const $saveImageButton = $imagePicker.find('[duck-button="save-image"]');
-		const $imagePickerImages = $imagePicker.find('[duck-images]');
+		const $uploadButton = $imagePicker.find('[data-file-picker="upload"]');
+		const $saveImageButton = $imagePicker.find('[data-file-picker="select"]');
+		const $imagePickerImages = $imagePicker.find('[data-file-picker="content"]');
 
 		$uploadButton.on('click', () => {
 			const imagePicker = $imagePicker.attr('duck-image-picker');
@@ -113,13 +137,13 @@ void function initDuckFilepicker($) {
 			$fileInput.click()
 		});
 
-		$imagePickerImages.on('click', 'img', (e) => {
+		$imagePickerImages.on('click', '.file-picker--image', (e) => {
 			e.stopPropagation();
 
 			const $this = $(e.currentTarget);
 
-			$imagePickerImages.find('img').filter((i, obj) => obj !== e.currentTarget).attr('image-selected', 'false').removeClass('bw-Lg bc-Purp bs-S');
-			$this.attr('image-selected', $this.attr('image-selected') === 'true' ? 'false' : 'true').toggleClass('bw-Lg bc-Purp bs-S');
+			$imagePickerImages.find('.file-picker--image').filter((i, obj) => obj !== e.currentTarget).attr('image-selected', 'false');
+			$this.attr('image-selected', $this.attr('image-selected') === 'true' ? 'false' : 'true');
 		})
 
 		$saveImageButton.on('click', (e) => {
@@ -146,6 +170,6 @@ void function initDuckFilepicker($) {
 			$newItems.each((i, item) => {
 				initFilePicker($(item), $uploadButton, $imagePicker, $imagePickerImages, $saveImageButton);
 			});
-		})
+		});
 	});
 }(jQuery.noConflict())

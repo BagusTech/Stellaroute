@@ -3,22 +3,24 @@
 void function initFilepicker($){
 	'use strict';
 
-	function getFiles(e, isLoaded) {
+	function getFiles(e, isLoaded, options) {
 		const $wrapper = e.data.wrapper;
 
 		$wrapper.trigger('gettingFiles');
 
 		if(isLoaded) {
-			$wrapper.trigger('gotFiles', [null, null, true])
+			$wrapper.trigger('gotFiles', [null, true])
 			return;
 		}
 
 		$.ajax({
-			url: '/getFiles',
 			type: 'GET',
+			url: '/getFiles',
+			dataType: 'json',
 			contentType: 'application/json',
+			data: options || {},
 			success: (data) => {
-				$wrapper.trigger('gotFiles', [null, data])
+				$wrapper.trigger('gotFiles', [null, false, data])
 			},
 			error: (err) => {
 				$wrapper.trigger('gotFiles', [err])

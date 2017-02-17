@@ -1,22 +1,10 @@
 .modal.fade#ImagePickerModal(tabindex="-1", role="dialog", style='z-index: 2000;')
 	//.modal-dialog.modal-lg
 	.file-picker
-		button.file-picker--close
-			i.fa.fa-times(aria-hidden='true')
-			.sr-only Close
-
-		aside.file-picker--directory(data-file-picker="directory")
-			ul
-				li North America
+		aside.file-picker--directory
+			ul(data-file-picker="directory")
+				li(data-prefix='/') / (root)
 					ul
-						li Missouri
-						li Illinois
-							ul
-								li Chicago
-						li Massachusetts
-				li South America
-				li Europe
-				li Asia
 		.file-picker--main
 			header.file-picker--header(data-file-picker="header")
 				h2 Current Folder Name

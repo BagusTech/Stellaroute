@@ -39,13 +39,9 @@ router.get('/get/:table', isLoggedIn(true), (req, res) => {
 });
 
 router.get('/getFiles', isLoggedIn(), (req, res) => {
-	s3.getFiles((data) => {
-		if(!data) {
-			res.status(500).send('No Data To Return')
-		}
-
-		res.send(data);
-	});
+	s3.getFiles((files, folder, subFolders, marker, nextMarker) => {
+		res.send({files, folder, subFolders, marker, nextMarker});
+	}, req.query.folder, req.query.marker, req.query.maxKeys);
 });
 
 router.get('/renderPug', (req, res) => {

@@ -2,28 +2,73 @@ const awsS3 = require('../config/s3.js');
 const Upload = require('s3-uploader');
 const s3 = {};
 
-s3.getFiles = (callback, folder, extentions) => {
-	const filesFolder = folder || 'images/';
-	const fileExtensions = extentions || ['jpg'];
+function getSetFolders(folderName, folder, subFolders) {
+	if(subFolders && subFolders.length > 0) {
+		folder[folderName] = folder[folderName] || {};
 
-	awsS3.listObjects({Bucket: 'stellaroute.com', Prefix: filesFolder}, function(err, data) {
+		getSetFolders(subFolders.shift(), folder[folderName], subFolders)
+	} else if(!folder[folderName]) {
+		folder[folderName] = false;
+	};
+}
+
+function createFolderStructure(files) {
+	const folders = {};
+
+	files.forEach((file) => {
+		const fileArr = file.split('/');
+		fileArr.pop(); // get rid of the file name, only worrying about the folders
+
+		getSetFolders(fileArr.shift(), folders, fileArr);
+	});
+
+	return folders
+};
+
+
+s3.getFiles = (callback, folder, marker, maxKeys) => {
+	if(!callback) {
+		console.error('A callback is required for getFiles');
+		return;
+	}
+
+	const prefix = folder
+	const filesFolder = '/';
+	const options = {
+		Bucket: 'stellaroute',
+		MaxKeys: maxKeys,
+		Prefix: prefix,
+		Delimiter: '/',
+		Marker: marker,
+	}
+
+	awsS3.listObjects(options, function(err, data) {
 		if (err) {
-			console.log(err, err.stack)
+			console.error(err, err.stack)
 			return;
 		};
 
-		const bucketObjects = data.Contents.filter((i) => fileExtensions.indexOf(i.Key.split('.').pop()) > -1);
+		const bucketObjects = data.Contents.filter((i) => {
+			const key = i.Key.split('/');
+			key.pop();
+			return `${key.join('/')}/` === prefix;
+		});
 
-		if (callback) {
-			callback(bucketObjects);
-		}
+		const subFolders = data.CommonPrefixes.map((folderPath) => {
+			const folders = folderPath.Prefix.split('/'); 
+
+			folders.pop(); // the last item in the array will always be an empty string
+			return folders.pop(); // return the last item, the folder name
+		});
+
+		callback(bucketObjects, prefix, subFolders, data.Marker, data.NextMarker);
 	});
 }
 
 s3.uploadImage = (file, options, callback, fileType, filePath) => {
 	const extention = fileType || 'jpg'
-	const path = filePath || 'images/';
-	const client = new Upload('stellaroute.com', {
+	const path = `images/${filePath || ''}`;
+	const client = new Upload('stellaroute', {
 		aws: {
 			path: path,
 			region: 'us-west-2',
@@ -73,3 +118,21 @@ s3.uploadImage = (file, options, callback, fileType, filePath) => {
 }
 
 module.exports = s3;
+
+/*
+
+[
+	'backups/neighborhoods/Neighborhoods-2017-01-26-21-51-15',
+	'backups/neighborhoods/Neighborhoods-2017-01-30-21-51-15'
+]
+
+folders = {
+	backups: {
+		neighborhoods: {
+			Neighborhoods-2017-01-26-21-51-15: false,
+			Neighborhoods-2017-01-26-23-45-33: false,
+		}
+	}
+}
+
+*/

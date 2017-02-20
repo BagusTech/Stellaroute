@@ -8,8 +8,7 @@ block content
 					img.profile-picture(src= user.profilePicture ? getImagePath(user.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
 					h1= `${user.name.first || '(unkown name, very mysterious)'} ${user.name.last || ''} `
 						+editButton('btn btn-secondary bg-Purp fc-W', 'Edit Profile Picture')
-					+edit
-						+image(user, 'profilePicture')
+					+image(user, 'profilePicture')
 
 					//h2 South Park, USA
 				//ul.account-pages(role="navigation")

@@ -103,3 +103,33 @@
 			padding: @gw-Sm;
 			text-align: right;
 		}
+
+		.file-picker--uploader {
+			background: rgba(155, 155, 155, .75);
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			padding: @gw-XXl;
+		}
+			.uploader {
+				max-width: 100%;
+				background: white;
+				padding: @gw-Sm;
+				display: inline-block;
+				text-align: left;
+			}
+				.uploader--header {margin-top: 0;}
+				.uploader--sub-header {font-weight: normal; margin-top: 0;}
+				.uploader--file-drop {
+					text-align: center;
+					border: 3px dashed @grey;
+					background: @grey-lightest;
+					padding: @gw-XXl;
+					font-size: 32px;
+					margin-bottom: @gw-Sm;
+				}
+				.uploader--files {}
+				.uploader--submit {}

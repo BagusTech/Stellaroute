@@ -4,20 +4,22 @@ void function initDuckFilepicker($) {
 	'use strict';
 
 	function addFolders(parentDirectory, folders) {
-		const $parentDirectory = $(`[data-prefix="${parentDirectory}"] > ul`);
+		const $parentDirectory = $(`[data-prefix="${parentDirectory || ''}"] > ul`);
 
 		folders.forEach((folder) => {
-			$parentDirectory.append(`
-				<li data-prefix="${folder}/">
-					<i class="fa fa-folder" aria-hidden="true"></i>
-					${folder}
-					<ul></ul>
-				</li>
-			`);
+			if($parentDirectory.find(`> [data-prefix="${parentDirectory || ''}${folder}/"]`).length === 0) {
+				$parentDirectory.append(`
+					<li data-prefix="${parentDirectory || ''}${folder}/">
+						<i class="fa fa-folder" aria-hidden="true"></i>
+						${folder}
+						<ul></ul>
+					</li>
+				`);
+			}
 		});
 	}
 
-	function getImageSize(size) {
+	function getFileSize(size) {
 		if (size > 1073741824) {
 			return `${Math.ceil(size/1024/1024/1024)}gb`;
 		} else if (size > 1048576) {
@@ -29,8 +31,9 @@ void function initDuckFilepicker($) {
 		return `${size}b`;
 	}
 
-	function buildImage(key, size) {
-		const imageSize = getImageSize(size);
+	function buildImage(image) {
+		const imageSize = getFileSize(image.Size);
+		const key = image.Key;
 		const img = `
 			<div class='file-picker--image' duck-image-value="${key.replace('-thumb2', '')}">
 				<div class="row">
@@ -51,6 +54,8 @@ void function initDuckFilepicker($) {
 	function fileUploading($uploadButton) {
 		return (e) => {
 			e.stopPropagation();
+
+			console.log('uploading');
 
 			$uploadButton.attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Uploading...');
 		}
@@ -75,43 +80,47 @@ void function initDuckFilepicker($) {
 		return (e) => {
 			e.stopPropagation();
 			$imagePicker.modal('show').attr('duck-image-picker', $item.attr('duck-image-picker'))
-
-			if($imagePickerImages.attr('data-loaded') === 'false'){
-				$imagePickerImages.html('<div class="p-Xl ta-C js-waiting"><i class="fa fa-spinner fa-spin"></div>');
-			}
+			$imagePickerImages.html('<div class="p-Xl ta-C js-waiting"><i class="fa fa-spinner fa-spin"></div>');
 		}
 	}
 
 	function gotFiles($item, $imagePickerImages) {
-		return (e, err, isLoaded, data) => {
-			if (err || !data) {
+		const $header = $('[data-file-picker="header"] h2');
+
+		return (e, err, data) => {
+			if (err) {
 				$imagePickerImages.text('Sorry, something went wrong getting the images.');
 				return;
 			}
 
-			const files = data.files
-			const folder = data.folder
-			const subFolders = data.subFolders
-			const marker = data.marker
-			const nextMarker = data.nextMarke
+			const files = data.files;
+			const folder = data.folder;
+			const subFolders = data.subFolders;
+			const marker = data.marker;
+			const nextMarker = data.nextMarker;
 
-			if(!isLoaded){
+			$header.text(folder || 'Root');
 
+			if(files){
 				$imagePickerImages.html('');
+
 				const images = files.filter((img) => img.Key.indexOf('-thumb2.') > -1).sort((a, b) => {
 					if(a.LastModified > b.LastModified) {return -1}
 					if(a.LastModified < b.LastModified) {return 1}
 					return 0;
 				});
 
-				addFolders(folder || '/', subFolders);
+				addFolders(folder, subFolders);
 
-				images.forEach((image) => {
-					$imagePickerImages.append(buildImage(image.Key, image.Size))
-				})
+				if(!images) {
+					$imagePickerImages.text('Sorry, there aren\'t any images in this folder.');
+				} else {
+					images.forEach((image) => {
+						$imagePickerImages.append(buildImage(image))
+					});
+				}
 
 				$imagePickerImages
-					.attr('data-loaded', true)
 					.closest('[data-function*="scroll"]')
 					.trigger('initScroll');
 			}
@@ -125,6 +134,17 @@ void function initDuckFilepicker($) {
 		}
 	}
 
+	function buildPrefix($folder, currentPrefix) {
+			const prefix = `${$folder.attr('data-prefix')}${currentPrefix || ''}`;
+			const $parentFolder = $folder.parent().closest('[data-prefix]');
+
+			if($parentFolder.length === 1) {
+				return buildPrefix($parentFolder, prefix);
+			}
+
+			return prefix;
+	}
+
 	function initFilePicker($fileManager, $uploadButton, $imagePicker, $imagePickerImages, $saveImageButton, $fileManagerDirectory) {
 		const $fileInput = $fileManager.find('input[type="file"]');
 		const filePickerOptions = {
@@ -134,20 +154,22 @@ void function initDuckFilepicker($) {
 			gotFiles: gotFiles($fileManager, $imagePickerImages),
 		};
 
-		$fileManager.find('[duck-button="image-select"]').on('click', () => {$fileManager.trigger('getFiles', [$imagePickerImages.attr('data-loaded') === 'true'])});
-		$fileInput.on('change', () => {$fileManager.trigger('uploadFiles')});
+		$fileManager.find('[duck-button="image-select"]').on('click', () => {$fileManager.trigger('getFiles')});
+		//$fileInput.on('change', () => {$fileManager.trigger('uploadFiles')});
 		
 		$fileManager.filePicker(filePickerOptions);
 
 		$fileManagerDirectory.on('click', '[data-prefix]', (e) => {
 			e.stopPropagation();
 
+			const $folder = $(e.target);
 			const options = {
-				folder: $(e.target).attr('data-prefix'),
+				folder: $folder.attr('data-prefix'),
+				files: $folder.prop('files'),
 			}
 
-			$fileManager.trigger('getFiles', [false, options])
-		})
+			$fileManager.trigger('getFiles', [options]);
+		});
 
 		$fileManager.prop('filePickerInitiated', true);
 	}
@@ -156,16 +178,16 @@ void function initDuckFilepicker($) {
 	$(() => {
 		const $imagePicker = $('#ImagePickerModal');
 		const $uploadButton = $imagePicker.find('[data-file-picker="upload"]');
+		const $cancelButton = $imagePicker.find('[data-file-picker="cancel"]');
 		const $saveImageButton = $imagePicker.find('[data-file-picker="select"]');
 		const $imagePickerImages = $imagePicker.find('[data-file-picker="content"]');
 		const $fileManagerDirectory = $imagePicker.find('[data-file-picker="directory"]');
+		const $fileUploader = $imagePicker.find('[data-file-picker="uploader"].file-picker--uploader');
+		const $footerButtons = $imagePicker.find('[data-file-picker="footer"] button');
 
-		$uploadButton.on('click', () => {
-			const imagePicker = $imagePicker.attr('duck-image-picker');
-			const $item = $(`[duck-type="image"][duck-image-picker=${imagePicker}]`);
-			const $fileInput = $item.find('input[type="file"]');
-
-			$fileInput.click()
+		$uploadButton.add($cancelButton).on('click', () => {
+			$fileUploader.toggleClass('hidden');
+			$footerButtons.toggleClass('hidden');
 		});
 
 		$imagePickerImages.on('click', '.file-picker--image', (e) => {
@@ -203,4 +225,4 @@ void function initDuckFilepicker($) {
 			});
 		});
 	});
-}(jQuery.noConflict())
+}(jQuery.noConflict());

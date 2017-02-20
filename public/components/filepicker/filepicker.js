@@ -3,13 +3,13 @@
 void function initFilepicker($){
 	'use strict';
 
-	function getFiles(e, isLoaded, options) {
+	function getFiles(e, options) {
 		const $wrapper = e.data.wrapper;
 
 		$wrapper.trigger('gettingFiles');
 
-		if(isLoaded) {
-			$wrapper.trigger('gotFiles', [null, true])
+		if(options && options.files) {
+			$wrapper.trigger('gotFiles', [null, options])
 			return;
 		}
 
@@ -20,7 +20,7 @@ void function initFilepicker($){
 			contentType: 'application/json',
 			data: options || {},
 			success: (data) => {
-				$wrapper.trigger('gotFiles', [null, false, data])
+				$wrapper.trigger('gotFiles', [null, data])
 			},
 			error: (err) => {
 				$wrapper.trigger('gotFiles', [err])
@@ -28,9 +28,9 @@ void function initFilepicker($){
 		});
 	}
 
-	function uploadFiles(e) {
+	function uploadFiles(e, filesToUpload) {
 		const $wrapper = e.data.wrapper;
-		const files = $wrapper.find('input[type="file"]').get(0).files;
+		const files = filesToUpload || $wrapper.find('input[type="file"]').get(0).files;
 
 		if (files.length > 0){
 			$wrapper.trigger('fileUploading');

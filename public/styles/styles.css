@@ -5403,6 +5403,38 @@ button.list-group-item-danger.active:focus {
   padding: 12px;
   text-align: right;
 }
+.file-picker--uploader {
+  background: rgba(155, 155, 155, 0.75);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 60px;
+}
+.uploader {
+  max-width: 100%;
+  background: white;
+  padding: 12px;
+  display: inline-block;
+  text-align: left;
+}
+.uploader--header {
+  margin-top: 0;
+}
+.uploader--sub-header {
+  font-weight: normal;
+  margin-top: 0;
+}
+.uploader--file-drop {
+  text-align: center;
+  border: 3px dashed #959ca2;
+  background: #f7f7f7;
+  padding: 60px;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
 [data-icon] > .fa {
   line-height: inherit;
 }

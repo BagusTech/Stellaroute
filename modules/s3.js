@@ -25,7 +25,6 @@ function createFolderStructure(files) {
 	return folders
 };
 
-
 s3.getFiles = (callback, folder, marker, maxKeys) => {
 	if(!callback) {
 		console.error('A callback is required for getFiles');
@@ -67,7 +66,7 @@ s3.getFiles = (callback, folder, marker, maxKeys) => {
 
 s3.uploadImage = (file, options, callback, fileType, filePath) => {
 	const extention = fileType || 'jpg'
-	const path = `images/${filePath || ''}`;
+	const path = filePath || '/';
 	const client = new Upload('stellaroute', {
 		aws: {
 			path: path,
@@ -79,7 +78,7 @@ s3.uploadImage = (file, options, callback, fileType, filePath) => {
 
 		cleanup: {
 			versions: true,
-			original: true
+			original: true,
 		},
 
 		versions: [{
@@ -118,21 +117,3 @@ s3.uploadImage = (file, options, callback, fileType, filePath) => {
 }
 
 module.exports = s3;
-
-/*
-
-[
-	'backups/neighborhoods/Neighborhoods-2017-01-26-21-51-15',
-	'backups/neighborhoods/Neighborhoods-2017-01-30-21-51-15'
-]
-
-folders = {
-	backups: {
-		neighborhoods: {
-			Neighborhoods-2017-01-26-21-51-15: false,
-			Neighborhoods-2017-01-26-23-45-33: false,
-		}
-	}
-}
-
-*/

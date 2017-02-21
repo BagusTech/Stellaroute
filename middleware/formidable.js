@@ -2,7 +2,7 @@ const formidable = require('formidable');
 
 function formidableMiddleware() {
 	return (req, res, next) => {
-		req.fields = req.fields || [];
+		req.fields = req.fields || {};
 		req.files = req.files || [];
 
 		const form = new formidable.IncomingForm();
@@ -15,8 +15,11 @@ function formidableMiddleware() {
 		form.maxFieldsSize = 5 * 1024 * 1024;
 
 		form.on('file', (field, file) => {
-			req.fields.push(field);
 			req.files.push(file);
+		});
+
+		form.on('field', function(name, value) {
+			req.fields[name] = value;
 		});
 
 		// log any errors that occur

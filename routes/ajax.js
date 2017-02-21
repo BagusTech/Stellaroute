@@ -119,13 +119,13 @@ router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
 	for (let i = 0; i < length; i++) {
 		const file = files[i];
 		const fileName = file.name.split('.');
-		fileName.pop();
+		const fileType = fileName.pop();
 
 		s3.uploadImage(file.path, {path: fileName.join('')}, function(err, versions, meta) {
 			if (err) {console.error(err); res.status(500).send(err); return;}
 
 			res.send('success');
-		}, null, null);
+		}, fileType, req.fields.filePath);
 	}	
 });
 

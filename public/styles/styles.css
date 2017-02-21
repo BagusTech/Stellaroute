@@ -5301,7 +5301,7 @@ button.list-group-item-danger.active:focus {
   content: '\f068';
   font-family: FontAwesome;
 }
-.file-picker {
+.file-manager {
   clear: both;
   zoom: 1;
   position: absolute;
@@ -5318,19 +5318,19 @@ button.list-group-item-danger.active:focus {
   width: 100%;
   margin: 0 auto;
 }
-.file-picker:before,
-.file-picker:after {
+.file-manager:before,
+.file-manager:after {
   clear: both;
   content: " ";
   display: table;
 }
-.file-picker:before,
-.file-picker:after {
+.file-manager:before,
+.file-manager:after {
   clear: both;
   content: " ";
   display: table;
 }
-.file-picker--close {
+.file-manager--close {
   position: absolute;
   top: 0;
   right: 0;
@@ -5341,35 +5341,35 @@ button.list-group-item-danger.active:focus {
   z-index: 1;
   border-radius: 4px;
 }
-.file-picker--close:hover {
+.file-manager--close:hover {
   background: #e7e7e7;
 }
-.file-picker--directory,
-.file-picker--main {
+.file-manager--directory,
+.file-manager--main {
   display: table-cell;
 }
-.file-picker--directory {
+.file-manager--directory {
   padding: 12px;
   width: 25%;
   background: #e7e7e7;
 }
-.file-picker--main {
+.file-manager--main {
   width: 75%;
 }
-.file-picker--header {
+.file-manager--header {
   padding: 12px 12px 0;
   border-bottom: 1px solid #e7e7e7;
 }
-.file-picker--header h2 {
+.file-manager--header h2 {
   margin: 0 0 36px;
 }
-.file-picker--header .btn-group {
+.file-manager--header .btn-group {
   margin: 0 0 -1px -13px;
 }
-.file-picker--content {
+.file-manager--content {
   padding: 12px;
 }
-.file-picker--image {
+.file-manager--image {
   width: 300px;
   display: inline-block;
   padding: 6px;
@@ -5377,10 +5377,10 @@ button.list-group-item-danger.active:focus {
   cursor: pointer;
   border: 1px solid transparent;
 }
-.file-picker--image:hover {
+.file-manager--image:hover {
   background: #f7f7f7;
 }
-.file-picker--image[image-selected="true"] {
+.file-manager--image[image-selected="true"] {
   background: #e7e7e7;
   border-color: #cccccc;
 }
@@ -5399,11 +5399,11 @@ button.list-group-item-danger.active:focus {
 .image--content {
   max-width: 100%;
 }
-.file-picker--footer {
+.file-manager--footer {
   padding: 12px;
   text-align: right;
 }
-.file-picker--uploader {
+.file-manager--uploader {
   background: rgba(155, 155, 155, 0.75);
   position: absolute;
   top: 0;

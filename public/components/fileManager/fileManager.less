@@ -1,4 +1,4 @@
-.file-picker {
+.file-manager {
 	.clear;
 
 	position: absolute;
@@ -16,7 +16,7 @@
 	width: 100%;
 	margin: 0 auto;
 }
-	.file-picker--close {
+	.file-manager--close {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -33,21 +33,21 @@
 		}
 	}
 
-	.file-picker--directory,
-	.file-picker--main {
+	.file-manager--directory,
+	.file-manager--main {
 		display: table-cell;
 	}
 
-	.file-picker--directory {
+	.file-manager--directory {
 		padding: @gw-Sm;
 		width: 25%;
 		background: @grey-lighter;
 	}
 
-	.file-picker--main {
+	.file-manager--main {
 		width: 75%;
 	}
-		.file-picker--header {
+		.file-manager--header {
 			padding: @gw-Sm @gw-Sm 0;
 			border-bottom: 1px solid @grey-lighter;
 
@@ -60,12 +60,12 @@
 			}
 		}
 
-		.file-picker--content {
+		.file-manager--content {
 			//max-height: 75vh;
 			//overflow: hidden;
 			padding: @gw-Sm;
 		}
-			.file-picker--image {
+			.file-manager--image {
 				width: 300px;
 				display: inline-block;
 				padding: @gw-Xs;
@@ -99,12 +99,12 @@
 					max-width: 100%;
 				}
 
-		.file-picker--footer {
+		.file-manager--footer {
 			padding: @gw-Sm;
 			text-align: right;
 		}
 
-		.file-picker--uploader {
+		.file-manager--uploader {
 			background: rgba(155, 155, 155, .75);
 			position: absolute;
 			top: 0;

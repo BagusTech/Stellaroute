@@ -1,11 +1,11 @@
 .modal.fade#ImagePickerModal(tabindex="-1", role="dialog", style='z-index: 2000;')
-	.file-picker
-		aside.file-picker--directory
-			ul(data-file-picker='directory')
+	.file-manager(data-function="file-manager")
+		aside.file-manager--directory
+			ul(data-file-manager='directory')
 				li(data-prefix='') / (root)
 					ul
-		.file-picker--main
-			header.file-picker--header(data-file-picker='header')
+		.file-manager--main
+			header.file-manager--header(data-file-manager='header')
 				h2 Root
 				.btn-group
 					button.btn-default New Folder
@@ -13,64 +13,18 @@
 					//button.btn-default Rename Folder
 			div(data-function='scroll', style='height: 75vh')
 				div(data-scroll='content-wrapper')
-					.file-picker--content(data-file-picker='content', data-loaded='false', data-scroll='content')
-					.file-picker--uploader.hidden(data-file-picker='uploader')
-						form.uploader
+					.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')
+					.file-manager--uploader.hidden(data-file-manager='uploader')
+						.uploader(data-function='uploader')
 							h2.uploader--header Upload Files
-							.uploader--file-drop Drag &amp; Drop Your Files Here or Click to Upload
+							.uploader--file-drop(data-uploader='file-drop') Drag &amp; Drop Your Files Here or Click to Upload
 							h3.uploader--sub-header Files to Upload
-							ul.uploader--files
+							ul.uploader--files(data-uploader='files')
 
-							button.btn.btn-secondary.uploader--submit(data-file-picker='submit', disabled) Upload
+							button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
 
 				div(data-scroll='scrollbar')
 					button
-			footer.file-picker--footer(data-file-picker='footer')
-				button.btn.btn-secondary(data-file-picker='upload') Upload
-				button.btn.btn-primary(data-file-picker='select') Select
-				button.btn-warning.hidden(data-file-picker='cancel') Cancel
-
-	script.
-		const $ = jQuery.noConflict();
-		const files = [];
-
-		$('.uploader--file-drop').on('dragover', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			let efct;
-
-			try {
-				efct = e.originalEvent.dataTransfer.effectAllowed;
-			} catch (_error) {}
-
-			e.originalEvent.dataTransfer.dropEffect = 'move' === efct || 'linkMove' === efct ? 'move' : 'copy';
-		});
-
-		$('.uploader--file-drop').on('drop', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			const _files = e.originalEvent.dataTransfer.files;
-
-			for (var i = 0, length = _files.length; i < length; i++) {
-				const file = _files[i];
-				const duplicateFile = $('.uploader--files').find('li').filter((i, item) => $(item).text() === file.name).length > 0;
-
-				if(duplicateFile) {
-					// TODO: Handle Duplicate Files
-					return;
-				}
-
-				files.push(file);
-				$('.uploader--files').append(`<li>${file.name}</li>`);
-				$('[data-file-picker="submit"]').prop('disabled', false);
-			}
-		});
-
-		$('[data-file-picker="submit"]').on('click', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			$('[duck-type="image"]').trigger('uploadFiles', [files]);
-		});
+			footer.file-manager--footer(data-file-manager='footer')
+				button.btn.btn-secondary(data-file-manager='upload') Upload
+				button.btn-warning.hidden(data-file-manager='cancel') Cancel

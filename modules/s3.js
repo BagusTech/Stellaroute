@@ -31,8 +31,7 @@ s3.getFiles = (callback, folder, marker, maxKeys) => {
 		return;
 	}
 
-	const prefix = folder
-	const filesFolder = '/';
+	const prefix = folder || ''
 	const options = {
 		Bucket: 'stellaroute',
 		MaxKeys: maxKeys,
@@ -50,7 +49,12 @@ s3.getFiles = (callback, folder, marker, maxKeys) => {
 		const bucketObjects = data.Contents.filter((i) => {
 			const key = i.Key.split('/');
 			key.pop();
-			return `${key.join('/')}/` === prefix;
+
+			if(key.length) {
+				return prefix === `${key.join('/')}/`;
+			}
+
+			return prefix === '';
 		});
 
 		const subFolders = data.CommonPrefixes.map((folderPath) => {
@@ -114,6 +118,17 @@ s3.uploadImage = (file, options, callback, fileType, filePath) => {
 	});
 
 	client.upload(file, options, callback);
+}
+
+s3.deleteFiles = (files, callback) => {
+	const options = {
+		Bucket: 'stellaroute',
+		Delete: {
+			Objects: files,
+		},
+	};
+
+	awsS3.deleteObjects(options, callback);
 }
 
 module.exports = s3;

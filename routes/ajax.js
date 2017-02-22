@@ -129,4 +129,19 @@ router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
 	}	
 });
 
+router.post('/deleteFiles', isLoggedIn(), (req, res) => {
+	const files = req.body.files;
+
+	s3.deleteFiles(files, (err) => {
+		if(err) {
+			res.status(500).send(err);
+			console.error(err);
+
+			return;
+		}
+
+		res.send('success');
+	})
+});
+
 module.exports = router;

@@ -5353,18 +5353,39 @@ button.list-group-item-danger.active:focus {
   width: 25%;
   background: #e7e7e7;
 }
+.file-manager--directory ul {
+  list-style: none;
+}
+.file-manager--directory button {
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.file-manager--directory input {
+  background: none;
+  border-width: 0 0 1px 0;
+  border-color: #4a4d50;
+  border-style: solid;
+  box-shadow: none;
+}
 .file-manager--main {
   width: 75%;
 }
 .file-manager--header {
-  padding: 12px 12px 0;
+  padding: 12px;
   border-bottom: 1px solid #e7e7e7;
+  position: relative;
 }
 .file-manager--header h2 {
   margin: 0 0 36px;
 }
-.file-manager--header .btn-group {
-  margin: 0 0 -1px -13px;
+.file-manager--new-folder {
+  position: absolute;
+  background: #f7f7f7;
+  border: 1px solid #959ca2;
+  max-width: 320px;
+  top: 112%;
 }
 .file-manager--content {
   padding: 12px;
@@ -5380,7 +5401,7 @@ button.list-group-item-danger.active:focus {
 .file-manager--image:hover {
   background: #f7f7f7;
 }
-.file-manager--image[image-selected="true"] {
+.file-manager--image.file-manager--image__active {
   background: #e7e7e7;
   border-color: #cccccc;
 }
@@ -5412,6 +5433,7 @@ button.list-group-item-danger.active:focus {
   right: 0;
   text-align: center;
   padding: 60px;
+  z-index: 2;
 }
 .uploader {
   max-width: 100%;

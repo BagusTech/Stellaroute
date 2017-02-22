@@ -1,30 +1,28 @@
 .modal.fade#ImagePickerModal(tabindex="-1", role="dialog", style='z-index: 2000;')
 	.file-manager(data-function="file-manager")
-		aside.file-manager--directory
-			ul(data-file-manager='directory')
-				li(data-prefix='') / (root)
-					ul
+		aside.file-manager--directory(data-file-manager='directory')
+			ul
 		.file-manager--main
-			header.file-manager--header(data-file-manager='header')
-				h2 Root
+			header.file-manager--header
+				h2(data-file-manager="current-directory") Root
+
 				.btn-group
-					button.btn-default New Folder
-					//button.btn-default Delete Folder
-					//button.btn-default Rename Folder
+					button.btn.btn-danger(data-file-manager='delete', disabled) Delete
+					button.btn.btn-secondary(data-file-manager='upload') Upload
 			div(data-function='scroll', style='height: 75vh')
 				div(data-scroll='content-wrapper')
 					.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')
-					.file-manager--uploader.hidden(data-file-manager='uploader')
-						.uploader(data-function='uploader')
-							h2.uploader--header Upload Files
-							.uploader--file-drop(data-uploader='file-drop') Drag &amp; Drop Your Files Here or Click to Upload
-							h3.uploader--sub-header Files to Upload
-							ul.uploader--files(data-uploader='files')
-
-							button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
 
 				div(data-scroll='scrollbar')
 					button
-			footer.file-manager--footer(data-file-manager='footer')
-				button.btn.btn-secondary(data-file-manager='upload') Upload
-				button.btn-warning.hidden(data-file-manager='cancel') Cancel
+
+			.file-manager--uploader.hidden(data-file-manager='uploader')
+				.uploader(data-function='uploader')
+					h2.uploader--header Upload Files to:&nbsp;
+						span.fw-B(data-file-manager='current-directory') Root
+					.uploader--file-drop(data-uploader='file-drop') Drag &amp; Drop Your Files Here or Click to Upload
+					h3.uploader--sub-header Files to Upload
+					ul.uploader--files(data-uploader='files')
+
+					button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
+					button.btn.btn-warning(data-uploader='cancel') Cancel

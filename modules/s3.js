@@ -70,7 +70,7 @@ s3.getFiles = (callback, folder, marker, maxKeys) => {
 
 s3.uploadImage = (file, options, callback, fileType, filePath) => {
 	const extention = fileType || 'jpg'
-	const path = filePath || '/';
+	const path = filePath || '';
 	const client = new Upload('stellaroute', {
 		aws: {
 			path: path,

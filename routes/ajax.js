@@ -116,8 +116,7 @@ router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
 	const files = req.files || [];
 	const length = files.length;
 
-	for (let i = 0; i < length; i++) {
-		const file = files[i];
+	function uploadImage(file) {
 		const fileName = file.name.split('.');
 		const fileType = fileName.pop();
 
@@ -127,11 +126,15 @@ router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
 				res.status(500).send(err);
 
 				return;
+			} else if(files.length) {
+				uploadImage(files.shift());
+			} else {
+				res.send('success');
 			}
-
-			res.send('success');
 		}, fileType, req.fields.filePath);
-	}	
+	}
+
+	uploadImage(files.shift());
 });
 
 router.post('/deleteFiles', isLoggedIn(), (req, res) => {

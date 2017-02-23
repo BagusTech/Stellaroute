@@ -714,7 +714,7 @@ void function initDirectory($) {
 		$input.on('keypress', (evt) => {
 			const keyCode = evt.keyCode || evt.which;
 
-			if (keyCode === '13'){
+			if (keyCode === 13){
 				$input.blur();
 			}
 		});

@@ -8,10 +8,21 @@
 
 				.input-group
 					.input-group-btn
-						button.btn.btn-default(data-file-manager='delete-start', disabled, data-icon='fa fa-times') &nbsp;Delete
-						button.btn.btn-default(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
+						button.btn.btn-default.mr-Sm(data-file-manager='delete-start', disabled, data-icon='fa fa-times') &nbsp;Delete
+						//button.btn.btn-default(data-file-manager='rename', disabled, data-icon='fa fa-font') &nbsp;Rename
+
 					input.form-control(type='text', data-file-manager='search', placeholder='Search...')
 					span.input-group-addon(data-icon='fa fa-search')
+
+					.input-group-btn
+						button.btn.btn-default.ml-Sm(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
+			
+			.file-manager--sort(data-file-manager='sort')
+				.btn-group
+					button.btn.btn-default.active(data-sort='date', data-icon='fa fa-calendar')
+					button.btn.btn-default(data-sort='name', data-icon='fa fa-font')
+				.hidden(data-sort-direction='desc')
+
 			div(data-function='scroll', style='height: 75vh')
 				div(data-scroll='content-wrapper')
 					.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')

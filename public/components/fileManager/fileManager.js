@@ -135,10 +135,10 @@ void function initFileManager($) {
 	function buildImage(image) {
 		const imageSize = getFileSize(image.Size);
 		const key = image.Key;
-		const imageName = key.replace('-thumb2', '');
-		//const date = image.LastModified;
+		const fileName = key.replace('-thumb2', '');
+		const date = image.LastModified;
 		const img = `
-			<div class='file-manager--image' duck-image-value="${imageName}" title="${imageName}">
+			<div class='file-manager--image' title="${fileName}" data-file-date="${date}">
 				<div class="row">
 					<div class="col-xs-4">
 						<img class="image--content" src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" />
@@ -229,10 +229,67 @@ void function initFileManager($) {
 		}
 	}
 
+	function searchFiles(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const $search = e.data.search;
+		const $content = e.data.content;
+		const $files = $content.find('.file-manager--image');
+		const val = $search.val().toLowerCase();
+
+		$files.each((i, file) => {
+			const $file = $(file);
+			const fileName = $file.attr('title').toLowerCase();
+
+			if(fileName.indexOf(val) === -1) {
+				$file.addClass('hidden');
+			} else {
+				$file.removeClass('hidden');
+			}
+		});
+	}
+
+	function sortFiles($content, $files, sortBy, direction) {
+		$content.empty();
+		$files.sort((a, b) => {
+			const $a = $(a);
+			const $b = $(b);
+
+			if (sortBy === 'date') {
+				const aDate = new Date($a.attr('data-file-date'));
+				const bDate = new Date($b.attr('data-file-date'));
+
+				if(aDate > bDate) {
+					return direction === 'asc' ? 1 : -1
+				} else if (aDate < bDate) {
+					return direction === 'asc' ? -1 : 1
+				}
+
+				return 0
+			}
+
+			const aName = $a.attr('title').toLowerCase();
+			const bName = $b.attr('title').toLowerCase();
+
+			if(aName > bName) {
+				return direction === 'asc' ? 1 : -1
+			} else if (aName < bName) {
+				return direction === 'asc' ? -1 : 1
+			}
+
+			return 0
+		});
+		$content.append($files);
+	}
+
 	function fileManager(wrapper, options) {
 		const $wrapper = $(wrapper);
 		const $content = $wrapper.find('[data-file-manager="content"]'); // where all the files are shown
 		const $search = $wrapper.find('[data-file-manager="search"]');
+
+		const $sort = $wrapper.find('[data-file-manager="sort"]');
+		const $sortDirection = $sort.find('[data-sort-direction]');
 		
 		const $deleteStartButton = $wrapper.find('[data-file-manager="delete-start"]'); // button to open delete prompt
 		const $deletePrompt = $wrapper.find('[data-file-manager="delete-prompt"]'); // prompt to confirm delete
@@ -247,23 +304,30 @@ void function initFileManager($) {
 		const $directory = $wrapper.find('[data-file-manager="directory"]'); // where the file structure is shown
 		const rootDirectory = options && options.rootDirectory;
 
-		$search.on('input', (e) => {
+		$search.on('input', {content: $content, search: $search}, searchFiles);
+
+		$sort.on('click', 'button', (e) => {
 			e.stopPropagation();
 			e.preventDefault();
 
+			const $target = $(e.target);
+			const sortBy = $target.attr('data-sort');
+			const sortDirection = $sortDirection.attr('data-sort-direction');
+			const $activeSort = $sort.find('.active');
+			const reverseDirection = sortDirection === 'asc' ? 'desc' : 'asc';
 			const $files = $content.find('.file-manager--image');
-			const val = $search.val().toLowerCase();
 
-			$files.each((i, file) => {
-				const $file = $(file);
-				const fileName = $file.attr('duck-image-value').toLowerCase();
-
-				if(fileName.indexOf(val) === -1) {
-					$file.addClass('hidden');
-				} else {
-					$file.removeClass('hidden');
-				}
-			})
+			if (!sortBy) {
+				$sortDirection.attr('data-sort-direction', reverseDirection);
+				sortFiles($content, $files, $activeSort.attr('data-sort'), reverseDirection);
+			} else if ($target.hasClass('active')){
+				$sortDirection.attr('data-sort-direction', reverseDirection);
+				sortFiles($content, $files, sortBy, reverseDirection);
+			} else {
+				$activeSort.removeClass('active')
+				$target.addClass('active');
+				sortFiles($content, $files, sortBy, sortDirection);
+			}
 		});
 		
 		$directory.on('gettingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
@@ -312,7 +376,7 @@ void function initFileManager($) {
 
 			const files = [];
 			$content.find('.file-manager--image__active').each((i, item) => {
-				const key = $(item).attr('duck-image-value'); // "images/my-picture-name.jpg"
+				const key = $(item).attr('title'); // "images/my-picture-name.jpg"
 				const fileName = key.split('.')[0]; // "images/my-picture-name"
 				const fileType = key.split('.')[1]; // "jpg"
 				const fileSizes = ['large', 'medium', 'small', 'thumb1', 'thumb2'];
@@ -404,8 +468,7 @@ void function initUploader($) {
 			const duplicateFile = $filesList.find('li').filter((j, item) => $(item).attr('data-file-name') === file.name).length > 0;
 
 			if(duplicateFile) {
-				// TODO: Handle Duplicate Files
-				return;
+				return; // ignore duplicate files
 			}
 
 			filesToUpload.push(file);
@@ -534,6 +597,7 @@ void function initDirectory($) {
 			subFolders: $folder.prop('subFolders'),
 		}
 
+		$wrapper.off('click', getFiles);
 		$wrapper.trigger('getFiles', [options]);
 	}
 
@@ -549,6 +613,7 @@ void function initDirectory($) {
 		$folder.prop('subFolders', subFolders);
 		$wrapper.prop('currentDirectory', folder);
 		$wrapper.trigger('addFolders', [folder, subFolders]);
+		$wrapper.on('click', '[data-prefix]', {wrapper: $wrapper}, getFiles);
 	}
 
 	function filesDeleted(e, err) {
@@ -646,6 +711,13 @@ void function initDirectory($) {
 		$input.focus();
 
 		$input.on('blur', {wrapper: $wrapper, input: $input, button: $button, listItem: $listItem, prefix}, handleInput);
+		$input.on('keypress', (evt) => {
+			const keyCode = evt.keyCode || evt.which;
+
+			if (keyCode === '13'){
+				$input.blur();
+			}
+		});
 	}
 
 	function directory(wrapper, rootDirectory) {
@@ -655,7 +727,6 @@ void function initDirectory($) {
 		$wrapper.on('gotFiles', {wrapper: $wrapper}, gotFiles);
 		$wrapper.on('filesDeleted', {wrapper: $wrapper}, filesDeleted);
 		$wrapper.on('addFolders', {wrapper: $wrapper}, addFolders);
-		$wrapper.on('click', '[data-prefix]', {wrapper: $wrapper}, getFiles);
 		$wrapper.on('click', '[data-directory="new-folder"] button', {wrapper: $wrapper}, makeNewFolder);
 		$wrapper.s3();
 		$wrapper.trigger('getFiles', {folder: rootDirectory || ''});

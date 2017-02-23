@@ -16,22 +16,6 @@
 	width: 100%;
 	margin: 0 auto;
 }
-	.file-manager--close {
-		position: absolute;
-		top: 0;
-		right: 0;
-		border: none;
-		background: none;
-		padding: @gw-Sm;
-		line-height: 1;
-		z-index: 1;
-		border-radius: @br-Lg;
-
-
-		&:hover {
-			background: @grey-lighter;
-		}
-	}
 
 	.file-manager--directory,
 	.file-manager--main {
@@ -46,6 +30,10 @@
 		ul {
 			list-style: none;
 		}
+			li {
+				cursor: pointer;
+			}
+
 			button {
 				padding: 0;
 				background: none;
@@ -60,6 +48,13 @@
 				border-style: solid;
 				box-shadow: none;
 			}
+	}
+
+	.file-manager--sort {
+		position: absolute;
+		right: @gw-Sm;
+		padding-top: @gw-Sm;
+		z-index: 1;
 	}
 
 	.file-manager--main {

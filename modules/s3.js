@@ -25,16 +25,17 @@ function createFolderStructure(files) {
 	return folders
 };
 
-s3.getFiles = (callback, folder, marker, maxKeys) => {
+s3.getFiles = (callback, folder, marker, subFolders, bucketObjects) => {
 	if(!callback) {
 		console.error('A callback is required for getFiles');
 		return;
 	}
 
+	const _subFolders = subFolders || [];
+	const _bucketObjects = bucketObjects || [];
 	const prefix = folder || ''
 	const options = {
 		Bucket: 'stellaroute',
-		MaxKeys: maxKeys,
 		Prefix: prefix,
 		Delimiter: '/',
 		Marker: marker,
@@ -46,25 +47,27 @@ s3.getFiles = (callback, folder, marker, maxKeys) => {
 			return;
 		};
 
-		const bucketObjects = data.Contents.filter((i) => {
+		data.Contents.forEach((i) => {
 			const key = i.Key.split('/');
 			key.pop();
 
-			if(key.length) {
-				return prefix === `${key.join('/')}/`;
+			if((key.length && prefix === `${key.join('/')}/`) || (prefix === '')) {
+				_bucketObjects.push(i);
 			}
-
-			return prefix === '';
 		});
 
-		const subFolders = data.CommonPrefixes.map((folderPath) => {
+		data.CommonPrefixes.map((folderPath) => {
 			const folders = folderPath.Prefix.split('/'); 
 
 			folders.pop(); // the last item in the array will always be an empty string
-			return folders.pop(); // return the last item, the folder name
+			_subFolders.push(folders.pop()); // push the last item, the folder name
 		});
 
-		callback(bucketObjects, prefix, subFolders, data.Marker, data.NextMarker);
+		if(!data.NextMarker) {
+			callback(_bucketObjects, prefix, _subFolders, data.Marker, data.NextMarker);
+		} else {
+			s3.getFiles(callback, prefix, data.NextMarker, _subFolders, _bucketObjects)
+		}
 	});
 }
 

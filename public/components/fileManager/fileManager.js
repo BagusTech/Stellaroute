@@ -69,6 +69,8 @@ void function initS3($) {
 	function deleteFiles(e, filesToDelete) {
 		const $wrapper = e.data.wrapper;
 
+		$wrapper.trigger('deletingFiles');
+
 		$.ajax({
 			type: 'POST',
 			url: '/deleteFiles',
@@ -90,14 +92,14 @@ void function initS3($) {
 		const gettingFiles = options && options.gettingFiles;
 		const gotFiles = options && options.gotFiles;
 		const deletingFiles = options && options.deletingFiles;
-		const deletedFiles = options && options.deletedFiles;
+		const filesDeleted = options && options.filesDeleted;
 
 		if(fileUploading) { $wrapper.off('fileUploading').on('fileUploading', fileUploading); }
 		if(filesUploaded) { $wrapper.off('filesUploaded').on('filesUploaded', filesUploaded); }
 		if(gettingFiles) { $wrapper.off('gettingFiles').on('gettingFiles', gettingFiles); }
 		if(gotFiles) { $wrapper.off('gotFiles').on('gotFiles', gotFiles); }
 		if(deletingFiles) { $wrapper.off('deletingFiles').on('deletingFiles', deletingFiles); }
-		if(deletedFiles) { $wrapper.off('deletedFiles').on('deletedFiles', deletedFiles); }
+		if(filesDeleted) { $wrapper.off('filesDeleted').on('filesDeleted', filesDeleted); }
 
 		$wrapper.off('uploadFiles').on('uploadFiles', {wrapper: $wrapper}, uploadFiles);
 		$wrapper.off('getFiles').on('getFiles', {wrapper: $wrapper}, getFiles);
@@ -118,8 +120,6 @@ void function initS3($) {
 void function initFileManager($) {
 	'use strict';
 
-	
-
 	function getFileSize(size) {
 		if (size > 1073741824) {
 			return `${Math.ceil(size/1024/1024/1024)}gb`;
@@ -135,8 +135,10 @@ void function initFileManager($) {
 	function buildImage(image) {
 		const imageSize = getFileSize(image.Size);
 		const key = image.Key;
+		const imageName = key.replace('-thumb2', '');
+		const date = new Date(image.LastModified);
 		const img = `
-			<div class='file-manager--image' duck-image-value="${key.replace('-thumb2', '')}">
+			<div class='file-manager--image' duck-image-value="${imageName}" title="${imageName}">
 				<div class="row">
 					<div class="col-xs-4">
 						<img class="image--content" src="https://s3-us-west-2.amazonaws.com/stellaroute/${key}" />
@@ -144,6 +146,7 @@ void function initFileManager($) {
 					<div class="col-xs-8">
 						<h3 class="image--name">${key.split('/')[key.split('/').length-1].replace('-thumb2', '')}</h3>
 						<h4 class="image--size">${imageSize || 'unknown'}</h4>
+						<p class="iamge--date">${date.getMonth()}-${date.getFullYear()}</p>
 					</div>
 				</div>
 			</div>
@@ -152,34 +155,37 @@ void function initFileManager($) {
 		return img;
 	}
 
-	function fileUploading($uploadStartButton) {
+	function fileUploading($uploaderSubmit) {
 		return (e) => {
 			e.stopPropagation();
 
-			$uploadStartButton.attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Uploading...');
+			$uploaderSubmit.attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Uploading...');
 		}
 	}
 
-	function filesUploaded($uploadStartButton, $content, $wrapper) {
+	function filesUploaded($content, $directory, $uploader) {
 		return	(e, err) => {
 			e.stopPropagation();
-			$uploadStartButton.attr('disabled', false).text(err ? 'Try Again' : 'Upload Another Image');
-			
+
+			$uploader.toggleClass('hidden');
+
 			if(err) {
 				$content.text('Sorry, something went wrong uploading your image.');
 				return;
 			}
 
-			$content.attr('duck-images', false);
-			$wrapper.trigger('getFiles');
+			$directory.trigger('getFiles', [{folder: $directory.prop('currentDirectory')}]);
 		}
 	}
 
-	function gettingFiles($content) {
-		return (e) => {
-			e.stopPropagation();
-			$content.html('<div class="p-Xl ta-C js-waiting"><i class="fa fa-spinner fa-spin"></div>');
-		}
+	function changingFiles(e) {
+		e.stopPropagation();
+
+		const $content = e.data.content;
+		const $deleteStartButton = e.data.deleteStartButton;
+
+		$content.html('<div class="p-Xl ta-C js-waiting"><i class="fa fa-spinner fa-spin"></div>');
+		$deleteStartButton.prop('disabled', true);
 	}
 
 	function gotFiles($wrapper, $content, $uploader) {
@@ -229,22 +235,47 @@ void function initFileManager($) {
 	function fileManager(wrapper, options) {
 		const $wrapper = $(wrapper);
 		const $content = $wrapper.find('[data-file-manager="content"]'); // where all the files are shown
-		const $directory = $wrapper.find('[data-file-manager="directory"]'); // where the file structure is shown
+		const $search = $wrapper.find('[data-file-manager="search"]');
+		
+		const $deleteStartButton = $wrapper.find('[data-file-manager="delete-start"]'); // button to open delete prompt
+		const $deletePrompt = $wrapper.find('[data-file-manager="delete-prompt"]'); // prompt to confirm delete
 		const $deleteButton = $wrapper.find('[data-file-manager="delete"]'); // button to delete selected files
+		const $deleteCancelButton = $wrapper.find('[data-file-manager="delete-cancel"]'); // cancel delete
+		const $deleteGrammar = $deletePrompt.find('.js-grammar');
+		
 		const $uploader = $wrapper.find('[data-file-manager="uploader"]'); // container for uploader
-		const $uploadStartButton = $wrapper.find('[data-file-manager="upload"]'); // button to start the upload
+		const $uploaderSubmit = $wrapper.find('[data-uploader="upload"]'); // button to start the upload
+		
+		const $directory = $wrapper.find('[data-file-manager="directory"]'); // where the file structure is shown
 		const rootDirectory = options && options.rootDirectory;
-		
-		$uploader.on('fileUploading', fileUploading($uploadStartButton));
-		$uploader.on('filesUploaded', filesUploaded($uploadStartButton, $content, $wrapper));
 
-		$directory.on('gettingFiles', gettingFiles($content));
-		$directory.on('gotFiles', gotFiles($wrapper, $content, $uploader));
-		
+		$search.on('input', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
 
-		$uploadStartButton.on('click', () => {
-			$uploader.toggleClass('hidden');
+			const $files = $content.find('.file-manager--image');
+			const val = $search.val().toLowerCase();
+
+			$files.each((i, file) => {
+				const $file = $(file);
+				const fileName = $file.attr('duck-image-value').toLowerCase();
+
+				if(fileName.indexOf(val) === -1) {
+					$file.addClass('hidden');
+				} else {
+					$file.removeClass('hidden');
+				}
+			})
 		});
+		
+		$directory.on('gettingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
+		$directory.on('deletingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
+		$directory.on('gotFiles', gotFiles($wrapper, $content, $uploader));
+		$directory.directory(rootDirectory);
+
+		$uploader.on('fileUploading', fileUploading($uploaderSubmit));
+		$uploader.on('filesUploaded', filesUploaded($content, $directory, $uploader));
+		$uploader.uploader();
 
 		$content.on('click', '.file-manager--image', (e) => {
 			e.stopPropagation();
@@ -255,8 +286,20 @@ void function initFileManager($) {
 			$this.toggleClass('file-manager--image__active');
 
 			if($content.find('.file-manager--image__active').length) {
-				$deleteButton.prop('disabled', false);
+				$deleteStartButton.prop('disabled', false);
 			}
+		});
+
+		$deleteStartButton.add($deleteCancelButton).on('click', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			if($content.find('.file-manager--image__active').length > 1) {
+				$deleteGrammar.text('these')
+			} else {
+				$deleteGrammar.text('this')
+			}
+			$deletePrompt.toggleClass('hidden');
 		});
 
 		$deleteButton.on('click', (e) => {
@@ -265,42 +308,22 @@ void function initFileManager($) {
 
 			const files = [];
 			$content.find('.file-manager--image__active').each((i, item) => {
-				const key = $(item).attr('duck-image-value'); //"undefinedhero-small.jpg"
-				const fileName = key.split('.')[0];
-				const fileType = key.split('.')[1];
+				const key = $(item).attr('duck-image-value'); // "images/my-picture-name.jpg"
+				const fileName = key.split('.')[0]; // "images/my-picture-name"
+				const fileType = key.split('.')[1]; // "jpg"
 				const fileSizes = ['large', 'medium', 'small', 'thumb1', 'thumb2'];
 
 				fileSizes.forEach((size) => {
 					files.push({Key: `${fileName}-${size}.${fileType}`});
 				});
 			});
-			$wrapper.trigger('deleteFiles', [files]);
+
+			$directory.trigger('deleteFiles', [files]);
 		});
 
-		/*
-		const $createFolder = $wrapper.find('[data-file-manager="new-folder"]');
-		const $newFolder = $wrapper.find('[data-file-manager="new-folder"]');
-		$newFolder.find('button').click((e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			addFolders($uploader.prop('uploadFilePath'), [$newFolder.find('input').val()]);
-			$newFolder.find('input').val('')
-			$newFolder.detach();
-		}); 
-
-		$createFolder.on('click', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			$createFolder.after($newFolder)
-		});*/
-
-		$directory.directory(rootDirectory);
-		$uploader.uploader();
+		
+		
 		$wrapper.prop('fileManagerInitiated', true);
-
-		//$wrapper.find('[duck-button="image-select"]').on('click', () => {$wrapper.trigger('getFiles')});
 	}
 
 	$.fn.fileManager = function init(options) {
@@ -332,7 +355,7 @@ void function initUploader($) {
 		}
 	}
 
-	function deleteFileFromUploadQueue($wrapper, $uploadButton) {
+	function deleteFileFromQueue($wrapper, $uploadButton) {
 		return (e) => {
 			e.stopPropagation();
 			e.preventDefault();
@@ -397,10 +420,12 @@ void function initUploader($) {
 			e.stopPropagation();
 			e.preventDefault();
 
+			$filesList.empty();
+			$wrapper.prop('filesToUpload', []);
 			$wrapper.toggleClass('hidden');
 		});
 
-		$filesList.on('click', '[data-uploader="delete"]', deleteFileFromUploadQueue($wrapper, $uploadButton));
+		$filesList.on('click', '[data-uploader="delete"]', deleteFileFromQueue($wrapper, $uploadButton));
 
 		$fileDrop.on('dragenter', (e) => {
 			e.stopPropagation();
@@ -490,7 +515,7 @@ void function initDirectory($) {
 	}
 
 	function gotFiles(e, err, data) {
-		if(err) return;
+		if(err) { return; }
 
 		const $wrapper = e.data.wrapper;
 		const folder = data.folder;
@@ -503,6 +528,19 @@ void function initDirectory($) {
 		$wrapper.trigger('addFolders', [folder, subFolders]);
 	}
 
+	function filesDeleted(e, err) {
+		e.stopPropagation();
+
+		if(err) {return;}
+
+		const $wrapper = e.data.wrapper;
+		const folder = $wrapper.prop('currentDirectory');
+
+		$wrapper.prop('currentDirectory', '');
+		$wrapper.trigger('getFiles', {folder});
+
+	}
+
 	function makeFolder(parentDirectory, folder) {
 		const $folder = $('<li/>', { // the base folder element
 			'data-prefix': folder ? `${parentDirectory || ''}${folder}/` : '',
@@ -510,7 +548,7 @@ void function initDirectory($) {
 		});
 		const $folderIcon = $('<i/>', {
 			'class': 'fa fa-folder',
-			'aria-hidden': 'true'
+			'aria-hidden': 'true',
 		});
 
 		$folder.prepend($folderIcon);
@@ -538,7 +576,7 @@ void function initDirectory($) {
 		if($parentDirectorySubFoldersList.find('> [data-directory]').length === 0) {
 			const $addIcon = $('<i/>', {
 				'class': 'fa fa-plus',
-				'aria-hidden': 'true'
+				'aria-hidden': 'true',
 			});
 			const $addButton = $('<button/>', {text: ' New Folder'});
 			const $addListItem = $('<li/>', {'data-directory': 'new-folder'});
@@ -549,6 +587,25 @@ void function initDirectory($) {
 		}
 
 		$parentDirectorySubFoldersList.slideDown('270');
+	}
+
+	function handleInput(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const $wrapper = e.data.wrapper;
+		const $input = e.data.input;
+		const $button = e.data.button;
+		const $listItem = e.data.listItem;
+		const val = $input.val();
+
+		if(val) {
+			$listItem.remove();
+			$wrapper.trigger('addFolders', [e.data.prefix, [val]]);
+		} else {
+			$input.remove();
+			$button.removeClass('hidden');
+		}
 	}
 
 	function makeNewFolder(e) {
@@ -565,29 +622,15 @@ void function initDirectory($) {
 		$button.addClass('hidden');
 		$input.focus();
 
-		$input.on('blur', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			const val = $input.val();
-			console.log(prefix, val)
-
-			if(val) {
-				$listItem.remove();
-				$wrapper.trigger('addFolders', [prefix, [val]]);
-			} else {
-				$input.remove();
-				$button.removeClass('hidden');
-			}
-		});
-		
+		$input.on('blur', {wrapper: $wrapper, input: $input, button: $button, listItem: $listItem, prefix}, handleInput);
 	}
 
 	function directory(wrapper, rootDirectory) {
 		const $wrapper = $(wrapper);
 
 		$wrapper.find('> ul').append(makeFolder(null, rootDirectory));
-		$wrapper.on('gotFiles', {wrapper: $wrapper}, gotFiles)
+		$wrapper.on('gotFiles', {wrapper: $wrapper}, gotFiles);
+		$wrapper.on('filesDeleted', {wrapper: $wrapper}, filesDeleted);
 		$wrapper.on('addFolders', {wrapper: $wrapper}, addFolders);
 		$wrapper.on('click', '[data-prefix]', {wrapper: $wrapper}, getFiles);
 		$wrapper.on('click', '[data-directory="new-folder"] button', {wrapper: $wrapper}, makeNewFolder);

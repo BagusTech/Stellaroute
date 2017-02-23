@@ -5424,7 +5424,7 @@ button.list-group-item-danger.active:focus {
   padding: 12px;
   text-align: right;
 }
-.file-manager--uploader {
+.file-manager--prompt {
   background: rgba(155, 155, 155, 0.75);
   position: absolute;
   top: 0;
@@ -5435,12 +5435,14 @@ button.list-group-item-danger.active:focus {
   padding: 60px;
   z-index: 2;
 }
-.uploader {
+.prompt--content {
   max-width: 100%;
-  background: white;
-  padding: 12px;
   display: inline-block;
   text-align: left;
+}
+.uploader {
+  background: white;
+  padding: 12px;
 }
 .uploader--header {
   margin-top: 0;
@@ -5456,6 +5458,9 @@ button.list-group-item-danger.active:focus {
   padding: 60px;
   font-size: 32px;
   margin-bottom: 12px;
+}
+.file-manager--delete h2 {
+  margin: 0 0 36px;
 }
 [data-icon] > .fa {
   line-height: inherit;

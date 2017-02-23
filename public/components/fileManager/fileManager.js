@@ -196,7 +196,7 @@ void function initFileManager($) {
 				return;
 			}
 
-			const files = data.files;
+			const files = data.files || [];
 			const folder = data.folder;
 
 			//const marker = data.marker;
@@ -205,29 +205,27 @@ void function initFileManager($) {
 			$uploader.prop('uploadFilePath', folder || '');
 			$currentDirectory.text(folder || 'Root');
 
-			if(files){
-				$content.html('');
+			$content.html('');
 
-				const images = files.filter((img) => img.Key.indexOf('-thumb2.') > -1).sort((a, b) => {
-					if(a.LastModified > b.LastModified) {return -1}
-					if(a.LastModified < b.LastModified) {return 1}
-					return 0;
+			const images = files.filter((img) => img.Key.indexOf('-thumb2.') > -1).sort((a, b) => {
+				if(a.LastModified > b.LastModified) {return -1}
+				if(a.LastModified < b.LastModified) {return 1}
+				return 0;
+			});
+
+			
+
+			if(!images.length) {
+				$content.text('There are no files in this folder, you can upload some or check one of it\'s sub-folders.');
+			} else {
+				images.forEach((image) => {
+					$content.append(buildImage(image))
 				});
-
-				
-
-				if(!images) {
-					$content.text('Sorry, there aren\'t any images in this folder.');
-				} else {
-					images.forEach((image) => {
-						$content.append(buildImage(image))
-					});
-				}
-
-				$content
-					.closest('[data-function*="scroll"]')
-					.trigger('initScroll');
 			}
+
+			$content
+				.closest('[data-function*="scroll"]')
+				.trigger('initScroll');
 		}
 	}
 
@@ -324,8 +322,16 @@ void function initFileManager($) {
 				});
 			});
 
+			$deleteButton.prop('disabled', true).text('Deleting').prepend('<i class="fa fa-spin fa-spinner" aria-hidden="true"></i> ')
 			$directory.trigger('deleteFiles', [files]);
 		});
+
+		$directory.on('filesDeleted', (e) => {
+			e.stopPropagation();
+
+			$deletePrompt.addClass('hidden');
+			$deleteButton.prop('disabled', false).text('Delete')
+		})
 		
 		$wrapper.prop('fileManagerInitiated', true);
 	}
@@ -410,6 +416,16 @@ void function initUploader($) {
 		$wrapper.prop('filesToUpload', filesToUpload);
 	}
 
+	function filesUploaded(e) {
+		const $wrapper = e.data.wrapper;
+		const $filesList = e.data.filesList;
+		const $uploadButton = e.data.uploadButton;
+
+		$wrapper.prop('filesToUpload', []);
+		$filesList.empty();
+		$uploadButton.text('Upload');
+	}
+
 	function uploader(wrapper) {
 		const $wrapper = $(wrapper);
 		const $fileDrop = $wrapper.find('[data-uploader="file-drop"]'); // area where files can be dragged and dropped to for upload
@@ -426,6 +442,7 @@ void function initUploader($) {
 
 			$filesList.empty();
 			$wrapper.prop('filesToUpload', []);
+			$uploadButton.prop('disabled', true);
 			$wrapper.toggleClass('hidden');
 		});
 
@@ -476,6 +493,8 @@ void function initUploader($) {
 			$wrapper.trigger('uploadFiles', [$wrapper.prop('filesToUpload')]);
 		});
 
+		$wrapper.on('filesAdded', {wrapper: $wrapper, filesList: $filesList, uploadButton: $uploadButton}, filesAdded);
+		$wrapper.on('filesUploaded', {wrapper: $wrapper, filesList: $filesList, uploadButton: $uploadButton}, filesUploaded)
 		$wrapper.s3();
 	}
 

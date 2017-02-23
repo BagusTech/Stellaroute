@@ -136,7 +136,7 @@ void function initFileManager($) {
 		const imageSize = getFileSize(image.Size);
 		const key = image.Key;
 		const imageName = key.replace('-thumb2', '');
-		const date = new Date(image.LastModified);
+		//const date = image.LastModified;
 		const img = `
 			<div class='file-manager--image' duck-image-value="${imageName}" title="${imageName}">
 				<div class="row">
@@ -146,7 +146,6 @@ void function initFileManager($) {
 					<div class="col-xs-8">
 						<h3 class="image--name">${key.split('/')[key.split('/').length-1].replace('-thumb2', '')}</h3>
 						<h4 class="image--size">${imageSize || 'unknown'}</h4>
-						<p class="iamge--date">${date.getMonth()}-${date.getFullYear()}</p>
 					</div>
 				</div>
 			</div>
@@ -244,7 +243,8 @@ void function initFileManager($) {
 		const $deleteGrammar = $deletePrompt.find('.js-grammar');
 		
 		const $uploader = $wrapper.find('[data-file-manager="uploader"]'); // container for uploader
-		const $uploaderSubmit = $wrapper.find('[data-uploader="upload"]'); // button to start the upload
+		const $uploaderStart = $wrapper.find('[data-file-manager="upload"]'); // button to start the upload
+		const $uploaderSubmit = $wrapper.find('[data-uploader="upload"]'); // button to submit the upload
 		
 		const $directory = $wrapper.find('[data-file-manager="directory"]'); // where the file structure is shown
 		const rootDirectory = options && options.rootDirectory;
@@ -275,6 +275,12 @@ void function initFileManager($) {
 
 		$uploader.on('fileUploading', fileUploading($uploaderSubmit));
 		$uploader.on('filesUploaded', filesUploaded($content, $directory, $uploader));
+		$uploaderStart.on('click', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$uploader.toggleClass('hidden');
+		});
 		$uploader.uploader();
 
 		$content.on('click', '.file-manager--image', (e) => {
@@ -320,8 +326,6 @@ void function initFileManager($) {
 
 			$directory.trigger('deleteFiles', [files]);
 		});
-
-		
 		
 		$wrapper.prop('fileManagerInitiated', true);
 	}

@@ -1,20 +1,31 @@
+.file-picker {
+	width: auto;
+	padding: 0 @gw-Md;
+	max-width: 1750px;
+
+	.modal-body {
+		padding: 0;
+	}
+
+	.modal-footer {
+		border-top: 1px solid @grey-lighter;
+		text-align: right;
+
+		&:before {
+			display: none;
+		}
+	}
+}
+
 .file-manager {
 	.clear;
 
-	position: absolute;
+	position: relative;
 	background: white;
-	border-radius: @br-Lg;
-	border: 1px solid @text-color;
 	overflow: hidden;
 	display: table;
 	table-layout: fixed;
-	top: @gw-Md;
-	left: @gw-Md;
-	right: @gw-Md;
-	overflow: hidden;
-	max-width: 1440px;
 	width: 100%;
-	margin: 0 auto;
 }
 
 	.file-manager--directory,
@@ -24,7 +35,7 @@
 
 	.file-manager--directory {
 		padding: @gw-Sm;
-		width: 25%;
+		width: 300px;
 		background: @grey-lighter;
 
 		ul {
@@ -47,6 +58,7 @@
 				border-color: @text-color;
 				border-style: solid;
 				box-shadow: none;
+				padding: @gw-XXs;
 			}
 	}
 
@@ -58,7 +70,7 @@
 	}
 
 	.file-manager--main {
-		width: 75%;
+		width: 100%;
 	}
 		.file-manager--header {
 			padding: @gw-Sm;
@@ -79,8 +91,6 @@
 			}
 
 		.file-manager--content {
-			//max-height: 75vh;
-			//overflow: hidden;
 			padding: @gw-Sm;
 		}
 			.file-manager--image {
@@ -146,11 +156,20 @@
 			.uploader--sub-header {font-weight: normal; margin-top: 0;}
 			.uploader--file-drop {
 				text-align: center;
-				border: 3px dashed @grey;
+				border: 2px dashed @grey-light;
 				background: @grey-lightest;
 				padding: @gw-XXl;
-				font-size: 32px;
+				font-size: 26px;
 				margin-bottom: @gw-Sm;
+
+				span {
+					pointer-events: none;
+				}
+
+				&.uploader--file-drop__active {
+					border-style: solid;
+					background: @blue-lightest;
+				}
 			}
 			.uploader--files {}
 			.uploader--submit {}

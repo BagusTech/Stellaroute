@@ -1,54 +1,61 @@
-.modal.fade#ImagePickerModal(tabindex="-1", role="dialog", style='z-index: 2000;')
-	.file-manager(data-function="file-manager")
-		aside.file-manager--directory(data-file-manager='directory')
-			ul
-		.file-manager--main
-			header.file-manager--header
-				h2(data-file-manager="current-directory") Root
+.modal.fade#ImagePickerModal(tabindex='-1', role='dialog', style='z-index: 2000;')
+	.modal-dialog.file-picker()
+		.modal-content
+			.modal-body
+				.file-manager(duck-filepicker)
+					aside.file-manager--directory(data-file-manager='directory')
+						ul
+					.file-manager--main
+						header.file-manager--header
+							h2(data-file-manager="current-directory") Root
 
-				.input-group
-					.input-group-btn
-						button.btn.btn-default.mr-Sm(data-file-manager='delete-start', disabled, data-icon='fa fa-times') &nbsp;Delete
-						//button.btn.btn-default(data-file-manager='rename', disabled, data-icon='fa fa-font') &nbsp;Rename
+							.input-group
+								.input-group-btn
+									button.btn.btn-default.mr-Sm(data-file-manager='delete-start', disabled, data-icon='fa fa-times') &nbsp;Delete
+									//button.btn.btn-default(data-file-manager='rename', disabled, data-icon='fa fa-font') &nbsp;Rename
 
-					input.form-control(type='text', data-file-manager='search', placeholder='Search...')
-					span.input-group-addon(data-icon='fa fa-search')
+								input.form-control(type='text', data-file-manager='search', placeholder='Search...')
+								span.input-group-addon(data-icon='fa fa-search')
 
-					.input-group-btn
-						button.btn.btn-default.ml-Sm(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
-			
-			.file-manager--sort(data-file-manager='sort')
-				.btn-group
-					button.btn.btn-default.active(data-sort='date', data-icon='fa fa-calendar')
-					button.btn.btn-default(data-sort='name', data-icon='fa fa-font')
-				.hidden(data-sort-direction='desc')
+								.input-group-btn
+									button.btn.btn-default.ml-Sm(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
+						
+						.file-manager--sort(data-file-manager='sort')
+							.btn-group
+								button.btn.btn-default.active(data-sort='date', data-icon='fa fa-calendar')
+								button.btn.btn-default(data-sort='name', data-icon='fa fa-font')
+							.hidden(data-sort-direction='desc')
 
-			div(data-function='scroll', style='height: 75vh')
-				div(data-scroll='content-wrapper')
-					.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')
+						div(data-function='scroll', style='height: 75vh')
+							div(data-scroll='content-wrapper')
+								.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')
 
-				div(data-scroll='scrollbar')
-					button
+							div(data-scroll='scrollbar')
+								button
 
-			.file-manager--prompt.hidden(data-file-manager='uploader')
-				.prompt--content
-					.uploader(data-function='uploader')
-						h2.uploader--header Upload Files to:&nbsp;
-							span.fw-B(data-file-manager='current-directory') Root
-						.uploader--file-drop(data-uploader='file-drop') Drag &amp; Drop Your Files Here or Click to Upload
-						h3.uploader--sub-header Files to Upload
-						ul.uploader--files(data-uploader='files')
+						.file-manager--prompt.hidden(data-file-manager='uploader')
+							.prompt--content
+								.uploader(data-function='uploader')
+									h2.uploader--header Upload Files to:&nbsp;
+										span.fw-B(data-file-manager='current-directory') Root
+									.uploader--file-drop(data-uploader='file-drop')
+										span Drag &amp; Drop Your Files Here or Click to Upload
+									h3.uploader--sub-header Files to Upload
+									ul.uploader--files(data-uploader='files')
 
-						button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
-						button.btn.btn-warning(data-uploader='cancel') Cancel
+									button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
+									button.btn.btn-warning(data-uploader='cancel') Cancel
 
-			.file-manager--prompt.hidden(data-file-manager='delete-prompt')
-				.prompt--content
-					.alert.alert-danger.file-manager--delete
-						h2 Are you sure you want to delete <span class='js-grammar'>this</span>?
+						.file-manager--prompt.hidden(data-file-manager='delete-prompt')
+							.prompt--content
+								.alert.alert-danger.file-manager--delete
+									h2 Are you sure you want to delete <span class='js-grammar'>this</span>?
 
-						.row
-							.col-xs-6
-								button.btn-danger.btn-lg(data-file-manager='delete') Delete
-							.col-xs-6
-								button.btn-default.btn-lg(data-file-manager='delete-cancel') Cancel
+									.row
+										.col-xs-6
+											button.btn-danger.btn-lg(data-file-manager='delete') Delete
+										.col-xs-6
+											button.btn-default.btn-lg(data-file-manager='delete-cancel') Cancel
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(type='button', duck-filepicker='select') Select

@@ -187,7 +187,7 @@ void function initFileManager($) {
 		$deleteStartButton.prop('disabled', true);
 	}
 
-	function gotFiles($wrapper, $content, $uploader) {
+	function gotFiles($wrapper, $content, $uploader, $sort) {
 		const $currentDirectory = $('[data-file-manager="current-directory"]');
 
 		return (e, err, data) => {
@@ -216,8 +216,11 @@ void function initFileManager($) {
 			
 
 			if(!images.length) {
+				$sort.addClass('hidden');
 				$content.text('There are no files in this folder, you can upload some or check one of it\'s sub-folders.');
 			} else {
+				$sort.removeClass('hidden').find('.active').removeClass('active');
+				$sort.find('[data-sort="date"]').addClass('active');
 				images.forEach((image) => {
 					$content.append(buildImage(image))
 				});
@@ -283,6 +286,21 @@ void function initFileManager($) {
 		$content.append($files);
 	}
 
+	function selectFile(e, $targetFile) {
+		e.stopPropagation();
+
+		const $content = e.data.content;
+		const $deleteStartButton = e.data.deleteStartButton;
+
+		$targetFile.addClass('file-manager--image__active');
+
+		if($content.find('.file-manager--image__active').length) {
+			$deleteStartButton.prop('disabled', false);
+		} else {
+			$deleteStartButton.prop('disabled', true);
+		}
+	}
+
 	function fileManager(wrapper, options) {
 		const $wrapper = $(wrapper);
 		const $content = $wrapper.find('[data-file-manager="content"]'); // where all the files are shown
@@ -324,7 +342,7 @@ void function initFileManager($) {
 				$sortDirection.attr('data-sort-direction', reverseDirection);
 				sortFiles($content, $files, sortBy, reverseDirection);
 			} else {
-				$activeSort.removeClass('active')
+				$activeSort.removeClass('active');
 				$target.addClass('active');
 				sortFiles($content, $files, sortBy, sortDirection);
 			}
@@ -332,7 +350,7 @@ void function initFileManager($) {
 		
 		$directory.on('gettingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
 		$directory.on('deletingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
-		$directory.on('gotFiles', gotFiles($wrapper, $content, $uploader));
+		$directory.on('gotFiles', gotFiles($wrapper, $content, $uploader, $sort));
 		$directory.directory(rootDirectory);
 
 		$uploader.on('fileUploading', fileUploading($uploaderSubmit));
@@ -345,17 +363,13 @@ void function initFileManager($) {
 		});
 		$uploader.uploader();
 
+		$wrapper.on('selectFile', {content: $content, deleteStartButton: $deleteStartButton}, selectFile);
+		
 		$content.on('click', '.file-manager--image', (e) => {
 			e.stopPropagation();
 			e.preventDefault();
 
-			const $this = $(e.currentTarget);
-
-			$this.toggleClass('file-manager--image__active');
-
-			if($content.find('.file-manager--image__active').length) {
-				$deleteStartButton.prop('disabled', false);
-			}
+			$wrapper.trigger('selectFile', [$(e.currentTarget), $content.find('.file-manager--image__active')]);
 		});
 
 		$deleteStartButton.add($deleteCancelButton).on('click', (e) => {
@@ -515,14 +529,14 @@ void function initUploader($) {
 			e.stopPropagation();
 			e.preventDefault();
 
-			$fileDrop.addClass('.uploader--file-drop__active');
+			$fileDrop.addClass('uploader--file-drop__active');
 		});
 
 		$fileDrop.on('dragleave', (e) => {
 			e.stopPropagation();
 			e.preventDefault();
 
-			$fileDrop.removeClass('.uploader--file-drop__active');
+			$fileDrop.removeClass('uploader--file-drop__active');
 		});
 
 		$fileDrop.on('dragover', (e) => {

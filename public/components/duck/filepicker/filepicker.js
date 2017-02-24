@@ -3,6 +3,16 @@
 void function initDuckFilepicker($) {
 	'use strict';
 
+	function selectCurrentFile($imagePicker) {
+		$imagePicker.find('.file-manager--image').each((i, image) => {
+			const $image = $(image);
+
+			if($image.attr('title') === $imagePicker.prop('duck-start-value')) {
+				$image.addClass('file-manager--image__active');
+			}
+		})
+	}
+
 	// run after dom has loaded
 	$(() => {
 		const $imagePickerModal = $('#ImagePickerModal');
@@ -19,6 +29,7 @@ void function initDuckFilepicker($) {
 			$imagePickerModal.modal('show');
 			$imagePicker.prop('duck-image', $this);
 			$imagePicker.prop('duck-start-value', startVal);
+			selectCurrentFile($imagePicker);
 		});
 
 		$select.on('click', (e) => {
@@ -39,13 +50,7 @@ void function initDuckFilepicker($) {
 		});
 
 		$imagePicker.on('gotFiles', () => {
-			$imagePicker.find('.file-manager--image').each((i, image) => {
-				const $image = $(image);
-
-				if($image.attr('title') === $imagePicker.prop('duck-start-value')) {
-					$image.addClass('file-manager--image__active');
-				}
-			})
+			selectCurrentFile($imagePicker);
 		});
 
 		$imagePicker.fileManager({rootDirectory: 'images/'});

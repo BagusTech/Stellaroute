@@ -210,92 +210,92 @@ mixin guideForm(crud, guide, locations, user, cancel)
 		if locations && locations.continents
 			.form-group.hidden(duck-field='continents', duck-type='array')
 				for continent in locations.continents
-					input(type='text', required, duck-value, value=continent, disabled)
+					input(type='text', duck-value, value=continent, disabled)
 		else if guide && guide.continents
 			.form-group.hidden(duck-field='continents', duck-type='array')
 				for continent in guide.continents
-					input(type='text', required, duck-value, value=continent, disabled)
+					input(type='text', duck-value, value=continent, disabled)
 
 		if locations && locations.worldRegions
 			.form-group.hidden(duck-field='worldRegions', duck-type='array')
 				for worldRegions in locations.worldRegions
-					input(type='text', required, duck-value, value=worldRegions, disabled)
+					input(type='text', duck-value, value=worldRegions, disabled)
 		else if guide && guide.worldRegions
 			.form-group.hidden(duck-field='worldRegions', duck-type='array')
 				for worldRegions in guide.worldRegions
-					input(type='text', required, duck-value, value=worldRegions, disabled)
+					input(type='text', duck-value, value=worldRegions, disabled)
 
 		if locations && locations.countries
 			.form-group.hidden(duck-field='countries', duck-type='array')
 				for country in locations.countries
-					input(type='text', required, duck-value, value=country, disabled)
+					input(type='text', duck-value, value=country, disabled)
 		else if guide && guide.countries
 			.form-group.hidden(duck-field='countries', duck-type='array')
 				for country in guide.countries
-					input(type='text', required, duck-value, value=country, disabled)
+					input(type='text', duck-value, value=country, disabled)
 		
 		if locations && locations.countryRegions
 			.form-group.hidden(duck-field='countryRegions', duck-type='array')
 				for countryRegions in locations.countryRegions
-					input(type='text', required, duck-value, value=countryRegions, disabled)
+					input(type='text', duck-value, value=countryRegions, disabled)
 		else if guide && guide.countryRegions
 			.form-group.hidden(duck-field='countryRegions', duck-type='array')
 				for countryRegions in guide.countryRegions
-					input(type='text', required, duck-value, value=countryRegions, disabled)
+					input(type='text', duck-value, value=countryRegions, disabled)
 
 		if locations && locations.provinces
 			.form-group.hidden(duck-field='provinces', duck-type='array')
 				for province in locations.provinces
-					input(type='text', required, duck-value, value=province, disabled)
+					input(type='text', duck-value, value=province, disabled)
 		else if guide && guide.provinces
 			.form-group.hidden(duck-field='provinces', duck-type='array')
 				for province in guide.provinces
-					input(type='text', required, duck-value, value=province, disabled)
+					input(type='text', duck-value, value=province, disabled)
 
 		if locations && locations.provinceRegions
 			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
 				for provinceRegions in locations.provinceRegions
-					input(type='text', required, duck-value, value=provinceRegions, disabled)
+					input(type='text', duck-value, value=provinceRegions, disabled)
 		else if guide && guide.provinceRegions
 			.form-group.hidden(duck-field='provinceRegions', duck-type='array')
 				for provinceRegions in guide.provinceRegions
-					input(type='text', required, duck-value, value=provinceRegions, disabled)
+					input(type='text', duck-value, value=provinceRegions, disabled)
 
 		if locations && locations.cities
 			.form-group.hidden(duck-field='cities', duck-type='array')
 				for city in locations.cities
-					input(type='text', required, duck-value, value=city, disabled)
+					input(type='text', duck-value, value=city, disabled)
 		else if guide && guide.cities
 			.form-group.hidden(duck-field='cities', duck-type='array')
 				for city in guide.cities
-					input(type='text', required, duck-value, value=city, disabled)
+					input(type='text', duck-value, value=city, disabled)
 
 		if locations && locations.cityRegions
 			.form-group.hidden(duck-field='cityRegions', duck-type='array')
 				for cityRegions in locations.cityRegions
-					input(type='text', required, duck-value, value=cityRegions, disabled)
+					input(type='text', duck-value, value=cityRegions, disabled)
 		else if guide && guide.cityRegions
 			.form-group.hidden(duck-field='cityRegions', duck-type='array')
 				for cityRegions in guide.cityRegions
-					input(type='text', required, duck-value, value=cityRegions, disabled)
+					input(type='text', duck-value, value=cityRegions, disabled)
 
 		if locations && locations.neighborhoods
 			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
 				for neighborhoods in locations.neighborhoods
-					input(type='text', required, duck-value, value=neighborhoods, disabled)
+					input(type='text', duck-value, value=neighborhoods, disabled)
 		else if guide && guide.neighborhoods
 			.form-group.hidden(duck-field='neighborhoods', duck-type='array')
 				for neighborhoods in guide.neighborhoods
-					input(type='text', required, duck-value, value=neighborhoods, disabled)
+					input(type='text', duck-value, value=neighborhoods, disabled)
 
 		if locations && locations.attractions
 			.form-group.hidden(duck-field='attractions', duck-type='array')
 				for attractions in locations.attractions
-					input(type='text', required, duck-value, value=attractions, disabled)
+					input(type='text', duck-value, value=attractions, disabled)
 		else if guide && guide.attractions
 			.form-group.hidden(duck-field='attractions', duck-type='array')
 				for attractions in guide.attractions
-					input(type='text', required, duck-value, value=attractions, disabled)
+					input(type='text', duck-value, value=attractions, disabled)
 
 		.form-group.hidden(duck-field='author', duck-type='string')
 			input(type='hidden', duck-value, value= user.Id)

@@ -5393,6 +5393,13 @@ button.list-group-item-danger.active:focus {
 }
 .file-manager--content {
   padding: 12px;
+  min-height: 100%;
+}
+.file-manager--content__active {
+  opacity: .7;
+}
+.file-manager--content__active > * {
+  pointer-events: none;
 }
 .file-manager--image {
   width: 300px;
@@ -5469,6 +5476,19 @@ button.list-group-item-danger.active:focus {
 .uploader--file-drop.uploader--file-drop__active {
   border-style: solid;
   background: #e3f4fa;
+}
+.uploader--files {
+  padding: 0;
+  list-style: none;
+}
+.uploader--files li + li {
+  margin: 4px 0 0;
+}
+.uploader--delete {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 12px;
 }
 .file-manager--delete h2 {
   margin: 0 0 36px;

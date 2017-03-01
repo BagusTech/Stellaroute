@@ -53,6 +53,6 @@ void function initDuckFilepicker($) {
 			selectCurrentFile($imagePicker);
 		});
 
-		$imagePicker.fileManager({rootDirectory: 'images/'});
+		$imagePicker.fileManager();
 	});
 }(jQuery.noConflict());

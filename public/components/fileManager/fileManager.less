@@ -92,7 +92,16 @@
 
 		.file-manager--content {
 			padding: @gw-Sm;
+			min-height: 100%;
 		}
+			.file-manager--content__active {
+				opacity: .7;
+
+				> * {
+					pointer-events: none;
+				}
+			}
+
 			.file-manager--image {
 				width: 300px;
 				display: inline-block;
@@ -171,7 +180,20 @@
 					background: @blue-lightest;
 				}
 			}
-			.uploader--files {}
+			.uploader--files {
+				padding: 0;
+				list-style: none;
+
+				li + li{
+					margin: @gw-XXs 0 0;
+				}
+			}
+				.uploader--delete {
+					background: none;
+					border: none;
+					padding: 0;
+					margin-right: @gw-Sm;
+				}
 			.uploader--submit {}
 
 		.file-manager--delete {

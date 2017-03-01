@@ -3,6 +3,17 @@
 void function initS3($) {
 	'use strict';
 
+	function getRootDirectory($wrapper) {
+		$.ajax({
+			type: 'GET',
+			url: '/getRootDirectory',
+			success: (data) => {
+				$wrapper.prop('rootDirectory', data);
+				$wrapper.trigger('s3Initialized');
+			},
+		})
+	}
+
 	function getFiles(e, options) {
 		const $wrapper = e.data.wrapper;
 
@@ -85,30 +96,19 @@ void function initS3($) {
 		})
 	}
 
-	function s3(wrapper, options) {
+	function s3(wrapper) {
 		const $wrapper = $(wrapper);
-		const fileUploading = options && options.fileUploading;
-		const filesUploaded = options && options.filesUploaded;
-		const gettingFiles = options && options.gettingFiles;
-		const gotFiles = options && options.gotFiles;
-		const deletingFiles = options && options.deletingFiles;
-		const filesDeleted = options && options.filesDeleted;
-
-		if(fileUploading) { $wrapper.off('fileUploading').on('fileUploading', fileUploading); }
-		if(filesUploaded) { $wrapper.off('filesUploaded').on('filesUploaded', filesUploaded); }
-		if(gettingFiles) { $wrapper.off('gettingFiles').on('gettingFiles', gettingFiles); }
-		if(gotFiles) { $wrapper.off('gotFiles').on('gotFiles', gotFiles); }
-		if(deletingFiles) { $wrapper.off('deletingFiles').on('deletingFiles', deletingFiles); }
-		if(filesDeleted) { $wrapper.off('filesDeleted').on('filesDeleted', filesDeleted); }
 
 		$wrapper.off('uploadFiles').on('uploadFiles', {wrapper: $wrapper}, uploadFiles);
 		$wrapper.off('getFiles').on('getFiles', {wrapper: $wrapper}, getFiles);
 		$wrapper.off('deleteFiles').on('deleteFiles', {wrapper: $wrapper}, deleteFiles);
+		
+		getRootDirectory($wrapper);
 	}
 
-	$.fn.s3 = function init(options) {
+	$.fn.s3 = function init() {
 		return this.each((index, wrapper) => {
-			s3(wrapper, options);
+			s3(wrapper);
 		});
 	}
 }(jQuery.noConflict());
@@ -203,7 +203,14 @@ void function initFileManager($) {
 			//const nextMarker = data.nextMarker;
 
 			$uploader.prop('uploadFilePath', folder || '');
-			$currentDirectory.text(folder || 'Root');
+			if(folder) {
+				const folderPath = folder.split('/');
+
+				folderPath[0] = 'My Files';
+				$currentDirectory.text(folderPath.join('/'));
+			} else {
+				$currentDirectory.text('Root')	;
+			}
 
 			$content.html('');
 
@@ -301,8 +308,13 @@ void function initFileManager($) {
 		}
 	}
 
-	function fileManager(wrapper, options) {
+	function fileManager(wrapper) {
 		const $wrapper = $(wrapper);
+
+		if($wrapper.prop('fileManagerInitialized')) {
+			return;
+		}
+
 		const $content = $wrapper.find('[data-file-manager="content"]'); // where all the files are shown
 		const $search = $wrapper.find('[data-file-manager="search"]');
 
@@ -320,7 +332,44 @@ void function initFileManager($) {
 		const $uploaderSubmit = $wrapper.find('[data-uploader="upload"]'); // button to submit the upload
 		
 		const $directory = $wrapper.find('[data-file-manager="directory"]'); // where the file structure is shown
-		const rootDirectory = options && options.rootDirectory;
+
+		$content.on('dragenter', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$content.addClass('file-manager--content__active');
+		});
+
+		$content.on('dragleave', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$content.removeClass('file-manager--content__active');
+		});
+
+		$content.on('dragover', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			let effect;
+
+			try {
+				effect = e.originalEvent.dataTransfer.effectAllowed;
+			} catch (_error) {
+				effect = null;
+			}
+
+			e.originalEvent.dataTransfer.dropEffect = effect === 'move' || effect === 'linkMove' ? 'move' : 'copy';
+		});
+
+		$content.on('drop', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$uploader.toggleClass('hidden');
+			$uploader.trigger('filesAdded', [e.originalEvent.dataTransfer.files]);
+			$content.removeClass('file-manager--content__active');
+		})
 
 		$search.on('input', {content: $content, search: $search}, searchFiles);
 
@@ -351,7 +400,7 @@ void function initFileManager($) {
 		$directory.on('gettingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
 		$directory.on('deletingFiles', {content: $content, deleteStartButton: $deleteStartButton}, changingFiles);
 		$directory.on('gotFiles', gotFiles($wrapper, $content, $uploader, $sort));
-		$directory.directory(rootDirectory);
+		$directory.directory();
 
 		$uploader.on('fileUploading', fileUploading($uploaderSubmit));
 		$uploader.on('filesUploaded', filesUploaded($content, $directory, $uploader));
@@ -411,15 +460,21 @@ void function initFileManager($) {
 			$deleteButton.prop('disabled', false).text('Delete')
 		})
 		
-		$wrapper.prop('fileManagerInitiated', true);
+		$wrapper.prop('fileManagerInitialized', true);
 	}
 
-	$.fn.fileManager = function init(options) {
-		return this.each((index, wrapper) => { fileManager(wrapper, options); });
+	$.fn.fileManager = function init() {
+		return this.each((index, wrapper) => { fileManager(wrapper); });
 	}
 
 	// run after dom has loaded
-	$(() => {$('[data-function*="file-manager"').fileManager();});
+	$(() => {
+		const $fileManagers = $('[data-function*="file-manager"');
+
+		if($fileManagers.length) {
+			$fileManagers.fileManager();
+		}
+	});
 }(jQuery.noConflict());
 
 
@@ -429,18 +484,11 @@ void function initFileManager($) {
 void function initUploader($) {
 	'use strict';
 
-	function addFileToUploadQueue($wrapper, $filesInput) {
-		return (e) => {
-			e.stopPropagation();
-			e.preventDefault();
+	function addFileToUploadQueue(e, files) {
+		e.stopPropagation();
+		e.preventDefault();
 
-			if($filesInput) {
-				$wrapper.trigger('filesAdded', [$filesInput[0].files]);
-				return;
-			}
-
-			$wrapper.trigger('filesAdded', [e.originalEvent.dataTransfer.files]);
-		}
+		$(e.data.wrapper).trigger('filesAdded', [files]);
 	}
 
 	function deleteFileFromQueue($wrapper, $uploadButton) {
@@ -471,6 +519,7 @@ void function initUploader($) {
 
 	function filesAdded(e, files) {
 		e.stopPropagation();
+		e.preventDefault();
 
 		const $wrapper = e.data.wrapper;
 		const $filesList = e.data.filesList;
@@ -486,7 +535,7 @@ void function initUploader($) {
 			}
 
 			filesToUpload.push(file);
-			$filesList.append(`<li data-file-name='${file.name}'>${file.name}<button class='uploader--delete' data-uploader='delete'><i class='fa fa-times' aria-hidden='true'></i><span class='sr-only'>Remove File From Upload List</i></button></li>`);
+			$filesList.append(`<li data-file-name='${file.name}'><button class='uploader--delete' data-uploader='delete'><i class='fa fa-times' aria-hidden='true'></i><span class='sr-only'>Remove File From Upload List</i></button>${file.name}</li>`);
 			$uploadButton.prop('disabled', false);
 		}
 
@@ -505,6 +554,9 @@ void function initUploader($) {
 
 	function uploader(wrapper) {
 		const $wrapper = $(wrapper);
+		if($wrapper.prop('uploaderInitialized')) {
+			return;
+		}
 		const $fileDrop = $wrapper.find('[data-uploader="file-drop"]'); // area where files can be dragged and dropped to for upload
 		const $filesList = $wrapper.find('[data-uploader="files"]'); // list of files to be uploaded
 		const $uploadButton = $wrapper.find('[data-uploader="upload"]'); // button to do upload
@@ -554,14 +606,28 @@ void function initUploader($) {
 			e.originalEvent.dataTransfer.dropEffect = effect === 'move' || effect === 'linkMove' ? 'move' : 'copy';
 		});
 
-		$fileDrop.on('drop', addFileToUploadQueue($wrapper));
+		$fileDrop.on('drop', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$fileDrop.trigger('addFileToUploadQueue', [e.originalEvent.dataTransfer.files]);
+			$fileDrop.removeClass('uploader--file-drop__active');
+		});
+		$fileDrop.on('addFileToUploadQueue', {wrapper: $wrapper}, addFileToUploadQueue);
+
 		$fileDrop.on('click', (e) => {
 			e.stopPropagation();
 			e.preventDefault();
 
 			$filesInput.click();
 		});
-		$filesInput.on('change', addFileToUploadQueue($wrapper, $filesInput));
+
+		$filesInput.on('change', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$fileDrop.trigger('addFileToUploadQueue', [$filesInput[0].files]);
+		});
 
 		$uploadButton.on('click', (e) => {
 			e.stopPropagation();
@@ -573,6 +639,8 @@ void function initUploader($) {
 		$wrapper.on('filesAdded', {wrapper: $wrapper, filesList: $filesList, uploadButton: $uploadButton}, filesAdded);
 		$wrapper.on('filesUploaded', {wrapper: $wrapper, filesList: $filesList, uploadButton: $uploadButton}, filesUploaded)
 		$wrapper.s3();
+
+		$wrapper.prop('uploaderInitialized', true);
 	}
 
 	$.fn.uploader = function init(options) {
@@ -622,7 +690,7 @@ void function initDirectory($) {
 		const folder = data.folder;
 		const subFolders = data.subFolders;
 		const $folder = $wrapper.find(`[data-prefix="${folder}"]`);
-		
+
 		$folder.prop('files', data.files);
 		$folder.prop('subFolders', subFolders);
 		$wrapper.prop('currentDirectory', folder);
@@ -643,10 +711,10 @@ void function initDirectory($) {
 
 	}
 
-	function makeFolder(parentDirectory, folder) {
+	function makeFolder(parentDirectory, folder, $wrapper) {
 		const $folder = $('<li/>', { // the base folder element
 			'data-prefix': folder ? `${parentDirectory || ''}${folder}/` : '',
-			text: ` ${folder || '/ (root)'}`,
+			text: ` ${folder === $wrapper.prop('rootDirectory') ? 'My Files' : folder || 'My Files'}`,
 		});
 		const $folderIcon = $('<i/>', {
 			'class': 'fa fa-folder',
@@ -663,6 +731,8 @@ void function initDirectory($) {
 	function addFolders(e, parentDirectory, folders) {
 		e.stopPropagation();
 
+
+
 		const $wrapper = e.data.wrapper;
 		const $parentDirectory = $wrapper.find(`[data-prefix="${parentDirectory || ''}"]`);
 		const $parentDirectorySubFoldersList = $parentDirectory.find('> ul');
@@ -671,7 +741,7 @@ void function initDirectory($) {
 
 		folders.forEach((folder) => {
 			if($parentDirectorySubFoldersList.find(`> [data-prefix="${parentDirectory || ''}${folder}/"]`).length === 0) {
-				$parentDirectorySubFoldersList.append(makeFolder(parentDirectory, folder));
+				$parentDirectorySubFoldersList.append(makeFolder(parentDirectory, folder, $wrapper));
 			}
 		});
 
@@ -734,21 +804,31 @@ void function initDirectory($) {
 		});
 	}
 
-	function directory(wrapper, rootDirectory) {
+	function directory(wrapper) {
 		const $wrapper = $(wrapper);
 
-		$wrapper.find('> ul').append(makeFolder(null, rootDirectory));
+		if($wrapper.prop('directoryInitialized')) {
+			return;
+		}
+
 		$wrapper.on('gotFiles', {wrapper: $wrapper}, gotFiles);
 		$wrapper.on('filesDeleted', {wrapper: $wrapper}, filesDeleted);
 		$wrapper.on('addFolders', {wrapper: $wrapper}, addFolders);
 		$wrapper.on('click', '[data-directory="new-folder"] button', {wrapper: $wrapper}, makeNewFolder);
+		$wrapper.on('s3Initialized', () => {
+			const rootDirectory = $wrapper.prop('rootDirectory');
+
+
+			$wrapper.find('> ul').append(makeFolder(null, rootDirectory, $wrapper));
+			$wrapper.trigger('getFiles', {folder: `${rootDirectory}/` || ''});
+		});
 		$wrapper.s3();
-		$wrapper.trigger('getFiles', {folder: rootDirectory || ''});
+		$wrapper.prop('directoryInitialized', true)
 	}
 
-	$.fn.directory = function init(rootDirectory) {
+	$.fn.directory = function init() {
 		return this.each((index, wrapper) => {
-			directory(wrapper, rootDirectory);
+			directory(wrapper);
 		});
 	}
 }(jQuery.noConflict());

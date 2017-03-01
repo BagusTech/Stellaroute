@@ -62,8 +62,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 		};
 
 		return icons[icon];
-	}
-	
+	}	
 	
 	res.locals.wysiwygHasData = function wysiwygHasData(data) {
 		if (!data) {return false;}

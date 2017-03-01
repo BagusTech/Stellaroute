@@ -2,11 +2,11 @@
 	h2.fc-G Nearby Attractions
 		+editButton()(class='f-R mt-NegSm')
 
-		+view
-			for nearbyAttraction in nearbyAttractions ? nearbyAttractions : []
-				.content-card.p-0
-					a(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
-						+card(getImagePath(nearbyAttraction.cardImage, 'medium'), nearbyAttraction.names.display, null, null, nearbyAttraction.description)
+	+view
+		for nearbyAttraction in nearbyAttractions ? nearbyAttractions : []
+			.content-card.p-0
+				a(href=`/${city.countryUrl}/${city.url}/attraction/${nearbyAttraction.url}`, target='_blank')
+					+card(getImagePath(nearbyAttraction.cardImage, 'medium'), nearbyAttraction.names.display, null, null, nearbyAttraction.description)
 
-		+edit
-			+array(attraction, 'nearbyAttractions', 'Nearby Attractions', 'Add Nearby Attraction')
+	+edit
+		+array(attraction, 'nearbyAttractions', 'Nearby Attractions', 'Add Nearby Attraction')

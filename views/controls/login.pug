@@ -92,7 +92,7 @@ if (!user)
 							input.btn.btn-primary(type='submit', value='Create')
 
 	if !loginScriptLoaded
-		script(src='/js/controls/login.min.js', type='text/javascript')
+		script(src='/controls/login/login.min.js', type='text/javascript')
 		- loginScriptLoaded = true;
 else
 	- var loginClasses = `bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;

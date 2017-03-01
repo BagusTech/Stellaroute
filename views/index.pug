@@ -49,9 +49,7 @@ block content
 						
 
 				include controls/requestLocation.pug
-
-				script(type='text/javascript', src='/js/controls/betaSignup.min.js')
-
+				
 				hr.mb-Lg
 
 				h2.fc-G Coming Soon
@@ -78,24 +76,6 @@ block content
 					li Rate Attractions
 					li Interactive Map
 					li Upload Pictures
-					
-				// REMOVED UNTIL SEARCH IS WORKING
-					.row
-						h1.mt-0.mb-Md.ta-C Plan Spontaneity
-						.col-xs-12.col-md-6.col-md-push-3
-							.input-group
-								input.form-control.p-S(type='text', placeholder='Where do you want to go?')
-								.input-group-btn
-									button.btn.btn-primary.p-S(type='submit')
-										span.hidden-Xs Search
-										span.visible-Xs
-											i.fa.fa-search(aria-hidden="true")
-							.text-wings.fc-W.mtb-Lg
-								hr
-								span or
-								hr
-
-							a.btn.btn-primary.btn-lg.fs-Lg(href="/explore", data-icon='fa fa-location-arrow') &nbsp;Explore
 	else
 		+splashPage('https://www.stellaroute.com/images/index-bg.jpg', '30%')
 			.container.ta-C

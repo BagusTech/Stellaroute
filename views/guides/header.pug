@@ -1,6 +1,8 @@
 div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.backgroundImage, 'large') || getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
+			if userIsAuthorized(user)
+				.bg-W.p-Xs.f-R= guide.Id
 			ol.breadcrumb
 				li.active: a(href= '/') Home
 				li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display

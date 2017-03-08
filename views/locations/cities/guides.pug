@@ -7,7 +7,8 @@ block content
 			.modal-dialog.modal-lg
 				.content-card
 					h2.content-card--header Add New Guide Item
-					+guideForm('add', null, {cities: [city.Id], country: [city.country]}, user)
+					- console.log()
+					+guideForm('add', null, {cities: [city.Id], countries: [city.country]}, user)
 
 	if guides.length
 		.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm

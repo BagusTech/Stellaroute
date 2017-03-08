@@ -63,7 +63,7 @@ block content
 							for day, i in guide.days ? guide.days : [{}]
 								+object(null, 'Day')(data-position= i+1, class='mtb-XXl p-Sm')
 									+string(day, 'title', 'Title')
-									+wysiwyg(guide, 'description', 'Day Description')
+									+wysiwyg(day, 'description', 'Day Description')
 
 									.guide-card--wrapper(data-toggle='hidden')
 										+array(null, 'cards')

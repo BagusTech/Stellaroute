@@ -32,20 +32,20 @@ block content
 							a(href=`/${location.countryUrl}/${location.url}`)
 								+card(location.cardImage, location.names.display, null, null, null, 'medium')
 
-						.col-xs-12.col-sm-6.col-md-3.mb-Md
-							.card.c-P(data-toggle='modal', data-target='#RequestLocation')
-								.ta-C.fc-Purp.bg-G__ltr(style='padding: 22% 0; font-size: 60px;')
-									i.fa.fa-plus(aria-hidden='true')
-									.sr-only Request
+					.col-xs-12.col-sm-6.col-md-3.mb-Md
+						.card.c-P(data-toggle='modal', data-target='#RequestLocation')
+							.ta-C.fc-Purp.bg-G__ltr(style='padding: 22% 0; font-size: 60px;')
+								i.fa.fa-plus(aria-hidden='true')
+								.sr-only Request
 
-								h3.card--title Request a Location
+							h3.card--title Request a Location
 
-						.col-xs-12.col-md-6
-							.card.p-Md.p-Lg--sm.pb-0.pb-Md--sm
-								+emailCapture
-									h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
-									hr
-									small.d-N.d-B--sm.fc-G.pt-Xs.mb-Md Stay updated on new features and locations!
+					.col-xs-12.col-md-6
+						.card.p-Md.p-Lg--sm.pb-0.pb-Md--sm
+							+emailCapture
+								h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
+								hr
+								small.d-N.d-B--sm.fc-G.pt-Xs.mb-Md Stay updated on new features and locations!
 						
 
 				include controls/requestLocation.pug

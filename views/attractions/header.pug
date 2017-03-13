@@ -5,6 +5,7 @@ div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(attraction.backgroun
 		.container.ptb-0
 			ol.breadcrumb
 				li.active: a(href= '/') Home
+				li.active: a(href= `/${city.countryUrl}`)= city.countryDisplay
 				li.active: a(href=`/${city.countryUrl}/${city.url}`)= city.names.display
 				li.active: a(href=`/${city.countryUrl}/${city.url}#Attractions`)= `Attractions`
 			+formStart(attraction, 'Attractions')

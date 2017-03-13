@@ -6,10 +6,12 @@ const Country = Duck({
 		Id: String,
 		url: String,
 		abbreviation: String,
-		image: String,
 		continent: Array,
 		worldRegions: Array,
 	//At a Glance Card
+		image: String,
+		backgroundImage: String,
+		cardImage: String,
 		description: String,
 		tagline: String,
 		averageStay: String,

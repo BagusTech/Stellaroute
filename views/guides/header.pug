@@ -5,6 +5,7 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ba
 				.bg-W.p-Xs.f-R= guide.Id
 			ol.breadcrumb
 				li.active: a(href= '/') Home
+				li.active: a(href= `/${city.countryUrl}`)= city.countryDisplay
 				li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
 				li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides
 

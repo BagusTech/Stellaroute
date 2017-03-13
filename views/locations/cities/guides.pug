@@ -7,7 +7,7 @@ block content
 			.modal-dialog.modal-lg
 				.content-card
 					h2.content-card--header Add New Guide Item
-					- console.log()
+
 					+guideForm('add', null, {cities: [city.Id], countries: [city.country]}, user)
 
 	if guides.length

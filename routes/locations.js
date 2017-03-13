@@ -72,6 +72,7 @@ router.get('/:country', (req, res, next) => {
 	const provinces = Province.find('country', country.Id).items.sort(sortBy('url'));
 	const attractions = Attraction.find('country', country.Id).items.sort(sortBy('url'));
 	const cities = City.find('country', country.Id).items.sort(sortBy('url'))
+	const guides = Guide.find('countries', country.Id).join('cities', City.cached(), 'Id', 'names.display').items;
 
 	res.render('locations/countries/country', {
 		title: `Stellaroute: ${country.names.display}`,
@@ -84,6 +85,7 @@ router.get('/:country', (req, res, next) => {
 		provinces: provinces,
 		cities: cities,
 		attractions: attractions,
+		guides: guides,
 	});
 });
 
@@ -392,6 +394,7 @@ router.get('/:country/:city/:guide', (req, res, next) => {
 		description: `Stellaroute: ${city.names.display} Overview`,
 		key: City.hash,
 		guide: guide,
+		country: country,
 		countryRegions: countryRegions,
 		provinces: provinces,
 		provinceRegions: provinceRegions,
@@ -447,6 +450,7 @@ router.get('/:country/:city/attraction/:attraction', (req, res, next) => {
 		description: `Stellaroute: ${attraction.names.display} Overview`,
 		key: City.hash,
 		attraction: attraction,
+		country: country,
 		countryRegions: countryRegions,
 		provinces: provinces,
 		provinceRegions: provinceRegions,

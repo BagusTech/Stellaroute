@@ -16,6 +16,7 @@ append header
 			.container.ptb-0.p-R
 				ol.breadcrumb
 					li.active: a(href= '/') Home
+					li.active: a(href= `/${city.countryUrl}`)= city.countryDisplay
 
 				+formStart(city, 'Cities')
 					+view

@@ -21,13 +21,7 @@ const routes           = require('./routes/index');
 const admin            = require('./routes/admin');
 const ajax             = require('./routes/ajax');
 const locations        = require('./routes/locations');
-const continents       = require('./routes/continents');
-const countries        = require('./routes/countries');
-const countryRegions   = require('./routes/country-regions');
 const profile          = require('./routes/profile');
-const worldRegions     = require('./routes/world-regions');
-const provinces        = require('./routes/provinces');
-const provinceRegions  = require('./routes/province-regions');
 
 const Guide            = require('./schemas/guide');
 const Attraction       = require('./schemas/attraction');
@@ -143,12 +137,6 @@ app.use('/', ajax);
 
 app.use('/admin', isLoggedIn(true), admin)
 app.use('/profile', isLoggedIn(), profile);
-app.use('/continents', isLoggedIn(true), continents);
-//app.use('/countries', isLoggedIn(true), countries);
-//app.use('/country-regions', isLoggedIn(true), countryRegions);
-//app.use('/world-regions', isLoggedIn(true), worldRegions);
-//app.use('/provinces', isLoggedIn(true), provinces);
-//app.use('/province-regions', isLoggedIn(true), provinceRegions);
 
 // view locations
 app.use('/', locations);

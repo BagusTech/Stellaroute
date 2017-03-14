@@ -1,6 +1,13 @@
 extends ../../layout.pug
 
 block content
+	if userIsAuthorized(user)
+		#AddGuide.modal.fade(tabindex="-1", role="dialog")
+			.modal-dialog.modal-lg
+				.content-card
+					h2.content-card--header Add New Guide Item
+
+					+guideForm('add', null, {countries: [country.Id]}, user)
 	div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(country.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 		.bg-Dkr
 			.container.ptb-0.p-R
@@ -33,7 +40,14 @@ block content
 							.col-xs-12.col-sm-6
 							.col-xs-12.col-sm-6
 								+image(country, 'cardImage', 'Card Image')
+						h3 Guides
+						.row
+							.col-xs-12.col-sm-6
+								+array(country, 'guides', 'Guides', 'Add Guide')
 	.container
+		if userIsAuthorized(user)
+			.p-R
+				button.btn.btn-primary.p-A.r-0(data-target='#AddGuide', data-toggle='modal') Add Guide
 		.row
 			.col-xs-12.col-sm-4.col-md-3.col-lg-2(data-function='filter')
 				div(data-function='stickey')
@@ -50,6 +64,17 @@ block content
 											input(type='checkbox', value= region.Id)
 											span.visible-xs= region.names.display
 			.col-xs-12.col-sm-8
+				h2 Country Guides
+				- var countryGuides = guides && guides.filter((g) => (country.guides && country.guides.indexOf(g.Id) > -1 ));
+				if countryGuides && countryGuides.length
+					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+						for guide in countryGuides ? countryGuides : []
+							.masonry--item
+								a(href=`/${guide.url}`)
+									+card(guide.cardImage, guide.names.display)
+				else
+					h3 Sorry, there are not country specific guides for this country yet.
+
 				for city in cities ? cities : []
 					div(data-filter-country-region=city.countryRegions ? city.countryRegions[0] : 'false')
 						a(href=`/${country.url}/${city.url}`)

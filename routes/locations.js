@@ -527,4 +527,101 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 	});
 });
 
+router.get('/:guide', (req, res, next) => {
+	const guide = Guide.findOne('url', req.params.guide).items;
+
+	if(!guide) {
+		next();
+		return;
+	}
+
+	const country = Country.findOne('Id', guide.countries).items;
+
+
+	const city = City.findOne('Id', guide.cities)
+					 .join('country', Country.cached(), 'Id', 'names.display')
+					 .join('country', Country.cached(), 'Id', 'url')
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'names.display' )
+					 .join('countryRegions', CountryRegion.cached(), 'Id', 'url' )
+					 .join('province', Province.cached(), 'Id', 'names.display' )
+					 .join('province', Province.cached(), 'Id', 'url' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'names.display' )
+					 .join('provinceRegions', ProvinceRegion.cached(), 'Id', 'url' )
+					 .items[0];
+
+	
+
+	if(guide.highlights) {
+		const length = guide.highlights.length
+
+		for (let i = 0; i < length; i++) {
+			const highlight = guide.highlights[i];
+
+			if(highlight.Id && highlight.table) {
+				const table = pickTable(highlight.table);
+
+				const referenceItem = table.findOne('Id', highlight.Id).items
+
+				if(referenceItem) {
+					guide.highlights[i].cardImage = guide.highlights[i].cardImage || referenceItem.cardImage;
+					guide.highlights[i].title = guide.highlights[i].title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';
+					guide.highlights[i].description = (guide.highlights[i].description && guide.highlights[i].description !== '<p><br></p>' && guide.highlights[i].description !== '<br>') ? guide.highlights[i].description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
+				}
+			}
+		}
+	}
+
+	if(guide.days) {
+		const daysLength = guide.days.length
+
+		for (let i = 0; i < daysLength; i++) {
+			const day = guide.days[i];
+
+			if(day.cards){
+				const cardsLength = day.cards.length;
+
+				for (let j = 0; j < cardsLength; j++) {
+					const card = day.cards[j];
+
+					if(card.Id && card.table) {
+						const table = pickTable(card.table);
+
+						const referenceItem = table.findOne('Id', card.Id).items
+
+						if(referenceItem) {
+							card.image = card.image || referenceItem.cardImage;
+							card.title = card.title || referenceItem.names.display || 'Oops, looks like there isn\'t a title!';							
+							card.description = (card.description && card.description !== '<p><br></p>' && card.description !== '<br>') ? card.description : (referenceItem.description || 'Woopsy Daisy! Need to get a description here...');
+						}
+					}
+				}
+			}
+		}
+	}
+
+	const countryRegions = CountryRegion.find('Id', guide.countryRegions).items
+	const provinces = Province.find('Id', guide.provinces).items
+	let provinceRegions = [];
+	const cityRegions = CityRegion.find('Id', guide.cityRegions).items;
+	const neighborhoods = Neighborhood.find('Id', guide.neighborhoods).items;
+
+	provinces.forEach(function(p){
+		provinceRegions = provinceRegions.concat(ProvinceRegion.find('province', p.Id).items)
+	});
+
+	res.render('guides/guide', {
+		title: `Stellaroute: ${guide.names.display}`,
+		description: `Stellaroute: ${guide.names.display} Overview`,
+		key: City.hash,
+		guide: guide,
+		country: country,
+		countryRegions: countryRegions,
+		provinces: provinces,
+		provinceRegions: provinceRegions,
+		city: city,
+		cityRegions: cityRegions,
+		neighborhoods: neighborhoods,
+	});
+});
+
 module.exports = router;

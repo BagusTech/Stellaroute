@@ -8,6 +8,7 @@ const Country = Duck({
 		abbreviation: String,
 		continent: Array,
 		worldRegions: Array,
+		guides: Array,
 	//At a Glance Card
 		image: String,
 		backgroundImage: String,

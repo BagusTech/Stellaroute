@@ -44,6 +44,15 @@ append header
 							.col-xs-12.col-sm-6
 							.col-xs-12.col-sm-6
 								+image(city, 'cardImage', 'Card Image')
+						h3 Locations
+						.row
+							.col-xs-12.col-sm-6
+								.form-group(duck-type='array', duck-field='countryRegions')
+									label Country Region
+										select.form-control(duck-value)
+											for region in countryRegions ? countryRegions : []
+												option(value=region.Id, selected= city.countryRegions && city.countryRegions.indexOf(region.Id) > -1)= region.names.display
+							.col-xs-12.col-sm-6
 
 			nav.tabbed-nav(data-tabs='controls')
 				a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview

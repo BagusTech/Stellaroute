@@ -34,27 +34,44 @@ block content
 							.col-xs-12.col-sm-6
 								+image(country, 'cardImage', 'Card Image')
 	.container
-		for city in cities ? cities : []
-			a(href=`/${country.url}/${city.url}`)
-				h2= city.names.display
-			if guides
-				.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
-					- var cityGuides = guides.filter((g) => (g.cities.indexOf(city.Id) > -1));
+		.row
+			.col-xs-12.col-sm-4.col-md-3.col-lg-2(data-function='filter')
+				div(data-function='stickey')
+					div(data-stickey='content')
+						.visible-xs
+							button.btn.btn-default.w-100(data-function='toggle', data-target='#CountryRegionsFilter') Filter
+						#CountryRegionsFilter.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
+							div(data-filter-section='country-region')
+								h2.mt-0.pt-Sm.ta-R--sm Country Region
+								for region in countryRegions
+									.checkbox.checkbox-right
+										label
+											span.hidden-xs= region.names.display
+											input(type='checkbox', value= region.Id)
+											span.visible-xs= region.names.display
+			.col-xs-12.col-sm-8
+				for city in cities ? cities : []
+					div(data-filter-country-region=city.countryRegions ? city.countryRegions[0] : 'false')
+						a(href=`/${country.url}/${city.url}`)
+							h2= city.names.display
+						if guides
+							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg.pt-Sm
+								- var cityGuides = guides.filter((g) => (city.guides && city.guides.indexOf(g.Id) > -1 ));
 
-					for guide in cityGuides ? cityGuides : []
-						.masonry--item
-							a(href=`/${country.url}/${city.url}/${guide.url}`)
-								+card(guide.cardImage, guide.names.display)
-					
-					else
-						.masonry--item
-							.alert.alert-warning
-								h3.mt-0 Sorry, this city doesn't appear to have any guides.
-			else
-				h3 Sorry, this city doesn't appear to have any guides.
+								for guide in cityGuides ? cityGuides : []
+									.masonry--item
+										a(href=`/${country.url}/${city.url}/${guide.url}`)
+											+card(guide.cardImage, guide.names.display)
+								
+								else
+									.masonry--item
+										.alert.alert-warning
+											h3.mt-0 Sorry, this city doesn't appear to have any guides.
+						else
+							h3 Sorry, this city doesn't appear to have any guides.
 
-		else
-			h2 Sorry, doesn't look like this country has any cities yet.
+				else
+					h2 Sorry, doesn't look like this country has any cities yet.
 	//
 		.media-bg-img.request-page-header
 			.container

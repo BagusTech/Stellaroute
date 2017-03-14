@@ -55,6 +55,10 @@
       margin-top: @gw-Md;
     }
   }
+
+  .panel {
+    margin-bottom: 0;
+  }
 }
 
 @media (min-width: @screen-sm) {
@@ -156,7 +160,8 @@
 .input-group-btn:first-child > .btn-group > .btn,
 .input-group-btn:first-child > .dropdown-toggle,
 .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
-.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn,
+.input-group .panel:first-child {
   .border-right-radius(0);
 }
 .input-group-addon:first-child {
@@ -168,7 +173,8 @@
 .input-group-btn:last-child > .btn-group > .btn,
 .input-group-btn:last-child > .dropdown-toggle,
 .input-group-btn:first-child > .btn:not(:first-child),
-.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn,
+.input-group .panel:last-child {
   .border-left-radius(0);
 }
 .input-group-addon:last-child {

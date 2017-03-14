@@ -54,8 +54,14 @@ block content
 							.form-group(duck-field='country', duck-type='select')
 								label Country
 									select.form-control(duck-value)
-										for country in countries.sort((a, b) => {if(a.names.display < b.names.display){return -1}if(a.names.display > b.names.display){return 1} return 0})
+										for country in countries ? countries.sort((a, b) => {if(a.names.display < b.names.display){return -1}if(a.names.display > b.names.display){return 1} return 0}) : []
 											option(value= country.Id)= country.names.display
+						.col-xs-12.col-sm-6
+							.form-group(duck-field='countryRegions', duck-type='array')
+								label Country Region
+									select.form-control(duck-value)
+										for region in countryRegions ? countryRegions.sort((a, b) => {if(a.names.display < b.names.display){return -1}if(a.names.display > b.names.display){return 1} return 0}) : []
+											option(value= region.Id)= region.names.display
 
 					.row
 						.col-xs-12.col-sm-6
@@ -69,6 +75,33 @@ block content
 									input.form-control(type='text', duck-value, disabled)
 					.ta-R
 						button.btn.btn-primary(duck-button='submit') Add City
+
+			h2.fc-G(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-changed', data-target='this i')
+				i.fa.fa-chevron-down(aria-hidden='true', data-toggle='rotate-Neg180')
+				| Add Country Region
+			.row(role='tabpanel', aria-hidden='true')
+				.content-card(duck-table='CountryRegions', duck-function='add', duck-key='Id', duck-key-value= uuid())
+					h3.content-card--header Add Country Region
+					.row
+						.col-xs-12.col-sm-6
+							.form-group(duck-field='country', duck-type='select')
+								label Country
+									select.form-control(duck-value)
+										for country in countries ? countries.sort((a, b) => {if(a.names.display < b.names.display){return -1}if(a.names.display > b.names.display){return 1} return 0}) : []
+											option(value= country.Id)= country.names.display
+
+					.row
+						.col-xs-12.col-sm-6
+							div(duck-field='names', duck-type='object')
+								.form-group(duck-field='display', duck-type='string')
+									label Country Region Name
+										input.form-control(type='text', duck-value)
+						.col-xs-12.col-sm-6
+							.form-group(duck-field='url', duck-type='string')
+								label Url
+									input.form-control(type='text', duck-value, disabled)
+					.ta-R
+						button.btn.btn-primary(duck-button='submit') Add Country Region
 	
 	.hidden
 		for country in countries

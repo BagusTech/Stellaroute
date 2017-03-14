@@ -3829,6 +3829,9 @@ tbody.collapse.in {
   width: 100%;
   margin-top: 24px;
 }
+.input-group .panel {
+  margin-bottom: 0;
+}
 @media (min-width: 767px) {
   .input-group.input-submit-group .form-control,
   .input-group.input-submit-group .input-group-btn,
@@ -3942,7 +3945,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-btn:first-child > .btn-group > .btn,
 .input-group-btn:first-child > .dropdown-toggle,
 .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
-.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn,
+.input-group .panel:first-child {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
@@ -3955,7 +3959,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-btn:last-child > .btn-group > .btn,
 .input-group-btn:last-child > .dropdown-toggle,
 .input-group-btn:first-child > .btn:not(:first-child),
-.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn,
+.input-group .panel:last-child {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }

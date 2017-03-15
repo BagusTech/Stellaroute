@@ -1,4 +1,4 @@
-div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.backgroundImage, 'large') || getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
+div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage ? getImagePath(guide.backgroundImage, 'large') : (city && getImagePath(city.backgroundImage, 'large') || country && getImagePath(country.backgroundImage, 'large'))}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
 			if userIsAuthorized(user)
@@ -6,7 +6,7 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ba
 			ol.breadcrumb
 				li.active: a(href= '/') Home
 				if country
-					li.active: a(href= `/${country.url}`)= city.countryDisplay
+					li.active: a(href= `/${country.url}`)= country.names.display
 				if city
 					li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
 					li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides

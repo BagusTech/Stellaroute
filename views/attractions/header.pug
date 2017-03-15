@@ -1,6 +1,6 @@
 div(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(attraction.backgroundImage, 'large') || getImagePath(city.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr.p-R
-		if userIsAuthorized()
+		if userIsAuthorized(user)
 			.bg-W.p-A.p-Xs.r-Sm.t-0.z-1.d-N.d-B--sm= attraction.Id
 		.container.ptb-0
 			ol.breadcrumb

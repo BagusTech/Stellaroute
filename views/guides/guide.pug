@@ -35,10 +35,118 @@ block content
 						include guideNav.pug
 
 			.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-				include ./cards/overview.pug
-				+factsHacks(false, guide, 'Guides')
-				include ./cards/highlights.pug
-				include ./cards/whereTo.pug
+
+
+				.content-card.js-card(duck-table='Guides', duck-function='update', duck-key=guide.Id)
+					h2.content-card--header.js-card-title New Card
+					.row
+						.col-xs-12.col-md-6
+							.form-horizontal
+								.form-group(duck-field='title', duck-type='string')
+									label.col-sm-2.control-label Title
+									.col-sm-10
+										input.form-control(type='text', duck-value)
+								.form-group(duck-field='title', duck-type='image')
+									label.col-sm-2.control-label Image
+									.col-sm-10
+										input.hidden(type='hidden', duck-value, value= item && item[field])
+										.form-control(duck-button='image-select')
+											i.fa.fa-image(aria-hidden='true')
+											span.pl-Sm(duck-image-value)= item && item[field] || 'Please select an Image'
+								.form-group(duck-field='text', duck-type='wysiwyg')
+									label.col-sm-2.control-label Text
+									.col-sm-10
+										.summernote
+								.form-group
+									label.col-sm-2.control-label Style
+									.col-sm-10
+										select.form-control
+											option ...
+									.col-sm-10.col-sm-offset-2
+										.card-styles--list
+											.row
+												.col-xs-3.card-styles--style(card-style='section')
+													.ta-C
+														.fw-B Title
+
+														div(style='line-height: .33;') ~~ ~ ~ ~~
+												.col-xs-3.card-styles--style(card-style='sub')
+													.bg-G__lt.p-Xs.ta-C.fw-B.br-Md Title
+												.col-xs-3.card-styles--style.card-styles--style__active(card-style='big')
+													.bg-G__ltr.ta-C
+														img(src='images/no-image.svg', height='20px')
+													strong Title
+													div(style='line-height: .33;') ~~ ~ ~ ~~
+												.col-xs-3.card-styles--style(card-style='small')
+													.w-25.f-L
+														.bg-G__ltr(style='height: 40px')
+															img.w-100(src='images/no-image.svg')
+													.w-75.f-L.pl-Xs
+														strong Title
+														div(style='line-height: .33;') ~~ ~ ~ ~~ ~~
+											.row
+												.col-xs-3.card-styles--style(card-style='img')
+													.bg-G__ltr
+														img.w-100(src='images/no-image.svg', height='40px')
+												.col-xs-3.card-styles--style(card-style='plain')
+													.alert.m-0.p-Xs ~~ ~
+												.col-xs-3.card-styles--style(card-style='white')
+													.content-card.m-0.p-Xs ~~ ~
+												.col-xs-3.card-styles--style(card-style='danger')
+													.alert.alert-danger.m-0.p-Xs ~ ~~
+											.row
+												.col-xs-3.card-styles--style(card-style='success')
+													.alert.alert-success.m-0.p-Xs ~~ ~
+												.col-xs-3.card-styles--style(card-style='info')
+													.alert.alert-info.m-0.p-Xs ~ ~~
+
+						.col-xs-12.col-md-6
+							h3.mt-0 Preview
+							.card-styles--preview(card-style='section')
+								h2.fs-32.fw-B.m-0.ta-C.js-card-title Card Title
+
+								.lead.p-Md.ta-C.js-card-text This is where the #[strong Text] for this card will appear.
+
+							.card-styles--preview(card-style='sub')
+								.pl-Md
+									.guide-card.guide-card__separator
+										.guide-card--content
+											.guide-card--info
+												h2.guide-card--header.js-card-title Card Title
+							.card-styles--preview.card-styles--preview__active(card-style='big')
+								.guide-card.guide-card__attraction
+									.guide-card--content
+										.guide-card--img-wrapper
+											img.guide-card--img.js-card-image(src='images/no-image.svg')
+										.guide-card--info
+											h2.guide-card--header.js-card-title Card #[strong Title]
+											.guide-card--description.js-card-text This is where the #[strong Text] for the card will go.
+
+							.card-styles--preview(card-style='small')
+								.guide-card.guide-card__sub
+									.guide-card--content
+										.guide-card--img-wrapper.js-card-image(style="background-image: url('images/no-image.svg')")
+										.guide-card--info
+											h2.guide-card--header.js-card-title Card #[strong Title]
+											.guide-card--description.js-card-text This is where the #[strong Text] for the card will go.
+							.card-styles--preview(card-style='img')
+								img.w-100.js-card-image(src='images/no-image.svg')
+
+							.card-styles--preview(card-style='plain')
+								.alert.js-card-text This is where the #[strong Text] for the card will go. Great for any small information that might be useful.
+							.card-styles--preview(card-style='white')
+								.content-card.mt-0.js-card-text This is where the #[strong Text] for the card will go. Great for any small information that might be useful.
+							.card-styles--preview(card-style='danger')
+								.alert.alert-danger.js-card-text This is where the #[strong Text] for the card will go. Make sure people know what yo watch out for!
+							.card-styles--preview(card-style='success')
+								.alert.alert-success.js-card-text This is where the #[strong Text] for the card will go. Ensure that people don't miss out on this!
+							.card-styles--preview(card-style='info')
+								.alert.alert-info.js-card-text This is where the #[strong Text] for the card will go. Just a bit of infomation someone should know.
+
+				//include ./cards/overview.pug
+				//+factsHacks(false, guide, 'Guides')
+				//include ./cards/highlights.pug
+				//include ./cards/whereTo.pug
 
 				
 				+formStart(guide, 'Guides')

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="185 85 400 300">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-no-ticket-lghtgry);
+      }
+
+      .cls-2 {
+        fill: #eee;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+      }
+
+      .cls-4 {
+        fill: #ccc;
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-no-ticket-lghtgry">
+      <rect x="185" y="85" width="400" height="300"/>
+    </clipPath>
+  </defs>
+  <g id="no-ticket-lghtgry" class="cls-1">
+    <rect class="cls-5" x="185" y="85" width="400" height="300"/>
+    <rect id="Rectangle_5" data-name="Rectangle 5" class="cls-2" width="400" height="300" transform="translate(185 85)"/>
+    <line id="Line_1" data-name="Line 1" class="cls-3" y1="300" x2="400" transform="translate(185 85)"/>
+    <line id="Line_2" data-name="Line 2" class="cls-3" x2="400" y2="300" transform="translate(185 85)"/>
+    <g id="Group_1" data-name="Group 1" transform="translate(184 86)">
+      <rect id="Rectangle_1" data-name="Rectangle 1" class="cls-2" width="225.246" height="167.453" transform="translate(88 65)"/>
+      <path id="Path_1" data-name="Path 1" class="cls-4" d="M152.749,30.663H119.81l-3.378-12.669a8.208,8.208,0,0,0-8.164-6.194H62.377a8.208,8.208,0,0,0-8.164,6.194L50.834,30.663H18.177A13.94,13.94,0,0,0,4.1,44.739v74.887A13.94,13.94,0,0,0,18.177,133.7H153.03a13.94,13.94,0,0,0,14.077-14.077V44.739A14.553,14.553,0,0,0,152.749,30.663ZM85.463,114.841a35.191,35.191,0,1,1,35.191-35.191A35.2,35.2,0,0,1,85.463,114.841Z" transform="translate(113.538 66.537)"/>
+    </g>
+  </g>
+</svg>

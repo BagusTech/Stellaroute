@@ -1,0 +1,26 @@
+.card-styles--list {
+	padding:0 12px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	overflow: hidden;
+}
+	.card-styles--style {
+		cursor: pointer;
+		margin-bottom: 12px;
+		padding: 6px;
+
+		&:hover {
+			background: @green;
+		}
+	}
+
+		.card-styles--style__active {
+			border: 2px solid @green-dark;
+		}
+
+	.card-styles--preview {
+		display: none;
+	}
+		.card-styles--preview__active {
+			display: block
+		}

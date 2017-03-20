@@ -32,17 +32,8 @@ legend {
 label {
   display: inline-block;
   max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
-  font-weight: 400;
-  //color: @grey-light;
-  //line-height: 1;
-  //font-size: 14px;
-
-  input[type='text'],
-  input[type='password'],
-  input[type='number'],
-  select{
-    margin-top: @gw-Xs;
-  }
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 
@@ -122,6 +113,7 @@ output {
 
 .form-control {
   display: block;
+  cursor: pointer;
   width: 100%;
   height: @input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   padding: @padding-base-vertical @padding-base-horizontal;
@@ -169,8 +161,10 @@ output {
     height: auto;
   }
 
-  &[required] {
-    border-left: 3px solid @purple;
+  &:not(textarea) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -225,10 +219,6 @@ input[type="search"] {
 
 .form-group {
   margin-bottom: @form-group-margin-bottom;
-
-  label {
-    width: 100%;
-  }
 }
 
 
@@ -240,8 +230,8 @@ input[type="search"] {
 .checkbox {
   position: relative;
   display: block;
-  margin-top: @gw-Sm;
-  margin-bottom: @gw-Sm;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   label {
     min-height: @line-height-computed; // Ensure the input doesn't jump when there is no text
@@ -251,51 +241,19 @@ input[type="search"] {
     cursor: pointer;
   }
 }
-.radio,
-.radio-inline,
-.checkbox,
-.checkbox-inline{
-  input[type="radio"],
-  input[type="checkbox"] {
-    position: absolute;
-    margin-left: -20px;
-    margin-top: 4px \9;  
-  }
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px \9;
 }
 
 .radio + .radio,
 .checkbox + .checkbox {
   margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
 }
-
-@media(min-width: @screen-sm) {
-  .radio,
-  .checkbox {
-    &.radio-right,
-    &.checkbox-right {
-      text-align: right;
-
-      label {
-        padding-left: 0;
-        padding-right: 20px;
-      }
-    }
-  }
-
-  .radio-right,
-  .checkbox-right {
-    input[type="radio"],
-    input[type="checkbox"] {
-      margin-left: 7px;
-    }
-  }
-
-  .radio + .radio,
-  .checkbox + .checkbox {
-    margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
-  }
-}
-
 
 // Radios and checkboxes on same line
 .radio-inline,
@@ -311,7 +269,7 @@ input[type="search"] {
 .radio-inline + .radio-inline,
 .checkbox-inline + .checkbox-inline {
   margin-top: 0;
-  margin-left: @gw-Sm; // space out consecutive inline controls
+  margin-left: 10px; // space out consecutive inline controls
 }
 
 // Apply same disabled cursor tweak as for inputs
@@ -404,8 +362,7 @@ input[type="checkbox"] {
 }
 
 .input-lg {
-  .input-size(@input-height-large; @padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @input-border-radius);
-  border-width: 2px;
+  .input-size(@input-height-large; @padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @input-border-radius-large);
 }
 .form-group-lg {
   .form-control {
@@ -477,24 +434,12 @@ input[type="checkbox"] {
 // Feedback states
 .has-success {
   .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
-
-  &:after {
-    content: '\f00c';
-  }
 }
 .has-warning {
   .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
-
-  &:after {
-    content: '\f071';
-  }
 }
 .has-error {
   .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
-
-  &:after {
-    content: '\f00d';
-  }
 }
 
 // Reposition feedback icon if input has visible label above
@@ -517,7 +462,7 @@ input[type="checkbox"] {
 .help-block {
   display: block; // account for any element using help-block
   margin-top: 5px;
-  margin-bottom: @gw-Sm;
+  margin-bottom: 10px;
   color: lighten(@text-color, 25%); // lighten the text some for contrast
 }
 

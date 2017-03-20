@@ -3,17 +3,18 @@ div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage
 		.container.ptb-0
 			if userIsAuthorized(user)
 				.bg-W.p-Xs.f-R= guide.Id
+
 			ol.breadcrumb
-				li.active: a(href= '/') Home
-				if country
+				li.active Created by: #[a(href= '/')= author && author.names.first || 'unknown']
+				//if country
 					li.active: a(href= `/${country.url}`)= country.names.display
-				if city
+				//if city
 					li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
 					li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides
 
 			+formStart(guide, 'Guides')
 				+view
-					h1 #{guide.names.display}
+					h1 #{guide.names.display} #[small (unpublished)]
 						+editButton('f-R bg-W mt-NegSm')
 						if author && author.names
 							small.pl-Xs= author.names.first

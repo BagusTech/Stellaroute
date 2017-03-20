@@ -39,7 +39,7 @@ void function initDuckFilepicker($) {
 			const $image = $imagePicker.prop('duck-image');
 			const selectedImage = $imagePicker.prop('duck-current-value');
 
-			$image.find('[duck-value]').val(selectedImage);
+			$image.find('[duck-value]').val(selectedImage).change();
 			$image.find('[duck-image-value]').text(selectedImage);
 			$imagePickerModal.modal('hide');
 		});

@@ -30,9 +30,8 @@ legend {
 }
 
 label {
-  display: inline-block;
+  display: block;
   max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
-  margin-bottom: 5px;
   font-weight: bold;
 }
 
@@ -112,12 +111,13 @@ output {
 // input[type="color"]
 
 .form-control {
+  cursor: pointer; // so that the class can be used on non inputs
   display: block;
-  cursor: pointer;
   width: 100%;
   height: @input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   padding: @padding-base-vertical @padding-base-horizontal;
   font-size: @font-size-base;
+  font-weight: normal;
   line-height: @line-height-base;
   color: @input-color;
   background-color: @input-bg;
@@ -161,10 +161,8 @@ output {
     height: auto;
   }
 
-  &:not(textarea) {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  label > & {
+    margin-top: 5px;
   }
 }
 
@@ -219,6 +217,11 @@ input[type="search"] {
 
 .form-group {
   margin-bottom: @form-group-margin-bottom;
+
+  > .btn {
+    margin-top: 27px;
+    width: 100%
+  }
 }
 
 
@@ -239,6 +242,10 @@ input[type="search"] {
     margin-bottom: 0;
     font-weight: normal;
     cursor: pointer;
+
+    &.btn {
+      padding-left: @gw-Md;
+    }
   }
 }
 .radio input[type="radio"],

@@ -20,24 +20,9 @@ void function initDuckForm($, duck, window) {
 		const $wrapper = $this.closest('[duck-type="array"]');
 		const $item = $wrapper.find('[duck-type]').first();
 		const $lastItem = $item.parent().find('> [duck-type]').last();
-		const $clone = $item.clone();
+		const $clone = $wrapper.prop('ArrayItemTemplate') ? $wrapper.prop('ArrayItemTemplate').clone() : $item.clone();
 
-		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null);
-		$clone.find('[duck-button="delete"]').click(deleteArrayItem);
-		$clone.find('[data-function="tabs"]').makeTabs();
-
-		if($item.attr('duck-type') === 'object'){
-			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
-			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote({height: 150});
-			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
-			$clone.find('[duck-button="add"]').click(addArrayItem);
-		}
-
-		if($item.attr('duck-type') === 'image') {
-			$clone.attr('duck-image-picker', $('[duck-image-picker]').length)
-			$clone.prop('filePickerInitiated', false);
-			$clone.find('[duck-image-value]').text('');
-		}
+		console.log($clone)
 
 		switch(addDirection) {
 			case 'after' : {
@@ -53,6 +38,33 @@ void function initDuckForm($, duck, window) {
 				break;		
 			}
 		}
+
+		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null);
+		$clone.find('[duck-button="delete"]').click(deleteArrayItem);
+		$clone.find('[data-function="tabs"]').makeTabs();
+		$clone.find('[id]').each((i, idItem) => {
+			const $idItem = $(idItem);
+			const currentId = $idItem.attr('id');
+			const newId = currentId + duck.uuid();
+
+			$idItem.attr('id', newId).prop('id', newId);
+		});
+		$clone.find('[data-function="accordion"]').makeAccordion();
+		$clone.find('.js-card').guideCard();
+
+		if($item.attr('duck-type') === 'object'){
+			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
+			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote({height: 150, disableDragAndDrop: true});
+			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
+			$clone.find('[duck-button="add"]').click(addArrayItem);
+		}
+
+		if($item.attr('duck-type') === 'image') {
+			$clone.prop('filePickerInitiated', false);
+			$clone.find('[duck-image-value]').text('');
+		}
+
+		
 
 		$item.parent().sortable('[duck-type]');
 

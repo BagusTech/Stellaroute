@@ -1,34 +1,10 @@
-- let visibleNav = 0;
-
 nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
-	//
-		a(href='#', role='tab', aria-expanded='true', data-position='0')
-			h3 Overview
-		ul(role='tabpanel', aria-hidden='false')
-			if userIsAuthorized(user) || guide.travelHacks && guide.travelHacks[0] && wysiwygHasData(guide.travelHacks[0].description)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Travel Hacks
-
-			if userIsAuthorized(user) || guide.highlights && guide.highlights[0] && wysiwygHasData(guide.highlights[0].description)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Highlights
-			
-			if userIsAuthorized(user) || wysiwygHasData(guide.whereToStay)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Where to Stay
-			
-			if userIsAuthorized(user) || wysiwygHasData(guide.whereToGoOut)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Where to Go Out
-			
-			if userIsAuthorized(user) || wysiwygHasData(guide.whereToEat)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Where to Eat
-			
-			if userIsAuthorized(user) || wysiwygHasData(guide.whereToExplore)
-				li: a(href='#', data-position=`0.${visibleNav++}`) Where to Explore
-
-	for day, i in guide.days ? guide.days : []
-		a(href='#', role='tab', aria-expanded='false', data-position= i+1)
-			h3= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
-
-		if day.cards
+	- console.log(cards)
+	for card, i in cards ? cards : []
+		a(href='#', role='tab', aria-expanded='false', data-position= i)
+			h3= card.section.title
+		if card.subCards
 			ul(role='tabpanel', aria-hidden='true')
-				for card, j in day.cards
-					if card.title || card.tagTitle
-						li: a(href='#', data-position= `${i+1}.${j}`)= card.title || card.tagTitle
+				for subCard, j in card.subCards
+					if subCard.style === 'sub' || subCard.style === 'big'
+						li(class=`guide-nav--${subCard.style}`): a(href='#', data-position= `${i}.${j}`)= subCard.title

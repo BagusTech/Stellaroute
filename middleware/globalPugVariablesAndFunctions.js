@@ -88,7 +88,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 	}
 	res.locals.getImagePath = function getImagePath(img, size) {
 		if (!img) {
-			return 'https://placebear.com/100/100';
+			return 'images/no-image.svg';
 		} else if (img.indexOf('https') === 0) {
 			return img
 		}
@@ -97,7 +97,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 		const imgExtention = imgPath.pop();
 		const s3Path = `https://s3-us-west-2.amazonaws.com/stellaroute/`;
 
-		return img.indexOf('http') === 0 ? 'https://placebear.com/100/100' : `${s3Path}${imgPath.join('')}-${size || 'medium'}.${imgExtention}`
+		return img.indexOf('http') === 0 ? 'images/no-image.svg' : `${s3Path}${imgPath.join('')}-${size || 'medium'}.${imgExtention}`
 	}
 
 	return next();

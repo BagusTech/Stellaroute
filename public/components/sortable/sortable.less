@@ -1,5 +1,7 @@
 [data-function*='sort'] {
 	position: relative;
+	display: inline-block;
+	width: 100%;
 
 	&.sorting{
 		-webkit-touch-callout: none; /* iOS Safari */
@@ -22,15 +24,31 @@
 	}
 
 	[data-sort='item'] {
-		cursor: pointer;
 		top: auto;
 		left: auto;
 		right: auto;
+		width: 100%;
 
 		&.sorting{
 			border: 1px dashed grey;
 			background: white;
 			z-index: 1;
+		}
+
+		&:first-child:last-child {
+			[data-sort='handle'],
+			.input-group-btn {
+				display: none;
+			}			
+		}
+	}
+
+	[data-sort='handle'] {
+		cursor: pointer;
+		transition: background .05s linear;
+
+		&:hover {
+			background: @grey-light;
 		}
 	}
 }

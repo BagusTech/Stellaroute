@@ -19,15 +19,15 @@ void function initScripts($){
 		});
 
 		// initialize summernote where it is being used
-		$('.summernote:visible').summernote({height: 150});
+		$('.summernote:visible').summernote({height: 150, disableDragAndDrop: true});
 
 		$('.modal').on('shown.bs.modal', () => {
-			$('.summernote:visible').summernote({height: 150});
+			$('.summernote:visible').summernote({height: 150, disableDragAndDrop: true});
 		});
 
 		$('[duck-button="edit"], [duck-table] .btn').on('click', () => {
 			setTimeout(() => {
-				$('.summernote').summernote({height: 150});
+				$('.summernote').summernote({height: 150, disableDragAndDrop: true});
 			}, 10)
 		});
 	});

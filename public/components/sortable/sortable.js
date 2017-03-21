@@ -66,7 +66,7 @@ void function initializeIcon($) {
 		e.stopPropagation();
 		e.preventDefault();
 
-		const $this = $(e.currentTarget);
+		const $this = $(e.currentTarget).closest('[data-sort="item"]');
 		const $wrapper = e.data.wrapper;
 		const $items = e.data.items;
 		const sortItemQuery = e.data.sortItemQuery;
@@ -134,17 +134,21 @@ void function initializeIcon($) {
 		const $windowToScroll = $customScroll.length ? $customScroll : $(window);
 		const sortItemQuery = sortItems || '[data-sort="item"]';
 		const $items = $wrapper.find(`> ${sortItemQuery}`).attr('data-sort', 'item');
+
 		if($items.length < 2) {return;}
+
+		const $sortHandles = $items.find('[data-sort="handle"]')
 		const $sortButtons = duck.findRelevantChildren($items, '[data-sort-buttons]');
 		const $upButtons = $sortButtons.find('[data-sort="up"]');
 		const $downButtons = $sortButtons.find('[data-sort="down"]');
 
 		if($wrapper.prop('sortInitaited')) {
-			$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"]').off('mousedown', duck.stopProp);
+			$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"] .simpleMDE').off('mousedown', duck.stopProp);
 
 			$upButtons.off('click', moveUp);
 			$downButtons.off('click', moveDown);
 
+			$sortHandles.off('mousedown', startSort);
 			$items.off('mousedown', startSort);
 			$items.off('moveItem', moveItem);
 
@@ -152,12 +156,17 @@ void function initializeIcon($) {
 		}
 
 		// stop propagation on anything the user might actually be interacting with
-		$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"]').on('mousedown', duck.stopProp);
+		$wrapper.find('a, button, input, select, textarea, [duck-type="wysiwyg"] .simpleMDE').on('mousedown', duck.stopProp);
 
 		$upButtons.on('click', {sortItemQuery}, moveUp);
 		$downButtons.on('click', {sortItemQuery}, moveDown);
 
-		$items.on('mousedown', {wrapper: $wrapper, items: $items, windowToScroll: $windowToScroll, sortItemQuery}, startSort);
+		if($sortHandles.length) {
+			$sortHandles.on('mousedown', {wrapper: $wrapper, items: $items, windowToScroll: $windowToScroll, sortItemQuery}, startSort);
+		} else {
+			$items.on('mousedown', {wrapper: $wrapper, items: $items, windowToScroll: $windowToScroll, sortItemQuery}, startSort);
+		}
+		
 		$items.on('moveItem', moveItem);
 
 		$(document).on('mouseup', stopSort);

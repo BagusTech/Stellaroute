@@ -1,179 +1,256 @@
 extends ../layout.pug
 
 block content
-	-
-		let visibleGuideSecions = 0;
-		function tagBackground(type) {
-			const types = {
-				food: 'bg-Orange',
-				activity: 'bg-Bl',
-				area: false,
-				sub: false,
-				attraction: false,
-				location: false,
-				note: false,
-				map: false
-			};
-
-			return types[type];
-		}
-
 	include header.pug
 
-	if guide.map
-		+modal('OverviewMap')(class='modal-lg')
-			.ta-C(style='overflow-x: scroll')
-				img(src= getImagePath(guide.map, 'large'), alt= guide.names.display)
-			button.btn.btn-default.btn-lg.mt-XXs(type='button', data-dismiss='modal', aria-label='Close') Close
-
 	.container.p-R
-		+shareThis(guide.cardImage)
+		//+shareThis(guide.cardImage)
 		.row
 			.col-sm-5.col-md-4.col-lg-3.mt-NegSm.mb-Lg.mtb-0--sm.mlr-NegMd.mlr-0--sm
 				div(data-function='stickey')
 					div(data-stickey='content')
 						include guideNav.pug
 
-			.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes
-
-
-				.content-card.js-card(duck-table='Guides', duck-function='update', duck-key=guide.Id)
-					h2.content-card--header.js-card-title New Card
-					.row
-						.col-xs-12.col-md-6
-							.form-horizontal
-								.form-group(duck-field='title', duck-type='string')
-									label.col-sm-2.control-label Title
-									.col-sm-10
-										input.form-control(type='text', duck-value)
-								.form-group(duck-field='title', duck-type='image')
-									label.col-sm-2.control-label Image
-									.col-sm-10
-										input.hidden(type='hidden', duck-value, value= item && item[field])
-										.form-control(duck-button='image-select')
-											i.fa.fa-image(aria-hidden='true')
-											span.pl-Sm(duck-image-value)= item && item[field] || 'Please select an Image'
-								.form-group(duck-field='text', duck-type='wysiwyg')
-									label.col-sm-2.control-label Text
-									.col-sm-10
-										.summernote
-								.form-group
-									label.col-sm-2.control-label Style
-									.col-sm-10
-										select.form-control
-											option ...
-									.col-sm-10.col-sm-offset-2
-										.card-styles--list
+			.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value=guide.Id)
+				div(duck-field='cards', duck-type='array')
+					div
+						for _card, i in cards ? cards : [{}]
+							- var card = _card.section
+							.input-group.guide-card--admin.js-card(duck-type='object', class=`guide-card--${card.style}`)
+								button.btn.btn-default.p-A.t-Sm.r-Sm.z-1.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
+								.input-group-addon(data-sort='handle')
+									i.fa.fa-arrows-v(aria-hidden='true')
+								.panel.panel-default(data-function='accordion', data-position= i)
+									.panel-heading(role='tab', aria-expanded='true'): h2.panel-title.js-card-title= card.title || 'New Card'
+									.p-0(role='tabpanel', aria-hidden='false')
+										.panel-body
 											.row
-												.col-xs-3.card-styles--style(card-style='section')
-													.ta-C
-														.fw-B Title
+												.col-xs-12.col-md-6.guide-card--edit
+													.form-horizontal
+														.form-group(duck-field='title', duck-type='string')
+															label.col-sm-2.control-label Title
+															.col-sm-10
+																input.form-control(type='text', duck-value, value= card.title)
+														.form-group(duck-field='image', duck-type='image')
+															label.col-sm-2.control-label Image
+															.col-sm-10
+																input.hidden(type='hidden', duck-value, value= card.image)
+																.form-control(duck-button='image-select')
+																	i.fa.fa-image(aria-hidden='true')
+																	span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+														.form-group(duck-field='text', duck-type='wysiwyg')
+															label.col-sm-2.control-label Text
+															.col-sm-10
+																.summernote!= card.text
+														.form-group(duck-field='style', duck-type='select')
+															label.col-sm-2.control-label Style
+															.col-sm-10
+																select.form-control(duck-value)
+																	option(value='big', selected= card.style === 'big') Big Card
+																	option(value='small', selected= card.style === 'small') Small Card
+																	option(value='section', selected= card.style === 'section') Section
+																	option(value='sub', selected= card.style === 'sub') Sub Section
+																	option(value='img', selected= card.style === 'img') Image Only
+																	option(value='plain', selected= card.style === 'plain') Plain Text
+																	option(value='white', selected= card.style === 'white') White Text
+																	option(value='danger', selected= card.style === 'danger') Danger Text
+																	option(value='success', selected= card.style === 'success') Success Text
+																	option(value='info', selected= card.style === 'info') Info Text
 
-														div(style='line-height: .33;') ~~ ~ ~ ~~
-												.col-xs-3.card-styles--style(card-style='sub')
-													.bg-G__lt.p-Xs.ta-C.fw-B.br-Md Title
-												.col-xs-3.card-styles--style.card-styles--style__active(card-style='big')
-													.bg-G__ltr.ta-C
-														img(src='images/no-image.svg', height='20px')
-													strong Title
-													div(style='line-height: .33;') ~~ ~ ~ ~~
-												.col-xs-3.card-styles--style(card-style='small')
-													.w-25.f-L
-														.bg-G__ltr(style='height: 40px')
-															img.w-100(src='images/no-image.svg')
-													.w-75.f-L.pl-Xs
-														strong Title
-														div(style='line-height: .33;') ~~ ~ ~ ~~ ~~
-											.row
-												.col-xs-3.card-styles--style(card-style='img')
-													.bg-G__ltr
-														img.w-100(src='images/no-image.svg', height='40px')
-												.col-xs-3.card-styles--style(card-style='plain')
-													.alert.m-0.p-Xs ~~ ~
-												.col-xs-3.card-styles--style(card-style='white')
-													.content-card.m-0.p-Xs ~~ ~
-												.col-xs-3.card-styles--style(card-style='danger')
-													.alert.alert-danger.m-0.p-Xs ~ ~~
-											.row
-												.col-xs-3.card-styles--style(card-style='success')
-													.alert.alert-success.m-0.p-Xs ~~ ~
-												.col-xs-3.card-styles--style(card-style='info')
-													.alert.alert-info.m-0.p-Xs ~ ~~
+															//.col-sm-10.col-sm-offset-2
+																.card-styles--list
+																	.row
+																		.col-xs-3.card-styles--style(card-style='section')
+																			.ta-C
+																				.fw-B Title
 
-						.col-xs-12.col-md-6
-							h3.mt-0 Preview
-							.card-styles--preview(card-style='section')
-								h2.fs-32.fw-B.m-0.ta-C.js-card-title Card Title
+																				div(style='line-height: .33;') ~~ ~ ~ ~~
+																		.col-xs-3.card-styles--style(card-style='sub')
+																			.bg-G__lt.p-Xs.ta-C.fw-B.br-Md Title
+																		.col-xs-3.card-styles--style.card-styles--style__active(card-style='big')
+																			.bg-G__ltr.ta-C
+																				img(src='images/no-image.svg', height='20px')
+																			strong Title
+																			div(style='line-height: .33;') ~~ ~ ~ ~~
+																		.col-xs-3.card-styles--style(card-style='small')
+																			.w-25.f-L
+																				.bg-G__ltr(style='height: 40px')
+																					img.w-100(src='images/no-image.svg')
+																			.w-75.f-L.pl-Xs
+																				strong Title
+																				div(style='line-height: .33;') ~~ ~ ~ ~~ ~~
+																	.row
+																		.col-xs-3.card-styles--style(card-style='img')
+																			.bg-G__ltr
+																				img.w-100(src='images/no-image.svg', height='40px')
+																		.col-xs-3.card-styles--style(card-style='plain')
+																			.alert.m-0.p-Xs ~~ ~
+																		.col-xs-3.card-styles--style(card-style='white')
+																			.content-card.m-0.p-Xs ~~ ~
+																		.col-xs-3.card-styles--style(card-style='danger')
+																			.alert.alert-danger.m-0.p-Xs ~ ~~
+																	.row
+																		.col-xs-3.card-styles--style(card-style='success')
+																			.alert.alert-success.m-0.p-Xs ~~ ~
+																		.col-xs-3.card-styles--style(card-style='info')
+																			.alert.alert-info.m-0.p-Xs ~ ~~
 
-								.lead.p-Md.ta-C.js-card-text This is where the #[strong Text] for this card will appear.
+												.col-xs-12.col-md-6.guide-card--view
+													.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
+														include cards/section.pug
 
-							.card-styles--preview(card-style='sub')
-								.pl-Md
-									.guide-card.guide-card__separator
-										.guide-card--content
-											.guide-card--info
-												h2.guide-card--header.js-card-title Card Title
-							.card-styles--preview.card-styles--preview__active(card-style='big')
-								.guide-card.guide-card__attraction
-									.guide-card--content
-										.guide-card--img-wrapper
-											img.guide-card--img.js-card-image(src='images/no-image.svg')
-										.guide-card--info
-											h2.guide-card--header.js-card-title Card #[strong Title]
-											.guide-card--description.js-card-text This is where the #[strong Text] for the card will go.
+													.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
+														include cards/sub.pug
 
-							.card-styles--preview(card-style='small')
-								.guide-card.guide-card__sub
-									.guide-card--content
-										.guide-card--img-wrapper.js-card-image(style="background-image: url('images/no-image.svg')")
-										.guide-card--info
-											h2.guide-card--header.js-card-title Card #[strong Title]
-											.guide-card--description.js-card-text This is where the #[strong Text] for the card will go.
-							.card-styles--preview(card-style='img')
-								img.w-100.js-card-image(src='images/no-image.svg')
+													.card-styles--preview.guide-card--wrapper(card-style='big', class= card.style === 'big' && 'card-styles--preview__active')
+														include cards/big.pug										
 
-							.card-styles--preview(card-style='plain')
-								.alert.js-card-text This is where the #[strong Text] for the card will go. Great for any small information that might be useful.
-							.card-styles--preview(card-style='white')
-								.content-card.mt-0.js-card-text This is where the #[strong Text] for the card will go. Great for any small information that might be useful.
-							.card-styles--preview(card-style='danger')
-								.alert.alert-danger.js-card-text This is where the #[strong Text] for the card will go. Make sure people know what yo watch out for!
-							.card-styles--preview(card-style='success')
-								.alert.alert-success.js-card-text This is where the #[strong Text] for the card will go. Ensure that people don't miss out on this!
-							.card-styles--preview(card-style='info')
-								.alert.alert-info.js-card-text This is where the #[strong Text] for the card will go. Just a bit of infomation someone should know.
+													.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
+														include cards/small.pug
+													
+													.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
+														include cards/img.pug
 
-				//include ./cards/overview.pug
-				//+factsHacks(false, guide, 'Guides')
-				//include ./cards/highlights.pug
-				//include ./cards/whereTo.pug
+													.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
+														include cards/plain.pug
+														
+													.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
+														include cards/white.pug
+														
+													.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
+														include cards/danger.pug
+														
+													.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
+														include cards/success.pug
+														
+													.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
+														include cards/info.pug
+														
+										.panel-footer.text-right
+											button.btn.btn-default.js-card-toggle Preview
+								.input-group-btn
+									button.btn.btn-danger(duck-button='delete')
+										i.fa.fa-times(aria-hidden='true')
+										span.sr-only Delete This Card
+							for _subCard, j in _card.subCards ? _card.subCards : []
+								- card = _subCard;
+								.input-group.guide-card--admin.js-card(duck-type='object', class=`guide-card--${card.style}`)
+									button.btn.btn-default.p-A.t-Sm.r-Sm.z-1.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
+									.input-group-addon(data-sort='handle')
+										i.fa.fa-arrows-v(aria-hidden='true')
+									.panel.panel-default(data-function='accordion', data-position= (card.style === 'big' || card.style === 'sub') && `${i}.${j}`)
+										.panel-heading(role='tab', aria-expanded='true'): h2.panel-title.js-card-title= card.title || 'New Card'
+										.p-0(role='tabpanel', aria-hidden='false')
+											.panel-body
+												.row
+													.col-xs-12.col-md-6.guide-card--edit
+														.form-horizontal
+															.form-group(duck-field='title', duck-type='string')
+																label.col-sm-2.control-label Title
+																.col-sm-10
+																	input.form-control(type='text', duck-value, value= card.title)
+															.form-group(duck-field='image', duck-type='image')
+																label.col-sm-2.control-label Image
+																.col-sm-10
+																	input.hidden(type='hidden', duck-value, value= card.image)
+																	.form-control(duck-button='image-select')
+																		i.fa.fa-image(aria-hidden='true')
+																		span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+															.form-group(duck-field='text', duck-type='wysiwyg')
+																label.col-sm-2.control-label Text
+																.col-sm-10
+																	.summernote!= card.text
+															.form-group(duck-field='style', duck-type='select')
+																label.col-sm-2.control-label Style
+																.col-sm-10
+																	select.form-control(duck-value)
+																		option(value='big', selected= card.style === 'big') Big Card
+																		option(value='small', selected= card.style === 'small') Small Card
+																		option(value='section', selected= card.style === 'section') Section
+																		option(value='sub', selected= card.style === 'sub') Sub Section
+																		option(value='img', selected= card.style === 'img') Image Only
+																		option(value='plain', selected= card.style === 'plain') Plain Text
+																		option(value='white', selected= card.style === 'white') White Text
+																		option(value='danger', selected= card.style === 'danger') Danger Text
+																		option(value='success', selected= card.style === 'success') Success Text
+																		option(value='info', selected= card.style === 'info') Info Text
 
-				
-				+formStart(guide, 'Guides')
-					if userIsAuthorized(user)
-						div(data-function='stickey')
-							.ta-R(data-stickey='content')
-								button.btn.btn-primary(duck-button='submit') Save
-								button.btn.btn-secondary.duck-edit-hidden(duck-button='edit') Start Editing
-								button.btn.btn-warning.duck-view-hidden(duck-button='cancel') Stop Editing
+																//.col-sm-10.col-sm-offset-2
+																	.card-styles--list
+																		.row
+																			.col-xs-3.card-styles--style(card-style='section')
+																				.ta-C
+																					.fw-B Title
 
-					+view
-						for day, i in guide.days ? guide.days : []
-							.mtb-XXl(data-position=i+1)
-								h2.fs-32.fw-B.m-0.ta-C= `${guide.isGroupedByDay ? `Day ${i+1}: ` : ''}${day.title}`
+																					div(style='line-height: .33;') ~~ ~ ~ ~~
+																			.col-xs-3.card-styles--style(card-style='sub')
+																				.bg-G__lt.p-Xs.ta-C.fw-B.br-Md Title
+																			.col-xs-3.card-styles--style.card-styles--style__active(card-style='big')
+																				.bg-G__ltr.ta-C
+																					img(src='images/no-image.svg', height='20px')
+																				strong Title
+																				div(style='line-height: .33;') ~~ ~ ~ ~~
+																			.col-xs-3.card-styles--style(card-style='small')
+																				.w-25.f-L
+																					.bg-G__ltr(style='height: 40px')
+																						img.w-100(src='images/no-image.svg')
+																				.w-75.f-L.pl-Xs
+																					strong Title
+																					div(style='line-height: .33;') ~~ ~ ~ ~~ ~~
+																		.row
+																			.col-xs-3.card-styles--style(card-style='img')
+																				.bg-G__ltr
+																					img.w-100(src='images/no-image.svg', height='40px')
+																			.col-xs-3.card-styles--style(card-style='plain')
+																				.alert.m-0.p-Xs ~~ ~
+																			.col-xs-3.card-styles--style(card-style='white')
+																				.content-card.m-0.p-Xs ~~ ~
+																			.col-xs-3.card-styles--style(card-style='danger')
+																				.alert.alert-danger.m-0.p-Xs ~ ~~
+																		.row
+																			.col-xs-3.card-styles--style(card-style='success')
+																				.alert.alert-success.m-0.p-Xs ~~ ~
+																			.col-xs-3.card-styles--style(card-style='info')
+																				.alert.alert-info.m-0.p-Xs ~ ~~
 
-								.lead.p-Md.ta-C!= day.description
-							.guide-card--wrapper
-								for card, j in day.cards ? day.cards : []
-									include ./cards/guideCard.pug
-					+edit
-						+array(null, 'days', 'Add New Day')
-							for day, i in guide.days ? guide.days : [{}]
-								+object(null, 'Day')(data-position= i+1, class='mtb-XXl p-Sm')
-									+string(day, 'title', 'Title')
-									+wysiwyg(day, 'description', 'Day Description')
+													.col-xs-12.col-md-6.guide-card--view
+														.card-styles--preview.guide-card--wrapper(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
+															include cards/section.pug
 
-									.guide-card--wrapper(data-toggle='hidden')
-										+array(null, 'cards')
-											for card, j in day.cards ? day.cards : [{}]
-												include ./cards/guideEditCard.pug
+														.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
+															include cards/sub.pug
+
+														.card-styles--preview.guide-card--wrapper(card-style='big', class= card.style === 'big' && 'card-styles--preview__active')
+															include cards/big.pug										
+
+														.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
+															include cards/small.pug
+														
+														.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
+															include cards/img.pug
+
+														.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
+															include cards/plain.pug
+															
+														.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
+															include cards/white.pug
+															
+														.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
+															include cards/danger.pug
+															
+														.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
+															include cards/success.pug
+															
+														.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
+															include cards/info.pug
+															
+											.panel-footer.text-right
+												button.btn.btn-default.js-card-toggle Preview
+									.input-group-btn
+										button.btn.btn-danger(duck-button='delete')
+											i.fa.fa-times(aria-hidden='true')
+											span.sr-only Delete This Card
+						
+					p.text-right
+						button.btn.btn-primary(type='submit', duck-button='submit') Save
+						button.btn.btn-info(duck-button='add') Add Card

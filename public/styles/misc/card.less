@@ -1,24 +1,3 @@
-.test-test{height: 34px;}
-	.test-test:after{
-		content: '';
-		position: absolute;
-		border-width: 16px;
-		border-color: transparent white transparent transparent;
-		border-style: solid;
-		top: 0;
-		right: 100%;
-	}
-	.test-test:before{
-		content: '';
-		position: absolute;
-		border-width: 17px;
-		border-color: transparent #959ca2 transparent transparent;
-		border-style: solid;
-		top: -1px;
-		right: 100%;
-
-	}
-
 .loading {
 	.card {
 		min-height: 150px;
@@ -100,19 +79,144 @@
 		color: @grey;
 	}
 
+.guide-nav--sub {
+	margin-left: -@gw-Sm;
+}
+.guide-card--admin {
+	.input-group-addon,
+	.input-group-btn,
+	.panel-heading,
+	.panel-footer,
+	.guide-card--edit {
+		display: none;
+	}
+
+	.guide-card--view {
+		width: 100%;
+	}
+
+	.panel-body,
+	.panel {
+		background: none;
+		padding: 0;
+		box-shadow: none;
+	}
+
+	.panel {
+		border-width: 0;
+	}
+
+	> .btn {
+		transition: opacity .17s ease-out;
+		opacity: 0;
+	}
+
+	&:hover > .btn {
+		opacity: 1;
+	}
+
+	&.guide-card--section + .guide-card--admin{
+		position: relative;
+
+		&:before {
+			content: ' ';
+			position: absolute;
+			left: @gw-Md;
+			width: 3px;
+			background: @grey-lighter;
+			top: 0;
+			height: @gw-Md;
+			z-index: 1;
+		}
+	}
+
+	&:last-of-type {
+		&:before {
+			content: ' ';
+			position: absolute;
+			left: @gw-Md;
+			width: 3px;
+			background: @grey-lighter;
+			
+			bottom: 0;
+			top: auto;
+			z-index: 1;
+			border-radius: 0;
+			height: 33px;
+		}
+	}
+
+	.alert {
+		margin: 0;
+	}
+
+	[card-style="small"] {
+		margin-top: -@gw-Md - 1;
+		//border-top: 1px solid white;
+
+		.guide-card--content {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+}
+	.guide-card--edit-mode {
+		margin-bottom: @gw-Sm;
+
+		&, .guide-card--wrapper, .guide-card {
+			&:before,
+			&:after {
+				display: none;
+			}
+		}
+
+		.guide-card--wrapper {
+			border: none;
+			padding-left: 0;
+			margin-left: 0; 
+		}
+
+		> .btn {
+			display: none;
+		}
+
+		.input-group-addon,
+		.input-group-btn {
+			display: table-cell;
+		}
+
+		.panel-heading,
+		.panel-footer,
+		.guide-card--edit {
+			display: block;
+		}
+
+		.guide-card--view {
+			width: 50%;
+		}
+
+		.panel-body {
+			background: white;
+			padding: @gw-Sm;
+		}
+
+		.panel {
+			border-width: 1px;
+		}
+	}
+
 .guide-card--wrapper {
-	margin: 0 0 @gw -@gw-Sm;
-	padding: 0 0 0 @gw-Sm;
+	margin: 0 0 0 -@gw-Sm;
+	padding: 0 0 @gw-Md @gw-Sm;
 	border-left: 1px solid @grey;
 }
 
 .guide-card {
-	margin-top: @gw-Md;
 	position: relative;
 
 	&:first-child {
 		&:after{
-			content: '';
+			//content: '';
 			top: 0;
 			left: -@gw-Sm - 1;
 			background: @grey-lighter;
@@ -124,7 +228,7 @@
 
 	&:last-child {
 		&:after{
-			content: '';
+			//content: '';
 			bottom: 0;
 			left: -@gw-Sm - 1;
 			background: @grey-lighter;
@@ -136,13 +240,8 @@
 }
 	.guide-card__food {}
 	.guide-card__area {}
-	.guide-card__sub {margin-top: 0; position: relative;}
-	.guide-card__attraction {}
-	.guide-card__location {}
-	.guide-card__activity {}
-	.guide-card__note {}
-	.guide-card__map {}
-	.guide-card__separator {
+	.guide-card__small {margin-top: 0; position: relative;}
+	.guide-card__sub {
 		font-size: 1.2em;
 
 		&:before{
@@ -197,7 +296,7 @@
 			color: white;
 		}
 
-		.guide-card__separator & {
+		.guide-card__sub & {
 			background: @grey-light;
 			text-align: center;
 		}
@@ -220,7 +319,7 @@
 			.guide-card--header {
 				margin: 0 0 @gw-Md;
 
-				.guide-card__separator & {
+				.guide-card__sub & {
 					margin: 0;
 					font-weight: bold;
 				}
@@ -256,13 +355,13 @@
 	}
 		.guide-card__food {}
 		.guide-card__area {}
-		.guide-card__sub {}
+		.guide-card__small {}
 		.guide-card__attraction {}
 		.guide-card__location {}
 		.guide-card__activity {}
 		.guide-card__note {}
 		.guide-card__map {}
-		.guide-card__separator {
+		.guide-card__sub {
 			&:before{
 				left: -@gw-Lg + @gw-Xs - 1;
 			}
@@ -272,7 +371,7 @@
 			padding: @gw-Md;
 			font-size: 24px;
 
-			.guide-card__sub & {
+			.guide-card__small & {
 				position: absolute;
 				background: white;
 				margin-top: 0;
@@ -304,7 +403,7 @@
 		} */
 
 		.guide-card--content {
-			.guide-card__sub & {
+			.guide-card__small & {
 				display: flex;
 				flex-wrap: wrap;
 				align-items: stretch;
@@ -312,7 +411,7 @@
 		}
 
 			.guide-card--img-wrapper {
-				.guide-card__sub & {
+				.guide-card__small & {
 					width: 25%;
 					background-repeat: no-repeat;
 					background-size: cover;
@@ -326,14 +425,14 @@
 			.guide-card--info {
 				padding: @gw-Sm;
 
-				.guide-card__sub & {
+				.guide-card__small & {
 					width: 75%;
 				}
 			}
 				/* .guide-card--header {
 					margin: 0 0 @gw-Md;
 
-					.guide-card__separator & {
+					.guide-card__sub & {
 						margin: 0;
 						font-weight: bold;
 					}

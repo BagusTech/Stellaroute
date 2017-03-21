@@ -1,16 +1,11 @@
-div.city-header(style=`background: rgba(0, 0, 0, 0) url("${guide.backgroundImage ? getImagePath(guide.backgroundImage, 'large') : (city && getImagePath(city.backgroundImage, 'large') || country && getImagePath(country.backgroundImage, 'large'))}") no-repeat scroll center 57% / cover;`)
+div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
 			if userIsAuthorized(user)
 				.bg-W.p-Xs.f-R= guide.Id
 
 			ol.breadcrumb
-				li.active Created by: #[a(href= '/')= author && author.names.first || 'unknown']
-				//if country
-					li.active: a(href= `/${country.url}`)= country.names.display
-				//if city
-					li.active: a(href= `/${city.countryUrl}/${city.url}`)= city.names.display
-					li.active: a(href= `/${city.countryUrl}/${city.url}/#Guides`) Guides
+				li.active Created by: #[a(href= '/')= author && author.name && author.name.first || 'unknown']
 
 			+formStart(guide, 'Guides')
 				+view

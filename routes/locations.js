@@ -16,6 +16,61 @@ const CityRegion     = require('../schemas/city-region');
 const Neighborhood   = require('../schemas/neighborhood');
 const router         = express.Router();
 
+router.get('/:guide', (req, res, next) => {
+	const guide = Guide.findOne('url', req.params.guide).items;
+
+	if(!guide) {
+		next();
+		return;
+	}
+
+	const author = User.findOne('Id', guide.author).items;
+	const _cards = guide.cards || [];
+
+	let endSubCards = _cards.length
+	const cards = _cards.map((_card, cardIndex, arr) => {
+		const obj = {};
+
+		obj.section = _card
+		obj.subCards = [];
+
+		if(obj.section.style !== 'section') {
+			return obj;
+		}
+
+		const startIndex = cardIndex;
+		let endIndex = _cards.length;
+		obj.subCards = arr.filter((_subCard, subCardIndex) => {
+			if(subCardIndex < cardIndex || subCardIndex >= endSubCards) {
+				return false;
+			}
+
+			if(_subCard.style === 'section') {
+				if(cardIndex !== subCardIndex) {
+					endSubCards = subCardIndex;
+					endIndex = subCardIndex;
+				}
+				return false;
+			}
+
+			return true;
+		});
+
+		_cards.splice(startIndex, (endIndex - startIndex - 1));
+
+		endSubCards = _cards.length;
+		return obj;
+	}).filter((_) => _);
+
+	res.render('guides/guide', {
+		title: `Stellaroute: ${guide.names.display}`,
+		description: `Stellaroute: ${guide.names.display} Overview`,
+		guide,
+		author,
+		cards
+	});
+});
+
 router.get('/:continent', (req, res, next) => {
 	const continent = Continent.findOne('url', req.params.continent).items;
 
@@ -525,53 +580,6 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 		cityRegions: cityRegions,
 		neighborhood: neighborhood,
 		nearbyNeighborhoods: nearbyNeighborhoods,
-	});
-});
-
-router.get('/:guide', (req, res, next) => {
-	const guide = Guide.findOne('url', req.params.guide).items;
-
-	if(!guide) {
-		next();
-		return;
-	}
-
-	const author = User.findOne('Id', guide.author).items;
-	const _cards = guide.cards || [];
-
-	let endSubCards = _cards.length
-	const cards = _cards.map((_card, cardIndex) => {
-		const obj = {}
-
-		if(_card.style === 'section'){
-			obj.section = _card
-			obj.subCards = _cards.filter((_subCard, subCardIndex) => {
-				if(subCardIndex < cardIndex || subCardIndex >= endSubCards) {
-					return false;
-				}
-
-				if(_subCard.style === 'section') {
-					if(cardIndex !== subCardIndex) {
-						endSubCards = subCardIndex;
-					}
-
-					return false;
-				}
-
-				return true;
-			});
-
-			endSubCards = _cards.length;
-			return obj;
-		}
-	}).filter((_) => _);
-
-	res.render('guides/guide', {
-		title: `Stellaroute: ${guide.names.display}`,
-		description: `Stellaroute: ${guide.names.display} Overview`,
-		guide,
-		author,
-		cards
 	});
 });
 

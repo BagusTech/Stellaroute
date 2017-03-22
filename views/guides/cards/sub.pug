@@ -1,4 +1,2 @@
-.guide-card.guide-card__sub
-	.guide-card--content
-		.guide-card--info
-			h2.guide-card--header.js-card-title= card.title || 'Card Title'
+.guide-card--card(class=`guide-card--card__${card.style}`)
+	h3.guide-card--title.js-card-title= card.title || 'Card Title'

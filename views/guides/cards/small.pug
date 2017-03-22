@@ -1,6 +1,5 @@
-.guide-card.guide-card__small
-	.guide-card--content
-		.guide-card--img-wrapper.js-card-image(style=`background-image: url(${getImagePath(card.image, 'thumb2')})`)
-		.guide-card--info
-			h2.guide-card--header.js-card-title= card.title || 'Card Title'
-			.guide-card--description.js-card-text!= card.text || 'This is where the <strong>Text</strong> for the card will go.'
+.guide-card--card(class=`guide-card--card__${card.style}`)
+	img.guide-card--img.js-card-image(src= getImagePath(card.image))
+	.guide-card--body
+		h4.guide-card--title.js-card-title= card.title || 'Card Title'
+		.guide-card--text.js-card-text!= card.text || 'This is where the <strong>Text</strong> for the card will go.'

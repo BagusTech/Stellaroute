@@ -1,2 +1,4 @@
-h2.fs-32.fw-B.m-0.ta-C.js-card-title= card.title || 'Card Title'
-.lead.p-Md.ta-C.js-card-text!= card.text || 'This is where the <strong>Text</strong> for this card will appear.'
+.guide-card--card(class=`guide-card--card__${card.style}`)
+	.guide-card--body
+		h2.guide-card--title.js-card-title= card.title || 'Card Title'
+		.guide-card--text.js-card-text!= card.text || 'This is where the <strong>Text</strong> for the card will go.'

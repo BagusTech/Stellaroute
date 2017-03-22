@@ -49,7 +49,7 @@ if userIsAuthorized(user)
 				i.fa.fa-times(aria-hidden='true')
 				span.sr-only Delete This Card
 else
-	div(class=`guide-card--${card.style}`, data-position= offset)
+	div(data-position= offset)
 		if card.style === 'section'
 			include section.pug
 

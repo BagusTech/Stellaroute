@@ -115,7 +115,7 @@
 		opacity: 1;
 	}
 
-	&.guide-card--section + .guide-card--admin{
+	/*&.guide-card--section + .guide-card--admin{
 		position: relative;
 
 		&:before {
@@ -144,21 +144,7 @@
 			border-radius: 0;
 			height: 33px;
 		}
-	}
-
-	.alert {
-		margin: 0;
-	}
-
-	[card-style="small"] {
-		margin-top: -@gw-Md - 1;
-		//border-top: 1px solid white;
-
-		.guide-card--content {
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
-	}
+	} */
 }
 	.guide-card--edit-mode {
 		margin-bottom: @gw-Sm;
@@ -205,246 +191,61 @@
 		}
 	}
 
-.guide-card--wrapper {
+.guide-card--card {
 	margin: 0 0 0 -@gw-Sm;
-	padding: 0 0 @gw-Md @gw-Sm;
+	padding: 0 0 @gw-Md @gw-Md;
 	border-left: 1px solid @grey;
 }
-
-.guide-card {
-	position: relative;
-
-	&:first-child {
-		&:after{
-			//content: '';
-			top: 0;
-			left: -@gw-Sm - 1;
-			background: @grey-lighter;
-			width: 3px;
-			height: 1.2em;
-			position: absolute;
-		}
-	}
-
-	&:last-child {
-		&:after{
-			//content: '';
-			bottom: 0;
-			left: -@gw-Sm - 1;
-			background: @grey-lighter;
-			width: 3px;
-			height: 1.2em;
-			position: absolute;
-		}
-	}
-}
-	.guide-card__food {}
-	.guide-card__area {}
-	.guide-card__small {margin-top: 0; position: relative;}
-	.guide-card__sub {
-		font-size: 1.2em;
-
-		&:before{
-			content: '';
-			top: 1.2em;
-			left: -@gw-Md + @gw-Xs - 1;
-			background: @grey-dark;
-			width: @gw-Sm+1;
-			height: @gw-Sm+1;
-			border-radius: 50%;
-			position: absolute;
-			z-index: 1;
-		}
-	}
-
-	.guide-card--directions {
-		margin-top: -@gw-Md;
-		padding: @gw-Sm;
-		text-align: center;
-		font-size: 16px;
-
-		.guide-card__sub & {
-			background: @grey-light;
-			margin-top: 0;
-			padding: @gw-Xs;
-
-			.directions--distance { padding-left: @gw-Xs;}
-		}
-	}
-		.directions--method {}
-		.directions--time { padding-left: @gw-Md;}
-		.directions--distance { padding-left: @gw-Sm; }
-
-	.guide-card--tag {
-		text-align: center;
-		padding: @gw-Xs;
-		border-radius: @br-Md @br-Md 0 0;
-		color: white;
-		font-size: 18px;
-
-		+ .guide-card--content {
-			border-radius: 0 0 @br-Md @br-Md;
-		}
-	}
-
-	.guide-card--content {
+	.guide-card--body {
 		.card;
 
-		overflow: hidden;
+		padding: @gw-Sm;
+	}
 
-		.guide-card__area & {
-			background: @purple;
-			color: white;
-		}
+	.guide-card--img {
+		width: 100%;
+	}
 
-		.guide-card__sub & {
+	.guide-card--title {
+		margin: 0 0 @gw-Sm;
+		font-size: 1.3em;
+	}
+
+	.guide-card--card__section {}
+	.guide-card--card__sub {
+		.guide-card--body {
 			background: @grey-light;
 			text-align: center;
 		}
 	}
 
+	.guide-card--card__big {}
+	.guide-card--card__small {margin-top: 0; position: relative;}
+
+	.guide-card--card__img {}
+
+	.guide-card--card__plain {}
+	.guide-card--card__white {}
+	.guide-card--card__danger {}
+	.guide-card--card__success {}
+	.guide-card--card__info {}
+
+
+	
+
 		.guide-card--img-wrapper {
-			.guide-card__sub & {
+			.guide-card--card__sub & {
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: center center;
 			}
 		}
-			.guide-card--img {
-				width: 100%;
-			}
+			
 
 		.guide-card--info {
 			padding: @gw-Sm;
 		}
-			.guide-card--header {
-				margin: 0 0 @gw-Md;
-
-				.guide-card__sub & {
-					margin: 0;
-					font-weight: bold;
-				}
-			}
-
-			.guide-card--description {}
-			.guide-card--suggested-time {
-				color: @grey;
-
-				.guide-card__area & {
-					color: white;
-				}
-			}
+			
 
 @media(min-width: @screen-Sm) {
-	.guide-card--wrapper {
-		margin-left: @gw;
-		padding-left: @gw;
-	}
-
-	.guide-card {
-		&:first-child {
-			&:after{
-				left: -@gw-Md - 1;
-			}
-		}
-
-		&:last-child {
-			&:after{
-				left: -@gw-Md - 1;
-			}
-		}
-	}
-		.guide-card__food {}
-		.guide-card__area {}
-		.guide-card__small {}
-		.guide-card__attraction {}
-		.guide-card__location {}
-		.guide-card__activity {}
-		.guide-card__note {}
-		.guide-card__map {}
-		.guide-card__sub {
-			&:before{
-				left: -@gw-Lg + @gw-Xs - 1;
-			}
-		}
-
-		.guide-card--directions {
-			padding: @gw-Md;
-			font-size: 24px;
-
-			.guide-card__small & {
-				position: absolute;
-				background: white;
-				margin-top: 0;
-				padding: @gw-Xs;
-				font-size: 16px;
-				left: 2%;
-				right: 77%;
-				top: -20px;
-				z-index: 1;
-				border: 1px solid @grey;
-
-				.directions--distance { padding-left: @gw-Xs;}
-			}
-		}
-			.directions--method {}
-			.directions--time { padding-left: @gw-Md;}
-			.directions--distance { padding-left: @gw-Sm; }
-
-		/* .guide-card--tag {
-			text-align: center;
-			padding: @gw-Xs;
-			border-radius: @br-Md @br-Md 0 0;
-			color: white;
-			font-size: 18px;
-
-			+ .guide-card--content {
-				border-radius: 0 0 @br-Md @br-Md;
-			}
-		} */
-
-		.guide-card--content {
-			.guide-card__small & {
-				display: flex;
-				flex-wrap: wrap;
-				align-items: stretch;
-			}
-		}
-
-			.guide-card--img-wrapper {
-				.guide-card__small & {
-					width: 25%;
-					background-repeat: no-repeat;
-					background-size: cover;
-					background-position: center center;
-				}
-			}
-				.guide-card--img {
-					width: 100%;
-				}
-
-			.guide-card--info {
-				padding: @gw-Sm;
-
-				.guide-card__small & {
-					width: 75%;
-				}
-			}
-				/* .guide-card--header {
-					margin: 0 0 @gw-Md;
-
-					.guide-card__sub & {
-						margin: 0;
-						font-weight: bold;
-					}
-				}
-
-				.guide-card--description {}
-				.guide-card--suggested-time {
-					color: @grey;
-
-					.guide-card__area & {
-						color: white;
-					}
-				} */
 }

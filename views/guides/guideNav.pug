@@ -1,5 +1,4 @@
-nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true', data-interior-nav-offset='60')
-	- console.log(cards)
+nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true')
 	for card, i in cards ? cards : []
 		a(href='#', role='tab', aria-expanded='false', data-position= i)
 			h3= card.section.title

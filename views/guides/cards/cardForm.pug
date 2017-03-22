@@ -1,0 +1,68 @@
+.form-horizontal
+	.form-group(duck-field='title', duck-type='string')
+		label.col-sm-2.control-label Title
+		.col-sm-10
+			input.form-control(type='text', duck-value, value= card.title)
+	.form-group(duck-field='image', duck-type='image')
+		label.col-sm-2.control-label Image
+		.col-sm-10
+			input.hidden(type='hidden', duck-value, value= card.image)
+			.form-control(duck-button='image-select')
+				i.fa.fa-image(aria-hidden='true')
+				span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+	.form-group(duck-field='text', duck-type='wysiwyg')
+		label.col-sm-2.control-label Text
+		.col-sm-10
+			.summernote!= card.text
+	.form-group(duck-field='style', duck-type='select')
+		label.col-sm-2.control-label Style
+		.col-sm-10
+			select.form-control(duck-value)
+				option(value='big', selected= card.style === 'big') Big Card
+				option(value='small', selected= card.style === 'small') Small Card
+				option(value='section', selected= card.style === 'section') Section
+				option(value='sub', selected= card.style === 'sub') Sub Section
+				option(value='img', selected= card.style === 'img') Image Only
+				option(value='plain', selected= card.style === 'plain') Plain Text
+				option(value='white', selected= card.style === 'white') White Text
+				option(value='danger', selected= card.style === 'danger') Danger Text
+				option(value='success', selected= card.style === 'success') Success Text
+				option(value='info', selected= card.style === 'info') Info Text
+
+		//.col-sm-10.col-sm-offset-2
+			.card-styles--list
+				.row
+					.col-xs-3.card-styles--style(card-style='section')
+						.ta-C
+							.fw-B Title
+
+							div(style='line-height: .33;') ~~ ~ ~ ~~
+					.col-xs-3.card-styles--style(card-style='sub')
+						.bg-G__lt.p-Xs.ta-C.fw-B.br-Md Title
+					.col-xs-3.card-styles--style.card-styles--style__active(card-style='big')
+						.bg-G__ltr.ta-C
+							img(src='images/no-image.svg', height='20px')
+						strong Title
+						div(style='line-height: .33;') ~~ ~ ~ ~~
+					.col-xs-3.card-styles--style(card-style='small')
+						.w-25.f-L
+							.bg-G__ltr(style='height: 40px')
+								img.w-100(src='images/no-image.svg')
+						.w-75.f-L.pl-Xs
+							strong Title
+							div(style='line-height: .33;') ~~ ~ ~ ~~ ~~
+				.row
+					.col-xs-3.card-styles--style(card-style='img')
+						.bg-G__ltr
+							img.w-100(src='images/no-image.svg', height='40px')
+					.col-xs-3.card-styles--style(card-style='plain')
+						.alert.m-0.p-Xs ~~ ~
+					.col-xs-3.card-styles--style(card-style='white')
+						.content-card.m-0.p-Xs ~~ ~
+					.col-xs-3.card-styles--style(card-style='danger')
+						.alert.alert-danger.m-0.p-Xs ~ ~~
+				.row
+					.col-xs-3.card-styles--style(card-style='success')
+						.alert.alert-success.m-0.p-Xs ~~ ~
+					.col-xs-3.card-styles--style(card-style='info')
+						.alert.alert-info.m-0.p-Xs ~ ~~

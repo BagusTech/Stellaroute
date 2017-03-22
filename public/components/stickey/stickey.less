@@ -3,6 +3,10 @@
 	width: 100%;
 	z-index: 1;
 
+	[data-stickey='content'] {
+		display: inline-block; // for bfc
+	}
+	
 	&.stickey [data-stickey='content'] {
 		position: fixed;
 		top: 0 !important;

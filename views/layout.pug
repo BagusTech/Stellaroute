@@ -1,10 +1,10 @@
 doctype html
-html(lang='en', style='height: 100%')
+html(lang='en')
 	head
 		include controls/common-resources.pug
 		block head
 
-	body.loading#Stellaroute(data-function='scroll')
+	body.loading#Stellaroute
 		// include all mixins
 		include mixins/_mixins.pug
 		include controls/shareThis.pug
@@ -17,17 +17,13 @@ html(lang='en', style='height: 100%')
 		noscript
 			iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NG3DCTG", height="0", width="0", style="display:none;visibility:hidden")
 
-		div#Body(data-scroll='content-wrapper')
-			.body-wrapper(data-scroll='content')
-				header.site-header
-					block header
-						include controls/header.pug
-					
-				main.site-body
-					include controls/flash.pug
-					block content
+		header.site-header
+			block header
+				include controls/header.pug
+			
+		main.site-body
+			include controls/flash.pug
+			block content
 
-				block footer
-					include controls/footer.pug
-		div(data-scroll='scrollbar')
-			button
+		block footer
+			include controls/footer.pug

@@ -147,7 +147,7 @@ void function initializeAccordions($) {
         $tabs.click(initTabChange);
 
         // if there isn't a page anchor, end here
-        if (!pageAnchor) {
+        if (!pageAnchor && !alwaysShowOne) {
             $wrapper.trigger('accordin-initialized');
             return;
         }
@@ -160,6 +160,8 @@ void function initializeAccordions($) {
             $(window).on('load', () => {
                 $anchorTab.click();
             });
+        } else if (alwaysShowOne && !$tabs.filter((i, _tab) => $(_tab).attr('aria-expanded') === 'true' ? true : false).length) {
+            $tabs.eq(0).trigger('tab-change', [true])
         }
 
         $wrapper.trigger('accordin-initialized');

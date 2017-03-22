@@ -566,9 +566,6 @@ router.get('/:guide', (req, res, next) => {
 		}
 	}).filter((_) => _);
 
-	console.log(cards);
-
-
 	res.render('guides/guide', {
 		title: `Stellaroute: ${guide.names.display}`,
 		description: `Stellaroute: ${guide.names.display} Overview`,

@@ -34,7 +34,8 @@ void function initInteriorNav($) {
 	function checkForActiveTabChange(e) {
 		const $wrapper = e.data.wrapper;
 		const $nodes = e.data.nodes;
-		const $allActiveNodes = $nodes.filter((i, node) => $(node).is(':visible') && $(node).offset().top <= e.data.offset);
+		const isWindow = e.data.isWindow;
+		const $allActiveNodes = $nodes.filter((i, node) => $(node).is(':visible') && $(node).offset().top <= (isWindow ? $('html,body').scrollTop() : e.data.offset));
 		const $activeNodes = $wrapper.find('.active');
 		const activePosition = $allActiveNodes.last().attr('data-position');
 		const currentPosition = $activeNodes.last().attr('data-position')
@@ -66,11 +67,12 @@ void function initInteriorNav($) {
 		const $contentScrollWrap = e.data.contentScrollWrap;
 		const $content = e.data.content;
 		const offset = e.data.offset;
+		const isWindow = e.data.isWindow;
 		const $this = $(this);
 		const position = $this.attr('data-position');
 		const $thisParent = $wrapper.find(`[data-position="${position.split('.')[0]}"]`);
 		const $goTo = $nodes.filter((i, node) => $(node).attr('data-position') === position && $(node).is(':visible'));
-		const goToVal = $goTo.offset().top - $content.offset().top - offset;
+		const goToVal = isWindow ? $goTo.offset().top : ($goTo.offset().top - $content.offset().top - offset);
 
 		$wrapper.find('a').removeClass('active');
 
@@ -80,29 +82,34 @@ void function initInteriorNav($) {
 			$thisParent.addClass('active').trigger('becomeActiveNode', [$wrapper, true]);
 			$this.addClass('active').trigger('becomeActiveNode', [$wrapper]);
 		}
-
 		$contentScrollWrap.off('scroll', checkForActiveTabChange);
-		$contentScrollWrap.trigger('scrollTo', [goToVal]);
+
+		if (isWindow) {
+			$content.animate({scrollTop: goToVal});
+		} else {
+			$contentScrollWrap.trigger('scrollTo', [goToVal]);
+		}
 
 		// don't check for active tab change when we know it's happening causing it to trigger twice
 		setTimeout(() => {
-			$contentScrollWrap.on('scroll', {wrapper: $wrapper, nodes: $nodes, offset}, checkForActiveTabChange);
+			$contentScrollWrap.on('scroll', {wrapper: $wrapper, nodes: $nodes, offset, isWindow}, checkForActiveTabChange);
 		}, $wrapper.attr('data-animation-speed') || 500);
 	}
 
 	function interiorNav(wrapper, contentWrapper, userDefinedOffset) {
 		const $wrapper = $(wrapper);
+		const isWindow = !(contentWrapper || $wrapper.attr('data-interior-nav-content-wrapper'));
 		const $contentScrollWrap = contentWrapper ? $(contentWrapper) : 
 													($wrapper.attr('data-interior-nav-content-wrapper') ? $($wrapper.attr('data-interior-nav-content-wrapper')) :
-																											$wrapper.closest('[data-scroll=content-wrapper]'));
-		const $content = $contentScrollWrap.find('> [data-scroll="content"]');
+																											$(window));
+		const $content = isWindow ? $('html, body') : $contentScrollWrap.find('> [data-scroll="content"]');
 		const $nodes = $('.js-nav-nodes [data-position]');
 		const offset = userDefinedOffset || $wrapper.attr('data-interior-nav-offset') || 24;
 
-		$wrapper.find('[data-position]').on('becomeActiveNode', becomeActiveNode)
+		$wrapper.find('[data-position]').off('becomeActiveNode', becomeActiveNode).on('becomeActiveNode', becomeActiveNode)
 
-		$wrapper.find('a').on('click', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, content: $content, offset}, scrollTo);
-		$contentScrollWrap.on('scroll', {wrapper: $wrapper, nodes: $nodes, offset}, checkForActiveTabChange);
+		$wrapper.find('a').off('click', scrollTo).on('click', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, content: $content, offset, isWindow}, scrollTo);
+		$contentScrollWrap.off('scroll', checkForActiveTabChange).on('scroll', {wrapper: $wrapper, nodes: $nodes, offset, isWindow}, checkForActiveTabChange);
 	}
 
 	$.fn.interiorNav = function(contentWrapper, offset) {

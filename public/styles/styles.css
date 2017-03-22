@@ -3977,7 +3977,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .breadcrumb > li {
   display: inline-block;
-  max-width: 33%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5876,67 +5875,6 @@ button.close {
 [data-icon] > .fa {
   line-height: inherit;
 }
-[data-function*='interiorNav'] {
-  margin: 0;
-  z-index: 2;
-  white-space: nowrap;
-  position: relative;
-  -webkit-transition: left 0.17s ease-out;
-  transition: left 0.17s ease-out;
-  display: inline-block;
-}
-[data-function*='interiorNav'] > [role='tab'] {
-  background: white;
-  padding: 12px;
-  display: inline-block;
-  border-right: 1px solid #cccccc;
-  border-bottom: 1px solid #959ca2;
-  max-width: 200px;
-  position: relative;
-}
-[data-function*='interiorNav'] > [role='tab'].active {
-  background: #7770A1;
-}
-[data-function*='interiorNav'] h3 {
-  font-weight: inherit;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-[data-function*='interiorNav'] a {
-  color: #4a4d50;
-  display: block;
-  font-weight: normal;
-  padding: 6px 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-[data-function*='interiorNav'] .active {
-  color: white;
-}
-[data-function*='interiorNav'] [role='tabpanel'] {
-  background: #f7f7f7;
-  padding: 0;
-  list-style: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  -webkit-transition: left 0.17s ease-out;
-  transition: left 0.17s ease-out;
-}
-[data-function*='interiorNav'] [role='tabpanel'] a {
-  display: block;
-  width: 100%;
-}
-[data-function*='interiorNav'] [role='tabpanel'] .active {
-  background: #aaa3d4;
-}
-[data-function*='interiorNav'] li {
-  display: inline-block;
-  max-width: 150px;
-  border-right: 1px solid #cccccc;
-}
 @media (min-width: 767px) {
   [data-function*='interiorNav'] {
     white-space: inherit;
@@ -6392,6 +6330,9 @@ button.close {
   width: 100%;
   z-index: 1;
 }
+[data-function*='stickey'] [data-stickey='content'] {
+  display: inline-block;
+}
 [data-function*='stickey'].stickey [data-stickey='content'] {
   position: fixed;
   top: 0 !important;
@@ -6525,20 +6466,19 @@ button.close {
     max-width: 1607px;
   }
 }
-#Stellaroute {
-  padding: 0 !important;
+html,
+body {
+  min-height: 100%;
 }
-.body-wrapper {
-  height: 100%;
+body {
   display: table;
+  table-layout: fixed;
   width: 100%;
-  overflow: hidden;
   background: #e7e7e7;
 }
 .site-body {
   display: table-row;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
 }
 .site-header {
   display: table-row;
@@ -7347,6 +7287,7 @@ form.profile-settings-update .profile-label.notification h3 {
   height: 13px;
   border-radius: 50%;
   position: absolute;
+  z-index: 1;
 }
 .guide-card--directions {
   margin-top: -24px;

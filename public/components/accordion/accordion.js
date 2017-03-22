@@ -160,7 +160,7 @@ void function initializeAccordions($) {
             $(window).on('load', () => {
                 $anchorTab.click();
             });
-        } else if (alwaysShowOne && !$tabs.filter((i, _tab) => $(_tab).attr('aria-expanded') === 'true' ? true : false).length) {
+        } else if (alwaysShowOne && !$tabs.filter((i, _tab) => ($(_tab).attr('aria-expanded' === 'true') ? true : false)).length) {
             $tabs.eq(0).trigger('tab-change', [true])
         }
 

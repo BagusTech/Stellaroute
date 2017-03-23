@@ -1,9 +1,13 @@
-nav.guide-nav(data-function='accordion, interiorNav', data-always-show-one='true')
-	for card, i in cards ? cards : []
-		a(href='#', role='tab', aria-expanded='false', data-position= i)
-			h3= card.section.title
-		if card.subCards
-			ul(role='tabpanel', aria-hidden='true')
-				for subCard, j in card.subCards
-					if subCard.style === 'sub' || subCard.style === 'big'
-						li(class=`guide-nav--${subCard.style}`): a(href='#', data-position= `${i}.${j}`)= subCard.title
+div(data-function='stickey', data-stickey-bottom='footer.site-footer')
+	nav.interior-nav(data-stickey='content', data-function='interiorNav')
+		button.interior-nav--toggle(data-interior-nav='toggle')
+			i.fa.fa-chevron-right(aria-hidden='true')
+		.interior-nav--nav(data-function='accordion', data-always-show-one='true')
+			for card, i in cards ? cards : []
+				a.interior-nav--node(href='#', role='tab', aria-expanded='false', data-position= i)
+					h3= card.section.title
+				if card.subCards && card.subCards.length
+					ul.interior-nav--sub-nav(role='tabpanel', aria-hidden='true')
+						for subCard, j in card.subCards
+							if subCard.style === 'sub' || subCard.style === 'big'
+								li(class=`guide-nav--${subCard.style}`): a.interior-nav--node(href='#', data-position= `${i}.${j}`)= subCard.title

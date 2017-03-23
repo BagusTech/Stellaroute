@@ -6,14 +6,12 @@ block content
 	.container.p-R
 		//+shareThis(guide.cardImage)
 		.row
-			.col-sm-5.col-md-4.col-lg-3
-				div(data-function='stickey')
-					div(data-stickey='content')
-						include guideNav.pug
+			.col-xs-12.col-sm-4.col-lg-3
+				include guideNav.pug
 
-			.col-xs-12.col-sm-7.col-md-8.col-lg-9.js-nav-nodes(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value=guide.Id)
+			.col-xs-12.col-sm-8.col-lg-9.js-nav-nodes(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value=guide.Id)
 				- var _attributes = userIsAuthorized(user) ? {'duck-field': 'cards', 'duck-type': 'array'} : {};
-				.pt-Lg.pt-0--Sm&attributes(_attributes)
+				div&attributes(_attributes)
 					div
 						for _card, i in cards ? cards : [{}]
 							- var card = _card.section, offset = i;

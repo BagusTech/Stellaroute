@@ -4,6 +4,7 @@ if userIsAuthorized(user)
 		.input-group-addon(data-sort='handle')
 			i.fa.fa-arrows-v(aria-hidden='true')
 		.panel.panel-default(data-function='accordion', data-position= offset)
+
 			.panel-heading(role='tab', aria-expanded='true'): h2.panel-title.js-card-title= card.title || 'New Card'
 			.p-0(role='tabpanel', aria-hidden='false')
 				.panel-body
@@ -12,6 +13,7 @@ if userIsAuthorized(user)
 							include cardForm.pug
 
 						.col-xs-12.col-md-6.guide-card--view
+							- offset = null; // so that the cards don't also get the data-position attribute
 							.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
 								include section.pug
 
@@ -49,33 +51,32 @@ if userIsAuthorized(user)
 				i.fa.fa-times(aria-hidden='true')
 				span.sr-only Delete This Card
 else
-	div(data-position= offset)
-		if card.style === 'section'
-			include section.pug
+	if card.style === 'section'
+		include section.pug
 
-		if card.style === 'sub'
-			include sub.pug
-		
-		if card.style === 'big'
-			include big.pug
-		
-		if card.style === 'small'
-			include small.pug
-		
-		if card.style === 'img'
-			include img.pug
-		
-		if card.style === 'plain'
-			include plain.pug
-		
-		if card.style === 'white'
-			include white.pug
-		
-		if card.style === 'danger'
-			include danger.pug
-		
-		if card.style === 'success'
-			include success.pug
-		
-		if card.style === 'info'
-			include info.pug
+	if card.style === 'sub'
+		include sub.pug
+	
+	if card.style === 'big'
+		include big.pug
+	
+	if card.style === 'small'
+		include small.pug
+	
+	if card.style === 'img'
+		include img.pug
+	
+	if card.style === 'plain'
+		include plain.pug
+	
+	if card.style === 'white'
+		include white.pug
+	
+	if card.style === 'danger'
+		include danger.pug
+	
+	if card.style === 'success'
+		include success.pug
+	
+	if card.style === 'info'
+		include info.pug

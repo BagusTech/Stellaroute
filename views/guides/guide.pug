@@ -9,18 +9,28 @@ block content
 			.col-xs-12.col-sm-4.col-lg-3
 				include guideNav.pug
 
-			.col-xs-12.col-sm-8.col-lg-9.js-nav-nodes(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value=guide.Id)
-				- var _attributes = userIsAuthorized(user) ? {'duck-field': 'cards', 'duck-type': 'array'} : {};
-				div&attributes(_attributes)
-					div
-						for _card, i in cards ? cards : [{}]
-							- var card = _card.section, offset = i;
-							include cards/_card.pug
-
-							for _subCard, j in _card.subCards ? _card.subCards : []
-								- card = _subCard; offset = `${i}.${j}`
+			if userIsAuthorized(user)
+				.col-xs-12.col-sm-8.col-lg-9.js-nav-nodes(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value=guide.Id)
+					- var _attributes = userIsAuthorized(user) ? {'duck-field': 'cards', 'duck-type': 'array'} : {};
+					div&attributes(_attributes)
+						div
+							for _card, i in cards ? cards : [{}]
+								- var card = _card.section, offset = i;
 								include cards/_card.pug
 
-					p.text-right
-						button.btn.btn-primary(type='submit', duck-button='submit') Save
-						button.btn.btn-info(duck-button='add') Add Card
+								for _subCard, j in _card.subCards ? _card.subCards : []
+									- card = _subCard; offset = `${i}.${j}`
+									include cards/_card.pug
+
+						.js-card-admin-options
+							button.btn.btn-primary(type='submit', duck-button='submit') Save
+							button.btn.btn-info(duck-button='add') Add Card
+			else
+				.col-xs-12.col-sm-8.col-lg-9.js-nav-nodes
+					for _card, i in cards ? cards : [{}]
+						- var card = _card.section, offset = i;
+						include cards/_card.pug
+
+						for _subCard, j in _card.subCards ? _card.subCards : []
+							- card = _subCard; offset = `${i}.${j}`
+							include cards/_card.pug

@@ -111,6 +111,59 @@
 	&:hover > .btn {
 		opacity: 1;
 	}
+
+	// FOR THE ACCENT LINE TO THE LEFT OF THE CARDS |
+	&:before {
+		display: block;
+		position: absolute;
+		width: 1px;
+		background: @grey-dark;
+		bottom: @gw-Xl;
+		top: -@gw-Xl;
+		left: -@gw-Sm - 1;
+	}
+
+	&:after {
+		height: @gw-Sm + 1;
+		width: @gw-Sm + 1;
+		border-radius: 50%;
+		display: block;
+		position: absolute;
+		left: -@gw-Sm - @gw-Xs - 1;
+		top: @gw-Md - @gw-Xs;
+		background: @grey-dark;
+	}
+	
+	.guide-card--section ~ &:before,
+	.guide-card--section ~ &:after {
+		content: ' ';
+	}
+
+	+ .guide-card--admin:after,
+	&.guide-card--section:before,
+	&.guide-card--section:after {
+		display: none;
+	}
+
+	.guide-card--section + &:before {
+		top: @gw-Md;
+	}
+
+	.guide-card--section + &:after,
+	&.guide-card--sub:after {
+		display: block;
+	}
+
+	.guide-card--section ~ .guide-card--admin:not(.guide-card--section) + &.guide-card--section:after {
+		top: -@gw-Xl;
+		display: block;
+	}
+
+	&:last-child:after {
+		display: block;
+		top: auto;
+		bottom: @gw-Xl - @gw-Sm;
+	}
 }
 	.guide-card--edit-mode {
 		margin-bottom: @gw-Sm;
@@ -186,7 +239,8 @@
 		top: @gw-Md;
 	}
 
-	.guide-card--card__section + &:after {
+	.guide-card--card__section + &:after,
+	&.guide-card--card__sub:after {
 		display: block;
 	}
 
@@ -223,8 +277,7 @@
 	.guide-card--card__section {
 		font-size: 1.5em;
 		text-align: center;
-		margin-top: @gw-Lg;
-		margin-bottom: @gw-Md;
+		margin: @gw-Lg 0;
 		padding-bottom: 0;
 
 		&:before{
@@ -337,4 +390,7 @@
 			
 
 @media(min-width: @screen-Sm) {
+	.guide-card--card {
+		padding-left: @gw-Sm;
+	}
 }

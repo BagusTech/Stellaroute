@@ -45,11 +45,13 @@ if userIsAuthorized(user)
 								include info.pug
 								
 				.panel-footer.text-right
-					button.btn.btn-default.js-card-toggle Preview
-		.input-group-btn
-			button.btn.btn-danger(duck-button='delete')
-				i.fa.fa-times(aria-hidden='true')
-				span.sr-only Delete This Card
+					button.btn.btn-danger(duck-button='delete') Delete Card
+					button.btn.btn-info.js-card-toggle Preview
+		//.input-group-btn
+			button.btn.btn-info.js-card-toggle
+				i.fa.fa-eye(aria-hidden='true')
+				span.sr-only Preview
+				
 else
 	if card.style === 'section'
 		include section.pug

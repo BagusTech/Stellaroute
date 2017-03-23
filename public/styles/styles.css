@@ -7238,6 +7238,50 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card--admin:hover > .btn {
   opacity: 1;
 }
+.guide-card--admin:before {
+  display: block;
+  position: absolute;
+  width: 1px;
+  background: #4a4d50;
+  bottom: 48px;
+  top: -48px;
+  left: -13px;
+}
+.guide-card--admin:after {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  left: -19px;
+  top: 18px;
+  background: #4a4d50;
+}
+.guide-card--section ~ .guide-card--admin:before,
+.guide-card--section ~ .guide-card--admin:after {
+  content: ' ';
+}
+.guide-card--admin + .guide-card--admin:after,
+.guide-card--admin.guide-card--section:before,
+.guide-card--admin.guide-card--section:after {
+  display: none;
+}
+.guide-card--section + .guide-card--admin:before {
+  top: 24px;
+}
+.guide-card--section + .guide-card--admin:after,
+.guide-card--admin.guide-card--sub:after {
+  display: block;
+}
+.guide-card--section ~ .guide-card--admin:not(.guide-card--section) + .guide-card--admin.guide-card--section:after {
+  top: -48px;
+  display: block;
+}
+.guide-card--admin:last-child:after {
+  display: block;
+  top: auto;
+  bottom: 36px;
+}
 .guide-card--edit-mode {
   margin-bottom: 12px;
 }
@@ -7299,7 +7343,8 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card--card__section + .guide-card--card:before {
   top: 24px;
 }
-.guide-card--card__section + .guide-card--card:after {
+.guide-card--card__section + .guide-card--card:after,
+.guide-card--card.guide-card--card__sub:after {
   display: block;
 }
 .guide-card--card__section ~ .guide-card--card:not(.guide-card--card__section) + .guide-card--card.guide-card--card__section:after {
@@ -7348,8 +7393,7 @@ form.profile-settings-update .profile-label.notification h3 {
 .guide-card--card__section {
   font-size: 1.5em;
   text-align: center;
-  margin-top: 36px;
-  margin-bottom: 24px;
+  margin: 36px 0;
   padding-bottom: 0;
 }
 .guide-card--card__section:before {
@@ -7500,6 +7544,11 @@ form.profile-settings-update .profile-label.notification h3 {
 }
 .guide-card--info {
   padding: 12px;
+}
+@media (min-width: 767px) {
+  .guide-card--card {
+    padding-left: 12px;
+  }
 }
 .text-wings {
   position: relative;

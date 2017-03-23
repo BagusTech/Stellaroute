@@ -9,32 +9,6 @@
 			}
 		}
 
-[duck-type='array']{
-	> [duck-type='string'],
-	> [duck-type='number'],
-	> [duck-type='select'] {
-		display: flex;
-
-		.form-control{
-			border-radius: @br-Md 0 0 @br-Md;
-		}
-
-		[duck-button="delete"] {
-			border-radius: 0 @br-Md @br-Md 0;
-		}
-
-		&:first-of-type {
-			.form-control{
-				border-radius: @br-Md;
-			}
-
-			[duck-button="delete"] {
-				display: none;
-			}
-		}
-	}
-}
-
 [duck-button='add']:empty {
 	color: @green;
 	border: none;

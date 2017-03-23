@@ -3,34 +3,6 @@
 void function initInteriorNav($) {
 	'use strict';
 
-	function becomeActiveNode(e, $wrapper, isParent) {
-		const windowWidth = $(window).width();
-
-		if(windowWidth > 767) {
-			return;
-		}
-
-		const $node = $(e.currentTarget);
-		const $toMove = isParent ? $wrapper : $node.closest('[role="tabpanel"');
-		const leftOffset = isParent ? 0 : parseInt($wrapper.css('left'), 10) || 0;
-		const maxLeft = windowWidth - $toMove.outerWidth() - leftOffset;
-		const baseLeft = (leftOffset*-1) - $node.position().left;
-		const nodePosition = $node.attr('data-position').split('.');
-		const baseWithOffset = nodePosition[nodePosition.length - 1] === '0' ? baseLeft : baseLeft + 40;
-		const left = baseLeft <= maxLeft ? maxLeft : baseWithOffset;
-
-		// if there isn't a change between what we are setting and what it is, don't do anything
-		if(parseInt($toMove.css('left'), 10) === left) {
-			return;
-		}
-
-		$toMove.css('left', left);
-
-		if(isParent) {
-			$node.next().css('left', -left);
-		}
-	}
-
 	function checkForActiveTabChange(e) {
 		const $wrapper = e.data.wrapper;
 		const $nodes = e.data.nodes;
@@ -43,19 +15,18 @@ void function initInteriorNav($) {
 		const removeActive = (!$allActiveNodes.length && $activeNodes.length) || newActiveNode;
 
 		if (removeActive) {
-			$wrapper.find('a').removeClass('active');
+			$wrapper.find('a').removeClass('interior-nav--node__active');
 		}
 
 		if (newActiveNode){
-			const $activeNode = $wrapper.find(`[data-position="${activePosition}"]`);
+			const $activeNode = $wrapper.find(`[data-position="${activePosition}"]`)
 			const $activeNodeParent = $wrapper.find(`[data-position="${activePosition.split('.')[0]}"]`);
+
+			$activeNode.addClass('interior-nav--node__active');
 
 			if ($activeNodeParent.attr('aria-expanded') === 'false') {
 				$activeNodeParent.trigger('tab-change');
 			}
-
-			$activeNodeParent.addClass('active').trigger('becomeActiveNode', [$wrapper, true]);
-			$activeNode.addClass('active').trigger('becomeActiveNode', [$wrapper]);
 		}
 	}
 
@@ -70,18 +41,12 @@ void function initInteriorNav($) {
 		const isWindow = e.data.isWindow;
 		const $this = $(this);
 		const position = $this.attr('data-position');
-		const $thisParent = $wrapper.find(`[data-position="${position.split('.')[0]}"]`);
 		const $goTo = $nodes.filter((i, node) => $(node).attr('data-position') === position && $(node).is(':visible'));
 		const goToVal = isWindow ? $goTo.offset().top : ($goTo.offset().top - $content.offset().top - offset);
 
-		$wrapper.find('a').removeClass('active');
+		$wrapper.find('a').removeClass('interior-nav--node__active');
+		$this.addClass('interior-nav--node__active');
 
-		if($this[0] === $thisParent[0]) {
-			$this.addClass('active').trigger('becomeActiveNode', [$wrapper, true]);
-		} else {
-			$thisParent.addClass('active').trigger('becomeActiveNode', [$wrapper, true]);
-			$this.addClass('active').trigger('becomeActiveNode', [$wrapper]);
-		}
 		$contentScrollWrap.off('scroll', checkForActiveTabChange);
 
 		if (isWindow) {
@@ -96,6 +61,17 @@ void function initInteriorNav($) {
 		}, $wrapper.attr('data-animation-speed') || 500);
 	}
 
+	function toggleNav(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		const $wrapper = e.data.wrapper;
+		const $toggleIcon = e.data.toggleIcon;
+
+		$wrapper.toggleClass('interior-nav__active');
+		$toggleIcon.toggleClass('fa-rotate-180')
+	}
+
 	function interiorNav(wrapper, contentWrapper, userDefinedOffset) {
 		const $wrapper = $(wrapper);
 		const isWindow = !(contentWrapper || $wrapper.attr('data-interior-nav-content-wrapper'));
@@ -104,10 +80,12 @@ void function initInteriorNav($) {
 																											$(window));
 		const $content = isWindow ? $('html, body') : $contentScrollWrap.find('> [data-scroll="content"]');
 		const $nodes = $('.js-nav-nodes [data-position]');
+		const $toggle = $wrapper.find('[data-interior-nav="toggle"]');
+		const $toggleIcon = $toggle.find('.fa');
 		const offset = userDefinedOffset || $wrapper.attr('data-interior-nav-offset') || 24;
 
-		$wrapper.find('[data-position]').off('becomeActiveNode', becomeActiveNode).on('becomeActiveNode', becomeActiveNode)
-
+		
+		$toggle.off('click', toggleNav).on('click', {wrapper: $wrapper, toggleIcon: $toggleIcon}, toggleNav);
 		$wrapper.find('a').off('click', scrollTo).on('click', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, content: $content, offset, isWindow}, scrollTo);
 		$contentScrollWrap.off('scroll', checkForActiveTabChange).on('scroll', {wrapper: $wrapper, nodes: $nodes, offset, isWindow}, checkForActiveTabChange);
 	}

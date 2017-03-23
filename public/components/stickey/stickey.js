@@ -10,18 +10,54 @@
 void function initializeStickeyAddon($) {
 	'use strict';
 
-	const getOffset = function($elem, $scrollWrapper, offset, nextStickeyElem){
-		const defaultTop = $elem.offset().top + $scrollWrapper.scrollTop();
-		const userDefinedTop = offset && offset.top || ($elem.attr('data-stickey-top') ? ($($elem.attr('data-stickey-top')).offset().top + $scrollWrapper.scrollTop() - $($elem.attr('data-stickey-top')).outerHeight(true)) : false);
-		const $nextStickeyElem = (nextStickeyElem && $(nextStickeyElem)) || $elem.nextAll('[data-function*="stickey"]').first();
-		const defaultBottom = ($nextStickeyElem.length && $nextStickeyElem.offset().top + $scrollWrapper.scrollTop() - $elem.outerHeight(true)) || false;
-		const userDefinedBottom = (offset && offset.bottom) || ($elem.attr('data-stickey-bottom') ? ($($elem.attr('data-stickey-bottom')).offset().top + $scrollWrapper.scrollTop() - $elem.outerHeight(true)) : false);
+	function reInitStickey(e, userDefinedOffset, nextStickeyElem) {
+		e.stopPropagation();
 
-		return {
-			start: userDefinedTop ? $elem.offset().top - userDefinedTop + $elem.outerHeight(true) : $elem.offset().top,
-			top: userDefinedTop || defaultTop,
-			bottom: userDefinedBottom || defaultBottom,
-		};
+		e.data.wrapper.stickey(userDefinedOffset, nextStickeyElem);
+	}
+
+	function makeStickey(e) {
+		e.stopPropagation();
+
+		const $wrapper = e.data.wrapper;
+		const $content = e.data.content;
+
+		$wrapper.height($wrapper.outerHeight(true));
+		$content.css('width', $wrapper.outerWidth());
+		//$content.css('left', $wrapper.offset().left);
+		$wrapper.addClass('stickey');
+		$wrapper.removeClass('stuck');
+		$content.css('top', '');
+	}
+
+	function makeStuck(e, scrollTop) {
+		e.stopPropagation();
+
+		const $wrapper = e.data.wrapper;
+		const $content = e.data.content;
+
+		const top = scrollTop - $wrapper.prop('stickeyTop');
+
+		$wrapper.removeClass('stickey');
+		$wrapper.height($wrapper.outerHeight(true));
+		$wrapper.addClass('stuck');
+		$content.css('top', `${top}px`)
+	}
+
+	const setOffset = function(e){
+		e.stopPropagation();
+
+		const $wrapper = e.data.wrapper;
+		const $scrollWrapper = e.data.scrollWrapper;
+		const offset = e.data.offset;
+		const nextStickeyElem = e.data.nextStickeyElem;
+		const userDefinedTop = offset && offset.top || ($wrapper.attr('data-stickey-top') ? ($($wrapper.attr('data-stickey-top')).offset().top + $scrollWrapper.scrollTop() - $($wrapper.attr('data-stickey-top')).outerHeight(true)) : false);
+		const $nextStickeyElem = (nextStickeyElem && $(nextStickeyElem)) || $wrapper.nextAll('[data-function*="stickey"]').first();
+		const defaultBottom = ($nextStickeyElem.length && $nextStickeyElem.offset().top + $scrollWrapper.scrollTop() - $wrapper.outerHeight(true)) || false;
+		const userDefinedBottom = (offset && offset.bottom) || ($wrapper.attr('data-stickey-bottom') ? ($($wrapper.attr('data-stickey-bottom')).offset().top - $wrapper.find('[data-stickey="content"]').outerHeight(true)) : false);
+
+		$wrapper.prop('stickeyTop', userDefinedTop ? $wrapper.offset().top - userDefinedTop + $wrapper.outerHeight(true) : $wrapper.offset().top);
+		$wrapper.prop('stickeyBottom', userDefinedBottom || defaultBottom);
 	};
 
 	const initStickey = function(wrapper, userDefinedOffset, nextStickeyElem){
@@ -31,46 +67,41 @@ void function initializeStickeyAddon($) {
 								$wrapper.closest('[data-scroll="content-wrapper"').length ?
 									$wrapper.closest('[data-scroll="content-wrapper"') :
 									$(window);
-		const offset = getOffset($wrapper, $scrollWrapper, userDefinedOffset, nextStickeyElem);
 
-		function makeStickey() {
+		$wrapper.on('setStickeyOffset', {wrapper: $wrapper, scrollWrapper: $scrollWrapper, userDefinedOffset, nextStickeyElem}, setOffset)
+		$wrapper.trigger('setStickeyOffset');
+
+		function checkStickey(e) {
+			e.stopPropagation();
 			const scrollTop = $scrollWrapper.scrollTop();
 
-			if(scrollTop > offset.start && (!offset.bottom || scrollTop < offset.bottom)){
+			if(scrollTop > $wrapper.prop('stickeyTop') && (!$wrapper.prop('stickeyBottom') || scrollTop < $wrapper.prop('stickeyBottom'))){
 				if(!$wrapper.hasClass('stickey')){
-					$wrapper.height($wrapper.height());
-					$content.css('width', $wrapper.width())
-					$wrapper.addClass('stickey');
-					$wrapper.removeClass('stuck');
+					$wrapper.trigger('StickeyStick');
 				}
-			} else if (offset.bottom && scrollTop >= (offset.bottom)){
+			} else if ($wrapper.prop('stickeyBottom') && scrollTop >= ($wrapper.prop('stickeyBottom'))){
 				if(!$wrapper.hasClass('stuck')){
-					const top = scrollTop - offset.top;
-
-					$wrapper.removeClass('stickey');
-					$wrapper.height($wrapper.height());
-					$wrapper.addClass('stuck');
-					$content.css('top', `${top}px`)
+					$wrapper.trigger('StickeyStuck', [scrollTop]);
 				}
 			} else {
-				$wrapper.css('height', 'auto');
-				$content.css('width', 'auto');
+				$wrapper.css('height', '');
+				$content.css('width', '');
+				$content.css('top', '');
 				$wrapper.removeClass('stickey stuck');
 			}
 		}
 
-		function reInitStickey() {
-			$(window).off('resize', reInitStickey)
-			$scrollWrapper.off('scroll', makeStickey);
+		$wrapper.on('tab-changed', () => {
+			$wrapper.trigger('setStickeyOffset');
+		});
 
-			$wrapper.stickey(userDefinedOffset, nextStickeyElem);
-		}
-
-		$scrollWrapper.off('scroll', makeStickey).on('scroll', makeStickey);
+		$scrollWrapper.off('scroll', checkStickey).on('scroll', checkStickey);
+		$scrollWrapper.off('StickeyStick', makeStickey).on('StickeyStick', {wrapper: $wrapper, content: $content}, makeStickey);
+		$scrollWrapper.off('StickeyStuck', makeStuck).on('StickeyStuck', {wrapper: $wrapper, content: $content}, makeStuck);
 		$wrapper.off('reInitStickey', reInitStickey).on('reInitStickey', reInitStickey);
-		$wrapper.closest('[role="tabpanel"]').off('tab-changed', reInitStickey).on('tab-changed', reInitStickey);
+		$wrapper.closest('[role="tab"]').off('tab-changed', reInitStickey).on('tab-changed', reInitStickey);
 
-		$(window).on('resize', reInitStickey);
+		$(window).off('resize', reInitStickey).on('resize', {wrapper: $wrapper, userDefinedOffset, nextStickeyElem}, reInitStickey);
 	}
 
 	$.fn.stickey = function init(offset, nextStickeyElem) {

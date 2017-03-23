@@ -68,11 +68,15 @@ void function initializeAccordions($) {
 
     function toggleTab($tabToToggle, animationSpeed) {
         const tabState = $tabToToggle.attr('aria-expanded') === 'true';
+        const $tabpanel = $tabToToggle.next('[role="tabpanel"]'); // find the tabpanel that it is associated with
 
-        $tabToToggle.attr('aria-expanded', !tabState)
-            .next('[role="tabpanel"]') // find the tabpanel that it is associated with
-            .attr('aria-hidden', tabState)
-            .slideToggle(animationSpeed);
+        $tabToToggle.attr('aria-expanded', !tabState);
+
+
+        // if there is a tab panel hade/show it
+        if($tabpanel.length) {
+            $tabpanel.attr('aria-hidden', tabState).slideToggle(animationSpeed);
+        }
 
         // trigger tab-changed event when done
         setTimeout(() => {

@@ -15,6 +15,7 @@ var Guide = Duck({
 		backgroundImage: String,
 		cardImage: String,
 		tagline: String,
+		description: String,
 		cards: [{
 			title: String,
 			image: String,

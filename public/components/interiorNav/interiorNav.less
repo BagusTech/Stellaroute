@@ -3,27 +3,18 @@
 	color: white;
 	position: absolute;
 	padding: @gw-Sm;
-	margin-left: -@gw-Md;
-	width: 100%;
-	left: -100%;
+	margin-left: -@gw-Sm;
+	width: 272px;
+	left: -272px;
 	transition: left .27s ease-out;
 	opacity: .95;
+	z-index: 1;
+	font-size: 1.2em;
+
 	&.interior-nav__active {
 		left: 0;
 		.interior-nav--toggle {
 			opacity: 1;
-		}
-	}
-
-	.stickey &{
-		margin-left: 0;
-		left: auto;
-		right: 100%;
-		transition: right .27s ease-out;
-
-		&.interior-nav__active {
-			left: auto;
-			right: @gw-Xl;
 		}
 	}
 
@@ -53,9 +44,11 @@
 		color: inherit;
 		display: block;
 		font-weight: inherit;
+		line-height: 1;
+		padding: @gw-Xs 0 @gw-Xs;
 
 		&[role='tab'] {
-			padding: @gw-Sm 0 0;
+			
 
 			&:first-child {
 				padding-top: 0;
@@ -68,13 +61,13 @@
 
 	}
 		h3 {
-			margin: 0 0 @gw-Xs;
+			margin: 0;
 			font-weight: 500;
 		}
 
 	.interior-nav--sub-nav {
 		list-style: none;
-		margin: 0;
+		margin: 0 0 @gw-Sm;
 		padding: 0 0 0 @gw-Lg;
 		font-size: .9em;
 		font-weight: 400;
@@ -91,13 +84,9 @@
 		margin: 0;
 		opacity: 1;
 		background: none;
+		width: auto;
 		color: @text-color;
 		padding: @gw-Sm 0 0;
-
-		.stickey & {
-			right: auto;
-			left: auto;
-		}
 	
 		.interior-nav--toggle {
 			display: none;
@@ -107,11 +96,11 @@
 		.interior-nav--node:link{
 			border-left: 2px solid transparent;
 			transition: border-color .17s;
-			padding: 0 0 0 @gw-Sm;
+			padding: @gw-XXs 0 @gw-XXs @gw-Sm;
 
 			&[role='tab'] {
-				padding: 0 0 0 @gw-Sm;
-				margin: @gw-Sm 0 0;
+				padding: @gw-Xs 0 @gw-Xs @gw-Sm;
+				margin: @gw-XXs 0 0;
 
 				&:first-child {
 					padding-top: 0;

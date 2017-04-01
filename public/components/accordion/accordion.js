@@ -1,4 +1,4 @@
-/*global jQuery */
+/* global jQuery */
 void function initializeAccordions($) {
     'use strict';
 
@@ -142,8 +142,8 @@ void function initializeAccordions($) {
         $wrapper.removeClass('no-js');
 
         // make sure what is supposed to be shown is, and what isn't, isn't
-        $wrapper.find('> [aria-hidden="false"]').css({'display': 'block' });
-        $wrapper.find('> [aria-hidden="true"]').css({'display': 'none' });
+        $wrapper.find('[role="tabpanel"][aria-hidden="false"]').css({'display': 'block' });
+        $wrapper.find('[role="tabpanel"][aria-hidden="true"]').css({'display': 'none' });
 
         $tabs.on('tab-change', {wrapper: $wrapper, alwaysShowOne, allowMultiple, animationSpeed}, changeTab);
 
@@ -164,7 +164,7 @@ void function initializeAccordions($) {
             $(window).on('load', () => {
                 $anchorTab.click();
             });
-        } else if (alwaysShowOne && !$tabs.filter((i, _tab) => ($(_tab).attr('aria-expanded' === 'true') ? true : false)).length) {
+        } else if (alwaysShowOne && !$tabs.filter((i, _tab) => $(_tab).prop('aria-expanded')).length) {
             $tabs.eq(0).trigger('tab-change', [true])
         }
 

@@ -23,8 +23,7 @@ void function initializeStickeyAddon($) {
 		const $content = e.data.content;
 
 		$wrapper.height($wrapper.outerHeight(true));
-		$content.css('width', $wrapper.outerWidth());
-		//$content.css('left', $wrapper.offset().left);
+		$content.each((i, c) => {$(c).css('width', $(c).outerWidth());});
 		$wrapper.addClass('stickey');
 		$wrapper.removeClass('stuck');
 		$content.css('top', '');

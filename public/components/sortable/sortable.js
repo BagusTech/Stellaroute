@@ -5,7 +5,7 @@ void function initializeIcon($) {
 
 	function moveItem(e, movingDown, $active, $sibling, siblingTop, siblingHeight) {
 		if(siblingHeight) {
-			const newSiblingTop = movingDown ? siblingTop - siblingHeight : siblingTop + siblingHeight;
+			const newSiblingTop = movingDown ? siblingTop - $active.outerHeight() : siblingTop + $active.outerHeight();
 			$sibling.css('top', `${newSiblingTop}px`);
 		}
 

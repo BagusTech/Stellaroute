@@ -223,10 +223,14 @@ router.post('/reset-password', (req, res) => {
 });
 
 router.get('/login', (req, res, next) => {
-	res.render('profile/login', {
-		title: 'StellaRoute: Login',
-		description: 'Log into your stellaroute account.',
-	});
+	if(!req.user) {
+		res.render('profile/login', {
+			title: 'StellaRoute: Login',
+			description: 'Log into your stellaroute account.',
+		});
+	} else {
+		res.redirect(`/${req.user.username || req.user.Id}`)
+	}
 });
 
 router.post('/signup', passport.authenticate('local-signup', {

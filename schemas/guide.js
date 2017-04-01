@@ -12,7 +12,7 @@ var Guide = Duck({
 			alias: Array
 		},
 		isPublished: Boolean,
-		backgroundImage: String,
+		bannerImage: String,
 		cardImage: String,
 		tagline: String,
 		description: String,

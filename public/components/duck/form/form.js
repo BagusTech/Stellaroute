@@ -17,12 +17,11 @@ void function initDuckForm($, duck, window) {
 
 		const $this = $(this);
 		const addDirection = $this.attr('duck-add');
-		const $wrapper = $this.closest('[duck-type="array"]');
+		const target = $this.attr('duck-targt');
+		const $wrapper = target ? $(target) : $this.closest('[duck-type="array"]');
 		const $item = $wrapper.find('[duck-type]').first();
 		const $lastItem = $item.parent().find('> [duck-type]').last();
 		const $clone = $wrapper.prop('ArrayItemTemplate') ? $wrapper.prop('ArrayItemTemplate').clone() : $item.clone();
-
-		console.log($clone)
 
 		switch(addDirection) {
 			case 'after' : {
@@ -255,17 +254,17 @@ void function initDuckForm($, duck, window) {
 		});
 	}
 
-	function addItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack) {
+	function addItem(table, key, keyValue, $startOfFields, successCallback, errorCallBack) {
 		const item = {};
 		item[key] = keyValue || duck.uuid();
 
-		duck(table).add(buildObject(item, $startOfFields), successCallback, failureCallBack);
+		duck(table).add(buildObject(item, $startOfFields), successCallback, errorCallBack);
 	}
 
-	function updateItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack) {
+	function updateItem(table, key, keyValue, $startOfFields, successCallback, errorCallBack) {
 		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
 			const item = buildObject(data, $startOfFields);
-			duck(table).update(item, successCallback, failureCallBack);
+			duck(table).update(item, successCallback, errorCallBack);
 		});
 	}
 
@@ -290,14 +289,14 @@ void function initDuckForm($, duck, window) {
 		});
 	}
 
-	function deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, failureCallBack) {
+	function deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, errorCallBack) {
 		const path = $wrapper.attr('duck-delete-path');
 		const value = $wrapper.attr('duck-delete-value');
 
 		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
 			const item = removeFromObject(data, path, value);
 
-			duck(table).update(item, successCallback, failureCallBack);
+			duck(table).update(item, successCallback, errorCallBack);
 		});
 	}
 
@@ -319,21 +318,23 @@ void function initDuckForm($, duck, window) {
 		const $startOfFields = e.data.startOfFields;
 		const $wrapper = e.data.wrapper;
 		const successCallback = e.data.successCallback;
-		const failureCallBack = e.data.failureCallBack;
+		const errorCallBack = e.data.errorCallBack;
 
 		$(e.currentTarget).prop('disabled', true);
+
+		$wrapper.trigger('duck.form.submitted');
 
 		switch(crud){
 			// adds an item to the table
 			case 'add':{
-				addItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack);
+				addItem(table, key, keyValue, $startOfFields, successCallback, errorCallBack);
 
 				break;
 			}
 
 			// updates an item from the table
 			case 'update':{
-				updateItem(table, key, keyValue, $startOfFields, successCallback, failureCallBack);
+				updateItem(table, key, keyValue, $startOfFields, successCallback, errorCallBack);
 
 				break;
 			}
@@ -347,7 +348,7 @@ void function initDuckForm($, duck, window) {
 
 			// deletes a field or value from an item in the table
 			case 'deleteField':{
-				deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, failureCallBack)
+				deleteFieldFromItem(table, key, keyValue, $wrapper, successCallback, errorCallBack)
 
 				break;
 			}
@@ -365,8 +366,8 @@ void function initDuckForm($, duck, window) {
 		const key = (options && options.key) || $wrapper.attr('duck-key');
 		const keyValue = (options && options.keyValue) || $wrapper.attr('duck-key-value');
 		const $urlField = $wrapper.find('[duck-field="url"] input');
-		const successCallback = (options && options.successCallback) || (() => {window.location.reload(true)});
-		const failureCallBack = (options && options.failureCallBack) || (() => {window.location.reload(true)});
+		const successCallback = (options && options.successCallback) || (() => {$wrapper.trigger('duck.form.success')});
+		const errorCallBack = (options && options.errorCallBack) || (() => {$wrapper.trigger('duck.form.error')});
 
 		if($urlField.length){
 			autoSetUrl($urlField, $wrapper.find('[duck-field="names"] [duck-field="display"] input'));
@@ -383,7 +384,7 @@ void function initDuckForm($, duck, window) {
 
 		// set what happens when the submit button is clicked
 		$wrapper.off('click', submitForm)
-				.on('click', '[duck-button="submit"]', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, failureCallBack}, submitForm);
+				.on('click', '[duck-button="submit"]', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, errorCallBack}, submitForm);
 
 		// set arrays to be sortable
 		$wrapper.find('[duck-type="array"]')

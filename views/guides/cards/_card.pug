@@ -1,56 +1,58 @@
 if userIsAuthorized(user)
-	.input-group.guide-card--admin.js-card(duck-type='object', class=`guide-card--${card.style}`)
-		button.btn.btn-default.p-A.t-Sm.r-Sm.z-1.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
-		.input-group-addon(data-sort='handle')
-			i.fa.fa-arrows-v(aria-hidden='true')
-		.panel.panel-default(data-function='accordion', data-position= offset)
+	div(duck-type='object')
+		button.btn.btn-default.guide-card--add-card.hidden(duck-button='add', duck-add='before')
+			span Add&nbsp;
+			i.fa.fa-chevron-right(aria-hidden='true')
+		.input-group.guide-card--admin.js-card(class=`guide-card--${card.style}`)
+			button.btn.btn-default.guide-card--edit-toggle.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
+			.input-group-addon(data-sort='handle')
+				i.fa.fa-arrows-v(aria-hidden='true')
+			.panel.panel-default(data-function='accordion', data-position= offset)
+				.panel-heading(role='tab', aria-expanded='true'): h2.panel-title.js-card-title= card.title || 'New Card'
+				.p-0(role='tabpanel', aria-hidden='false')
+					.panel-body
+						.row
+							.col-xs-12.col-lg-6.guide-card--edit
+								include cardForm.pug
 
-			.panel-heading(role='tab', aria-expanded='true'): h2.panel-title.js-card-title= card.title || 'New Card'
-			.p-0(role='tabpanel', aria-hidden='false')
-				.panel-body
-					.row
-						.col-xs-12.col-md-6.guide-card--edit
-							include cardForm.pug
+							.col-lg-6.guide-card--view
+								- offset = null; // so that the cards don't also get the data-position attribute
+								.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
+									include section.pug
 
-						.col-xs-12.col-md-6.guide-card--view
-							- offset = null; // so that the cards don't also get the data-position attribute
-							.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
-								include section.pug
+								.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
+									include sub.pug
 
-							.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
-								include sub.pug
+								.card-styles--preview.guide-card--wrapper(card-style='big', class= card.style === 'big' && 'card-styles--preview__active')
+									include big.pug
 
-							.card-styles--preview.guide-card--wrapper(card-style='big', class= card.style === 'big' && 'card-styles--preview__active')
-								include big.pug
-
-							.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
-								include small.pug
-							
-							.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
-								include img.pug
-
-							.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
-								include plain.pug
+								.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
+									include small.pug
 								
-							.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
-								include white.pug
-								
-							.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
-								include danger.pug
-								
-							.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
-								include success.pug
-								
-							.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
-								include info.pug
-								
-				.panel-footer.text-right
-					button.btn.btn-danger(duck-button='delete') Delete Card
-					button.btn.btn-info.js-card-toggle Preview
-		//.input-group-btn
-			button.btn.btn-info.js-card-toggle
-				i.fa.fa-eye(aria-hidden='true')
-				span.sr-only Preview
+								.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
+									include img.pug
+
+								.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
+									include plain.pug
+									
+								.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
+									include white.pug
+									
+								.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
+									include danger.pug
+									
+								.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
+									include success.pug
+									
+								.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
+									include info.pug
+									
+					.panel-footer.text-right
+						button.btn.btn-danger(duck-button='delete') Delete Card
+	//.input-group-btn
+		button.btn.btn-info.js-card-toggle
+			i.fa.fa-eye(aria-hidden='true')
+			span.sr-only Preview
 				
 else
 	if card.style === 'section'

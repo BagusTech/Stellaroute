@@ -1,3 +1,18 @@
+#GuideDetailsForm {
+	.btn-default {
+		transition: opacity .17s;
+		opacity: 0;
+	}
+
+	&:hover, &[duck-edit-form="edit"] {
+		.btn-default{
+			opacity: 1;
+		}
+	}
+
+	padding-bottom: @gw-Lg;
+}
+
 .card-styles--list {
 	padding:0 12px;
 	border: 1px solid #ccc;
@@ -24,3 +39,55 @@
 		.card-styles--preview__active {
 			display: block
 		}
+
+.card-admin {
+	padding-top: @gw-Sm;
+	width: 100%;
+}
+
+.guide {
+	[data-sort='item'] {
+		position: relative;
+	}
+	[duck-button='add'] {
+		border: none;
+		background: none;
+		position: absolute;
+		z-index: 1;
+		top: -2em;
+		left: -4em;
+		opacity: .75;
+		transition: opacity .17s, left .17s;
+		
+		span {
+			opacity: 0;
+			transition: opacity .17s;
+		}
+
+		&:hover {
+			opacity: 1;
+			left: -3em;
+			span {opacity: 1;}
+		}
+
+		&:last-child {
+			top: auto;
+			bottom: 0;
+			//left: -2.25em;
+		}
+	}
+
+	.guide-card--edit-mode [duck-button='add'] {
+		top: -1.75em;
+	}
+
+	[data-sort="item"]:first-child {
+		[duck-button='add'] {
+			top: -1.5em;
+		}
+	}
+
+	.fa-plus {
+		transition: transform .17s;
+	}
+}

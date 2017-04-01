@@ -1,36 +1,122 @@
 extends ../layout.pug
 
 block content
-	section.profile-page
-		header.profile-header
-			.container
-				.profile-info
-					img.profile-picture(src='/images/profile_placeholder_360.jpg', alt='profile picture')
-					h1= `${profilesUser.name.first || '(unkown name, very mysterious)'} ${profilesUser.name.last || ''}`
-					//h2 South Park, USA
-				//ul.account-pages(role="navigation")
-					li 
-						a(href="#") Guides
-					li 
-						a(href="#") Wishlist
-					li 
-						a(href="#") Reviews
-					li.active
-						a(href="#") Settings
-		.container.p-Xs
-				.col-xs-12.col-sm-6
-					.content-card
-						h2.content-card--header= `${profilesUser.name.first}'s Guides`
-						for guide, i in guides ? guides : []
-							if i !== 0
-								.text-wings.plr-Xl.pb-Sm.fc-G
-									hr
-									span.plr-Sm.p-R(style='top: 3px;') &deg;
-									hr
-							a.row(href=`/${guide.countriesUrl[0]}/${guide.citiesUrl[0]}/${guide.url}`)
-								.col-xs-12.col-sm-5.col-md-3
-									img.w-100(src= getImagePath(guide.cardImage, 'small'))
-								.col-xs-12.col-sm-7.col-md-9
-									h3.mt-0= guide.names.display
-										small.d-B.mt-XXs.fc-G= guide.tagline
-									div!= guide.description
+	.profile
+		.sub-header(style=`background: rgba(0, 0, 0, 0) url("/images/profile_header_image_mirrored.jpg") no-repeat scroll center 57% / cover;`)
+			.container.pb-0
+				.row.pt-Sm.pt-Md--md.pt-Lg--lg
+					.col-xs-2.col-sm-3.col-md-2.col-lg-1
+						img.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
+					.col-xs-10.col-sm-9.col-md-10.col-lg-11
+						h1= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
+						p.tc-W= userProfile.tagline || ' '
+
+						nav.tabbed-nav.pl-0.mt-XXl--md.mt-Xl--lg(data-tabs='controls')
+							a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') Guides
+							a.tabbed-nav--tab(href='#MyWishlist', role='tab', aria-expanded='false') Wishlist
+							a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
+							//-console.log(user && user.Id === userProfile.Id)
+							if isMe
+								a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
+
+		.container
+			.mb-Sm.ta-R
+				.share42init
+			div(data-function='tabs')
+				#MyGuides.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
+					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+						for guide in guides ? guides : []
+							.masonry--item
+								a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+									+card(guide.cardImage, guide.names.display)
+						else
+							p.lead No guides created yet!
+				#MyWishlist.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+						for guide in favorites ? favorites : []
+							.masonry--item
+								a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+									+card(guide.cardImage, guide.names.display)
+						else
+							p.lead Nothing on the wishlist yet!
+				#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					if userProfile.description
+						!=userProfile.description
+					else
+						p.lead Nothing to know about me yet!
+				if isMe
+					#MySettings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+						.panel.panel-default(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)
+							.panel-heading My Settings
+							.panel-body
+								.row
+									.col-xs-12.col-sm-6
+										.form-group
+											label First Name
+												input.form-control(type='text', value= user.name && user.name.first)
+									.col-xs-12.col-sm-6
+										.form-group
+											label Last Name
+												input.form-control(type='text', value= user.name && user.name.last)
+									
+
+								.form-group
+									label Username
+										input.form-control(type='text', value= user.username)
+
+								.form-group
+									label Email
+										input.form-control(type='text', value= user.local && user.local.email)
+
+								.row
+									.col-xs-12.col-sm-6
+										.form-group
+											label Password
+												input.form-control(type='text')
+									
+									.col-xs-12.col-sm-6
+										.form-group
+											label Confirm Password
+												input.form-control(type='text')
+
+								.row
+									.col-xs-12.col-sm-6
+										.form-group
+											label Profile Picture
+												.form-control(duck-button='image-select')
+													i.fa.fa-image(aria-hidden='true')
+													span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+									.col-xs-12.col-sm-6
+										.form-group
+											label Banner Image
+												.form-control(duck-button='image-select')
+													i.fa.fa-image(aria-hidden='true')
+													span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+
+								.form-group
+									label Tagline
+										input.form-control(type='text', value= user.tagline)
+
+								.form-group
+									label About Me
+										.summernote
+
+							.panel-footer.text-right
+								button.btn.btn-primary(duck-button='submit') Save
+
+//- user
+		Id
+		name
+			first
+			list
+		username
+		local
+			email
+			password
+		profilePicture
+		bannerImage
+		friends
+		favorites
+		following
+		tagline
+		description

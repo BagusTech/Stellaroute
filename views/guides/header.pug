@@ -1,32 +1,47 @@
-div.city-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.backgroundImage, 'large')}") no-repeat scroll center 57% / cover;`)
+div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
-			//if userIsAuthorized(user)
-				.bg-W.p-Xs.f-R= guide.Id
-
 			ol.breadcrumb
-				li.active Created by: #[a(href= '/')= author && author.name && author.name.first || 'unknown']
+				li.active Created by: #[a(href= `/${author.username || author.Id}`)= author.username || 'unknown']
 
-			+formStart(guide, 'Guides')
+			+formStart(guide, 'Guides')(id='GuideDetailsForm')
+				+editButton('f-R bg-W')
 				+view
 					h1 #{guide.names.display} #[small (unpublished)]
-						+editButton('f-R bg-W mt-NegSm')
 						if author && author.names
 							small.pl-Xs= author.names.first
 
 						if guide.tagline
 							small.d-B.mt-Sm= guide.tagline
-				+edit('bg-W p-Sm mb-Sm')
-					.row
-						.col-xs-12.col-sm-6
-							+object('names')
-								+string(guide.names, 'display', 'Guide Name')
+				+edit(null, false)
+					.panel.panel-default
+						.panel-heading= guide.names.display
+						.panel-body.form-horizontal
+							.form-group(duck-type='object', duck-field='names')
+								label.col-sm-2.control-label Name
+								.col-sm-10(duck-type='string', duck-field='display')
+									input.form-control(duck-value, , value= guide && guide.names && guide.names.display)
 
-							+string(guide, 'tagline', 'Tagline')
-						.col-xs-12.col-sm-6
-							+image(guide, 'backgroundImage', 'Background Image')
-							+image(guide, 'cardImage', 'Card Image')
+							.form-group(duck-type='string', duck-field='tagline')
+								label.col-sm-2.control-label Tagline
+								.col-sm-10
+									input.form-control(duck-value, value= guide && guide.tagline)
 
-						.col-xs-12.ta-R
-							button.btn.btn-primary(duck-button='submit') Save
-							button.btn.btn-warning(duck-button='cancel') Cancel
+							.form-group(duck-type='image', duck-field='bannerImage')
+								label.col-sm-2.control-label Background Image
+								.col-sm-10
+									input.hidden(type='hidden', duck-value, value= guide.bannerImage)
+									.form-control(duck-button='image-select')
+										i.fa.fa-image(aria-hidden='true')
+										span.pl-Sm(duck-image-value)= guide && guide.bannerImage || 'Please select an Image'
+
+							.form-group(duck-type='image', duck-field='cardImage')
+								label.col-sm-2.control-label Card Image
+								.col-sm-10
+									input.hidden(type='hidden', duck-value, value= guide.cardImage)
+									.form-control(duck-button='image-select')
+										i.fa.fa-image(aria-hidden='true')
+										span.pl-Sm(duck-image-value)= guide && guide.cardImage || 'Please select an Image'
+
+						.panel-footer.ta-R
+							button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]

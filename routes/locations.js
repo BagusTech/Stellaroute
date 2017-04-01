@@ -16,15 +16,39 @@ const CityRegion     = require('../schemas/city-region');
 const Neighborhood   = require('../schemas/neighborhood');
 const router         = express.Router();
 
-router.get('/:guide', (req, res, next) => {
-	const guide = Guide.findOne('url', req.params.guide).items;
+router.get('/:user', (req, res, next) => {
+	const user = User.findOne('username', req.params.user).items || User.findOne('Id', req.params.user).items;
 
-	if(!guide) {
+	if(!user) {
 		next();
 		return;
 	}
 
-	const author = User.findOne('Id', guide.author).items;
+	const isMe = req.user && req.user.Id === user.Id;
+
+	res.locals.userProfile = user;
+	res.locals.isMe = isMe;
+
+	res.render('profile/profile', {
+		title: `Stellaroute: ${isMe ? 'Youre profile' : user.username+"'s Profile"}`,
+		description: 'Stellaroute: It\'s a pretty nice place to see other peoples things and edit your own.',
+		guides: Guide.find('author', user.Id).items,
+	});
+});
+
+router.get('/:user/:guide', (req, res, next) => {
+	const user = User.findOne('username', req.params.user).items || User.findOne('Id', req.params.user).items;
+	const guide = Guide.findOne('url', req.params.guide).items;
+
+	if(!user || !guide) {
+		next();
+		return;
+	}
+
+	res.locals.userProfile = user;
+	res.locals.isMe = req.user && req.user.Id === user.Id;
+
+	const author = user;
 	const _cards = guide.cards || [];
 
 	let endSubCards = _cards.length

@@ -80,6 +80,8 @@
 	}
 
 .guide-card--admin {
+	width: 100%;
+
 	.input-group-addon,
 	.input-group-btn,
 	.panel-heading,
@@ -103,74 +105,75 @@
 		border-width: 0;
 	}
 
-	> .btn {
-		transition: opacity .17s ease-out;
-		opacity: 0;
-	}
-
-	&:hover > .btn {
-		opacity: 1;
-	}
-
-	// FOR THE ACCENT LINE TO THE LEFT OF THE CARDS |
-	&:before {
-		display: block;
+	.guide-card--edit-toggle {
 		position: absolute;
-		width: 1px;
-		background: @grey-dark;
-		bottom: @gw-Xl;
-		top: -@gw-Xl;
-		left: -@gw-Sm - 1;
-	}
-
-	&:after {
-		height: @gw-Sm + 1;
-		width: @gw-Sm + 1;
-		border-radius: 50%;
-		display: block;
-		position: absolute;
-		left: -@gw-Sm - @gw-Xs - 1;
-		top: @gw-Md - @gw-Xs;
-		background: @grey-dark;
-	}
-	
-	.guide-card--section ~ &:before,
-	.guide-card--section ~ &:after {
-		content: ' ';
-	}
-
-	+ .guide-card--admin:after,
-	&.guide-card--section:before,
-	&.guide-card--section:after {
+		top: 1px;
+		right: 1px;
+		z-index: 2;
 		display: none;
 	}
 
-	.guide-card--section + &:before {
-		top: @gw-Md;
+	&.guide-card--sub {
+		.guide-card--edit-toggle {
+			top: 0;
+		}
 	}
 
-	.guide-card--section + &:after,
-	&.guide-card--sub:after {
-		display: block;
-	}
+	// FOR THE ACCENT LINE TO THE LEFT OF THE CARDS |
+	/*	&:before {
+			display: block;
+			position: absolute;
+			width: 1px;
+			background: @grey-dark;
+			bottom: @gw-Xl;
+			top: -@gw-Xl;
+			left: -@gw-Sm - 1;
+		}
 
-	.guide-card--section ~ .guide-card--admin:not(.guide-card--section) + &.guide-card--section:after {
-		top: -@gw-Xl;
-		display: block;
-	}
+		&:after {
+			height: @gw-Sm + 1;
+			width: @gw-Sm + 1;
+			border-radius: 50%;
+			display: block;
+			position: absolute;
+			left: -@gw-Sm - @gw-Xs - 1;
+			top: @gw-Md - @gw-Xs;
+			background: @grey-dark;
+		}
+		
+		.guide-card--section ~ &:before,
+		.guide-card--section ~ &:after {
+			content: ' ';
+		}
 
-	&:last-child:after {
-		display: block;
-		top: auto;
-		bottom: @gw-Xl - @gw-Sm;
-	}
+		+ .guide-card--admin:after,
+		&.guide-card--section:before,
+		&.guide-card--section:after {
+			display: none;
+		}
+
+		.guide-card--section + &:before {
+			top: @gw-Md;
+		}
+
+		.guide-card--section + &:after,
+		&.guide-card--sub:after {
+			display: block;
+		}
+
+		.guide-card--section ~ .guide-card--admin:not(.guide-card--section) + &.guide-card--section:after {
+			top: -@gw-Xl;
+			display: block;
+		}
+
+		&:last-child:after {
+			display: block;
+			top: auto;
+			bottom: @gw-Xl - @gw-Sm;
+		}*/
 }
 	.guide-card--edit-mode {
 		margin-bottom: @gw-Sm;
-
-		> .btn {
-			display: none;
-		}
 
 		.input-group-addon,
 		.input-group-btn {
@@ -185,6 +188,7 @@
 
 		.guide-card--view {
 			width: 50%;
+			display: none;
 		}
 
 		.panel-body {
@@ -226,8 +230,8 @@
 		background: @grey-dark;
 	}
 	
-	.guide-card--card__section ~ &:before,
-	.guide-card--card__section ~ &:after {
+	.guide-card--card__section + div &:before,
+	.guide-card--card__section + div &:after {
 		content: ' ';
 	}
 
@@ -235,16 +239,16 @@
 		display: none;
 	}
 
-	.guide-card--card__section + &:before {
+	.guide-card--card__section + div &:first-child:before {
 		top: @gw-Md;
 	}
 
-	.guide-card--card__section + &:after,
+	.guide-card--card__section + div &:after,
 	&.guide-card--card__sub:after {
-		display: block;
+		//display: block;
 	}
 
-	.guide-card--card__section ~ .guide-card--card:not(.guide-card--card__section) + &.guide-card--card__section:after {
+	.guide-card--card__section + div .guide-card--card:not(.guide-card--card__section) + &.guide-card--card__section:after {
 		top: -@gw-XXl - @gw-Md;
 		display: block;
 	}
@@ -252,7 +256,7 @@
 	&:last-child:after {
 		display: block;
 		top: auto;
-		bottom: @gw-Xl - @gw-Sm;
+		bottom: @gw-Lg + @gw-XXs;
 	}
 }
 	.guide-card--body {
@@ -293,6 +297,10 @@
 		}
 	}
 	.guide-card--card__sub {
+		//position: sticky;
+		//top: 0;
+		//z-index: 1;
+
 		.guide-card--body {
 			background: @grey-light;
 			text-align: center;
@@ -390,7 +398,35 @@
 			
 
 @media(min-width: @screen-Sm) {
+	.guide-card--admin{
+		.guide-card--edit-toggle {
+			display: block;
+			transition: opacity .17s ease-out;
+			opacity: 0;
+		}
+
+		&:hover .guide-card--edit-toggle {
+			opacity: 1;
+		}
+	}
+	.guide-card--edit-mode {
+		.guide-card--edit-toggle {
+			opacity: 1;
+			.fa:before {
+				content: "\f06e"
+			}
+		}
+	}
+
 	.guide-card--card {
 		padding-left: @gw-Sm;
+	}
+}
+
+@media(min-width: @screen-lg) {
+	.guide-card--edit-mode{
+		.guide-card--view{
+			display: block;
+		}
 	}
 }

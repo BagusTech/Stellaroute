@@ -28,7 +28,7 @@ void function initScripts($){
 		$('[duck-button="edit"], [duck-table] .btn').on('click', () => {
 			setTimeout(() => {
 				$('.summernote').summernote({height: 150, disableDragAndDrop: true});
-			}, 10)
+			}, 500)
 		});
 	});
 

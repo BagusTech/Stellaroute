@@ -346,8 +346,6 @@ void function initCardStyle($){
 
 		$('.js-card').guideCard();
 
-		console.log($cardsFormSaveButton.length)
-
 		$cardsForm.on('duck.form.submitted', (e) => {
 			e.stopPropagation();
 			
@@ -386,6 +384,9 @@ void function initCardStyle($){
 		$previewCards.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, previewCards);
 
 		$guideDetailsEdit.on('click', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
 			$guideDetailsEditIcon.toggleClass('fa-eye fa-pencil');
 		});
 

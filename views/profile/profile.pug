@@ -2,7 +2,7 @@ extends ../layout.pug
 
 block content
 	.profile
-		.sub-header(style=`background: rgba(0, 0, 0, 0) url("/images/profile_header_image_mirrored.jpg") no-repeat scroll center 57% / cover;`)
+		.sub-header(style=`background: rgba(0, 0, 0, 0) url("${ userProfile.bannerImage ? getImagePath(userProfile.bannerImage, 'large') : '/images/profile_header_image_mirrored.jpg'}") no-repeat scroll center 57% / cover;`)
 			.container.pb-0
 				.row.pt-Sm.pt-Md--md.pt-Lg--lg
 					.col-xs-2.col-sm-3.col-md-2.col-lg-1
@@ -40,70 +40,72 @@ block content
 						else
 							p.lead Nothing on the wishlist yet!
 				#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-					if userProfile.description
+					if wysiwygHasData(userProfile.description)
 						!=userProfile.description
 					else
 						p.lead Nothing to know about me yet!
-				if isMe
+				if user && isMe
 					#MySettings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 						.panel.panel-default(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)
 							.panel-heading My Settings
 							.panel-body
-								.row
+								.row(duck-field='name', duck-type='object')
 									.col-xs-12.col-sm-6
-										.form-group
+										.form-group(duck-field='first', duck-type='string')
 											label First Name
 												input.form-control(type='text', value= user.name && user.name.first)
 									.col-xs-12.col-sm-6
-										.form-group
+										.form-group(duck-field='last', duck-type='string')
 											label Last Name
 												input.form-control(type='text', value= user.name && user.name.last)
 									
 
-								.form-group
+								.form-group(duck-field='username', duck-type='string')
 									label Username
 										input.form-control(type='text', value= user.username)
 
-								.form-group
-									label Email
-										input.form-control(type='text', value= user.local && user.local.email)
-
-								.row
-									.col-xs-12.col-sm-6
-										.form-group
-											label Password
-												input.form-control(type='text')
+								.row(duck-field='local', duck-type='object')
+									.col-xs-12
+										.form-group(duck-field='email', duck-type='string')
+											label Email
+												input.form-control(type='email', value= user.local && user.local.email)
+								//	.col-xs-12.col-sm-6
+										.form-group(duck-field='password', duck-type='password')
+											label New Password
+												input.form-control(type='password', duck-value)
+											span.help-block Password must be at least 5 characters long.
 									
 									.col-xs-12.col-sm-6
 										.form-group
-											label Confirm Password
-												input.form-control(type='text')
+											label Confirm New Password
+												input.form-control(type='password')
 
 								.row
 									.col-xs-12.col-sm-6
-										.form-group
+										.form-group(duck-field='profilePicture', duck-type='image')
 											label Profile Picture
 												.form-control(duck-button='image-select')
 													i.fa.fa-image(aria-hidden='true')
-													span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+													span.pl-Sm(duck-image-value)= user.profilePicture || 'Please select an Image'
 									.col-xs-12.col-sm-6
-										.form-group
+										.form-group(duck-field='bannerImage', duck-type='image')
 											label Banner Image
 												.form-control(duck-button='image-select')
 													i.fa.fa-image(aria-hidden='true')
-													span.pl-Sm(duck-image-value)= card && card.image || 'Please select an Image'
+													span.pl-Sm(duck-image-value)= user.bannerImage || 'Please select an Image'
 
-								.form-group
+								.form-group(duck-field='tagline', duck-type='string')
 									label Tagline
-										input.form-control(type='text', value= user.tagline)
+										input.form-control(type='text', value= user.tagline, duck-value)
 
-								.form-group
+								.form-group(duck-field='description', duck-type='wysiwyg')
 									label About Me
-										.summernote
+									.summernote!= user.description
 
 							.panel-footer.text-right
 								button.btn.btn-primary(duck-button='submit') Save
-
+				
+					script(type='text/javascript' src='/js/pages/profile.min.js')
 //- user
 		Id
 		name

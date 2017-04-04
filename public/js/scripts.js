@@ -19,17 +19,32 @@ void function initScripts($){
 		});
 
 		// initialize summernote where it is being used
-		$('.summernote:visible').summernote({height: 150, disableDragAndDrop: true});
+		const $summernote = $('.summernote');
+		const summernoteLength = $summernote.length;
+		let summernoteToInit = 0;
+		const summernoteOptions = {
+			height: 150,
+			disableDragAndDrop: true,
+			toolbar: [
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table', 'hr']],
+				['link', ['link']],
+				['misc', ['fullscreen', 'codeview']],
+				['misc', ['undo', 'redo', 'help']],
+			],
+		};
+		const initSummernotes = setInterval(() => {
+			$summernote.eq(summernoteToInit).summernote(summernoteOptions);
+			summernoteToInit++;
+			if(summernoteToInit >= (summernoteLength)) {
+				clearInterval(initSummernotes);
+			}
+			
+		}, 250);
 
-		$('.modal').on('shown.bs.modal', () => {
-			$('.summernote:visible').summernote({height: 150, disableDragAndDrop: true});
-		});
-
-		$('[duck-button="edit"], [duck-table] .btn').on('click', () => {
-			setTimeout(() => {
-				$('.summernote').summernote({height: 150, disableDragAndDrop: true});
-			}, 500)
-		});
+		window.summernoteOptions = summernoteOptions;
 	});
 
 	$(window).on('load', () => {

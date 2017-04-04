@@ -21,7 +21,6 @@ const routes           = require('./routes/index');
 const admin            = require('./routes/admin');
 const ajax             = require('./routes/ajax');
 const locations        = require('./routes/locations');
-const profile          = require('./routes/profile');
 
 const Guide            = require('./schemas/guide');
 const Attraction       = require('./schemas/attraction');
@@ -135,8 +134,7 @@ app.use('/', routes);
 // CRUD
 app.use('/', ajax);
 
-app.use('/admin', isLoggedIn(true), admin)
-app.use('/profile', isLoggedIn(), profile);
+app.use('/admin', isLoggedIn(true), admin);
 
 // view locations
 app.use('/', locations);

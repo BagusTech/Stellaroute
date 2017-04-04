@@ -53,7 +53,7 @@ void function initDuckForm($, duck, window) {
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
-			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote({height: 150, disableDragAndDrop: true});
+			$clone.find('.summernote').parent().empty().append('<div class="summernote"></div>').find('> .summernote').summernote(window.summernoteOptions);
 			$clone.find('[duck-type="array"] > [duck-type]:not(:first-of-type)').remove();
 			$clone.find('[duck-button="add"]').click(addArrayItem);
 		}

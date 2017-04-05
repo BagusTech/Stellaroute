@@ -26,4 +26,17 @@ void function initRequest($){
 		}});
 	});
 
+	$(() => {
+		const $newGuideForm = $('[duck-table="Guides"]');
+		const $submit = $newGuideForm.find('[duck-button="submit"]');
+
+		$submit.on('click', () => {
+			$submit.append('<i class="fa fa-spin fa-spinner"></i>');
+		});
+
+		$newGuideForm.duckForm({successCallback: () => {
+			window.location = `${window.location.pathname}/${$('[duck-field="url"] [duck-value]').val()}`;
+		}});
+	});
+
 }(jQuery.noConflict())

@@ -1,6 +1,56 @@
 extends ../layout.pug
 
 block content
+	if user && isMe
+		#NewGuide.modal.fade(tabindex='-1', role='dialog')
+			.modal-dialog.modal-lg
+				.modal-content(duck-table='Guides', duck-key='Id', duck-function='add')
+					.modal-header
+						button.close(data-dismiss='modal') &times;
+						h4.modal-title New Guide
+					.modal-body
+						.form-horizontal
+							.hidden(duck-type='string', duck-field='author')
+								input(type='text', duck-value, value=user.Id)
+							.form-group(duck-type='object', duck-field='names')
+								label.col-sm-2.control-label Name
+								.col-sm-10(duck-type='string', duck-field='display')
+									input.form-control(duck-value)
+
+							.form-group(duck-field='url', duck-type='string')
+								label.col-sm-2.control-label Url
+								.col-sm-10
+									.input-group
+										input.form-control(type='text', required, duck-value)
+										.input-group-addon
+											small (only edit if you have to)
+									
+								script(src='/components/validateForm/specialValidation/guideUrl.min.js')
+
+							.form-group(duck-type='string', duck-field='tagline')
+								label.col-sm-2.control-label Tagline
+								.col-sm-10
+									input.form-control(duck-value)
+
+							.form-group(duck-type='image', duck-field='bannerImage')
+								label.col-sm-2.control-label Banner Image
+								.col-sm-10
+									input.hidden(type='hidden', duck-value)
+									.form-control(duck-button='image-select')
+										i.fa.fa-image(aria-hidden='true')
+										span.pl-Sm(duck-image-value) Please select an Image
+
+							.form-group(duck-type='image', duck-field='cardImage')
+								label.col-sm-2.control-label Card Image
+								.col-sm-10
+									input.hidden(type='hidden', duck-value)
+									.form-control(duck-button='image-select')
+										i.fa.fa-image(aria-hidden='true')
+										span.pl-Sm(duck-image-value) Please select an Image
+
+					.modal-footer
+						button.btn.btn-default(data-dismiss='modal') Close
+						button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
 	.profile
 		.sub-header(style=`background: rgba(0, 0, 0, 0) url("${ userProfile.bannerImage ? getImagePath(userProfile.bannerImage, 'large') : '/images/profile_header_image_mirrored.jpg'}") no-repeat scroll center 57% / cover;`)
 			.container.pb-0
@@ -26,6 +76,9 @@ block content
 				.share42init
 			div(data-function='tabs')
 				#MyGuides.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
+					if user && isMe
+						.p-R
+							button.hidden-xs.btn-primary.p-A.b-Sm(data-toggle='modal', data-target='#NewGuide') New Guide
 					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 						for guide in guides ? guides : []
 							.masonry--item

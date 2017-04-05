@@ -8,26 +8,26 @@ function parseData(data, schema, table) {
 				// uncomment if you want to be able to add new values without messing with the schema
 				// good for testing purposes, but do not forget to re-comment out
 				// return null;
-				console.error(`"${item}" isn't an attribute of "${path}"`); 
+				console.error(`"${item}" isn't an attribute of "${path}"`);
 				errorCount++;
-			}
+			} else {
+				const itemType = data[item] && data[item].constructor.name;
 
-			const itemType = data[item] && data[item].constructor.name;
+				if(itemType) {
+					const schemaType = typeof schema[item] === 'object' ? schema[item].constructor.name : schema[item]().constructor.name;
 
-			if(itemType) {
-				const schemaType = typeof schema[item] === 'object' ? schema[item].constructor.name : schema[item]().constructor.name;
-
-				if (itemType === 'Object') {
-					parse(data[item], schema[item], `${path} - ${item}`);
-				} else if (schemaType === 'Array' && typeof schema[item][0] === 'object') {
-					data[item].forEach((subItem) => {
-						parse(subItem, schema[item][0], `${path} - ${item}`);
-					});
-				} else {
-					if ( itemType !== schemaType ){
-						console.error('~~~ parsing data failed ~~~')
-						console.error(`"${item}" is currently a "${itemType}" and needs to be a "${schemaType}"`);
-						errorCount++;
+					if (itemType === 'Object') {
+						parse(data[item], schema[item], `${path} - ${item}`);
+					} else if (schemaType === 'Array' && typeof schema[item][0] === 'object') {
+						data[item].forEach((subItem) => {
+							parse(subItem, schema[item][0], `${path} - ${item}`);
+						});
+					} else {
+						if ( itemType !== schemaType ){
+							console.error('~~~ parsing data failed ~~~')
+							console.error(`"${item}" is currently a "${itemType}" and needs to be a "${schemaType}"`);
+							errorCount++;
+						}
 					}
 				}
 			}
@@ -38,6 +38,8 @@ function parseData(data, schema, table) {
 		return 'success';
 	}
 
+	console.error('~~~ data paresed ~~')
+	console.error(data)
 	return 'failure';
 }
 

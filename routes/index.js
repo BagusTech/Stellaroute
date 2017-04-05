@@ -233,6 +233,17 @@ router.get('/login', (req, res, next) => {
 	}
 });
 
+router.get('/profile', (req, res, next) => {
+	const user = req.user;
+
+	if (user) {
+		res.redirect(`/${user.username || user.Id}`);
+	} else {
+		req.flash('error', 'Sorry, you need to be logged on to do that :(');
+		res.redirect('/');
+	}
+});
+
 router.post('/signup', passport.authenticate('local-signup', {
 	successRedirect: '/profile',
 	failureRedirect: '/',

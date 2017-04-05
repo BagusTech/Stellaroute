@@ -159,11 +159,13 @@ void function initCardStyle($){
 	}
 
 	$(() => {
+		const $subHeader = $('.sub-header');
 		const $guideDetailsForm = $('#GuideDetailsForm');
 		const $guideDetailsSave = $guideDetailsForm.find('[duck-button="submit"]');
 		const $guideDetailsSaveIcon = $guideDetailsSave.find('.fa');
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
+		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 		const $cardsForm = $('#GuideCards');
 		const $cardsFormSaveButton = $cardsForm.find('[duck-button="submit"]');
 		const $cardsFormSaveIcon = $cardsFormSaveButton.find('.fa');
@@ -343,6 +345,7 @@ void function initCardStyle($){
 				</div>
 			</div>
 		`);
+		const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
 
 		$('.js-card').guideCard();
 
@@ -364,15 +367,16 @@ void function initCardStyle($){
 		$cardsForm.on('duck.form.error', (e) => {
 			e.stopPropagation();
 			
-			const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
-			$cardsWrapper.prepend($error);
+			const _$error = $error.clone();
+
+			$cardsWrapper.prepend(_$error);
 
 			setTimeout(() => {
-				$error.slideUp(270);
+				_$error.slideUp(270);
 			}, 3000);
 
 			setTimeout(() => {
-				$error.remove();
+				_$error.remove();
 			}, 3270);
 			
 			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
@@ -395,15 +399,33 @@ void function initCardStyle($){
 
 			$guideDetailsSaveIcon.toggleClass('hidden');
 		});
+
 		$guideDetailsForm.on('duck.form.success', (e) => {
 			e.stopPropagation();
 
+			const imagePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${$bannerImage.val().replace('.jpg', '-large.jpg')}`;
+			
+			$guideDetailsForm.modal('hide')
+
+			$subHeader.css('background-image', `url("${imagePath}")`);
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsSave.prop('disabled', false);
 			$guideDetailsEdit.click();
 		});
 		$guideDetailsForm.on('duck.form.error', (e) => {
 			e.stopPropagation();
+
+			const _$error = $error.clone();
+
+			$guideDetailsForm.prepend(_$error);
+
+			setTimeout(() => {
+				_$error.slideUp(270);
+			}, 3000);
+
+			setTimeout(() => {
+				_$error.remove();
+			}, 3270);
 
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsSave.prop('disabled', false);

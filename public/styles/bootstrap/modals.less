@@ -77,20 +77,11 @@
 // Modal header
 // Top section of the modal w/ title and dismiss
 .modal-header {
-  padding: @modal-title-padding;
-  position: relative;
   &:extend(.clearfix all);
 
-  &:after{
-    background: @grey-lighter;
-    content: ' ';
-    display: block;
-    position: absolute;
-    height: 1px;
-    left: @gw-Md;
-    right: @gw-Md;
-    bottom: 0;
-  }
+  padding: @modal-title-padding;
+  position: relative;
+  border-bottom: 1px solid @grey-lighter
 }
 // Close icon
 .modal-header .close {
@@ -114,20 +105,12 @@
 
 // Footer (for actions)
 .modal-footer {
-  padding: @modal-inner-padding;
-  position: relative;
   &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
 
-  &:before{
-    background: @grey-lighter;
-    content: ' ';
-    display: block;
-    position: absolute;
-    height: 1px;
-    left: @gw-Md;
-    right: @gw-Md;
-    top: 0;
-  }
+  padding: @modal-inner-padding;
+  position: relative;
+  border-top: 1px solid @grey-lighter;
+  text-align: right;
 
   // Properly space out buttons
   .btn + .btn {

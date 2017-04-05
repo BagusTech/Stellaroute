@@ -35,6 +35,9 @@ void function initScripts($){
 				['misc', ['undo', 'redo', 'help']],
 			],
 		};
+
+		// initiating summernotes on interval because it causes a noticable lag
+		// if you do ~3+ more at once.
 		const initSummernotes = setInterval(() => {
 			$summernote.eq(summernoteToInit).summernote(summernoteOptions);
 			summernoteToInit++;

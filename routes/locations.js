@@ -91,7 +91,8 @@ router.get('/:user/:guide', (req, res, next) => {
 		description: `Stellaroute: ${guide.names.display} Overview`,
 		guide,
 		author,
-		cards
+		cards,
+		countries: Country.cached().sort(sortBy('url')),
 	});
 });
 

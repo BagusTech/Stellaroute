@@ -4890,16 +4890,7 @@ button.close {
 .modal-header {
   padding: 12px;
   position: relative;
-}
-.modal-header:after {
-  background: #e7e7e7;
-  content: ' ';
-  display: block;
-  position: absolute;
-  height: 1px;
-  left: 24px;
-  right: 24px;
-  bottom: 0;
+  border-bottom: 1px solid #e7e7e7;
 }
 .modal-header .close {
   margin-top: -2px;
@@ -4929,16 +4920,8 @@ button.close {
 .modal-footer {
   padding: 12px;
   position: relative;
-}
-.modal-footer:before {
-  background: #e7e7e7;
-  content: ' ';
-  display: block;
-  position: absolute;
-  height: 1px;
-  left: 24px;
-  right: 24px;
-  top: 0;
+  border-top: 1px solid #e7e7e7;
+  text-align: right;
 }
 .modal-footer .btn + .btn {
   margin-left: 5px;
@@ -5827,18 +5810,6 @@ button.close {
 .file-manager--delete h2 {
   margin: 0 0 36px;
 }
-#GuideDetailsForm {
-  padding-bottom: 36px;
-}
-#GuideDetailsForm .btn-default {
-  -webkit-transition: opacity .17s;
-  transition: opacity .17s;
-  opacity: 0;
-}
-#GuideDetailsForm:hover .btn-default,
-#GuideDetailsForm[duck-edit-form="edit"] .btn-default {
-  opacity: 1;
-}
 .card-styles--list {
   padding: 0 12px;
   border: 1px solid #ccc;
@@ -5866,10 +5837,19 @@ button.close {
   padding-top: 12px;
   width: 100%;
 }
-.guide [data-sort='item'] {
+.guide .sub-header .btn-default {
+  -webkit-transition: opacity .17s;
+  transition: opacity .17s;
+  opacity: 0;
+}
+.guide .sub-header:hover .btn-default,
+.guide .in + .sub-header .btn-default {
+  opacity: 1;
+}
+.guide--cards [data-sort='item'] {
   position: relative;
 }
-.guide [duck-button='add'] {
+.guide--cards [duck-button='add'] {
   border: none;
   background: none;
   position: absolute;
@@ -5880,33 +5860,41 @@ button.close {
   -webkit-transition: opacity .17s, left .17s;
   transition: opacity .17s, left .17s;
 }
-.guide [duck-button='add'] span {
+.guide--cards [duck-button='add'] span {
   opacity: 0;
   -webkit-transition: opacity .17s;
   transition: opacity .17s;
 }
-.guide [duck-button='add']:hover {
+.guide--cards [duck-button='add']:hover {
   opacity: 1;
   left: -3em;
 }
-.guide [duck-button='add']:hover span {
+.guide--cards [duck-button='add']:hover span {
   opacity: 1;
 }
-.guide [duck-button='add']:last-child {
+.guide--cards [duck-button='add']:last-child {
   top: auto;
   bottom: 0;
 }
-.guide .guide-card--edit-mode [duck-button='add'] {
+.guide--cards .guide-card--edit-mode [duck-button='add'] {
   top: -1.75em;
 }
-.guide [data-sort="item"]:first-child [duck-button='add'] {
+.guide--cards [data-sort="item"]:first-child [duck-button='add'] {
   top: -1.5em;
 }
-.guide .fa-plus {
+.guide--cards .fa-plus {
   -webkit-transition: -webkit-transform .17s;
   transition: -webkit-transform .17s;
   transition: transform .17s;
   transition: transform .17s, -webkit-transform .17s;
+}
+@media (min-width: 767px) {
+  .guide .share42init span {
+    text-align: center;
+  }
+  .guide .share42-item {
+    width: 100%;
+  }
 }
 [data-icon] > .fa {
   line-height: inherit;

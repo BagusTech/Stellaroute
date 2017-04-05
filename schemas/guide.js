@@ -16,15 +16,18 @@ var Guide = Duck({
 		cardImage: String,
 		tagline: String,
 		description: String,
+		tags: Array,
 		cards: [{
 			title: String,
 			image: String,
 			text: String,
 			style: String,
 		}],
+		
+		countries: Array,
+
 		/*continents: Array,
 		worldRegions: Array,
-		countries: Array,
 		countryRegions: Array,
 		provinces: Array,
 		provinceRegions: Array,

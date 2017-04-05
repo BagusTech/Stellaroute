@@ -1,16 +1,4 @@
 #GuideDetailsForm {
-	.btn-default {
-		transition: opacity .17s;
-		opacity: 0;
-	}
-
-	&:hover, &[duck-edit-form="edit"] {
-		.btn-default{
-			opacity: 1;
-		}
-	}
-
-	padding-bottom: @gw-Lg;
 }
 
 .card-styles--list {
@@ -46,6 +34,21 @@
 }
 
 .guide {
+	.sub-header {
+		.btn-default {
+			transition: opacity .17s;
+			opacity: 0;
+		}
+	}
+
+	.sub-header:hover, .in + .sub-header{
+		.btn-default{
+			opacity: 1;
+		}
+	}
+}
+
+.guide--cards{
 	[data-sort='item'] {
 		position: relative;
 	}
@@ -89,5 +92,14 @@
 
 	.fa-plus {
 		transition: transform .17s;
+	}
+}
+
+@media (min-width: @screen-sm) {
+	.guide {
+		.share42init span {text-align: center;}
+			.share42-item {
+				width: 100%;
+			}
 	}
 }

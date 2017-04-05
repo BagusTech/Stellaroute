@@ -9,13 +9,15 @@ block content
 						img.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
 					.col-xs-10.col-sm-9.col-md-10.col-lg-11
 						h1= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
-						p.tc-W= userProfile.tagline || ' '
+
+						if userProfile.tagline
+							p.fc-W.bg-Dkr.p-Sm.d-Ib= userProfile.tagline
 
 						nav.tabbed-nav.pl-0.mt-XXl--md.mt-Xl--lg(data-tabs='controls')
 							a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') Guides
 							a.tabbed-nav--tab(href='#MyWishlist', role='tab', aria-expanded='false') Wishlist
-							a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
-							//-console.log(user && user.Id === userProfile.Id)
+							if wysiwygHasData(userProfile.description)
+								a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
 							if isMe
 								a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
 
@@ -32,18 +34,19 @@ block content
 						else
 							p.lead No guides created yet!
 				#MyWishlist.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-						for guide in favorites ? favorites : []
-							.masonry--item
-								a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
-									+card(guide.cardImage, guide.names.display)
+					p.lead Wishlist coming soon!
+					//	if favorites && favorites.length
+							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+								for guide in favorites ? favorites : []
+									.masonry--item
+										a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+											+card(guide.cardImage, guide.names.display)
 						else
 							p.lead Nothing on the wishlist yet!
-				#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-					if wysiwygHasData(userProfile.description)
-						!=userProfile.description
-					else
-						p.lead Nothing to know about me yet!
+				if wysiwygHasData(userProfile.description)
+					#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+						.panel.panel-default
+							.panel-body!=userProfile.description
 				if user && isMe
 					#MySettings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 						.panel.panel-default(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)
@@ -69,26 +72,19 @@ block content
 										.form-group(duck-field='email', duck-type='string')
 											label Email
 												input.form-control(type='email', value= user.local && user.local.email)
-								//	.col-xs-12.col-sm-6
-										.form-group(duck-field='password', duck-type='password')
-											label New Password
-												input.form-control(type='password', duck-value)
-											span.help-block Password must be at least 5 characters long.
-									
-									.col-xs-12.col-sm-6
-										.form-group
-											label Confirm New Password
-												input.form-control(type='password')
-
 								.row
 									.col-xs-12.col-sm-6
 										.form-group(duck-field='profilePicture', duck-type='image')
+											.hidden
+												input(type='text', value= user.profilePicture, duck-value)
 											label Profile Picture
 												.form-control(duck-button='image-select')
 													i.fa.fa-image(aria-hidden='true')
 													span.pl-Sm(duck-image-value)= user.profilePicture || 'Please select an Image'
 									.col-xs-12.col-sm-6
 										.form-group(duck-field='bannerImage', duck-type='image')
+											.hidden
+												input(type='text', value= user.bannerImage, duck-value)
 											label Banner Image
 												.form-control(duck-button='image-select')
 													i.fa.fa-image(aria-hidden='true')
@@ -103,8 +99,28 @@ block content
 									.summernote!= user.description
 
 							.panel-footer.text-right
+								button.btn.btn-default(data-toggle='modal', data-target='#ChangePassword') Change Password
 								button.btn.btn-primary(duck-button='submit') Save
-				
+					
+					#ChangePassword.modal.fade(tabindex="-1", role="dialog")
+						.modal-dialog
+							.modal-content(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)
+								.modal-header
+									button.close(data-dismiss='modal') &times;
+									h4.modal-title Change Password
+								.modal-body(duck-type='object', duck-field='local')
+									.form-group(duck-field='password', duck-type='password')
+										label New Password
+											input.form-control(type='password', duck-value)
+										span.help-block Password must be at least 5 characters long.
+									.form-group
+										label Confirm New Password
+											input.form-control(type='password')
+								.modal-footer
+									button.btn.btn-default(data-dismiss='modal', type='button') Cancel
+									button.btn.btn-primary(duck-button='submit', type='submit') Save
+
+
 					script(type='text/javascript' src='/js/pages/profile.min.js')
 //- user
 		Id

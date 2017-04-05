@@ -1,47 +1,90 @@
+if isMe
+	#GuideDetailsForm.modal.fade(tabindex='-1', role='dialog')
+		.modal-dialog.modal-lg
+			.modal-content(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='update')
+				.modal-header
+					button.close(data-dismiss='modal') &times;
+					h4.modal-title= guide.names.display
+				.modal-body
+					.form-horizontal
+						.form-group(duck-type='object', duck-field='names')
+							label.col-sm-2.control-label Name
+							.col-sm-10(duck-type='string', duck-field='display')
+								input.form-control(duck-value, , value= guide && guide.names && guide.names.display)
+
+						.form-group(duck-type='string', duck-field='tagline')
+							label.col-sm-2.control-label Tagline
+							.col-sm-10
+								input.form-control(duck-value, value= guide && guide.tagline)
+
+						.form-group(duck-type='image', duck-field='bannerImage')
+							label.col-sm-2.control-label Banner Image
+							.col-sm-10
+								input.hidden(type='hidden', duck-value, value= guide.bannerImage)
+								.form-control(duck-button='image-select')
+									i.fa.fa-image(aria-hidden='true')
+									span.pl-Sm(duck-image-value)= guide && guide.bannerImage || 'Please select an Image'
+
+						.form-group(duck-type='image', duck-field='cardImage')
+							label.col-sm-2.control-label Card Image
+							.col-sm-10
+								input.hidden(type='hidden', duck-value, value= guide.cardImage)
+								.form-control(duck-button='image-select')
+									i.fa.fa-image(aria-hidden='true')
+									span.pl-Sm(duck-image-value)= guide && guide.cardImage || 'Please select an Image'
+
+						.form-group(duck-type='array', duck-field='countries')
+							label.col-sm-2.control-label Countries
+							.col-sm-10
+								div
+									for guideCountry in guide.countries ? guide.countries : [null]
+										.input-group.mb-Sm(duck-type='string')
+											.input-group-addon(data-sort='handle')
+												i.fa.fa-arrows-v(aria-hidden='true')
+											select.form-control(duck-value)
+												option(value='') Please select a country
+												for country in countries ? countries : []
+													option(value=country.Id, selected= guideCountry === country.Id)= country.names.display
+											.input-group-btn
+												button.btn.btn-danger(duck-button='delete')
+													i.fa.fa-times(aria-hidden='true')
+													span.sr-only Delete
+								p.ta-R: button.btn.btn-default(duck-button='add') Add Country
+						.form-group(duck-type='array', duck-field='tags')
+							label.col-sm-2.control-label Tags
+							.col-sm-10
+								div
+									for tag in guide.tags ? guide.tags : [null]
+										.input-group.mb-Sm(duck-type='string')
+											.input-group-addon(data-sort='handle')
+												i.fa.fa-arrows-v(aria-hidden='true')
+											input.form-control(type='text', duck-value, value=tag)
+											.input-group-btn
+												button.btn.btn-danger(duck-button='delete')
+													i.fa.fa-times(aria-hidden='true')
+													span.sr-only Delete
+								p.ta-R: button.btn.btn-default(duck-button='add') New Tag
+						.form-group(duck-type='bool', duck-field='isPublished')
+							label.col-sm-2.control-label Publish
+							.col-sm-10
+								.checkbox
+									label
+										input(type='checkbox', duck-value, checked= guide.isPublished)
+										| By publishing your guide it will be visible to the public.
+
+				.modal-footer
+					button.btn.btn-default(data-dismiss='modal') Close
+					button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
+
 div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0
 			ol.breadcrumb
 				li.active Created by: #[a(href= `/${author.username || author.Id}`)= author.username || 'unknown']
 
-			+formStart(guide, 'Guides')(id='GuideDetailsForm')
-				+editButton('f-R bg-W')
-				+view
-					h1 #{guide.names.display} #[small (unpublished)]
-						if author && author.names
-							small.pl-Xs= author.names.first
-
-						if guide.tagline
-							small.d-B.mt-Sm= guide.tagline
-				+edit(null, false)
-					.panel.panel-default
-						.panel-heading= guide.names.display
-						.panel-body.form-horizontal
-							.form-group(duck-type='object', duck-field='names')
-								label.col-sm-2.control-label Name
-								.col-sm-10(duck-type='string', duck-field='display')
-									input.form-control(duck-value, , value= guide && guide.names && guide.names.display)
-
-							.form-group(duck-type='string', duck-field='tagline')
-								label.col-sm-2.control-label Tagline
-								.col-sm-10
-									input.form-control(duck-value, value= guide && guide.tagline)
-
-							.form-group(duck-type='image', duck-field='bannerImage')
-								label.col-sm-2.control-label Background Image
-								.col-sm-10
-									input.hidden(type='hidden', duck-value, value= guide.bannerImage)
-									.form-control(duck-button='image-select')
-										i.fa.fa-image(aria-hidden='true')
-										span.pl-Sm(duck-image-value)= guide && guide.bannerImage || 'Please select an Image'
-
-							.form-group(duck-type='image', duck-field='cardImage')
-								label.col-sm-2.control-label Card Image
-								.col-sm-10
-									input.hidden(type='hidden', duck-value, value= guide.cardImage)
-									.form-control(duck-button='image-select')
-										i.fa.fa-image(aria-hidden='true')
-										span.pl-Sm(duck-image-value)= guide && guide.cardImage || 'Please select an Image'
-
-						.panel-footer.ta-R
-							button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
+			if isMe
+				button.btn.btn-default.f-R(data-toggle='modal', data-target='#GuideDetailsForm'): i.fa.fa-pencil(aria-hidden)
+			h1 #{guide.names.display} #[small (unpublished)]
+				if guide.tagline
+					small.d-B.mt-Sm= guide.tagline
+							

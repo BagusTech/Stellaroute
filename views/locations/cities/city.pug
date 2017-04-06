@@ -18,7 +18,7 @@ append header
 					li.active: a(href= '/') Home
 					li.active: a(href= `/${city.countryUrl}`)= city.countryDisplay
 
-				+formStart(city, 'Cities')
+				//+formStart(city, 'Cities')
 					+view
 						h1= city.names.display
 							small.ml-Md= city.tagline

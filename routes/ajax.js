@@ -161,10 +161,10 @@ const router       = express.Router();
 	});
 
 	router.post('/upload', isLoggedIn(), formidable(), (req, res) => {
-		if(req.query.folder.split('/')[0] !== req.user.Id && !req.user.isAdmin) {
+		/*if(req.query.folder.split('/')[0] !== req.user.Id && !req.user.isAdmin) {
 			res.status(401).send('Request unauthorized');
 			return;
-		}
+		}*/
 
 		const files = req.files || [];
 		const length = files.length;

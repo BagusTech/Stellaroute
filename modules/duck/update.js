@@ -5,6 +5,47 @@ const flattenObject = require('../flattenObject');
 const parseData     = require('../parseData');
 const readJSON      = require('../readJSON');
 
+/*  isUniqueBy
+	check to see if it has any special rules for going into the db */
+
+	function isUniqueBy(itemKey, uniqueBy, reject, items, itemToAdd) {
+		const key = uniqueBy[0];
+		const range = (typeof uniqueBy[1] === 'string' ? Array(uniqueBy[1]) : uniqueBy[1]) || [];
+		const isUnique = items.filter(function(item){
+			if(item[itemKey] === itemToAdd[itemKey]) { // because it's an update, it doesn't have to validate against itself
+				return false;
+			}
+
+			if(!itemToAdd[key]) {
+				return true  
+			}
+
+			function isEqual(a, b){
+				if (a instanceof Array){
+					for (var i in b){
+						if(a.indexOf(b[i]) > -1){
+							return true;
+						}
+					}
+				} else {
+					return a === b;
+				}
+			}
+
+			const keyCheck = isEqual(item[key], itemToAdd[key]);
+			const range1 = isEqual(item[range[0]], itemToAdd[range[0]]);
+			const range2 = isEqual(item[range[1]], itemToAdd[range[1]]);			
+
+			return (keyCheck && range1 && range2)
+		}).length === 0;
+
+		if(!isUnique){
+			return false;
+		}
+
+		return true;
+	}
+
 /*  checkSchema
 	Checks the given object against it's schema making sure that all the fields are the correct type and name
 	ReAssign - bool - change object from { a.b: 'foo'} to { a: { b: 'foo' }} */
@@ -156,10 +197,17 @@ const readJSON      = require('../readJSON');
     ReAssign - bool - change object from { a.b: 'foo'} to { a: { b: 'foo' }}
 	TODO make it work with HASH-RANGE keys*/
 
-    function updateItem(data, reAssign, table, schema, key, oldItem) {
+    function updateItem(data, reAssign, table, schema, key, oldItem, uniqueBy, items) {
     	return new Promise((resolve, reject) => {
     		if(!checkSchema(data, reAssign, schema, table)) {
 				reject('Mismatch of data types');
+				return;
+			}
+
+			if(uniqueBy && !isUniqueBy(key, uniqueBy, reject, items, data)) {
+				const range = (typeof uniqueBy[1] === 'string' ? Array(uniqueBy[1]) : uniqueBy[1]) || [];
+
+				reject({ forUser: `Cant update ${table} because "${uniqueBy[0]}" must be unique${range.length ? ` "${range}."` : '.'}`});
 				return;
 			}
 
@@ -183,6 +231,8 @@ const readJSON      = require('../readJSON');
 		const key = this.hash;
 		const bulkUpdate = data instanceof Array;
 		const oldItem = bulkUpdate ? [] : this.findOne(key, data[key]).items;
+		const uniqueBy = this.uniqueBy;
+		const items = this.cached() || [];
 		
 		if(bulkUpdate) {
 			const length = data.length;
@@ -195,7 +245,7 @@ const readJSON      = require('../readJSON');
 		return new Promise((resolve, reject) => {
 			if(bulkUpdate) {
 				void function updates(item) {
-					updateItem(item, reAssign, table, schema, key, oldItem[item[key]]).then((success) => {
+					updateItem(item, reAssign, table, schema, key, oldItem[item[key]], uniqueBy, items).then((success) => {
 						if (data.length) {
 							updates(data.shift())
 						} else {
@@ -206,7 +256,7 @@ const readJSON      = require('../readJSON');
 					});
 				}(data.shift())
 			} else {
-				updateItem(data, reAssign, table, schema, key, oldItem).then((success) => {
+				updateItem(data, reAssign, table, schema, key, oldItem, uniqueBy, items).then((success) => {
 					resolve(success)
 				}, (error) => {
 					reject(error)

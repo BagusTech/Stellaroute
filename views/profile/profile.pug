@@ -79,13 +79,34 @@ block content
 					if user && isMe
 						.p-R
 							button.hidden-xs.btn-primary.p-A.b-Sm(data-toggle='modal', data-target='#NewGuide') New Guide
-					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-						for guide in guides ? guides : []
-							.masonry--item
-								a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
-									+card(guide.cardImage, guide.names.display)
-						else
-							p.lead No guides created yet!
+					.row
+						.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
+							.visible-xs
+								button.btn.btn-default.w-100(data-function='toggle', data-target='[data-filter-section="attraction-category"]') Filter
+							.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
+								//div(data-filter-section='top-attraction')
+									.checkbox.checkbox-right
+										label
+											span.hidden-xs Only Top Attractions
+											input(type='checkbox', value='true')
+											span.visible-xs Only Top Attractions
+								//div(data-filter-section='attraction-category')
+									h2.mt-0.pt-Sm.ta-R--sm Category
+									for category in attractionCategories
+										.checkbox.checkbox-right
+											label
+												span.hidden-xs= category
+												input(type='checkbox', value= category)
+												span.visible-xs= category
+
+						.col-xs-12.col-sm-8.col-md-9.col-lg-10
+							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+								for guide in guides ? guides : []
+									.masonry--item
+										a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+											+card(guide.cardImage, guide.names.display)
+								else
+									p.lead No guides created yet!
 				#MyWishlist.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 					p.lead Wishlist coming soon!
 					//	if favorites && favorites.length
@@ -124,7 +145,7 @@ block content
 									.col-xs-12
 										.form-group(duck-field='email', duck-type='string')
 											label Email
-												input.form-control(type='email', value= user.local && user.local.email)
+												input.form-control(type='email', value= user.local && user.local.email, duck-value)
 								.row
 									.col-xs-12.col-sm-6
 										.form-group(duck-field='profilePicture', duck-type='image')
@@ -154,6 +175,7 @@ block content
 							.panel-footer.text-right
 								button.btn.btn-default(data-toggle='modal', data-target='#ChangePassword') Change Password
 								button.btn.btn-primary(duck-button='submit') Save
+									i.fa.fa-spin.fa-spinner.hidden
 					
 					#ChangePassword.modal.fade(tabindex="-1", role="dialog")
 						.modal-dialog
@@ -172,6 +194,7 @@ block content
 								.modal-footer
 									button.btn.btn-default(data-dismiss='modal', type='button') Cancel
 									button.btn.btn-primary(duck-button='submit', type='submit') Save
+										i.fa.fa-spin.fa-spinner.hidden
 
 
 					script(type='text/javascript' src='/js/pages/profile.min.js')

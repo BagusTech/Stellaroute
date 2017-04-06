@@ -263,7 +263,16 @@ void function initDuckForm($, duck, window) {
 
 	function updateItem(table, key, keyValue, $startOfFields, successCallback, errorCallBack) {
 		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
+			const originalPassword = table === 'Users' ? data.local && data.local.password : false; // due to how javascript references values, this has to be declared before the item is built;
 			const item = buildObject(data, $startOfFields);
+
+			// because the password is encrypted, it will save over the old password, thinking an update was made
+			if(originalPassword) {
+				if(item.local.password === originalPassword) {
+					delete item.local.password;
+				}
+			}
+
 			duck(table).update(item, successCallback, errorCallBack);
 		});
 	}

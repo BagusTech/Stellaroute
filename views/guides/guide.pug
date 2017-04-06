@@ -24,8 +24,8 @@ block content
 						if isMe
 							.js-guide-cards(duck-field='cards', duck-type='array')
 								div
-									for _card, i in cards ? cards : [{}]
-										- var card = _card.section, offset = i;
+									for _card, i in cards && cards.length ? cards : [{}]
+										- var card = _card.section || {}, offset = i;
 										include cards/_card.pug
 
 										for _subCard, j in _card.subCards ? _card.subCards : []

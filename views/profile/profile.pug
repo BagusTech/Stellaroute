@@ -109,16 +109,16 @@ block content
 									.col-xs-12.col-sm-6
 										.form-group(duck-field='first', duck-type='string')
 											label First Name
-												input.form-control(type='text', value= user.name && user.name.first)
+												input.form-control(type='text', value= user.name && user.name.first, duck-value)
 									.col-xs-12.col-sm-6
 										.form-group(duck-field='last', duck-type='string')
 											label Last Name
-												input.form-control(type='text', value= user.name && user.name.last)
+												input.form-control(type='text', value= user.name && user.name.last, duck-value)
 									
 
 								.form-group(duck-field='username', duck-type='string')
 									label Username
-										input.form-control(type='text', value= user.username)
+										input.form-control(type='text', value= user.username, duck-value)
 
 								.row(duck-field='local', duck-type='object')
 									.col-xs-12

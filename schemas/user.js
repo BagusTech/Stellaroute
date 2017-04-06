@@ -31,7 +31,8 @@ const User = Duck({
 	HASH: 'Id',
 	HASHType: 'S',
 	CacheDuration: 60*60*24, // 24h -- node-cache timing is in seconds, not miliseconds
-	//, Indexes : ['localEmail']
+	//, Indexes : ['localEmail'],
+	UniqueBy: ['username']
 }, null, false);
 
 module.exports = User;

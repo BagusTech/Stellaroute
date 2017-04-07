@@ -3,7 +3,7 @@ if isMe
 		button.btn.btn-default.guide-card--add-card.hidden(duck-button='add', duck-add='before')
 			span Add&nbsp;
 			i.fa.fa-chevron-right(aria-hidden='true')
-		.input-group.guide-card--admin.js-card(class=`guide-card--${card.style}`)
+		.input-group.guide-card--admin.js-card(class=`guide-card--${card.style || 'big'}`)
 			button.btn.btn-default.guide-card--edit-toggle.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
 			.input-group-addon(data-sort='handle')
 				i.fa.fa-arrows-v(aria-hidden='true')
@@ -23,7 +23,7 @@ if isMe
 								.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
 									include sub.pug
 
-								.card-styles--preview.guide-card--wrapper(card-style='big', class= card.style === 'big' && 'card-styles--preview__active')
+								.card-styles--preview.guide-card--wrapper(card-style='big', class= (card.style === 'big' || !card.style) && 'card-styles--preview__active')
 									include big.pug
 
 								.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
@@ -61,7 +61,7 @@ else
 	if card.style === 'sub'
 		include sub.pug
 	
-	if card.style === 'big'
+	if !card.style || card.style === 'big'
 		include big.pug
 	
 	if card.style === 'small'

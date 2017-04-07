@@ -55,7 +55,7 @@ void function initCardStyle($){
 		const $addCardIcon = e.data.addCardIcon;
 		const $addButtons = $cardsWrapper.find('[duck-button="add"]');
 
-		$cardsWrapper.prop('ArrayItemTemplate', e.data.cardTemplate);
+		
 		$addButtons.removeClass('hidden');
 
 		if(!$addCardIcon.hasClass('rotate-45')) {
@@ -96,7 +96,6 @@ void function initCardStyle($){
 		});
 
 		$card.on('exitEditMode', () => {
-			//$card.removeClass('guide-card--edit-mode');
 			$card.parent().removeClass('guide-card--edit-mode');
 			
 			if($cardTab.attr('aria-expanded') === 'false') {
@@ -105,7 +104,6 @@ void function initCardStyle($){
 		});
 
 		$card.on('enterEditMode', () => {
-			//$card.addClass('guide-card--edit-mode');
 			$card.parent().addClass('guide-card--edit-mode');
 		});
 
@@ -124,11 +122,6 @@ void function initCardStyle($){
 			e.stopPropagation();
 			e.preventDefault();
 
-			//const $this = $(e.currentTarget);
-			//const style = $this.attr('card-style');
-
-			//$cardStyles.not($this).removeClass('card-styles--style__active');
-			//$this.addClass('card-styles--style__active');
 			$cardPreviews.removeClass('card-styles--preview__active');
 			$card.find(`.card-styles--preview[card-style="${$cardStyles.val()}"]`).addClass('card-styles--preview__active');
 		});
@@ -176,176 +169,15 @@ void function initCardStyle($){
 		const $previewCardsIcon = $previewCards.find('.fa');
 		const $addCard = $('.js-add-card-start');
 		const $addCardIcon = $addCard.find('.fa');
-		const $cardTemplate = $(`
-			<div duck-type="object">
-				<button class="btn btn-default guide-card--add-card" duck-button='add', duck-add='before'>
-					<span>Add&nbsp;</span>
-					<i class='fa fa-chevron-right' aria-hidden='true'></i>
-				</button>
-				<div class="input-group guide-card--admin js-card guide-card--big" data-sort="item">
-					<button class="btn btn-default guide-card--edit-toggle js-card-toggle">
-						<i class="fa fa-pencil" aria-hidden="true"></i>
-					</button>
-					<div class="input-group-addon" data-sort="handle">
-						<i class="fa fa-arrows-v" aria-hidden="true"></i>
-					</div>
-					<div class="panel panel-default" data-function="accordion" data-position="0.2">
-						<div class="panel-heading" role="tab" aria-expanded="true" id="NewCard">
-							<h2 class="panel-title js-card-title">New Card</h2>
-						</div>
-						<div class="p-0" role="tabpanel" aria-hidden="false" style="display: block;">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-xs-12 col-md-6 guide-card--edit">
-										<div class="form-horizontal">
-											<div class="form-group" duck-field="title" duck-type="string">
-												<label class="col-sm-2 control-label">Title</label>
-												<div class="col-sm-10">
-													<input class="form-control" duck-value="" value="New Card" type="text" />
-												</div>
-											</div>
-											<div class="form-group" duck-field="image" duck-type="image">
-												<label class="col-sm-2 control-label">Image</label>
-												<div class="col-sm-10">
-													<input class="hidden" duck-value="" value="" type="hidden" />
-													<div class="form-control" duck-button="image-select">
-														<i class="fa fa-image" aria-hidden="true"></i>
-														<span class="pl-Sm" duck-image-value=""></span>
-													</div>
-												</div>
-											</div>
-											<div class="form-group" duck-field="text" duck-type="wysiwyg">
-												<label class="col-sm-2 control-label">Text</label>
-												<div class="col-sm-10">
-													<div class="summernote" style="display: none;">
-														This is there the Text goes
-													</div>
-												</div>
-											</div>
-											<div class="form-group" duck-field="style" duck-type="select">
-												<label class="col-sm-2 control-label">Style</label>
-												<div class="col-sm-10">
-													<select class="form-control" duck-value="">
-														<option value="big" selected="">Big Card</option>
-														<option value="small">Small Card</option>
-														<option value="section">Section</option>
-														<option value="sub">Sub Section</option>
-														<option value="img">Image Only</option>
-														<option value="plain">Plain Text</option>
-														<option value="white">White Text</option>
-														<option value="danger">Danger Text</option>
-														<option value="success">Success Text</option>
-														<option value="info">Info Text</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-md-6 guide-card--view">
-										<div class="card-styles--preview" card-style="section">
-											<div class="guide-card--card guide-card--card__big">
-												<h2 class="guide-card--title js-card-title">New Card
-												</h2>
-												<div class="guide-card--text js-card-text">This is there the Text goes
-													<br>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="sub">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<h3 class="guide-card--title js-card-title">New Card
-													</h3>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper card-styles--preview__active" card-style="big">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<img class="guide-card--img js-card-image" src="/images/no-image.svg">
-													<h3 class="guide-card--title js-card-title">New Card
-													</h3>
-													<div class="guide-card--text js-card-text">This is there the Text goes
-														<br>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="small">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<img class="guide-card--img js-card-image" src="/images/no-image.svg">
-													<div>
-														<h4 class="guide-card--title js-card-title">New Card
-														</h4>
-														<div class="guide-card--text js-card-text">This is there the Text goes
-															<br>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="img">
-											<div class="guide-card--card guide-card--card__big">
-												<img class="guide-card--img js-card-image" src="/images/no-image.svg">
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="plain">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--text js-card-text">This is there the Text goes
-													<br>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="white">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<div class="guide-card--text js-card-text">This is there the Text goes
-														<br>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="danger">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<div class="guide-card--text js-card-text">This is there the Text goes
-														<br>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="success">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<div class="guide-card--text js-card-text">This is there the Text goes
-														<br>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="card-styles--preview guide-card--wrapper" card-style="info">
-											<div class="guide-card--card guide-card--card__big">
-												<div class="guide-card--body">
-													<div class="guide-card--text js-card-text">This is there the Text goes
-														<br>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="panel-footer text-right">
-								<button class="btn btn-danger" duck-button="delete">Delete Card</button>
-								<button class="btn btn-info js-card-toggle">Preview</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		`);
 		const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
+
+		$.ajax({
+			url: '/renderPug',
+			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big', title: 'New Card', text: 'New card text goes here.'}}},
+			success: (data) => {
+				$cardsWrapper.prop('ArrayItemTemplate', $(data));
+			}
+		});
 
 		$('.js-card').guideCard();
 
@@ -383,7 +215,7 @@ void function initCardStyle($){
 			$cardsFormSaveButton.prop('disabled', false);
 		});
 
-		$addCard.on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon, cardTemplate: $cardTemplate}, showAddButtons);
+		$addCard.on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}, showAddButtons);
 		$expandeCollapse.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, expandeCollapseAll);
 		$previewCards.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, previewCards);
 

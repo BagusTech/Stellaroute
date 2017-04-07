@@ -5860,11 +5860,6 @@ button.close {
   -webkit-transition: opacity .17s, left .17s;
   transition: opacity .17s, left .17s;
 }
-.guide--cards [duck-button='add'] span {
-  opacity: 0;
-  -webkit-transition: opacity .17s;
-  transition: opacity .17s;
-}
 .guide--cards [duck-button='add']:hover {
   opacity: 1;
   left: -3em;

@@ -215,6 +215,8 @@ const router       = express.Router();
 		const filePath = `views/${params.file}`;
 		const locals = params.locals;
 
+		locals.getImagePath = res.locals.getImagePath;
+
 		res.send(pug.compileFile(filePath)(locals));
 	});
 

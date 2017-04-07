@@ -144,9 +144,12 @@ app.use('/', locations);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
-    console.error(req);
+
+    console.error('~~~~ 404 - Not Found ~~~');
+    console.error(req.url, new Date());
+    console.error('~~~~~~ End Error ~~~~~~~');
+    
     err.status = 404;
-    console.error('~~~~~~~~~~');
     next(err);
 });
 

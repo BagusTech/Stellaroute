@@ -7220,6 +7220,7 @@ body {
 }
 .guide-card--img {
   width: 100%;
+  height: 100%;
 }
 .guide-card--title {
   margin: 0 0 12px;
@@ -7280,6 +7281,9 @@ body {
 }
 .guide-card--card__small .guide-card--body .guide-card--img {
   width: 25%;
+}
+.card-styles--preview .guide-card--card__small {
+  margin-top: 0;
 }
 .guide-card--card__danger .guide-card--body {
   padding: 12px;

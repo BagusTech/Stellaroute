@@ -170,9 +170,10 @@ const router       = express.Router();
 		const length = files.length;
 
 		function uploadImage(file) {
-			const fileType = file.name.split('.').pop();
+			const fileName = file.name.split('.');
+			const fileType = fileName.pop();
 
-			s3.uploadImage(file.path, {path: file.name}, function(err, versions, meta) {
+			s3.uploadImage(file.path, {path: fileName.join('')}, function(err, versions, meta) {
 				if (err) {
 					console.error(err);
 					res.status(500).send(err);

@@ -6,8 +6,10 @@ void function initInteriorNav($) {
 	function checkForActiveTabChange(e) {
 		const $wrapper = e.data.wrapper;
 		const $nodes = e.data.nodes;
+		const $contentScrollWrap = e.data.contentScrollWrap;
 		const isWindow = e.data.isWindow;
-		const $allActiveNodes = $nodes.filter((i, node) => $(node).is(':visible') && $(node).offset().top <= (isWindow ? $('html,body').scrollTop() : e.data.offset));
+		const scrollTop = $contentScrollWrap.scrollTop();
+		const $allActiveNodes = $nodes.filter((i, node) => $(node).is(':visible') && $(node).offset().top <= (isWindow ? scrollTop : e.data.offset));
 		const $activeNodes = $wrapper.find('.active');
 		const activePosition = $allActiveNodes.last().attr('data-position');
 		const currentPosition = $activeNodes.last().attr('data-position')
@@ -57,7 +59,7 @@ void function initInteriorNav($) {
 
 		// don't check for active tab change when we know it's happening causing it to trigger twice
 		setTimeout(() => {
-			$contentScrollWrap.on('scroll', {wrapper: $wrapper, nodes: $nodes, offset, isWindow}, checkForActiveTabChange);
+			$contentScrollWrap.on('scroll', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, offset, isWindow}, checkForActiveTabChange);
 		}, $wrapper.attr('data-animation-speed') || 500);
 	}
 
@@ -87,7 +89,7 @@ void function initInteriorNav($) {
 		
 		$toggle.off('click', toggleNav).on('click', {wrapper: $wrapper, toggleIcon: $toggleIcon}, toggleNav);
 		$wrapper.find('a').off('click', scrollTo).on('click', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, content: $content, offset, isWindow}, scrollTo);
-		$contentScrollWrap.off('scroll', checkForActiveTabChange).on('scroll', {wrapper: $wrapper, nodes: $nodes, offset, isWindow}, checkForActiveTabChange);
+		$contentScrollWrap.off('scroll', checkForActiveTabChange).on('scroll', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, offset, isWindow}, checkForActiveTabChange);
 	}
 
 	$.fn.interiorNav = function(contentWrapper, offset) {

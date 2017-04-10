@@ -23,18 +23,17 @@ var Guide = Duck({
 			text: String,
 			style: String,
 		}],
-		
-		countries: Array,
 
-		/*continents: Array,
+		continents: Array,
 		worldRegions: Array,
+		countries: Array,
 		countryRegions: Array,
 		provinces: Array,
 		provinceRegions: Array,
 		cities: Array,
 		cityRegions: Array,
 		neighborhoods: Array,
-		attractions: Array,
+		/*attractions: Array,
 		isGroupedByDay: Boolean,
 		map: String,
 		description: String,
@@ -65,7 +64,7 @@ var Guide = Duck({
 					time: String,
 					distance: String,
 				}],
-				type: String, // food/attraction/area attraction/sub attraction/city
+				type: String, // food/attraction/area attraction/sub attraction/city/activity/note
 				tagTitle: String,
 				image: String,
 				table: String, // the table the id corresponds to i.e. Attractions, Cities

@@ -18,6 +18,9 @@ void function initScripts($){
 			}, 200);
 		});
 
+		// opt in to bootstrap popovers
+		$('[data-toggle="tooltip"]').tooltip()
+
 		// initialize summernote where it is being used
 		const $summernote = $('.summernote');
 		const summernoteLength = $summernote.length;

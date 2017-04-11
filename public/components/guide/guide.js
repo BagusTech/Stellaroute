@@ -176,7 +176,7 @@ void function initCardStyle($){
 			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big', title: 'New Card', text: 'New card text goes here.'}}},
 			success: (data) => {
 				$cardsWrapper.prop('ArrayItemTemplate', $(data));
-			}
+			},
 		});
 
 		$('.js-card').guideCard();

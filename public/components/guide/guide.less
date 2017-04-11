@@ -1,6 +1,10 @@
 #GuideDetailsForm {
 }
 
+.guide--cards {
+	padding-top: @gw-Sm;
+}
+
 .card-styles--list {
 	padding:0 12px;
 	border: 1px solid #ccc;
@@ -89,6 +93,17 @@
 		transition: transform .17s;
 	}
 }
+	.guide-card--img__no-img {
+		display: none;
+
+		.guide-card--card__small .guide-card--body & + div {
+			width: 100%;
+		}
+
+		.guide-card--edit-mode & {
+			display: block;
+		}
+	}
 
 @media (min-width: @screen-sm) {
 	.guide {

@@ -5810,6 +5810,9 @@ button.close {
 .file-manager--delete h2 {
   margin: 0 0 36px;
 }
+.guide--cards {
+  padding-top: 12px;
+}
 .card-styles--list {
   padding: 0 12px;
   border: 1px solid #ccc;
@@ -5882,6 +5885,15 @@ button.close {
   transition: -webkit-transform .17s;
   transition: transform .17s;
   transition: transform .17s, -webkit-transform .17s;
+}
+.guide-card--img__no-img {
+  display: none;
+}
+.guide-card--card__small .guide-card--body .guide-card--img__no-img + div {
+  width: 100%;
+}
+.guide-card--edit-mode .guide-card--img__no-img {
+  display: block;
 }
 @media (min-width: 767px) {
   .guide .share42init span {
@@ -7278,6 +7290,9 @@ body {
   width: 25%;
 }
 .card-styles--preview .guide-card--card__small {
+  margin-top: 0;
+}
+.guide-card--card__small:first-child {
   margin-top: 0;
 }
 .guide-card--card__danger .guide-card--body {

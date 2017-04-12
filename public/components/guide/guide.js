@@ -43,8 +43,6 @@ void function initCardStyle($){
 	function hideAddButtons(e) {
 		e.data.cardsWrapper.find('[duck-button="add"]').addClass('hidden');
 		e.data.addCardIcon.removeClass('rotate-45');
-
-		$(e.currentTarget).off('click', hideAddButtons);
 	}
 
 	function showAddButtons(e) {
@@ -59,11 +57,9 @@ void function initCardStyle($){
 		$addButtons.removeClass('hidden');
 
 		if(!$addCardIcon.hasClass('rotate-45')) {
-			$('body').on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}, hideAddButtons);
-
 			$addCardIcon.addClass('rotate-45');
 		} else {
-			$('body').click();
+			hideAddButtons({data: {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}})
 		}
 	}
 

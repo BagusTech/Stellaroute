@@ -96,7 +96,7 @@ block content
 						for guide in guides
 							//.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
 							.masonry--item
-								a(href=`/${guide.author}/${guide.url}`)
+								a(href=`/${guide.authorUsername}/${guide.url}`)
 									+card(guide.cardImage, guide.names.display)
 				else
 					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.

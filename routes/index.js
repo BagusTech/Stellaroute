@@ -22,7 +22,7 @@ strategies.instagram(passport);
 router.get('/', (req, res, next) => {
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
-		guides: Guide.find('isPublished', true).items,
+		guides: Guide.find('isPublished', true).join('author', User.cached(), 'Id', 'username').items,
 	});
 });
 

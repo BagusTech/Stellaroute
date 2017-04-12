@@ -79,6 +79,7 @@ void function initCardStyle($){
 		const $cardText = $card.find('.summernote');
 		const $cardTexts = $card.find('.js-card-text');
 		const $editToggle = $card.find('.js-card-toggle');
+		
 
 		$editToggle.on('click', (e) => {
 			e.stopPropagation();
@@ -138,6 +139,24 @@ void function initCardStyle($){
 					$_cardImage.attr('src', imgSrc);
 				}
 			});
+		});
+
+		$card.on('click', '.js-delete-card', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			const $deleteForm = $(e.delegateTarget).parent().find('.js-delete-card-form');
+
+			$deleteForm.addClass('z-1').delay(10).addClass('o-1');
+		});
+
+		$card.parent().on('click', '.js-cancel-delete', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			const $deleteForm = $(e.delegateTarget).find('.js-delete-card-form');
+
+			$deleteForm.removeClass('o-1').delay(180).removeClass('z-1');
 		});
 	}
 

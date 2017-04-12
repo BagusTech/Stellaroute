@@ -1,4 +1,52 @@
-.form-horizontal
+.form-horizontal.col-xs-12.col-lg-6.guide-card--edit
+	.form-group(duck-field='style', duck-type='select')
+		label.col-sm-2.control-label Style
+		.col-sm-10
+			select.form-control(duck-value)
+				option(value='big', selected= card.style === 'big') Big Card
+				option(value='small', selected= card.style === 'small') Small Card
+				option(value='section', selected= card.style === 'section') Section
+				option(value='sub', selected= card.style === 'sub') Sub Section
+				option(value='img', selected= card.style === 'img') Image Only
+				option(value='plain', selected= card.style === 'plain') Plain Text
+				option(value='white', selected= card.style === 'white') White Text
+				option(value='danger', selected= card.style === 'danger') Danger Text
+				option(value='success', selected= card.style === 'success') Success Text
+				option(value='info', selected= card.style === 'info') Info Text
+
+.col-xs-12.col-lg-6.f-R.guide-card--view
+	- offset = null; // so that the cards don't also get the data-position attribute
+	.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
+		include section.pug
+
+	.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
+		include sub.pug
+
+	.card-styles--preview.guide-card--wrapper(card-style='big', class= (card.style === 'big' || !card.style) && 'card-styles--preview__active')
+		include big.pug
+
+	.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
+		include small.pug
+	
+	.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
+		include img.pug
+
+	.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
+		include plain.pug
+		
+	.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
+		include white.pug
+		
+	.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
+		include danger.pug
+		
+	.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
+		include success.pug
+		
+	.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
+		include info.pug
+		
+.form-horizontal.col-xs-12.col-lg-6.guide-card--edit
 	.form-group(duck-field='title', duck-type='string')
 		label.col-sm-2.control-label Title
 		.col-sm-10
@@ -14,17 +62,3 @@
 		label.col-sm-2.control-label Text
 		.col-sm-10
 			.summernote!= card.text
-	.form-group(duck-field='style', duck-type='select')
-		label.col-sm-2.control-label Style
-		.col-sm-10
-			select.form-control(duck-value)
-				option(value='big', selected= card.style === 'big') Big Card
-				option(value='small', selected= card.style === 'small') Small Card
-				option(value='section', selected= card.style === 'section') Section
-				option(value='sub', selected= card.style === 'sub') Sub Section
-				option(value='img', selected= card.style === 'img') Image Only
-				option(value='plain', selected= card.style === 'plain') Plain Text
-				option(value='white', selected= card.style === 'white') White Text
-				option(value='danger', selected= card.style === 'danger') Danger Text
-				option(value='success', selected= card.style === 'success') Success Text
-				option(value='info', selected= card.style === 'info') Info Text

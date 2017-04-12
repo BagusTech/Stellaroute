@@ -5980,6 +5980,17 @@ button.close {
 .guide-card--admin.guide-card--sub .guide-card--edit-toggle {
   top: 0;
 }
+.guide-card--delete-confirm {
+  display: none;
+  position: absolute;
+  bottom: -12px;
+  left: 12px;
+  right: 12px;
+  opacity: 0;
+  z-index: -1;
+  -webkit-transition: opacity 0.17s ease-out;
+  transition: opacity 0.17s ease-out;
+}
 .guide-card--edit-mode {
   margin-bottom: 12px;
 }
@@ -5992,16 +6003,15 @@ button.close {
 .guide-card--edit-mode .guide-card--edit {
   display: block;
 }
-.guide-card--edit-mode .guide-card--view {
-  width: 50%;
-  display: none;
-}
 .guide-card--edit-mode .panel-body {
   background: white;
   padding: 12px;
 }
 .guide-card--edit-mode .panel {
   border-width: 1px;
+}
+.guide-card--edit-mode .guide-card--delete-confirm {
+  display: block;
 }
 .card-styles--preview {
   margin: 0 auto;
@@ -6275,7 +6285,7 @@ button.close {
 }
 @media (min-width: 1600px) {
   .guide-card--edit-mode .guide-card--view {
-    display: block;
+    width: 50%;
   }
 }
 [data-icon] > .fa {

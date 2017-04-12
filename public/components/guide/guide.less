@@ -195,6 +195,18 @@
 			bottom: @gw-Xl - @gw-Sm;
 		}*/
 }
+
+.guide-card--delete-confirm {
+	display: none;
+	position: absolute;
+	bottom: -@gw-Sm;
+	left: @gw-Sm;
+	right: @gw-Sm;
+	opacity: 0;
+	z-index: -1;
+	transition: opacity .17s ease-out;
+}
+
 	.guide-card--edit-mode {
 		margin-bottom: @gw-Sm;
 
@@ -210,8 +222,8 @@
 		}
 
 		.guide-card--view {
-			width: 50%;
-			display: none;
+			//width: 50%;
+			//display: none;
 		}
 
 		.panel-body {
@@ -221,6 +233,10 @@
 
 		.panel {
 			border-width: 1px;
+		}
+
+		.guide-card--delete-confirm {
+			display: block;
 		}
 	}
 
@@ -464,7 +480,7 @@
 @media(min-width: @screen-lg) {
 	.guide-card--edit-mode{
 		.guide-card--view{
-			display: block;
+			width: 50%;
 		}
 	}
 }

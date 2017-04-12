@@ -11,43 +11,16 @@ if isMe
 				.p-0(role='tabpanel', aria-hidden='false')
 					.panel-body
 						.row
-							.col-xs-12.col-lg-6.guide-card--edit
-								include cardForm.pug
-
-							.col-lg-6.guide-card--view
-								- offset = null; // so that the cards don't also get the data-position attribute
-								.card-styles--preview(card-style='section', class= card.style === 'section' && 'card-styles--preview__active')
-									include section.pug
-
-								.card-styles--preview.guide-card--wrapper(card-style='sub', class= card.style === 'sub' && 'card-styles--preview__active')
-									include sub.pug
-
-								.card-styles--preview.guide-card--wrapper(card-style='big', class= (card.style === 'big' || !card.style) && 'card-styles--preview__active')
-									include big.pug
-
-								.card-styles--preview.guide-card--wrapper(card-style='small', class= card.style === 'small' && 'card-styles--preview__active')
-									include small.pug
-								
-								.card-styles--preview.guide-card--wrapper(card-style='img', class= card.style === 'img' && 'card-styles--preview__active')
-									include img.pug
-
-								.card-styles--preview.guide-card--wrapper(card-style='plain', class= card.style === 'plain' && 'card-styles--preview__active')
-									include plain.pug
-									
-								.card-styles--preview.guide-card--wrapper(card-style='white', class= card.style === 'white' && 'card-styles--preview__active')
-									include white.pug
-									
-								.card-styles--preview.guide-card--wrapper(card-style='danger', class= card.style === 'danger' && 'card-styles--preview__active')
-									include danger.pug
-									
-								.card-styles--preview.guide-card--wrapper(card-style='success', class= card.style === 'success' && 'card-styles--preview__active')
-									include success.pug
-									
-								.card-styles--preview.guide-card--wrapper(card-style='info', class= card.style === 'info' && 'card-styles--preview__active')
-									include info.pug
+							include cardForm.pug
 									
 					.panel-footer.text-right
-						button.btn.btn-danger(duck-button='delete') Delete Card
+						button.btn.btn-danger.js-delete-card Delete Card
+						button.btn.btn-primary(duck-button='submit') Save
+		.alert.alert-danger.guide-card--delete-confirm.js-delete-card-form
+			h4 Are You Sure You Want to Delete this Card?
+			p.mb-Md Once deleted, you can refresh the page to get it back, but if you save your changes, it will be deleted forever.
+			button.btn.btn-danger(duck-button='delete') Delete Card
+			button.btn.btn-default.js-cancel-delete Cancel
 	//.input-group-btn
 		button.btn.btn-info.js-card-toggle
 			i.fa.fa-eye(aria-hidden='true')

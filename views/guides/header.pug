@@ -84,7 +84,7 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 
 			if isMe
 				button.btn.btn-default.f-R(data-toggle='modal', data-target='#GuideDetailsForm'): i.fa.fa-pencil(aria-hidden)
-			h1 #{guide.names.display} #[small (unpublished)]
+			h1 #{guide.names.display} #[small= !guide.isPublished ? '(unpublished)' : '']
 				if guide.tagline
 					small.d-B.mt-Sm= guide.tagline
 							

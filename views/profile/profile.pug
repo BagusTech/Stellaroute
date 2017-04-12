@@ -63,7 +63,7 @@ block content
 						if userProfile.tagline
 							p.fc-W.bg-Dkr.p-Sm.d-Ib= userProfile.tagline
 
-						nav.tabbed-nav.pl-0.mt-XXl--md.mt-Xl--lg(data-tabs='controls')
+						nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
 							a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') Guides
 							a.tabbed-nav--tab(href='#MyWishlist', role='tab', aria-expanded='false') Wishlist
 							if wysiwygHasData(userProfile.description)
@@ -82,27 +82,21 @@ block content
 					.row
 						.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
 							.visible-xs
-								button.btn.btn-default.w-100(data-function='toggle', data-target='[data-filter-section="attraction-category"]') Filter
-							.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
-								//div(data-filter-section='top-attraction')
-									.checkbox.checkbox-right
-										label
-											span.hidden-xs Only Top Attractions
-											input(type='checkbox', value='true')
-											span.visible-xs Only Top Attractions
-								//div(data-filter-section='attraction-category')
-									h2.mt-0.pt-Sm.ta-R--sm Category
-									for category in attractionCategories
+								button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filter
+							#GuideFilter.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
+								div(data-filter-section='country')
+									h2.mt-0.pt-Sm.ta-R--sm Country
+									for country in countries
 										.checkbox.checkbox-right
 											label
-												span.hidden-xs= category
-												input(type='checkbox', value= category)
-												span.visible-xs= category
+												span.hidden-xs= country
+												input(type='checkbox', value= country)
+												span.visible-xs= country
 
 						.col-xs-12.col-sm-8.col-md-9.col-lg-10
 							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-								for guide in guides ? guides : []
-									.masonry--item
+								for guide in guides ? guides.filter((_guide) => isMe || _guide.isPublished) : []
+									.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
 										a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
 											+card(guide.cardImage, guide.names.display)
 								else

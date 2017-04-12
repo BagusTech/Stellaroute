@@ -25,6 +25,21 @@ router.get('/:user', (req, res, next) => {
 	}
 
 	const isMe = req.user && req.user.Id === user.Id;
+	const guides = Guide.find('author', user.Id).join('countries', Country.cached(), 'Id', 'names.display').items;
+	const countries = ['Unknown'];
+	guides.forEach((guide) => {
+		if(!guide.countriesDisplay) {
+			return;
+		}
+
+		guide.countriesDisplay.forEach((country) => {
+			if(countries.indexOf(country) > -1) {
+				return;
+			}
+
+			countries.push(country);
+		});
+	});
 
 	res.locals.userProfile = user;
 	res.locals.isMe = isMe;
@@ -32,7 +47,8 @@ router.get('/:user', (req, res, next) => {
 	res.render('profile/profile', {
 		title: `Stellaroute: ${isMe ? 'Youre profile' : user.username+"'s Profile"}`,
 		description: 'Stellaroute: It\'s a pretty nice place to see other peoples things and edit your own.',
-		guides: Guide.find('author', user.Id).items,
+		guides,
+		countries
 	});
 });
 
@@ -45,8 +61,16 @@ router.get('/:user/:guide', (req, res, next) => {
 		return;
 	}
 
+	const isMe = req.user && req.user.Id === user.Id;
+
 	res.locals.userProfile = user;
-	res.locals.isMe = req.user && req.user.Id === user.Id;
+	res.locals.isMe = isMe;
+
+	if(!isMe && !guide.isPublished) {
+		req.flash('error', 'That guide isn\'t published yet, but you can look at their other guides!');
+		res.redirect(`/${user.username || user.Id}`);
+		return;
+	}
 
 	const author = user;
 	const _cards = guide.cards || [];

@@ -1,8 +1,8 @@
 if isMe
 	div(duck-type='object')
-		button.btn.btn-primary.guide-card--add-card.hidden(duck-button='add', duck-add='before')
+		button.btn.btn-primary.guide-card--add-card(duck-button='add', duck-add='before', class= startInEditMode ? '' : 'hidden')
 			i.fa.fa-plus(aria-hidden='true')
-		.input-group.guide-card--admin.js-card(class=`guide-card--${card.style || 'big'}`)
+		.input-group.guide-card--admin.js-card(class=`guide-card--${card.style || 'big'} ${startInEditMode ? 'guide-card--edit-mode' : ''}`)
 			button.btn.btn-default.guide-card--edit-toggle.js-card-toggle: i.fa.fa-pencil(aria-hidden='true')
 			.input-group-addon(data-sort='handle')
 				i.fa.fa-arrows-v(aria-hidden='true')

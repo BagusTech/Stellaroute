@@ -11,7 +11,7 @@ block header
 		include controls/header.pug
 
 block content
-	if user	
+	//if user	
 		.media-bg-img.home-bg-img.pt-Xl
 			.container.ptb-Xl.plr-Lg
 				.row
@@ -76,36 +76,47 @@ block content
 					li Rate Attractions
 					li Interactive Map
 					li Upload Pictures
-	else
-		+splashPage('https://www.stellaroute.com/images/index-bg.jpg', '30%')
-			.container.ta-C
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
-						h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-0
-							img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
-							span.d-Ib.plr-Sm stellaroute
-						h2.fc-G__lt.tt-U.fs-32--sm Plan Spontaneity
 
+	.mt-NegXl.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
+		.container.ta-C.mt-Xl
+			.row
+				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-0.hidden-xs
+						img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
+						span.d-Ib.plr-Sm stellaroute
+					h2.fc-G__lt.tt-U.fs-32--sm Plan Spontaneity
+					
+					if !user
 						+emailCapture('general')
 							p.lead.ta-C.mlr-A.fc-W.mb-Md Welcome! We are curretly accepting users for our Beta.
 
+			.content-card.mt-Xl
+				if guides && guides.length
+					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+						for guide in guides
+							//.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
+							.masonry--item
+								a(href=`/${guide.author}/${guide.url}`)
+									+card(guide.cardImage, guide.names.display)
+				else
+					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.
 
-				//.row
-					.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
-						.content-card
-							h2.content-card--header Contact Us
-							p.lead We will be sure to get back to you as soon as possible.
-							form#FeedbackForm
-								.form-group
-									input.form-control(name='user', type='text', placeholder='Name')
-								.form-group
-									input.form-control(name='email', type='email', placeholder='Email')
-								.form-group
-									input.form-control(name='subject', type='text', placeholder='Subject')
-								.form-group
-									textarea.form-control(name='feedback', placeholder='What\'s on your mind?', style='min-height: 150px;')
-								.form-group.mb-0
-									button.btn-primary.btn-block(type='submit') Send
 
-						script(src='/js/pages/feedback.min.js')
-block footer
+			//.row
+				.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
+					.content-card
+						h2.content-card--header Contact Us
+						p.lead We will be sure to get back to you as soon as possible.
+						form#FeedbackForm
+							.form-group
+								input.form-control(name='user', type='text', placeholder='Name')
+							.form-group
+								input.form-control(name='email', type='email', placeholder='Email')
+							.form-group
+								input.form-control(name='subject', type='text', placeholder='Subject')
+							.form-group
+								textarea.form-control(name='feedback', placeholder='What\'s on your mind?', style='min-height: 150px;')
+							.form-group.mb-0
+								button.btn-primary.btn-block(type='submit') Send
+
+					script(src='/js/pages/feedback.min.js')

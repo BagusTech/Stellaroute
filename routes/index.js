@@ -11,6 +11,7 @@ const User             = require('../schemas/user');
 const Continent 	   = require('../schemas/continent');
 const Country     	   = require('../schemas/country');
 const City       	   = require('../schemas/city');
+const Guide     	   = require('../schemas/guide');
 const db               = require('../config/db');
 const router           = express.Router();
 
@@ -19,11 +20,9 @@ strategies.instagram(passport);
 
 // home page
 router.get('/', (req, res, next) => {
-	const approvedLocations = City.find('isPublic', true).join('country', Country.cached(), 'Id', 'url').items;
-
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
-		approvedLocations: approvedLocations
+		guides: Guide.find('isPublished', true).items,
 	});
 });
 

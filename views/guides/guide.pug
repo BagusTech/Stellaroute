@@ -33,9 +33,8 @@ block content
 											include cards/_card.pug
 								
 								.p-R
-									button.btn.btn-default.hidden.guide-card--add-card(duck-button='add')
-										span Add&nbsp;
-										i.fa.fa-chevron-right(aria-hidden='true')
+									button.btn.btn-primary.guide-card--add-card.hidden(duck-button='add', duck-add='before')
+										i.fa.fa-plus(aria-hidden='true')
 						else
 							for _card, i in cards ? cards : [{}]
 								- var card = _card.section, offset = i;

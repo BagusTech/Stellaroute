@@ -261,6 +261,7 @@ input[type="search"] {
   position: absolute;
   margin-left: -20px;
   margin-top: 4px \9;
+  bottom: @gw-Xs - 1;
 }
 
 .radio + .radio,
@@ -313,6 +314,20 @@ input[type="checkbox"] {
     label {
       cursor: @cursor-disabled;
     }
+  }
+}
+
+@media (min-width: @screen-sm) {
+  .checkbox-right,
+  .radio-right {
+    label {
+      padding: 0 20px 0 0;
+      text-align: right;
+    }
+      input[type="checkbox"],
+      input[type="radio"] {
+        right: 0;
+      }
   }
 }
 

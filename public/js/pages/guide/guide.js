@@ -63,9 +63,6 @@ void function initCardStyle($){
 		}
 	}
 
-	const defaultTitle = 'Card Title';
-	const defaultImageSrc = 'images/no-image.svg';
-
 	function initCard(wrapper) {
 		const $card = $(wrapper);
 		const $cardTab = $card.find('.panel-heading[role="tab"]');
@@ -107,11 +104,21 @@ void function initCardStyle($){
 			e.stopPropagation();
 			e.preventDefault();
 
-			$cardTitles.text($cardTitle.val() || defaultTitle);
+			const title = $cardTitle.val();
+
+			if(title) {
+				$cardTitles.removeClass('guide-card--placeholder').text(title);
+			} else {
+				$cardTitles.addClass('guide-card--placeholder').text('Card Title');
+			}
 		});
 
 		$cardText.on('summernote.change', (we, contents) => {
-			$cardTexts.html(contents);
+			if(contents) {
+				$cardTitles.removeClass('guide-card--placeholder').text(contents);
+			} else {
+				$cardTitles.addClass('guide-card--placeholder').text('This is where the <strong>Text</strong> for the card will go.');
+			}
 		});
 
 		$cardStyles.on('input', (e) => {
@@ -126,7 +133,7 @@ void function initCardStyle($){
 			e.stopPropagation();
 			e.preventDefault();
 
-			const imgSrc = $cardImage.val() ? `https://s3-us-west-2.amazonaws.com/stellaroute/${$cardImage.val().replace('.', '-medium.')}` : defaultImageSrc;
+			const imgSrc = $cardImage.val() ? `https://s3-us-west-2.amazonaws.com/stellaroute/${$cardImage.val().replace('.', '-medium.')}` : 'images/no-image--small.svg';
 
 
 			$cardImages.each((j, _cardImage) => {

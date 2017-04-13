@@ -33,7 +33,7 @@ block content
 											include cards/_card.pug
 								
 								.p-R
-									button.btn.btn-primary.guide-card--add-card.hidden(duck-button='add', duck-add='before')
+									button.btn.btn-primary.guide-card--add-card(duck-button='add', class= startInEditMode ? '' : 'hidden')
 										i.fa.fa-plus(aria-hidden='true')
 						else
 							for _card, i in cards ? cards : [{}]
@@ -45,4 +45,4 @@ block content
 										- card = _subCard; offset = `${i}.${j}`
 										include cards/_card.pug
 
-					
+	script(type='text/javascript' src='/js/pages/guide/guide.min.js')

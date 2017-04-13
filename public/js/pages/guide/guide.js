@@ -117,7 +117,7 @@ void function initCardStyle($){
 			if(contents) {
 				$cardTexts.removeClass('guide-card--placeholder').text(contents);
 			} else {
-				$cardTexts.addClass('guide-card--placeholder').text('This is where the <strong>Text</strong> for the card will go.');
+				$cardTexts.addClass('guide-card--placeholder').html('This is where the <strong>Text</strong> for the card will go.');
 			}
 		});
 

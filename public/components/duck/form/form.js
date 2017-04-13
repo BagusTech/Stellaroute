@@ -47,8 +47,7 @@ void function initDuckForm($, duck, window) {
 
 			$idItem.attr('id', newId).prop('id', newId);
 		});
-		$clone.find('[data-function="accordion"]').makeAccordion();
-		$clone.find('.js-card').guideCard();
+		$clone.find('[data-function="accordion"]').makeAccordion();		
 
 		if($item.attr('duck-type') === 'object'){
 			$clone.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
@@ -63,10 +62,10 @@ void function initDuckForm($, duck, window) {
 		}
 
 		
-
+		$clone.find('.js-card').guideCard();
 		$item.parent().sortable('[duck-type]');
 
-		$wrapper.trigger('duckArrayItemAdded');
+		$wrapper.trigger('duckArrayItemAdded', [$clone]);
 		$wrapper.closest('[data-function*="scroll"]').trigger('initScroll')
 	}
 

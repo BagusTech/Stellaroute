@@ -64,7 +64,6 @@ void function initCardStyle($){
 	}
 
 	const defaultTitle = 'Card Title';
-	const defaultText = 'This is where the <strong>Text</strong> for the card will go.';
 	const defaultImageSrc = 'images/no-image.svg';
 
 	function initCard(wrapper) {
@@ -92,7 +91,9 @@ void function initCardStyle($){
 			}
 		});
 
+		console.log($card.length, 'inited')
 		$card.on('exitEditMode', () => {
+			console.log('triggered');
 			$card.parent().removeClass('guide-card--edit-mode');
 			
 			if($cardTab.attr('aria-expanded') === 'false') {
@@ -112,7 +113,7 @@ void function initCardStyle($){
 		});
 
 		$cardText.on('summernote.change', (we, contents) => {
-			$cardTexts.html(contents || defaultText);
+			$cardTexts.html(contents);
 		});
 
 		$cardStyles.on('input', (e) => {
@@ -169,14 +170,12 @@ void function initCardStyle($){
 	$(() => {
 		const $subHeader = $('.sub-header');
 		const $guideDetailsForm = $('#GuideDetailsForm');
-		const $guideDetailsSave = $guideDetailsForm.find('[duck-button="submit"]');
-		const $guideDetailsSaveIcon = $guideDetailsSave.find('.fa');
+		const $guideDetailsSaveIcon = $guideDetailsForm.find('[duck-button="submit"] .fa');
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 		const $cardsForm = $('#GuideCards');
-		const $cardsFormSaveButton = $cardsForm.find('[duck-button="submit"]');
-		const $cardsFormSaveIcon = $cardsFormSaveButton.find('.fa');
+		const $cardsFormSaveIcon = $cardsForm.find('[duck-button="submit"]').find('.fa');
 		const $cardsWrapper = $('.js-guide-cards');
 		const $expandeCollapse = $('.js-expand-collapse');
 		const $expandeCollapseIcon = $expandeCollapse.find('.fa');
@@ -200,13 +199,14 @@ void function initCardStyle($){
 			e.stopPropagation();
 			
 			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', true);
 		});
 
 		$cardsForm.on('duck.form.success', (e) => {
 			e.stopPropagation();
 			
 			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
-			$cardsFormSaveButton.prop('disabled', false);
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
 			$cardsWrapper.find('.js-card').trigger('exitEditMode');
 			$previewCardsIcon.removeClass('fa-eye').addClass('fa-pencil')
 		});
@@ -227,7 +227,7 @@ void function initCardStyle($){
 			}, 3270);
 			
 			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
-			$cardsFormSaveButton.prop('disabled', false);
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
 
 		$addCard.on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}, showAddButtons);
@@ -256,7 +256,7 @@ void function initCardStyle($){
 
 			$subHeader.css('background-image', `url("${imagePath}")`);
 			$guideDetailsSaveIcon.toggleClass('hidden');
-			$guideDetailsSave.prop('disabled', false);
+			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 			$guideDetailsEdit.click();
 		});
 		$guideDetailsForm.on('duck.form.error', (e) => {
@@ -275,7 +275,7 @@ void function initCardStyle($){
 			}, 3270);
 
 			$guideDetailsSaveIcon.toggleClass('hidden');
-			$guideDetailsSave.prop('disabled', false);
+			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
 	});
 }(jQuery.noConflict())

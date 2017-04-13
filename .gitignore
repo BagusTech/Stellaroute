@@ -6,7 +6,5 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-public/styles/styles.css.map
-*.map
 npm-debug.log
 yarn.lock

@@ -38,7 +38,6 @@ void function initDuckForm($, duck, window) {
 			}
 		}
 
-		$clone.find('[duck-value], [duck-type="wysiwyg"]').val(null);
 		$clone.find('[duck-button="delete"]').click(deleteArrayItem);
 		$clone.find('[data-function="tabs"]').makeTabs();
 		$clone.find('[id]').each((i, idItem) => {

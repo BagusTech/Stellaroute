@@ -115,9 +115,9 @@ void function initCardStyle($){
 
 		$cardText.on('summernote.change', (we, contents) => {
 			if(contents) {
-				$cardTitles.removeClass('guide-card--placeholder').text(contents);
+				$cardTexts.removeClass('guide-card--placeholder').text(contents);
 			} else {
-				$cardTitles.addClass('guide-card--placeholder').text('This is where the <strong>Text</strong> for the card will go.');
+				$cardTexts.addClass('guide-card--placeholder').text('This is where the <strong>Text</strong> for the card will go.');
 			}
 		});
 

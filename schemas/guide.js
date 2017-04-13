@@ -77,7 +77,7 @@ var Guide = Duck({
 	},
 	HASH: 'Id',
 	HASHType: 'S',
-	UniqueBy: ['url']
+	UniqueBy: ['url', 'author']
 }, null, false);
 
 module.exports = Guide;

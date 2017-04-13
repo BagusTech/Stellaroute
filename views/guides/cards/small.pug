@@ -2,5 +2,5 @@
 	.guide-card--body
 		img.guide-card--img.js-card-image(src= getImagePath(card.image), class= !card.image && 'guide-card--img__no-img')
 		div
-			h4.guide-card--title.js-card-title= card.title || 'Card Title'
-			.guide-card--text.js-card-text!= card.text || 'This is where the <strong>Text</strong> for the card will go.'
+			h4.guide-card--title.js-card-title(class= card.title ? '' : 'guide-card--placeholder')= card.title ? card.title : 'Card Title'
+			.guide-card--text.js-card-text(class= wysiwygHasData(card.text) ? '' : 'guide-card--placeholder')!= wysiwygHasData(card.text) ? card.text : 'This is where the <strong>Text</strong> for the card will go.'

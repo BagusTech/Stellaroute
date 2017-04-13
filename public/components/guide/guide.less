@@ -221,9 +221,8 @@
 			display: block;
 		}
 
-		.guide-card--view {
-			//width: 50%;
-			//display: none;
+		.guide-card--placeholder {
+			display: block;
 		}
 
 		.panel-body {
@@ -317,6 +316,10 @@
 		margin-bottom: 0;
 	}
 
+	.guide-card--placeholder {
+		display: none;
+	}
+
 	.guide-card--card__section {
 		font-size: 1.5em;
 		text-align: center;
@@ -361,7 +364,6 @@
 
 		.guide-card--title {
 			padding: @gw-Sm @gw-Sm 0;
-			margin: 0 0 @gw-Xs;
 		}
 
 		.guide-card--text {
@@ -399,8 +401,17 @@
 
 	.guide-card--card__img {}
 
-	.guide-card--card__plain {}
-	.guide-card--card__white {}
+	.guide-card--card__plain {
+		.guide-card--body{
+			background: @grey-lighter;
+			box-shadow: none;
+		}
+	}
+	.guide-card--card__white {
+		.guide-card--title {
+			.content-card--header;
+		}
+	}
 	.guide-card--card__danger {
 		.guide-card--body{
 			.alert;

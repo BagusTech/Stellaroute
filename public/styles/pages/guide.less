@@ -273,7 +273,9 @@
 		content: ' ';
 	}
 
-	+ .guide-card--card:after {
+	+ .guide-card--card:after,
+	.guide-card--card__section + div &:first-child:last-child:before,
+	.guide-card--card__section + div &:first-child:last-child:after, {
 		display: none;
 	}
 

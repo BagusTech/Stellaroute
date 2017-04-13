@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="679 448 400 240">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-no-image-400x240);
+      }
+
+      .cls-2 {
+        fill: #eee;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+      }
+
+      .cls-4 {
+        fill: #ccc;
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-no-image-400x240">
+      <rect x="679" y="448" width="400" height="240"/>
+    </clipPath>
+  </defs>
+  <g id="no-image-400x240" class="cls-1">
+    <rect class="cls-5" x="679" y="448" width="400" height="240"/>
+    <rect id="Rectangle_6" data-name="Rectangle 6" class="cls-2" width="400" height="300" transform="translate(679 418)"/>
+    <line id="Line_5" data-name="Line 5" class="cls-3" y1="264" x2="439" transform="translate(664 432)"/>
+    <line id="Line_6" data-name="Line 6" class="cls-3" x2="431" y2="261" transform="translate(664 437)"/>
+    <g id="Group_3" data-name="Group 3" transform="translate(716 448)">
+      <rect id="Rectangle_7" data-name="Rectangle 7" class="cls-2" width="149.152" height="110.883" transform="translate(88 65)"/>
+      <path id="Path_5" data-name="Path 5" class="cls-4" d="M102.531,24.29H80.72L78.483,15.9a5.435,5.435,0,0,0-5.406-4.1H42.69a5.435,5.435,0,0,0-5.406,4.1L35.046,24.29H13.421A9.231,9.231,0,0,0,4.1,33.611V83.2a9.231,9.231,0,0,0,9.321,9.321h89.3a9.231,9.231,0,0,0,9.321-9.321V33.611A9.636,9.636,0,0,0,102.531,24.29ZM57.976,80.031a23.3,23.3,0,1,1,23.3-23.3A23.311,23.311,0,0,1,57.976,80.031Z" transform="translate(103.525 62.031)"/>
+    </g>
+  </g>
+</svg>

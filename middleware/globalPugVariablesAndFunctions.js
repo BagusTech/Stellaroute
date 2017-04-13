@@ -88,7 +88,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 	}
 	res.locals.getImagePath = function getImagePath(img, size) {
 		if (!img) {
-			return '/images/no-image.svg';
+			return `/images/no-image--small.svg`;
 		} else if (img.indexOf('https') === 0) {
 			return img
 		}

@@ -2,7 +2,7 @@
   <defs>
     <style>
       .cls-1 {
-        clip-path: url(#clip-no-ticket-lghtgry);
+        clip-path: url(#clip-no-ticket);
       }
 
       .cls-2 {
@@ -23,11 +23,11 @@
         fill: #fff;
       }
     </style>
-    <clipPath id="clip-no-ticket-lghtgry">
+    <clipPath id="clip-no-ticket">
       <rect x="185" y="85" width="400" height="300"/>
     </clipPath>
   </defs>
-  <g id="no-ticket-lghtgry" class="cls-1">
+  <g id="no-ticket" class="cls-1">
     <rect class="cls-5" x="185" y="85" width="400" height="300"/>
     <rect id="Rectangle_5" data-name="Rectangle 5" class="cls-2" width="400" height="300" transform="translate(185 85)"/>
     <line id="Line_1" data-name="Line 1" class="cls-3" y1="300" x2="400" transform="translate(185 85)"/>

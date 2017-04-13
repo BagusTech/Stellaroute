@@ -91,9 +91,7 @@ void function initCardStyle($){
 			}
 		});
 
-		console.log($card.length, 'inited')
 		$card.on('exitEditMode', () => {
-			console.log('triggered');
 			$card.parent().removeClass('guide-card--edit-mode');
 			
 			if($cardTab.attr('aria-expanded') === 'false') {

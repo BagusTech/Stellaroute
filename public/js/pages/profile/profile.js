@@ -1,4 +1,4 @@
-/* global jQuery */
+/* global jQuery, duck */
 
 void function initRequest($){
 	'use strict';

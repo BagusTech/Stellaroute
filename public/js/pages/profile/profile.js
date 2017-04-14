@@ -10,10 +10,18 @@ void function initRequest($){
 		const $userForm = $('#MySettings [duck-table="Users"]');
 		const $userSubmit = $userForm.find('[duck-button="submit"]');
 		const $username = $userForm.find('[duck-field="username"] [duck-value]');
+		const startingUsername = $username.val();
 
-		$username.on('input', (e) => {
-			e.stopPropagation();
-			e.preventDefault();
+		$username.prop('validateFunc', () => () => {
+			const newUsername = $username.val();
+			
+			duck('Users').exists({field: 'username', value: newUsername, fineOne: true}, (length) => {
+				if (length === "0" || startingUsername === newUsername) {
+					$username.trigger('passedValidation');
+				} else {
+					$username.trigger('failedValidation');
+				}
+			});
 		});
 
 		$userSubmit.on('click', () => {

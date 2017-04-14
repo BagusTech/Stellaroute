@@ -33,7 +33,7 @@ router.get('/:user', (req, res, next) => {
 		}
 
 		guide.countriesDisplay.forEach((country) => {
-			if(countries.indexOf(country) > -1) {
+			if(countries.indexOf(country) > -1 || (!guide.isPublished && !isMe)) {
 				return;
 			}
 

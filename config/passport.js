@@ -1,4 +1,5 @@
 const uuid              = require('uuid');
+const cache             = require('../modules/cache');
 const LocalStrategy     = require('passport-local').Strategy;
 const InstagramStrategy = require('passport-instagram').Strategy;
 const instagram         = require('./instagram');
@@ -83,6 +84,22 @@ strategies.local = function(passport){
 			}
 
 			return done(null, false, req.flash('error', 'Sorry, the password and email did not match!'));
+		}
+	));
+
+	passport.use('local-magic-link', new LocalStrategy({
+			usernameField: 'email',
+			passwordField: 'key',
+			passReqToCallback: true
+		}, function(req, email, key, done){
+			const user = User.findOne('local.email', email).items;
+			const isActive = (new Date() - cache.get(key)) < 1000*60*10;
+
+			if(user && isActive){
+				return done(null, user);
+			}
+
+			return done(null, false, req.flash('error', 'Sorry, the link is expired!'));
 		}
 	));
 };

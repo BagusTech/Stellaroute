@@ -28,7 +28,7 @@ const router       = express.Router();
 	router.get('/get/:table', (req, res) => {
 		const user = req.user;
 
-		if(!isAuthorized(user, 'beta-travel-wishlist')) {
+		if(!isAuthorized(user, 'beta-travel-wishlist', 'beta-general')) {
 			console.error('User is unauthorized.');
 			res.status(401).send('User is unauthorized.');
 			return;
@@ -51,7 +51,7 @@ const router       = express.Router();
 	router.post('/add/:table', (req, res) => {
 		const user = req.user;
 		
-		if(!isAuthorized(user, 'beta-travel-wishlist')) {
+		if(!isAuthorized(user, 'beta-travel-wishlist', 'beta-general')) {
 			console.error('User is unauthorized.');
 			res.status(401).send('User is unauthorized.');
 			return;
@@ -81,7 +81,7 @@ const router       = express.Router();
 		const item = req.body.item;
 		const tableName = req.params.table;
 
-		if(((tableName === 'Users') && (item.Id !== req.user.Id)) || !isAuthorized(user, 'beta-travel-wishlist')) {
+		if(((tableName === 'Users') && (item.Id !== req.user.Id)) || !isAuthorized(user, 'beta-travel-wishlist', 'beta-general')) {
 			console.error('User is unauthorized.');
 			res.status(401).send('User is unauthorized.');
 			return;
@@ -117,7 +117,7 @@ const router       = express.Router();
 	router.post('/delete/:table', (req, res) => {
 		const user = req.user;
 		
-		if(((tableName === 'Users') && (!isAuthorized(user))) || !isAuthorized(user, 'beta-travel-wishlist')) {
+		if(((tableName === 'Users') && (!isAuthorized(user))) || !isAuthorized(user, 'beta-travel-wishlist', 'beta-general')) {
 			console.error('User is unauthorized.');
 			res.status(401).send('User is unauthorized.');
 			return;

@@ -1,10 +1,12 @@
 const express          = require('express');
 const flash            = require('connect-flash');
+const uuid             = require('uuid');
 const passport         = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const strategies       = require('../config/passport');
 const instagram        = require('../config/instagram');
 const isLoggedIn       = require('../middleware/isLoggedIn');
+const cache            = require('../modules/cache');
 const setFlash         = require('../modules/setFlash');
 const sendEmail        = require('../modules/sendEmail');
 const User             = require('../schemas/user');
@@ -259,6 +261,28 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 router.post('/auth/local', passport.authenticate('local-login', {
+	successRedirect: '/profile',
+	failureRedirect: '/login',
+	failureFlash: true
+}));
+
+router.get('/send-magic-link/:email', (req, res, next) => {
+	const key = uuid()
+	const email = req.params.email;
+	const subject = "You're Magic Link to Stellaroute";
+	const template = `
+		<a href='https://www.stellaroute.com/auth/local-magic-link?email=${email}&key=${key}'>Click Here!</a>
+	`;
+
+	cache.set(key, new Date(), 60*10);
+
+	console.log(`/auth/local-magic-link?email=${email}&key=${key}`)
+	res.redirect('/login')
+
+	//sendEmail(email, subject, template);
+});
+
+router.get('/auth/local-magic-link', passport.authenticate('local-magic-link', {
 	successRedirect: '/profile',
 	failureRedirect: '/login',
 	failureFlash: true

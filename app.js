@@ -37,6 +37,7 @@ const User             = require('./schemas/user');
 
 const fs               = require('fs');
 const app              = express();
+let start;
 
 function redirectUrl(req, res) {
   if (req.method === "GET") {
@@ -69,6 +70,12 @@ function enforceHTTPS(req, res, next) {
    next();
 };
 
+app.use((req, res, next) => {
+    start = new Date();
+    console.log('start: ', req.url)
+    next();
+})
+
 if(app.get('env') === 'production') {
     app.use(enforceWWW);
 }
@@ -76,6 +83,11 @@ if(app.get('env') === 'production') {
 if(app.get('env') === 'staging' || app.get('env') === 'production') {
     app.use(enforceHTTPS);
 }
+
+app.use((req, res, next) => {
+    console.log('enforce https: ', start - new Date());
+    next();
+})
 
 // Set up the view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -87,6 +99,11 @@ app.use(bodyParser.json()); // needed for post requests, still figuring out what
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // Sets the public folder to be available available to the front end
+
+app.use((req, res, next) => {
+    console.log('set favicon, parsers, and public dir: ', start - new Date());
+    next();
+})
 
 // required for passport
 app.set('trust proxy', 1) // trust first proxy
@@ -102,6 +119,11 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
 
+app.use((req, res, next) => {
+    console.log('session, passport, and flash: ', start - new Date());
+    next();
+})
+
 // for securing ajax
 app.use(csrf({ cookie: true }));
 app.use((req, res, next) => {
@@ -109,11 +131,21 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    console.log('csrf: ', start - new Date());
+    next();
+})
+
 // get the user
 app.use(getUser);
 
 // assign global variables and functions for the view
 app.use(globalPugVariablesAndFunctions);
+
+app.use((req, res, next) => {
+    console.log('get user and globals: ', start - new Date());
+    next();
+})
 
 // location cache
 app.use(Guide.getCached(),
@@ -129,15 +161,40 @@ app.use(Guide.getCached(),
         Neighborhood.getCached(),
         User.getCached());
 
+app.use((req, res, next) => {
+    console.log('cached: ', start - new Date());
+    next();
+});
+
 app.use('/', routes);
+
+app.use((req, res, next) => {
+    console.log('routes (index): ', start - new Date());
+    next();
+})
 
 // CRUD
 app.use('/', ajax);
 
+app.use((req, res, next) => {
+    console.log('ajax routes: ', start - new Date());
+    next();
+})
+
 app.use('/admin', isLoggedIn(true), admin);
+
+app.use((req, res, next) => {
+    console.log('admin routes: ', start - new Date());
+    next();
+})
 
 // view locations
 app.use('/', locations);
+
+app.use((req, res, next) => {
+    console.log('locations routes: ', start - new Date());
+    next();
+})
 
 // error handlers /////////////////////////////////////////////////////
 

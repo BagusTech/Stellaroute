@@ -191,15 +191,15 @@ const router       = express.Router();
 	});
 
 	router.post('/deleteFiles', isLoggedIn(), (req, res) => {
-		if(req.query.folder.split('/')[0] !== req.user.Id && !req.user.isAdmin) {
-			res.status(401).send('Request unauthorized');
-			return;
-		}
-
 		const files = req.body.files;
 
-		s3.deleteFiles(files, (err) => {
+		s3.deleteFiles(files, req.user, (err) => {
 			if(err) {
+				if (err === 'Request unauthorized') {
+					res.status(401).send(err);
+					return;
+				}
+
 				res.status(500).send(err);
 				console.error(err);
 

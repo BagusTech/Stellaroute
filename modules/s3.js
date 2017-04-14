@@ -123,7 +123,15 @@ s3.uploadImage = (file, options, callback, fileType, filePath) => {
 	client.upload(file, options, callback);
 }
 
-s3.deleteFiles = (files, callback) => {
+s3.deleteFiles = (files, user, callback) => {
+	for (let i = 0, length = files.length; i < length; i++) {
+		if(files[i].Key.split('/')[0] !== user.Id && !user.isAdmin) {
+			callback('Request unauthorized');
+
+			return;
+		}
+	}
+
 	const options = {
 		Bucket: 'stellaroute',
 		Delete: {

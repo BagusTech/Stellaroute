@@ -139,6 +139,8 @@ void function initCardStyle($){
 			$cardImages.each((j, _cardImage) => {
 				const $_cardImage = $(_cardImage);
 
+				$_cardImage.removeClass('guide-card--img__no-img');
+
 				if($_cardImage.attr('style')) {
 					$_cardImage.attr('style', `background-image: url('${imgSrc}')`);
 				} else {

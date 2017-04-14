@@ -113,7 +113,11 @@ router.post('/newsletter-signup', (req, res) => {
 		return;
 	}
 
-	User.add(req.body, true).then(() => {
+	const newUser = req.body;
+
+	newUser.username = newUser.local.email.split('@').join('-');
+
+	User.add(newUser, true).then(() => {
 		sendEmail(email, subject, template);
 
 		User.updateCache().then(function(){
@@ -145,7 +149,6 @@ router.post('/email-capture', (req, res) => {
 			})
 		}
 
-
 		User.update(user).then(() => {
 			sendEmail(email, subject, template);
 			sendEmail('marketing@stellaroute.com', `New User Signed up for ${user.roles[0].replace('beta-', '')}`, null, '<h1>This email is just an alert.</h1>');
@@ -157,16 +160,22 @@ router.post('/email-capture', (req, res) => {
 		return;
 	}
 
+	user.username = user.local.email.split('@').join('-');
+
 	User.add(user).then(() => {
 		sendEmail(email, subject, template);
+		sendEmail('marketing@stellaroute.com', `New User Signed up for ${user.roles[0].replace('beta-', '')}`, null, `<h1>This email is just an alert. Email: ${user.local.email}</h1>`);
 
 		User.updateCache().then(() => {
 			res.send({msg: 'success'});
 		}, (error) => {
+			console.log(error);
 			res.status(500).send({msg: 'error: ' + error});
 		});
 
 	}, (error) => {
+		console.log(JSON.stringify(user, null, 2));
+		console.log(error);
 		res.status(500).send({msg: 'error: ' + error});
 	});
 });

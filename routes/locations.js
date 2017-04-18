@@ -121,6 +121,7 @@ router.get('/:user/:guide', (req, res, next) => {
 	});
 });
 
+/*
 router.get('/:continent', (req, res, next) => {
 	const continent = Continent.findOne('url', req.params.continent).items;
 
@@ -631,6 +632,6 @@ router.get('/:country/:city/:neighborhood', (req, res, next) => {
 		neighborhood: neighborhood,
 		nearbyNeighborhoods: nearbyNeighborhoods,
 	});
-});
+}); */
 
 module.exports = router;

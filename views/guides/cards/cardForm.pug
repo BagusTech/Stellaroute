@@ -3,16 +3,16 @@
 		label.col-sm-2.control-label Style
 		.col-sm-10
 			select.form-control(duck-value)
-				option(value='big', selected= card.style === 'big') Big Card
-				option(value='small', selected= card.style === 'small') Small Card
-				option(value='section', selected= card.style === 'section') Section
-				option(value='sub', selected= card.style === 'sub') Sub Section
+				option(value='big', selected= card.style === 'big') Standard Card
+				option(value='small', selected= card.style === 'small') Sub-Card
+				option(value='section', selected= card.style === 'section') Main Section
+				option(value='sub', selected= card.style === 'sub') Subsection
 				option(value='img', selected= card.style === 'img') Image Only
-				option(value='plain', selected= card.style === 'plain') Plain Text
-				option(value='white', selected= card.style === 'white') White Text
-				option(value='danger', selected= card.style === 'danger') Danger Text
-				option(value='success', selected= card.style === 'success') Success Text
-				option(value='info', selected= card.style === 'info') Info Text
+				option(value='danger', selected= card.style === 'danger') Text Only (Red Background)
+				option(value='white', selected= card.style === 'white') Text Only (White Background)
+				option(value='info', selected= card.style === 'info') Text Only (Blue Background)
+				option(value='success', selected= card.style === 'success') Text Only (Green Background)
+				option(value='plain', selected= card.style === 'plain') Text Only (No Background)
 
 .col-xs-12.col-lg-6.f-R.guide-card--view
 	- offset = null; // so that the cards don't also get the data-position attribute

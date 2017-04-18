@@ -4,6 +4,7 @@ const cache         = require('../cache');
 const flattenObject = require('../flattenObject');
 const parseData     = require('../parseData');
 const readJSON      = require('../readJSON');
+const santatize     = require('../sanatize');
 
 /*  isUniqueBy
 	check to see if it has any special rules for going into the db */
@@ -233,6 +234,8 @@ const readJSON      = require('../readJSON');
 		const oldItem = bulkUpdate ? [] : this.findOne(key, data[key]).items;
 		const uniqueBy = this.uniqueBy;
 		const items = this.cached() || [];
+
+		santatize(data);
 		
 		if(bulkUpdate) {
 			const length = data.length;

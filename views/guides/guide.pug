@@ -12,7 +12,8 @@ block content
 							button.btn.btn-default.js-expand-collapse(data-toggle="tooltip", data-container="body", data-placement="left" title="Expand / Collapse"): i.fa.fa-compress(aria-hidden='true')
 							button.btn.btn-default.js-add-card-start(data-toggle="tooltip", data-container="body", data-placement="left" title="Add Card"): i.fa.fa-pencil(aria-hidden='true')
 
-					.share42init.pt-Sm.ta-C.ta-L--sm
+					if guide.isPublished
+						.share42init.pt-Sm.ta-C.ta-L--sm
 
 				.col-xs-12.col-sm-4.col-lg-3.z-2.stickey.t-Sm
 					include guideNav.pug

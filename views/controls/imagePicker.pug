@@ -1,5 +1,5 @@
 .modal.fade#ImagePickerModal(tabindex='-1', role='dialog', style='z-index: 2000;')
-	.modal-dialog.file-picker()
+	.modal-dialog.file-picker
 		.modal-content
 			.modal-body
 				.file-manager(duck-filepicker)
@@ -18,7 +18,7 @@
 								span.input-group-addon(data-icon='fa fa-search')
 
 								.input-group-btn
-									button.btn.btn-default.ml-Sm(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
+									button.btn.btn-primary.ml-Sm(data-file-manager='upload', data-icon='fa fa-upload') &nbsp;Upload
 						
 						.file-manager--sort(data-file-manager='sort')
 							.btn-group
@@ -26,7 +26,7 @@
 								button.btn.btn-default(data-sort='name', data-icon='fa fa-font')
 							.hidden(data-sort-direction='desc')
 
-						div(data-function='scroll', style='height: 75vh')
+						div(data-function='scroll')
 							div(data-scroll='content-wrapper')
 								.file-manager--content(data-file-manager='content', data-loaded='false', data-scroll='content')
 
@@ -39,11 +39,16 @@
 									h2.uploader--header Upload Files to:&nbsp;
 										span.fw-B(data-file-manager='current-directory') Root
 									.uploader--file-drop(data-uploader='file-drop')
-										span Drag &amp; Drop Your Files Here or Click to Upload
+										span Drag &amp; Drop Your Files Here
+										.text-wings
+											hr
+											span or
+											hr
+										span.btn.btn-primary.btn-lg Upload
 									h3.uploader--sub-header Files to Upload
 									ul.uploader--files(data-uploader='files')
 
-									button.btn.btn-secondary.uploader--submit(data-uploader='upload', disabled) Upload
+									button.btn.btn-default.uploader--submit(data-uploader='upload', disabled) Save
 									button.btn.btn-warning(data-uploader='cancel') Cancel
 
 						.file-manager--prompt.hidden(data-file-manager='delete-prompt')

@@ -42,7 +42,7 @@ void function initCardStyle($){
 
 	function hideAddButtons(e) {
 		e.data.cardsWrapper.find('[duck-button="add"]').addClass('hidden');
-		e.data.addCardIcon.removeClass('rotate-45');
+		e.data.addCardIcon.removeClass('fa-eye').addClass('fa-pencil');
 	}
 
 	function showAddButtons(e) {
@@ -56,8 +56,8 @@ void function initCardStyle($){
 		
 		$addButtons.removeClass('hidden');
 
-		if(!$addCardIcon.hasClass('rotate-45')) {
-			$addCardIcon.addClass('rotate-45');
+		if(!$addCardIcon.hasClass('fa-eye')) {
+			$addCardIcon.removeClass('fa-pencil').addClass('fa-eye');
 		} else {
 			hideAddButtons({data: {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}})
 		}
@@ -70,11 +70,15 @@ void function initCardStyle($){
 		const $cardPreviews = $card.find('.card-styles--preview');
 		const $cardTitle = $card.find('[duck-type="string"] [duck-value]');
 		const $cardTitles = $card.find('.js-card-title');
-		const $cardImage = $card.find('[duck-type="image"] [duck-value]');
+		const $cardImageForm = $card.find('[duck-type="image"]');
+		const $cardImage = $cardImageForm.find('[duck-value]');
 		const $cardImages = $card.find('.js-card-image');
-		const $cardText = $card.find('.summernote');
+		const $cardTextFrom = $card.find('[duck-type="wysiwyg"]');
+		const $cardText = $cardTextFrom.find('.summernote');
 		const $cardTexts = $card.find('.js-card-text');
 		const $editToggle = $card.find('.js-card-toggle');
+		const noImageCards = ['section', 'sub', 'plain', 'white', 'danger', 'success', 'info'];
+		const noTextCards = ['img', 'sub'];
 		
 
 		$editToggle.on('click', (e) => {
@@ -125,8 +129,21 @@ void function initCardStyle($){
 			e.stopPropagation();
 			e.preventDefault();
 
+			const style = $cardStyles.val();
+
 			$cardPreviews.removeClass('card-styles--preview__active');
-			$card.find(`.card-styles--preview[card-style="${$cardStyles.val()}"]`).addClass('card-styles--preview__active');
+			$cardImageForm.removeClass('hidden');
+			$cardTextFrom.removeClass('hidden');
+
+			$card.find(`.card-styles--preview[card-style="${style}"]`).addClass('card-styles--preview__active');
+
+			if(noImageCards.indexOf(style) > -1) {
+				$cardImageForm.addClass('hidden');
+			}
+
+			if(noTextCards.indexOf(style) > -1) {
+				$cardTextFrom.addClass('hidden');
+			}
 		});
 
 		$cardImage.on('change', (e) => {
@@ -182,7 +199,6 @@ void function initCardStyle($){
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 		const $cardsForm = $('#GuideCards');
-		const $cardsFormSaveIcon = $cardsForm.find('[duck-button="submit"]').find('.fa');
 		const $cardsWrapper = $('.js-guide-cards');
 		const $expandeCollapse = $('.js-expand-collapse');
 		const $expandeCollapseIcon = $expandeCollapse.find('.fa');
@@ -194,7 +210,7 @@ void function initCardStyle($){
 
 		$.ajax({
 			url: '/renderPug',
-			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big', title: 'New Card', text: 'New card text goes here.'}, startInEditMode: true}},
+			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big'}, startInEditMode: true}},
 			success: (data) => {
 				$cardsWrapper.prop('ArrayItemTemplate', $(data));
 			},
@@ -205,14 +221,14 @@ void function initCardStyle($){
 		$cardsForm.on('duck.form.submitted', (e) => {
 			e.stopPropagation();
 			
-			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
 			$cardsForm.find('[duck-button="submit"]').prop('disabled', true);
 		});
 
 		$cardsForm.on('duck.form.success', (e) => {
 			e.stopPropagation();
 			
-			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
 			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
 			$cardsWrapper.find('.js-card').trigger('exitEditMode');
 			$previewCardsIcon.removeClass('fa-eye').addClass('fa-pencil')
@@ -233,7 +249,7 @@ void function initCardStyle($){
 				_$error.remove();
 			}, 3270);
 			
-			$cardsFormSaveIcon.toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
 			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
 

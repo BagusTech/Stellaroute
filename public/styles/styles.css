@@ -4840,6 +4840,13 @@ button.close {
 }
 .modal-open {
   overflow: hidden;
+  display: block;
+  height: 100%;
+}
+.modal-open .site-header,
+.modal-open .site-body,
+.modal-open .site-footer {
+  display: block;
 }
 .modal {
   display: none;
@@ -5634,15 +5641,27 @@ button.close {
 }
 .file-picker {
   width: auto;
-  padding: 0 24px;
-  max-width: 1750px;
-}
-.file-picker .modal-body {
   padding: 0;
+  margin: 0 auto;
+  max-width: 1750px;
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+}
+.file-picker .modal-body,
+.file-picker .modal-content {
+  padding: 0;
+  height: 100%;
 }
 .file-picker .modal-footer {
   border-top: 1px solid #e7e7e7;
   text-align: right;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 .file-picker .modal-footer:before {
   display: none;
@@ -5656,6 +5675,7 @@ button.close {
   display: table;
   table-layout: fixed;
   width: 100%;
+  height: 100%;
 }
 .file-manager:before,
 .file-manager:after {
@@ -5672,6 +5692,7 @@ button.close {
 .file-manager--directory,
 .file-manager--main {
   display: table-cell;
+  height: 100%;
 }
 .file-manager--directory {
   padding: 12px;
@@ -5706,11 +5727,16 @@ button.close {
 }
 .file-manager--main {
   width: 100%;
+  padding-top: 130px;
+  padding-bottom: 70px;
 }
 .file-manager--header {
   padding: 12px;
   border-bottom: 1px solid #e7e7e7;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 300px;
+  right: 0;
 }
 .file-manager--header h2 {
   margin: 0 0 36px;
@@ -5797,7 +5823,7 @@ button.close {
   text-align: center;
   border: 2px dashed #cccccc;
   background: #f7f7f7;
-  padding: 60px;
+  padding: 36px;
   font-size: 26px;
   margin-bottom: 12px;
 }
@@ -5807,6 +5833,11 @@ button.close {
 .uploader--file-drop.uploader--file-drop__active {
   border-style: solid;
   background: #e3f4fa;
+}
+.uploader--file-drop .text-wings {
+  color: #959ca2;
+  font-size: 18px;
+  margin: 24px 0;
 }
 .uploader--files {
   padding: 0;
@@ -7184,19 +7215,17 @@ body {
   margin-top: -25px;
   position: relative;
 }
+.guide-card--card__small .guide-card--img {
+  float: left;
+  width: 50%;
+  margin: 0 12px 0 0;
+}
 .guide-card--card__small .guide-card--body {
   padding: 0;
   border-radius: 0 0 2px 2px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
 }
 .guide-card--card__small .guide-card--body > div {
-  width: 75%;
   padding: 12px;
-}
-.guide-card--card__small .guide-card--body .guide-card--img {
-  width: 25%;
 }
 .card-styles--preview .guide-card--card__small {
   margin-top: 0;
@@ -7342,10 +7371,16 @@ body {
   .guide-card--card {
     padding-left: 12px;
   }
+  .guide-card--card__small .guide-card--img {
+    width: 33%;
+  }
 }
 @media (min-width: 1600px) {
   .guide-card--edit-mode .guide-card--view {
     width: 50%;
+  }
+  .guide-card--card__small .guide-card--img {
+    width: 25%;
   }
 }
 .loading .card {

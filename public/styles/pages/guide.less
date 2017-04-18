@@ -341,10 +341,6 @@
 		}
 	}
 	.guide-card--card__sub {
-		//position: sticky;
-		//top: 0;
-		//z-index: 1;
-
 		.guide-card--body {
 			background: @grey-light;
 			text-align: center;
@@ -376,19 +372,18 @@
 		margin-top: -@gw-Md - 1;
 		position: relative;
 
+		.guide-card--img {
+			float: left;
+			width: 50%;
+			margin: 0 @gw-Sm 0 0;
+		}
+
 		.guide-card--body {
 			padding: 0;
 			border-radius: 0 0 @br-Md @br-Md;
 
-			display: flex;
-
 			> div {
-				width: 75%;
 				padding: @gw-Sm;
-			}
-
-			.guide-card--img {
-				width: 25%;
 			}
 		}
 
@@ -488,12 +483,24 @@
 	.guide-card--card {
 		padding-left: @gw-Sm;
 	}
+
+	.guide-card--card__small {
+		.guide-card--img {
+			width: 33%;
+		}
+	}
 }
 
 @media(min-width: @screen-lg) {
 	.guide-card--edit-mode{
 		.guide-card--view{
 			width: 50%;
+		}
+	}
+
+	.guide-card--card__small {
+		.guide-card--img {
+			width: 25%;
 		}
 	}
 }

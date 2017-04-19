@@ -1,15 +1,16 @@
 .interior-nav {
 	background: @text-color;
 	color: white;
-	position: absolute;
+	position: relative;
 	padding: @gw-Sm;
-	margin-left: -@gw-Sm;
+	margin-left: -@gw-Md;
 	width: 272px;
 	left: -272px;
 	transition: left .27s ease-out;
 	opacity: .95;
 	z-index: 1;
 	font-size: 1.2em;
+	top: @gw-Sm;
 
 	&.interior-nav__active {
 		left: 0;

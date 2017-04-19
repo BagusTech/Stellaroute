@@ -89,8 +89,8 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 					small.d-B.mt-Sm= guide.tagline
 
 				if isMe
-					.checkbox.publish-button.hidden-xs.js-publish-form(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id)
-						label(duck-type='bool', duck-field='isPublished')
+					.checkbox.d-Ib.hidden-xs.js-publish-form(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id)
+						label.publish-button(duck-type='bool', duck-field='isPublished')
 							input.js-publish(type='checkbox', checked= guide.isPublished, duck-value)
 							| Published
 							span.hidden.js-publish-icon

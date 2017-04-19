@@ -106,14 +106,18 @@ else
 			
 			if user.instagram
 				img.br-C.ml-XXs(src=user.instagram.profile_picture, alt=user.name.first, style= {'max-width': '32px'})
+			else if user.profilePicture
+				img.br-C.ml-XXs(src=getImagePath(user.profilePicture, 'thumb2'), alt=user.name.first, style= {'max-width': '32px'})
 			else
 				i.fa.fa-user(aria-hidden="true")
 
 		ul.dropdown-menu.l-A.r-0(aria-labelledby="UserMenu")
 			li: a(href='/profile') My Account
-			li: a(href='/request') Make A Request
-			li: a(href='/feedback') Give Us Feedback
+			li: a(href='/') Guides
+			li: a(href='/about-us') About Us
+			li: a(href='/contact-us') Contact Us
 			if user.isAdmin
+				li.divider(role="separator")
 				li: a(href='/admin') Admin Panel
 			li.divider(role="separator")
 			li: a(href='/logout') Log Out

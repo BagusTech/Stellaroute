@@ -5,8 +5,12 @@
 				button.btn-search.toggle-search(type='button', data-icon='fa fa-search', data-function='toggle', data-target='#SiteLogo, #SearchQuery')
 				input#SearchQuery.form-control.bg-N.w-0.o-0(type='text', placeholder='Where do you want to go?', name='searchInput', data-toggle='w-0 o-0 o-1')
 
-		a#SiteLogo(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
+		a#SiteLogo.w-25(href='/', data-toggle='w-50 w-0 plr-Sm p-XXs')
 			img.img-responsive(src=`/images/logo_${logoColor}.svg`, alt='Stellaroute')
 
-		.ml-A.mr-Md.mr-0--sm
-			include login
+		nav.hidden-xs
+			a.fw-N.fc-I.fs-18.plr-Sm(href='/') Guides
+			a.fw-N.fc-I.fs-18.plr-Sm(href='/about-us') About Us
+			a.fw-N.fc-I.fs-18.plr-Sm(href='/contact-us') Contact Us
+
+		include login

@@ -3,94 +3,21 @@ extends layout.pug
 append options
 	- headerBackground = 'none';
 	- logoColor = 'white';
-	- headerClasses = 'p-A pt-Sm';
+	- headerClasses = 'home-page-header';
 	- showHeaderSearch = false;
 
-block header
-	if user
-		include controls/header.pug
-
 block content
-	//if user	
-		.media-bg-img.home-bg-img.pt-Xl
-			.container.ptb-Xl.plr-Lg
-				.row
-					.col-xs-12
-						h1.mt-0.mb-Md.ta-C
-							span.fs-Xl--sm stellaroute
-							br
-							small.tt-U.fs-32--sm Plan Spontaneity
-
-						p.lead.ta-J.mlr-A.w-60--sm.fc-W Welcome to our Beta. We’re excited to help travelers experience their world, their way. We’d love to hear about where you want to go next and how you like to travel.
-		.bg-W
-			.container
-
-				h2.fc-G Locations
-				.row
-					for location in approvedLocations
-						.col-xs-12.col-sm-6.col-md-3.mb-Md
-							a(href=`/${location.countryUrl}/${location.url}`)
-								+card(location.cardImage, location.names.display, null, null, null, 'medium')
-
-					.col-xs-12.col-sm-6.col-md-3.mb-Md
-						.card.c-P(data-toggle='modal', data-target='#RequestLocation')
-							.ta-C.fc-Purp.bg-G__ltr(style='padding: 22% 0; font-size: 60px;')
-								i.fa.fa-plus(aria-hidden='true')
-								.sr-only Request
-
-							h3.card--title Request a Location
-
-					.col-xs-12.col-md-6
-						.card.p-Md.p-Lg--sm.pb-0.pb-Md--sm
-							+emailCapture
-								h2.mt-0.mb-Md--lg Sign Up for Our Newsletter
-								hr
-								small.d-N.d-B--sm.fc-G.pt-Xs.mb-Md Stay updated on new features and locations!
-						
-
-				include controls/requestLocation.pug
-				
-				hr.mb-Lg
-
-				h2.fc-G Coming Soon
-				.masonry.masonry-grid-1.masonry-grid-2--sm.masonry-grid-4--md
-					.masonry--item
-						+card('images/budweiser.jpg', 'St. Louis', null, null, null, 'medium')
-					.masonry--item
-						+card('images/635973353399336445-1421152854_NYC-1.jpg', 'New York', null, null, null, 'medium')
-					// REMOVED AS SUPERFLOUS, MIGHT PUT BACK IN LATER
-						.masonry--item
-							+card('images/London-1_tcm233-2111842.jpg', 'London', null, null, null, 'medium')
-					.masonry--item
-						+card('images/Amsterdam.jpg', 'Amsterdam', null, null, null, 'medium')
-					.masonry--item
-						+card('images/efm-hotel-billboard-washingtondccom.jpg', 'Washington, D.C.', null, null, null, 'medium')
-
-				hr.mb-Lg
-
-				h2.fc-G Upcoming Features
-				ul.fs-Xl.mt-Sm.mb-XXl
-					li Export to PDF
-					li Create &amp; Edit Personalized Guides
-					li Forums
-					li Rate Attractions
-					li Interactive Map
-					li Upload Pictures
-
 	.mt-NegXl.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
 		.container.ta-C.mt-Xl
 			.row
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
-					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-0.hidden-xs
+					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
 						img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
 						span.d-Ib.plr-Sm stellaroute
 					h2.fc-G__lt.tt-U.fs-32--sm Plan Spontaneity
-					
-					if !user
-						+emailCapture('general')
-							p.lead.ta-C.mlr-A.fc-W.mb-Md Welcome! We are currently accepting users for our Beta.
 
-			.content-card.mt-Xl
+
+			.content-card.mt-Xl.p-Md
 				if guides && guides.length
 					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 						for guide in guides
@@ -100,23 +27,3 @@ block content
 									+card(guide.cardImage, guide.names.display)
 				else
 					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.
-
-
-			//.row
-				.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
-					.content-card
-						h2.content-card--header Contact Us
-						p.lead We will be sure to get back to you as soon as possible.
-						form#FeedbackForm
-							.form-group
-								input.form-control(name='user', type='text', placeholder='Name')
-							.form-group
-								input.form-control(name='email', type='email', placeholder='Email')
-							.form-group
-								input.form-control(name='subject', type='text', placeholder='Subject')
-							.form-group
-								textarea.form-control(name='feedback', placeholder='What\'s on your mind?', style='min-height: 150px;')
-							.form-group.mb-0
-								button.btn-primary.btn-block(type='submit') Send
-
-					script(src='/js/pages/feedback.min.js')

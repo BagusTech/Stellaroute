@@ -11,13 +11,21 @@ function returnItem(obj, field, value, contains) {
 		return returnItem(obj[currentField], field, value, contains);
 	}
 
-	const objValue = obj[currentField];
+	let objValue = obj[currentField];
 	if(objValue instanceof Array) {
 		return objValue.indexOf(value) > -1;
 	}
 
 	if(value instanceof Array) {
 		return value.indexOf(objValue) > -1;
+	}
+
+	if(typeof objValue === 'string') {
+		objValue = objValue.toLowerCase();
+	}
+
+	if(typeof value === 'string') {
+		value = value.toLowerCase();
 	}
 
 	return contains ? objValue.indexOf(value) > -1 : objValue === value;

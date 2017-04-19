@@ -1,14 +1,78 @@
 extends layout.pug
 
 block content
-	.media-bg-img.request-page-header
-		.container
-			.row
-				.col-xs-12.col-sm-8.col-sm-push-2
-					h1 About Us
+	.about-us
+		.sub-header(style=`background: rgba(0, 0, 0, 0) url("images/hero-large.jpg") no-repeat scroll center 57% / cover;`)
+			.container.pb-0
+				h1.ta-C.plr-Lg--md.ptb-Xl Planning a trip should be as simple as finding inspiration
 
-	.container.p-Md
-		.row
-			.col-xs-12.col-sm-8.col-sm-push-2.form-group
-				.content-card
-					p.lead Stellaroute is an early stage startup committed to giving travelers the information and tools they need to make every trip their dream trip. We're travel junkies passionate about exploring the world and we want to share our passion with fellow travelers. Our goal is to help people make the most out of their trip, no matter where they want to go or what they want to do and see.
+
+				nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
+					a.tabbed-nav--tab(href='#Overview', role='tab', aria-expanded='true') Overview
+					a.tabbed-nav--tab(href='#OurTeam', role='tab', aria-expanded='false') Our Team
+					a.tabbed-nav--tab(href='#ComingSoon', role='tab', aria-expanded='false') Coming Soon
+
+		.container
+			div(data-function='tabs')
+				#Overview.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
+					.panel.panel-default
+						.panel-body
+							.ta-C
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										i.fa.fa-5x.fa-lightbulb-o(aria-hidden='true')
+									h2 Get Inspired
+									p.ta-J.plr-Sm--sm Find inspiration from the trips other travelers are taking. Everyone gets excited about the possibility of a trip, but the planning is a stressful and painstaking process, we want to take the hassle out of it.
+
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										i.fa.fa-5x.fa-heart(aria-hidden='true')
+									h2 Create Wishlists
+									p.ta-J.plr-Sm--sm Create your bucket list of travel experiences. It can be anything: a restaurant, a temple, a beach, or an entire city. Don’t be constrained by anything, we’ll even send you trip deals on the places you’ve always wanted to go.
+
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										i.fa.fa-5x.fa-globe(aria-hidden='true')
+									h2 Share Your World
+									p.ta-J.plr-Sm--sm Inspire others and make it easier for everyone to understand that traveling is one simple decision away from becoming a reality. You don’t have to go have way around the world to have an adventure, tell us about your hometown, your favorite neighborhood, or you favorite restaurant.
+				#OurTeam.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					.panel.panel-default
+						.panel-body
+							.ta-C.clear
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										img.br-C(src='http://bagusco.com/img/profile/alan.jpg', style='max-width: 150px;')
+									h2 Alan Furth
+									p.ta-J.plr-Sm--sm Alan has spent a combined 13-years living in five countries and has traveled to over 40 countries across 6 continents. He loves creating the perfect trip for friends and relatives as well as clean, simple design. He’s never stepped foot in India and he’s eager to make his way there as soon as possible. He loves debating the virtues of different sports around the world and trying new foods and drinks.
+
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										img.img-responsive.br-C(src='http://bagusco.com/img/profile/joe.jpg', style='max-width: 150px;')
+									h2 Joe Lissner
+									p.ta-J.plr-Sm--sm Joe loves to travel and lived in China while teaching English and studying Chinese. Professionaly, Joe has experience working directly with clients to build their websites including nonprofits, small businesses, and national franchises. As well as his development experience, he has a background in design and client training.
+								.col-xs-12.col-sm-4
+									.pt-Lg
+										img.img-responsive.br-C(src='http://bagusco.com/img/profile/peter.jpg', style='max-width: 150px;')
+									h2 Peter Lamming
+									p.ta-J.plr-Sm--sm Whether it’s running teams or running around the world, Peter is always on the move. Peter has lived in 3 countries and traveled off the beaten paths in over 40 countries across 6 continents. The place he wants to explore next is Central Asia - especially Uzbekistan and Georgia.
+
+							.pt-Md.pb-Md--sm.plr-XXl--sm
+								h3 Who We Are
+								p We're three guys who, together, have been to over 60 countries across 6 continents and through all our travels we kept running into the same problem: the headache of planning a trip. It baffled us that travelers continually ran into the same problems when traveling and no two people had the same information for places that thousands of people had already explored. 
+
+								p So we decided to put a stop to the madness by coming up with a solution that makes it really easy for anyone to share their insights to the places they know best. Now anyone can create a guide showing their world in their unique travel style and, hopefully, inspire the next traveler to experience something amazing. Best of all, there’s no need to set anything up or build anything - everything is point and click
+
+								p We're brand new and still have a long way to go, but we’ve taken the first step towards building the world’s ultimate travel community - but it's a journey we're going to need your help with. If there's a feature you want to see, something you don't like, or just a cool idea we want to hear it. We're building this site for travelers like you and we need your help to do it right.
+				#ComingSoon.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					.panel.panel-default
+						.panel-body.p-Md
+							h2.mt-0 We're Not Done
+							p This is just the start of what we're building. There are many more exciting features in the pipelines. Here's are a few things that will be added in the near future. If there's anything you don't see that you want - tell us about it. We're building this site for you and we'd love your input.
+
+							h2 Upcoming Features
+							ul
+								li Wishlists
+								li Copy and Edit Guides
+								li Interactive Map
+								li Forums &amp; Comments
+								li Follow Your Friends

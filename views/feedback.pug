@@ -6,26 +6,30 @@ append header
 		p.alert.alert-danger.d-N Sorry, something went wrong. If this continues please let us know and we will fix is shortly.
 
 block content
-	.media-bg-img.feedback-header
-		.container
-			h1 We Want to Know What What You Think!		
-	form#FeedbackForm.feedback-form
-			.container
-				p.lead.text-center We are always trying to improve our site and we take your feedback very seriously. Let us know how we can improve.
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						input.form-control(name='user', type='text', placeholder='Name')
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						input.form-control(name='email', type='email', placeholder='Email')
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						input.form-control(name='subject', type='text', placeholder='Subject')
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2.form-group
-						textarea.form-control(name='feedback', placeholder='Tell us how we can improve')
-				.row
-					.col-xs-12.col-sm-8.col-sm-push-2
-						button.btn-primary.btn-block(type='submit') Send Your Feedback
+	.sub-header(style=`background: rgba(0, 0, 0, 0) url("images/custom-guides.jpg") no-repeat scroll center 57% / cover;`)
+			.container.ta-C
+				h1.ptb-Md.ptb-Lg--sm.ptb-Xl--md Tell Us What You Think
+
+	.container.pt-Md
+		.row
+			.col-xs-12.col-md-8.col-md-push-2.col-lg-6.col-lg-push-3
+				.panel.panel-default
+					.panel-body.p-Md
+						h2.mt-0 Give Us Your Feedback or Report a Bug
+						p The good, the bad, the ugly - we want to hear from you. Let us know what you want to see us do and how we can change to make your experience better.
+						
+						form#FeedbackForm.feedback-form.mt-Lg
+							.row
+								.col-xs-12.col-sm-8.col-sm-push-2
+									.form-group
+										input.form-control(name='user', type='text', placeholder='Name (optional)', value= user && user.name && `${user.name.first} ${user.name.last ? user.name.last : ''}`)
+									.form-group
+										input.form-control(name='email', type='email', placeholder='Email (optional)', value= user && user.local && user.local.email)
+									.form-group
+										input.form-control(name='subject', type='text', placeholder='Subject', required)
+									.form-group
+										textarea.form-control(name='feedback', placeholder='Tell us how we can improve', required)
+									
+									button.btn-primary.btn-block(type='submit') Send Your Feedback
 
 	script(src='/js/pages/feedback/feedback.min.js')

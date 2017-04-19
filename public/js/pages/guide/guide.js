@@ -193,6 +193,10 @@ void function initCardStyle($){
 
 	$(() => {
 		const $subHeader = $('.sub-header');
+		const $publishForm = $subHeader.find('.js-publish-form');
+		const $publish = $publishForm.find('.js-publish');
+		const $publishIcon = $publishForm.find('.js-publish-icon');
+		const $publishedText = $subHeader.find('.js-is-publshed-text');
 		const $guideDetailsForm = $('#GuideDetailsForm');
 		const $guideDetailsSaveIcon = $guideDetailsForm.find('[duck-button="submit"] .fa');
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
@@ -217,6 +221,43 @@ void function initCardStyle($){
 		});
 
 		$('.js-card').guideCard();
+
+		$publish.on('change', (e) => {
+			e.stopPropagation();
+
+			$publishForm.trigger('duck.form.submit')
+		});
+		$publishForm.on('duck.form.submitted', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$publish.prop('disabled', true);
+			$publishIcon.removeClass('hidden');
+		});
+
+		$publishForm.on('duck.form.success', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			$publishedText.toggleClass('hidden');
+			$publish.prop('disabled', false);
+			$publishIcon.addClass('hidden');
+		});
+
+		$publishForm.on('duck.form.error', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			const _$error = $error.clone();
+
+			$publishForm.append(_$error);
+
+			setTimeout(() => {_$error.slideUp(270);}, 3000)
+			setTimeout(() => {_$error.remove();}, 3270)
+
+			$publish.prop('disabled', false);
+			$publishIcon.addClass('hidden');
+		});
 
 		$cardsForm.on('duck.form.submitted', (e) => {
 			e.stopPropagation();
@@ -282,6 +323,7 @@ void function initCardStyle($){
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 			$guideDetailsEdit.click();
 		});
+
 		$guideDetailsForm.on('duck.form.error', (e) => {
 			e.stopPropagation();
 

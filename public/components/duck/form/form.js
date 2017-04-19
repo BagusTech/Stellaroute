@@ -314,6 +314,13 @@ void function initDuckForm($, duck, window) {
 		$('[data-function*="scroll"]').trigger('initScroll');
 	}
 
+	function triggerSubmitForm(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		e.data.wrapper.trigger('duck.form.submit');
+	}
+
 	function submitForm(e) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -390,8 +397,10 @@ void function initDuckForm($, duck, window) {
 					.on('click', {wrapper: $wrapper}, editForm);
 
 		// set what happens when the submit button is clicked
-		$wrapper.off('click', submitForm)
-				.on('click', '[duck-button="submit"]', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, errorCallBack}, submitForm);
+		$wrapper.off('click', triggerSubmitForm)
+				.on('click', '[duck-button="submit"]', {wrapper: $wrapper}, triggerSubmitForm);
+
+		$wrapper.off('duck.form.submit', submitForm).on('duck.form.submit', {crud, table, key, keyValue, wrapper: $wrapper, startOfFields: $startOfFields, successCallback, errorCallBack}, submitForm)
 
 		// set arrays to be sortable
 		$wrapper.find('[duck-type="array"]')

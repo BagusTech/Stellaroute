@@ -11,6 +11,13 @@ void function initRequest($){
 		const $userSubmit = $userForm.find('[duck-button="submit"]');
 		const $username = $userForm.find('[duck-field="username"] [duck-value]');
 		const startingUsername = $username.val();
+		const $profilePicture = $('.js-profile-pic');
+		const $profilePictureForm = $userForm.find('[duck-field="profilePicture"] [duck-value]');
+		const startingProfilePicture = $profilePictureForm.val();
+		const $bannerImage = $('.js-banner-image');
+		const $bannerImageForm = $userForm.find('[duck-field="bannerImage"] [duck-value]');
+		const startingBannerImage = $bannerImageForm.val();
+
 
 		$username.prop('validateFunc', () => () => {
 			const newUsername = $username.val();
@@ -29,7 +36,38 @@ void function initRequest($){
 		});
 
 		$userForm.duckForm({successCallback: () => {
+			const newUsername = $username.val();
+			const newProfilePicture = $profilePictureForm.val();
+			const newBannerImage = $bannerImageForm.val();
+
 			$userSubmit.prop('disabled', false).find('i').addClass('hidden');
+
+			// if username changed refresh page
+			if(newUsername.toLowerCase() !== startingUsername.toLowerCase()) {
+				window.location.href = `/${newUsername}`;
+				return;
+			}
+
+			// update profile picture
+			if(newProfilePicture !== startingProfilePicture) {
+				const _newProfilePicture = newProfilePicture.split('.');
+					_newProfilePicture.pop();
+				
+				const newProfilePicturePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${_newProfilePicture.join('.')}-thumb2.jpg`;
+				
+				$profilePicture.attr('src', newProfilePicturePath);
+			}
+
+			// update banner image
+			if(newBannerImage !== startingBannerImage) {
+				const _newBannerImage = newBannerImage.split('.');
+					_newBannerImage.pop();
+				
+				const newBannerImagePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${_newBannerImage}-large.jpg`;
+
+				$bannerImage.css('background-image', `url("${newBannerImagePath}")`);
+			}
+
 		}, errorCallBack: () => {
 			const _$error = $error.clone();
 

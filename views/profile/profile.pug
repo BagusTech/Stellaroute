@@ -52,11 +52,11 @@ block content
 						button.btn.btn-default(data-dismiss='modal') Close
 						button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
 	.profile
-		.sub-header(style=`background: rgba(0, 0, 0, 0) url("${ userProfile.bannerImage ? getImagePath(userProfile.bannerImage, 'large') : '/images/profile_header_image_mirrored.jpg'}") no-repeat scroll center 57% / cover;`)
+		.sub-header.js-banner-image(style=`background: rgba(0, 0, 0, 0) url("${ userProfile.bannerImage ? getImagePath(userProfile.bannerImage, 'large') : '/images/profile_header_image_mirrored.jpg'}") no-repeat scroll center 57% / cover;`)
 			.container.pb-0
 				.row.pt-Sm.pt-Md--md.pt-Lg--lg
 					.col-xs-2.col-sm-3.col-md-2.col-lg-1
-						img.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
+						img.js-profile-pic.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
 					.col-xs-10.col-sm-9.col-md-10.col-lg-11
 						h1= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
 

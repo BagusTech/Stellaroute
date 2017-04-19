@@ -6554,6 +6554,9 @@ body {
   display: none;
 }
 .global-header {
+  z-index: 3;
+}
+.global-header .container {
   padding: 4px 12px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -6562,7 +6565,6 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  z-index: 3;
 }
 .btn-search {
   padding: 12px;

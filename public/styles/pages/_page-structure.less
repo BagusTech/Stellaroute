@@ -24,12 +24,35 @@ body {
 	z-index: 3;
 
 	.container {
-		padding: @gw-XXs @gw-Sm;
+		padding: @gw-XXs @gw-Md;
 		display: flex;
-		flex-justify: space-around;
+		justify-content: space-around;
 		align-items: center;
 	}
+
+	&.home-page-header {
+		position: absolute;
+		padding-top: @gw-Sm;
+		color: white;
+		z-index: 1041;
+	}
+
+	nav.hidden-xs {
+		text-align: center;
+		width: 100%;
+	}
 }
+
+.modal-open .global-header.home-page-header {
+	padding-right: 17px;
+
+	#SiteLogo,
+	.login-control {
+		opacity: .5;
+		pointer-events: none;
+	}
+}
+
 	.btn-search {
 		padding: @gw-Sm;
 		background: none;
@@ -121,7 +144,7 @@ body {
 
 @media(min-width: @screen-Sm) {
 	.global-header {
-		padding: @gw-Xs @gw-Lg;
+		padding: @gw-Xs 0;
 		width: 100%
 	}
 		.btn-search {
@@ -141,10 +164,17 @@ body {
 
 			#SiteLogo {
 				width: 25%;
-				max-width: 180px;
+				max-width: 400px;
 				order: -1;
-				margin: 0 5% 0 0;
+				margin: 0;
 				padding: 0;
+			}
+
+			.login-control,
+			nav.dropdown {
+				width: 25%;
+				max-width: 180px;
+				text-align: right;
 			}
 		}
 

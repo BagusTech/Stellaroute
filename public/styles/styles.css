@@ -906,21 +906,8 @@ pre code {
   padding: 12px 24px;
   -webkit-transition: width 0.23s ease-out;
   transition: width 0.23s ease-out;
-}
-@media (min-width: 767px) {
-  .container {
-    width: 791px;
-  }
-}
-@media (min-width: 1023px) {
-  .container {
-    width: 1047px;
-  }
-}
-@media (min-width: 1600px) {
-  .container {
-    width: 1624px;
-  }
+  width: 100%;
+  max-width: 1600px;
 }
 .container-fluid {
   margin-right: auto;
@@ -6557,14 +6544,33 @@ body {
   z-index: 3;
 }
 .global-header .container {
-  padding: 4px 12px;
+  padding: 4px 24px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  flex-justify: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+.global-header.home-page-header {
+  position: absolute;
+  padding-top: 12px;
+  color: white;
+  z-index: 1041;
+}
+.global-header nav.hidden-xs {
+  text-align: center;
+  width: 100%;
+}
+.modal-open .global-header.home-page-header {
+  padding-right: 17px;
+}
+.modal-open .global-header.home-page-header #SiteLogo,
+.modal-open .global-header.home-page-header .login-control {
+  opacity: .5;
+  pointer-events: none;
 }
 .btn-search {
   padding: 12px;
@@ -6647,7 +6653,7 @@ body {
 }
 @media (min-width: 767px) {
   .global-header {
-    padding: 6px 36px;
+    padding: 6px 0;
     width: 100%;
   }
   .btn-search {
@@ -6664,12 +6670,18 @@ body {
   }
   #Stellaroute #SiteLogo {
     width: 25%;
-    max-width: 180px;
+    max-width: 400px;
     -webkit-box-ordinal-group: 0;
         -ms-flex-order: -1;
             order: -1;
-    margin: 0 5% 0 0;
+    margin: 0;
     padding: 0;
+  }
+  #Stellaroute .login-control,
+  #Stellaroute nav.dropdown {
+    width: 25%;
+    max-width: 180px;
+    text-align: right;
   }
   .hamburger-menu--toggle {
     display: none;

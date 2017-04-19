@@ -37,7 +37,8 @@ router.get('/privacy-and-terms', (req, res) => {
 });
 
 // about
-router.get('/about', (req, res) => {
+router.get('/about', (req, res) => {res.redirect('/about-us')})
+router.get('/about-us', (req, res) => {
 	res.render('about', {
 		title: 'Stellaroute: Learn Everything About Us',
 	});
@@ -51,7 +52,8 @@ router.get('/request', (req, res) => {
 });
 
 // feedback
-router.get('/feedback', (req, res) => {
+router.get('/feedback', (req, res) => {res.redirect('/contact-us')})
+router.get('/contact-us', (req, res) => {
 	res.render('feedback', {
 		title: 'Stellaroute: Learn Everything About Us',
 	});

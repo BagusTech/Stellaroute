@@ -5506,6 +5506,9 @@ button.close {
     display: none !important;
   }
 }
+.link-dialog .form-group {
+  margin: 0;
+}
 .no-js [role="tabpanel"] {
   display: block !important;
 }

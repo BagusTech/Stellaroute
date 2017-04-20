@@ -18,6 +18,7 @@ const User = Duck({
 			email: String,
 			password: String
 		},
+		gender: String,
 		profilePicture: String,
 		bannerImage: String,
 		friends: Array,

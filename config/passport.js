@@ -180,7 +180,7 @@ strategies.facebook = function(passport){
 		clientID: process.env.FACEBOOK_ID,
 		clientSecret: process.env.FACEBOOK_SECRET,
 		callbackURL: '/auth/facebook/callback',
-		profileFields: ['id', 'displayName', 'email', 'first_name', 'last_name', 'gender', 'link', 'public_key']
+		profileFields: ['id', 'displayName', 'email', 'first_name', 'last_name', 'gender', 'link', 'public_key', 'picture']
 	},
 	function(accessToken, refreshToken, profile, done) {
 		console.log(profile);
@@ -193,13 +193,16 @@ strategies.facebook = function(passport){
 				const newUser = {
 					Id: uuid.v4(),
 					facebook: profile.id,
+					username: profile.displayName.trim().replace(/\W+/g, '-'),
 					name: {
 						first: profile.name && profile.name.givenName,
 						last: profile.name && profile.name.familyName
 					},
 					local: {
 						email: profile.emails && profile.emails[0] && profile.emails[0].value
-					}
+					},
+					gender: profile.gender,
+					profilePicture: profile.picture,
 				};
 
 				User.add(newUser, false).then(function success(){
@@ -213,6 +216,9 @@ strategies.facebook = function(passport){
 				user.facebook = profile.id;
 				user.name.first = user.name.first || profile.name && profile.name.givenName,
 				user.name.last = user.name.last || profile.name && profile.name.familyName,
+				user.gender = profile.gender;
+				user.username = user.username || profile.displayName.trim().replace(/\W+/g, '-');
+				user.profilePicture = user.profilePicture || profile.picture;
 
 				User.update(user, false).then(() => {
 					User.deleteCached();

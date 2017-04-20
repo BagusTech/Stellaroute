@@ -185,9 +185,8 @@ strategies.facebook = function(passport){
 		//facebook.use({ access_token: accessToken });
 
 		process.nextTick(function () {
-			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails[0].value).items;
-
 			console.log(profile);
+			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails && profile.emails[0] && profile.emails[0].value).items;
 
 			if(!user){
 				const newUser = {

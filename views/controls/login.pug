@@ -13,9 +13,9 @@ if (!user)
 						span(aria-hidden='true') &times;
 				form.modal-body.login(method='POST', action='/auth/local')
 					input(type='hidden', name='_csrf', value= csrfToken)
-					//.col-xs-12
-						button.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(type='button') Log In with Facebook
-						button.btn.btn-default.btn-lg(type='button') Log In with Google
+					.col-xs-12
+						a.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(href="/auth/facebook") Log In with Facebook
+						//button.btn.btn-default.btn-lg(type='button') Log In with Google
 					//.col-xs-12.ptb-Md.mb-Xs
 						.text-wings.fc-G.fw-B
 							hr

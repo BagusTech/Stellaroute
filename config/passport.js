@@ -2,6 +2,7 @@ const uuid              = require('uuid');
 const cache             = require('../modules/cache');
 const LocalStrategy     = require('passport-local').Strategy;
 const InstagramStrategy = require('passport-instagram').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const instagram         = require('./instagram');
 const User              = require('../schemas/user');
 
@@ -154,6 +155,74 @@ strategies.instagram = function(passport){
 			} else {
 				return done(null, user);
 			}			
+		});
+	}));
+};
+
+strategies.facebook = function(passport){
+	passport.serializeUser(function(user, done){
+		done(null, user.Id);
+	});
+
+	// used to deserialize the user
+	passport.deserializeUser(function(id, done){
+		var user = User.findOne('Id', id).items;
+
+		if (user){
+			done(null, user);
+		} else {
+			done(null, false);
+		}
+	});
+
+	passport.use(new FacebookStrategy({
+		clientID: process.env.FACEBOOK_ID,
+		clientSecret: process.env.FACEBOOK_SECRET,
+		callbackURL: '/auth/facebook/callback'
+	},
+	function(accessToken, refreshToken, profile, done) {
+		facebook.use({ access_token: accessToken });
+
+		process.nextTick(function () {
+			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails[0].value).items;
+
+			console.log(profile);
+
+			if(!user){
+				const newUser = {
+					Id: uuid.v4(),
+					facebook: profile.id,
+					name: {
+						first: profile.name && profile.name.givenName,
+						last: profile.name && profile.name.familyName
+					},
+					local: {
+						email: profile.emails && profile.emails[0] && profile.emails[0].value
+					}
+				};
+
+				User.add(newUser, false).then(function success(){
+					User.deleteCached();
+					return done(null, newUser);
+				}, function error(err){
+					console.error(err);
+					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
+				});
+			} else if(!user.facebook){
+				user.facebook = profile.id;
+				user.name.first = user.name.first || profile.name && profile.name.givenName,
+				user.name.last = user.name.last || profile.name && profile.name.familyName,
+
+				User.update(user, false).then(() => {
+					User.deleteCached();
+					return done(null, user);
+				}, (err) => {
+					console.error(err);
+					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
+				});
+			} else {
+				return done(null, user);
+			}		
 		});
 	}));
 };

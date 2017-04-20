@@ -202,12 +202,16 @@ strategies.facebook = function(passport){
 						email: profile.emails && profile.emails[0] && profile.emails[0].value
 					},
 					gender: profile.gender,
-					profilePicture: profile.picture,
+					profilePicture: profile.photos && profile.photos[0] && profile.photos[0].value,
 				};
 
 				User.add(newUser, false).then(function success(){
-					User.deleteCached();
-					return done(null, newUser);
+					User.updateCache().then(() => {
+						return done(null, newUser);	
+					}, () => {
+						return done(null, newUser);
+					});
+					
 				}, function error(err){
 					console.error(err);
 					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));

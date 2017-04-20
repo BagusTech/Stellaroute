@@ -4,7 +4,7 @@ const LocalStrategy     = require('passport-local').Strategy;
 const InstagramStrategy = require('passport-instagram').Strategy;
 const instagram         = require('./instagram');
 const FacebookStrategy  = require('passport-facebook').Strategy;
-//const facebook         = require('./facebook');
+const facebook         = require('./facebook');
 const User              = require('../schemas/user');
 
 const strategies    = {};
@@ -179,13 +179,14 @@ strategies.facebook = function(passport){
 	passport.use(new FacebookStrategy({
 		clientID: process.env.FACEBOOK_ID,
 		clientSecret: process.env.FACEBOOK_SECRET,
-		callbackURL: '/auth/facebook/callback'
+		callbackURL: '/auth/facebook/callback',
+		profileFields: ['id', 'displayName', 'email', 'first_name', 'last_name', 'gender', 'link', 'public_key']
 	},
 	function(accessToken, refreshToken, profile, done) {
-		//facebook.use({ access_token: accessToken });
+		console.log(profile);
+		facebook.options({ access_token: accessToken });
 
 		process.nextTick(function () {
-			console.log(profile);
 			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails && profile.emails[0] && profile.emails[0].value).items;
 
 			if(!user){

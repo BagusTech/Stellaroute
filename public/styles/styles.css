@@ -4826,14 +4826,7 @@ button.close {
   -webkit-appearance: none;
 }
 .modal-open {
-  overflow: hidden;
-  display: block;
-  height: 100%;
-}
-.modal-open .site-header,
-.modal-open .site-body,
-.modal-open .site-footer {
-  display: block;
+  padding-right: 0 !important;
 }
 .modal {
   display: none;

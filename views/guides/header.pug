@@ -85,9 +85,6 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 			if isMe
 				button.btn.btn-default.f-R(data-toggle='modal', data-target='#GuideDetailsForm'): i.fa.fa-pencil(aria-hidden)
 			h1 #{guide.names.display} #[small.js-is-publshed-text(class= guide.isPublished ? 'hidden' : '') (unpublished)]
-				if guide.tagline
-					small.d-B.mt-Sm= guide.tagline
-
 				if isMe
 					.checkbox.d-Ib.hidden-xs.js-publish-form(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id)
 						label.publish-button(duck-type='bool', duck-field='isPublished')
@@ -96,3 +93,5 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 							span.hidden.js-publish-icon
 								|&nbsp;
 								i.fa.fa-spin.fa-spinner(aria-hidden='true')
+				if guide.tagline
+					small.d-B.mb-Md= guide.tagline

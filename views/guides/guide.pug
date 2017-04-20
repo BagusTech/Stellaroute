@@ -4,9 +4,9 @@ block content
 	.guide
 		include header.pug
 
-		.container
+		.container.guide--container
 			.row#GuideCards(duck-table= isMe && 'Guides', duck-function= isMe && 'update', duck-key= isMe && 'Id', duck-key-value= isMe && guide.Id)
-				.col-xs-12.col-sm-1.stickey.pull-right.z-1
+				.col-xs-12.col-sm-1.stickey.pull-right.z-1.guide--aside
 					if isMe
 						.card-admin.js-card-admin.btn-group-vertical.hidden-xs
 							button.btn.btn-default.js-expand-collapse(data-toggle="tooltip", data-container="body", data-placement="left" title="Expand / Collapse"): i.fa.fa-compress(aria-hidden='true')
@@ -15,33 +15,36 @@ block content
 					if guide.isPublished
 						.share42init.pt-Sm.ta-C.ta-L--sm
 
-				.col-xs-12.col-sm-4.col-lg-3.z-2.stickey.t-Sm
-					include guideNav.pug
+				.col-xs-12.col-sm-11.guide--content
+					.row
+						.col-xs-12.col-sm-4.col-lg-3.guide--nav
+							.stickey.t-Sm
+								include guideNav.pug
 
-				.col-xs-12.col-sm-7.col-lg-8
-					.js-nav-nodes.guide--cards
-						if isMe
-							.js-guide-cards(duck-field='cards', duck-type='array')
-								div
-									for _card, i in cards && cards.length ? cards : [{}]
-										- var card = _card.section || {}, offset = i;
+						.col-xs-12.col-sm-7.col-lg-8.guide--cards
+							.js-nav-nodes
+								if isMe
+									.js-guide-cards(duck-field='cards', duck-type='array')
+										div
+											for _card, i in cards && cards.length ? cards : [{}]
+												- var card = _card.section || {}, offset = i;
+												include cards/_card.pug
+
+												for _subCard, j in _card.subCards ? _card.subCards : []
+													- card = _subCard; offset = `${i}.${j}`
+													include cards/_card.pug
+										
+										.p-R
+											button.btn.btn-primary.guide-card--add-card(duck-button='add', class= startInEditMode ? '' : 'hidden')
+												i.fa.fa-plus(aria-hidden='true')
+								else
+									for _card, i in cards ? cards : [{}]
+										- var card = _card.section, offset = i;
 										include cards/_card.pug
 
-										for _subCard, j in _card.subCards ? _card.subCards : []
-											- card = _subCard; offset = `${i}.${j}`
-											include cards/_card.pug
-								
-								.p-R
-									button.btn.btn-primary.guide-card--add-card(duck-button='add', class= startInEditMode ? '' : 'hidden')
-										i.fa.fa-plus(aria-hidden='true')
-						else
-							for _card, i in cards ? cards : [{}]
-								- var card = _card.section, offset = i;
-								include cards/_card.pug
-
-								div
-									for _subCard, j in _card.subCards ? _card.subCards : []
-										- card = _subCard; offset = `${i}.${j}`
-										include cards/_card.pug
+										div
+											for _subCard, j in _card.subCards ? _card.subCards : []
+												- card = _subCard; offset = `${i}.${j}`
+												include cards/_card.pug
 
 	script(type='text/javascript' src='/js/pages/guide/guide.min.js')

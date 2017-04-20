@@ -5843,20 +5843,20 @@ button.close {
 .interior-nav {
   background: #4a4d50;
   color: white;
-  position: absolute;
+  position: relative;
   padding: 12px;
   margin-left: -12px;
-  width: 272px;
-  left: -272px;
+  width: 100%;
+  left: 0;
+  top: 0;
   -webkit-transition: left 0.27s ease-out;
   transition: left 0.27s ease-out;
   opacity: .95;
   z-index: 1;
   font-size: 1.2em;
-  top: 12px;
 }
 .interior-nav.interior-nav__active {
-  left: 0;
+  left: 100%;
 }
 .interior-nav.interior-nav__active .interior-nav--toggle {
   opacity: 1;
@@ -5882,6 +5882,10 @@ button.close {
   transition: -webkit-transform 0.1s ease-out;
   transition: transform 0.1s ease-out;
   transition: transform 0.1s ease-out, -webkit-transform 0.1s ease-out;
+}
+.interior-nav .interior-nav--nav.interior-nav--nav__scroll {
+  overflow-y: scroll;
+  max-height: 90vh;
 }
 .interior-nav .interior-nav--node,
 .interior-nav .interior-nav--node:link {
@@ -6907,6 +6911,35 @@ body {
   top: 50%;
   margin-top: -3px;
 }
+.guide--container {
+  padding-left: 0;
+  padding-right: 0;
+}
+.guide--content {
+  display: table;
+  padding: 0;
+  width: 160%;
+  left: -60%;
+}
+.guide--content > .row {
+  display: table-row;
+}
+.guide--content > .row > div {
+  display: table-cell;
+  float: none;
+}
+.guide--content > .row .guide--nav {
+  width: 40%;
+  padding: 0;
+  margin: 0 0 0 0;
+  top: 12px;
+  left: 10px;
+  z-index: 2;
+}
+.guide--content > .row .guide--cards {
+  width: 60%;
+  padding: 0 36px 0 36px;
+}
 .guide--cards {
   padding-top: 12px;
 }
@@ -7472,6 +7505,37 @@ fieldset[disabled] .guide .publish-button.focus {
   padding: 12px;
 }
 @media (min-width: 767px) {
+  .guide--container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .guide--content {
+    display: block;
+    padding: 0 12px;
+    width: 91.66666667%;
+    left: auto;
+  }
+  .guide--content > .row {
+    display: block;
+  }
+  .guide--content > .row > div {
+    display: block;
+    float: left;
+  }
+  .guide--content > .row .guide--nav {
+    width: 33.33%;
+    padding: 0 24px 0 12px;
+    margin: 0 0 0 0;
+    top: 12px;
+    left: auto;
+    z-index: 2;
+    position: -webkit-sticky;
+    position: sticky;
+  }
+  .guide--content > .row .guide--cards {
+    width: 66.67%;
+    padding: 0 12px;
+  }
   .guide .share42init span {
     text-align: center;
   }

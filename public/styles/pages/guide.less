@@ -1,4 +1,39 @@
-#GuideDetailsForm {
+.guide--container {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.guide--content {
+	display: table;
+	padding: 0;
+	width: 160%;
+	left: -60%;
+
+	> .row {
+		display: table-row;
+
+		> div {
+			display: table-cell;
+			float: none;
+		}
+
+		.guide--nav {
+			width: 40%;
+			padding: 0;
+			margin: 0 0 0 0;
+			top: @gw-Sm;
+			left: 10px;
+			z-index: 2;
+		}
+		.guide--cards {
+			width: 60%;
+			padding: 0 @gw-Lg 0 @gw-Lg;
+		}
+	}
+}
+
+.guide--aside {
+
 }
 
 .guide--cards {
@@ -417,6 +452,42 @@
 			
 
 @media(min-width: @screen-Sm) {
+	.guide--container {
+		padding-left: @gw-Md;
+		padding-right: @gw-Md;
+	}
+
+	.guide--content {
+		display: block;
+		padding: 0 @gw-Sm;
+		width: 91.66666667%;
+		left: auto;
+
+		> .row {
+			display: block;
+
+			> div {
+				display: block;
+				float: left;
+			}
+
+			.guide--nav {
+				width: 33.33%;
+				padding: 0 @gw-Md 0 @gw-Sm;
+				margin: 0 0 0 0;
+				top: @gw-Sm;
+				left: auto;
+				z-index: 2;
+				position: sticky;
+			}
+			.guide--cards {
+				width: 66.67%;
+				padding: 0 @gw-Sm;
+			}
+		}
+	}
+
+
 	.guide {
 		.share42init span {text-align: center;}
 			.share42-item {

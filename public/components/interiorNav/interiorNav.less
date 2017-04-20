@@ -1,19 +1,19 @@
 .interior-nav {
 	background: @text-color;
 	color: white;
-	position: absolute;
+	position: relative;
 	padding: @gw-Sm;
 	margin-left: -@gw-Sm;
-	width: 272px;
-	left: -272px;
+	width: 100%;
+	left: 0;
+	top: 0;
 	transition: left .27s ease-out;
 	opacity: .95;
 	z-index: 1;
 	font-size: 1.2em;
-	top: @gw-Sm;
 
 	&.interior-nav__active {
-		left: 0;
+		left: 100%;
 		.interior-nav--toggle {
 			opacity: 1;
 		}
@@ -38,6 +38,11 @@
 		i {
 			transition: transform .1s ease-out;
 		}
+	}
+
+	.interior-nav--nav.interior-nav--nav__scroll {
+		overflow-y: scroll;
+		max-height: 90vh;
 	}
 
 	.interior-nav--node,

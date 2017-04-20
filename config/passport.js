@@ -2,8 +2,9 @@ const uuid              = require('uuid');
 const cache             = require('../modules/cache');
 const LocalStrategy     = require('passport-local').Strategy;
 const InstagramStrategy = require('passport-instagram').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 const instagram         = require('./instagram');
+const FacebookStrategy  = require('passport-facebook').Strategy;
+//const facebook         = require('./facebook');
 const User              = require('../schemas/user');
 
 const strategies    = {};
@@ -181,7 +182,7 @@ strategies.facebook = function(passport){
 		callbackURL: '/auth/facebook/callback'
 	},
 	function(accessToken, refreshToken, profile, done) {
-		facebook.use({ access_token: accessToken });
+		//facebook.use({ access_token: accessToken });
 
 		process.nextTick(function () {
 			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails[0].value).items;

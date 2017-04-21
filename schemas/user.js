@@ -28,6 +28,7 @@ const User = Duck({
 		tagline: String,
 		description: String,
 		isDeleted: Boolean,
+		isNewUser: Boolean,
 	},
 	HASH: 'Id',
 	HASHType: 'S',

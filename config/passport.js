@@ -61,6 +61,7 @@ strategies.local = function(passport){
 					last: req.body['name.last']
 				},
 				created: new Date(),
+				isNewUser: true
 			}
 
 			newUser.username = req.body.username || newUser.Id;
@@ -140,6 +141,8 @@ strategies.instagram = function(passport){
 					name: {
 						first: (profile.name.givenName ? profile.name.givenName : profile.displayName),
 					},
+					created: new Date(),
+					isNewUser: true
 				};
 
 				if(profile.name.familyName){
@@ -184,7 +187,7 @@ strategies.facebook = function(passport){
 	},
 	function(accessToken, refreshToken, profile, done) {
 		console.log(profile);
-		facebook.options({ access_token: accessToken });
+		//facebook.options({ access_token: accessToken });
 
 		process.nextTick(function () {
 			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails && profile.emails[0] && profile.emails[0].value).items;
@@ -203,6 +206,8 @@ strategies.facebook = function(passport){
 					},
 					gender: profile.gender,
 					profilePicture: profile.photos && profile.photos[0] && profile.photos[0].value,
+					created: new Date(),
+					isNewUser: true
 				};
 
 				User.add(newUser, false).then(function success(){
@@ -222,7 +227,7 @@ strategies.facebook = function(passport){
 				user.name.last = user.name.last || profile.name && profile.name.familyName,
 				user.gender = profile.gender;
 				user.username = user.username || profile.displayName.trim().replace(/\W+/g, '-');
-				user.profilePicture = user.profilePicture || profile.picture;
+				user.profilePicture = profile.picture;
 
 				User.update(user, false).then(() => {
 					User.deleteCached();
@@ -232,6 +237,7 @@ strategies.facebook = function(passport){
 					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
 				});
 			} else {
+				user.profilePicture = profile.picture;
 				return done(null, user);
 			}		
 		});

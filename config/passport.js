@@ -60,7 +60,7 @@ strategies.local = function(passport){
 					first: req.body['name.first'],
 					last: req.body['name.last']
 				},
-				created: new Date(),
+				created: String(new Date()),
 				isNewUser: true
 			}
 
@@ -141,7 +141,7 @@ strategies.instagram = function(passport){
 					name: {
 						first: (profile.name.givenName ? profile.name.givenName : profile.displayName),
 					},
-					created: new Date(),
+					created: String(new Date()),
 					isNewUser: true
 				};
 

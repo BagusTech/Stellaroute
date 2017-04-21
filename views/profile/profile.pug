@@ -1,5 +1,8 @@
 extends ../layout.pug
 
+append options
+	-var guidesToShow = guides.filter((_guide) => isMe || _guide.isPublished);
+
 block content
 	if user && isMe
 		#NewGuide.modal.fade(tabindex='-1', role='dialog')
@@ -81,24 +84,34 @@ block content
 							button.hidden-xs.btn-primary.p-A.b-Sm(data-toggle='modal', data-target='#NewGuide') New Guide
 					.row
 						.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
-							.visible-xs
-								button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filter
-							#GuideFilter.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
-								div(data-filter-section='country')
-									h2.mt-0.pt-Sm.ta-R--sm Country
-									for country in countries
-										.checkbox.checkbox-right
-											label
-												span.hidden-xs= country
-												input(type='checkbox', value= country)
-												span.visible-xs= country
+							if guidesToShow.length
+								.visible-xs
+									button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filter
+								#GuideFilter.hidden-xs.bg-W.bg-N--sm.p-Sm.p-N--sm(data-toggle='hidden-xs')
+									div(data-filter-section='country')
+										h2.mt-0.pt-Sm.ta-R--sm Country
+										for country in countries
+											.checkbox.checkbox-right
+												label
+													span.hidden-xs= country
+													input(type='checkbox', value= country)
+													span.visible-xs= country
 
 						.col-xs-12.col-sm-8.col-md-9.col-lg-10
-							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-								for guide in guides ? guides.filter((_guide) => isMe || _guide.isPublished) : []
-									.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
-										a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
-											+card(guide.cardImage, guide.names.display)
+							if guidesToShow.length
+								.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+									for guide in guidesToShow
+										.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
+											a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+												+card(guide.cardImage, guide.names.display)
+							else
+								if isMe
+									.w-100.w-33--sm.w-25--md
+										button.btn.btn-default.p-Xl(style='white-space: normal;', data-toggle='modal', data-target='#NewGuide')
+											span.d-B.ta-C
+												i.fa.fa-plus.fa-5x(aria-hidden='true')
+											span.fs-18.fw-B Click here to make your first guide!
+
 								else
 									p.lead No guides created yet!
 				#MyWishlist.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')

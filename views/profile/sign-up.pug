@@ -1,0 +1,56 @@
+extends ../layout.pug
+
+append options
+	- headerBackground = 'none';
+	- logoColor = 'white';
+	- headerClasses = 'home-page-header';
+	- showHeaderSearch = false;
+
+block content
+	.mt-NegXl.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
+		.container.mt-Xl
+			.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+				.content-card.mt-Md.mt-Lg--sm
+					h2.content-card--header Sign Up
+					form.login(method='POST', action='/signup')
+						input(type='hidden', name='_csrf', value= csrfToken)
+						.col-xs-12.col-sm-6
+							.form-group
+								label First Name
+									input.form-control(name='name.first', type='text', placeholder='John')
+						.col-xs-12.col-sm-6
+							.form-group
+								label Last Name
+									input.form-control(name='name.last', type='text', placeholder='Doe')
+						.col-xs-12
+							.form-group
+								label Username
+									small &nbsp; (must be unique)
+									input.form-control.js-signup-username(name='username', type='text', placeholder='gl0b3tr0773r', required)
+
+							.form-group
+								label Email
+									small &nbsp; (must be unique)
+									input.form-control.js-signup-email(name='local.email', type='email', placeholder='joe@gmail.com', required)
+
+							.form-group
+								label Passphrase
+									small &nbsp; (passphrase must be 8+ characters)
+									input.form-control.js-signup-pass(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required)
+							.form-group
+								label Repeat Passphrase
+									input.form-control.js-signup-pass-repeat(placeholder='StellarouteIsTheBest!', required, type='password')
+
+						.col-xs-12.mb-Sm
+							input.btn.btn-lg.bg-Gr.fc-G__ltst(type='submit', value='Sign Up')
+
+							.text-wings.fc-G.mtb-Sm
+								hr
+								span or
+								hr
+
+							a.btn.btn-lg.bg-Bl__fb.fc-W.mt-Xs(href="/auth/facebook") #[i.fa.fa-facebook-official.mr-Xs(aria-hidden='true')] Continue with Facebook
+
+	if !loginScriptLoaded
+		script(src='/controls/login/login.min.js', type='text/javascript')
+		- loginScriptLoaded = true;

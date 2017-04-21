@@ -1,5 +1,4 @@
 if (!user)
-	- var loginScriptLoaded = false;
 	.login-control
 		//button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
 		button.btn.btn-default.bw-N(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
@@ -14,10 +13,9 @@ if (!user)
 				form.modal-body.login(method='POST', action='/auth/local')
 					input(type='hidden', name='_csrf', value= csrfToken)
 					.col-xs-12
-						a.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(href="/auth/facebook") Log In with Facebook
-						//button.btn.btn-default.btn-lg(type='button') Log In with Google
-					//.col-xs-12.ptb-Md.mb-Xs
-						.text-wings.fc-G.fw-B
+						a.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(href="/auth/facebook") #[i.fa.fa-facebook-official.mr-Xs(aria-hidden='true')] Continue with Facebook
+					.col-xs-12
+						.text-wings.fc-G.mb-Sm
 							hr
 							span or
 							hr
@@ -33,14 +31,19 @@ if (!user)
 							input#Passphrase.form-control.input-lg.mt-0(name='password', type='password', placeholder='Password')
 						p.help-block.ta-R
 							a.fs-12(href='/reset-password') Forgot Password
+							| &nbsp;|&nbsp;
+							button.fs-12.p-0.bw-N.bg-N.fw-B.fc-Purp(type='button', data-dismiss='modal', data-toggle='modal', data-target='#SignupModal') Sign Up
+							//a.fs-12(href='/sign-up') Sign Up
 
 					//.col-xs-8
 						.checkbox
 							label.fc-G__dk
 								input(type='checkbox', name='remember')
 								| Remember me
-					.col-xs-12
+					.col-xs-12.col-sm-8
 						input.btn.btn-lg.bg-Gr.fc-G__ltst(type='submit', value='Log In')
+					.col-xs-12.col-sm-4
+						input.btn.btn-lg.btn-default(type='button', data-dismiss='modal', data-toggle='modal', data-target='#SignupModal', value='Sign Up') 
 
 				//.modal-footer
 					.col-xs-12.col-sm-6.col-md-8
@@ -51,45 +54,50 @@ if (!user)
 			form.modal-content(method='POST', action='/signup')
 				input(type='hidden', name='_csrf', value= csrfToken)
 				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
+					h4.mt-0.mb-0.pl-Sm.fc-G Sign Up
+					button.close.p-A.t-Xs.r-Xs(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-					h4.modal-title#SignupModalLabel Create an Account
-				.modal-body
+				.modal-body.fc-B
 					.col-xs-12.col-sm-6
 						.form-group
-							label(for='First') First Name
-								input.form-control#First(name='name.first', type='text', placeholder='John')
+							label First Name
+								input.form-control(name='name.first', type='text', placeholder='John')
 					.col-xs-12.col-sm-6
 						.form-group
-							label(for='Last') Last Name
-								input.form-control#Last(name='name.last', type='text', placeholder='Doe')
+							label Last Name
+								input.form-control(name='name.last', type='text', placeholder='Doe')
 					.col-xs-12
 						.form-group
-							label(for='Username') Username
+							label Username
 								small &nbsp; (must be unique)
-								input.form-control#Username(name='username', type='text', placeholder='gl0b3tr0773r')
+								input.form-control.js-signup-username(name='username', type='text', placeholder='gl0b3tr0773r', required)
 
 						.form-group
-							label(for='SignupEmail') Email
+							label Email
 								small &nbsp; (must be unique)
-								input.form-control#SignupEmail(name='local.email', type='email', placeholder='joe@gmail.com', required)
+								input.form-control.js-signup-email(name='local.email', type='email', placeholder='joe@gmail.com', required)
 
 						.form-group
-							label(for='SignupPassphrase') Passphrase
+							label Passphrase
 								small &nbsp; (passphrase must be 8+ characters)
-								input.form-control#SignupPassphrase(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required)
+								input.form-control.js-signup-pass(name='local.password', type='password', placeholder='StellarouteIsTheBest!', required)
 						.form-group
-							label(for='SignupPassphraseRepeat') Repeat Passphrase
-								input.form-control#SignupPassphraseRepeat(placeholder='StellarouteIsTheBest!', required, type='password')
+							label Repeat Passphrase
+								input.form-control.js-signup-pass-repeat(placeholder='StellarouteIsTheBest!', required, type='password')
+
+						.text-wings.fc-G.mb-Sm
+							hr
+							span or
+							hr
+
+						a.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm(href="/auth/facebook") #[i.fa.fa-facebook-official.mr-Xs(aria-hidden='true')] Continue with Facebook
 
 				.modal-footer.plr-Md
-					.row
-						.col-xs-12.col-sm-6
-							p Already have an account?
-								button.btn-default.ml-Sm(type='button', data-dismiss='modal', data-toggle='modal', data-target='#LoginModal') Log In
-						.col-xs-12.col-sm-6.ta-R--sm
-							button.btn.btn-default(type='button', data-dismiss='modal') Close
+					.row.ta-L
+						.col-xs-12.col-sm-6.ta-R--sm.f-R
 							input.btn.btn-primary(type='submit', value='Create')
+						.col-xs-12.col-sm-6
+							button.btn-default(type='button', data-dismiss='modal', data-toggle='modal', data-target='#LoginModal') Back to Login
 
 	if !loginScriptLoaded
 		script(src='/controls/login/login.min.js', type='text/javascript')

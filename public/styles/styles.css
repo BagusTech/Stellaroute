@@ -6531,6 +6531,7 @@ body {
   table-layout: fixed;
   width: 100%;
   background: #e7e7e7;
+  padding-right: 0 !important;
 }
 .site-body {
   display: table-row;
@@ -6566,9 +6567,6 @@ body {
 .global-header nav.hidden-xs {
   text-align: center;
   width: 100%;
-}
-.modal-open .global-header.home-page-header {
-  padding-right: 17px;
 }
 .modal-open .global-header.home-page-header #SiteLogo,
 .modal-open .global-header.home-page-header .login-control {

@@ -25,34 +25,43 @@ void function initLogin($, duck) {
 	}	
 
 	$(() => {
-		$('#SignupEmail, #Username').prop('debounceValidate', 1000).prop('validateFunc', () => validateField);
+		const $SignupPassphrase = $('.js-signup-pass');
+		const $SignupPassphraseRepeat = $('.js-signup-pass-repeat');
 
-		$('#SignupPassphrase').prop('validateFunc', () => ($input) => {
-			const val = $input.val();
+		$('.js-signup-email, .js-signup-username').prop('debounceValidate', 1000).prop('validateFunc', () => validateField);
 
-			if (val.length > 7) {
-				$input.trigger('passedValidation');
-			} else {
-				$input.trigger('failedValidation');
-			}
+		$SignupPassphrase.each((i, item) => {
+			const $item = $(item);
+			$item.prop('validateFunc', () => () => {
+				const val = $item.val();
 
-			$('#SignupPassphraseRepeat').trigger('validate');
+				if (val.length > 7) {
+					$item.trigger('passedValidation');
+				} else {
+					$item.trigger('failedValidation');
+				}
+
+				$SignupPassphraseRepeat.trigger('validate');
+			});
 		});
 
-		$('#SignupPassphraseRepeat').prop('validateFunc', () => ($input) => {
-			const $siblingInput = $('#SignupPassphrase');
-			const val1 = $input.val();
-			const val2 = $siblingInput.val();
+		$SignupPassphraseRepeat.each((i, item) => {
+			const $item = $(item);
 
-			if(val1 && val2) {
-				if(val1 === val2) {
-					$input.trigger('passedValidation');
-				} else {
-					$input.trigger('failedValidation');
+			$item.prop('validateFunc', () => () => {
+				const val1 = $item.val();
+				const val2 = $item.closest('form').find('.js-signup-pass').val();
+
+				if(val1 && val2) {
+					if(val1 === val2) {
+						$item.trigger('passedValidation');
+					} else {
+						$item.trigger('failedValidation');
+					}
 				}
-			}
 
-			$siblingInput.trigger('validate');
+				$SignupPassphrase.trigger('validate');
+			});
 		});
 	});
 }(jQuery.noConflict(), duck);

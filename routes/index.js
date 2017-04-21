@@ -245,6 +245,18 @@ router.get('/login', (req, res, next) => {
 	}
 });
 
+router.get('/sign-up', (req, res, next) => {
+	if(!req.user) {
+		res.render('profile/sign-up', {
+			title: 'StellaRoute: Login',
+			description: 'Sign up for a stellaroute account.',
+		});
+	} else {
+		res.redirect(`/${req.user.username || req.user.Id}`)
+	}
+});
+
+
 router.get('/profile', (req, res, next) => {
 	const user = req.user;
 

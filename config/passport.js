@@ -193,6 +193,7 @@ strategies.facebook = function(passport){
 			const user = User.findOne('facebook', profile.id).items || User.findOne('local.email', profile.emails && profile.emails[0] && profile.emails[0].value).items;
 
 			if(!user){
+				console.log('1')
 				const newUser = {
 					Id: uuid.v4(),
 					facebook: profile.id,
@@ -212,6 +213,7 @@ strategies.facebook = function(passport){
 
 				User.add(newUser, false).then(function success(){
 					User.updateCache().then(() => {
+						console.log(newUser)
 						return done(null, newUser);	
 					}, () => {
 						return done(null, newUser);
@@ -222,6 +224,7 @@ strategies.facebook = function(passport){
 					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
 				});
 			} else if(!user.facebook){
+				console.log('2')
 				user.facebook = profile.id;
 				user.name.first = user.name.first || profile.name && profile.name.givenName,
 				user.name.last = user.name.last || profile.name && profile.name.familyName,
@@ -230,14 +233,20 @@ strategies.facebook = function(passport){
 				user.profilePicture = profile.picture;
 
 				User.update(user, false).then(() => {
-					User.deleteCached();
-					return done(null, user);
+					User.updateCache().then(() => {
+						console.log(user)
+						return done(null, User);	
+					}, () => {
+						return done(null, User);
+					});
 				}, (err) => {
 					console.error(err);
 					return done(null, false, req.flash('error', 'Something went wrong, please try again.'));
 				});
 			} else {
+				console.log('3')
 				user.profilePicture = profile.picture;
+				console.log(user)
 				return done(null, user);
 			}		
 		});

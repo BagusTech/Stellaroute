@@ -206,7 +206,7 @@ strategies.facebook = function(passport){
 					},
 					gender: profile.gender,
 					profilePicture: profile.photos && profile.photos[0] && profile.photos[0].value,
-					created: new Date(),
+					created: String(new Date()),
 					isNewUser: true
 				};
 

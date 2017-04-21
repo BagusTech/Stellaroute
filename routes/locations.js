@@ -26,9 +26,18 @@ router.get('/:user', (req, res, next) => {
 
 	const isMe = req.user && req.user.Id === user.Id;
 	const guides = Guide.find('author', user.Id).join('countries', Country.cached(), 'Id', 'names.display').items;
-	const countries = ['Unknown'];
+	const countries = [];
+	const favorites = user.favorites && user.favorites.map((favorite) => {
+		const guide = Guide.findOne('Id', favorite.guide).items;
+		//const card = guide.cards.find((_card) => {});
+
+		return guide
+	});
+	let hasUnknown = false;
+
 	guides.forEach((guide) => {
 		if(!guide.countriesDisplay) {
+			hasUnknown = true;
 			return;
 		}
 
@@ -41,20 +50,36 @@ router.get('/:user', (req, res, next) => {
 		});
 	});
 
+	if (hasUnknown) {
+		countries.splice(0, 0, 'Unknown')
+	}
+
 	res.locals.userProfile = user;
 	res.locals.isMe = isMe;
 
 	res.render('profile/profile', {
 		title: `Stellaroute: ${isMe ? 'Youre profile' : user.username+"'s Profile"}`,
 		description: 'Stellaroute: It\'s a pretty nice place to see other peoples things and edit your own.',
+		favorites,
 		guides,
 		countries
 	});
 });
 
 router.get('/:user/:guide', (req, res, next) => {
-	const user = User.findOne('username', req.params.user).items || User.findOne('Id', req.params.user).items;
-	const guide = Guide.findOne('url', req.params.guide).items;
+	let user = User.findOne('username', req.params.user).items;
+	const userById = User.findOne('Id', req.params.user).items;
+
+	if(!user && userById) {
+		if(userById.username) {
+			res.redirect(`/${userById.username}/${req.params.guide}`);
+			return;
+		}
+
+		user = userById;
+	}
+
+	const guide = Guide.find('url', req.params.guide).findOne('author', user && user.Id).items;
 
 	if(!user || !guide) {
 		next();

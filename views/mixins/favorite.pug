@@ -1,0 +1,12 @@
+mixin favorite(guide, card)
+	if user
+		- user.favorites = user.favorites || [];
+		- isFavorite = !!user.favorites.filter((favorite) => favorite.guide === guide && favorite.card === card).length;
+		button.js-favorite-button.favorite-button(data-guide=guide, data-card=card, data-user= user.Id, type='submit', isFavorite=String(isFavorite), class= isFavorite ? (card ? 'favorite-button__icon favorite-button__active' : 'favorite-button__button favorite-button__active') : (card ? 'favorite-button__icon' : 'favorite-button__button'))
+			if card
+				i.fa.fa-star(aria-hidden=true, class= isFavorite ? 'is-favorite' : '')
+				span.sr-only Favorite This!
+			else
+				| This Guide#[i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')]
+
+script(type='text/javascript', src='/controls/favorite/favorite.min.js')

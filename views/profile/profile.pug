@@ -2,6 +2,7 @@ extends ../layout.pug
 
 append options
 	-var guidesToShow = guides.filter((_guide) => isMe || _guide.isPublished);
+	-userProfile.favorites = userProfile.favorites || [];
 
 block content
 	if user && isMe
@@ -58,21 +59,21 @@ block content
 		.sub-header.js-banner-image(style=`background: rgba(0, 0, 0, 0) url("${ userProfile.bannerImage ? getImagePath(userProfile.bannerImage, 'large') : '/images/profile_header_image_mirrored.jpg'}") no-repeat scroll center 57% / cover;`)
 			.container.pb-0
 				.row.pt-Sm.pt-Md--md.pt-Lg--lg
-					.col-xs-2.col-sm-3.col-md-2.col-lg-1
+					.col-xs-4.col-sm-3.col-md-2.col-lg-1
 						img.js-profile-pic.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
-					.col-xs-10.col-sm-9.col-md-10.col-lg-11
+					.col-xs-8.col-sm-9.col-md-10.col-lg-11
 						h1= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
 
 						if userProfile.tagline
-							p.fc-W.bg-Dkr.p-Sm.d-Ib= userProfile.tagline
+							p.fc-W.bg-Dkr.p-Sm.d-Ib.hidden-xs= userProfile.tagline
 
-						nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
-							a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') Guides
-							a.tabbed-nav--tab(href='#MyWishlist', role='tab', aria-expanded='false') Wishlist
-							if wysiwygHasData(userProfile.description)
-								a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
-							if isMe
-								a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
+				nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
+					a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') My Guides
+					a.tabbed-nav--tab(href='#MyFavorites', role='tab', aria-expanded='false') Favorites
+					if wysiwygHasData(userProfile.description)
+						a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
+					if isMe
+						a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
 
 		.container
 			.mb-Sm.ta-R
@@ -96,12 +97,14 @@ block content
 													span.hidden-xs= country
 													input(type='checkbox', value= country)
 													span.visible-xs= country
-
 						.col-xs-12.col-sm-8.col-md-9.col-lg-10
 							if guidesToShow.length
 								.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 									for guide in guidesToShow
 										.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
+											if user && user.favorites && user.favorites.filter((favorite) => favorite.guide === guide.Id).length
+												.p-A.t-Xs.r-Xs.z-1
+													i.fa.fa-star.is-favorite(aria-hidden=true)
 											a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
 												+card(guide.cardImage, guide.names.display)
 							else
@@ -114,16 +117,15 @@ block content
 
 								else
 									p.lead No guides created yet!
-				#MyWishlist.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-					p.lead Wishlist coming soon!
-					//	if favorites && favorites.length
-							.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-								for guide in favorites ? favorites : []
-									.masonry--item
-										a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
-											+card(guide.cardImage, guide.names.display)
-						else
-							p.lead Nothing on the wishlist yet!
+				#MyFavorites.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					if favorites && favorites.length
+						.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
+							for guide in favorites ? favorites : []
+								.masonry--item
+									a(href=`/${guide.author}/${guide.url}`)
+										+card(guide.cardImage, guide.names.display)
+					else
+						p.lead Nothing favorited yet!
 				if wysiwygHasData(userProfile.description)
 					#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 						.panel.panel-default

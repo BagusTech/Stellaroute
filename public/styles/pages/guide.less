@@ -1,3 +1,55 @@
+.favorite-button {
+	&.favorite-button__button {
+		.btn;
+		.btn-primary;
+
+		width: 100%;
+
+		&:before {
+			content: 'Favorite ';
+		}
+
+		&.favorite-button__active {
+			.btn-default;
+
+			&:before {
+				content: 'Un-Favorite ';
+			}
+		}
+	}
+
+	&.favorite-button__icon {
+		background: none;
+		border: none;
+		padding: 0;
+	}
+
+	.fa.fa-star {
+		color: @grey-lighter;
+		text-shadow: 1px 1px 2px #777;
+		transition: color .17s;
+	}
+
+	&:hover {
+		.fa.fa-star {
+			color: gold;
+		}
+	}
+
+	&.favorite-button__active {
+		.is-favorite {
+			color: yellow;
+		}
+	}
+}
+
+
+
+.is-favorite {
+	color: yellow;
+	text-shadow: 1px 1px 2px #777;
+}
+
 .guide--container {
 	padding-left: 0;
 	padding-right: 0;

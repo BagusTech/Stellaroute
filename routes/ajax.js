@@ -23,7 +23,7 @@ const router       = express.Router();
 		const items = findOne ? table.findOne(field, value).items : table.find(field, value).items;
 
 		res.send(items.length.toString());
-	});
+	});									
 
 	router.get('/get/:table', (req, res) => {
 		const user = req.user;
@@ -135,6 +135,45 @@ const router       = express.Router();
 		table.delete(key)
 		.then(() => {
 			table.updateCache().then(() => {
+				res.send('success');
+			});
+		}, (err) => {
+			console.error(err);
+			res.status(500).send(err);
+		});
+	});
+
+	router.post('/favorite', (req, res) => {
+		const params = req.body;
+		const userId = params.user;
+		const User = pickTable('Users');
+		const user = User.findOne('Id', userId).items;
+
+		if(!user) {
+			res.status(404).send('User Not Found');
+		}
+
+		user.favorites = user.favorites || [];
+
+		const guide = params.guide;
+		const card = params.card;
+		const addFavorite = params.addFavorite;
+
+		if(addFavorite) {
+			user.favorites.push({guide, card});
+		} else {
+			for(let i = 0, length = user.favorites.length; i < length; i++) {
+				const favorite = user.favorites[i];
+
+				if(favorite.guide === guide && favorite.card === card) {
+					user.favorites.splice(i, 1);
+					break;
+				}
+			}
+		}
+
+		User.update(user).then(() => {
+			User.updateCache().then(() => {
 				res.send('success');
 			});
 		}, (err) => {

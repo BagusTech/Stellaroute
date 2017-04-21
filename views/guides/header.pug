@@ -78,7 +78,7 @@ if isMe
 
 div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
-		.container.ptb-0
+		.container.ptb-0.p-R
 			ol.breadcrumb
 				li.active Created by: #[a(href= `/${author.username || author.Id}`)= author.username || 'unknown']
 
@@ -95,3 +95,7 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 								i.fa.fa-spin.fa-spinner(aria-hidden='true')
 				if guide.tagline
 					small.d-B.mb-Md= guide.tagline
+
+			if !isMe
+				.mb-Sm.p-A--sm.m-0--sm.r-Md.b-Md
+					+favorite(guide.Id)

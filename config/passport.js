@@ -207,7 +207,8 @@ strategies.facebook = function(passport){
 					gender: profile.gender,
 					profilePicture: profile.photos && profile.photos[0] && profile.photos[0].value,
 					created: String(new Date()),
-					isNewUser: true
+					isNewUser: true,
+					roles: ['beta-general']
 				};
 
 				User.add(newUser, false).then(function success(){

@@ -33,9 +33,9 @@ void function initFavorite($, duck) {
 				$button.attr('isFavorite', !isFavorite)
 						.toggleClass('favorite-button__active');
 			},
-			error: (err) => {
+			error: () => {
 				$icon.addClass('hidden');
-				button.text('Something went wrong, please refresh the page and try again');
+				$button.text('Something went wrong, please refresh the page and try again');
 			},
 		})
 	}
@@ -51,10 +51,7 @@ void function initFavorite($, duck) {
 
 	$(() => {
 		const $button = $('.js-favorite-button');
-		const $icon = $button.find('.fa-spinner')
-
-		const isFavorite = $button.attr('isFavorite') === 'true';
-		console.log(isFavorite);
+		const $icon = $button.find('.fa-spinner');
 
 		$button.off('click', triggerFavorite).on('click', {button: $button}, triggerFavorite);
 		$button.off('duck.favorite', favorite).on('duck.favorite', {button: $button, icon: $icon}, favorite)

@@ -1,9 +1,15 @@
 const uuid = require('uuid');
+const app = require('../app');
 const isAuthorized = require('../modules/isAuthorized');
 const getNested = require('../modules/getNested');
 const sortBy = require('../modules/sortBy');
 
 function globalPugVariablesAndFunctions(req, res, next){
+	// res.locals.env is set in app.js
+	if(res.locals.env === 'production') {
+        res.locals.canonicalUrl = `https://www.${req.headers.host}${req._parsedOriginalUrl.pathname}`;
+    }
+
 	res.locals.url = req.originalUrl;
 	res.locals.title = 'stellaroute';
 	res.locals.description = 'stellaroute: helping you plan spontinaity';

@@ -315,7 +315,7 @@ router.get('/auth/instagram', passport.authenticate('instagram'));
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get('/auth/instagram/callback', passport.authenticate('instagram', {
-	successRedirect: '/',
+	successRedirect: '/profile',
 	failureRedirect: '/',
 }));
 
@@ -332,7 +332,7 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-	successRedirect: '/',
+	successRedirect: '/profile',
 	failureRedirect: '/',
 }));
 

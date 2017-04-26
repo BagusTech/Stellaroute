@@ -145,10 +145,10 @@ void function initializeAccordions($) {
         $wrapper.find('[role="tabpanel"][aria-hidden="false"]').css({'display': 'block' });
         $wrapper.find('[role="tabpanel"][aria-hidden="true"]').css({'display': 'none' });
 
-        $tabs.on('tab-change', {wrapper: $wrapper, alwaysShowOne, allowMultiple, animationSpeed}, changeTab);
+        $tabs.off('tab-change', changeTab).on('tab-change', {wrapper: $wrapper, alwaysShowOne, allowMultiple, animationSpeed}, changeTab);
 
         // on click of tab, trigger the tab change
-        $tabs.click(initTabChange);
+        $tabs.off('click', initTabChange).on('click', initTabChange);
 
         // if there isn't a page anchor, end here
         if (!pageAnchor && !alwaysShowOne) {

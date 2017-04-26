@@ -3,6 +3,8 @@
 void function initCardStyle($){
 	'use strict';
 
+	const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
+
 	function expandeCollapseAll(e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -188,10 +190,152 @@ void function initCardStyle($){
 	$.fn.guideCard = function init() {
 		return this.each((i, wrapper) => {
 			initCard(wrapper)
-		})
+		})	
+	}
+
+	function formatCardsForNav(_cards) {
+		let endSubCards = _cards.length
+		const cards = _cards.map((_card, cardIndex, arr) => {
+			const obj = {};
+
+			obj.section = _card
+			obj.subCards = [];
+
+			if(obj.section.style !== 'section') {
+				return obj;
+			}
+
+			const startIndex = cardIndex;
+			let endIndex = _cards.length;
+			obj.subCards = arr.filter((_subCard, subCardIndex) => {
+				if(subCardIndex < cardIndex || subCardIndex >= endSubCards) {
+					return false;
+				}
+
+				if(_subCard.style === 'section') {
+					if(cardIndex !== subCardIndex) {
+						endSubCards = subCardIndex;
+						endIndex = subCardIndex;
+					}
+					return false;
+				}
+
+				return true;
+			});
+
+			_cards.splice(startIndex, (endIndex - startIndex - 1));
+
+			endSubCards = _cards.length;
+			return obj;
+		}).filter((_) => _);
+
+		return cards;
+	}
+
+	function updateBody(e, guide) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const $body = e.data.body;
+		const cards = guide.cards;
+		const locals = {
+			isMe: true,
+			cards: formatCardsForNav(cards),
+			guide: {
+				isPublished: $('.js-is-publshed-text').hasClass('hidden'),
+			},
+		};
+
+		$.ajax({
+			url: '/renderPug',
+			data: {file: '../views/guides/body.pug', locals},
+			success: (data) => {
+				const $newBody = $(data);
+				
+				$body.html($newBody);
+				$body.trigger('guide.init.body');
+			},
+		});
+	}
+
+	function initGuideBody(e) {
+		e.stopPropagation();
+
+		const $body = e.data.body;
+		const $cardsForm = $body;
+		const $cardsWrapper = $('.js-guide-cards');
+		const $expandeCollapse = $('.js-expand-collapse');
+		const $expandeCollapseIcon = $expandeCollapse.find('.fa');
+		const $previewCards = $('.js-preview-cards');
+		const $previewCardsIcon = $previewCards.find('.fa');
+		const $addCard = $('.js-add-card-start');
+		const $addCardIcon = $addCard.find('.fa');
+
+		$body.find('[data-function*="interiorNav"]').interiorNav();
+		$body.find('[data-function*="accordion"]').makeAccordion();
+		$body.find('[duck-table]').add($body).duckForm();
+		$body.find('[data-function*="sort"]').sortable();
+		$body.find('[data-function*="toggle"]').makeToggle();
+		$body.find('[data-function*="form"], [duck-table], form').validateForm();
+
+		$('.js-card').guideCard();
+
+		$.ajax({
+			url: '/renderPug',
+			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big'}, startInEditMode: true}},
+			success: (data) => {
+				$cardsWrapper.prop('ArrayItemTemplate', $(data));
+			},
+		});
+
+		$cardsForm.on('guide.update.body', {body: $body}, updateBody)
+
+		$cardsForm.on('duck.form.submitted', (evt, item) => {
+			evt.stopPropagation();
+			
+			$cardsForm.trigger('guide.update.body', [item]);
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', true);
+		});
+
+		$cardsForm.on('duck.form.success', (evt) => {
+			evt.stopPropagation();
+			
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
+			$cardsWrapper.find('.js-card').trigger('exitEditMode');
+			$previewCardsIcon.removeClass('fa-eye').addClass('fa-pencil');
+		});
+
+		$cardsForm.on('duck.form.error', (evt) => {
+			evt.stopPropagation();
+			
+			const _$error = $error.clone();
+
+			$cardsWrapper.prepend(_$error);
+
+			setTimeout(() => {
+				_$error.slideUp(270);
+			}, 3000);
+
+			setTimeout(() => {
+				_$error.remove();
+			}, 3270);
+			
+			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
+			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
+		});
+
+		$addCard.on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}, showAddButtons);
+		$expandeCollapse.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, expandeCollapseAll);
+		$previewCards.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, previewCards);
 	}
 
 	$(() => {
+		const $body = $('.js-guide-body');
+		$body.on('guide.init.body', {body: $body}, initGuideBody);
+		$body.trigger('guide.init.body');
+
 		const $subHeader = $('.sub-header');
 		const $publishForm = $subHeader.find('.js-publish-form');
 		const $publish = $publishForm.find('.js-publish');
@@ -202,25 +346,6 @@ void function initCardStyle($){
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
-		const $cardsForm = $('#GuideCards');
-		const $cardsWrapper = $('.js-guide-cards');
-		const $expandeCollapse = $('.js-expand-collapse');
-		const $expandeCollapseIcon = $expandeCollapse.find('.fa');
-		const $previewCards = $('.js-preview-cards');
-		const $previewCardsIcon = $previewCards.find('.fa');
-		const $addCard = $('.js-add-card-start');
-		const $addCardIcon = $addCard.find('.fa');
-		const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
-
-		$.ajax({
-			url: '/renderPug',
-			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big'}, startInEditMode: true}},
-			success: (data) => {
-				$cardsWrapper.prop('ArrayItemTemplate', $(data));
-			},
-		});
-
-		$('.js-card').guideCard();
 
 		$publish.on('change', (e) => {
 			e.stopPropagation();
@@ -258,45 +383,6 @@ void function initCardStyle($){
 			$publish.prop('disabled', false);
 			$publishIcon.addClass('hidden');
 		});
-
-		$cardsForm.on('duck.form.submitted', (e) => {
-			e.stopPropagation();
-			
-			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
-			$cardsForm.find('[duck-button="submit"]').prop('disabled', true);
-		});
-
-		$cardsForm.on('duck.form.success', (e) => {
-			e.stopPropagation();
-			
-			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
-			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
-			$cardsWrapper.find('.js-card').trigger('exitEditMode');
-			$previewCardsIcon.removeClass('fa-eye').addClass('fa-pencil')
-		});
-
-		$cardsForm.on('duck.form.error', (e) => {
-			e.stopPropagation();
-			
-			const _$error = $error.clone();
-
-			$cardsWrapper.prepend(_$error);
-
-			setTimeout(() => {
-				_$error.slideUp(270);
-			}, 3000);
-
-			setTimeout(() => {
-				_$error.remove();
-			}, 3270);
-			
-			$cardsForm.find('[duck-button="submit"] .fa').toggleClass('fa-spinner fa-spin fa-floppy-o');
-			$cardsForm.find('[duck-button="submit"]').prop('disabled', false);
-		});
-
-		$addCard.on('click', {cardsWrapper: $cardsWrapper, addCardIcon: $addCardIcon}, showAddButtons);
-		$expandeCollapse.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, expandeCollapseAll);
-		$previewCards.on('click', {cardsWrapper: $cardsWrapper, expandeCollapseIcon: $expandeCollapseIcon, previewCardsIcon: $previewCardsIcon}, previewCards);
 
 		$guideDetailsEdit.on('click', (e) => {
 			e.stopPropagation();

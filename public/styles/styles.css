@@ -7458,10 +7458,15 @@ fieldset[disabled] .guide .publish-button.focus {
 .guide--cards [duck-button='add']:hover {
   opacity: 1;
 }
+.guide--cards .guide-card--edit-mode [duck-button='add'] {
+  top: -6px;
+}
 .guide--cards [data-sort="item"]:not(.guide-card--edit-mode) .guide-card--card__small {
   margin-top: -25px;
 }
-.guide--cards [data-sort="item"]:first-child .guide-card--admin .guide-card--card__small {
+.guide--cards [data-sort="item"]:first-child .guide-card--admin .guide-card--card__small,
+.guide--cards [data-sort="item"] .guide-card--add-card:not(.hidden) + .guide-card--small .guide-card--card__small,
+.guide--cards [data-sort="item"].guide-card--edit-mode + [data-sort="item"] .guide-card--admin .guide-card--card__small {
   margin-top: 0;
 }
 .guide--cards .fa-plus {
@@ -7510,6 +7515,13 @@ fieldset[disabled] .guide .publish-button.focus {
 }
 .guide-card--admin.guide-card--sub .guide-card--edit-toggle {
   top: 0;
+}
+.guide-card--admin.guide-card--small .guide-card--edit-toggle {
+  top: -24px;
+}
+.guide-card--edit-mode .guide-card--admin.guide-card--small .guide-card--edit-toggle,
+.guide-card--edit-mode .guide-card--admin.guide-card--sub .guide-card--edit-toggle {
+  top: 1px;
 }
 .guide-card--delete-confirm {
   display: none;

@@ -6,12 +6,13 @@ html(lang='en')
 		block head
 
 	body.loading#Stellaroute
-		script(async, src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
-		script.
-			(adsbygoogle = window.adsbygoogle || []).push({
-				google_ad_client: "ca-pub-5229644281598502",
-				enable_page_level_ads: true
-			});
+		if env === 'production'
+			script(async, src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+			script.
+				(adsbygoogle = window.adsbygoogle || []).push({
+					google_ad_client: "ca-pub-5229644281598502",
+					enable_page_level_ads: true
+				});
 
 		// include all mixins
 		include mixins/_mixins.pug

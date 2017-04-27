@@ -5,7 +5,7 @@ block content
 		include header.pug
 
 		.container.guide--container
-			#GuideCards.row.js-guide-body(duck-table= isMe && 'Guides', duck-function= isMe && 'update', duck-key= isMe && 'Id', duck-key-value= isMe && guide.Id)
+			.row.js-guide-body
 				include body.pug
 
 	script(type='text/javascript' src='/js/pages/guide/guide.min.js')

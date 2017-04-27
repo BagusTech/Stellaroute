@@ -69,39 +69,6 @@ void function initDuckForm($, duck, window) {
 		$wrapper.closest('[data-function*="scroll"]').trigger('initScroll')
 	}
 
-	function removeFromObject(obj, path, value) {
-		const pathList = typeof path === 'string' ? path.split('.') : path;
-		const length = pathList.length
-
-		for(let i = 0; i < length; i++){
-			const field = pathList[i];
-			const isLastItem = length === 1;
-			const isObject = typeof obj[field] === 'object';
-
-			if(isLastItem && !isObject){
-				delete obj[field];
-			} else if (!isObject){
-				break;
-			}
-
-			const type = obj[field] instanceof Array ? 'array' : 'object';
-
-			if(type === 'object'){
-				const newPathList = pathList.slice(0);
-				newPathList.splice(0, 1);
-
-				obj[field] = removeFromObject(obj[field], newPathList, value);
-			} else {
-				const indexToSplice = isLastItem ?  obj[field].indexOf(value) : 
-													obj[field].map((o) => o[pathList[i+1]]).indexOf(value);
-				
-				obj[field].splice(indexToSplice, 1)
-			}
-		}
-
-		return obj;
-	}
-
 	function parseObject(obj, $item, fieldName, buildObjectFunction) {
 		const key = $item.attr('duck-key');
 		const newObj = obj[fieldName] || {};
@@ -180,9 +147,8 @@ void function initDuckForm($, duck, window) {
 		}
 	}
 
-	function parseWysiwyg(obj, $item, fieldName, editor) {
-		const summernote = editor || '.summernote';
-		const value = $item.find(summernote).summernote('code');
+	function parseWysiwyg(obj, $item, fieldName) {
+		const value = $item.find('.summernote').summernote('code');
 
 		if(value){
 			obj[fieldName] = value;
@@ -304,19 +270,6 @@ void function initDuckForm($, duck, window) {
 		$wrapper.trigger('duck.form.submitted', [item]);
 	}
 
-	function deleteFieldFromItem($wrapper, table, key, keyValue, successCallback, errorCallBack) {
-		const path = $wrapper.attr('duck-delete-path');
-		const value = $wrapper.attr('duck-delete-value');
-
-		duck(table).get({field: key, value: keyValue, findOne: true}, (data) => {
-			const item = removeFromObject(data, path, value);
-
-			$wrapper.trigger('duck.form.submitted', [item]);
-
-			duck(table).update(item, successCallback, errorCallBack);
-		});
-	}
-
 	function editForm(e) {
 		const $wrapper = e.data.wrapper;
 
@@ -368,12 +321,6 @@ void function initDuckForm($, duck, window) {
 				break;
 			}
 
-			// deletes a field or value from an item in the table
-			case 'deleteField':{
-				deleteFieldFromItem(table, key, keyValue, successCallback, errorCallBack)
-
-				break;
-			}
 			default:
 		}
 	}
@@ -388,7 +335,7 @@ void function initDuckForm($, duck, window) {
 		const key = (options && options.key) || $wrapper.attr('duck-key');
 		const keyValue = (options && options.keyValue) || $wrapper.attr('duck-key-value');
 		const $urlField = $wrapper.find('[duck-field="url"] input');
-		const successCallback = (options && options.successCallback) || (() => {$wrapper.trigger('duck.form.success')});
+		const successCallback = (options && options.successCallback) || ((data) => {$wrapper.trigger('duck.form.success', [data])});
 		const errorCallBack = (options && options.errorCallBack) || (() => {$wrapper.trigger('duck.form.error')});
 
 		if($urlField.length){

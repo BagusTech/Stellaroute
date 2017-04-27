@@ -7211,6 +7211,13 @@ fieldset[disabled] .favorite-button.favorite-button__button.favorite-button__act
   color: yellow;
   text-shadow: 1px 1px 2px #777;
 }
+.guide-submiting {
+  cursor: wait;
+  opacity: .7;
+}
+.guide-submiting * {
+  pointer-events: none;
+}
 .guide--container {
   padding-left: 0;
   padding-right: 0;

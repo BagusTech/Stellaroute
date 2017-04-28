@@ -99,6 +99,7 @@ void function initializeValidateForm($){
 		$wrapper.on('passedValidation', passedValidation);
 		$wrapper.on('failedValidation', failedValidation);
 		$wrapper.on('input', debounceValidate());
+		$wrapper.on('change', (e) => {$wrapper.trigger('validate', [e.target])});
 
 		if($wrapper.find('input').filter((i, item) => $(item).prop('required')).length) {
 			$wrapper.find('[type="submit"]').prop('disabled', true);

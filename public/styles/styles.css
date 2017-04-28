@@ -275,6 +275,10 @@ th {
     box-shadow: none !important;
     text-shadow: none !important;
   }
+  html,
+  body {
+    height: auto;
+  }
   a,
   a:visited {
     text-decoration: underline;
@@ -313,6 +317,10 @@ th {
   h2,
   h3 {
     page-break-after: avoid;
+  }
+  .site-header,
+  .site-footer {
+    display: none !important;
   }
   .navbar {
     display: none;

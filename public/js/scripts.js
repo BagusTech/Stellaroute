@@ -21,6 +21,13 @@ void function initScripts($){
 		// opt in to bootstrap popovers
 		$('[data-toggle="tooltip"]').tooltip()
 
+		// check to make sure we aren't removing the modal-open class when a modal is still open
+		$('.modal').on('hidden.bs.modal', () => {
+			if($('.modal.in').length !== 0) {
+				$('body').addClass('modal-open');
+			}
+		})
+
 		// initialize summernote where it is being used
 		const $summernote = $('.summernote');
 		const summernoteLength = $summernote.length;

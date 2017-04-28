@@ -31,7 +31,8 @@ void function initRequest($){
 			});
 		});
 
-		$userSubmit.on('click', () => {
+		$userForm.on('duck.form.submitted', () => {
+			$userSubmit.prop('disabled', true);
 			$userSubmit.find('i').removeClass('hidden');
 		});
 
@@ -93,7 +94,9 @@ void function initRequest($){
 			e.stopPropagation();
 			e.preventDefault();
 
-			if(($passwordFields.eq(0).val() !== $passwordFields.eq(1).val()) || $passwordFields.eq(0).val().length < 6 || $passwordFields.eq(1).val().length < 6) {
+			if($passwordFields.eq(0).val() && !$passwordFields.eq(1).val()) {
+				$passwordSubmit.prop('disabled', true);
+			} else if(($passwordFields.eq(0).val() !== $passwordFields.eq(1).val()) || $passwordFields.eq(0).val().length < 8 || $passwordFields.eq(1).val().length < 8) {
 				$passwordSubmit.prop('disabled', true);
 				$passwordFields.closest('.form-group').addClass('has-error');
 			} else {
@@ -102,7 +105,8 @@ void function initRequest($){
 			}
 		});
 
-		$passwordSubmit.on('click', () => {
+		$changePasswordForm.on('duck.form.submitted', () => {
+			$passwordSubmit.prop('disabled', true);
 			$passwordSubmit.find('i').removeClass('hidden');
 		});
 

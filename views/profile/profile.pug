@@ -184,7 +184,7 @@ block content
 							.panel-footer.text-right
 								button.btn.btn-default(data-toggle='modal', data-target='#ChangePassword') Change Password
 								button.btn.btn-primary(duck-button='submit') Save
-									i.fa.fa-spin.fa-spinner.hidden
+									i.fa.fa-spin.fa-spinner.hidden.ml-Xs
 					
 					#ChangePassword.modal.fade(tabindex="-1", role="dialog")
 						.modal-dialog
@@ -195,15 +195,15 @@ block content
 								.modal-body(duck-type='object', duck-field='local')
 									.form-group(duck-field='password', duck-type='password')
 										label New Password
-											input.form-control(type='password', duck-value)
-										span.help-block Password must be at least 5 characters long.
+											input.form-control(type='password', duck-value, required)
+										span.help-block Password must be at least 8 characters long.
 									.form-group
 										label Confirm New Password
 											input.form-control(type='password')
 								.modal-footer
 									button.btn.btn-default(data-dismiss='modal', type='button') Cancel
 									button.btn.btn-primary(duck-button='submit', type='submit') Save
-										i.fa.fa-spin.fa-spinner.hidden
+										i.fa.fa-spin.fa-spinner.hidden.ml-Xs
 
 
 					script(type='text/javascript' src='/js/pages/profile/profile.min.js')

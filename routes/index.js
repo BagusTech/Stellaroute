@@ -221,8 +221,8 @@ router.post('/reset-password', (req, res) => {
 		res.send('success');
 	}
 
-	User.update({Id: userToUpdate.Id, local: {password: User.generateHash(newPassword)}}).then(() => {
-		const html = `<h1>Your Password Has Been Reset!</h1><p>Your new password is</p><h2>${newPassword}</h2><p>Please log in at <a href="https://stellaroute.com/">Stellaroute</a> with your new password. We advise going into your profile and changing it something else as soon as possible</p>`
+	User.update({Id: userToUpdate.Id, username: userToUpdate.username || userToUpdate.Id, local: {password: User.generateHash(newPassword)}}).then(() => {
+		const html = `<h1>Your Password Has Been Reset!</h1><p>Your new password is</p><h2>${newPassword}</h2><p>Please log in at <a href="https://stellaroute.com/">Stellaroute</a> with your new password. We advise going into your profile and changing it something else as soon as possible.</p><h2>To Change Your Password</h2><ol><li>Login - Once logged in you will be redirected to your profile</li><li>Click on the <strong>My Settings</strong> tab</li><li>Click on <strong>Change Password</strong> at the bottom right of the form</li></ol>`
 
 		User.updateCache().then(() => {
 			sendEmail(userEmail, 'Stellaroute Password Reset', null, html);

@@ -47,10 +47,10 @@ function redirectUrl(req, res) {
   }
 };
 
-function enforceWWW(req, res, next) {
-    const isWWW = req.headers.host.split('.')[0].toLowerCase() === 'www';
+function enforceSubdomain(req, res, next) {
+    const hasSubdomain = req.headers.host.split('.')[1];
 
-    if (!isWWW) {
+    if (!hasSubdomain) {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
         return;
@@ -89,10 +89,7 @@ app.use((req, res, next) => {
 })
 
 if(app.get('env') === 'production') {
-    app.use(enforceWWW);
-}
-
-if(app.get('env') === 'staging' || app.get('env') === 'production') {
+    app.use(enforceSubdomain);
     app.use(enforceHTTPS);
 }
 

@@ -62,16 +62,13 @@ block content
 					.col-xs-4.col-sm-3.col-md-2.col-lg-1
 						img.js-profile-pic.img-circle.img-responsive.bw-Md.bs-S.bc-W(src= userProfile.profilePicture ? getImagePath(userProfile.profilePicture, 'thumb2') : '/images/profile_placeholder_360.jpg', alt='profile picture')
 					.col-xs-8.col-sm-9.col-md-10.col-lg-11
-						h1= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
-
-						if userProfile.tagline
-							p.fc-W.bg-Dkr.p-Sm.d-Ib.hidden-xs= userProfile.tagline
+						h1.js-first-name= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
+						p.fc-W.bg-Dkr.p-Sm.d-Ib.hidden-xs.js-tagline(class= userProfile.tagline ? '' : 'hidden')= userProfile.tagline
 
 				nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
 					a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') My Guides
 					a.tabbed-nav--tab(href='#MyFavorites', role='tab', aria-expanded='false') Favorites
-					if wysiwygHasData(userProfile.description)
-						a.tabbed-nav--tab(href='#AboutMe', role='tab', aria-expanded='false') About Me
+					a.tabbed-nav--tab.js-about-me-tab(href='#AboutMe', role='tab', aria-expanded='false', class= wysiwygHasData(userProfile.description) ? '' : 'hidden') About Me
 					if isMe
 						a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
 
@@ -126,10 +123,9 @@ block content
 										+card(guide.cardImage, guide.names.display)
 					else
 						p.lead Nothing favorited yet!
-				if wysiwygHasData(userProfile.description)
-					#AboutMe.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
-						.panel.panel-default
-							.panel-body!=userProfile.description
+				#AboutMe.tabbed-nav--tabpanel.js-about-me-tab(role='tabpanel', aria-hidden='true', class= wysiwygHasData(userProfile.description) ? '' : 'hidden')
+					.panel.panel-default
+						.panel-body.js-about-me!=userProfile.description
 				if user && isMe
 					#MySettings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 						.panel.panel-default(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)

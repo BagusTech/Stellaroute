@@ -17,6 +17,12 @@ void function initRequest($){
 		const $bannerImage = $('.js-banner-image');
 		const $bannerImageForm = $userForm.find('[duck-field="bannerImage"] [duck-value]');
 		const startingBannerImage = $bannerImageForm.val();
+		const $firstName = $('.js-first-name');
+		const $lastName = $('.js-last-name');
+		const $tagline = $('.js-tagline');
+		const $aboutMeTab = $('.js-about-me-tab');
+		const $aboutMe = $('.js-about-me');
+
 
 
 		$username.prop('validateFunc', () => () => {
@@ -40,6 +46,18 @@ void function initRequest($){
 			const newUsername = $username.val();
 			const newProfilePicture = $profilePictureForm.val();
 			const newBannerImage = $bannerImageForm.val();
+			const newFirstName = $userForm.find('[duck-field="first"] [duck-value]').val();
+			const newLastName = $userForm.find('[duck-field="last"] [duck-value]').val();
+			const newTagline = $userForm.find('[duck-field="tagline"] [duck-value]').val();
+			const newAboutMe = $userForm.find('[duck-field="description"] .summernote').summernote('code');
+
+			$firstName.text(newFirstName);
+			$lastName.text(newLastName);
+			$tagline.text(newTagline);
+			$aboutMe.html(newAboutMe);
+
+			$tagline.removeClass('hidden');
+			$aboutMeTab.removeClass('hidden');
 
 			$userSubmit.prop('disabled', false).find('i').addClass('hidden');
 

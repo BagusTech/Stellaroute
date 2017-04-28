@@ -295,19 +295,7 @@ void function initCardStyle($){
 			const $summernote = $('.summernote');
 			const summernoteLength = $summernote.length;
 			let summernoteToInit = 0;
-			const summernoteOptions = {
-				height: 150,
-				disableDragAndDrop: true,
-				toolbar: [
-					['style', ['bold', 'italic', 'underline', 'clear']],
-					['color', ['color']],
-					['para', ['ul', 'ol', 'paragraph']],
-					['insert', ['table', 'hr']],
-					['link', ['link']],
-					['misc', ['fullscreen', 'codeview']],
-					['misc', ['undo', 'redo', 'help']],
-				],
-			};
+			const summernoteOptions = window.summernoteOptions;
 
 			// initiating summernotes on interval because it causes a noticable lag
 			// if you do ~3+ more at once.

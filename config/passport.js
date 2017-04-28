@@ -61,7 +61,8 @@ strategies.local = function(passport){
 					last: req.body['name.last']
 				},
 				created: String(new Date()),
-				isNewUser: true
+				isNewUser: true,
+				roles: ['beta-general']
 			}
 
 			newUser.username = req.body.username || newUser.Id;

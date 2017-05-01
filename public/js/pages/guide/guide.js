@@ -256,8 +256,10 @@ void function initCardStyle($){
 		};
 
 		$.ajax({
+			type: 'POST',
 			url: '/renderPug',
-			data: {file: '../views/guides/body.pug', locals},
+			contentType: 'application/json',
+			data: JSON.stringify({file: '../views/guides/body.pug', locals}),
 			success: (data) => {
 				const $newBody = $(data);
 				
@@ -312,8 +314,10 @@ void function initCardStyle($){
 		$('.js-card').guideCard();
 
 		$.ajax({
+			type: 'POST',
 			url: '/renderPug',
-			data: {file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big'}, startInEditMode: true}},
+			contentType: 'application/json',
+			data: JSON.stringify({file: '../views/guides/cards/_card.pug', locals: {isMe: true, card: {style: 'big'}, startInEditMode: true}}),
 			success: (data) => {
 				$cardsWrapper.prop('ArrayItemTemplate', $(data));
 			},

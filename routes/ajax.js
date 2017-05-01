@@ -250,8 +250,8 @@ const router       = express.Router();
 	});
 
 //// utility ajax calls
-	router.get('/renderPug', (req, res) => {
-		const params = req.query;
+	router.post('/renderPug', (req, res) => {
+		const params = req.body;
 		const filePath = `views/${params.file}`;
 		const locals = params.locals;
 

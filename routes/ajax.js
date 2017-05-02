@@ -182,6 +182,74 @@ const router       = express.Router();
 		});
 	});
 
+	router.post('/search', (req, res) => {
+		const term = req.body.term.replace(/\W/g, '').trim().toLowerCase();
+		const returnedGuides = [];
+		const guides = pickTable('Guides')
+						.find('isPublished', true)
+						.join('countries', pickTable('Countries').cached(), 'Id', 'names.display')
+						.join('cities', pickTable('Cities').cached(), 'Id', 'names.display')
+						.items;
+
+		// guide title
+		guides.forEach((guide, i) => {
+			if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		})
+
+		// countries
+		guides.forEach((guide, i) => {
+			const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
+			if(countries && countries.indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		})
+
+		// cities
+		guides.forEach((guide, i) => {
+			const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
+			if(cities && cities.indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		})
+
+		// tags
+		guides.forEach((guide, i) => {
+			const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
+			if(tags && tags.indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		})
+
+		// card titles
+		guides.forEach((guide, i) => {
+			if(guide.cards) {
+				for(let i = 0, length = guide.cards.length; i < length; i++) {
+					const card = guide.cards[i];
+
+					if(card.title && card.title.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
+				}
+			}
+		})
+
+
+		res.send(returnedGuides);
+	})
+
 //// s3 ajax calls
 	router.get('/getFiles', isLoggedIn(), (req, res) => {
 		if(req.query.folder.split('/')[0] !== req.user.Id && !req.user.isAdmin) {

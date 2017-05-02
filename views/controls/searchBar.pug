@@ -1,0 +1,12 @@
+.js-search-bar.search-bar
+	.input-group.search-bar--input-group
+		.input-group-addon
+			i.fa.fa-search.fa-fw.js-search-icon(aria-hidden='true')
+		.search-bar--input-wrapper
+			input.form-control.js-search-input
+			.search-bar--results.js-search-results-wrapper.hidden
+				button.close.js-close-search &times;
+				.search-results.js-search-results
+		.input-group-btn
+			a.btn.btn-primary.js-search-button(hre='/search') Search
+	.search-bar--backdrop.js-seach-backdrop.js-close-search.hidden

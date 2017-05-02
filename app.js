@@ -48,13 +48,15 @@ function redirectUrl(req, res) {
 };
 
 function enforceSubdomain(req, res, next) {
-    const hasSubdomain = req.headers.host.split('.')[1];
+    const domainParts = req.headers.host.split('.');
 
-    if (!hasSubdomain) {
+    if (!domainParts[1]) {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
         return;
     }
+
+    res.locals.env = domainParts[0] === 'www' ? app.get('env') : 'staging';
 
     next();
 };
@@ -72,7 +74,6 @@ function enforceHTTPS(req, res, next) {
 
 app.get('/robots.txt', (req, res, next) => {
     res.type('text/plain');
-    res.locals.env = app.get('env');
 
     if (res.locals.env === 'production') {
         res.send('User-agent: *\nDisallow: /ajax\nDisallow: /admin');

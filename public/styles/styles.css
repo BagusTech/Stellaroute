@@ -1866,7 +1866,7 @@ output {
   cursor: pointer;
   display: block;
   width: 100%;
-  height: 44px;
+  height: 45px;
   padding: 10px 12px;
   font-size: 16px;
   font-weight: normal;
@@ -1925,7 +1925,7 @@ input[type="search"] {
   input[type="time"].form-control,
   input[type="datetime-local"].form-control,
   input[type="month"].form-control {
-    line-height: 44px;
+    line-height: 45px;
   }
   input[type="date"].input-sm,
   input[type="time"].input-sm,
@@ -2124,7 +2124,7 @@ select[multiple].input-lg {
   position: relative;
 }
 .has-feedback .form-control {
-  padding-right: 55px;
+  padding-right: 56.25px;
 }
 .form-control-feedback {
   position: absolute;
@@ -2132,9 +2132,9 @@ select[multiple].input-lg {
   right: 0;
   z-index: 2;
   display: block;
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
   text-align: center;
   pointer-events: none;
 }
@@ -6447,6 +6447,68 @@ button.close {
 .login label:after {
   display: none;
 }
+.search-bar--input-group {
+  z-index: 2;
+}
+.search-bar--results {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 44px;
+}
+.search-bar--results .close {
+  margin-top: 6px;
+  margin-right: 6px;
+}
+.search-results {
+  border: 1px solid #cccccc;
+  background: white;
+}
+.search-results--result {
+  clear: both;
+  zoom: 1;
+  display: block;
+  font-weight: normal;
+  background: white;
+}
+.search-results--result:before,
+.search-results--result:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.search-results--result:before,
+.search-results--result:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.search-results--result:first-of-type {
+  border-top: 1px solid #cccccc;
+}
+.search-results--result:nth-of-type(2n) {
+  background: #e7e7e7;
+}
+.search-results--result:hover {
+  background: #f7f7f7;
+}
+.search-bar--backdrop {
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+@media (min-width: 767px) {
+  .search-bar--input-wrapper {
+    position: relative;
+  }
+  .search-bar--results {
+    padding-right: 1px;
+  }
+}
 .share-this {
   text-align: center;
   line-height: 0;
@@ -7969,6 +8031,7 @@ fieldset[disabled] .guide .publish-button.focus {
   padding: 0 12px 12px;
   color: #4a4d50;
   font-weight: normal;
+  text-align: left;
 }
 .content-card {
   clear: both;

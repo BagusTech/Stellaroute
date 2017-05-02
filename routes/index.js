@@ -22,9 +22,58 @@ strategies.facebook(passport);
 
 // home page
 router.get('/', (req, res, next) => {
+	const guides = Guide.find('isPublished', true)
+						.join('countries', Country.cached(), 'Id', 'names.display')
+						.join('author', User.cached(), 'Id', 'username')
+						.join('author', User.cached(), 'Id', 'tagline')
+						.join('author', User.cached(), 'Id', 'profilePicture')
+						.items
+
 	res.render('index', {
 		title: 'Stellaroute: helping you explore your world your way',
-		guides: Guide.find('isPublished', true).join('author', User.cached(), 'Id', 'username').items,
+		guides
+	});
+});
+
+// search
+router.get('/search', (req, res, next) => {
+	const term = req.query.term;
+	const countries = [];
+	const tags = [];
+	const guides = Guide.find('isPublished', true)
+						.join('countries', Country.cached(), 'Id', 'names.display')
+						.join('author', User.cached(), 'Id', 'username')
+						.join('author', User.cached(), 'Id', 'tagline')
+						.join('author', User.cached(), 'Id', 'profilePicture')
+						.items
+
+	guides.forEach((guide) => {
+		if(guide.countriesDisplay) {
+			guide.countriesDisplay.forEach((country) => {
+				if(countries.indexOf(country) === -1) {
+					countries.push(country);
+				}
+			});
+		}
+
+		if(guide.tags) {
+			guide.tags.forEach((country) => {
+				if(tags.indexOf(country) === -1) {
+					tags.push(country);
+				}
+			});
+		}
+	});
+
+	countries.sort();
+	tags.sort();
+
+	res.render('search', {
+		title: 'Stellaroute: helping you explore your world your way',
+		guides,
+		term,
+		countries,
+		tags
 	});
 });
 

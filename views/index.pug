@@ -7,23 +7,58 @@ append options
 	- showHeaderSearch = false;
 
 block content
-	.mt-NegXl.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
-		.container.ta-C.mt-Xl
-			.row
+	.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
+		.container.ta-C.mt-Xl--sm
+			.row.p-R(style='z-index: 1042;')
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
 					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
 						img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
 						span.d-Ib.plr-Sm stellaroute
-					h2.fc-G__lt.tt-U.fs-32--sm Plan Spontaneity
+						small.pt-Sm Plan Spontaneity
+				.col-xs-12
+					p.lead.ta-C.fc-W.mt-Md--sm Save money and time by using our guides created by people all around the world. #[br] Or create your own guides and share themw ith the world.
+
+				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+					include controls/searchBar.pug
 
 
-			.content-card.mt-Xl.p-Md
+			.mt-Md.mt-Xl--sm.p-Md--sm
 				if guides && guides.length
 					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 						for guide in guides
 							//.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
 							.masonry--item
-								a(href=`/${guide.authorUsername}/${guide.url}`)
-									+card(guide.cardImage, guide.names.display)
+								.card
+									.ta-R.p-A.r-0.l-0.t-0.z-1
+										for country in guide.countriesDisplay ? guide.countriesDisplay : []
+											a.d-Ib.bg-Gr.fc-W.p-Xs.fw-N.mr-XXs.mt-XXs(href=`/search?term=${country}`)= country
+									a(href=`/${guide.authorUsername}/${guide.url}`)
+										.card--img-wrapper
+											img.card--img(src= getImagePath(guide.cardImage, cardSize()), alt= guide.names.display)
+										div.p-R
+											.p-A.r-Sm.t-Sm
+												+favorite(guide.Id, true)
+										h3.ta-L.m-0.fc-B.p-Sm
+											span.pr-Md= guide.names.display
+											.fs-Sm.mt-XXs.d-B.fc-G
+												strong.pr-Sm #[span.hidden-xs Created] #[i.fa.fa-clock-o(aria-hidden='true')]
+												-var created = new Date(guide.created)
+												= `${created.getDate()}/${created.getMonth() + 1}/${created.getFullYear()}`
+									.ta-L.p-Sm.pt-0
+										if guide.cards && guide.cards[0] && wysiwygHasData(guide.cards[0].text)
+											!= guide.cards[0].text
+										else
+											p= guide.tagline
+									if guide.tags
+										div.ta-L.p-Sm.pt-0
+											i.fa.fa-tag.pr-Sm(aria-hidden='true')
+											for tag in guide.tags
+												a(href=`/search?term=${tag}`)= tag
+									a(href=`/${guide.authorUsername}`).d-B.p-Sm.ta-L.c-B.bw-0.btw-Sm.bs-S.bc-G__lt.fw-N.fc-I
+										img.img-responsive.br-C.f-L.mr-Md(src= getImagePath(guide.authorProfilePicture, 'thumb1'), alt= guide.authorUsername, style='max-width: 64px;')
+										h4.d-Ib.mt-Xs.mb-0= guide.authorUsername
+										if guide.authorTagline
+											span &nbsp;- #{guide.authorTagline}
+					
 				else
 					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.

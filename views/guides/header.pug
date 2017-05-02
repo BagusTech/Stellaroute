@@ -2,6 +2,8 @@ if isMe
 	#GuideDetailsForm.modal.fade(tabindex='-1', role='dialog')
 		.modal-dialog.modal-lg
 			.modal-content(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='update')
+				.hidden(duck-type='string', duck-field='lastEdited')
+					input(duck-value, type='text', value= new Date())
 				.modal-header
 					button.close(data-dismiss='modal') &times;
 					h4.modal-title= guide.names.display
@@ -87,6 +89,8 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 			h1 #{guide.names.display} #[small.js-is-publshed-text(class= guide.isPublished ? 'hidden' : '') (unpublished)]
 				if isMe
 					.checkbox.d-Ib.hidden-xs.js-publish-form(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id)
+						.hidden(duck-type='string', duck-field='lastEdited')
+							input(duck-value, type='text', value= new Date())
 						label.publish-button(duck-type='bool', duck-field='isPublished')
 							input.js-publish(type='checkbox', checked= guide.isPublished, duck-value)
 							| Published

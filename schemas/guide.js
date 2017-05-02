@@ -11,7 +11,9 @@ var Guide = Duck({
 			display: String,
 			alias: Array
 		},
+		created: String,
 		isPublished: Boolean,
+		lastEdited: String,
 		bannerImage: String,
 		cardImage: String,
 		tagline: String,

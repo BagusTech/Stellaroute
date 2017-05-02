@@ -9,6 +9,10 @@ block content
 		#NewGuide.modal.fade(tabindex='-1', role='dialog')
 			.modal-dialog.modal-lg
 				.modal-content(duck-table='Guides', duck-key='Id', duck-function='add')
+					.hidden(duck-type='string', duck-field='created')
+						input(duck-value, type='text', value= new Date())
+					.hidden(duck-type='string', duck-field='lastEdited')
+						input(duck-value, type='text', value= new Date())
 					.modal-header
 						button.close(data-dismiss='modal') &times;
 						h4.modal-title New Guide
@@ -99,10 +103,9 @@ block content
 								.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 									for guide in guidesToShow
 										.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
-											if user && user.favorites && user.favorites.filter((favorite) => favorite.guide === guide.Id).length
-												.p-A.t-Xs.r-Xs.z-1
-													i.fa.fa-star.is-favorite(aria-hidden=true)
 											a(href=`/${userProfile.username || userProfile.Id}/${guide.url}`)
+												.p-A.t-Xs.r-Xs.z-1
+													+favorite(guide.Id, true)
 												+card(guide.cardImage, guide.names.display)
 							else
 								if isMe

@@ -1,28 +1,7 @@
 .favorite-button {
-	&.favorite-button__button {
-		.btn;
-		.btn-primary;
-
-		width: 100%;
-
-		&:before {
-			content: 'Favorite ';
-		}
-
-		&.favorite-button__active {
-			.btn-default;
-
-			&:before {
-				content: 'Un-Favorite ';
-			}
-		}
-	}
-
-	&.favorite-button__icon {
-		background: none;
-		border: none;
-		padding: 0;
-	}
+	background: none;
+	border: none;
+	padding: 0;
 
 	.fa.fa-star {
 		color: @grey-lighter;
@@ -37,7 +16,7 @@
 	}
 
 	&.favorite-button__active {
-		.is-favorite {
+		.fa {
 			color: yellow;
 		}
 	}

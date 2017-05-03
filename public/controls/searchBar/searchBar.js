@@ -11,6 +11,7 @@ void function _initSearchBar($){
 		const $resultsWrapper = e.data.resultsWrapper;
 		const $results = e.data.results;
 		const $backdrop = e.data.backdrop;
+		const $zIndex = e.data.zIndex;
 		const term = _term || $input.val();
 
 		if($icon.hasClass('fa-search')) {
@@ -34,6 +35,7 @@ void function _initSearchBar($){
 			data: JSON.stringify({term}),
 			success: (guides) => {
 				$backdrop.removeClass('hidden');
+				$zIndex.css('z-index', 1042);
 				$results.html('');
 				$resultsWrapper.removeClass('hidden');
 
@@ -87,6 +89,7 @@ void function _initSearchBar($){
 
 		e.data.resultsWrapper.addClass('hidden');
 		e.data.backdrop.addClass('hidden');
+		e.data.zIndex.css('z-index', 'auto');
 		e.data.input.val('');
 	}
 
@@ -125,11 +128,12 @@ void function _initSearchBar($){
 		const $results = $wrapper.find('.js-search-results');
 		const $close = $wrapper.find('.js-close-search');
 		const $backdrop = $wrapper.find('.js-seach-backdrop');
+		const $zIndex = $('.js-search-bar-z-index');
 		let timeout;
 		
 		$input.off('input', startSearch).on('input', {wrapper: $wrapper, icon: $icon, input: $input, timeout}, startSearch);
-		$wrapper.off('duck.search', search).on('duck.search', {input: $input, icon: $icon, resultsWrapper: $resultsWrapper, results: $results, backdrop: $backdrop}, search);
-		$close.off('click', closeSearch).on('click', {resultsWrapper: $resultsWrapper, backdrop: $backdrop, input: $input}, closeSearch);
+		$wrapper.off('duck.search', search).on('duck.search', {input: $input, icon: $icon, resultsWrapper: $resultsWrapper, results: $results, backdrop: $backdrop, zIndex: $zIndex}, search);
+		$close.off('click', closeSearch).on('click', {resultsWrapper: $resultsWrapper, backdrop: $backdrop, input: $input, zIndex: $zIndex}, closeSearch);
 		$button.off('click', triggerSearch).on('click', {wrapper: $wrapper}, triggerSearch)
 	}
 

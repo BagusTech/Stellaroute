@@ -103,7 +103,7 @@ if (!user)
 		script(src='/controls/login/login.min.js', type='text/javascript')
 		- loginScriptLoaded = true;
 else
-	- var loginClasses = `bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;
+	- var loginClasses = `ws-NoWrap bg-N bw-N pt-0 ${headerBackground === 'none' ? 'fc-W' : 'fc-B'}`;
 
 	nav.dropdown
 		button#UserMenu(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", class= loginClasses)

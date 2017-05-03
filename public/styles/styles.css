@@ -6750,9 +6750,11 @@ body {
   }
   #Stellaroute .login-control,
   #Stellaroute nav.dropdown {
-    width: 25%;
-    max-width: 180px;
     text-align: right;
+  }
+  #Stellaroute .login-control img,
+  #Stellaroute nav.dropdown img {
+    min-width: 46px;
   }
   .hamburger-menu--toggle {
     display: none;

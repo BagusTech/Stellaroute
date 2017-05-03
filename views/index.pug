@@ -35,9 +35,10 @@ block content
 									a(href=`/${guide.authorUsername}/${guide.url}`)
 										.card--img-wrapper
 											img.card--img(src= getImagePath(guide.cardImage, cardSize()), alt= guide.names.display)
-										div.p-R
-											.p-A.r-Sm.t-Sm
-												+favorite(guide.Id, true)
+									div.p-R
+										.p-A.r-Sm.t-Sm.z-1
+											+favorite(guide.Id)
+									a(href=`/${guide.authorUsername}/${guide.url}`)
 										h3.ta-L.m-0.fc-B.p-Sm
 											span.pr-Md= guide.names.display
 											.fs-Sm.mt-XXs.d-B.fc-G

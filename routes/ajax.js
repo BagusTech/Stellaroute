@@ -203,20 +203,30 @@ const router       = express.Router();
 		// countries
 		guides.forEach((guide, i) => {
 			const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
-			if(countries && countries.indexOf(term) > -1) {
-				guide.cards = [];
-				returnedGuides.push(guide);
-				guides.splice(i, 1);
+			if(countries && countries.length) {
+				for(country of countries) {
+					if(country.indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
+				}
 			}
 		})
 
 		// cities
 		guides.forEach((guide, i) => {
 			const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
-			if(cities && cities.indexOf(term) > -1) {
-				guide.cards = [];
-				returnedGuides.push(guide);
-				guides.splice(i, 1);
+			if(cities && cities.length) {
+				for(city of cities) {
+					if(city.indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
+				}
 			}
 		})
 

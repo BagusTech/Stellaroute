@@ -22,7 +22,7 @@
 						.js-guide-cards(duck-field='cards', duck-type='array')
 							div
 								for _card, i in cards && cards.length ? cards : [{newGuide: true}]
-									if card.title || card.text || card.image || card.newGuide
+									if _card.section.title || _card.section.text || _card.section.image || _card.newGuide
 										- var card = _card.section || {}, offset = i;
 										include cards/_card.pug
 

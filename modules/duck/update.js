@@ -102,6 +102,18 @@ const santatize     = require('../sanatize');
 		return objectsToAdd;
 	}
 
+	function setEmptyStringToNull(Item){
+		for (var item in Item){
+			if(Item[item] === String()){
+				Item[item] = null;
+			} else if(typeof Item[item] === 'object') {
+				setEmptyStringToNull(Item[item]);
+			}
+		}
+
+		return Item;
+	}
+
 /*  final update
 	makes the last call to the database, */
 
@@ -134,7 +146,7 @@ const santatize     = require('../sanatize');
 				}
 
 				// DynamoDB doesn't except empty strings as ReturnValues, so the value to null if that's the case
-				const attributeValue = flattenedData[item] == String() ? null : flattenedData[item];
+				const attributeValue = flattenedData[item] === String() ? null : (typeof flattenedData[item] === 'object' ? setEmptyStringToNull(flattenedData[item]) : flattenedData[item]);
 				params.ExpressionAttributeValues[`:${expressionCounter}`] = attributeValue;
 					
 			}

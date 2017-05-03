@@ -98,7 +98,7 @@ module.exports = (_duck) => {
 				for (var item in Item){
 					if(Item[item] === String()){
 						Item[item] = null;
-					} else if(typeof Item[item] === 'object' && !(Item[item] instanceof Array)) {
+					} else if(typeof Item[item] === 'object') {
 						setEmptyStringToNull(Item[item]);
 					}
 				}

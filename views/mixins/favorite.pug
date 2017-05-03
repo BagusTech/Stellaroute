@@ -1,21 +1,14 @@
+script(type='text/javascript', src='/controls/favorite/favorite.min.js')
+
 mixin favorite(guide, card)
 	if user
 		- user.favorites = user.favorites || [];
-		- isFavorite = !!user.favorites.filter((favorite) => favorite.guide === guide && favorite.card === card).length;
-		if card
-			.favorite-button.favorite-button__icon(data-target='#LoginModal', data-toggle='modal', class= isFavorite ? 'favorite-button__active' : '')
-				i.fa.fa-star(aria-hidden=true, class= isFavorite ? 'is-favorite' : '')
-				span.sr-only Favorite This!
-		else
-			button.js-favorite-button.favorite-button.favorite-button__button(data-guide=guide, data-card=card, data-user= user.Id, type='submit', isFavorite=String(isFavorite), class= isFavorite ? 'favorite-button__active' : '')
-				| This Guide#[i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')]
-	else
-		if card
-			button.favorite-button.favorite-button__icon(data-target='#LoginModal', data-toggle='modal')
-				i.fa.fa-star(aria-hidden=true, class= isFavorite ? 'is-favorite' : '')
-				span.sr-only Favorite This!
-		else
-			button.favorite-button.favorite-button__icon(data-target='#LoginModal', data-toggle='modal')
-				| This Guide#[i.fa.fa-spinner.fa-spin.ml-Xs.hidden(aria-hidden='true')]
+		- isFavorite = Boolean(user.favorites.find((favorite) => favorite.guide === guide));
 
-script(type='text/javascript', src='/controls/favorite/favorite.min.js')
+		button.js-favorite-button.favorite-button(data-guide=guide, data-card=card, data-user= user.Id, type='submit', isFavorite=String(isFavorite), class= isFavorite ? 'favorite-button__active' : '')
+			i.fa.fa-star.fa-2x(aria-hidden=true, class= isFavorite ? 'is-favorite' : '')
+			span.sr-only Favorite This!
+	else
+		button.favorite-button(data-target='#LoginModal', data-toggle='modal')
+			i.fa.fa-star.fa-2x(aria-hidden=true)
+			span.sr-only Favorite This!

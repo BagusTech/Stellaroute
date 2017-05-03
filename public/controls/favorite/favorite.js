@@ -1,9 +1,7 @@
 /* global jQuery, duck */
 
-void function initFavorite($, duck) {
+void function _initFavorite($, duck) {
 	'use strict';
-
-	duck();
 
 	function favorite(e) {
 		e.stopPropagation();
@@ -20,7 +18,7 @@ void function initFavorite($, duck) {
 		}
 
 		$button.prop('disabled', true);
-		$icon.removeClass('hidden');
+		$icon.addClass('fa-spin');
 
 		$.ajax({
 			type: 'POST',
@@ -29,13 +27,12 @@ void function initFavorite($, duck) {
 			contentType: 'application/json',
 			success: () => {
 				$button.prop('disabled', false);
-				$icon.addClass('hidden');
+				$icon.removeClass('fa-spin');
 				$button.attr('isFavorite', !isFavorite)
 						.toggleClass('favorite-button__active');
 			},
 			error: () => {
-				$icon.addClass('hidden');
-				$button.text('Something went wrong, please refresh the page and try again');
+				$icon.removeClass('fa-spin');
 			},
 		})
 	}
@@ -49,12 +46,18 @@ void function initFavorite($, duck) {
 		$button.trigger('duck.favorite');
 	}
 
-	$(() => {
-		const $button = $('.js-favorite-button');
-		const $icon = $button.find('.fa-spinner');
+	$.fn.favoriteButton = function initFavorite() {
+		return this.each((i, wrapper) => {
+			const $button = $(wrapper);
+			const $icon = $button.find('.fa');
 
-		$button.off('click', triggerFavorite).on('click', {button: $button}, triggerFavorite);
-		$button.off('duck.favorite', favorite).on('duck.favorite', {button: $button, icon: $icon}, favorite)
+			$button.off('click', triggerFavorite).on('click', {button: $button}, triggerFavorite);
+			$button.off('duck.favorite', favorite).on('duck.favorite', {button: $button, icon: $icon}, favorite)
+		});
+	}
+
+	$(() => {
+		$('.js-favorite-button').favoriteButton()
 	});
 }(jQuery.noConflict(), duck)
 

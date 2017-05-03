@@ -165,7 +165,7 @@ const router       = express.Router();
 			for(let i = 0, length = user.favorites.length; i < length; i++) {
 				const favorite = user.favorites[i];
 
-				if(favorite.guide === guide && favorite.card === card) {
+				if(favorite.guide === guide) {
 					user.favorites.splice(i, 1);
 					break;
 				}

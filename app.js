@@ -72,16 +72,6 @@ function enforceHTTPS(req, res, next) {
    next();
 };
 
-app.get('/robots.txt', (req, res, next) => {
-    res.type('text/plain');
-
-    if (res.locals.env === 'production') {
-        res.send('User-agent: *\nDisallow: /ajax\nDisallow: /admin');
-    } else {
-        res.send('User-agent: *\nDisallow: /');
-    }
-});
-
 app.use((req, res, next) => {
     startTime = new Date();
     startUrl = req.url;
@@ -97,7 +87,17 @@ if(app.get('env') === 'production') {
 app.use((req, res, next) => {
     console.log('enforce https: ', startTime - new Date(), startUrl);
     next();
-})
+});
+
+app.get('/robots.txt', (req, res, next) => {
+    res.type('text/plain');
+
+    if (res.locals.env === 'production') {
+        res.send('User-agent: *\nDisallow: /ajax\nDisallow: /admin');
+    } else {
+        res.send('User-agent: *\nDisallow: /');
+    }
+});
 
 // Set up the view engine
 app.set('views', path.join(__dirname, 'views'));

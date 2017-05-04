@@ -52,7 +52,7 @@ function enforceSubdomain(req, res, next) {
 
     console.log(req.headers.host)
 
-    if (domainParts[0] !== 'www' || domainParts[0] !== 'staging') {
+    if (domainParts[0] !== 'www' && domainParts[0] !== 'staging') {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
         return;

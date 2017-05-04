@@ -384,6 +384,7 @@ void function initCardStyle($, duck){
 		const $guideDetailsSaveIcon = $guideDetailsForm.find('[duck-button="submit"] .fa');
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
+		const $guideDetailsTags = $guideDetailsForm.find('[duck-field="tags"]');
 		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 
 		$publish.on('change', (e) => {
@@ -467,5 +468,7 @@ void function initCardStyle($, duck){
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
+
+		$guideDetailsTags.prop('ArrayItemTemplate', $('<div class="input-group mb-Sm" duck-type="string" data-sort="item"><div class="input-group-addon" data-sort="handle"><i class="fa fa-arrows-v" aria-hidden="true"></i></div><input class="form-control" duck-value="" type="text"><div class="input-group-btn"><button class="btn btn-danger" duck-button="delete"><i class="fa fa-times" aria-hidden="true"></i><span class="sr-only">Delete</span></button></div></div>'));
 	});
 }(jQuery.noConflict(), duck);

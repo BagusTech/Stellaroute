@@ -50,7 +50,7 @@ function redirectUrl(req, res) {
 function enforceSubdomain(req, res, next) {
     const domainParts = req.headers.host.split('.');
 
-    if (!domainParts[1]) {
+    if (domainParts[0] !== 'www' || domainParts[0] !== 'staging') {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
         return;

@@ -50,8 +50,6 @@ function redirectUrl(req, res) {
 function enforceSubdomain(req, res, next) {
     const domainParts = req.headers.host.split('.');
 
-    console.log(req.headers.host)
-
     if (domainParts[0] !== 'www' && domainParts[0] !== 'staging') {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
@@ -77,7 +75,7 @@ function enforceHTTPS(req, res, next) {
 app.use((req, res, next) => {
     startTime = new Date();
     startUrl = req.url;
-    console.log('start: ', startUrl)
+    //console.log('start: ', startUrl)
     next();
 })
 
@@ -87,7 +85,7 @@ if(app.get('env') === 'production') {
 }
 
 app.use((req, res, next) => {
-    console.log('enforce https: ', startTime - new Date(), startUrl);
+    //console.log('enforce https: ', startTime - new Date(), startUrl);
     next();
 });
 
@@ -113,7 +111,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // Sets the public folder to be available available to the front end
 
 app.use((req, res, next) => {
-    console.log('set favicon, parsers, and public dir: ', startTime - new Date(), startUrl);
+    //console.log('set favicon, parsers, and public dir: ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -132,7 +130,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(setFlash);
 
 app.use((req, res, next) => {
-    console.log('session, passport, and flash: ', startTime - new Date(), startUrl);
+    //console.log('session, passport, and flash: ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -144,7 +142,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    console.log('csrf: ', startTime - new Date(), startUrl);
+    //console.log('csrf: ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -155,7 +153,7 @@ app.use(getUser);
 app.use(globalPugVariablesAndFunctions);
 
 app.use((req, res, next) => {
-    console.log('get user and globals: ', startTime - new Date(), startUrl);
+    //console.log('get user and globals: ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -174,14 +172,14 @@ app.use(Guide.getCached(),
         User.getCached());
 
 app.use((req, res, next) => {
-    console.log('cached: ', startTime - new Date(), startUrl);
+    //console.log('cached: ', startTime - new Date(), startUrl);
     next();
 });
 
 app.use('/', routes);
 
 app.use((req, res, next) => {
-    console.log('routes (index): ', startTime - new Date(), startUrl);
+    //console.log('routes (index): ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -189,14 +187,14 @@ app.use((req, res, next) => {
 app.use('/', ajax);
 
 app.use((req, res, next) => {
-    console.log('ajax routes: ', startTime - new Date(), startUrl);
+    //console.log('ajax routes: ', startTime - new Date(), startUrl);
     next();
 })
 
 app.use('/admin', isLoggedIn(true), admin);
 
 app.use((req, res, next) => {
-    console.log('admin routes: ', startTime - new Date(), startUrl);
+    //console.log('admin routes: ', startTime - new Date(), startUrl);
     next();
 })
 
@@ -204,7 +202,7 @@ app.use((req, res, next) => {
 app.use('/', locations);
 
 app.use((req, res, next) => {
-    console.log('locations routes: ', startTime - new Date(), startUrl);
+    //console.log('locations routes: ', startTime - new Date(), startUrl);
     next();
 })
 

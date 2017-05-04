@@ -1,6 +1,6 @@
-/* global jQuery */
+/* global jQuery, duck */
 
-void function initDuckFilepicker($) {
+void function initDuckFilepicker($, duck) {
 	'use strict';
 
 	function selectCurrentFile($imagePicker) {
@@ -13,8 +13,7 @@ void function initDuckFilepicker($) {
 		})
 	}
 
-	// run after dom has loaded
-	$(() => {
+	duck.initDuckFilepicker = () => {
 		const $imagePickerModal = $('#ImagePickerModal');
 		const $imagePicker = $imagePickerModal.find('[duck-filepicker]');
 		const $select = $imagePickerModal.find('[duck-filepicker="select"]');
@@ -54,5 +53,10 @@ void function initDuckFilepicker($) {
 		});
 
 		$imagePicker.fileManager();
+	}
+
+	// run after dom has loaded
+	$(() => {
+		duck.initDuckFilepicker();
 	});
-}(jQuery.noConflict());
+}(jQuery.noConflict(), duck);

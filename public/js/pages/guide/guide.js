@@ -1,6 +1,6 @@
-/* global jQuery */
+/* global jQuery, duck */
 
-void function initCardStyle($){
+void function initCardStyle($, duck){
 	'use strict';
 
 	const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
@@ -289,6 +289,7 @@ void function initCardStyle($){
 			$body.find('[data-function*="sort"]').sortable();
 			$body.find('[data-function*="toggle"]').makeToggle();
 			$body.find('[data-function*="form"], [duck-table], form').validateForm();
+			duck.initDuckFilepicker();
 
 			// opt in to bootstrap popovers
 			$('[data-toggle="tooltip"]').tooltip()
@@ -467,4 +468,4 @@ void function initCardStyle($){
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
 	});
-}(jQuery.noConflict())
+}(jQuery.noConflict(), duck);

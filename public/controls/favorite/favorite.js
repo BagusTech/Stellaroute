@@ -1,6 +1,6 @@
-/* global jQuery, duck */
+/* global jQuery */
 
-void function _initFavorite($, duck) {
+void function _initFavorite($) {
 	'use strict';
 
 	function favorite(e) {
@@ -59,7 +59,7 @@ void function _initFavorite($, duck) {
 	$(() => {
 		$('.js-favorite-button').favoriteButton()
 	});
-}(jQuery.noConflict(), duck)
+}(jQuery.noConflict())
 
 /*
 button.js-favorite-button.favorite-button(

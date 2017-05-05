@@ -5,8 +5,10 @@ function isLoggedIn(mustBeAdmin) {
 	    // or if user is going to the home or login page
 	    if (req.isAuthenticated() && (!mustBeAdmin || (req.user && req.user.isAdmin))){
 			return next();
+		} else if (!req.user) {
+			req.flash('error', 'Please log in to continue.');
+			res.redirect('/login');
 		} else {
-			// if they aren't redirect them to the home page
 			req.flash('error', 'Sorry, you are\'t allowed to go there :(');
 			res.redirect('/');
 		}

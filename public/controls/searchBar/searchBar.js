@@ -112,11 +112,11 @@ void function _initSearchBar($){
 		}, 1000)
 	}
 
-	function triggerSearch(e) {
+	function goToSearchPage(e) {
 		e.stopPropagation();
 		e.preventDefault();
 
-		e.data.wrapper.trigger('duck.search')
+		window.location.href = `/search?term=${e.data.input.val()}`
 	}
 
 	function initSearchBar(wrapper) {
@@ -134,7 +134,7 @@ void function _initSearchBar($){
 		$input.off('input', startSearch).on('input', {wrapper: $wrapper, icon: $icon, input: $input, timeout}, startSearch);
 		$wrapper.off('duck.search', search).on('duck.search', {input: $input, icon: $icon, resultsWrapper: $resultsWrapper, results: $results, backdrop: $backdrop, zIndex: $zIndex}, search);
 		$close.off('click', closeSearch).on('click', {resultsWrapper: $resultsWrapper, backdrop: $backdrop, input: $input, zIndex: $zIndex}, closeSearch);
-		$button.off('click', triggerSearch).on('click', {wrapper: $wrapper}, triggerSearch)
+		$button.off('click', goToSearchPage).on('click', {input: $input}, goToSearchPage)
 	}
 
 	$.fn.searchBar = function init() {

@@ -376,6 +376,10 @@ void function initCardStyle($, duck){
 		$body.trigger('guide.init.body', [true]);
 
 		const $subHeader = $('.sub-header');
+		const $featuredForm = $subHeader.find('#MakeGuideFeatured');
+		const $featuredFormSubmit = $featuredForm.find('button');
+		const $featuredFormIcon = $featuredFormSubmit.find('.fa');
+		const $featuredFormText = $featuredFormSubmit.find('span');
 		const $publishForm = $subHeader.find('.js-publish-form');
 		const $publish = $publishForm.find('.js-publish');
 		const $publishIcon = $publishForm.find('.js-publish-icon');
@@ -468,6 +472,28 @@ void function initCardStyle($, duck){
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});
+
+		$featuredForm.on('duck.form.submitted', (e) => {
+			e.stopPropagation();
+
+			$featuredFormSubmit.prop('disabled', true);
+			$featuredFormIcon.toggleClass('hidden');
+		});
+
+		$featuredForm.on('duck.form.success', (e) => {
+			e.stopPropagation();
+
+			const $input = $featuredForm.find('input');
+
+			$featuredFormSubmit.prop('disabled', false).toggleClass('btn-primary')
+			$input.prop('checked', !$input.prop('checked'));
+			$featuredFormIcon.toggleClass('hidden');
+			$featuredFormText.text($featuredFormText.text() == 'Un-Feature Guide' ? 'Make Featured Guide' : 'Un-Feature Guide')
+		});
+
+		$featuredForm.on('duck.form.error', (e) => {
+			window.location.reload(true);
+		})
 
 		$guideDetailsTags.prop('ArrayItemTemplate', $('<div class="input-group mb-Sm" duck-type="string" data-sort="item"><div class="input-group-addon" data-sort="handle"><i class="fa fa-arrows-v" aria-hidden="true"></i></div><input class="form-control" duck-value="" type="text"><div class="input-group-btn"><button class="btn btn-danger" duck-button="delete"><i class="fa fa-times" aria-hidden="true"></i><span class="sr-only">Delete</span></button></div></div>'));
 	});

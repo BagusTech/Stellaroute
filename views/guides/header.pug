@@ -81,6 +81,13 @@ if isMe
 div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0.p-R
+			if userIsAuthorized(user)
+				#MakeGuideFeatured.f-R(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='update')
+					.hidden(duck-field='isFeatured', duck-type='bool')
+						input(type='checkbox', duck-value, checked= !guide.isFeatured)
+					button.btn(class= guide.isFeatured ? '' : 'btn-primary', duck-button='submit')
+						span= guide.isFeatured ? 'Un-Feature Guide' : 'Make Featured Guide'
+						i.fa.fa-spin.fa-spinner.hidden.ml-Xs(aria-hidden='true')
 			ol.breadcrumb
 				li.active Created by: #[a(href= `/${author.username || author.Id}`)= author.username || 'unknown']
 

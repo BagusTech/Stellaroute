@@ -25,11 +25,16 @@ router.get('/:user', (req, res, next) => {
 	}
 
 	const isMe = req.user && req.user.Id === user.Id;
-	const guides = Guide.find('author', user.Id).join('countries', Country.cached(), 'Id', 'names.display').items;
+	const guides = Guide.find('author', user.Id).join('countries', Country.cached(), 'Id', 'names.display').join('author', User.cached(), 'Id', 'username').items;
 	const countries = [];
 	const favorites = user.favorites && user.favorites.map((favorite) => {
-		const guide = Guide.findOne('Id', favorite.guide).items;
-		//const card = guide.cards.find((_card) => {});
+		const guide = Guide.findOne('Id', favorite.guide)
+							.join('countries', Country.cached(), 'Id', 'names.display')
+							.join('author', User.cached(), 'Id', 'username')
+							.join('author', User.cached(), 'Id', 'tagline')
+							.join('author', User.cached(), 'Id', 'profilePicture')
+							.items[0];
+		
 
 		return guide
 	});

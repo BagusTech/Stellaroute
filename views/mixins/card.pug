@@ -41,4 +41,44 @@ mixin contentCard(title)
 	.content-card&attributes(attributes)
 		if title
 			h2.content-card--header= title
-		block 
+		block
+
+mixin guideCard(guide, showAuthor)
+	if guide
+		.card
+			if guide.countriesDisplay && guide.countriesDisplay.length
+				.ta-R.p-A.r-0.l-0.t-0.z-1
+					for country in guide.countriesDisplay
+						a.d-Ib.bg-Gr.fc-W.p-Xs.fw-N.mr-XXs.mt-XXs(href=`/search?term=${country}`)= country
+
+			if guide.cardImage
+				a(href=`/${guide.authorUsername}/${guide.url}`)
+					.card--img-wrapper
+						img.card--img(src= getImagePath(guide.cardImage, cardSize()), alt= guide.names.display)
+			div.p-R
+				.p-A.r-Sm.t-Sm.z-1
+					+favorite(guide.Id)
+			a(href=`/${guide.authorUsername}/${guide.url}`)
+				h3.ta-L.m-0.fc-B.p-Sm
+					span.pr-Md= guide.names.display
+					.fs-Sm.mt-XXs.d-B.fc-G
+						strong.pr-Sm #[span.hidden-xs Created] #[i.fa.fa-clock-o(aria-hidden='true')]
+						-var created = new Date(guide.created)
+						= `${created.getDate()}/${created.getMonth() + 1}/${created.getFullYear()}`
+			.ta-L.p-Sm.pt-0
+				if guide.tagline
+					p= guide.tagline
+				else if guide.cards && guide.cards[0] && wysiwygHasData(guide.cards[0].text)
+					!= guide.cards[0].text
+
+			if guide.tags
+				div.ta-L.p-Sm.pt-0
+					i.fa.fa-tag.pr-Sm(aria-hidden='true')
+					for tag in guide.tags
+						a.mr-Sm(href=`/search?term=${tag}`)= tag
+			if showAuthor
+				a(href=`/${guide.authorUsername}`).d-B.p-Sm.ta-L.c-B.bw-0.btw-Sm.bs-S.bc-G__lt.fw-N.fc-I
+					img.img-responsive.br-C.f-L.mr-Md(src= getImagePath(guide.authorProfilePicture, 'thumb1'), alt= guide.authorUsername, style='max-width: 64px;')
+					h4.d-Ib.mt-0.mb-0= guide.authorUsername
+					if guide.authorTagline
+					span &nbsp;- #{guide.authorTagline}

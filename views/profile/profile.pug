@@ -118,8 +118,7 @@ block content
 						.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
 							for guide in favorites ? favorites : []
 								.masonry--item
-									a(href=`/${guide.author}/${guide.url}`)
-										+card(guide.cardImage, guide.names.display)
+									+guideCard(guide, true)
 					else
 						p.lead Nothing favorited yet!
 				#AboutMe.tabbed-nav--tabpanel.js-about-me-tab(role='tabpanel', aria-hidden='true', class= wysiwygHasData(userProfile.description) ? '' : 'hidden')
@@ -202,19 +201,3 @@ block content
 
 
 					script(type='text/javascript' src='/js/pages/profile/profile.min.js')
-//- user
-		Id
-		name
-			first
-			list
-		username
-		local
-			email
-			password
-		profilePicture
-		bannerImage
-		friends
-		favorites
-		following
-		tagline
-		description

@@ -7,50 +7,51 @@ append options
 	- showHeaderSearch = false;
 
 block content
-	.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
+	.ptb-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
 		.container.ta-C.mt-Xl--sm
 			.row.p-R.js-search-bar-z-index
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
-					h1.d-F.fai-C.fj-C.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
-						//img.img-responsive.w-6(src='/images/plain_logo_white.svg', alt='stellaroute')
-						span.d-Ib.plr-Sm stellaroute
-						small.pt-Sm Plan Spontaneity
-				.col-xs-12
-					p.lead.ta-C.fc-W.mt-Md--sm Save money and time by using our guides created by people all around the world. #[br] Or create your own guides and share them with the world.
+					h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
+						span.d-b.plr-Sm Find the Right Guide
+						small.pt-Sm.d-B Plan Spontaneity
+	
+	.container
+		.p-Md--sm
+			if guides && guides.length
+				.row
+					.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
+						.visible-xs
+							button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filters
+						#GuideFilter.hidden-xs.bg-Ltst.w-A.p-Sm(data-toggle='hidden-xs')
+							if countries && countries.length
+								div(data-filter-section='country')
+									h2.mt-0.pt-Sm.ta-R--sm Country
+									for country in countries
+										.checkbox.checkbox-right
+											label
+												span.hidden-xs= country
+												input(type='checkbox', value= country, checked= country === term || country === originalTerm)
+												span.visible-xs= country
+							if tags && tags.length
+								div(data-filter-section='tags')
+									h2.mt-0.pt-Sm.ta-R--sm Tag
+									for tag in tags
+										.checkbox.checkbox-right
+											label
+												span.hidden-xs= tag
+												input(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
+												span.visible-xs= tag
 
-				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
+					.col-xs-12.col-sm-8.col-md-9.col-lg-10
+						.mb-Md
+							include controls/searchBar.pug
+							.ta-R= `${guides.length} ${guides.length > 1 ? 'results' : 'result'}`
+						.masonry.masonry-grid-1.masonry-grid-2--md.masonry-grid-3--lg
+							for guide in guides
+								.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', data-filter-tags= guide.tags && guide.tags.join('|') || 'Unknown')
+									+guideCard(guide, true)
+			else
+				.mb-Md
 					include controls/searchBar.pug
 
-			.mt-Md.mt-Xl--sm.p-Md--sm
-				if guides && guides.length
-					.row
-						.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
-							.visible-xs
-								button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filters
-							#GuideFilter.hidden-xs.bg-Ltst.w-A.p-Sm(data-toggle='hidden-xs')
-								if countries && countries.length
-									div(data-filter-section='country')
-										h2.mt-0.pt-Sm.ta-R--sm Country
-										for country in countries
-											.checkbox.checkbox-right
-												label
-													span.hidden-xs= country
-													input(type='checkbox', value= country, checked= country === term)
-													span.visible-xs= country
-								if tags && tags.length
-									div(data-filter-section='tags')
-										h2.mt-0.pt-Sm.ta-R--sm Tag
-										for tag in tags
-											.checkbox.checkbox-right
-												label
-													span.hidden-xs= tag
-													input(type='checkbox', value= tag, checked= tag === term)
-													span.visible-xs= tag
-
-						.col-xs-12.col-sm-8.col-md-9.col-lg-10
-							.masonry.masonry-grid-1.masonry-grid-2--md.masonry-grid-3--lg
-								for guide in guides
-									.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', data-filter-tags= guide.tags && guide.tags.join('|') || 'Unknown')
-										+guideCard(guide, true)
-				else
-					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.
+				p.lead Sorry, there were 0 results, please try a different search

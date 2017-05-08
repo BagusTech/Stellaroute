@@ -7,7 +7,7 @@ append options
 	- showHeaderSearch = false;
 
 block content
-	.pt-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
+	.pt-Xl.pb-XXl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat fixed top center / cover')
 		.container.ta-C.mt-Xl--sm
 			.row.js-search-bar-z-index.p-R
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
@@ -20,16 +20,42 @@ block content
 
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
 					include controls/searchBar.pug
+	
+	//.pt-Xl.pb-XXl.bs-S.bc-G__ltr(style='background: #ccc url("../images/index-bg.jpg") no-repeat fixed top center / cover;border-width: 12px 0;')
+	.container
+		.ptb-Sm.p-Md--sm
+			h2.ta-C.mb-Lg.fs-48: span.bw-0.bbw-Lg.bs-S.bc-G__dkst Featured Guides
+			if guides && guides.length
+				.row
+					for guide in guides
+						.col-xs-12.col-sm-6.col-md-3
+							+guideCard(guide, true, 'medium')
+				.ta-R
+					a.btn.btn-secondary(href='/search') View All Guides #[i.fa.fa-chevron-right(aria-hidden='true')]
+			else
+				p.lead Sorry, we are in the middle of an update, this should be fixed shortly.
 
+	.pt-Xl.pb-XXl(style='background: #ccc url("../images/location-overviews.jpg") no-repeat fixed top center / cover')
+		.container
+			h2.ta-C.mb-Lg.fs-48.fc-W How it Works
+			.row.ta-C.ptb-Sm
+				.col-xs-12.col-sm-4
+					.content-card
+						.pt-Lg
+							i.fa.fa-5x.fa-lightbulb-o(aria-hidden='true')
+						h2 Get Inspired
+						p.ta-J.plr-Sm--sm Find inspiration from the trips other travelers are taking. Everyone gets excited about the possibility of a trip, but the planning is a stressful and painstaking process, we want to take the hassle out of it.
 
-			.mt-Md.mt-Xl--sm.p-Md--sm
-				h2.ta-L.fc-W.mb-Lg.bw-0.bbw-Sm.bs-S.bc-W Featured Guides
-				if guides && guides.length
-					.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-						for guide in guides
-							.masonry--item
-								+guideCard(guide, true)
-					.ta-R
-						a.btn.btn-secondary(href='/search') View All Guides #[i.fa.fa-chevron-right(aria-hidden='true')]
-				else
-					p.lead Sorry, we are in the middle of an update, this should be fixed shortly.
+				.col-xs-12.col-sm-4
+					.content-card
+						.pt-Lg
+							i.fa.fa-5x.fa-heart(aria-hidden='true')
+						h2 Create Wishlists
+						p.ta-J.plr-Sm--sm Create your bucket list of travel experiences. It can be anything: a restaurant, a temple, a beach, or an entire city. Don’t be constrained by anything, we’ll even send you trip deals on the places you’ve always wanted to go.
+
+				.col-xs-12.col-sm-4
+					.content-card
+						.pt-Lg
+							i.fa.fa-5x.fa-globe(aria-hidden='true')
+						h2 Share Your World
+						p.ta-J.plr-Sm--sm Inspire others and make it easier for everyone to understand that traveling is one simple decision away from becoming a reality. You don’t have to go have way around the world to have an adventure, tell us about your hometown, your favorite neighborhood, or you favorite restaurant.

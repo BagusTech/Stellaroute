@@ -43,7 +43,7 @@ mixin contentCard(title)
 			h2.content-card--header= title
 		block
 
-mixin guideCard(guide, showAuthor)
+mixin guideCard(guide, showAuthor, size)
 	if guide
 		.card
 			if guide.countriesDisplay && guide.countriesDisplay.length
@@ -51,10 +51,13 @@ mixin guideCard(guide, showAuthor)
 					for country in guide.countriesDisplay
 						a.d-Ib.bg-Gr.fc-W.p-Xs.fw-N.mr-XXs.mt-XXs(href=`/search?term=${country}`)= country
 
-			if guide.cardImage
+			if guide.cardImage || guide.isFeatured
 				a(href=`/${guide.authorUsername}/${guide.url}`)
-					.card--img-wrapper
-						img.card--img(src= getImagePath(guide.cardImage, cardSize()), alt= guide.names.display)
+					if guide.cardImage
+						.card--img-wrapper
+							img.card--img(src= getImagePath(guide.cardImage, cardSize(size)), alt= guide.names.display)
+					if guide.isFeatured
+						.bg-Purp.fc-W.fw-N.plr-Sm Featured
 			div.p-R
 				.p-A.r-Sm.t-Sm.z-1
 					+favorite(guide.Id)

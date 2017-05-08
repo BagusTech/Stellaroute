@@ -183,7 +183,7 @@ const router       = express.Router();
 	});
 
 	router.post('/search', (req, res) => {
-		const term = req.body.term.replace(/\W/g, '').trim().toLowerCase();
+		const term = req.body.term && req.body.term.replace(/\W/g, '').trim().toLowerCase();
 		const returnedGuides = [];
 		const guides = pickTable('Guides')
 						.find('isPublished', true)

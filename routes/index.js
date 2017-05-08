@@ -38,10 +38,10 @@ router.get('/', (req, res, next) => {
 
 // search
 router.get('/search', (req, res, next) => {
-	const term = req.query.term && req.query.term.trim().toLowerCase();
+	const originalTerm = req.query.term;
+	const term = originalTerm && req.query.term.replace(/\W/g, '').trim().toLowerCase();
 	const countries = [];
 	const tags = [];
-	const returnedGuides = [];
 	const guides = pickTable('Guides')
 					.find('isPublished', true)
 					.join('countries', pickTable('Countries').cached(), 'Id', 'names.display')
@@ -50,71 +50,74 @@ router.get('/search', (req, res, next) => {
 					.join('author', User.cached(), 'Id', 'tagline')
 					.join('author', User.cached(), 'Id', 'profilePicture')
 					.items;
+	const returnedGuides = term ? [] : guides;
 
-	// guide title
-	guides.forEach((guide, i) => {
-		if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
-			guide.cards = [];
-			returnedGuides.push(guide);
-			guides.splice(i, 1);
-		}
-	})
+	if (term) {
+		// guide title
+		guides.forEach((guide, i) => {
+			if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		});
 
-	// countries
-	guides.forEach((guide, i) => {
-		const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
-		if(countries && countries.length) {
-			for(country of countries) {
-				if(country.indexOf(term) > -1) {
-					guide.cards = [];
-					returnedGuides.push(guide);
-					guides.splice(i, 1);
-					return;
+		// countries
+		guides.forEach((guide, i) => {
+			const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
+			if(countries && countries.length) {
+				for(country of countries) {
+					if(country.indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
 				}
 			}
-		}
-	})
+		});
 
-	// cities
-	guides.forEach((guide, i) => {
-		const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
-		if(cities && cities.length) {
-			for(city of cities) {
-				if(city.indexOf(term) > -1) {
-					guide.cards = [];
-					returnedGuides.push(guide);
-					guides.splice(i, 1);
-					return;
+		// cities
+		guides.forEach((guide, i) => {
+			const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
+			if(cities && cities.length) {
+				for(city of cities) {
+					if(city.indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
 				}
 			}
-		}
-	})
+		});
 
-	// tags
-	guides.forEach((guide, i) => {
-		const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
-		if(tags && tags.indexOf(term) > -1) {
-			guide.cards = [];
-			returnedGuides.push(guide);
-			guides.splice(i, 1);
-		}
-	})
+		// tags
+		guides.forEach((guide, i) => {
+			const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
+			if(tags && tags.indexOf(term) > -1) {
+				guide.cards = [];
+				returnedGuides.push(guide);
+				guides.splice(i, 1);
+			}
+		});
 
-	// card titles
-	guides.forEach((guide, i) => {
-		if(guide.cards) {
-			for(let i = 0, length = guide.cards.length; i < length; i++) {
-				const card = guide.cards[i];
+		// card titles
+		guides.forEach((guide, i) => {
+			if(guide.cards) {
+				for(let i = 0, length = guide.cards.length; i < length; i++) {
+					const card = guide.cards[i];
 
-				if(card.title && card.title.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
-					guide.cards = [];
-					returnedGuides.push(guide);
-					guides.splice(i, 1);
-					return;
+					if(card.title && card.title.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+						return;
+					}
 				}
 			}
-		}
-	})
+		});
+	}
 
 	returnedGuides.forEach((guide) => {
 		if(guide.countriesDisplay) {
@@ -140,6 +143,7 @@ router.get('/search', (req, res, next) => {
 	res.render('search', {
 		title: 'Stellaroute: helping you explore your world your way',
 		guides: returnedGuides,
+		originalTerm,
 		term,
 		countries,
 		tags

@@ -40,11 +40,11 @@ void function _initSearchBar($){
 				$resultsWrapper.removeClass('hidden');
 
 				if(!guides || !guides.length) {
-					$results.append('<p>No results</p>');
+					$results.append('<p class="p-Xs m-0">No results</p>');
 				} else {
 					guides.forEach((guide, i) => {
 						const $html = $(`
-							${i === 0 ? `<span class='f-L pl-Sm mt-XXs'>${guides.length} results</span>` : ''}
+							${i === 0 ? `<span class='f-L p-Xs'>${guides.length} results</span>` : ''}
 							<a class='search-results--result' href='/${guide.author}/${guide.url}'>
 								<div class='w-25 f-L'>
 									<img class='w-100' src='https://s3-us-west-2.amazonaws.com/stellaroute/${guide.cardImage.replace('.jpg', '-thumb1.jpg').replace('.jpeg', '-thumb1.jpeg')}' />
@@ -90,7 +90,6 @@ void function _initSearchBar($){
 		e.data.resultsWrapper.addClass('hidden');
 		e.data.backdrop.addClass('hidden');
 		e.data.zIndex.css('z-index', 'auto');
-		e.data.input.val('');
 	}
 
 
@@ -134,7 +133,8 @@ void function _initSearchBar($){
 		$input.off('input', startSearch).on('input', {wrapper: $wrapper, icon: $icon, input: $input, timeout}, startSearch);
 		$wrapper.off('duck.search', search).on('duck.search', {input: $input, icon: $icon, resultsWrapper: $resultsWrapper, results: $results, backdrop: $backdrop, zIndex: $zIndex}, search);
 		$close.off('click', closeSearch).on('click', {resultsWrapper: $resultsWrapper, backdrop: $backdrop, input: $input, zIndex: $zIndex}, closeSearch);
-		$button.off('click', goToSearchPage).on('click', {input: $input}, goToSearchPage)
+		$wrapper.off('submit', goToSearchPage).on('submit', {input: $input}, goToSearchPage);
+		$button.off('click', goToSearchPage).on('click', {input: $input}, goToSearchPage);
 	}
 
 	$.fn.searchBar = function init() {

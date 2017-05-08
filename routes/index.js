@@ -38,7 +38,7 @@ router.get('/', (req, res, next) => {
 
 // search
 router.get('/search', (req, res, next) => {
-	const term = req.query.term.trim().toLowerCase();
+	const term = req.query.term && req.query.term.trim().toLowerCase();
 	const countries = [];
 	const tags = [];
 	const returnedGuides = [];

@@ -1,14 +1,8 @@
 extends layout.pug
 
-append options
-	- headerBackground = 'none';
-	- logoColor = 'white';
-	- headerClasses = 'home-page-header';
-	- showHeaderSearch = false;
-
 block content
 	.ptb-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
-		.container.ta-C.mt-Xl--sm
+		.container.ta-C
 			.row.p-R.js-search-bar-z-index
 				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
 					h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
@@ -25,22 +19,20 @@ block content
 						#GuideFilter.hidden-xs.bg-Ltst.w-A.p-Sm(data-toggle='hidden-xs')
 							if countries && countries.length
 								div(data-filter-section='country')
-									h2.mt-0.pt-Sm.ta-R--sm Country
+									h2.mt-0.pt-Sm Country
 									for country in countries
-										.checkbox.checkbox-right
+										.checkbox
 											label
-												span.hidden-xs= country
 												input(type='checkbox', value= country, checked= country === term || country === originalTerm)
-												span.visible-xs= country
+												span= country
 							if tags && tags.length
 								div(data-filter-section='tags')
-									h2.mt-0.pt-Sm.ta-R--sm Tag
+									h2.mt-0.pt-Sm Tag
 									for tag in tags
-										.checkbox.checkbox-right
+										.checkbox
 											label
-												span.hidden-xs= tag
 												input(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
-												span.visible-xs= tag
+												span= tag
 
 					.col-xs-12.col-sm-8.col-md-9.col-lg-10
 						.mb-Md

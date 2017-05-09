@@ -488,10 +488,10 @@ void function initCardStyle($, duck){
 			$featuredFormSubmit.prop('disabled', false).toggleClass('btn-primary')
 			$input.prop('checked', !$input.prop('checked'));
 			$featuredFormIcon.toggleClass('hidden');
-			$featuredFormText.text($featuredFormText.text() == 'Un-Feature Guide' ? 'Make Featured Guide' : 'Un-Feature Guide')
+			$featuredFormText.text($featuredFormText.text() === 'Un-Feature Guide' ? 'Make Featured Guide' : 'Un-Feature Guide')
 		});
 
-		$featuredForm.on('duck.form.error', (e) => {
+		$featuredForm.on('duck.form.error', () => {
 			window.location.reload(true);
 		})
 

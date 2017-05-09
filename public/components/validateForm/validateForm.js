@@ -104,6 +104,8 @@ void function initializeValidateForm($){
 		if($wrapper.find('input').filter((i, item) => $(item).prop('required')).length) {
 			$wrapper.find('[type="submit"]').prop('disabled', true);
 		}
+
+		$wrapper.find('[required]').trigger('validate');
 	}
 
 	$.fn.validateForm = function() {

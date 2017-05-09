@@ -8,6 +8,21 @@
 		blue: 'bg-Bl',
 	}
 
+	const month = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sept',
+		'Oct',
+		'Nov',
+		'Dec'
+	]
+
 	function cardSize(size) {
 		const rand = Math.random();
 
@@ -67,7 +82,7 @@ mixin guideCard(guide, showAuthor, size)
 					.fs-Sm.mt-XXs.d-B.fc-G
 						strong.pr-Sm #[span.hidden-xs Created] #[i.fa.fa-clock-o(aria-hidden='true')]
 						-var created = new Date(guide.created)
-						= `${created.getDate()}/${created.getMonth() + 1}/${created.getFullYear()}`
+						= `${month[created.getMonth()]} ${created.getDate()}, ${created.getFullYear()}`
 			.ta-L.p-Sm.pt-0
 				if guide.tagline
 					p= guide.tagline
@@ -81,7 +96,7 @@ mixin guideCard(guide, showAuthor, size)
 						a.mr-Sm(href=`/search?term=${tag}`)= tag
 			if showAuthor
 				a(href=`/${guide.authorUsername}`).d-B.p-Sm.ta-L.c-B.bw-0.btw-Sm.bs-S.bc-G__lt.fw-N.fc-I
-					img.img-responsive.br-C.f-L.mr-Md(src= getImagePath(guide.authorProfilePicture, 'thumb1'), alt= guide.authorUsername, style='max-width: 64px;')
+					img.img-responsive.br-C.f-L.mr-Md(src= getImagePath(guide.authorProfilePicture, 'thumb1', true), alt= guide.authorUsername, style='max-width: 64px;')
 					h4.d-Ib.mt-0.mb-0= guide.authorUsername
 					if guide.authorTagline
 					span &nbsp;- #{guide.authorTagline}

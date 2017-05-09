@@ -6,23 +6,23 @@ if isMe
 					input(duck-value, type='text', value= new Date())
 				.modal-header
 					button.close(data-dismiss='modal') &times;
-					h4.modal-title= guide.names.display
+					h4.modal-title Guide Settings
 				.modal-body
 					.form-horizontal
 						.form-group(duck-type='object', duck-field='names')
 							label.col-sm-2.control-label Name
 							.col-sm-10(duck-type='string', duck-field='display')
-								input.form-control(duck-value, , value= guide && guide.names && guide.names.display)
+								input.form-control(type='text', duck-value, required, value= guide && guide.names && guide.names.display)
 
 						.form-group(duck-type='string', duck-field='tagline')
 							label.col-sm-2.control-label Tagline
 							.col-sm-10
-								input.form-control(duck-value, value= guide && guide.tagline)
+								input.form-control(duck-value, value= guide && guide.tagline, required)
 
 						.form-group(duck-type='image', duck-field='bannerImage')
 							label.col-sm-2.control-label Banner Image
 							.col-sm-10
-								input.hidden(type='hidden', duck-value, value= guide.bannerImage)
+								input.hidden(type='hidden', duck-value, value= guide.bannerImage, required)
 								.form-control(duck-button='image-select')
 									i.fa.fa-image(aria-hidden='true')
 									span.pl-Sm(duck-image-value)= guide && guide.bannerImage || 'Please select an Image'
@@ -66,17 +66,19 @@ if isMe
 													i.fa.fa-times(aria-hidden='true')
 													span.sr-only Delete
 								p.ta-R: button.btn.btn-default(duck-button='add') New Tag
-						.form-group(duck-type='bool', duck-field='isPublished')
-							label.col-sm-2.control-label Publish
-							.col-sm-10
-								.checkbox
-									label
-										input(type='checkbox', duck-value, checked= guide.isPublished)
-										| By publishing your guide it will be visible to the public.
+						.form-group
+							.col-sm-10.col-sm-push-2
+								.alert.alert-warning.m-0
+									h2.mt-0 Publish Your Guide
+									p By publishing your guide it will be visible to the public.
+									.checkbox(duck-type='bool', duck-field='isPublished')
+										label
+											input(type='checkbox', duck-value, checked= guide.isPublished)
+											| Publish Your Guide
 
 				.modal-footer
 					button.btn.btn-default(data-dismiss='modal') Close
-					button.btn.btn-primary(duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
+					button.btn.btn-primary(type='submit', duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
 
 div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
@@ -88,13 +90,17 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 					button.btn(class= guide.isFeatured ? '' : 'btn-primary', duck-button='submit')
 						span= guide.isFeatured ? 'Un-Feature Guide' : 'Make Featured Guide'
 						i.fa.fa-spin.fa-spinner.hidden.ml-Xs(aria-hidden='true')
-			ol.breadcrumb
-				li.active Created by: #[a(href= `/${author.username || author.Id}`)= author.username || 'unknown']
+			.bw-0.bbw-Sm.bc-G__lt.bs-S.pb-Sm.pt-Lg.fs-32
+				a.fai-E(href=`/${author.username || author.Id}`, style='display: inline-flex;')
+					img.br-C(src=getImagePath(author.profilePicture, 'thumb1', true), alt = author.username, height='64px' width='64px')
+					span.mlr-Md.fc-G__lt= author.username || 'unknown'
+					if !guide.isPublished
+						span.fc-Purp.fw-B (DRAFT)
 
-			if isMe
+			//if isMe
 				button.btn.btn-default.f-R(data-toggle='modal', data-target='#GuideDetailsForm'): i.fa.fa-pencil(aria-hidden)
-			h1 #{guide.names.display} #[small.js-is-publshed-text(class= guide.isPublished ? 'hidden' : '') (unpublished)]
-				if isMe
+			h1.mb-Lg #{guide.names.display} 
+				//if isMe // publish guide button
 					.checkbox.d-Ib.hidden-xs.js-publish-form(duck-table='Guides', duck-function='update', duck-key='Id', duck-key-value= guide.Id)
 						.hidden(duck-type='string', duck-field='lastEdited')
 							input(duck-value, type='text', value= new Date())
@@ -105,7 +111,10 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 								|&nbsp;
 								i.fa.fa-spin.fa-spinner(aria-hidden='true')
 				if guide.tagline
-					small.d-B.mb-Md= guide.tagline
+					small.d-B.mt-Md= guide.tagline
+			if isMe
+				.p-A.r-Md.b-Lg
+					button.btn.btn-primary.f-R(data-toggle='modal', data-target='#GuideDetailsForm') Guide Settings and Publish
 
 			if !isMe
 				.mb-Sm.p-A--sm.m-0--sm.r-Md.b-Md

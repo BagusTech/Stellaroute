@@ -8770,7 +8770,7 @@ fieldset[disabled] .guide .publish-button.focus {
       -ms-flex-align: start;
           align-items: flex-start;
 }
-#Stellaroute .fai-W {
+#Stellaroute .fai-E {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -8933,7 +8933,7 @@ fieldset[disabled] .guide .publish-button.focus {
   -ms-flex-item-align: start;
       align-self: flex-start;
 }
-#Stellaroute .fas-W {
+#Stellaroute .fas-E {
   -ms-flex-item-align: end;
       align-self: flex-end;
 }
@@ -9022,7 +9022,7 @@ fieldset[disabled] .guide .publish-button.focus {
         -ms-flex-align: start;
             align-items: flex-start;
   }
-  #Stellaroute .fai-W--sm {
+  #Stellaroute .fai-E--sm {
     -webkit-box-align: end;
         -ms-flex-align: end;
             align-items: flex-end;
@@ -9185,7 +9185,7 @@ fieldset[disabled] .guide .publish-button.focus {
     -ms-flex-item-align: start;
         align-self: flex-start;
   }
-  #Stellaroute .fas-W--sm {
+  #Stellaroute .fas-E--sm {
     -ms-flex-item-align: end;
         align-self: flex-end;
   }
@@ -9275,7 +9275,7 @@ fieldset[disabled] .guide .publish-button.focus {
         -ms-flex-align: start;
             align-items: flex-start;
   }
-  #Stellaroute .fai-W--md {
+  #Stellaroute .fai-E--md {
     -webkit-box-align: end;
         -ms-flex-align: end;
             align-items: flex-end;
@@ -9438,7 +9438,7 @@ fieldset[disabled] .guide .publish-button.focus {
     -ms-flex-item-align: start;
         align-self: flex-start;
   }
-  #Stellaroute .fas-W--md {
+  #Stellaroute .fas-E--md {
     -ms-flex-item-align: end;
         align-self: flex-end;
   }

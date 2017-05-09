@@ -389,7 +389,7 @@ void function initCardStyle($, duck){
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $guideDetailsTags = $guideDetailsForm.find('[duck-field="tags"]');
-		const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
+		//const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 
 		$publish.on('change', (e) => {
 			e.stopPropagation();
@@ -444,14 +444,16 @@ void function initCardStyle($, duck){
 		$guideDetailsForm.on('duck.form.success', (e) => {
 			e.stopPropagation();
 
-			const imagePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${$bannerImage.val().replace('.jpg', '-large.jpg')}`;
+			window.location.reload(true);
+
+			/*const imagePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${$bannerImage.val().replace('.jpg', '-large.jpg')}`;
 			
 			$guideDetailsForm.modal('hide')
 
 			$subHeader.css('background-image', `url("${imagePath}")`);
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
-			$guideDetailsEdit.click();
+			$guideDetailsEdit.click();*/
 		});
 
 		$guideDetailsForm.on('duck.form.error', (e) => {

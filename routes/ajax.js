@@ -262,7 +262,7 @@ const router       = express.Router();
 
 //// s3 ajax calls
 	router.get('/getFiles', isLoggedIn(), (req, res) => {
-		if(req.query.folder.split('/')[0] !== req.user.Id && !req.user.isAdmin) {
+		if((req.query.folder && req.query.folder.split('/')[0] !== req.user.Id) && !req.user.isAdmin) {
 			res.status(401).send('Request unauthorized');
 			return;
 		}

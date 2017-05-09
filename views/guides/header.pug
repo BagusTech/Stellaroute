@@ -10,27 +10,27 @@ if isMe
 				.modal-body
 					.form-horizontal
 						.form-group(duck-type='object', duck-field='names')
-							label.col-sm-2.control-label Name
+							label.col-sm-2.control-label Name*
 							.col-sm-10(duck-type='string', duck-field='display')
 								input.form-control(type='text', duck-value, required, value= guide && guide.names && guide.names.display)
 
 						.form-group(duck-type='string', duck-field='tagline')
-							label.col-sm-2.control-label Tagline
+							label.col-sm-2.control-label Tagline*
 							.col-sm-10
 								input.form-control(duck-value, value= guide && guide.tagline, required)
 
 						.form-group(duck-type='image', duck-field='bannerImage')
 							label.col-sm-2.control-label Banner Image
 							.col-sm-10
-								input.hidden(type='hidden', duck-value, value= guide.bannerImage, required)
+								input.hidden(type='hidden', duck-value, value= guide.bannerImage)
 								.form-control(duck-button='image-select')
 									i.fa.fa-image(aria-hidden='true')
 									span.pl-Sm(duck-image-value)= guide && guide.bannerImage || 'Please select an Image'
 
 						.form-group(duck-type='image', duck-field='cardImage')
-							label.col-sm-2.control-label Guide Cover Image
+							label.col-sm-2.control-label Guide Cover Image*
 							.col-sm-10
-								input.hidden(type='hidden', duck-value, value= guide.cardImage)
+								input.hidden(type='hidden', duck-value, value= guide.cardImage, required)
 								.form-control(duck-button='image-select')
 									i.fa.fa-image(aria-hidden='true')
 									span.pl-Sm(duck-image-value)= guide && guide.cardImage || 'Please select an Image'
@@ -90,12 +90,12 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 					button.btn(class= guide.isFeatured ? '' : 'btn-primary', duck-button='submit')
 						span= guide.isFeatured ? 'Un-Feature Guide' : 'Make Featured Guide'
 						i.fa.fa-spin.fa-spinner.hidden.ml-Xs(aria-hidden='true')
-			.bw-0.bbw-Sm.bc-G__lt.bs-S.pb-Sm.pt-Lg.fs-32
+			.bw-0.bbw-Sm.bc-G__lt.bs-S.pb-Sm.pt-Lg.fs-32.fai-E(style='display: flex;')
 				a.fai-E(href=`/${author.username || author.Id}`, style='display: inline-flex;')
 					img.br-C(src=getImagePath(author.profilePicture, 'thumb1', true), alt = author.username, height='64px' width='64px')
 					span.mlr-Md.fc-G__lt= author.username || 'unknown'
-					if !guide.isPublished
-						span.fc-Purp.fw-B (DRAFT)
+				if !guide.isPublished
+					.p-C.alert.alert-warning.d-Ib.m-0.fs-18.fw-N(data-toggle='modal', data-target='#GuideDetailsForm') draft
 
 			//if isMe
 				button.btn.btn-default.f-R(data-toggle='modal', data-target='#GuideDetailsForm'): i.fa.fa-pencil(aria-hidden)
@@ -113,7 +113,7 @@ div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.ban
 				if guide.tagline
 					small.d-B.mt-Md= guide.tagline
 			if isMe
-				.p-A.r-Md.b-Lg
+				.p-A.r-Md.b-Lg.hidden-xs
 					button.btn.btn-primary.f-R(data-toggle='modal', data-target='#GuideDetailsForm') Guide Settings and Publish
 
 			if !isMe

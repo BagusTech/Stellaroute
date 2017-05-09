@@ -138,7 +138,7 @@ router.get('/:user/:guide', (req, res, next) => {
 
 		endSubCards = _cards.length;
 		return obj;
-	}).filter((_) => _);
+	}).filter((_) => _).filter((_card) => _card.section && (_card.section.title || res.locals.wysiwygHasData(_card.section.text) || _card.section.image)) || [];
 
 	res.render('guides/guide', {
 		title: `Stellaroute: ${guide.names.display}`,

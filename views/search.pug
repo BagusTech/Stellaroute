@@ -3,11 +3,9 @@ extends layout.pug
 block content
 	.ptb-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
 		.container.ta-C
-			.row.p-R.js-search-bar-z-index
-				.col-xs-12.col-sm-8.col-sm-push-2.col-lg-6.col-lg-push-3
-					h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
-						span.d-b.plr-Sm Find the Right Guide
-						small.pt-Sm.d-B Plan Spontaneity
+			h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
+				span.d-b.plr-Sm Plan your next trip, create your own guides, and join the next generation of travel.
+				small.pt-Sm.d-B Plan Spontaneity
 	
 	.container
 		.p-Md--sm
@@ -35,7 +33,7 @@ block content
 												span= tag
 
 					.col-xs-12.col-sm-8.col-md-9.col-lg-10
-						.mb-Md
+						.p-R.mb-Md.js-search-bar-z-index
 							include controls/searchBar.pug
 							.ta-R= `${guides.length} ${guides.length > 1 ? 'results' : 'result'}`
 						.masonry.masonry-grid-1.masonry-grid-2--md.masonry-grid-3--lg

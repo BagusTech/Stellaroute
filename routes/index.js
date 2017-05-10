@@ -38,6 +38,7 @@ router.get('/', (req, res, next) => {
 
 // search
 router.get('/search', (req, res, next) => {
+	const searchType = req.query.type;
 	const originalTerm = req.query.term;
 	const term = originalTerm && req.query.term.replace(/\W/g, '').trim().toLowerCase();
 	const countries = [];
@@ -53,70 +54,132 @@ router.get('/search', (req, res, next) => {
 	const returnedGuides = term ? [] : guides;
 
 	if (term) {
-		// guide title
-		guides.forEach((guide, i) => {
-			if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
-				guide.cards = [];
-				returnedGuides.push(guide);
-				guides.splice(i, 1);
-			}
-		});
-
-		// countries
-		guides.forEach((guide, i) => {
-			const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
-			if(countries && countries.length) {
-				for(country of countries) {
-					if(country.indexOf(term) > -1) {
+		switch (searchType) {
+			case 'title': {
+				guides.forEach((guide, i) => {
+					if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
 						guide.cards = [];
 						returnedGuides.push(guide);
 						guides.splice(i, 1);
-						return;
 					}
-				}
-			}
-		});
+				});
 
-		// cities
-		guides.forEach((guide, i) => {
-			const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
-			if(cities && cities.length) {
-				for(city of cities) {
-					if(city.indexOf(term) > -1) {
+				break;
+			}
+			case 'country': {
+				guides.forEach((guide, i) => {
+					const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
+					if(countries && countries.length) {
+						for(country of countries) {
+							if(country.indexOf(term) > -1) {
+								guide.cards = [];
+								returnedGuides.push(guide);
+								guides.splice(i, 1);
+								return;
+							}
+						}
+					}
+				});
+
+				break;
+			}
+			case 'city': {
+				guides.forEach((guide, i) => {
+					const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
+					if(cities && cities.length) {
+						for(city of cities) {
+							if(city.indexOf(term) > -1) {
+								guide.cards = [];
+								returnedGuides.push(guide);
+								guides.splice(i, 1);
+								return;
+							}
+						}
+					}
+				});
+
+				break;
+			}
+			case 'tag': {
+				guides.forEach((guide, i) => {
+					const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
+					if(tags && tags.indexOf(term) > -1) {
 						guide.cards = [];
 						returnedGuides.push(guide);
 						guides.splice(i, 1);
-						return;
 					}
-				}
+				});
+
+				break;
 			}
-		});
-
-		// tags
-		guides.forEach((guide, i) => {
-			const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
-			if(tags && tags.indexOf(term) > -1) {
-				guide.cards = [];
-				returnedGuides.push(guide);
-				guides.splice(i, 1);
-			}
-		});
-
-		// card titles
-		guides.forEach((guide, i) => {
-			if(guide.cards) {
-				for(let i = 0, length = guide.cards.length; i < length; i++) {
-					const card = guide.cards[i];
-
-					if(card.title && card.title.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+			case 'all':
+			default: {
+				// guide title
+				guides.forEach((guide, i) => {
+					if(guide.names && guide.names.display && guide.names.display.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
 						guide.cards = [];
 						returnedGuides.push(guide);
 						guides.splice(i, 1);
-						return;
 					}
-				}
+				});
+
+				// countries
+				guides.forEach((guide, i) => {
+					const countries = guide.countriesDisplay && guide.countriesDisplay.map((c) => c.replace(/\W/g, '').trim().toLowerCase());
+					if(countries && countries.length) {
+						for(country of countries) {
+							if(country.indexOf(term) > -1) {
+								guide.cards = [];
+								returnedGuides.push(guide);
+								guides.splice(i, 1);
+								return;
+							}
+						}
+					}
+				});
+
+				// cities
+				guides.forEach((guide, i) => {
+					const cities = guide.citiesDisplay && guide.citiesDisplay.map((c) => c.toLowerCase());
+					if(cities && cities.length) {
+						for(city of cities) {
+							if(city.indexOf(term) > -1) {
+								guide.cards = [];
+								returnedGuides.push(guide);
+								guides.splice(i, 1);
+								return;
+							}
+						}
+					}
+				});
+
+				// tags
+				guides.forEach((guide, i) => {
+					const tags = guide.tags && guide.tags.map((t) => t.replace(/\W/g, '').trim().toLowerCase());
+					if(tags && tags.indexOf(term) > -1) {
+						guide.cards = [];
+						returnedGuides.push(guide);
+						guides.splice(i, 1);
+					}
+				});
+
+				// card titles
+				guides.forEach((guide, i) => {
+					if(guide.cards) {
+						for(let i = 0, length = guide.cards.length; i < length; i++) {
+							const card = guide.cards[i];
+
+							if(card.title && card.title.replace(/\W/g, '').trim().toLowerCase().indexOf(term) > -1) {
+								guide.cards = [];
+								returnedGuides.push(guide);
+								guides.splice(i, 1);
+								return;
+							}
+						}
+					}
+				});
 			}
-		});
+		}
 	}
 
 	returnedGuides.forEach((guide) => {
@@ -146,7 +209,8 @@ router.get('/search', (req, res, next) => {
 		originalTerm,
 		term,
 		countries,
-		tags
+		tags,
+		searchType
 	});
 });
 

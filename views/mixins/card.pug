@@ -64,7 +64,7 @@ mixin guideCard(guide, showAuthor, size)
 			if guide.countriesDisplay && guide.countriesDisplay.length
 				.ta-R.p-A.r-0.l-0.t-0.z-1
 					for country in guide.countriesDisplay
-						a.d-Ib.bg-Gr.fc-W.p-Xs.fw-N.mr-XXs.mt-XXs(href=`/search?term=${country}`)= country
+						a.d-Ib.bg-Gr.fc-W.p-Xs.fw-N.mr-XXs.mt-XXs(href=`/search?term=${country}&type=country`)= country
 
 			if guide.cardImage || guide.isFeatured
 				a(href=`/${guide.authorUsername}/${guide.url}`)
@@ -78,8 +78,8 @@ mixin guideCard(guide, showAuthor, size)
 					+favorite(guide.Id)
 			a(href=`/${guide.authorUsername}/${guide.url}`)
 				h3.ta-L.m-0.fc-B.p-Sm
-					span.pr-Md= guide.names.display
-					.fs-Sm.mt-XXs.d-B.fc-G
+					span.d-B.pr-Lg= guide.names.display
+					span.fs-Sm.mt-XXs.d-B.fc-G
 						strong.pr-Sm #[span.hidden-xs Created] #[i.fa.fa-clock-o(aria-hidden='true')]
 						-var created = new Date(guide.created)
 						= `${month[created.getMonth()]} ${created.getDate()}, ${created.getFullYear()}`

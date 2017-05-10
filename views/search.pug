@@ -1,17 +1,18 @@
 extends layout.pug
 
 block content
-	.ptb-Xl(style='background: #ccc url("../images/splashpage-japan-path-image.jpg") no-repeat scroll top center / 100%')
-		.container.ta-C
-			h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
-				span.d-b.plr-Sm Find Your Inspiration
-				//small.pt-Sm.d-B Plan Spontaneity
+	div(style='background: #ccc url("../images/uyuni-peoplereflection--banner.jpg") no-repeat scroll top center / 100%')
+		.ptb-Xl.bg-Dk
+			.container.ta-C
+				h1.fw-N.fs-32.fs-64--sm.mt-Lg.hidden-xs
+					span.d-b.plr-Sm Find Your Inspiration
+					//small.pt-Sm.d-B Plan Spontaneity
 	
 	.container
 		.p-Md--sm
 			if guides && guides.length
 				.row
-					.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter')
+					.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter', style='z-index: 3;')
 						.visible-xs
 							button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filters
 						#GuideFilter.hidden-xs.bg-Ltst.w-A.p-Sm(data-toggle='hidden-xs')

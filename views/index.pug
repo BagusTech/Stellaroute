@@ -26,10 +26,13 @@ block content
 		.ptb-Sm.p-Md--sm
 			h2.ta-C.mb-Lg.fs-48: span.fw-B.fc-G Featured Guides
 			if guides && guides.length
+				- var featuredGuideIterator = 0;
+
 				.row
-					for guide in guides
-						.col-xs-12.col-sm-6.col-md-3
-							+guideCard(guide, true, 'medium')
+					while featuredGuideIterator < 4
+						.col-xs-12.col-sm-6.col-md-3.mb-Md
+							+guideCard(guides[featuredGuideIterator], true, 'medium')
+						- featuredGuideIterator++;
 				.ta-R
 					a.btn.btn-secondary(href='/search') View All Guides #[i.fa.fa-chevron-right(aria-hidden='true')]
 			else

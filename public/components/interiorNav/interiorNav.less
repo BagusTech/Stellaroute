@@ -40,11 +40,6 @@
 		}
 	}
 
-	.interior-nav--nav.interior-nav--nav__scroll {
-		overflow-y: scroll;
-		max-height: 90vh;
-	}
-
 	.interior-nav--node,
 	.interior-nav--node:link{
 		color: inherit;
@@ -63,6 +58,11 @@
 
 		&:active, &:focus {
 			outline: none;
+		}
+
+		&.interior-nav--node__active {
+			border-left: 2px solid white;
+			padding-left: @gw-Xs - 2;
 		}
 
 	}

@@ -5304,6 +5304,12 @@ button.close {
 .affix {
   position: fixed;
 }
+.scroll-y {
+  overflow-y: scroll;
+}
+.scroll-x {
+  overflow-x: scroll;
+}
 @-ms-viewport {
   width: device-width;
 }
@@ -5894,10 +5900,6 @@ button.close {
   transition: transform 0.1s ease-out;
   transition: transform 0.1s ease-out, -webkit-transform 0.1s ease-out;
 }
-.interior-nav .interior-nav--nav.interior-nav--nav__scroll {
-  overflow-y: scroll;
-  max-height: 90vh;
-}
 .interior-nav .interior-nav--node,
 .interior-nav .interior-nav--node:link {
   color: inherit;
@@ -5915,6 +5917,11 @@ button.close {
 .interior-nav .interior-nav--node:focus,
 .interior-nav .interior-nav--node:link:focus {
   outline: none;
+}
+.interior-nav .interior-nav--node.interior-nav--node__active,
+.interior-nav .interior-nav--node:link.interior-nav--node__active {
+  border-left: 2px solid white;
+  padding-left: 4px;
 }
 .interior-nav h3 {
   margin: 0;
@@ -6399,7 +6406,7 @@ button.close {
 [data-function*='stickey'].stuck [data-stickey='content'] {
   position: absolute;
 }
-.stickey {
+.sticky {
   position: -webkit-sticky;
   position: sticky;
   top: 0;

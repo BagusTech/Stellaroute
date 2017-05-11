@@ -1,7 +1,7 @@
 #GuideCards.clear(duck-table= isMe && 'Guides', duck-function= isMe && 'update', duck-key= isMe && 'Id', duck-key-value= isMe && guide.Id)
 	.hidden(duck-type='string', duck-field='lastEdited')
 		input(duck-value, type='text', value= new Date())
-	.col-xs-12.col-sm-1.stickey.pull-right.z-1.guide--aside
+	.col-xs-12.col-sm-1.sticky.pull-right.z-1.guide--aside
 		if isMe
 			.card-admin.js-card-admin.btn-group-vertical.hidden-xs
 				button.btn.btn-default.js-expand-collapse(data-toggle="tooltip", data-container="body", data-placement="left" title="Expand / Collapse"): i.fa.fa-compress(aria-hidden='true')
@@ -13,7 +13,7 @@
 	.col-xs-12.col-sm-11.guide--content
 		.row
 			.col-xs-12.col-sm-4.col-lg-3.guide--nav
-				.stickey.t-Sm.js-guide-nav
+				.sticky.t-Sm.js-guide-nav
 					include guideNav.pug
 
 			.col-xs-12.col-sm-7.col-lg-8.guide--cards

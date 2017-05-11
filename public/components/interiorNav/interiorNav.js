@@ -74,19 +74,6 @@ void function initInteriorNav($) {
 		$toggleIcon.toggleClass('fa-rotate-180')
 	}
 
-	function checkNavHeight(e) {
-		e.stopPropagation();
-		e.preventDefault();
-
-		const $interiorNav = e.data.interiorNav;
-		const navHeight = $interiorNav.removeClass('interior-nav--nav__scroll').height();
-		const windowHeight = $(window).height();
-
-		if(navHeight >= windowHeight*0.9) {
-			$interiorNav.addClass('interior-nav--nav__scroll')
-		}
-	}
-
 	function interiorNav(wrapper, contentWrapper, userDefinedOffset) {
 		const $wrapper = $(wrapper);
 		const isWindow = !(contentWrapper || $wrapper.attr('data-interior-nav-content-wrapper'));
@@ -98,15 +85,10 @@ void function initInteriorNav($) {
 		const $toggle = $wrapper.find('[data-interior-nav="toggle"]');
 		const $toggleIcon = $toggle.find('.fa');
 		const offset = userDefinedOffset || $wrapper.attr('data-interior-nav-offset') || 24;
-		const $interiorNav = $wrapper.find('.interior-nav--nav');
 		
 		$toggle.off('click', toggleNav).on('click', {wrapper: $wrapper, toggleIcon: $toggleIcon}, toggleNav);
 		$wrapper.find('a').off('click', scrollTo).on('click', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, content: $content, offset, isWindow}, scrollTo);
 		$contentScrollWrap.off('scroll', checkForActiveTabChange).on('scroll', {wrapper: $wrapper, nodes: $nodes, contentScrollWrap: $contentScrollWrap, offset, isWindow}, checkForActiveTabChange);
-		$wrapper.off('interiorNav.tabChange', checkNavHeight).on('interiorNav.tabChange', {interiorNav: $interiorNav}, checkNavHeight);
-		$wrapper.off('tab-changed', checkNavHeight).on('tab-changed', {interiorNav: $interiorNav}, checkNavHeight);
-
-		$wrapper.trigger('interiorNav.tabChange');
 	}
 
 	$.fn.interiorNav = function(contentWrapper, offset) {

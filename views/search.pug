@@ -12,26 +12,31 @@ block content
 		.p-Md--sm
 			if guides && guides.length
 				.row
-					.col-xs-12.col-sm-4.col-md-3.col-lg-2.stickey(data-function='filter', style='z-index: 3;')
-						.visible-xs
-							button.btn.btn-default.w-100(data-function='toggle', data-target='#GuideFilter') Filters
-						#GuideFilter.hidden-xs.bg-Ltst.w-A.p-Sm(data-toggle='hidden-xs')
-							if countries && countries.length
-								div(data-filter-section='country')
-									h2.mt-0.pt-Sm Country
-									for country in countries
-										.checkbox
-											label
-												input(type='checkbox', value= country, checked= country === term || country === originalTerm)
-												span= country
-							if tags && tags.length
-								div(data-filter-section='tags')
-									h2.mt-0.pt-Sm Tag
-									for tag in tags
-										.checkbox
-											label
-												input(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
-												span= tag
+					.col-xs-12.col-sm-4.col-md-3.col-lg-2.sticky.mb-Sm(data-function='filter', style='z-index: 3;')
+						div(style='margin: 0 -1px;')
+							.visible-xs
+								button.btn.btn-secondary.w-100.js-sticky-content-trigger(data-function='toggle', data-target='#GuideFilter') Filters
+							#GuideFilter.js-sticky-content.bg-G__ltst.bg-Ltst--sm.hidden-xs.bw-Sm.btw-0.bs-S.bc-G__dkst.bw-0--sm(data-toggle='hidden-xs')
+								.p-Sm
+									if countries && countries.length
+						
+										div(data-filter-section='country', data-function='accordion')
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18.rotate-Neg180(aria-hidden='true', data-toggle='rotate-Neg180')] Country
+											div(role='tabpanel', aria-hidden='false')
+												for country in countries
+													.checkbox
+														label
+															input(type='checkbox', value= country, checked= country === term || country === originalTerm, disabled = countries.length === 1)
+															span= country
+									if tags && tags.length
+										div(data-filter-section='tags', data-function='accordion')
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18(aria-hidden='true', data-toggle='rotate-Neg180')] Tag
+											div(role='tabpanel', aria-hidden='true')
+												for tag in tags
+													.checkbox
+														label
+															input(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
+															span= tag
 
 					.col-xs-12.col-sm-8.col-md-9.col-lg-10
 						.p-R.mb-Md.js-search-bar-z-index

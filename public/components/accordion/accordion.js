@@ -75,15 +75,13 @@ void function initializeAccordions($) {
 
         // if there is a tab panel hade/show it
         if($tabpanel.length) {
-            $tabpanel.attr('aria-hidden', tabState).slideToggle(animationSpeed);
+            $tabpanel.attr('aria-hidden', tabState).slideToggle(animationSpeed, () => {
+                $tabToToggle.closest('[data-function*="scroll"]').trigger('initScroll')
+                $tabToToggle.trigger('tab-changed', [ true ]);
+            });
+        } else {
+            $tabToToggle.trigger('tab-changed', [ true ]);
         }
-
-        // trigger tab-changed event when done
-        setTimeout(() => {
-            $tabToToggle.closest('[data-function*="scroll"]').trigger('initScroll')
-        }, animationSpeed);
-
-        $tabToToggle.trigger('tab-changed', [ true ]);
     }
 
     function changeTab(e, isOnLoad) {

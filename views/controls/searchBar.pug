@@ -7,6 +7,16 @@ form.js-search-bar.search-bar
 			.search-bar--results.js-search-results-wrapper.hidden
 				button.close.js-close-search(type='submit') &times;
 				.search-results.js-search-results
+		//.input-group-btn
+			button.btn.btn-default(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+				span.js-search-type= (searchType) ? searchType.charAt(0).toUpperCase()  + searchType.slice(1) : 'All'
+				i.fa.fa-chevron-down.ml-Xs(aria-hidden='true')
+			ul.dropdown-menu
+				li(class= !searchType || searchType === 'all' && 'active'): a(href='#') All
+				li(class= searchType === 'country' && 'active'): a(href='#') Country
+				//li(class= searchType === 'city' && 'active'): a(href='#') City
+				li(class= searchType === 'title' && 'active'): a(href='#') Title
+				li(class= searchType === 'tag' && 'active'): a(href='#') Tag
 		.input-group-btn
 			a.btn.btn-primary.js-search-button(hre='/search') Search
 	.search-bar--backdrop.js-seach-backdrop.js-close-search.hidden

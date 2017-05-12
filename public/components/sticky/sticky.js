@@ -32,8 +32,6 @@ void function initializeStickyContentAddon($) {
 		let resizeDebounce;
 
 		return (e) => {
-
-			console.log('here')
 			clearTimeout(resizeDebounce);
 
 			resizeDebounce = setTimeout(() => {

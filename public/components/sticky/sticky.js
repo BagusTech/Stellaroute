@@ -15,7 +15,15 @@ void function initializeStickyContentAddon($) {
 		const stickyHeight = $sticky.height();
 		const contentHeight = $wrapper.outerHeight(true);
 		const windowHeight = $(window).height();
-		const maxContentHeight = windowHeight - ($sticky.offset().top - $('html, body').scrollTop()) - (stickyHeight - contentHeight) - 12;
+		const stickyTop = $sticky.css('top');
+		const maxContentHeight = windowHeight - (stickyTop ? parseInt(stickyTop, 10) : 0) - (stickyHeight - contentHeight) - 12;
+
+		window.$wrapper = $wrapper;
+		window.$sticky = $sticky;
+		window.stickyHeight = stickyHeight;
+		window.windowHeight = windowHeight;
+		window.contentHeight = contentHeight;
+
 
 		if(contentHeight >= maxContentHeight) {
 			$wrapper.addClass('scroll-y').height(maxContentHeight);

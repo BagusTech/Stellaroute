@@ -11,20 +11,20 @@ void function initInteriorNav($) {
 		const scrollTop = $contentScrollWrap.scrollTop();
 		const $allActiveNodes = $nodes.filter((i, node) => $(node).is(':visible') && $(node).offset().top <= (isWindow ? scrollTop : e.data.offset));
 		const $activeNodes = $wrapper.find('.active');
+		const currentPosition = $activeNodes.last().attr('data-position');
+		const $currentActiveNode = $wrapper.find(`[data-position="${currentPosition}"]`);
 		const activePosition = $allActiveNodes.last().attr('data-position');
-		const currentPosition = $activeNodes.last().attr('data-position')
-		const newActiveNode = ($allActiveNodes.length && (activePosition !== currentPosition));
-		const removeActive = (!$allActiveNodes.length && $activeNodes.length) || newActiveNode;
+		const $newActiveNode = $wrapper.find(`[data-position="${activePosition}"]`)
+		const removeActive = (!$allActiveNodes.length && $activeNodes.length) || $newActiveNode.length;
 
 		if (removeActive) {
 			$wrapper.find('a').removeClass('interior-nav--node__active');
 		}
 
-		if (newActiveNode){
-			const $activeNode = $wrapper.find(`[data-position="${activePosition}"]`)
+		if ($newActiveNode.length && ($currentActiveNode[0] !== $newActiveNode[0])){
 			const $activeNodeParent = $wrapper.find(`[data-position="${activePosition.split('.')[0]}"]`);
 
-			$activeNode.addClass('interior-nav--node__active');
+			$newActiveNode.addClass('interior-nav--node__active');
 
 			if ($activeNodeParent.attr('aria-expanded') === 'false') {
 				$activeNodeParent.trigger('tab-change');

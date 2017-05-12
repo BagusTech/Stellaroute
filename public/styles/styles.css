@@ -5906,7 +5906,8 @@ button.close {
   display: block;
   font-weight: inherit;
   line-height: 1;
-  padding: 6px 0 6px;
+  padding: 6px 0 6px 12px;
+  border-left: 2px solid transparent;
 }
 .interior-nav .interior-nav--node[role='tab']:first-child,
 .interior-nav .interior-nav--node:link[role='tab']:first-child {
@@ -5920,8 +5921,7 @@ button.close {
 }
 .interior-nav .interior-nav--node.interior-nav--node__active,
 .interior-nav .interior-nav--node:link.interior-nav--node__active {
-  border-left: 2px solid white;
-  padding-left: 4px;
+  border-left-color: white;
 }
 .interior-nav h3 {
   margin: 0;
@@ -5930,7 +5930,7 @@ button.close {
 .interior-nav .interior-nav--sub-nav {
   list-style: none;
   margin: 0 0 12px;
-  padding: 0 0 0 36px;
+  padding: 0 0 0 24px;
   font-size: .9em;
   font-weight: 400;
 }

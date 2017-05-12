@@ -46,8 +46,9 @@
 		display: block;
 		font-weight: inherit;
 		line-height: 1;
-		padding: @gw-Xs 0 @gw-Xs;
-
+		padding: @gw-Xs 0 @gw-Xs @gw-Sm;
+		border-left: 2px solid transparent;
+		
 		&[role='tab'] {
 			
 
@@ -61,8 +62,7 @@
 		}
 
 		&.interior-nav--node__active {
-			border-left: 2px solid white;
-			padding-left: @gw-Xs - 2;
+			border-left-color: white;
 		}
 
 	}
@@ -74,7 +74,7 @@
 	.interior-nav--sub-nav {
 		list-style: none;
 		margin: 0 0 @gw-Sm;
-		padding: 0 0 0 @gw-Lg;
+		padding: 0 0 0 @gw-Md;
 		font-size: .9em;
 		font-weight: 400;
 	}

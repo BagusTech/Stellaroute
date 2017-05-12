@@ -385,7 +385,8 @@ void function initCardStyle($, duck){
 		const $publishIcon = $publishForm.find('.js-publish-icon');
 		const $publishedText = $subHeader.find('.js-is-publshed-text');
 		const $guideDetailsForm = $('#GuideDetailsForm');
-		const $guideDetailsSaveIcon = $guideDetailsForm.find('[duck-button="submit"] .fa');
+		const $guideDetailsSubmit = $guideDetailsForm.find('[duck-button="submit"]');
+		const $guideDetailsSaveIcon = $guideDetailsSubmit.find('.fa');
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $guideDetailsTags = $guideDetailsForm.find('[duck-field="tags"]');
@@ -432,12 +433,14 @@ void function initCardStyle($, duck){
 			e.stopPropagation();
 			e.preventDefault();
 
+			$guideDetailsSubmit.prop('disabled', true);
 			$guideDetailsEditIcon.toggleClass('fa-eye fa-pencil');
 		});
 
 		$guideDetailsForm.on('duck.form.submitted', (e) => {
 			e.stopPropagation();
 
+			$guideDetailsSubmit.prop('disabled', true);
 			$guideDetailsSaveIcon.toggleClass('hidden');
 		});
 
@@ -471,6 +474,7 @@ void function initCardStyle($, duck){
 				_$error.remove();
 			}, 3270);
 
+			$guideDetailsSubmit.prop('disabled', false);
 			$guideDetailsSaveIcon.toggleClass('hidden');
 			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
 		});

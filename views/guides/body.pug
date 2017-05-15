@@ -27,7 +27,7 @@
 									if cardsShown % 6 === 0
 										.guide-card--card(class=`guide-card--card__white`)
 											.guide-card--body.p-0
-												+ad()
+												+ad((cardsShown/6)-1)
 									- var card = _card.section || {}, offset = i;
 									include cards/_card.pug
 
@@ -36,7 +36,7 @@
 										if cardsShown % 6 === 0
 											.guide-card--card(class=`guide-card--card__white`)
 												.guide-card--body.p-0
-													+ad()
+													+ad((cardsShown/6)-1)
 										- card = _subCard; offset = `${i}.${j}`
 										include cards/_card.pug
 							
@@ -49,7 +49,7 @@
 							if cardsShown % 6 === 0
 								.guide-card--card(class=`guide-card--card__white`)
 									.guide-card--body.p-0
-										+ad()
+										+ad((cardsShown/6)-1)
 							- var card = _card.section, offset = i;
 							include cards/_card.pug
 
@@ -59,7 +59,7 @@
 									if cardsShown % 6 === 0
 										.guide-card--card(class=`guide-card--card__white`)
 											.guide-card--body.p-0
-												+ad()
+												+ad((cardsShown/6)-1)
 
 									- card = _subCard; offset = `${i}.${j}`
 									include cards/_card.pug

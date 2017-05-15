@@ -44,28 +44,29 @@
 .guide--content {
 	display: table;
 	padding: 0;
-	width: 160%;
-	left: -60%;
+	width: 200%;
+	left: -100%;
+	table-layout: fixed;
 
 	> .row {
 		display: table-row;
+		margin: 0;
 
 		> div {
 			display: table-cell;
 			float: none;
+			width: 50%;
 		}
 
 		.guide--nav {
-			width: 40%;
-			padding: 0;
-			margin: 0 0 0 0;
+			padding: 0 0 0 @gw-XXl;
+			margin: 0;
 			top: @gw-Sm;
-			left: 10px;
+			left: 0;
 			z-index: 2;
 		}
 		.guide--cards {
-			width: 60%;
-			padding: 0 @gw-Lg 0 @gw-Lg;
+			padding: 0 @gw-Md;
 		}
 	}
 }
@@ -536,6 +537,10 @@
 				left: auto;
 				z-index: 2;
 				position: sticky;
+
+				> .sticky {
+					position: relative;
+				}
 			}
 			.guide--cards {
 				width: 66.67%;

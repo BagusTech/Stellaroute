@@ -5862,7 +5862,6 @@ button.close {
   color: white;
   position: relative;
   padding: 12px;
-  margin-left: -12px;
   width: 100%;
   left: 0;
   top: 0;
@@ -7026,27 +7025,28 @@ body {
 .guide--content {
   display: table;
   padding: 0;
-  width: 160%;
-  left: -60%;
+  width: 200%;
+  left: -100%;
+  table-layout: fixed;
 }
 .guide--content > .row {
   display: table-row;
+  margin: 0;
 }
 .guide--content > .row > div {
   display: table-cell;
   float: none;
+  width: 50%;
 }
 .guide--content > .row .guide--nav {
-  width: 40%;
-  padding: 0;
-  margin: 0 0 0 0;
+  padding: 0 0 0 60px;
+  margin: 0;
   top: 12px;
-  left: 10px;
+  left: 0;
   z-index: 2;
 }
 .guide--content > .row .guide--cards {
-  width: 60%;
-  padding: 0 36px 0 36px;
+  padding: 0 24px;
 }
 .guide--cards {
   padding-top: 12px;
@@ -7651,6 +7651,9 @@ fieldset[disabled] .guide .publish-button.focus {
     z-index: 2;
     position: -webkit-sticky;
     position: sticky;
+  }
+  .guide--content > .row .guide--nav > .sticky {
+    position: relative;
   }
   .guide--content > .row .guide--cards {
     width: 66.67%;

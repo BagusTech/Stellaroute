@@ -1,8 +1,7 @@
 - var adSlots = ["2743856074", "2964182075", "1347848079", "2824581279"], adSlotsLength = adSlots.length;
 
 mixin ad(slot)
-	if env === 'production' && slot && adSlots[slot]
-
+	if env === 'production' && adSlots[slot]
 		ins.adsbygoogle(style="display:block", data-ad-client="ca-pub-5229644281598502", data-ad-slot=adSlots[slot], data-ad-format="auto")
-	else
-		.p-Sm.bg-Purp.fc-W.fw-B.fs-24.ta-C Ad #{(slot % adSlotsLength) + 1} Goes Here!
+	else if adSlots[slot]
+		.p-Sm.bg-Purp.fc-W.fw-B.fs-24.ta-C Ad #{slot + 1} Goes Here!

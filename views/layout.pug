@@ -1,12 +1,12 @@
 doctype html
 
 html(lang='en')
-	// include all mixins
-	include mixins/_mixins.pug
-
 	head
 		include controls/common-resources.pug
 		block head
+
+	// include all mixins
+	include mixins/_mixins.pug
 
 	body.loading#Stellaroute
 		if env === 'production'

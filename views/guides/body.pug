@@ -18,14 +18,25 @@
 
 			.col-xs-12.col-sm-7.col-lg-8.guide--cards
 				.js-nav-nodes
+					-var cardsShown = 0;
 					if isMe
 						.js-guide-cards(duck-field='cards', duck-type='array')
 							div
 								for _card, i in cards.length ? cards : [{newGuide: true}]
+									- cardsShown++
+									if cardsShown % 6 === 0
+										.guide-card--card(class=`guide-card--card__white`)
+											.guide-card--body.p-0
+												+ad()
 									- var card = _card.section || {}, offset = i;
 									include cards/_card.pug
 
 									for _subCard, j in _card.subCards ? _card.subCards : []
+										- cardsShown++
+										if cardsShown % 6 === 0
+											.guide-card--card(class=`guide-card--card__white`)
+												.guide-card--body.p-0
+													+ad()
 										- card = _subCard; offset = `${i}.${j}`
 										include cards/_card.pug
 							
@@ -34,10 +45,21 @@
 									i.fa.fa-plus(aria-hidden='true')
 					else
 						for _card, i in cards ? cards : [{}]
+							- cardsShown++
+							if cardsShown % 6 === 0
+								.guide-card--card(class=`guide-card--card__white`)
+									.guide-card--body.p-0
+										+ad()
 							- var card = _card.section, offset = i;
 							include cards/_card.pug
 
 							div
 								for _subCard, j in _card.subCards ? _card.subCards : []
+									- cardsShown++
+									if cardsShown % 6 === 0
+										.guide-card--card(class=`guide-card--card__white`)
+											.guide-card--body.p-0
+												+ad()
+
 									- card = _subCard; offset = `${i}.${j}`
 									include cards/_card.pug

@@ -1,6 +1,9 @@
 doctype html
 
 html(lang='en')
+	// include all mixins
+	include mixins/_mixins.pug
+
 	head
 		include controls/common-resources.pug
 		block head
@@ -13,9 +16,6 @@ html(lang='en')
 					google_ad_client: "ca-pub-5229644281598502",
 					enable_page_level_ads: true
 				});
-
-		// include all mixins
-		include mixins/_mixins.pug
 
 		block options
 			- var logoColor = 'purple';
@@ -36,3 +36,7 @@ html(lang='en')
 
 		block footer
 			include controls/footer.pug
+
+		if env === 'production'
+			script.
+				(adsbygoogle = window.adsbygoogle || []).push({});

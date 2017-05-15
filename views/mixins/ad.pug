@@ -5,5 +5,4 @@ mixin ad(slot)
 
 		ins.adsbygoogle(style="display:block", data-ad-client="ca-pub-5229644281598502", data-ad-slot=adSlots[slot], data-ad-format="auto")
 	else
-		-console.log(slot, adSlotsLength)
 		.p-Sm.bg-Purp.fc-W.fw-B.fs-24.ta-C Ad #{(slot % adSlotsLength) + 1} Goes Here!

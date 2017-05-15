@@ -21,21 +21,21 @@ block content
 									if countries && countries.length
 						
 										div(data-filter-section='country', data-function='accordion')
-											h2.mt-0.pt-Sm(role='tab', aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18.rotate-Neg180(aria-hidden='true', data-toggle='rotate-Neg180')] Country
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18(aria-hidden='true', data-toggle='rotate-90')] Country
 											div(role='tabpanel', aria-hidden='false')
 												for country in countries
-													.checkbox
+													.checkbox.pt-Xs
 														label
-															input(type='checkbox', value= country, checked= country === term || country === originalTerm, disabled = countries.length === 1)
+															input.t-Xs(type='checkbox', value= country, checked= country === term || country === originalTerm, disabled = countries.length === 1)
 															span= country
 									if tags && tags.length
 										div(data-filter-section='tags', data-function='accordion')
-											h2.mt-0.pt-Sm(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18(aria-hidden='true', data-toggle='rotate-Neg180')] Tag
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18.rotate-90(aria-hidden='true', data-toggle='rotate-90')] Tag
 											div(role='tabpanel', aria-hidden='true')
 												for tag in tags
-													.checkbox
+													.checkbox.pt-Xs
 														label
-															input(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
+															input.t-Xs(type='checkbox', value= tag, checked= tag === term || tag === originalTerm)
 															span= tag
 
 					.col-xs-12.col-sm-8.col-md-9.col-lg-10

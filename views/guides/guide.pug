@@ -3,7 +3,7 @@ extends ../layout.pug
 append head
 	- var ogStuffLoaded = false;
 
-	if env !== 'production' && !ogStuffLoaded
+	if env === 'production' && !ogStuffLoaded
 		meta(property="og:image" content=getImagePath(guide.cardImage, 'large'))
 		meta(property="og:type" content="article")
 		meta(property="og:title" content=`${guide.names.display} - stellaroute.com`)

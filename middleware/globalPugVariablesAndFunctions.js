@@ -7,7 +7,7 @@ const sortBy = require('../modules/sortBy');
 function globalPugVariablesAndFunctions(req, res, next){
 	// res.locals.env is set in app.js
 	if(res.locals.env === 'production' && req._parsedOriginalUrl) {
-        res.locals.canonicalUrl = `https://www.${req.headers.host}${req._parsedOriginalUrl.pathname}`;
+        res.locals.canonicalUrl = `https://${req.headers.host}${req._parsedOriginalUrl.pathname}`;
     }
 
 	res.locals.url = req.originalUrl;

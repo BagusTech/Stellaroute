@@ -1,5 +1,15 @@
 extends ../layout.pug
 
+append head
+	if env === 'production'
+		meta(property="og:type" content="article")
+		meta(property="og:title" content=`${guide.names.display} - stellaroute.com`)
+		meta(property="og:description" content=guide.tagline)
+		meta(property="og:url" content=canonicalUrl)
+		meta(property="og:site_name" content="stellaroute.com")
+		meta(property="article:published_time" content=guide.created)
+		meta(property="article:author" content=`stellaroute ${author.username}`)
+
 block content
 	.guide
 		include header.pug

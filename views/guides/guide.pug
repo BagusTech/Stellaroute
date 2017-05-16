@@ -1,7 +1,10 @@
 extends ../layout.pug
 
 append head
-	if env === 'production'
+	- var ogStuffLoaded = false;
+
+	if env !== 'production' && !ogStuffLoaded
+		meta(property="og:image" content=getImagePath(guide.cardImage, 'large'))
 		meta(property="og:type" content="article")
 		meta(property="og:title" content=`${guide.names.display} - stellaroute.com`)
 		meta(property="og:description" content=guide.tagline)
@@ -9,6 +12,8 @@ append head
 		meta(property="og:site_name" content="stellaroute.com")
 		meta(property="article:published_time" content=guide.created)
 		meta(property="article:author" content=`stellaroute ${author.username}`)
+
+		-ogStuffLoaded = true;
 
 block content
 	.guide

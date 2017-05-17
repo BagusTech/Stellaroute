@@ -398,6 +398,22 @@ router.post('/request-location', (req, res) => {
 });
 
 // authentication
+router.get('/send-magic-link/:email', (req, res, next) => {
+	const key = uuid()
+	const email = req.params.email;
+	const subject = "You're Magic Link to Stellaroute";
+	const html = `
+		<h1>Your Stellaroute Magic Link!</h1>
+		<p><a href='https://www.stellaroute.com/auth/local-magic-link?email=${email}&key=${key}'>Click Here!</a> to log in to your stellaroute account and change your password.</p>
+	`;
+
+	cache.set(key, new Date(), 60*10);
+
+	console.log(`magic link sent to: ${email} at ${new Date()}`);
+	sendEmail(email, subject, null, html);
+	res.render('profile/magic-link-landing', {email});
+});
+
 router.get('/reset-password', (req, res) => {
 	res.render('reset-password', {
 		title: 'Stellaroute: Password Reset',
@@ -448,7 +464,6 @@ router.get('/sign-up', (req, res, next) => {
 	}
 });
 
-
 router.get('/profile', (req, res, next) => {
 	const user = req.user;
 
@@ -466,27 +481,21 @@ router.post('/signup', passport.authenticate('local-signup', {
 	failureFlash: true
 }));
 
-router.post('/auth/local', passport.authenticate('local-login', {
+router.post('/auth/local', (req, res, next) => {
+	const email = req.body.email
+	const user = User.findOne('local.email', email).items;
+
+	if(user && !user.local.password) {
+		res.redirect(`/send-magic-link/${email}`)
+		return;
+	}
+
+	next();
+}, passport.authenticate('local-login', {
 	successRedirect: '/profile',
 	failureRedirect: '/login',
 	failureFlash: true
 }));
-
-router.get('/send-magic-link/:email', (req, res, next) => {
-	const key = uuid()
-	const email = req.params.email;
-	const subject = "You're Magic Link to Stellaroute";
-	const template = `
-		<a href='https://www.stellaroute.com/auth/local-magic-link?email=${email}&key=${key}'>Click Here!</a>
-	`;
-
-	cache.set(key, new Date(), 60*10);
-
-	console.log(`/auth/local-magic-link?email=${email}&key=${key}`)
-	res.redirect('/login')
-
-	//sendEmail(email, subject, template);
-});
 
 router.get('/auth/local-magic-link', passport.authenticate('local-magic-link', {
 	successRedirect: '/profile',

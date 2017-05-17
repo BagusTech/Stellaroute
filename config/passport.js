@@ -45,7 +45,7 @@ strategies.local = function(passport){
 			if (User.findOne('local.email', email).items) {
 				return done(null, false, req.flash('error', 'That email is already taken'));
 			} else if (User.findOne('username', req.body.username).items) {
-				return done(null, false, req.flash('error', 'That email is already taken'));
+				return done(null, false, req.flash('error', 'That username is already taken'));
 			} else if(password.length < 4) {
 				return done(null, false, req.flash('error', 'Your Passphrase must be at least 4 characters long.'));
 			}
@@ -83,7 +83,9 @@ strategies.local = function(passport){
 		}, function(req, email, password, done){
 			const user = User.findOne('local.email', email).items;
 
-			if(user && User.validPassword(password, user.local.password)){
+			if(user && !user.local.password){
+				return done(null, false, req.flash('error', 'Sorry, the password and email did not match!'));
+			} else if (user && User.validPassword(password, user.local.password)) {
 				return done(null, user);
 			}
 

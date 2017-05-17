@@ -1,0 +1,26 @@
+extends ../layout.pug
+
+block content
+	+splashPage(null, '15%')
+		.container.pb-XXl--md
+			h1.ta-C.pb-XXl--md.mt-0
+				img.img-responsive(src='/images/logo.png', alt='stellaroute')
+
+			.row
+				.col-xs-12.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
+					.content-card
+						h2.content-card--header Log In
+						.modal-body
+							input(type='hidden', name='_csrf', value= csrfToken)
+							.col-xs-12
+								p.lead.m-0.ta-C An email has been sent to #[em(style='text-decoration: underline;')= email] with a #[span.fw-B.fc-Purp(data-toggle="tooltip", title='Magic links allow you to log in without a password.') Magic Link] for you to log in with! From there, you can create your password.
+							.col-xs-12.mtb-Sm
+								.text-wings.fc-G.mb-Sm
+									hr
+									span or
+									hr
+
+							.col-xs-12
+								a.btn.btn-lg.bg-Bl__fb.fc-W.mb-Sm.ws-Normal(href="/auth/facebook") #[i.fa.fa-facebook-official.mr-Xs(aria-hidden='true')] Continue with Facebook
+
+block footer

@@ -1,3 +1,6 @@
+if includeMixins
+	include ..\mixins\_mixins.pug
+
 #GuideCards.clear(duck-table= isMe && 'Guides', duck-function= isMe && 'update', duck-key= isMe && 'Id', duck-key-value= isMe && guide.Id)
 	.hidden(duck-type='string', duck-field='lastEdited')
 		input(duck-value, type='text', value= new Date())
@@ -5,7 +8,7 @@
 		if isMe
 			.card-admin.js-card-admin.btn-group-vertical.hidden-xs
 				button.btn.btn-default.js-expand-collapse(data-toggle="tooltip", data-container="body", data-placement="left" title="Expand / Collapse"): i.fa.fa-compress(aria-hidden='true')
-				button.btn.btn-default.js-add-card-start(data-toggle="tooltip", data-container="body", data-placement="left" title="Add Card"): i.fa.fa-pencil(aria-hidden='true')
+				button.btn.btn-default.js-add-card-start(data-toggle="tooltip", data-container="body", data-placement="left" title="Add Card"): i.fa(aria-hidden='true', class= startInAddCardMode ? 'fa-eye' : 'fa-pencil')
 
 		if guide.isPublished
 			.share42init.pt-Sm.ta-C.ta-L--sm
@@ -24,8 +27,8 @@
 							div
 								for _card, i in cards.length ? cards : [{newGuide: true}]
 									- cardsShown++
-									if cardsShown % 6 === 0
-										.guide-card--card(class=`guide-card--card__white`)
+									if cardsShown % 6 === 0 && !isMe
+										.guide-card--card.guide-card--card__white.guide-card--card__ad
 											.guide-card--body.p-0
 												+ad((cardsShown/6)-1)
 									- var card = _card.section || {}, offset = i;
@@ -33,21 +36,21 @@
 
 									for _subCard, j in _card.subCards ? _card.subCards : []
 										- cardsShown++
-										if cardsShown % 6 === 0
-											.guide-card--card(class=`guide-card--card__white`)
+										if cardsShown % 6 === 0 && !isMe
+											.guide-card--card.guide-card--card__white.guide-card--card__ad
 												.guide-card--body.p-0
 													+ad((cardsShown/6)-1)
 										- card = _subCard; offset = `${i}.${j}`
 										include cards/_card.pug
 							
 							.p-R
-								button.btn.btn-primary.guide-card--add-card(duck-button='add', class= startInEditMode ? '' : 'hidden')
-									i.fa.fa-plus(aria-hidden='true')
+								button.btn.btn-primary.guide-card--add-card(duck-button='add', class= (startInEditMode || startInAddCardMode) ? '' : 'hidden')
+									| Add Card #[i.fa.fa-plus(aria-hidden='true')]
 					else
 						for _card, i in cards ? cards : [{}]
 							- cardsShown++
-							if cardsShown % 6 === 0
-								.guide-card--card(class=`guide-card--card__white`)
+							if cardsShown % 6 === 0 && !isMe
+								.guide-card--card.guide-card--card__white.guide-card--card__ad
 									.guide-card--body.p-0
 										+ad((cardsShown/6)-1)
 							- var card = _card.section, offset = i;
@@ -56,8 +59,8 @@
 							div
 								for _subCard, j in _card.subCards ? _card.subCards : []
 									- cardsShown++
-									if cardsShown % 6 === 0
-										.guide-card--card(class=`guide-card--card__white`)
+									if cardsShown % 6 === 0 && !isMe
+										.guide-card--card.guide-card--card__white.guide-card--card__ad
 											.guide-card--body.p-0
 												+ad((cardsShown/6)-1)
 

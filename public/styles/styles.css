@@ -7255,12 +7255,10 @@ fieldset[disabled] .guide .publish-button.focus {
   opacity: .75;
   -webkit-transition: opacity .17s, left .17s;
   transition: opacity .17s, left .17s;
-  border-radius: 50%;
+  border-radius: 4px;
   display: block;
   margin: 0 auto;
   text-align: center;
-  width: 45px;
-  height: 45px;
   position: relative;
   top: -12px;
 }
@@ -7275,7 +7273,11 @@ fieldset[disabled] .guide .publish-button.focus {
 }
 .guide--cards [data-sort="item"]:first-child .guide-card--admin .guide-card--card__small,
 .guide--cards [data-sort="item"] .guide-card--add-card:not(.hidden) + .guide-card--small .guide-card--card__small,
-.guide--cards [data-sort="item"].guide-card--edit-mode + [data-sort="item"] .guide-card--admin .guide-card--card__small {
+.guide--cards [data-sort="item"].guide-card--edit-mode + [data-sort="item"] .guide-card--admin .guide-card--card__small,
+.guide-card--card__ad + .guide--cards [data-sort="item"] .guide-card--admin .guide-card--card__small {
+  margin-top: 0;
+}
+.guide--cards .guide-card--card__ad + [data-sort="item"] .guide-card--admin .guide-card--card__small {
   margin-top: 0;
 }
 .guide--cards .fa-plus {
@@ -7509,7 +7511,8 @@ fieldset[disabled] .guide .publish-button.focus {
 .card-styles--preview .guide-card--card__small {
   margin-top: 0;
 }
-.guide-card--card__small:first-child {
+.guide-card--card__small:first-child,
+.guide-card--card__ad + .guide-card--card__small {
   margin-top: 0;
 }
 .guide-card--card__plain .guide-card--body {

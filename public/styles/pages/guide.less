@@ -146,12 +146,12 @@
 	[duck-button='add'] {
 		opacity: .75;
 		transition: opacity .17s, left .17s;
-		border-radius: 50%;
+		border-radius: 4px;
 		display: block;
 		margin: 0 auto;
 		text-align: center;
-		width: 45px; 
-		height: 45px;
+		//width: 45px; 
+		//height: 45px;
 		position: relative;
 		top: -@gw-Sm;
 
@@ -178,10 +178,15 @@
 
 		&:first-child .guide-card--admin .guide-card--card__small,
 		.guide-card--add-card:not(.hidden) + .guide-card--small .guide-card--card__small,
-		&.guide-card--edit-mode + [data-sort="item"] .guide-card--admin .guide-card--card__small{
+		&.guide-card--edit-mode + [data-sort="item"] .guide-card--admin .guide-card--card__small,
+		.guide-card--card__ad + & .guide-card--admin .guide-card--card__small{
 			margin-top: 0;
 		}
 	}
+
+	.guide-card--card__ad + [data-sort="item"] .guide-card--admin .guide-card--card__small{
+			margin-top: 0;
+		}
 
 	.fa-plus {
 		transition: transform .17s;
@@ -448,7 +453,8 @@
 			margin-top: 0;
 		}
 
-		&:first-child {
+		&:first-child,
+		.guide-card--card__ad + & {
 			margin-top: 0;
 		}
 	}

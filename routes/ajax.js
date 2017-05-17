@@ -335,6 +335,7 @@ const router       = express.Router();
 
 		locals.getImagePath = res.locals.getImagePath;
 		locals.wysiwygHasData = res.locals.wysiwygHasData;
+		locals.includeMixins = true;
 
 		res.send(pug.compileFile(filePath)(locals));
 	});

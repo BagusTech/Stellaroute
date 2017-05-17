@@ -328,6 +328,12 @@ router.post('/email-capture', (req, res) => {
 	const template = 'betaSignup';
 
 	if(oldUser){
+		if (oldUser.recieveNewsletter === true) {
+			sendEmail(email, subject, template);
+			res.send({msg: 'success'});
+			return;
+		}
+
 		user.Id = oldUser.Id;
 		user.recieveNewsletter = true;
 

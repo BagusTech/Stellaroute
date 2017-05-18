@@ -1,5 +1,17 @@
 if (!user)
-	.login-control
+	nav.dropdown.visible-xs
+		button.bg-N.bw-0(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", class= loginClasses)
+			i.fa.fa-bars.fa-2x(aria-hidden='true')
+			span.sr-only Toggle Menu
+
+		ul.dropdown-menu.l-A.r-0(aria-labelledby="UserMenu")
+			li: a(href='/search') Guides
+			li: a(href='/about-us') About Us
+			li: a(href='/contact-us') Contact Us
+			li.divider(role="separator")
+			li: a(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
+
+	.login-control.hidden-xs
 		//button.btn.sign-up.hidden-xs(type='button', data-toggle='modal', data-target='#SignupModal', tab-index='2') Sign Up
 		button.btn.btn-default.bw-N(type='button', data-toggle='modal', data-target='#LoginModal', tab-index='1') Log In
 

@@ -21,7 +21,7 @@ block content
 									if countries && countries.length
 						
 										div(data-filter-section='country', data-function='accordion')
-											h2.mt-0.pt-Sm(role='tab', aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18(aria-hidden='true', data-toggle='rotate-90')] Country
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='true', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18(aria-hidden='true', data-toggle='rotate-Neg90')] Country
 											div(role='tabpanel', aria-hidden='false')
 												for country in countries
 													.checkbox.pt-Xs
@@ -30,7 +30,7 @@ block content
 															span= country
 									if tags && tags.length
 										div(data-filter-section='tags', data-function='accordion')
-											h2.mt-0.pt-Sm(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18.rotate-90(aria-hidden='true', data-toggle='rotate-90')] Tag
+											h2.mt-0.pt-Sm(role='tab', aria-expanded='false', data-function='toggle', data-event='tab-change', data-target='this i') #[i.fa.fa-chevron-down.fs-18.rotate-Neg90(aria-hidden='true', data-toggle='rotate-Neg90')] Tag
 											div(role='tabpanel', aria-hidden='true')
 												for tag in tags
 													.checkbox.pt-Xs

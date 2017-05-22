@@ -80,8 +80,8 @@ mixin guideCard(guide, showAuthor, size)
 				h3.ta-L.m-0.fc-B.p-Sm
 					span.d-B.pr-Lg= guide.names.display
 					span.fs-Sm.mt-XXs.d-B.fc-G
-						strong.pr-Sm #[span.hidden-xs Created] #[i.fa.fa-clock-o(aria-hidden='true')]
-						-var created = new Date(guide.created)
+						strong.pr-Sm #[span.hidden-xs Last Edited] #[i.fa.fa-clock-o(aria-hidden='true')]
+						-var created = new Date(guide.lastEdited || guide.created)
 						= `${month[created.getMonth()]} ${created.getDate()}, ${created.getFullYear()}`
 			.ta-L.p-Sm.pt-0
 				if guide.tagline

@@ -116,6 +116,7 @@ const router       = express.Router();
 
 	router.post('/delete/:table', (req, res) => {
 		const user = req.user;
+		const tableName = req.params.table;
 		
 		if(((tableName === 'Users') && (!isAuthorized(user))) || !isAuthorized(user, 'beta-travel-wishlist', 'beta-general')) {
 			console.error('User is unauthorized.');

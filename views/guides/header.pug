@@ -1,4 +1,13 @@
 if isMe
+	#GuideDeleteForm.modal.fade(tabindex='-1', role='dialog')
+		.modal-dialog.modal-lg
+			.alert.alert-danger.p-Md(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='delete')
+				h4.mt-0 Delete Guide
+				p This will permanently delete your guide. If you are sure you want to permanently delete your guide, click #[strong Delete] below.
+				.ta-L.mt-Lg
+					button.btn.btn-default(data-toggle='modal', data-target='#GuideDetailsForm', data-dismiss='modal') Cancel
+					button.btn.btn-danger.f-R(type='submit', duck-button='submit') Delete #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
+
 	#GuideDetailsForm.modal.fade(tabindex='-1', role='dialog')
 		.modal-dialog.modal-lg
 			.modal-content(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='update')
@@ -77,6 +86,7 @@ if isMe
 											| Publish Your Guide
 
 				.modal-footer
+					button.btn.btn-danger.f-L(data-toggle='modal', data-target='#GuideDeleteForm', data-dismiss='modal') Delete Guide
 					button.btn.btn-default(data-dismiss='modal') Close
 					button.btn.btn-primary(type='submit', duck-button='submit') Save #[i.fa.fa-spinner.fa-spin.hidden(aria-hidden='true')]
 

@@ -390,6 +390,9 @@ void function initCardStyle($, duck){
 		const $guideDetailsEdit = $guideDetailsForm.find('[duck-button="edit"]');
 		const $guideDetailsEditIcon = $guideDetailsEdit.find('.fa');
 		const $guideDetailsTags = $guideDetailsForm.find('[duck-field="tags"]');
+		const $guideDeleteForm = $('#GuideDeleteForm');
+		const $guideDeleteSubmit = $guideDeleteForm.find('[duck-button="submit"]');
+		const $guideDeleteSaveIcon = $guideDeleteSubmit.find('.fa');
 		//const $bannerImage = $guideDetailsForm.find('[duck-field="bannerImage"] [duck-value]');
 
 		$publish.on('change', (e) => {
@@ -448,15 +451,6 @@ void function initCardStyle($, duck){
 			e.stopPropagation();
 
 			window.location.reload(true);
-
-			/*const imagePath = `https://s3-us-west-2.amazonaws.com/stellaroute/${$bannerImage.val().replace('.jpg', '-large.jpg')}`;
-			
-			$guideDetailsForm.modal('hide')
-
-			$subHeader.css('background-image', `url("${imagePath}")`);
-			$guideDetailsSaveIcon.toggleClass('hidden');
-			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
-			$guideDetailsEdit.click();*/
 		});
 
 		$guideDetailsForm.on('duck.form.error', (e) => {
@@ -500,6 +494,33 @@ void function initCardStyle($, duck){
 		$featuredForm.on('duck.form.error', () => {
 			window.location.reload(true);
 		})
+
+		$guideDeleteForm.on('duck.form.submitted', (e) => {
+			e.stopPropagation();
+
+			$guideDeleteSubmit.prop('disabled', true);
+			$guideDeleteSaveIcon.toggleClass('hidden');
+		});
+
+		$guideDeleteForm.on('duck.form.error', (e) => {
+			e.stopPropagation();
+
+			const _$error = $error.clone();
+
+			$guideDeleteForm.prepend(_$error);
+
+			setTimeout(() => {
+				_$error.slideUp(270);
+			}, 3000);
+
+			setTimeout(() => {
+				_$error.remove();
+			}, 3270);
+
+			$guideDeleteSubmit.prop('disabled', false);
+			$guideDeleteSaveIcon.toggleClass('hidden');
+			$guideDetailsForm.find('[duck-button="submit"]').prop('disabled', false);
+		});
 
 		$guideDetailsTags.prop('ArrayItemTemplate', $('<div class="input-group mb-Sm" duck-type="string" data-sort="item"><div class="input-group-addon" data-sort="handle"><i class="fa fa-arrows-v" aria-hidden="true"></i></div><input class="form-control" duck-value="" type="text"><div class="input-group-btn"><button class="btn btn-danger" duck-button="delete"><i class="fa fa-times" aria-hidden="true"></i><span class="sr-only">Delete</span></button></div></div>'));
 	});

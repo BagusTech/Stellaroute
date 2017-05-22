@@ -7833,10 +7833,6 @@ fieldset[disabled] .guide .publish-button.focus {
   content: ' ';
   border-bottom: 1px solid;
 }
-.fb-comments.fb_iframe_widget > span,
-.fb-comments.fb_iframe_widget > span > iframe {
-  width: 100% !important;
-}
 #Stellaroute .an-Xf {
   -webkit-transition: all 0.17s ease-out;
   transition: all 0.17s ease-out;

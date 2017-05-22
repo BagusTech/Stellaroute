@@ -66,3 +66,6 @@ if includeMixins
 
 									- card = _subCard; offset = `${i}.${j}`
 									include cards/_card.pug
+
+							if env === 'production'
+								div(class="fb-comments", data-href=canonicalUrl, data-numposts="5")

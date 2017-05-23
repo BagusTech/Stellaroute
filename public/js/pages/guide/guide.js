@@ -253,6 +253,7 @@ void function initCardStyle($, duck){
 				Id: guide.Id,
 				isPublished: $('.js-is-publshed-text').hasClass('hidden'),
 			},
+			startInAddCardMode: true,
 		};
 
 		$.ajax({

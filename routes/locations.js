@@ -148,7 +148,7 @@ router.get('/:user/:guide', (req, res, next) => {
 		cards,
 		countries: Country.cached().sort(sortBy('url')),
 		startInEditMode: !(cards && cards.length),
-		startInAddCardMode: !guide.isPublished
+		startInAddCardMode: !guide.isPublished,
 	});
 });
 

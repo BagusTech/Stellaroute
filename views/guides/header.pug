@@ -93,7 +93,7 @@ if isMe
 div.sub-header(style=`background: rgba(0, 0, 0, 0) url("${getImagePath(guide.bannerImage, 'large')}") no-repeat scroll center 57% / cover;`)
 	.bg-Dkr
 		.container.ptb-0.p-R
-			if userIsAuthorized(user)
+			if userIsAuthorized(user) && guide.isPublished
 				#MakeGuideFeatured.f-R(duck-table='Guides', duck-key='Id', duck-key-value=guide.Id, duck-function='update')
 					.hidden(duck-field='isFeatured', duck-type='bool')
 						input(type='checkbox', duck-value, checked= !guide.isFeatured)

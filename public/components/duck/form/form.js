@@ -62,7 +62,10 @@ void function initDuckForm($, duck, window) {
 		}
 
 		
-		$clone.find('.js-card').guideCard();
+		if($clone.guideCard) {
+			$clone.find('.js-card').guideCard();
+		}
+
 		$item.parent().sortable('[duck-type]');
 
 		$wrapper.trigger('duckArrayItemAdded', [$clone]);

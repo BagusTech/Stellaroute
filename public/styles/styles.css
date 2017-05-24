@@ -7699,6 +7699,18 @@ fieldset[disabled] .guide .publish-button.focus {
     width: 25%;
   }
 }
+[data-tabs='SettingsTabs'] {
+  padding: 0;
+}
+[data-tabs='SettingsTabs'] a {
+  font-weight: normal;
+  color: #4a4d50;
+  padding: 12px;
+  display: inline-block;
+}
+[data-tabs='SettingsTabs'] a[aria-expanded='true'] {
+  background: rgba(0, 0, 0, 0.1);
+}
 .loading .card {
   min-height: 150px;
 }

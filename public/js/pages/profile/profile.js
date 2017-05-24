@@ -7,7 +7,7 @@ void function initRequest($){
 		const $error = $('<div class="alert alert-danger p-A z-1 l-0 r-0 t-0">Something went wrong, please try again.</div>');
 
 	// USER FORM
-		const $userForm = $('#MySettings [duck-table="Users"]');
+		const $userForm = $('#Settings [duck-table="Users"]');
 		const $userSubmit = $userForm.find('[duck-button="submit"]');
 		const $username = $userForm.find('[duck-field="username"] [duck-value]');
 		const startingUsername = $username.val();
@@ -22,8 +22,6 @@ void function initRequest($){
 		const $tagline = $('.js-tagline');
 		const $aboutMeTab = $('.js-about-me-tab');
 		const $aboutMe = $('.js-about-me');
-
-
 
 		$username.prop('validateFunc', () => () => {
 			const newUsername = $username.val();

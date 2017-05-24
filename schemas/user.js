@@ -12,11 +12,11 @@ const User = Duck({
 		roles: Array,
 		name: {
 			first: String,
-			last: String
+			last: String,
 		},
 		local: {
 			email: String,
-			password: String
+			password: String,
 		},
 		gender: String,
 		profilePicture: String,
@@ -29,12 +29,13 @@ const User = Duck({
 		description: String,
 		isDeleted: Boolean,
 		isNewUser: Boolean,
+		featuredGuides: Array,
 	},
 	HASH: 'Id',
 	HASHType: 'S',
 	CacheDuration: 60*60*24, // 24h -- node-cache timing is in seconds, not miliseconds
 	//, Indexes : ['localEmail'],
-	UniqueBy: ['username']
+	UniqueBy: ['username'],
 }, null, false);
 
 module.exports = User;

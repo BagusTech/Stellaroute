@@ -69,17 +69,17 @@ block content
 						h1.js-first-name= userProfile.name ? userProfile.name.first : userProfile.username || 'unkown name, very mysterious'
 						p.fc-W.bg-Dkr.p-Sm.d-Ib.hidden-xs.js-tagline(class= userProfile.tagline ? '' : 'hidden')= userProfile.tagline
 
-				nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='controls')
+				nav.tabbed-nav.pl-0.mt-Lg--md(data-tabs='ProfileTabs')
 					a.tabbed-nav--tab(href='#MyGuides', role='tab', aria-expanded='true') My Guides
 					a.tabbed-nav--tab(href='#MyFavorites', role='tab', aria-expanded='false') Favorites
 					a.tabbed-nav--tab.js-about-me-tab(href='#AboutMe', role='tab', aria-expanded='false', class= wysiwygHasData(userProfile.description) ? '' : 'hidden') About Me
 					if isMe
-						a.tabbed-nav--tab(href='#MySettings', role='tab', aria-expanded='false') My Settings
+						a.tabbed-nav--tab(href='#Settings', role='tab', aria-expanded='false') Settings
 
 		.container
 			.mb-Sm.ta-R
 				.share42init
-			div(data-function='tabs')
+			#ProfileTabs(data-function='tabs')
 				#MyGuides.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='false')
 					if user && isMe
 						.p-R
@@ -100,10 +100,28 @@ block content
 													span.visible-xs= country
 						.col-xs-12.col-sm-8.col-md-9.col-lg-10
 							if guidesToShow.length
+								if userProfile.featuredGuides
+									-
+										guidesToShow = userProfile.featuredGuides.map((_guide) => {
+											var index = 0;
+											var g;
+
+											for (var i = 0, length = guidesToShow.length; i < length; i++) {
+												var _g = guidesToShow[i];
+
+												if (_g.Id === _guide) {
+													index = i;
+													g = _g;
+												}
+											}
+
+											guidesToShow.splice(index, 1);
+											return g;
+										}).concat(guidesToShow)
 								.masonry.masonry-grid-1.masonry-grid-3--md.masonry-grid-4--lg
-									for guide in guidesToShow
+									for guide, i in guidesToShow
 										.masonry--item(data-filter-country= guide.countriesDisplay && guide.countriesDisplay.join('|') || 'Unknown', class= guide.isPublished ? '' : 'bc-R bw-Md bs-S')
-											+guideCard(guide)
+											+guideCard(guide, false, userProfile.featuredGuides && i < userProfile.featuredGuides.length ? 'large' : null)
 							else if isMe
 								.w-100.w-33--sm.w-25--md
 									button.btn.btn-default.p-Xl(style='white-space: normal;', data-toggle='modal', data-target='#NewGuide')
@@ -126,55 +144,77 @@ block content
 					.panel.panel-default
 						.panel-body.js-about-me!=userProfile.description
 				if user && isMe
-					#MySettings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
+					#Settings.tabbed-nav--tabpanel(role='tabpanel', aria-hidden='true')
 						.panel.panel-default(duck-table='Users', duck-function='update', duck-key='Id', duck-key-value=user.Id)
-							.panel-heading My Settings
-							.panel-body
-								.row(duck-field='name', duck-type='object')
-									.col-xs-12.col-sm-6
-										.form-group(duck-field='first', duck-type='string')
-											label First Name
-												input.form-control(type='text', value= user.name && user.name.first, duck-value)
-									.col-xs-12.col-sm-6
-										.form-group(duck-field='last', duck-type='string')
-											label Last Name
-												input.form-control(type='text', value= user.name && user.name.last, duck-value)
-									
+							.panel-heading(data-tabs='SettingsTabs')
+								a(href='#MySettings', role='tab', aria-expanded='true') My Settings
+								a(href='#GuideManagement', role='tab', aria-expanded='false') Guide Management
+							#SettingsTabs(data-function='tabs')
+								#MySettings.panel-body(role='tabpanel', aria-hidden='false')
+									.row(duck-field='name', duck-type='object')
+										.col-xs-12.col-sm-6
+											.form-group(duck-field='first', duck-type='string')
+												label First Name
+													input.form-control(type='text', value= user.name && user.name.first, duck-value)
+										.col-xs-12.col-sm-6
+											.form-group(duck-field='last', duck-type='string')
+												label Last Name
+													input.form-control(type='text', value= user.name && user.name.last, duck-value)
+										
 
-								.form-group(duck-field='username', duck-type='string')
-									label Username
-										input.form-control(type='text', value= user.username, duck-value)
+									.form-group(duck-field='username', duck-type='string')
+										label Username
+											input.form-control(type='text', value= user.username, duck-value)
 
-								.row(duck-field='local', duck-type='object')
-									.col-xs-12
-										.form-group(duck-field='email', duck-type='string')
-											label Email
-												input.form-control(type='email', value= user.local && user.local.email, duck-value)
-								.row
-									.col-xs-12.col-sm-6
-										.form-group(duck-field='profilePicture', duck-type='image')
-											.hidden
-												input(type='text', value= user.profilePicture, duck-value)
-											label Profile Picture
-												.form-control(duck-button='image-select')
-													i.fa.fa-image(aria-hidden='true')
-													span.pl-Sm(duck-image-value)= user.profilePicture || 'Please select an Image'
-									.col-xs-12.col-sm-6
-										.form-group(duck-field='bannerImage', duck-type='image')
-											.hidden
-												input(type='text', value= user.bannerImage, duck-value)
-											label Banner Image
-												.form-control(duck-button='image-select')
-													i.fa.fa-image(aria-hidden='true')
-													span.pl-Sm(duck-image-value)= user.bannerImage || 'Please select an Image'
+									.row(duck-field='local', duck-type='object')
+										.col-xs-12
+											.form-group(duck-field='email', duck-type='string')
+												label Email
+													input.form-control(type='email', value= user.local && user.local.email, duck-value)
+									.row
+										.col-xs-12.col-sm-6
+											.form-group(duck-field='profilePicture', duck-type='image')
+												.hidden
+													input(type='text', value= user.profilePicture, duck-value)
+												label Profile Picture
+													.form-control(duck-button='image-select')
+														i.fa.fa-image(aria-hidden='true')
+														span.pl-Sm(duck-image-value)= user.profilePicture || 'Please select an Image'
+										.col-xs-12.col-sm-6
+											.form-group(duck-field='bannerImage', duck-type='image')
+												.hidden
+													input(type='text', value= user.bannerImage, duck-value)
+												label Banner Image
+													.form-control(duck-button='image-select')
+														i.fa.fa-image(aria-hidden='true')
+														span.pl-Sm(duck-image-value)= user.bannerImage || 'Please select an Image'
 
-								.form-group(duck-field='tagline', duck-type='string')
-									label Tagline
-										input.form-control(type='text', value= user.tagline, duck-value)
+									.form-group(duck-field='tagline', duck-type='string')
+										label Tagline
+											input.form-control(type='text', value= user.tagline, duck-value)
 
-								.form-group(duck-field='description', duck-type='wysiwyg')
-									label About Me
-									.summernote!= user.description
+									.form-group(duck-field='description', duck-type='wysiwyg')
+										label About Me
+										.summernote!= user.description
+								#GuideManagement.panel-body.ptb-Md(role='tabpanel', aria-hidden='true')
+									// featuredGuides
+									.form-group(duck-type='array', duck-field='featuredGuides')
+										label.col-sm-2.control-label Featured Guides
+										.col-sm-10
+											div
+												for featuredGuide in user.featuredGuides ? user.featuredGuides : [null]
+													.input-group.mb-Sm(duck-type='string')
+														.input-group-addon(data-sort='handle')
+															i.fa.fa-arrows-v(aria-hidden='true')
+														select.form-control(duck-value)
+															option
+															for guideToShow in guidesToShow ? guidesToShow : []
+																option(value=guideToShow.Id, selected= featuredGuide === guideToShow.Id)= guideToShow.names.display
+														.input-group-btn
+															button.btn.btn-danger(duck-button='delete')
+																i.fa.fa-times(aria-hidden='true')
+																span.sr-only Delete
+											p.ta-R: button.btn.btn-default(duck-button='add') Add Featured Guide
 
 							.panel-footer.text-right
 								button.btn.btn-default(data-toggle='modal', data-target='#ChangePassword') Change Password

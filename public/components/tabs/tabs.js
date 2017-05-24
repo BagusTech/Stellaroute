@@ -38,7 +38,7 @@ void function initializeTabs($) {
         const $wrapper = $(wrapper);
         const $tabs = $wrapper.find('> [role="tab"]');
         const $panels = $wrapper.find('> [role="tabpanel"]');
-        const $controls = $('[data-tabs="controls"]');
+        const $controls = $(`[data-tabs="${$wrapper.attr('id')}"]`);
         const pageAnchor = window.location.hash;
 
         if ($tabs.length) {

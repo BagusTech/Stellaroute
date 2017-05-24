@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
 						.items
 
 	res.render('index', {
-		title: 'Stellaroute: helping you explore your world your way',
+		title: 'Stellaroute: Helping You Explore Your World Your Way',
 		guides
 	});
 });

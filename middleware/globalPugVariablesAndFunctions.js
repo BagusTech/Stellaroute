@@ -11,8 +11,8 @@ function globalPugVariablesAndFunctions(req, res, next){
     }
 
 	res.locals.url = req.originalUrl;
-	res.locals.title = 'stellaroute';
-	res.locals.description = 'stellaroute: helping you plan spontinaity';
+	res.locals.title = 'Stellaroute';
+	res.locals.description = 'Stellaroute - Helping You Plan Spontinaity. Stellaroute is a startup trying to make it easier to find what you want to do wherever you go, and inspire you to get there.';
 	res.locals.attractionCategories = [
 		'Other',
 		'Buildings & Scyscrapers',
@@ -30,7 +30,7 @@ function globalPugVariablesAndFunctions(req, res, next){
 		'Market & Bazzar',
 		'Area of Significance',
 		'Trails & Walkways',
-		'Historic Landmark'
+		'Historic Landmark',
 	];
 
 	res.locals.tablesList = [

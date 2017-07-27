@@ -48,6 +48,7 @@ function redirectUrl(req, res) {
 };
 
 function enforceSubdomain(req, res, next) {
+    console.log(req, req.headers, req.headers.host)
     const domainParts = req && req.headers && req.headers.host && req.headers.host.split('.');
 
     if (!domainParts || (domainParts[0] !== 'www' && domainParts[0] !== 'staging')) {

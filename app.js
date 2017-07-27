@@ -23,16 +23,16 @@ const ajax             = require('./routes/ajax');
 const locations        = require('./routes/locations');
 
 const Guide            = require('./schemas/guide');
-const Attraction       = require('./schemas/attraction');
-const Continent        = require('./schemas/continent');
-const WorldRegion      = require('./schemas/world-region');
+//const Attraction       = require('./schemas/attraction');
+//const Continent        = require('./schemas/continent');
+//const WorldRegion      = require('./schemas/world-region');
 const Country          = require('./schemas/country');
-const CountryRegion    = require('./schemas/country-region');
-const Province         = require('./schemas/province');
-const ProvinceRegion   = require('./schemas/province-region');
-const City             = require('./schemas/city');
-const CityRegion       = require('./schemas/city-region');
-const Neighborhood     = require('./schemas/neighborhood');
+//const CountryRegion    = require('./schemas/country-region');
+//const Province         = require('./schemas/province');
+//const ProvinceRegion   = require('./schemas/province-region');
+//const City             = require('./schemas/city');
+//const CityRegion       = require('./schemas/city-region');
+//const Neighborhood     = require('./schemas/neighborhood');
 const User             = require('./schemas/user');
 
 const fs               = require('fs');
@@ -48,9 +48,9 @@ function redirectUrl(req, res) {
 };
 
 function enforceSubdomain(req, res, next) {
-    const domainParts = req.headers.host.split('.');
+    const domainParts = req && req.headers && req.headers.host && req.headers.host.split('.');
 
-    if (domainParts[0] !== 'www' && domainParts[0] !== 'staging') {
+    if (!domainParts || (domainParts[0] !== 'www' && domainParts[0] !== 'staging')) {
         req.headers.host = `www.${req.headers.host}`
         redirectUrl(req, res);
         return;
@@ -160,16 +160,16 @@ app.use((req, res, next) => {
 
 // location cache
 app.use(Guide.getCached(),
-        Attraction.getCached(),
-        Continent.getCached(),
-        WorldRegion.getCached(),
+        //Attraction.getCached(),
+        //Continent.getCached(),
+        //WorldRegion.getCached(),
         Country.getCached(),
-        CountryRegion.getCached(),
-        Province.getCached(),
-        ProvinceRegion.getCached(),
-        City.getCached(),
-        CityRegion.getCached(),
-        Neighborhood.getCached(),
+        //CountryRegion.getCached(),
+        //Province.getCached(),
+        //ProvinceRegion.getCached(),
+        //City.getCached(),
+        //CityRegion.getCached(),
+        //Neighborhood.getCached(),
         User.getCached());
 
 app.use((req, res, next) => {

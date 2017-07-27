@@ -21,4 +21,4 @@ const CityRegion = Duck({
 	UniqueBy: ['url', 'city']
 }, null, false);
 
-module.exports = CityRegion;
+//module.exports = CityRegion;

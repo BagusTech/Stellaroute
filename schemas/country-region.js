@@ -21,4 +21,4 @@ const CountryRegion = Duck({
 	UniqueBy: ['url', 'country']
 }, null, false);
 
-module.exports = CountryRegion;
+//module.exports = CountryRegion;

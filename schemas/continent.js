@@ -20,4 +20,4 @@ const Continent = Duck({
 	UniqueBy: ['url']
 }, null, false);
 
-module.exports = Continent;
+//module.exports = Continent;

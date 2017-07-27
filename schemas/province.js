@@ -24,4 +24,4 @@ const Province = Duck({
 	UniqueBy: ['url', 'country']
 }, null, false);
 
-module.exports = Province;
+//module.exports = Province;

@@ -21,4 +21,4 @@ const WorldRegion = Duck({
 	UniqueBy: ['url']
 }, null, false);
 
-module.exports = WorldRegion;
+//module.exports = WorldRegion;

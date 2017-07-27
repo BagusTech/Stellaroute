@@ -82,8 +82,8 @@ app.use((req, res, next) => {
 
 if(app.get('env') === 'production') {
     app.use(require('compression')())
-    //app.use(enforceSubdomain);
-    //app.use(enforceHTTPS);
+    app.use(enforceSubdomain);
+    app.use(enforceHTTPS);
 }
 
 app.use((req, res, next) => {

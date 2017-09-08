@@ -46,7 +46,7 @@ router.get('/search', (req, res, next) => {
 	const guides = pickTable('Guides')
 					.find('isPublished', true)
 					.join('countries', pickTable('Countries').cached(), 'Id', 'names.display')
-					.join('cities', pickTable('Cities').cached(), 'Id', 'names.display')
+					//.join('cities', pickTable('Cities').cached(), 'Id', 'names.display')
 					.join('author', User.cached(), 'Id', 'username')
 					.join('author', User.cached(), 'Id', 'tagline')
 					.join('author', User.cached(), 'Id', 'profilePicture')

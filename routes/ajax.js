@@ -189,8 +189,10 @@ const router       = express.Router();
 		const guides = pickTable('Guides')
 						.find('isPublished', true)
 						.join('countries', pickTable('Countries').cached(), 'Id', 'names.display')
-						.join('cities', pickTable('Cities').cached(), 'Id', 'names.display')
+						//.join('cities', pickTable('Cities').cached(), 'Id', 'names.display')
 						.items;
+
+		debugger
 
 		// guide title
 		guides.forEach((guide, i) => {
